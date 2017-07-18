@@ -62,7 +62,7 @@ commit 9a25e9936cfffde89520f35405b7248213b3bf3c
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Jul 9 12:02:19 2017 -0700
 
-    512385:
+    Update PCH NVS offset definition. 
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchNvs.asl
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/PchNvsAreaDef.h
@@ -91,7 +91,7 @@ commit dd6dfd833a0011097653e4e7869967984dd568f5
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Jul 9 04:08:27 2017 -0700
 
-    512369:[1504532609] [CNVi] Move BT interface selection to Internal Only due to  BT over UART is not platform POR
+    [CNVi] Move BT interface selection due to  BT over UART is not platform POR
     
     ---
     
@@ -171,30 +171,18 @@ commit 61af7f490e8f8d1c74765cd0908aacac11f77edd
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jul 7 08:22:32 2017 -0700
 
-    512118:[1406181331] CNP xHCI: USB2_Link_Mgr_Ctrl_Reg1 bit22 not set in BIOS
-    [Description] Due to bug found in PCH LP A0 BIOS should set bit 22 under offset 0x80F0 in xHCI MMIO space as a workaround
+    BIOS should set 0x80F0 bit[22] 1b for CNL PCH-LP B0 and PCH-H.
     ---
     
 
 Intel/CannonLakeSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
 
-commit 71434fefaf8b28f9889ca452d4dd369686ca6814
-Author: ClientSysFWGit <clientsysfwgit@intel.com>
-Date:   Fri Jul 7 08:01:32 2017 -0700
-
-    512115:[1406203384] [CFL-H-A1] dis_trm_prf_sync_cpl_fix is not set to 0 in BIOS
-    [Description] BIOS doesn't clear bit 25 under xHCI MMIO 0xB1D0 offset when it should. Additionally PCH H value wasn't clear for this bit and was updated.
-    
-    ---
-    
-
-Intel/CannonLakeSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
 
 commit 76666b8ff84ae3909e37a06b642daccdb1a8b227
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jul 7 06:52:49 2017 -0700
 
-    512102:[1805281475] GbE Init refactor
+    Optimize Intel GbE device init code structure
     
     ---
     
@@ -422,7 +410,7 @@ commit dfceae20495051c3e0cd8e8db467376ca7672910
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jul 5 15:51:50 2017 -0700
 
-    511470:[220324306] Correct the CpuStepping check in PCH RC
+    Correct the CpuStepping check in CNL PCH SIC.
     
     ---
     
@@ -477,7 +465,7 @@ commit 1de812a400cbe429392b0e5d74fb1e04341314a6
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jul 5 03:20:37 2017 -0700
 
-    511219:Merging CL511215 from KBL to CNL, [220380739][BIOS] No Runtime D3 (RTD3) support for PCH SDCard controller (no ACPI _S0W method)
+    Added PCH SD Card Controller Runtime D3(RTD3) support.
     
     ---
     
@@ -500,11 +488,8 @@ commit 45e6167f81b3726491a0e6ccc246b6ea468744dd
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jul 5 00:02:42 2017 -0700
 
-    511148:[1805178586][Usage of PchLimits.h needs changes for easier handling of multiple projects in one source]
-    
-    Description:
-    Cleanup of PchLimits.h and how defines from this source are used in BIOS code.
-    
+    Optimize PCH SIC structure for easier handling of multiple projects in one source.
+   
     ---
     
 
@@ -612,10 +597,8 @@ commit 7ccf3cf61fbcab0d83f911d29088e3540a520da9
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 3 23:24:32 2017 -0700
 
-    510994:[1604361993][PROCHOT is coming when we are putting system into SLPS0]
-    
-    Description:
-    Set PWRM PM_CFG3[2] also for PCH-H.
+
+    BIOS has to set PWRM PM_CFG3[2] also for PCH-H.
     
     ---
     
@@ -662,10 +645,8 @@ commit 8afab0dab476023419e3ec6d58947a849b939fa7
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 3 02:29:48 2017 -0700
 
-    510836:[1805253304][In PCH PMC lib create separate function for ModPhy SUS PG check]
-    
-    Description:
-    Replace checks on ModPHY SUS PG support with a dedicated static helper function. This will enable easier integration of future projects which may have different requirements.
+
+    Replace checks on ModPHY SUS PG support with a dedicated static function. 
     
     ---
     
@@ -912,7 +893,7 @@ commit d3e0bc797be7f9f3bd6b2f3ee4fbcc0e606cb0d4
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jun 30 07:31:26 2017 -0700
 
-    510500:[NO-HSD][REFACTOR] LPSS initialization and configuration
+    Optimize PCH LPSS initialization and configuration
     ---
     
 
@@ -1022,10 +1003,8 @@ commit b1870e285434e48aa7ec0a1d4f52316b062c875c
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jun 28 23:46:09 2017 -0700
 
-    510063:[1405837326] Cavs : Bios work around to be removed
-    [Description]
-    Remove CNP-LP Ax Si W/A for 'Distorted Audio in SLP_S0' (HSD#1405385651):
-    Set PMC_PWRM_EN_CW_SA (PwrmBase, offset 1888h), BIT12 = 0b
+
+    BIOS needs to set PMC_PWRM_EN_CW_SA[12] = 0b
     ---
     
 
@@ -1048,7 +1027,7 @@ commit 8a1c152dca40543b988d68e45ad212747151e5f0
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jun 28 13:30:27 2017 -0700
 
-    509829:1406297174 CNP-H A1 Integrate Chipsetinit Version 5
+    Integrate CNL PCH-H A1 Chipsetinit Rev.5
     
     ---
     
@@ -1060,9 +1039,8 @@ commit ce5bc04d642e2478eb4c39804581fd8305a6b621
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jun 28 04:31:47 2017 -0700
 
-    509661:[1504525877] Flat and restructure PCH PrePolicy function
-    [Description] Too many layers in PchInitPrePolicy.
-    This the request to flat it and make it modularity.
+    Optimize and restructure PCH PrePolicy function.
+    
     ---
     
 
@@ -1238,8 +1216,7 @@ commit ce9a1603a1ec25237382adb7ff220c4cdc1be23f
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jun 27 03:35:42 2017 -0700
 
-    509256:[1504485028] After USB device enumeration, just provide library function "UsbPdoProgramming" for customer to callback as their feature requirement
-    [Description] Take 2 on the change. Updated the documentation as it was invalid also made the functionality naming more clear
+    Provide library function "UsbPdoProgramming" for callback after USB device enumeration.
     
     ---
     
@@ -1253,8 +1230,7 @@ commit 00cb07eb59b3de1c29639bd8670a7c89838f417d
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jun 27 03:01:06 2017 -0700
 
-    509246:[1805150049][CNL/ICl] PchFia library rework
-            part 2 moved CLKREQ# assignment to PchFiaLib
+    Optimize PCH FIA library
     
     ---
     
@@ -1413,7 +1389,7 @@ commit 028dc1baad88df271a96e6bd29dcc6e04ab5f09b
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jun 26 09:29:20 2017 -0700
 
-    508938:[1804927292] Create common USB initialization library for sharing between CPU and PCH
+    Create common USB initialization library for sharing between CPU and PCH
     
     ---
     
@@ -1527,7 +1503,7 @@ commit 6691721de9d6dfbf2e52098454cb2e8940c184da
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jun 26 04:01:16 2017 -0700
 
-    508902:[1604392408] CNL_PCH RC review: Config block & UPD
+    Update CNL PCH SIC Config Block & UPD
     
     ---
     
@@ -1541,8 +1517,7 @@ commit 147167c682cb57323218d763f210240b75ce1c4a
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jun 26 02:48:04 2017 -0700
 
-    508887:[1805140226] P2SB to propagate IOSF-SB completion status from IP as RAVDM STS to CPU
-    [Description] BIOS must set RCSPE in P2SB configuration space for CNP-LP and CNP-H when paired with CNL CPU (or newer). Not applicable to CFL.
+    BIOS must set RCSPE in P2SB configuration space for CNL PCH-LP and PCH-H when paired with CNL CPU (or newer). This is not applicable to CFL CPU.
     
     ---
     
@@ -1569,7 +1544,7 @@ commit b023ad038886f247d87bad40fb36a10c62d93da7
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jun 26 02:24:48 2017 -0700
 
-    508873:Rechecking 491302 - [1405852587][CNP-H: BIOS missed out DMI UEM.Poisoned TLP Mask setting] - as some of changes were overwritten by mistake
+    Correct "B_PCH_DMI15_PCR_UEM_PT" bit definition.
     
     ---
     
@@ -1580,7 +1555,7 @@ commit c8cc702f229bf814ff09dd351a870df2d28c7a61
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jun 26 02:16:18 2017 -0700
 
-    508869:[1406269496] LPSS_HSUART as debug port stop working after PCI enumeration on ICL
+    Fix LPSS_HSUART as debug port stop working after PCI enumeration
     
     ---
     
@@ -1668,7 +1643,7 @@ commit 9fd91fd8704849752f9b06aa591f99afe2175c5e
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Jun 25 12:03:10 2017 -0700
 
-    508782:
+    Update ACPI NVS definition.
 
 Intel/CannonLakeSiliconPkg/Cpu/AcpiTables/CpuSsdt/CpuNvs.asl
 Intel/CannonLakeSiliconPkg/Cpu/Include/CpuNvsAreaDef.h
@@ -1693,7 +1668,7 @@ commit 6eb457955ccb28858f8895f334f7a4ee02fe1956
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Jun 25 10:06:09 2017 -0700
 
-    508774:
+    Update ACPI NVS definition.
 
 Intel/CannonLakeSiliconPkg/Cpu/AcpiTables/CpuSsdt/CpuNvs.asl
 Intel/CannonLakeSiliconPkg/Cpu/Include/CpuNvsAreaDef.h
@@ -1824,7 +1799,7 @@ commit 9c41ac6ea2e8e91a4ebc79d9044f2c3ee7fdacf0
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jun 23 10:21:59 2017 -0700
 
-    508555:[1406258822][Disable GbE by default on USFF CNP-H A1]
+    Disable GbE by default on USFF CNL PCH-H A1
     
     ---
     
@@ -1835,9 +1810,7 @@ commit 4b6b0ec4204f09f8e47cc875ccd30e0aa984dbe9
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jun 23 03:25:52 2017 -0700
 
-    508493:[1604302048] CFL-S ECless USBC support: S0ix workaround
-    [Description] BIOS needs to accordingly control the PS_ON signal driving through PCH register.
-    [Solution] Implementing DSM method for USBC S0ix workaround
+    Added new definition of "R_CNL_PCH_PMC_PWRM_CFG4". BIOS needs to accordingly set this register for CFL-S ECless USBC support.
     
     ---
     
@@ -1859,10 +1832,7 @@ commit e5f76ec8a87fad6a001882f644da52e4de0fb06d
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jun 22 23:15:46 2017 -0700
 
-    508440:[1504525056] [CNL] Update redefined PCH Lpc registers in ResetSystemLib.
-    [Description]
-    Some redefined PCH Lpc registers in ResetSystemLib are not updated.
-    Please help to fix those.
+    Update redefined PCH Lpc registers in ResetSystemLib.
     
     ---
     
@@ -1903,8 +1873,8 @@ commit 99992789ef2d34624bde82f783c4bad90b6e08ae
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jun 22 16:40:26 2017 -0700
 
-    508344:[1805150049][CNL/ICl] PchFia library rework
-    - Fix assert seen when booting ICP-N Simics
+    Optimize PchFia library - Fix assertion seen when booting.
+
     
     ---
     
