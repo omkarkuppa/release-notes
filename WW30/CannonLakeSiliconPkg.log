@@ -32,14 +32,13 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 10 05:49:17 2017 -0700
 
     512511:[1504509777] Setup menu : Above 4GB MMIO BIOS assignment broken for ICL
-    [description]
+    Description:
     Enablle above 4g and use IGD device will assert.
-    [solution]
+    Solution:
     1. WORKAROUND for MTRR above 4G issue
     2. Rename SIZE_128GB -> BASE_128GB
     3. Set above 4G MMIO Base = BASE_256GB, Legnth = SIZE_256GB.
-    code review:
-    https://fm-codecollab.intel.com/ui#review:id=198217
+    Code colab review: https://fm-codecollab.intel.com/ui#review:id=198217
     ---
     
 
@@ -213,8 +212,11 @@ commit 781cc3be70d0a9941aa22b4e944505da12de8816
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jul 7 03:08:02 2017 -0700
 
-    512077:[1604337148][CNL_U1][BIOS to program audio pin buf control bit 31 in Gfx mmio register (GttMmAdr) as per B-spec]
-    
+    512077:[1604337148][CNL_U1][BIOS to program audio pin buf control bit 31 in Gfx mmio register (GttMmAdr)]
+	Description:
+	Display Audio should enumerate in device manager.
+    Solution:
+	Enable CD Clock PLL after Power Well enable. Code clean up of redundant link and/or controller resets.
     ---
     
 
@@ -441,11 +443,11 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jul 5 13:53:28 2017 -0700
 
     511405:[ICL][220287393] Simics Flags Cleanup for PeiVtdInitLic.c
-    
-    [Issue/Feature Description]  Remove this PcdSimicsEnable w/a for ICL only (CNL Simics package can still reproduce the issue), issue connot be reproduced anymore.
-    [Impacted Platform] All
-    [Customer visible] No
-    
+    Description:
+    Remove this PcdSimicsEnable w/a for ICL and issue connot be reproduced anymore.
+    Solution:
+	PcdSimicsEnable w/a removed.
+    Code collab review: https://fm-codecollab.intel.com/ui#review:id=196606
     ---
     
 
@@ -526,9 +528,11 @@ commit 32790f322394a091050f9375e6f518eda7ab68d8
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jul 4 23:30:34 2017 -0700
 
-    511138:[2006651612] WS CFL-S CPUs are classified as Halo in SA - Take2
-    
-    Change the WorkStation and Server from Halo to Desktop SKU.
+    511138:[2006651612] CFL-S CPUs are classified as Halo in SA
+    Description: 
+	CFL-S CPUs were displayed as Halo in SA.
+	Solution: 
+	WorkStation and Server CPUs were changed from Halo to Desktop.
     ---
     
     
@@ -540,6 +544,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jul 4 22:24:18 2017 -0700
 
     511122:[1604398619] : [CFL - Integrate latest CFL GOP 1068]
+	Description:
+    Integrate latest CFL GOP.
+    Solution:
+    Integrated CFL GOP 1068.	
     
     ---
     
@@ -587,7 +595,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jul 4 01:35:23 2017 -0700
 
     511016:[1604399397][Add GT DID for CFL POR SKUs]
-    
+	Description:
+	Add GT DID into BIOS.
+	Solution:
+    GT DID for defined SKUs are added.
     ---
     
 
@@ -621,9 +632,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 3 20:03:57 2017 -0700
 
     510953:[2006651612] WS CFL-S CPUs are classified as Halo in SA
-    
-    Change the WorkStation and Server from Halo to Desktop SKU.
-    
+    Description: 
+	CFL-S CPUs were displayed as Halo in SA.
+	Solution: 
+	WorkStation and Server CPUs were changed from Halo to Desktop.
     ---
     
 
@@ -880,8 +892,13 @@ commit a41ce292aea7d818e3114a483f8444098a7b589f
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jun 30 13:21:25 2017 -0700
 
-    CSE doesn't get the BUP_MKHI_ICC_CMD_REQ message from BIOS that cause Overclocking flow is broken.
-    
+    [1305181624][CNL][Overclocking] CSE doesn't get the BUP_MKHI_ICC_CMD_REQ message from BIOS. Overclocking flow is broken.
+    Description:
+	CSE doesn't get the BUP_MKHI_ICC_CMD_REQ message from BIOS and overclocking is not performed.
+	Solution:
+	Command request size is updated to issue the command regardless of Overclocking feature state.
+	Code colab review: https://fm-codecollab.intel.com/ui#review:id=197679 
+    ---
     
 
 Intel/CannonLakeSiliconPkg/Me/Library/PeiMeLib/HeciMsgPeiLib.c
@@ -1687,7 +1704,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Jun 25 05:44:37 2017 -0700
 
     508768:[1305029177] Add Iommu Drhd Wa for CNL bios (taken from KBL)
-    
+	Description:
+	When running Grits with IOACCESS driver, random blue screen and hangs are seen.
+    Solution:
+	Changes were taken from KBL to CNL Bios.
     ---
     
 
@@ -1820,7 +1840,11 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jun 23 00:42:50 2017 -0700
 
     508459:[220179882] Set PcdDeprecatedFunctionRemove back to True
-    
+	Description:
+	Converting the values UnicodeValueToString, AsciiValueToString to secure and re-enable PcdDeprecatedFunctionRemove.
+	Solution:
+    Values changed to secure and PcdDeprecatedFunctionRemove is set to true.
+	Code colab review: https://fm-codecollab.intel.com/ui#review:id=196627
     ---
     
 
@@ -1920,6 +1944,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jun 21 22:25:45 2017 -0700
 
     507921:[1504523198] Add SA DID for CFL POR SKUs
+	Description:
+	Add SA DID into BIOS.
+	Solution:
+	SA DIDs added for defined SKUs into BIOS.
     
     ---
     
@@ -2002,6 +2030,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jun 21 06:02:51 2017 -0700
 
     507622:[1604376704] : [Add support for PEG3(0_6_0) controller in ACPI code]
+	Description:
+	Need to provide support for additional fourth PEG controller from ACPI.
+	Solution:
+	PEG controller support for additional fourth controller is provided.
     ---
     
 
@@ -2019,10 +2051,11 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jun 21 05:23:53 2017 -0700
 
     507616:[1305029177] - Add Iommu Drhd Wa for CNL bios (taken from KBL)
-    
+    Description:
+	When running Grits with IOACCESS driver, random blue screen and hangs are seen.
+    Solution:
+	Changes were taken from KBL to CNL Bios.
     ---
-    
-    yes
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/ConfigBlock/MiscDxeConfig.h
 Intel/CannonLakeSiliconPkg/SystemAgent/SaInit/Dxe/VTd.c
@@ -2082,8 +2115,14 @@ commit c98bee39627e965689f3e8f64dcb993f1eef0047
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jun 20 06:09:08 2017 -0700
 
-    507190:1604342525.7: [CNL][PEG/DMI]Recipe programming for PEG/DMI - updated
-    
+    507190:[1604342525]: [CNL][PEG/DMI]Recipe programming for PEG/DMI
+    Description:
+	Program PEG/DMI recipe for CNL platform.
+	Solution: Programed new recipe for CNL platform.Care should be taken not to disturb the current recipe for CFL.
+              For CNL, the bundles are shifted for PEG 1 and a new controller PEG3 is added.
+              Bundle 0-1 : PEG3
+              Bundles 2-9: PEG Device 1
+              Bundles 10-13: DMI
     ---
     
 
@@ -2186,6 +2225,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jun 19 08:10:27 2017 -0700
 
     506753:[1504521755] Correct the CpuFamily and CpuStepping check in SA RC
+	Description:
+	Correct the CpuFamily and CpuStepping check in SA RC.
+	Solution:
+	CpuFamily and CpuStepping check in SA RC has been updated.
     
     ---
     
@@ -2424,7 +2467,11 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jun 15 20:28:52 2017 -0700
 
     506146:[1504520592] Update latest CNL SA DID based
-    
+	Description:
+	Update latest CNL SA DID
+	Solution:
+	Updated to latest CNL SA DID
+ 
     ---
     
 
@@ -2485,6 +2532,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jun 15 09:15:47 2017 -0700
 
     505855:[1604384335]: Correct the SA PEG/DMI RC code for CNL Silicon release.
+	Description:
+	Correct SA PEG/DMI RC Code
+	Solution:
+	Build tags were corrected and aligned. 
     ---
     
 
@@ -2498,10 +2549,13 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jun 15 02:56:29 2017 -0700
 
     505822:[1504520320] Correct the SA RC code for CNL Silicon release.
+	Description:
     1. Reset OC ConfigBlock revision to 1.
     2. Delete the unnecessary files for CNL RC.
     3. Update Doxygen for CNL.
     4. Use NASM for GCC build
+	Solution:
+	Updated SA RC code.
     ---
     
 
@@ -2530,6 +2584,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jun 14 23:27:08 2017 -0700
 
     505758:[220263159]CFL-S failing Preset 10 in SigTest
+	Description:
+	CFL-S Preset 10 seems to be targeted to -8 dB but SigTest 3.2.0 accepts a range between -8dB and -10dB, so the test fails or barely pass for the parts we tested.
+	Solution:
+	Targeting Preset 10 to the center of the range, that is -9 dB solves the problem.
     ---
     
 
@@ -2663,7 +2721,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jun 14 02:28:06 2017 -0700
 
     505376:[1604382999][Make sure CPU_ICL flags should get removed in CNL SA RC Release]
-    
+	Description:
+	CPU_ICL flags need to be removed from internal CNL RC Release package.
+	Solution:
+    CNL SA RA release does not include CPU_ICL flags.
     ---
     
 
@@ -2674,8 +2735,11 @@ commit eb7cd4347da656f689d72d112ffb5d6be9e65bd4
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jun 14 00:23:36 2017 -0700
 
-    505354:[1604382858][Update latest CNL GT DID based on Bspec]
-    
+    505354:[1604382858][Update latest CNL GT DID based on spec]
+	Description:
+    Update latest CNL GT DID
+	Solution:
+	CNL GT DID updated as per spec.
     ---
     
 
@@ -2756,6 +2820,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jun 12 23:18:07 2017 -0700
 
     504963:[1604380427][cannon_lake]Clean up IPU FW GPIO allocation implementation due to it is non-POR feature.
+	Description:
+	Clean up IPU FW GPIO allocation implementation from CNL Bios.
+	Solution:
+	IPU FW GPIO allocation implementation has been removed from CNL Bios.
     
     ---
     
@@ -3016,7 +3084,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jun 9 12:58:49 2017 -0700
 
     504294:1604349901:[ICL]: GEN11lp Display Workarounds
-    
+    Solution:
     ICL Gen11LP Display Silicon Workaround for A0 stepping
     https://fm-codecollab.intel.com/ui#review:id=195129
     https://hsdes.intel.com/appstore/article/#/1604349901
@@ -3178,7 +3246,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jun 8 00:20:57 2017 -0700
 
     503584:[1604377406] : [CFL - Integrate CFL GOP 1066]
-    
+	Description:
+	eDP was not working with GOP 1066.
+	Solution:
+    Fix was available in GOP and same was integrated in CFL Bios. 
     ---
     
 
@@ -3214,7 +3285,11 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jun 6 21:18:23 2017 -0700
 
     503055:[1604369008][CNL]Address gaps in PciExpress code to support PEG3 (BDF:060)
-    
+    Description:
+	1. MAX_SUPPORTED_ROOT_BRIDGE_NUMBER should be increased by one
+    2. Program PegDevenTable for PEG3 only for relevant platforms
+	Solution:
+	Address gaps found in PciExpress code for PEG3 was updated. 
     ---
     
 
