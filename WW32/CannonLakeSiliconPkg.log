@@ -27,7 +27,7 @@ commit 5cf311f59b7daac2d3df415593050da1ab1e2bea
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 7 09:03:05 2017 -0700
 
-    521062:Merged CL#520114 - [1604419418] [CNL_U6/U7][OPTANE]: Yellow bang observed in device manager for Pleasant Star & Stony beach after enabling BIOS setting "PCIe Storage Dev on Port 9"  to "RST controlled" in LPDDR4 board  VLPM is an object from SSDT table and should not be used unconditionally in DSDT table. Print remapped device _ADR instead.
+    Fix Optane device yellow bang observed in device manager after enabling BIOS setting "PCIe Storage Dev on Port 9"  to "RST controlled"
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchRstPcieStorage.asl
 
@@ -73,7 +73,7 @@ commit c1a6eb54f97bb9c13d1de807b6432b66f0fea056
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 3 04:03:10 2017 -0700
 
-    520089:Merged CL#519980 - [NO HSD] Update PCH for CFL RC v7.0.9.xx review.
+    Update PCH for CFL RC review.
 
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/PcieRpConfig.h
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/PmConfig.h
@@ -222,13 +222,9 @@ commit 0c3474130fac5b4a38887d4ce646798ff951487e
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jul 28 03:55:22 2017 -0700
 
-    518247:[1604355828] Memory reserved for Trace Hub is double the required size for FSP boot.
+    Memory reserved for Trace Hub is double the required size for FSP boot.
+
     ---
-    
-    Core allocate aligned-memory service will allocate double of required size for base alignment, the memory overhead will be recycled back to memory map. However memory used by FSP would be marked as reserved, that can never take it back. Move memory allocation from Si (FSP) to platform (boot loader), and pass allocated base via policy for silicon to do following initialization.
-    1. Move memory allocation from silicon to platform, add a policy/UPD that carries allocated memory base.
-    2. Make trace memory to BWG default : PCH (64MB/64MB) / CPU (128MB/128MB) to handle memory allocation for SCRPD0[24] set even when TraceHubMode is disabled.
-    3. Add trace hub memory check, if total (CPU+PCH) TH memory size over 512MB, enforce them to BWG default. ( PCH (64MB/64MB) / CPU (128MB/128MB))
 
 Intel/CannonLakeSiliconPkg/Include/ConfigBlock/SiConfig.h
 Intel/CannonLakeSiliconPkg/Include/Library/SiPolicyLib.h
