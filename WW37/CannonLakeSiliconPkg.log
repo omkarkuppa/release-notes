@@ -38,10 +38,9 @@ commit fa6862bfbad6575375afbbce93a96fa304270114
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Sep 4 05:21:43 2017 -0700
 
-    529911:[1805473376] Add I2C termination settings to platform policy
+    [PCH] Add I2C termination settings to platform policy avoiding platfrom override.
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/SerialIoConfig.h
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/Library/GpioPrivateLib.h
@@ -53,11 +52,10 @@ commit 4933827d0812ce5a1171e9a3408cf5dc4e325cf7
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Sep 4 04:43:30 2017 -0700
 
-    529899:1805491554 [CFL] PCIe Root ports enumerated even without plugged devices.
+    [PCH] Fix PCIe Root ports enumerated even without plugged devices.
     Code checked PresenceDetectState bit before setting SlotImplemented bit, so PDS was invalid and all PCIE rootports appeared full.
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/Library/PchPciExpressHelpersLib.h
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchPciExpressHelpersLib/PchPciExpressHelpersLibrary.c
@@ -67,10 +65,9 @@ commit 76dfd39158ca7da503efc473ecf9c234ab820409
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Sep 4 01:34:39 2017 -0700
 
-    529869:[1504582911] Fix ICL thermal PchHot default temperature in UPD
+    [PCH] Sync up thermal PchHot default temperature between UPD and RC defalut setting.
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:Yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiThermalLib/PeiThermalLibCnl.c
 
@@ -146,10 +143,9 @@ commit 012feeda8cd95cfe286a1c4e6b91e77bb9bd4b66
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sat Sep 2 11:20:32 2017 -0700
 
-    529731:[1805476814]Add a test option to enable PCIe DMIL1EDM selectively
+    [PCH] Add a test option to enable PCIe DMIL1EDM selectively
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchRootPorts.c
 
@@ -205,9 +201,8 @@ commit 62207e95f2490b61682b499cb4708d4c05166d5e
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Sep 1 07:44:36 2017 -0700
 
-    529477:[1406449885] [CFL-H] BIOS clears EXI.USB2DBCEN without performing a global reset afterwards - causing platform to be stuck at EC07 after removing the coin battery
+    [PCH] Add USB2 debug cable to platfrom debug probe type
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/DciConfig.h
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLib.c
@@ -217,20 +212,9 @@ commit 168e17d04faacfda8e4c18f40c12879364600fb9
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Sep 1 05:17:59 2017 -0700
 
-    529449:[1805476797][PMC library implementation refactoring - group PMC code]
-    Sync from CannonLake - 529418
-    
-    Description:
-    - Refactor PMC code so that it is located in PMC library folders (public & private)
-    - Remove _CNL_PCH_ prefix from register defines which in fact are common, move those defines to PchRegsPmc.h
-    - Created dedicated header for ICL specific regs - PchRegPmcIcl.h
-    - Create separate library implementation for PMC for PEI phase to handle PMC related functions consuming policy
-    - Create separate library implementation for CNL and ICL to handle generation specific functions
-    - Remove PchPm.c from PeiPchInitLib
-    - Move non-PMC code (e.g. LPC, eSPI) to modules/libraries which are responsible for those features
+    [PCH] PMC library implementation refactoring
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLibIcl.c
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLibIcl.inf
@@ -239,19 +223,9 @@ commit 70cc79790d3ef6f0102df9ecbab343122fabc31e
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Sep 1 02:26:53 2017 -0700
 
-    529418:[1805476797][PMC library implementation refactoring - group PMC code]
-    
-    Description:
-    - Refactor PMC code so that it is located in PMC library folders (public & private)
-    - Remove _CNL_PCH_ prefix from register defines which in fact are common, move those defines to PchRegsPmc.h
-    - Created dedicated header for ICL specific regs - PchRegPmcIcl.h
-    - Create separate library implementation for PMC for PEI phase to handle PMC related functions consuming policy
-    - Create separate library implementation for CNL and ICL to handle generation specific functions
-    - Remove PchPm.c from PeiPchInitLib
-    - Move non-PMC code (e.g. LPC, eSPI) to modules/libraries which are responsible for those features
+    [PCH] PMC library implementation refactoring
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuInitLib/Features.c
 Intel/CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuInitLib/PeiCpuInitLib.inf
@@ -336,10 +310,9 @@ commit 1f6199c4a285f62231a032c9cf04c672b7dcc230
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 31 14:09:09 2017 -0700
 
-    529220:[1406439511][CNP-LP B1 Integrate Chipsetinit Version 5]
+    [PCH] Update HSIO Chipsetinit Version 5 for CNP-LP B1
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/CnlPchLpHsioBx.h
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/CnlPchLpHsioBx.c
@@ -348,10 +321,9 @@ commit f8598e431cbf709158ade1535f83374156c22c0f
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 31 12:56:48 2017 -0700
 
-    529181:1406439559 CNP-H A1 Integrate Chipsetinit Version 8
+    [PCH] Update HSIO Chipsetinit Version 8 for CNP-H A1
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:Yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/CnlPchHHsioAx.h
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/CnlPchHHsioAx.c
@@ -383,13 +355,9 @@ commit c48447e50015de8c745724499ecd0fb2745d4121
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 31 00:58:39 2017 -0700
 
-    528930:[1406259459][Low Power Mode Settings (LPM): PWRMBASE+1E4Ch CPPMVRIC3 bit 22 to be set as recommended]
-    
-    Description:
-    Configure PWRMBASE + 0x1E4C[22] (IPLLGPEN) according to PMC IP BWG
+    [PCH] BIOS should set PWRMBASE+1E4Ch bit 22 for System Low Power Mode
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchPm.c
 
@@ -412,9 +380,8 @@ commit 7ff9bc5b0dcd2a3f2820e30c2d4d5dc974d4f892
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 30 23:48:28 2017 -0700
 
-    528902:Merging 528899 from ICL to CNP
+    [PCH] Fix code flow potential issue.
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmGpioLib/GpioLib.c
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchHsio.c
@@ -653,13 +620,11 @@ commit b906a9a4fb90694b35d21b64c929f4637d76fe6e
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 30 05:15:46 2017 -0700
 
-    528485:[1504414861] Move HDA ACPI policies to PCH policy protocol
-    [Description]
+    [PCH] Move HDA ACPI policies to PCH policy protocol
     1. Implemented DXE PchPolicyLib.
     2. ACPI related audio policies (NHLT endpoint enablement, Feature mask) moved to PchPolicy protocol and removed from PEI/FSP.
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/HdAudioConfig.h
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/PchConfigHob.h
@@ -678,11 +643,9 @@ commit 84c5ef9b54145874b3757350b3d5236ce1f3f49b
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 29 19:39:41 2017 -0700
 
-    528346:[1504578273] Update PCH RC for ICL RC review
-    [Description] 1. Remove unused files. SpiConfig.h, PchPmcXramOffsetData.h 2. Add PCH-N USB port number.
+    [PCH] Remove unused files and refactor Get USB port number funciton
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:Yes
 
 Intel/CannonLakeSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/SpiConfig.h
@@ -723,10 +686,9 @@ commit 9452569a53ccbba88a1df4f90c904c574c2f7170
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 29 18:49:01 2017 -0700
 
-    528328:[1406442606] [Need BIOS WA for CNP-LP C0]FWD Forward from Lewisburg.bug: pushed from es.server_classic: HPE-ISS seeing bad ROM fetches during warm reboot test with Peripheral Channel Non-Fatal Status (PCNFEC) showing unexpected completion
-    [Description] Require a SPI CFG read before any SPI CFG write.
+    [PCH] BIOS W/A for SPI: Require a SPI CFG read before any SPI CFG write
+    Description: IO cycle and memroy IO read cycles to eSPI peripheral channel might be completed incorrectly if no any PCI config spcae/memory read to SPI controller(D31F5) between a TPM read to TPM port and a config write to SPI controller(D31F5)
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:Yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPchCycleDecodingLib/PchCycleDecodingLib.c
 Intel/CannonLakeSiliconPkg/Pch/Library/PeiSpiLib/PchSpi.c
@@ -824,11 +786,9 @@ commit 64207e04131898cf156b2bfa89970b891bb68c27
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 28 03:25:18 2017 -0700
 
-    527502:[1805477362][CLF/CNL] remapping not working on root ports 21-24
-            Restore the missing w/a from KBL. For PLS register map PCIe lanes 21-24 to PCIe lanes 13-16
+    [PCH] Fix remapping function not working on root ports 21-24
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmRstPrivateLib/PeiDxeSmmRstPrivateLib.c
 
@@ -848,10 +808,9 @@ commit 92e45b63448e3d707fe10b314e9be334c993b287
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 28 00:37:01 2017 -0700
 
-    527471:1406246709 PCIe PCH TX Shuts Down when performing Controller Speed Toggle  (CNP LP B0 and CNP H A0)
-    Endpoint presence will be checked using PresenceDetectState instead of LinkActive, this will solve the problem of rootports disappearing during compliance testing
+    [PCH] PCIe Endpoint presence will be checked using PresenceDetectState instead of LinkActive
+    
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchPciExpressHelpersLib/PchPciExpressHelpersLibrary.c
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchRootPorts.c
@@ -901,11 +860,9 @@ commit 9686f53a785d19b09380a99ef6b291421ecc60d4
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Aug 27 20:36:26 2017 -0700
 
-    527425:[NO HSD] Fixed GCC RC Pkg (EDKII) CI build error caused by CL#527224 - 1305252246 - [CFL-S] Platform does not boot after Set Clock Settings via BIOS. No Recovery
-    [Issue] error: variable 'Status' set but not used [-Werror=unused-but-set-variable]
+    [PCH] Fixed GCC RC Pkg (EDKII) CI build error
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:YES
 
 Intel/CannonLakeSiliconPkg/Pch/Wdt/Dxe/WdtDxe.c
 
@@ -987,10 +944,9 @@ commit 1d1bc0383c016bec86119457536998fdecc91985
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 25 14:23:43 2017 -0700
 
-    527224:1305252246 - [CFL-S] Platform does not boot after Set Clock Settings via BIOS. No Recovery
+    [PCH] Fix platform does not boot after Set Clock Settings via BIOS for Overclocking function
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/Wdt/Dxe/WdtDxe.c
 
@@ -998,10 +954,9 @@ commit 9ff977099c630aec8cf41330f95bcd8c7fc565b7
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 25 12:50:10 2017 -0700
 
-    527191:[CNL][220419790] Clean up Simics Flags for PchRootPorts.c
+    [PCH] Clean up unused source code
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchRootPorts.c
 
@@ -1109,22 +1064,15 @@ commit 99a1f823d65735bb48d03a7eeaa8b0c664a8179d
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 25 01:18:07 2017 -0700
 
-    526993:[1804921353] BIOS must remove IA_POSTBOOT_SAI from P2SB CP
-    [Description]
-    Due to lack of SMM_SAI in CFL CPU BIOS cannot access P2SB from SMM nor after switch to POSTBOOT_SAI (preventing GPIO lock/unlock etc.).
-    As a mitigation PMC will add POSTBOOT_SAI to P2SB SAI control policy. BIOS must remove itself once relevant configuration is completed and before any third party code execution.
-    The PMC change is implemented for CNP LP B0 onwards.
-    
-    To remove POSTBOOT_SAI from P2SB SAI control policy BIOS must clear bit 0 in SAIPOLCTRL0 register (config offset 0x240) after switching to POSTBOOT_SAI (BOOT_SAI is not included in the control policy).
-    Until the bit is cleared the policy registers including SAIPOLCTRL are accessible to POSTBOOT_SAI despite access to all other P2SB registers being blocked.
+    [PCH] remove IA_POSTBOOT_SAI from P2SB control policy
+    Description:
+    BIOS cannot access P2SB from SMM nor after switch to POSTBOOT_SAI with CFL CPU (preventing GPIO lock/unlock etc.)    
+    To remove POSTBOOT_SAI from P2SB SAI control policy BIOS must clear bit 0 in config register offset 0x240 of P2SB after switching to POSTBOOT_SAI
     
     Note BIOS must either restrain from setting or clear the HIDE bit in P2SB since access to the HIDE bit is blocked after switch to POSTBOOT_SAI and would prevent the policy change.
     Setting HIDE bit is still necessary if switch to POSTBOOT_SAI is disabled for debug purposes.
     
-    BIOS may modify P2SB SAI access policy to gain access to P2SB configuration space with POSTBOOT_SAI by setting bit 0 in SAIPOLAC0 (offset 0x248) but this must be reverted before removing itself from P2SB SAI control policy.
-    
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:Yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Library/PchP2sbLib.h
 Intel/CannonLakeSiliconPkg/Pch/Include/Library/PchSbiAccessLib.h
@@ -1205,10 +1153,9 @@ commit 213ce35a44c151b6c3cf738bc45868676a6195ef
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 24 03:35:28 2017 -0700
 
-    526672:[1504575604] Setup xHCI DbC for Trace Hub tracing
-    [1504573060] BIOS tracing is not working on DbC2
+    [PCH] Setup xHCI DbC for Trace Hub tracing to fix BIOS tracing not working on DbC
+    
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Include/Register/RegsUsb.h
 Intel/CannonLakeSiliconPkg/Pch/Include/Register/PchRegsTraceHub.h
@@ -1396,11 +1343,9 @@ commit a65ab75daad6d3f0758b3b9850f85cf45577c958
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 22 03:43:56 2017 -0700
 
-    525850:[1209608016] BIOS must not implement _DSM function 6 for xDCI soft reset workaround on CNP and above chipsets
-    [Description] Remove Function 6 from xDCI ASL code as this workaround is no longer required
+    [PCH] Remove _DSM function 6 from xDCI ASL code for xDCI soft reset workaround
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchXdci.asl
 
@@ -1408,11 +1353,9 @@ commit 265126b330ac02773ef12189e2565f74421710fb
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 22 03:29:50 2017 -0700
 
-    525843:[1504443967][SCS][Si W/A]Require 'D3 bookending'/_PS0 control method for EMMC #2
-    [Description]
-    Added 50us delay in eMMC ACPI _PS0 - delay moved to the beggining of method.
+    [PCH] Added 50us delay in eMMC ACPI _PS0 method entry
+
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchScs.asl
 
@@ -1420,10 +1363,9 @@ commit f8143b4953c2ed0dc04f1b9621367854ae55c36c
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 22 02:50:41 2017 -0700
 
-    525831:1504561962 [CFL] System hang on ready to boot callback function "PchOnReadyToBoot?
-    One variable was left uninitialized in certain path of PCIe power management, leading to possible crash in SMM
+    [PCH] Fix system hang on ready to boot callback function
+
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchPciExpressHelpersLib/PchPciExpressHelpersLibrary.c
 
@@ -1431,14 +1373,9 @@ commit 46bc79a2384366108f92490341187789d35a70ea
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 22 01:45:59 2017 -0700
 
-    525800:[1805436492] [CFL][EDK] S3 resume hang up at post code "00E1"
-    [Description]
-    BIOS was using invalid SPI MBAR in bootscript leading to unexpected values in requested address
-    [Solution]
-    Even in DXE for SPI BIOS should use fixed MBAR address that's also used in PEI phase. Thanks to that BIOS accesses correct memory locations during boot script execution.
+    [PCH] Fix S3 resume hang up at post code "00E1"
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/PchInit/Dxe/PchInit.c
 
@@ -1446,11 +1383,9 @@ commit f82e78fb3e65f7e4bc396fbc92518432e7a26e23
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 22 01:25:18 2017 -0700
 
-    525779:[1305282410][ICL][PO] BIOS trying to program non-existing RST PCIe Storage Cycle Router
-            Added function to check if silicon supports this Cycle router number. Cycle router mmio space programming can only be done if this function returns TRUE.
+    [PCH] Fix BIOS trying to program non-existing RST PCIe Storage Cycle Router
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Library/PchPcieRpLib.h
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/Library/RstPrivateLib.h
@@ -1463,12 +1398,9 @@ commit d098c30085d8c1656a83eedcd9a84c91965a853e
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 22 01:16:17 2017 -0700
 
-    525772:[1504443967][SCS][Si W/A]Require 'D3 bookending'/_PS0 control method for EMMC
-    [Description]
-    Added 50us delay in eMMC ACPI _PS0.
+    [PCH] Added 50us delay in eMMC ACPI _PS0 method entry
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchScs.asl
 
@@ -1476,17 +1408,9 @@ commit 5e25c100e3ef164903de0e2217c344a829ecdc5d
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 21 23:26:49 2017 -0700
 
-    525739:[1805453477][Refactor BIOS PCH DMI support - group PCH DMI code into single directory and provide library for other modules to use]
-    
-    Description:
-     - create separate header for DMI SIP14 specific registers
-     - move DMI support from PeiPchRcLib to PCH DMI lib
-     - separate SIP14 and SIP15 DMI code
-     - move DMI initialization from PeiPchInitLib to PCH DMI lib
-     - create necessary DMI functions for other modules to use through PCH DMI lib
+    [PCH] Refactor BIOS PCH DMI support
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/Library/PchDmiLib.h
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/Library/PchPsfPrivateLib.h
@@ -1552,14 +1476,9 @@ commit 4abc4031ac3390888a0a56bba4c760e63859bf3c
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 21 05:00:41 2017 -0700
 
-    525496:[1805131876][GPIO initialization and configuration ]
-    
-    Refactor GPIO lib:
-    - extend GPIO lib for GPE mapping to handle cases where part of GPIO group (32 pads) can be mapped for 1-Tier GPE.
-    - add ability within GPIO lib to handle additional ISH SPI controller
+    [PCH] Refactor GPIO initialization and configuration
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/GpioLib.asl
 Intel/CannonLakeSiliconPkg/Pch/Include/Library/GpioLib.h
@@ -1590,15 +1509,9 @@ commit 4cc1e7bcf7812288cf0396ae954d59f20488dfd1
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 21 01:38:24 2017 -0700
 
-    525446:[1406210144] cAVS_CFL H PO:[BIOS/DRIVER] I2S codec yellow bang
-    [Description]
-    1) I2S Codec defintion supports all I2C controllers [0-5]. ACPI definition moved to separate asl file - HdaI2sCodec.asl
-    2) I2C bus to which codec is connected determined based on BoardId (initialization in BoardInitLib)
-    3) Methods to construct I2C and Interrupt resource descriptors implemented in DSDT.asl for generic use.
-    4) Configure SSP.MCLK GPIO pin for CNL-H
-    5) Clean up of obsolete/deprecated codec models and NHLT configuration blobs
+    [PCH] Fix audio I2S codec under I2C controller yellow bang issue
+
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/PchHdaEndpoints.h
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/DxePchHdaLib/PchHdaLib.c
@@ -1826,11 +1739,9 @@ commit a7a8b94f2eec29376121e7602f7db09624239903
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 18 16:37:31 2017 -0700
 
-    525234:1305248259 - [CNL H][ICC OC] Overclocking above the 100 MHz fails on WDT expiration
-    -Reorder unexpected reset check in FSP to prevent infininte reboot cycle.
+    [PCH] Fix Overclocking above the 100 MHz fails on WDT expiration
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Library/OcWdtLib.h
 Intel/CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPchWdtCommonLib/WdtCommon.c
@@ -1869,10 +1780,9 @@ commit 5b6233c206fb0b2ad06fcfd67049c81e709072fc
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 18 00:48:49 2017 -0700
 
-    524917:[1406354936]: Move BME enabling of PCH IPs after SMM Lock event
+    524917:[1406354936]: Move enabling Bus Master Enable bit of PCH devices after SMM Lock event
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Me/Library/PeiDxeMeChipsetLib/PeiDxeMeChipsetLib.c
 Intel/CannonLakeSiliconPkg/Me/Library/Private/PeiDxeHeciInitLib/HeciCore.c
@@ -1992,6 +1902,8 @@ Date:   Wed Aug 16 01:19:43 2017 -0700
     Description: Tie "TCx-VC0" programming with "PcieComplianceTestMode" setup option
 	Solution: Removed the PcieInitTcxVc0() function from silicon code.
     Platform Affected: CNL
+    
+    ---
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/DxeSmmSaPcieLib/DxeSmmSaPcieLib.c
 
@@ -1999,14 +1911,9 @@ commit 350ce5a1cd2ef765e76f14a700056bd9fd234f21
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 16 00:46:33 2017 -0700
 
-    524155:[1805388434] Revise xHCI implementation with accordance to latest BIOS guide versions
-    [Issue Description]
-    Recent findings lead to a discovery that BIOS Guide default values in registers might not be the same as in HW. Leading to improper xHCI programming done during initialization.
-    [Resolution]
-    Make sure BIOS programs all bits explicitly even if default value is supposed to be same as expected.
+    [PCH] Revise xHCI implementation with accordance to latest BIOS guide versions
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Include/Register/RegsUsb.h
 Intel/CannonLakeSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
@@ -2265,11 +2172,10 @@ commit af15c6a4e94503212a672b3d2fa0452173d33970
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 11 16:30:34 2017 -0700
 
-    523216:[1504564270][USB3 device can not be detected on USB3 port with external iBIOS95_04]
+    [PCH] USB3 device can not be detected on USB3 port
     XhciOcLock, XhciAcLock are disabled on external build, which causes failure in USB3 enumeration
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLib.c
 
@@ -2286,11 +2192,9 @@ commit 2ef9cd8a926e3ff8212366a110c61038ad111397
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 11 10:24:26 2017 -0700
 
-    523028:[1406371132][[CFL S] To Enable PS_ON, SATA Slumber LTR should be 0x1001]
-    To enable PS_ON, LTR should be set to "no requirement" (infinite) to enable idle state (PS_ON# requires 103ms LTR).
+    [PCH] To Enable PS_ON, SATA Slumber LTR should be 0x1001
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchSata.c
 
@@ -2298,15 +2202,11 @@ commit 64cc06fbd55dc00706bd5cbd2562368a0ac3b124
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 11 06:14:32 2017 -0700
 
-    522952:[1805435487][CNL] Move RST RAID power management support into DSDT table in reference code - part 1
+    [PCH] Move RST RAID power management support into DSDT table in reference code - part 1
             -Moved RAID power management support into DSDT table
-            -Fixed bug with destroying remapped disk coniguration during system startup see HSD below
-    
-    This CL fixes bug described in this HSD:
-    [1604421059] [CFL S  + CNP H ][Storage] One click optane driver installation is getting failed with unsupported BIOS error Pop up in AHCI mode.
+            -Fixed One click optane driver installation bug in AHCI mode with destroying remapped disk configuration during system startup
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchRstPcieStorage.asl
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchSata.asl
@@ -2317,10 +2217,9 @@ commit d5bedebf5b3047c2dfa78472f82c311b46de518d
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 10 19:25:18 2017 -0700
 
-    522861:[220469569][CNP] BIOS default settings to Enable Energy reporting feature by default
+    [PCH] BIOS default settings to Enable Energy reporting feature by default
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/PmConfig.h
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/Library/PmcPrivateLib.h
@@ -2335,12 +2234,9 @@ commit d964346069b911b45773bbe921af3e16b261a826
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 10 15:56:18 2017 -0700
 
-    522767:[1406403965][Use FIA Instance when initializing FIA IP to support common library]
-    Use FIA_INSTANCE stucture to pass as an argument for FIA library to support CNL/ICL/LKF.
-    Sync from LKF/ClientMaster stream
+    [PCH] Use FIA_INSTANCE stucture to pass as an argument for FIA library
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchFiaLib/PchFia14.c
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchFiaLib/PchFia14.h
@@ -2410,16 +2306,9 @@ commit 0b16094d299b10ff809df3b8cad42785bd47895f
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 10 01:54:00 2017 -0700
 
-    522447:[1504547297][Update PCH DMI NFTS value for Gen1, Gen2 and Gen3 in BIOS]
-    
-    Description:
-    New recommendation for PCH-H DMI Gen1/2/3 NFTS:
-    0x2c : g3ccnfts (07:00) - Offset 0x2478 bit[7:0]
-    0x70 : g2ccnfts (23:16) - Offset 0x2314 bit[23:16]
-    0x38 : g1ccnfts (07:00) - Offset 0x2314 bit[7:0]
+    [PCH] Update PCH DMI NFTS value for Gen1, Gen2 and Gen3 in BIOS
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchDmi15.c
 
@@ -2427,13 +2316,9 @@ commit 8fe424e9ec52fac4f7243cbae3d49c61767d1e39
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 10 01:48:47 2017 -0700
 
-    522442:[1504547264][BIOS to set PCH-H DMI Squelch Direction settings]
-    
-    Description:
-    Due to CNP-H modphy topology for DMI lanes is in reversed direction, squelch direction need to be configured accordingly. If these registers are not set correctly, DMI link will always stuck in RXL0S state when the rxl0s is enabled.
+    [PCH] BIOS add DMI Squelch Direction settings for H series
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Register/PchRegsDmi15.h
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchDmi15.c
@@ -2497,13 +2382,9 @@ commit 6d3b9bcae61af0a7ae30fb9b8b7a8262fba7f6d8
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 9 11:13:04 2017 -0700
 
-    522151:[1504533470][cannon_lake]CNL restructure RTC for common IP library
-    
-    [Description]
-    Moving RTC related functions from PchInitLib to its own library.
+    [PCH] Moving RTC related functions from PchInitLib to its own library.
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/Library/PeiRtcLib.h
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchInit.c
@@ -2589,10 +2470,9 @@ commit 3906c34390992a6c216246eed02a2717d2782804
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 8 12:10:45 2017 -0700
 
-    521636:[1604354689][[CFL S][PM] After Waking from SLPS0 in PSON enabled system for Legacy SATA, more 10 second Screen freeze is seen]
+    [PCH] Fix screen freeze after waking from SLPS0 in PSON enabled system with Legacy SATA
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Register/PchRegsPmc.h
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchPm.c
@@ -2679,13 +2559,9 @@ commit 1b9c551ec2a3bf95bcad2313c9509b9b3649b1a1
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 7 07:37:02 2017 -0700
 
-    521037:[1805432465][BIOS MCTP support based on PSF IP BWG] - remove unnecessary debug logs
-    
-    Description:
-    Update MCTP support in BIOS based on PSF IP BWG. Remove MCTP enable option from PCIe restricted setup and make it ME test option.
+    [PCH] Remove unnecessary MCTP debug logs
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchPsfPrivateLib/PchPsfPrivateLib.c
 
@@ -2693,13 +2569,9 @@ commit 5571e2d2973b2a33f4a808866f4510f1f62f2f5b
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 7 04:55:28 2017 -0700
 
-    521011:[1805432465][BIOS MCTP support based on PSF IP BWG]
-    
-    Description:
-    Update MCTP support in BIOS based on PSF IP BWG. Remove MCTP enable option from PCIe restricted setup and make it ME test option.
+    [PCH] BIOS need updating MCTP support
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Me/Include/ConfigBlock/MePeiConfig.h
 Intel/CannonLakeSiliconPkg/Me/Library/PeiMePolicyLib/PeiMePolicyLib.c
@@ -2722,14 +2594,9 @@ commit 97272e183c5480f682919a588289707e432167ae
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 7 04:22:17 2017 -0700
 
-    521005:[1504543762][CNP] Failed to enter S0ix due to PG TH ungracefully. PMC only PG TH Vnn domain, when Vaon (TSU) is in IRDY and pegs npk_clk high for ctc_sync. w/a is do not PG TH via IPC1 for CNL
+    [PCH] Fixe CFL U43e failed to enter S0ix cuased by Trace Hub.
+
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
-    [1406204507] Enable PMC messages blocks C10 state. When PMC msgs sent to TH, which wakes npk prim_clk mapped to PM_SYNC in CPU, preventing CPU from C10 State. -> Adding a knob from BIOS option to disable PMC debug as default for w/a
-    [1604404407] System hang for race condition between PG TH and CSME messages in flight.
-    1. Do not PG TH via IPC1 command for CNL platform.
-    2. Add PMC debug message option with disabled as default.
-    3. Revise TH PG flow, un-gate TH via global reset when needed. For CSME can only garantee not send msgs to TH during IMR and DID when grst/g3 boot.
 
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/PmConfig.h
 Intel/CannonLakeSiliconPkg/Pch/Include/Private/Library/PchPsfPrivateLib.h
@@ -2771,14 +2638,9 @@ commit 4b3055467b4f08c36a219b4ad126b386f76452a6
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Aug 6 23:12:14 2017 -0700
 
-    520951:[1406259684][Low Power Mode Settings (LPM): PWRMBASE+1BA8h CPPM_CG_POL3A/[30] CPPM Shutdown Qualifier Enable for Clock Source Group 3 (CPPM_G3_QUAL) to be set to 1]
+    [PCH]BIOS should set CPPM Shutdown Qualifier Enable for Clock Source Group 3(PWRMBASE+1BA8h[30]) to 0 for Low Power Mode
     
-    Description:
-    Clarification on how 0x1BA8[30] should be configured:
-      PCH = CNL:  0x1BA8[30] = 0b
-      PCH > CNL:  0x1BA8[30] = 1b
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/Register/PchRegsPmcCnl.h
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchPm.c
@@ -3048,7 +2910,7 @@ commit c8a76397d65886802f5ba49f784b2a42d05ea5cf
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 4 07:26:16 2017 -0700
 
-    520521:1406380421 CNP-H A1 Integrate Chipsetinit Version 7
+    [PCH] Update HSIO Chipsetinit Version 7 for CNP-H A1
     
     ---
     I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:Yes
@@ -3060,19 +2922,9 @@ commit 1bcdb56e341e4f338abfb62e7371ca8898fb487f
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 4 04:02:52 2017 -0700
 
-    520500:After Sloving TeamCity build error of [HSD#1405716508]: [CFL/CNL U/Y] Requesting BIOS to set/clear MSPDRTREQ to enable MPHy SUS PG.
-    Description:
-    PMC Mem offset 10D0h (MODPHY_PM_CFG5), Bit 14: Corresponds to xHCI Controller
-    Bit 15: Corresponds to xDCI Controller. However these BITs are not set.
-    Solution:
-    Code changes done in PchXhci.asl and PchXdci.asl to set/clear above bit at S0x entry and exit based on RTD3 setup option.
+    [PCH] Fix build error
     
-    Previous Code Review: https://fm-codecollab.intel.com/ui#review:id=198811
-    However that CL was Backout.
-    
-    So After fixing team city build Code review: https://fm-codecollab.intel.com/ui#review:id=200613
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchXdci.asl
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchXhci.asl
@@ -3139,11 +2991,9 @@ commit 0354c617e80631a569944ae7f2e3286b5236e9ae
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 3 06:13:00 2017 -0700
 
-    520114:[1604419418] [CNL_U6/U7][OPTANE]: Yellow bang observed in device manager for Pleasant Star & Stony beach after enabling BIOS setting "PCIe Storage Dev on Port 9"  to "RST controlled" in LPDDR4 board
-            VLPM is an object from SSDT table and should not be used unconditionally in DSDT table. Print remapped device _ADR instead.
+    [PCH] Fix yellow bang observed in device manager for Pleasant Star & Stony beach Optane devices after enabling BIOS setting "PCIe Storage Dev on Port 9"  to "RST controlled"
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchRstPcieStorage.asl
 
@@ -3151,10 +3001,9 @@ commit efc12c2440dde5037ba2e82d32cceb3c4c6ee643
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 3 03:08:40 2017 -0700
 
-    520075:[1604333826] NPK/ITH support as ACPI device from BIOS
+    [PCH] Report Trace Hub ACPI device
+
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
-    Report TH ACPI device when it is host debugger mode. (1. user opt-in from setup menu. 2. SCRPD0[24] is set.)
 
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/Pch.asl
 Intel/CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchTraceHub.asl
@@ -3226,10 +3075,9 @@ commit acecb00ac5b085bc56816754cc9f2d82c8f5784b
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 2 21:10:26 2017 -0700
 
-    519980:[NO HSD] Update PCH for CFL RC v7.0.9.xx review.
+    [PCH] Update PCH for CFL RC review.
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:Yes
 
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/PcieRpConfig.h
 Intel/CannonLakeSiliconPkg/Pch/Include/ConfigBlock/PmConfig.h
@@ -3240,11 +3088,9 @@ commit d192d1f6854895fa1fce670cb743deedf807da7a
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 2 20:23:00 2017 -0700
 
-    519973:[220182226] CFL-U43e PO:  PCH CRID Mode Enable and disable Option needs to be Hide out
-    [Description] PCH CRID Mode Enable and disable Option needs to be Hide out. If silicon not fused for RID Supportability.
+    [PCH] PCH CRID Mode Enable and disable Option needs to be Hide out
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:Yes
 
 Intel/CannonLakeSiliconPkg/Library/Private/DxeSiFviInitLib/DxeSiFvi.c
 Intel/CannonLakeSiliconPkg/Library/Private/DxeSiFviInitLib/DxeSiFviInitLib.inf
@@ -3375,10 +3221,9 @@ commit 86fa35e153243014e738f3129e392d158c7451a5
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 1 09:46:36 2017 -0700
 
-    519247: [1604406298][CNL]Program new recipe to enable DMI x8
+    [PCH] Program new recipe to enable DMI x8
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchDmi15.c
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchInitPei.h
@@ -3428,10 +3273,9 @@ commit ce250cadddf928878808de2f3d97de7cc6676dbd
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 31 16:10:48 2017 -0700
 
-    519009:Backout CL#513563 - Not approved by Arch team
+    [PCH] update power management programming flow
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:Yes
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchPm.c
 
@@ -3448,8 +3292,7 @@ commit a11fdbca70f29f2508e5dd3ba37d232b99e1b113
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 31 03:19:38 2017 -0700
 
-    518763:[1406364907] [CFL-S] ASPM not programmed for NVMe-Remapped link.
-            After ASPM library refactoring ASPM was no longer programmed for remapped storage. Fixed library function call to programm ASPM for remapped storage.
+    [PCH] Fix ASPM not programmed for NVMe-Remapped link.
     
     ---
     I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
@@ -3463,13 +3306,9 @@ commit c0152a77b7ff30e3b799bd385d19b07e4d22b227
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 31 00:20:09 2017 -0700
 
-    518722:[Title][1305257398][CNL][ICL] Debug assert when xHCI is disabled
-    [Feature Description] BIOS should check whether controller is existing before initialize controller continuously.
-    [Implacted Platform] ALL
-    [Customer visible] YES
+    [PCH] Add debug assert when xHCI is disabled
     
     ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
 
@@ -3499,6 +3338,7 @@ commit 90481e295a30447068bb88e01c66ea3d94387071
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Aug 11 20:23:16 2017 -0700
 
+    [PCH] USB3 device can not be detected on USB3 port
     XhciOcLock, XhciAcLock are disabled on external build, which causes failure in USB3 enumeration
 
 Intel/CannonLakeSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLib.c
@@ -3709,7 +3549,7 @@ commit 5ffaa195956550315bee90ac2004f59b25f3fc83
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jul 27 17:26:37 2017 -0700
 
-    Update HSIO Chipsetinit Version 6 for CNP-H A1
+    [PCH] Update HSIO Chipsetinit Version 6 for CNP-H A1
     
     ---
 
@@ -3745,7 +3585,7 @@ commit ce5b6bfa06818e08af1946ff31f4a572fdec5bf9
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jul 27 11:32:13 2017 -0700
 
-    Update HSIO Chipsetinit Version 4 for CNP-LP B1
+    [PCH] Update HSIO Chipsetinit Version 4 for CNP-LP B1
     
     ---
 
@@ -4643,7 +4483,7 @@ commit ce98481baf2b41379486cb784bd06ef8edc69944
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 17 09:22:19 2017 -0700
 
-    Add HSIO Chipsetinit Version 3 for CNP-LP B1
+    [PCH] Update HSIO Chipsetinit Version 3 for CNP-LP B1
     
     ---
 
