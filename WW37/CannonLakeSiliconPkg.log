@@ -322,16 +322,9 @@ commit 2a009a72d659efef29edaf7dec2a7f682858364f
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 31 21:29:29 2017 -0700
 
-    529362:[1406429802][PEIM GFX logs with debug FSP for CNL]
-    [Description]
-    IntelGraphicsPeim.efi has a dependency on gEnablePeiGraphicsPpiGuid. This PPI is loaded in PeiDisplayInit() function which is actually called in SaResetCplComplete() function in EndOfPei Callback function.
-    Because FspNotifyPhasePeim installs EndOfPei PPI and call DxeIplInit, IntelGraphicsPeim.efi does not get loaded because PeiDisplayInit() has not been called and gEnablePeiGraphicsPpiGuid is not installed.
-    
-    [Solution]
-    Need to install gEnablePeiGraphicsPpiGuid before EndofPei callback so that it make sure to get installed before IntelGraphicsPeim.efi gets loaded before EndOfPei.
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    Description: PEIM GFX logs with debug FSP was not dumping PEIM GFX logs for CNL. 
+    Solution: Installing gEnablePeiGraphicsPpiGuid before EndofPei callback so that GraphicsPeim gets loaded before EndOfPei.
+    Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiDisplayInitLib/PeiDisplayInitLib.c
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiDisplayInitLib/PeiDisplayInitLib.inf
@@ -404,21 +397,13 @@ commit ddfdd0b551b43d0a25474162c794c7120b845c5b
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 31 00:13:51 2017 -0700
 
-    528907:[1504547279][CNP-H] BIOS to enable PCH DMI rxl0s]
-    
-    Description:
-    Apply following DMI ASPM configuration:
-    
-    When CNP-H paired with CFL-H/S CPU:
-     PCH DMI: ASPM Enabled -> both L1 and L0s
-     SA DMI:  ASPM Enabled -> both L1 and L0s
-    
-    When CNP-H paired with CNL-H CPU:
-      PCH DMI: ASPM Enabled -> L1 only
-      SA DMI:  ASPM Enabled -> both L1 and L0s
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    Description: BIOS to enable PCH DMI rxl0s.
+    Solution: Apply the following DMI ASPM configuration:
+			  When CNP-H paired with CFL-H/S CPU: PCH DMI: ASPM Enabled -> both L1 and L0s
+			                                      SA DMI:  ASPM Enabled -> both L1 and L0s
+			  When CNP-H paired with CNL-H CPU: PCH DMI: ASPM Enabled -> L1 only
+			                                    SA DMI:  ASPM Enabled -> both L1 and L0s
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/ConfigBlock/PciePeiConfig.h
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieInitLib/PcieComplex.c
@@ -439,13 +424,8 @@ commit 79a8047be4c318ef285016c8a733746f044de664
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 30 17:18:58 2017 -0700
 
-    528780:[1406382046][cannon_lake]Reference code should try not to include inline assembly
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
-    [hsdes] <HSD number> 1406382046
-    [title] <HSD title> [cannon_lake]Reference code should try not to include inline assembly
-    [description] <Short description of the issue/change> Move inline assembly code into dedicated assembly language files.
+    Description/Solution: Reference code should try not to include inline assembly.
+    Platform Affected: CNL, CFL, ICL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/Ia32/MrcOemPlatform.nasm
 
@@ -866,11 +846,9 @@ commit b93ba474fcff402a6e98ab8ece30a2867ac5954f
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Aug 28 01:22:53 2017 -0700
 
-    527476:[220614929][Performance][CNL][CFL] Nonoptimal polling in GraphicsInitLib - PCH audioinit takes 10ms to finish
-    [Description]
-    Optimized PollGtReady() pollling function from SystemAgent/PeiGraphicsInitLib.
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]: yes
+    Description: Nonoptimal polling in GraphicsInitLib takes 10ms to finish.
+    Solution: Polling function is Optimized in PeiGraphicsInitLib code.
+	Platform Affected: CNL, CFL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/Private/Library/GraphicsInitLib.h
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiGraphicsInitLib/PeiGraphicsInitLib.c
@@ -1303,10 +1281,8 @@ commit c98a52202cd3afc470327b6911a9e352a238c208
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 23 11:52:57 2017 -0700
 
-    526401:Temporarily commenting PSMI registers locking and programming these registers when Psmi support disabled as per validator's request until PSMI functionality fully tested.
+    Description/Solution:Temporarily commenting PSMI registers locking and programming these registers when Psmi support disabled as per validator's request until PSMI functionality fully tested.
     
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiGraphicsInitLib/PeiGraphicsPmInit.c
 
@@ -1365,26 +1341,18 @@ commit d42861fc4c4ee19362bb2a591712d2db5d403c9d
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 23 01:51:10 2017 -0700
 
-    526241:[1406354936]: Move BME enabling of PCH IPs after SMM Lock event
-    
-    Revert changes on SAInit.c BME bit in SA should be setting to 1
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
-
+    Description: Move BME enabling of PCH IPs after SMM Lock event.
+    Solution: BME bit in SA should be set to 1.
+    Platform Affected: CNL
+   
 Intel/CannonLakeSiliconPkg/SystemAgent/SaInit/Dxe/SaInit.c
 
 commit e34381b4329c82306c871bce8f353cfe10d7807e
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Aug 22 14:04:30 2017 -0700
 
-    526039:[1406382046][cannon_lake]Reference code should try not to include inline assembly
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
-    [hsdes] <HSD number> 1406382046
-    [title] <HSD title> [cannon_lake]Reference code should try not to include inline assembly
-    [description] <Short description of the issue/change> Move inline assembly code into dedicated assembly language files.
+    Description: Reference code should try not to include inline assembly.
+    Platform Affected: CNL, CFL, ICL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/Ia32/MrcOemPlatform.S
 
@@ -1654,7 +1622,7 @@ commit e6d20dc2bbd48f5f0159c68f4d920dded4dd1378
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Aug 20 12:34:10 2017 -0700
 
-    525366:I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    No Change.
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/Private/SaNvsAreaDef.h
 
@@ -1935,10 +1903,9 @@ commit 5544265257f6ef43c8c44006cd613c59d56b6453
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 17 19:38:56 2017 -0700
 
-    524842:[1504567886] ASL Name for IRQ Rout
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    Description: ASL Name for IRQ Routing.
+    Solution: ASL name added fro IRQ Routing.
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/AcpiTables/HostBus.asl
 
@@ -1968,10 +1935,9 @@ commit 82e791b52df5e8a4f1ebfff6f60bbf411e5b5e59
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Aug 17 01:59:50 2017 -0700
 
-    524520:[220178503][coffee_lake.u_ddr4_rvp]CFL-U43e PO: LPIT,WSMT,DMAR,DSDT ACPI Table showing Wrong OEM Table ID
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    Description: LPIT,WSMT,DMAR,DSDT ACPI Table showing Wrong OEM Table ID
+    Solution: ACPI tables would be updated based on CPU family/type accordingly.
+	Platform Affected: CFL
 
 Intel/CannonLakeSiliconPkg/SiPkgCfl.dec
 Intel/CannonLakeSiliconPkg/SiPkgCnl.dec
@@ -2037,10 +2003,9 @@ commit d82af42f287e336caf7b0e87c4a0fb7fd1151d95
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 16 01:19:43 2017 -0700
 
-    524175:[1405732973]Tie "TCx-VC0" programming with "PcieComplianceTestMode" setup option
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    Description: Tie "TCx-VC0" programming with "PcieComplianceTestMode" setup option
+	Solution: Removed the PcieInitTcxVc0() function from silicon code.
+    Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/DxeSmmSaPcieLib/DxeSmmSaPcieLib.c
 
@@ -2308,10 +2273,8 @@ commit f8c2a2dd2a327dd7119f5ce5100a572542670010
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sat Aug 12 00:54:11 2017 -0700
 
-    523270:[1604431331][CFLU 2+3e DAILY]: "SUT is not booting with Debug BIOS and hangs at Post code 0000"
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    Description: "SUT is not booting with Debug BIOS and hangs at Post code 0000"
+	Platform Affected: CFL
 
 Intel/CannonLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/Register/SaRegsHostBridge.h
@@ -2969,13 +2932,9 @@ commit 9500495dc230fa590c250679d855ead065211404
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Aug 6 02:38:36 2017 -0700
 
-    520857:[1406248060] CFL BIOS OC: Realtime Memory XTU control ID support - Part2 for CFL S + CNP
-     [Description]
-    Fixed Realtime Memory control ID not show in XTU 6.4.0.5
-    [1604420567] [XTU[CFL- CNP] Realtime memory controls are not visible on XTU UI even when it is enabled from BIOS
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:YES
+    Description: Realtime memory controls are not visible on XTU UI even when it is enabled from BIOS
+    Solution: Realtime Memory control ID support is added in BIOS.
+    Platform Affected: CFL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaOcInitLib/PeiSaOcInitLib.c
 
@@ -3280,10 +3239,8 @@ commit 7a15733145e63d5210ea78cfa0fbacb31910d2ce
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 2 22:28:18 2017 -0700
 
-    519993:[NO HSD] Update SA for CFL RC v7.0.9.xx review.
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    Description/Solution: Update SA for CFL RC v7.0.9.xx review.
+    Platform Affected: CFL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/ConfigBlock/MemoryConfig.h
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/ConfigBlock/PciePeiPreMemConfig.h
@@ -3352,10 +3309,8 @@ commit 9aebaf47768b8213ce6daeb63b985464fb0be7d0
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 2 19:13:52 2017 -0700
 
-    519959:[NO_HSD] Fix FSP GCC build fail
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    Description/Solution: Fix FSP GCC build fail
+    Platform Affected: CFL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
 
@@ -3363,10 +3318,8 @@ commit 4bc0c6218d3bf54c0f9e67ad964232762e88ba54
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Aug 2 18:47:20 2017 -0700
 
-    519955:[1504554240][cannon_lake]Clean up SKL/KBL related content for CFL/CNL SA RC
-    
-    ---
-    I confirm that I understand the authorized content and license obligations listed in the IP Plan defined in the stream description and I will deliver or have delivered content in accordance with that IP Plan [yes/no]:yes
+    Description/Solution: Clean up SKL/KBL related content for CFL/CNL SA RC
+	Platform Affected: CNL, CFL, ICL
 
 Intel/CannonLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
 Intel/CannonLakeSiliconPkg/SystemAgent/AcpiTables/Dmar/Dmar.aslc
@@ -3770,9 +3723,8 @@ commit 12b5833665d5a0754b8ea7543c7c85378beb9951
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jul 28 03:39:07 2017 -0700
 
-    [SKL/KBL/CFL - Integrate latest CFL GOP 1069]
-    
-    ---
+    Description/Solution: Integrate latest CFL GOP 1069.
+	Platform Affected: CFL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCfl.efi
 Intel/CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCflDebug.efi
@@ -3839,15 +3791,9 @@ commit df599bec02e11f6065df5c80668ba5b2546c4403
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jul 27 00:58:18 2017 -0700
 
-    [CNL FSP version 80: GFX PEIM display not comming]
-    
-    [Description]
-    
-    PEI Disply is dependent on pcode readiness and pcode is dependent on RESET_CPL.
-    
-    So PEI Display initialisation shoule be done after RESET_CPL.
-    
-    ---
+    Description: GFX PEIM display not comming.
+    Solution: PEI Disply is dependent on pcode readiness and pcode is dependent on RESET_CPL. So PEI Display initialisation shoule be done after RESET_CPL.
+    Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaInitLib/SaInit.c
 
@@ -3997,16 +3943,8 @@ Intel/CannonLakeSiliconPkg/SiPkgPeiLib.dsc
 commit 0b1d114f8db1370555e96792ed01cc02e82b6618
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jul 25 19:42:25 2017 -0700
-
-    Questions regarding FSP-M UPD values - some may need clarification, some may get modified
     
-    [Description]
-    
-    1. Updated DmiGen3RootPortPreset = 8, DmiGen3RxCtlePeaking = 0;
-    
-    2. Removed CstateLatencyControl0Irtl as reserved, corrected CstateLatencyControl1Irtl from 0x6B to 0x76.
-    
-    ---
+    Description/Solution: Questions regarding FSP-M UPD values - some may need clarification, some may get modified (Not a Bug)
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
 
@@ -4124,9 +4062,8 @@ commit d1a4f0edae64a67e1baf2e3c1bca6c98cf35de12
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jul 25 04:10:59 2017 -0700
 
-    [Integrate Debug DXE and PEI GOP for CNL/CFL/ICL]
-    
-    ---
+    Description/Solution: Integrate Debug DXE and PEI GOP for CNL/CFL/ICL.
+	Platform Affected: CFL, CNL, ICL.
 
 Intel/CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCflDebug.efi
 Intel/CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCnlDebug.efi
@@ -4245,9 +4182,8 @@ commit 993ab6dccdf52d8b716dc331236dabf78771703a
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 24 08:02:07 2017 -0700
 
-    [CNL]Enable CLKREQ and apply SI-WA to enable PEG10/60 - correct PEG display issue.
-    
-    ---
+    Description/SOlution: Enable CLKREQ and apply SI-WA to enable PEG10/60 - correct PEG display issue.
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieInitLib/PeiSaPcieInitLib.c
 
@@ -4255,9 +4191,7 @@ commit 30527579d82821520fd82af386bcff21b6983b51
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 24 00:23:13 2017 -0700
 
-    Questions regarding FSP-M UPD values - some may need clarification, some may get modified
-    
-    ---
+    Description/Solution: Questions regarding FSP-M UPD values - some may need clarification, some may get modified (Not a Bug)
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
 
@@ -4265,9 +4199,8 @@ commit 08ab623d87a613f0eb9e51dfc01e37c10ca6c51b
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Jul 23 19:21:00 2017 -0700
 
-    Klocwork issues for SA RC based on CNL Release_94_00_240 - Take3
-    
-    ---
+    Description/Solution: Fixed issues for SA RC based on CNL Release_94_00_240
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieInitLib/LowLevel/PcieTrainingEqSettings.c
 
@@ -4409,9 +4342,8 @@ commit 9c37b1fce827313844e0b5cdb766bee185843fbc
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jul 21 10:59:16 2017 -0700
 
-    WOPCM programming need to be independent of PAVP feature
-    
-    ---
+    Description/Solution: WOPCM programming need to be independent of PAVP feature.
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiGraphicsInitLib/PeiGraphicsPmInit.c
 
@@ -4430,9 +4362,8 @@ commit c598144c4179fdc76944223b5da38cd2356928dc
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Thu Jul 20 22:25:25 2017 -0700
 
-    Add per-port CTLE override control to PEG policy values
-    
-    ---
+    Description/Solution: Add per-port CTLE override control to PEG policy values.
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/ConfigBlock/PciePeiPreMemConfig.h
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieDmiLib/PeiSaPcieDmiLib.c
@@ -4499,9 +4430,8 @@ commit 0462871d9379490d383e11fb5e1c31cfd021235f
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jul 19 23:09:40 2017 -0700
 
-    Create a Private Library for CpuTraceHub
-    
-    ---
+    Description/Solution: Create a Private Library for CpuTraceHub for easier maintenance.
+	Platform Affected: CNL, ICL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/Private/Library/PeiCpuTraceHubLib.h
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiCpuTraceHubLib/PeiCpuTraceHubLib.c
@@ -4568,10 +4498,9 @@ commit e604d6c37763ce3070f6ec73ca6b53c8f4ce77ac
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jul 19 06:02:01 2017 -0700
 
-    [CNL] Remove unnecessary platform tags / codes in CannonLakePlatSamplePkg
-    
-    ---
-
+    Description/Solution: Remove unnecessary platform tags / codes in CannonLakePlatSamplePkg.
+	Platform Affected: CNL
+	
 Intel/CannonLakeSiliconPkg/SiInit/Pei/SiInitPreMem.inf
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiGraphicsInitLib/PeiGraphicsInitLib.inf
 
@@ -4579,9 +4508,8 @@ commit 11d7b695f4aaa1afd3893e5f7a30740281382eed
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jul 19 03:37:31 2017 -0700
 
-    Fixed ASCII issue
-    
-    ---
+    Description/Solution: Fixed ASCII issue.
+	Platform Affected: CNL, ICL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/AcpiTables/SaSsdt/Ipu.asl
 
@@ -4603,9 +4531,8 @@ commit e6ffb119870436b242d2f0da78066482b515eda1
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jul 19 02:56:52 2017 -0700
 
-    [Cannonlake] Use _DSM method to pass LTR information from BIOS to IPU driver.
-    
-    ---
+    Description/Solution: Use _DSM method to pass LTR information from BIOS to IPU driver.
+	Platform Affected: CNL, ICL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/AcpiTables/SaSsdt/Ipu.asl
 Intel/CannonLakeSiliconPkg/SystemAgent/AcpiTables/SaSsdt/Sa.asl
@@ -4703,9 +4630,8 @@ commit 9916535df8aa049d000a174b980096426fd0e7f5
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 17 23:57:58 2017 -0700
 
-    Program new recipe to enable DMI x8
-    
-    ---
+    Description/Solution: Program new recipe to enable DMI x8.
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchDmi15.c
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieDmiLib/PeiSaPcieDmiLib.c
@@ -4714,9 +4640,8 @@ commit 7cc54659e371364378af5e34291f68c3b07be8ae
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Mon Jul 17 23:13:51 2017 -0700
 
-    Enable CLKREQ and apply SI-WA to enable PEG10/60
-    
-    ---
+    Description/SOlution: Enable CLKREQ and apply SI-WA to enable PEG10/60 - correct PEG display issue.
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/Private/Library/SaPcieInitLib.h
 Intel/CannonLakeSiliconPkg/SystemAgent/Include/Register/SaRegsPeg.h
@@ -4796,9 +4721,8 @@ commit dd6409a4fc657057e055e08dcd373040e0b64eb6
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Jul 16 19:10:22 2017 -0700
 
-    Klocwork issues for SA RC based on CNL Release_94_00_240 - Take2
-    
-    ---
+    Description/Solution: Fixed issues for SA RC based on CNL Release_94_00_240
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieInitLib/LowLevel/PcieTrainingEqSettings.c
 
@@ -4987,9 +4911,8 @@ commit 1e1987bbf5f47718cfd79fd662a8ff386f4e4a6a
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Fri Jul 14 00:56:32 2017 -0700
 
-    [CNL] Klocwork issues for SA RC based on CNL Release_94_00_240
-    
-    ---
+    Description/Solution: Fixed issues for SA RC based on CNL Release_94_00_240
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieInitLib/LowLevel/PcieTrainingEqSettings.c
 
@@ -5136,9 +5059,8 @@ commit b2b227a2bb6c677aae69cade886d681993db1269
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jul 11 22:15:17 2017 -0700
 
-    [[CNL] Refactor CannonLakeSiliconPkg\SystemAgent\SaInit\Dxe\SwitchableGraphicsInit.C]
-    
-    ---
+    Description/Solution: Refactor CannonLakeSiliconPkg\SystemAgent\SaInit\Dxe\SwitchableGraphicsInit.C
+    Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/AcpiTables/SwitchableGraphics/Pch/SgAcpiTablesPch.inf
 Intel/CannonLakeSiliconPkg/SystemAgent/AcpiTables/SwitchableGraphics/Pch/SgDgpuPch.asl
@@ -5386,7 +5308,8 @@ commit d269ed845b288e150428f1c3d60a3a3f2b56cef5
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Jul 23 19:59:11 2017 -0700
 
-    [cannon_lake][CNL] Klocwork issues for SA RC based on CNL Release_94_00_240 - Take3
+    Description/Solution: Fixed issues for SA RC based on CNL Release_94_00_240
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieInitLib/LowLevel/PcieTrainingEqSettings.c
 
@@ -5482,6 +5405,7 @@ commit 2e95189570f479e2444fd41f0301a795f20edd97
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Sun Jul 16 20:19:23 2017 -0700
 
-    [cannon_lake][CNL] Klocwork issues for SA RC based on CNL Release_94_00_240 - Take2
+    Description/Solution: Fixed issues for SA RC based on CNL Release_94_00_240
+	Platform Affected: CNL
 
 Intel/CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieInitLib/LowLevel/PcieTrainingEqSettings.c
