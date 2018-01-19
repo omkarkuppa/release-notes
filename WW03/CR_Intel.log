@@ -190,11 +190,7 @@ commit d341ea2d9cdf20ef89221ac13e57c2199c9f5f6b
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:26:28 2018 -0800
 
-    Original commit hash: 5ec02a07899fb56023789da7c3ae17c091c86ed5
-    Original commit date: Mon Jan 15 09:56:51 2018 +0800
-    Change-Id: I337f32d9e70130237e335881ed56d8ee6aba45b1
-    Boot hanging during RtcWaitForCp()
-    [Description] Hanging at Post Code B14 due to coding error in RtcWaitForCp.
+    [PCH] Fix system hang at Post Code 0x0B14 due to coding error.
 
 CannonLakeSiliconPkg/Pch/Library/Private/PeiRtcLib/PeiRtcLib.c
 
@@ -243,10 +239,7 @@ commit b24963bf63ae98dc9f549e7573a4f2cdffdcacd0
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:26:16 2018 -0800
 
-    Original commit hash: aad588a31d918984a9baf97b9a74a3d92e0a605b
-    Original commit date: Thu Jan 11 17:37:07 2018 -0800
-    Change-Id: I0048d195c1694d6404aa8d09c08378abd2faea6d
-    [CFL-H][Corp][B1][Regression]: After S4 System is not Entering to SLP_S0.
+    [PCH] Fix system is not entering to SLP_S0 After resuming from S4
 
 CannonLakeFspPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
 CannonLakeFspPkg/Upd/FspsUpd.dsc
@@ -375,11 +368,7 @@ commit 485048937b13220d095a3ae95d13bec61e331084
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:18:47 2018 -0800
 
-    Original commit hash: 28e40e82f54b6ee075e3a4e339d0cacd774f812f
-    Original commit date: Wed Jan 10 11:52:41 2018 +0100
-    Change-Id: Idc94d988bc172c0722589e4fb7299591711ff72f
-    BIOS should not disable L0s on Gen3 capable PCIe ports
-    Deleted logic that disables L0s for Gen3 capable ports and removed the corresponding setup option.
+    [PCH] BIOS should not disable L0s on Gen3 capable PCIe ports and remove the corresponding setting.
 
 CannonLakePlatSamplePkg/Setup/PchSetup.hfr
 
@@ -387,10 +376,7 @@ commit abbc5b8484294b8d910b73f7abd7684ad1973351
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:18:44 2018 -0800
 
-    Original commit hash: de8bc6e68e37d83fc1f665776645c1586701f04a
-    Original commit date: Tue Jan 9 12:42:29 2018 +0100
-    Change-Id: Id35f1e36c5899412c8d8874f8ae51a13fd70b198
-    Follow-up to LtrMax fix: changed FSP default values and removed dead ASL code
+    [PCH] changed FSP default values for PCIE LTR setting and removed unnecessary ASL code
 
 CannonLakeFspPkg/Upd/FspsUpd.dsc
 
@@ -398,14 +384,7 @@ commit 48e8a309a337d82251a6b540ffc99facbf7d3eec
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:18:42 2018 -0800
 
-    Original commit hash: 3b0f125d632716b3dc0d14839f6beb699b7af064
-    Original commit date: Thu Jan 11 11:05:51 2018 +0800
-    Change-Id: I0d825aaf704c122e089cdc9fb156a07bef44f8a0
-    [2201534892] PCH RC WA to resolve potential race condition that could happen with CSE assisted SAI  WA for BIOS RTC TS bit access
-    [Description]
-    The RTC SAI CP register is in the host reset domain, which means CSE cannot set it until allows the CPU out of reset.
-    This creates a race condition where if BIOS requires access to the RTC topswap via POSTBOOT_SAI prior to CSE writing the RTC control policy register it will fail.
-    BIOS needs to read the RTC control policy register to confirm it has access prior to switching to POSTBOOT SAI. ME will always set the register.
+    [PCH] Resolve potential race condition that could happen with CSE assisted SAI for BIOS RTC Top Swap bit access
 
 CannonLakeSiliconPkg/Pch/Library/Private/PeiRtcLib/PeiRtcLib.c
 
@@ -603,12 +582,7 @@ commit 4c01c4ff895bf7da951afe7bf3fca851cdbdba95
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:18:03 2018 -0800
 
-    Original commit hash: 15b0e69da772d718cf9a09b2205423ee68f1aae1
-    Original commit date: Tue Jan 9 12:01:07 2018 -0800
-    Change-Id: Ie2b4d2b646cc1e933d58361aa4e09f5bfb65bc00
-    [2201877721][CFL / CNL - need to be able to disable ASPM on individual
-    ports using knobs for PPV]
-    Need this to enable automation for PPV
+    [PCH] need to be able to enable/disable ASPM on individual PCIE ports
 
 CannonLakePlatSamplePkg/Setup/PchSetup.uni
 
@@ -720,10 +694,7 @@ commit 20339cc2c7af5bb8515a6a193a08e51699bd53e9
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:17:35 2018 -0800
 
-    Original commit hash: 1c1ab7caaa402ed68c2686a3b5cd468f2edbac34
-    Original commit date: Tue Jan 9 21:15:51 2018 -0800
-    Change-Id: I0deb1fb63d8b544347103040d1bf2a3ba0d54713
-    [CNL-U7/U8/U11/Y8][PM] 9b00 hung observed on system while Sx cycles 3 strike error waiting for GBe to respond
+    [PCH] system hang at check point 0x9b00 while Sx cycles 3 strike error waiting for GBE to respond
 
 CannonLakePlatSamplePkg/Setup/PchSetup.hfr
 CannonLakePlatSamplePkg/Setup/PchSetup.uni
@@ -750,11 +721,7 @@ commit ae1ef5b99163c899de99988b45eb6eae2f5147d9
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:17:24 2018 -0800
 
-    Original commit hash: b3d3914e2468ca61b856a5be3c6f2638e3776745
-    Original commit date: Mon Jan 8 23:10:25 2018 -0800
-    Change-Id: I4a658ba1c0e73442640fa1c7ff97534f7687903e
-    [CNP-H] Request to to add DMI Link ASPM Control -> <L1 Only> Option in BIOS Menu
-    Description : Customers need to be given an option to have DmiAspm Disable/L0sL1/L1Only/L0Only
+    [PCH] Add "L1 Only" option for DMI Link ASPM Control
 
 CannonLakeFspPkg/Upd/FspsUpd.dsc
 CannonLakePlatSamplePkg/FspWrapper/Library/PeiFspPolicyInitLib/PeiFspPchPolicyInitLib.c
@@ -991,12 +958,7 @@ commit 1e7fade4a2e7cc350612a5848a59f3728a41383a
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:16:36 2018 -0800
 
-    Original commit hash: f8a894adecb1612324a102af55ef9e6ce3d6d781
-    Original commit date: Mon Jan 8 15:08:01 2018 -0800
-    Change-Id: Ic0f44b4399b52748e7f69c65976d83de541f9bb2
-    [REGRESSION][CFL U]-System Hanging at 0040 PC after flashing BIOS
-    Description: Need to check config block policy only if config block is found
-    Impacted Platform: CNL and CFL All SKUs
+    [PCH] Fix System Hanging at post code 0x0040 after flashing BIOS
 
 CannonLakeSiliconPkg/Pch/Library/PeiPchResetLib/PchReset.c
 
@@ -1035,12 +997,7 @@ commit ddc58b9958a85bfa539daaf865d2d993d80663a2
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:16:30 2018 -0800
 
-    Original commit hash: d77705af752600f185e4b852cd744a70e72beef2
-    Original commit date: Thu Jan 4 18:11:17 2018 -0800
-    Change-Id: Icd2f45eba895817561164545beb2224dee9d87c6
-    Use TestDisableResets policy instead of PcdDisableResets
-    Description: Based on review comments from HSD 1406633129,  don't need policy and PCD to control "Skip System Resets" setup option. Need to remove usage of PcdDisableResets and use the policy/hob instead.
-    Impacted Platform: CNL and CFL All SKUs
+    [PCH] Fixe system might stuck on post code 0x9E06, remove unnecessary PCD and use policy/HOB instead
 
 CannonLakeFspPkg/FspInit/Pei/FspInitPreMem.inf
 CannonLakeSiliconPkg/Pch/Library/PeiPchResetLib/PchReset.c
@@ -1287,10 +1244,7 @@ commit 5bd60ac2924735bc8705243a30496f1470b07cfd
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:15:40 2018 -0800
 
-    Original commit hash: 20a575f96a9c17b3677f8a0142b60764ae1043bc
-    Original commit date: Sun Dec 17 20:42:28 2017 +0100
-    Change-Id: I4b896166e50869cce8c2ac2675f85777c7ea3f97
-    LtrMax settings propagate incorrectly through ASL. Discrepancy in default policy values for LtrMax.
+    [PCH] Fix PCIE root port LTR settings incorrect through ASL
 
 CannonLakeSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLib.c
 
@@ -1324,11 +1278,7 @@ commit eded933c85b0eb5b2782ae64cb763665e07299c8
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:15:18 2018 -0800
 
-    Original commit hash: afb8d0e85a38b8bc24d542f9b4fc27a39666b3e9
-    Original commit date: Wed Dec 27 12:14:15 2017 +0100
-    Change-Id: Ifb5d18716422e3eff323acc4c6a302fab565ae08
-    CannonLakeSiliconPkg: RTC Top Swap Bit is non-accessible during BIOS Upgrade.
-    Resolution: Add IA_POSTBOOT to SAI Policy during BIOS Upgrade.
+    [PCH] Top Swap Bit in back up control register is non-accessible during BIOS Upgrade
     Note: This fix requires CSE 1042 or newer.
 
 CannonLakeSiliconPkg/Pch/Include/Register/PchRegsLpc.h
@@ -1453,11 +1403,7 @@ commit 3f78f10266f1ebebe7a99b6f77fdfd8291fff201
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:14:48 2018 -0800
 
-    Original commit hash: 3a7a317591d4f7799cae19847252ca8a66aec68e
-    Original commit date: Tue Dec 19 18:12:54 2017 -0800
-    Change-Id: I67c316e2ba1ecab0f1d6ed8dc19040a2df23767e
-    CFL- S CNP BKC Bios reset at PC 9E06 when Skip System Reset setup option is enabled
-    [Description] When setting Skip System Reset BIOS setup option, global reset on ISH disable still executes, leading to extra PPV cycles.
+    [PCH] Fixe system might stuck on post code 0x9E06, remove unnecessary PCD and use policy/HOB instead
 
 CannonLakeFspPkg/Upd/FspmUpd.dsc
 CannonLakePlatSamplePkg/FspWrapper/Library/PeiFspPolicyInitLib/PeiFspPchPolicyInitLib.c
@@ -1663,12 +1609,10 @@ Date:   Wed Jan 17 20:14:15 2018 -0800
     Original commit hash: 991d73fa1c14091726209834c6de595aa25ed462
     Original commit date: Tue Jan 2 10:09:33 2018 +0530
     Change-Id: Ic715fb1f9e0d410a6958d6f88eebac1e32190cb8
-    CannonLakeSiliconPkg: CNL FSP MemInfoHob header clean up (remove TODOs)
-    Solutions: This patch ensures that MemInfoHob.h is using UEFI header
-    for Hob Structure and variable types.
-    TEST=Build and Boot CannonLake RVP.
-    Hsd-es-id: 1604608152
-    Attestation-link: CannonLakePlatformSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+    
+    Description: CNL FSP MemInfoHob header clean up (remove TODOs).
+    Solution: Solutions ensures that MemInfoHob.h is using UEFI header for Hob Structure and variable types.
+    Platform Affected: CFL/CNL
 
 CannonLakeSiliconPkg/SystemAgent/Include/MemInfoHob.h
 
@@ -1691,12 +1635,7 @@ commit d445ca3852c094bb9caa5a38ca1d6ae3548420c6
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:14:07 2018 -0800
 
-    Original commit hash: 57c9ddeaf64e2cffe34600a47fdb816c5fe69747
-    Original commit date: Tue Dec 12 16:29:28 2017 +0800
-    Change-Id: I49e4151aefc06845c3de30855683de2844c00b67
-    [1504656561] Move BIOS Lock to PciEnumComplete
-    [Description] Coffee Lake RC sets BIOS Lock in PEI, different from KBL RC that sets Lock in DXE.
-    This change breaks recovery feature, need to move BIOS Lock to PciEnumComplete.
+    [PCH] Move BIOS Lock to PciEnumComplete avoiding breaking recovery feature
 
 CannonLakeSiliconPkg/Pch/Include/Register/PchRegsLpc.h
 CannonLakeSiliconPkg/Pch/PchInit/Dxe/PchInit.c
@@ -2071,13 +2010,7 @@ commit 6fba738d30bdcb3f92c2f10a3e34b909990b5849
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:12:28 2018 -0800
 
-    Original commit hash: dfd4e8cffe6a1826f3687559b801a640d501bce5
-    Original commit date: Tue Dec 19 11:17:29 2017 -0800
-    Change-Id: Ic08b54614f6677889005c0fee3c513740bf52019
-    Title: [CFL-S][CNP][OC] OS content lost (Host  Reset) on resuming from S3 while BCLK freq is set
-    Resolution: Use a PMC scratchpad register to track the BCLK warm reset flow during S3 resume.
-    Impacted Platform: CFL/CNL platforms
-    HSD: 1305429311
+    [PCH] OS content lost (Host  Reset) on resuming from S3 while BCLK freq is set
 
 CannonLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.c
 
@@ -2348,16 +2281,7 @@ commit 78455829633b795469ab60f1de0e493fcd83961a
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:11:39 2018 -0800
 
-    Original commit hash: 12f407b0276aa40611cceb2e1a446686ea331e29
-    Original commit date: Mon Dec 11 11:29:30 2017 +0100
-    Change-Id: I501bdfafa771da2daf0cbe09b6cab29854a71fe6
-    Title: [CNL] SmiHandlerProfileInfo register the same event in several times.
-    SmiHandlerProfileRegisterHandler is called only when recording event returns TRUE.
-    Remove SmiHandlerProfileRegisterHandler from IoTrapRegisterHelper because
-    SmiHandlerProfileRegisterHandler should be called always on the same layer.
-    Impacted Platform: CNL/CFL
-    Hsd-es-id:1805823533
-    Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+    [PCH] Update SMM code flow avoding same SMI event be registered several times
 
 CannonLakeSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmiDispatch.c
 CannonLakeSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmmEspi.c
@@ -3354,10 +3278,7 @@ commit e448d6f6a3f4424be66f97c9a64a87d010f1bc3f
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 17:38:50 2018 -0800
 
-    Original commit hash: d2c98127f1431d2098a7aa29cf72eb5b9dd97581
-    Original commit date: Wed Jan 17 09:27:25 2018 -0800
-    Change-Id: I05a8eb40d74c4ca80ac0c26a93cba267759bbbee
-    [EC][CFL-S][CNP-PCH-B1][LPC]:Delay observed for ~5min while SUT booting to OS/during Sx entry/exit with LPC Mode.
+    [PCH] Delay observed for ~5min while SUT booting to OS/during Sx entry/exit with LPC Mode.
 
 CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCflSDdr4.h
 CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmGpioLib/GpioLib.c
@@ -3366,11 +3287,7 @@ commit 052399081a04f14fca5985bf896ff3100de3c62c
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 17:38:48 2018 -0800
 
-    Original commit hash: 8542525223d176bfc041f6080c03000825c6079a
-    Original commit date: Tue Jan 16 15:09:13 2018 -0800
-    Change-Id: I9d7fa58fc403a0554a998fcbfd71e0dbc0fe7784
-    [CNP] Disabling LPC Clock run by default
-    Description : Disabling LPC Clock run by default
+    [PCH] Disabling LPC Clock run by default
 
 CannonLakeFspPkg/Upd/FspsUpd.dsc
 CannonLakePlatSamplePkg/Setup/PchSetup.hfr
@@ -3396,10 +3313,7 @@ commit 5bc0ab4a8745cc04a8c45c4a29507c1491809896
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:59 2018 -0800
 
-    Original commit hash: 781ea75efc2b70c5b30dd7d5503b5d43f9cf9a6d
-    Original commit date: Thu Jan 11 17:37:07 2018 -0800
-    Change-Id: I0048d195c1694d6404aa8d09c08378abd2faea6d
-    [CFL-H][Corp][B1][Regression]: After S4 System is not Entering to SLP_S0.
+    [PCH] Fix system is not entering to SLP_S0 After resuming from S4
 
 CannonLakeFspPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
 CannonLakeFspPkg/Upd/FspsUpd.dsc
@@ -3418,16 +3332,12 @@ commit bac7c48cd8044a069af19616e65616d898f91a01
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:57 2018 -0800
 
-    Original commit hash: faa4782c3a65cd028668f5ecc92b0f7e15a6557d
-    Original commit date: Tue Jan 9 16:14:22 2018 +0100
-    Change-Id: I5c5232be9b2451617bc397be4a6cade6004f6d35
-    Platform stuck at PC 9B04 during warm reset cycle
+    [PCH] Platform stuck at post code 0x9B04 during warm reset cycle
     Issue is due to timing and improper check after write in AFE programming flows.
     Some AFE registers might have RO bits that may change between write and read back
     to verify programming. This led to ASSERT being hit on data mismatch on bits that
     weren't programmed at all during boot flow.
     Resolution: Add filtering after programing that only changed bits are verified
-    Impacted Platform: ALL
 
 CannonLakeSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
 
@@ -3468,10 +3378,7 @@ commit ccaeeb75c03673268ab86e66ac7af1b5c61b3066
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:54 2018 -0800
 
-    Original commit hash: a21e9628ce63e6a920e1091e867dcd9adfde0a39
-    Original commit date: Tue Jan 9 21:15:51 2018 -0800
-    Change-Id: I0deb1fb63d8b544347103040d1bf2a3ba0d54713
-    [CNL-U7/U8/U11/Y8][PM] 9b00 hung observed on system while Sx cycles 3 strike error waiting for GBe to respond
+    [PCH] system hang at check point 0x9b00 while Sx cycles 3 strike error waiting for GBE to respond
 
 CannonLakePlatSamplePkg/Setup/PchSetup.hfr
 CannonLakePlatSamplePkg/Setup/PchSetup.uni
@@ -3483,10 +3390,10 @@ Date:   Tue Jan 16 05:03:53 2018 -0800
     Original commit hash: a639bde976cf0139bb274eb05a51f02608027403
     Original commit date: Tue Dec 19 11:17:29 2017 -0800
     Change-Id: Ic08b54614f6677889005c0fee3c513740bf52019
-    Title: [CFL-S][CNP][OC] OS content lost (Host  Reset) on resuming from S3 while BCLK freq is set
-    Resolution: Use a PMC scratchpad register to track the BCLK warm reset flow during S3 resume.
-    Impacted Platform: CFL/CNL platforms
-    HSD: 1305429311
+	
+    Description: OS content lost (Host  Reset) on resuming from S3 while BCLK freq is set.
+    Solution: Used a PMC scratchpad register to track the BCLK warm reset flow during S3 resume.
+    Platform Affected: CFL/CNL
 
 CannonLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.c
 CannonLakeSiliconPkg/Pch/Include/Library/PmcLib.h
@@ -3499,11 +3406,7 @@ commit 246c1378a1c72bbcbf9e8dabd0c1323215a4fdba
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:51 2018 -0800
 
-    Original commit hash: 692ac23d19ec3c75ded9ad77b26a72f7d0c8d6a4
-    Original commit date: Tue Jan 9 15:08:42 2018 -0800
-    Change-Id: If3460aa886bb5f500f6e293dc0edb019bc6b3813
-    CFL-S/H + CNP-H : WoWLAN from S4 stops working after 10 cycles with JFP2 QS sample
-    Description : Need to change Byte Access to Dword access
+    [PCH] Fix CNVi Wake on WLAN from S3/S4 stops working after 10 cycles
 
 CannonLakeSiliconPkg/Pch/Library/Private/PeiCnviPrivateLib/PeiCnviPrivateLib.c
 
@@ -3531,11 +3434,7 @@ commit 2014de515332ca6904f4e7dde3e0d1536b3dbfeb
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:49 2018 -0800
 
-    Original commit hash: e4f6efdcae636b87c4a89bc34e1ee7b3f7db0e0a
-    Original commit date: Mon Jan 8 23:10:25 2018 -0800
-    Change-Id: I4a658ba1c0e73442640fa1c7ff97534f7687903e
-    [CNP-H] Request to to add DMI Link ASPM Control -> <L1 Only> Option in BIOS Menu
-    Description : Customers need to be given an option to have DmiAspm Disable/L0sL1/L1Only/L0Only
+    [PCH] Add "L1 Only" option for DMI Link ASPM Control
 
 CannonLakeFspPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
 CannonLakeFspPkg/Upd/FspsUpd.dsc
@@ -3676,10 +3575,7 @@ commit 3ffd5ead7c38abefcf8dfcda5b9fe03b784c58a6
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:38 2018 -0800
 
-    Original commit hash: 9e06d3a808920ca84ba84caa87733a88b3584fed
-    Original commit date: Tue Jan 9 11:44:59 2018 -0800
-    Change-Id: Iba391cc783e56b12c61d943efce0f8fc5ea8b6fe
-    [CNP-H] CNP-H B1 Integrate Chipsetinit Version 5
+    [PCH] Update HSIO ChipsetInit Version 5 for CNP-H B1
 
 CannonLakeSiliconPkg/Pch/ChipsetInit/Binaries/CnlPchHChipsetInitTable_Bx.bin
 CannonLakeSiliconPkg/Pch/ChipsetInit/Binaries/CnlPchHChipsetInitTable_Bx_Edbc.bin
@@ -3708,12 +3604,10 @@ Date:   Tue Jan 16 05:03:34 2018 -0800
     Original commit hash: f5483d852b0d6ba44048ec3e9103ce5146077dab
     Original commit date: Tue Jan 2 10:09:33 2018 +0530
     Change-Id: Ic715fb1f9e0d410a6958d6f88eebac1e32190cb8
-    CannonLakeSiliconPkg: CNL FSP MemInfoHob header clean up (remove TODOs)
-    Solutions: This patch ensures that MemInfoHob.h is using UEFI header
-    for Hob Structure and variable types.
-    TEST=Build and Boot CannonLake RVP.
-    Hsd-es-id: 1604608152
-    Attestation-link: CannonLakePlatformSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+	
+    Description: CNL FSP MemInfoHob header clean up (remove TODOs).
+    Solution: Solution ensures that MemInfoHob.h is using UEFI header for Hob Structure and variable types.
+    Platform Affected: CFL/CNL
 
 CannonLakeSiliconPkg/SystemAgent/Include/MemInfoHob.h
 
@@ -3824,11 +3718,7 @@ commit 4ccb42df844e0f0e324c32b2593b6c13636fefac
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:27 2018 -0800
 
-    Original commit hash: c0642cb9cb945757713f7cf7100c3a3e8814f9ca
-    Original commit date: Wed Dec 27 12:14:15 2017 +0100
-    Change-Id: Ifb5d18716422e3eff323acc4c6a302fab565ae08
-    CannonLakeSiliconPkg: RTC Top Swap Bit is non-accessible during BIOS Upgrade.
-    Resolution: Add IA_POSTBOOT to SAI Policy during BIOS Upgrade.
+    [PCH] Top Swap Bit in back up control register is non-accessible during BIOS Upgrade
     Note: This fix requires CSE 1042 or newer.
 
 CannonLakeSiliconPkg/Pch/Include/Register/PchRegsLpc.h
@@ -3895,11 +3785,7 @@ commit 0043c05e20fa59acc6e81f378ed4520d73c47650
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:21 2018 -0800
 
-    Original commit hash: bbf286920eb0c4d0023f5151114d9764053a98ab
-    Original commit date: Wed Jan 3 11:15:47 2018 -0800
-    Change-Id: Ibb7b5238f05847496a08a8e0f4a96824d6643dd0
-    [CFL-S62_CNP-H][PM]:Hung with EC05 During S3 Cycle [ME FW initiated GR]
-    [Description] Need to set Xtal DWORD0 Warm Stablitiy to 90us
+    [PCH] Fix system hang at post code 0xEC05 During S3 Cycle
 
 CannonLakeSiliconPkg/Pch/Include/Register/PchRegsClk.h
 CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchClk.c
@@ -3991,13 +3877,7 @@ commit 75adfdcea517880ea28edad1ca0d5e904bffa2b0
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:14 2018 -0800
 
-    Original commit hash: ffbe4fe1838b8972efcda7671376b4fc349d4a8d
-    Original commit date: Fri Dec 8 19:31:27 2017 -0800
-    Change-Id: Iac77be855a1c79548bef48097a41b4a3d6a1cb29
-    CFL-U43e CNL-U :SUT Hangs at Intel LOGO when UART2 Controller option is enabled in debug BIOS
-    Part 2
-    Hsd-es-id: 1504660561
-    Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+    [PCH] Fix system might hang at BIOS logo when LPSS UART2 controller is enable in debug build BIOS
 
 CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPchSerialIoUartLib/PeiDxeSmmPchSerialIoUartLib.c
 
@@ -4044,10 +3924,7 @@ commit a8fab0e59eef99269c4019b713e92bbf19192a78
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:09 2018 -0800
 
-    Original commit hash: 57147d6088a439ccaa0104aa81252787b67526ca
-    Original commit date: Mon Dec 18 10:52:31 2017 -0800
-    Change-Id: I122764ad7c9b31732387252f18cfed84e9f2cab4
-    CNP-H B1 Integrate Chipsetinit Version 3
+    [PCH] Update HSIO ChipsetInit Version 3 for CNP-H B1
 
 CannonLakeSiliconPkg/Pch/ChipsetInit/Binaries/CnlPchHChipsetInitTable_Bx.bin
 CannonLakeSiliconPkg/Pch/ChipsetInit/Binaries/CnlPchHChipsetInitTable_Bx_Edbc.bin
@@ -4133,11 +4010,7 @@ commit ba95a685c36f39077a6970a16f3245efb45db3d6
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 04:50:14 2018 -0800
 
-    Original commit hash: 7e4bca87d8894336b9770e0275eb6cb50ea01f1d
-    Original commit date: Thu Dec 14 11:27:07 2017 -0800
-    Change-Id: I7126935fc38c3617d14fa635678663f683bf6db4
-    [2201595836] CNP-H B1 Integrate Chipsetinit Version 1 - Phase2
-    [Description] Add MPHY support for CNP-H B1
+    [PCH] Update HSIO ChipsetInit Version 1 for CNP-H B1
 
 CannonLakePlatSamplePkg/Setup/PchSetup.c
 CannonLakeSiliconPkg/Library/Private/PeiSiFviInitLib/PeiSiFvi.c
@@ -4160,13 +4033,7 @@ commit f604962cfe9a62723b0594202b339b73e069d822
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 04:50:03 2018 -0800
 
-    Original commit hash: 130fc5123c602053f14c7edb7f08e349365d21bf
-    Original commit date: Thu Dec 14 16:24:59 2017 +0800
-    Change-Id: I243f238565dad566cb12230baf719c95b9b625a5
-    Title:Reboot cycle after flashing BIOS once UFP2DFP is enabled
-    Resolution: Add break for switch case "Usb3TcDbgNoChange"
-    Hsd-es-id: 1504683964
-    Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+    [PCH] Fix system keeps rebooting when UFP2DFP is enabled and re-flash BIOS
 
 CannonLakeSiliconPkg/Cpu/Include/Library/BootGuardLib.h
 CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmDciPrivateLib/PeiDciLib.c
@@ -4175,13 +4042,7 @@ commit fde6c64684f7d8b294e2dcac7fdbd8b4238e860b
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 04:50:02 2018 -0800
 
-    Original commit hash: fa6ffb278aa1a77d0f00a17415655356a2cf1e8f
-    Original commit date: Tue Dec 12 17:34:27 2017 +0100
-    Change-Id: I81a35fbd68797a6bb29379b55aa24734acc7b59c
-    RaidDeviceID hardcoding in CNL silicon code
-    Provided enumeration type for Raid device id option.
-    Hsd-es-id: 1504683402
-    Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+    [PCH] Add enumeration type definition of Raid Device ID in silicon code
 
 CannonLakeSiliconPkg/Pch/Include/ConfigBlock/SataConfig.h
 CannonLakeSiliconPkg/Pch/Library/Private/PeiSataPrivateLib/PeiSataPrivateLib.c
@@ -4223,10 +4084,7 @@ commit 862ee565101b6737305e6192392536e3be490e1a
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 04:49:58 2018 -0800
 
-    Original commit hash: 115ea653a37188902fe417bce1dbe04dacb43bef
-    Original commit date: Wed Dec 13 13:58:52 2017 +0100
-    Change-Id: Ie91d779fb5a4d4ea7251f80ad6074fffe62775f8
-    BIOS doesn't trigger Gen3 equalization for TBT devices
+    [PCH] Fix BIOS doesn't trigger Gen3 equalization for TBT devices
 
 CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchRootPorts.c
 
@@ -4237,10 +4095,10 @@ Date:   Tue Jan 16 04:49:57 2018 -0800
     Original commit hash: d4e87d5e1dcf25566f05316e3a8f6f9b3bd4265c
     Original commit date: Thu Dec 14 15:51:01 2017 +0800
     Change-Id: I6dbb9b1b75de9c8326f8b85869d167a33d7c9509
-    Title: [NO_HSD] Update SA for RC 7.0.1B.3x API Review
-    Resolution: doxygen update
-    Hsd-es-id: N/A
-    Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+	
+    Description: Update SA for RC 7.0.1B.3x API Review.
+    Solution: Doxygen update.
+    Platform Affected: CNL
 
 CannonLakeSiliconPkg/SystemAgent/Include/ConfigBlock/GraphicsPeiConfig.h
 
@@ -4262,13 +4120,7 @@ commit 154038b4b145878e677c0a1660fa88f93a322c31
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 04:49:51 2018 -0800
 
-    Original commit hash: 00bcdb5e8138aa609f3c2825294f47e7fc639c02
-    Original commit date: Wed Dec 13 22:11:05 2017 +0800
-    Change-Id: I26fb05e71aeed275984c4973beaf585372dcaa41
-    Title: Reboot cycle after flashing BIOS once UFP2DFP is enabled
-    Resolution: BIOS retain UFP2DFP bit for no change
-    Hsd-es-id: 1504683964
-    Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+    [PCH] Fix system keeps rebooting when UFP2DFP is enabled and re-flash BIOS
 
 CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmDciPrivateLib/PeiDciLib.c
 
@@ -4300,11 +4152,7 @@ commit 1b003a2afdee290288fd99446371d41bf7692a9d
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 04:44:45 2018 -0800
 
-    Original commit hash: a9760b3436b130fd1095c95c712e449ba865de19
-    Original commit date: Wed Dec 13 13:40:47 2017 -0800
-    Change-Id: I31c7e140278335ff503709d41b18b95ed07070a4
-    [2201595836] CNP-H B1 Integrate Chipsetinit Version 1
-    [Description] Add MPHY support for CNP-H  B1
+    [PCH] Update HSIO ChipsetInit Version 1 for CNP-H B1
 
 CannonLakePlatSamplePkg/Setup/PchSetup.c
 CannonLakePlatSamplePkg/Setup/PchSetup.h
@@ -4342,13 +4190,7 @@ commit 338d1c04c55c46012e67e989911d23f942476eb8
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 04:44:39 2018 -0800
 
-    Original commit hash: 460d02090eeb4fa30655b7f06e9dc0155cd3d3ca
-    Original commit date: Wed Dec 13 21:41:15 2017 +0800
-    Change-Id: I1f756d6d28eca57973105a8a3cda90afb4e41406
-    Title: [NO_HSD] Update PCH for RC 7.0.1B.3x API Review
-    Resolution: doxygen update
-    Hsd-es-id: N/A
-    Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+    [PCH] Update PCH for RC API Review
 
 CannonLakeSiliconPkg/Pch/Include/ConfigBlock/PcieRpConfig.h
 
@@ -4356,11 +4198,7 @@ commit 39b4ac8a7f314965592605ee271e73eeb8c19903
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 04:44:38 2018 -0800
 
-    Original commit hash: 28130e1b07ccf84f9bbe6e0a8714fbaafae03a04
-    Original commit date: Tue Dec 12 15:00:04 2017 -0800
-    Change-Id: Id4010617bd5b5683afe31df1eb09e937269b9fdd
-    [2201211251] PCI clock frequency can't keep in 100 Mhz.
-    [Description] Need to update PID for MODPHY for PCIe PLL programming
+    [PCH] PCI clock frequency can't keep in 100 Mhz after disable PCIE Spread Spectrum Clocking in BIOS setup menu
 
 CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchHsio.c
 CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieInitLib/LowLevel/SklPegPrivateLowLevel.c
