@@ -79,7 +79,7 @@ commit d341ea2d9cdf20ef89221ac13e57c2199c9f5f6b
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:26:28 2018 -0800
 
-    [PCH] Fix system hang at Post Code B14 due to coding error.
+    [PCH] Fix system hang at Post Code 0x0B14 due to coding error.
 
 CannonLakeSiliconPkg/Pch/Library/Private/PeiRtcLib/PeiRtcLib.c
 
@@ -273,14 +273,7 @@ commit 48e8a309a337d82251a6b540ffc99facbf7d3eec
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:18:42 2018 -0800
 
-    Original commit hash: 3b0f125d632716b3dc0d14839f6beb699b7af064
-    Original commit date: Thu Jan 11 11:05:51 2018 +0800
-    Change-Id: I0d825aaf704c122e089cdc9fb156a07bef44f8a0
-    [2201534892] PCH RC WA to resolve potential race condition that could happen with CSE assisted SAI  WA for BIOS RTC TS bit access
-    [Description]
-    The RTC SAI CP register is in the host reset domain, which means CSE cannot set it until allows the CPU out of reset.
-    This creates a race condition where if BIOS requires access to the RTC topswap via POSTBOOT_SAI prior to CSE writing the RTC control policy register it will fail.
-    BIOS needs to read the RTC control policy register to confirm it has access prior to switching to POSTBOOT SAI. ME will always set the register.
+    [PCH] Resolve potential race condition that could happen with CSE assisted SAI for BIOS RTC Top Swap bit access
 
 CannonLakeSiliconPkg/Pch/Library/Private/PeiRtcLib/PeiRtcLib.c
 
@@ -590,7 +583,7 @@ commit 20339cc2c7af5bb8515a6a193a08e51699bd53e9
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:17:35 2018 -0800
 
-    [PCH] system hang at check point 0x9b00 while Sx cycles 3 strike error waiting for GBe to respond
+    [PCH] system hang at check point 0x9b00 while Sx cycles 3 strike error waiting for GBE to respond
 
 CannonLakePlatSamplePkg/Setup/PchSetup.hfr
 CannonLakePlatSamplePkg/Setup/PchSetup.uni
@@ -854,7 +847,7 @@ commit 1e7fade4a2e7cc350612a5848a59f3728a41383a
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:16:36 2018 -0800
 
-    [PCH] Fix System Hanging at 0040 PC after flashing BIOS
+    [PCH] Fix System Hanging at post code 0x0040 after flashing BIOS
 
 CannonLakeSiliconPkg/Pch/Library/PeiPchResetLib/PchReset.c
 
@@ -893,12 +886,7 @@ commit ddc58b9958a85bfa539daaf865d2d993d80663a2
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:16:30 2018 -0800
 
-    Original commit hash: d77705af752600f185e4b852cd744a70e72beef2
-    Original commit date: Thu Jan 4 18:11:17 2018 -0800
-    Change-Id: Icd2f45eba895817561164545beb2224dee9d87c6
-    Use TestDisableResets policy instead of PcdDisableResets
-    Description: Based on review comments from HSD 1406633129,  don't need policy and PCD to control "Skip System Resets" setup option. Need to remove usage of PcdDisableResets and use the policy/hob instead.
-    Impacted Platform: CNL and CFL All SKUs
+    [PCH] Fixe system might stuck on post code 0x9E06, remove unnecessary PCD and use policy/HOB instead
 
 CannonLakeFspPkg/FspInit/Pei/FspInitPreMem.inf
 CannonLakeSiliconPkg/Pch/Library/PeiPchResetLib/PchReset.c
@@ -1304,11 +1292,7 @@ commit 3f78f10266f1ebebe7a99b6f77fdfd8291fff201
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Wed Jan 17 20:14:48 2018 -0800
 
-    Original commit hash: 3a7a317591d4f7799cae19847252ca8a66aec68e
-    Original commit date: Tue Dec 19 18:12:54 2017 -0800
-    Change-Id: I67c316e2ba1ecab0f1d6ed8dc19040a2df23767e
-    CFL- S CNP BKC Bios reset at PC 9E06 when Skip System Reset setup option is enabled
-    [Description] When setting Skip System Reset BIOS setup option, global reset on ISH disable still executes, leading to extra PPV cycles.
+    [PCH] Fixe system might stuck on post code 0x9E06, remove unnecessary PCD and use policy/HOB instead
 
 CannonLakeFspPkg/Upd/FspmUpd.dsc
 CannonLakePlatSamplePkg/FspWrapper/Library/PeiFspPolicyInitLib/PeiFspPchPolicyInitLib.c
@@ -3237,7 +3221,7 @@ commit bac7c48cd8044a069af19616e65616d898f91a01
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:57 2018 -0800
 
-    [PCH] Platform stuck at PC 9B04 during warm reset cycle
+    [PCH] Platform stuck at post code 0x9B04 during warm reset cycle
     Issue is due to timing and improper check after write in AFE programming flows.
     Some AFE registers might have RO bits that may change between write and read back
     to verify programming. This led to ASSERT being hit on data mismatch on bits that
@@ -3283,7 +3267,7 @@ commit ccaeeb75c03673268ab86e66ac7af1b5c61b3066
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:54 2018 -0800
 
-    [PCH] system hang at check point 0x9b00 while Sx cycles 3 strike error waiting for GBe to respond
+    [PCH] system hang at check point 0x9b00 while Sx cycles 3 strike error waiting for GBE to respond
 
 CannonLakePlatSamplePkg/Setup/PchSetup.hfr
 CannonLakePlatSamplePkg/Setup/PchSetup.uni
@@ -3690,7 +3674,7 @@ commit 0043c05e20fa59acc6e81f378ed4520d73c47650
 Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date:   Tue Jan 16 05:03:21 2018 -0800
 
-    [PCH] Fix system hang at check point 0xEC05 During S3 Cycle
+    [PCH] Fix system hang at post code 0xEC05 During S3 Cycle
 
 CannonLakeSiliconPkg/Pch/Include/Register/PchRegsClk.h
 CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchClk.c
