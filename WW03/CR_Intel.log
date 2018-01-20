@@ -307,29 +307,29 @@ Date:   Wed Jan 17 20:19:02 2018 -0800
     Original commit hash: e25ff971c8f9c43dcd296cda333423ad29e9524e
     Original commit date: Thu Dec 28 15:33:24 2017 -0800
     Change-Id: Ic7b9f3f3079dad4ca74b4d510f887bc70820f16c
-    CannonLakeSiliconPkg: CNL-H Fixes
-    [CNL H][MRC] SAGV will not be disabled in 2DPC on warm reset
+    CannonLakeSiliconPkg: CNL MRC 2DPC Fixes
+    [CNL MRC] SAGV will not be disabled in 2DPC on warm reset
             Root Cause:
                     Rank SPD bytes are not read on restore flows.  MRC isn't aware that the system should disable SAGV.
             Change:
                     Add information into MrcSave which tracks 2DPC platforms across resets.
                     Use this to override SAGV to disabled on restore flows.
-    [CNL H62] CRB intermittently went to pcD5 after reset from cmos.
+    [CNL MRC] CRB intermittently went to pcD5 after reset from cmos.
             Issue:
                     On restore paths, MRC locks SAGV low to 1333 when it was trained at 1600.
             Root Cause:
-                    W/A done for failure observed during 6+2 Power-on as a temp solution which sets low to 1600 in training.
+                    W/A done for failure observed as a temp solution which sets low to 1600 in training.
                     SAGV wasn't enabled at this point.
             Change:
                     1333 is functional now.  Returning to the POR of SAGV low being set to 1333.
-    CNL H DDR4 probeless mode enabled on cold boot but doesn't stay enabled after warm reset
+    DDR4 probeless mode enabled on cold boot but doesn't stay enabled after warm reset
             Issue:
                     Probeless mode is not retained on warm reset / S3
             Root Cause:
                     Probeless init flow is in a function not called on these paths.
             Change:
                     Add the probeless register to the Save/Restore list.
-    CNL H DDR4 Weak lock register not set in warm reset after being set during cold boot
+    DDR4 Weaklock register not set in warm reset after being set during cold boot
             Issue:
                     Weaklock registers are not retains on restore flows.
             Root Cause:
@@ -3941,7 +3941,7 @@ Date:   Tue Jan 16 04:50:27 2018 -0800
     Original commit hash: 758dbca5345b4b2b8039810c2038dbf8e7a937ea
     Original commit date: Thu Dec 14 12:03:33 2017 -0800
     Change-Id: I10a305635ee5f8aea9ec3040c87480620345ba2e
-    CannonLakeSiliconPkg: CNL-H can't change Memory frequency with FCE.exe
+    CannonLakeSiliconPkg: CNL MRC can't change Memory frequency with FCE.exe
     Change: Exposing all valid frequencies removing the RefClk condition.
     Valid values should match the refclk, i.e. divide by 133 or 100.
     This change is on top of the MRC Version 0.5.1.7
