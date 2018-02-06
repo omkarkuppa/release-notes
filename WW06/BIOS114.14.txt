@@ -1,0 +1,294 @@
+================================================================================ 
+Commit: af41a316bd314a41a6d49b8e0507544cae23cf0e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:45:09 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 06f10e893b99354ead72450ebbf706586446a4fe
+Original commit date: Wed Jan 31 12:25:57 2018 -0800
+Change-Id: Icc76a3d524f6dc6a504ca9b82504f8d09f673783
+[NO HSD] Update BIOS ID as 114.14 and FSP/RC version to be 7.x.18.3D
+Wed Jan 31 12:25:57 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 241f6c2a0964e50e9a6386fef999889f8fbd76dd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:45:08 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 74a78f8bdfd39cc6c7b26732fded348e264d6a14
+Original commit date: Tue Dec 19 20:36:06 2017 +0800
+Change-Id: Idb19f7b058b1f65f0a0b08ef802863fe0e9909cf
+[1604576410] CNL-Security: Capsule update is getting failed in CNL U11 with Prod Silicon in EDK Shell & Windows environment - take 2
+[Description] 1. Resolve the issue that Capsule update cannot be successfully triggered after adopting the fix for [1305418390][1305290502]CannonLakeSiliconPkg :[CNL][MRC] Enable back Retraining, Faset boot infinit loop fix. This is because PlatformHooklib is hard coding SSKPD value as 1 (bit 0) before MRC init in BOOT_ON_FLASH_UPDATE boot mode. However new MRC patch also examines bit 1 (SSKPD_PCU_CNL_SKPD_MEM_TEST_DONE) to determine if system needs a forced cold boot. SSKPD value = 1 makes MRC always forcing a cold boot so the capsule content gets destroyed.
+              2. Also adopted solution 032de38a073aa5327c178c1bf02d1a30116b7fa7 from EDKII trunk in order to mitigate the issue that Capsule might not be found when MemoryDescriptor of SystemMemory changes.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Board/Library/PeiPlatformHookLib/PeiPlatformHooklib.c
+CannonLakePlatSamplePkg/Override/DoxygenRpOverride.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/CapsulePei/Capsule.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/CapsulePei/CapsulePei.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/CapsulePei/CapsulePei.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/CapsulePei/CapsulePeiExtra.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/CapsulePei/Common/CapsuleCoalesce.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/CapsulePei/Common/CommonHeader.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/CapsulePei/UefiCapsule.c
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 23113b75c28235232c16cef3c6dcfd2ba7375cb8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:45:08 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a83e5bbde64e949c2de45f6598a3036d0f16655c
+Original commit date: Sat Dec 9 03:07:48 2017 +0800
+Change-Id: I13da7af42b24b4623942b5edc942711c69f51633
+[1604576410] CNL-Security: Capsule update is getting failed in CNL U11 with Prod Silicon in EDK Shell & Windows environment
+[Description] 1. Booting with full configuration should always been enforced after flash.
+              2. Add size check on Setup related variables: When variable size changes after BIOS update, we should enforce loading setup default to let setup variables up-to-date.
+              3. Fix the issue that when on-board BIOS is release build, debug messages are not available with debug build Capsule update driver (SystemFirmwareUpdate driver)
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Features/CapsuleUpdate/SystemFirmwareUpdate/SystemFirmwareUpdateDxe.c
+CannonLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.c
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+
+================================================================================ 
+Commit: 12349aecb18a0f0d31feafaef02a1aa3ce0590a6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:45:08 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 69272d68c658c667ed9df01ed0199d3c504f686e
+Original commit date: Wed Jan 31 10:34:45 2018 -0800
+Revert "CannonLakeSiliconPkg: [CNL][MRC] Read amplifier settings are causing failures on marginal units."
+This reverts commit b99266cd76678ab8ac536a5eac6bca48df76b168.
+Wed Jan 31 10:34:45 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGlobal.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 2e0e3af815d64d8db22a976b2ef7ae97d03522c9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:45:07 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 0479a44b06c51586e9bb2b7d7f776058497c1d89
+Original commit date: Wed Jan 31 10:34:40 2018 -0800
+Revert "[CNL][MRC] Minor fix for read amplifier training in DDR4 done in MRC 0,5,1,27"
+This reverts commit e7d0a0595fefe0751a156f506f617807c125f2df.
+Wed Jan 31 10:34:40 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 2aefa620020051eaba696d4977a546282c548936 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:45:07 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 370e0bc42fb441c96439303f427086476654a7ed
+Original commit date: Wed Jan 31 10:34:32 2018 -0800
+Revert "CannonLakeSiliconPkg: [CNL][MRC] Enable Park Mode during MRC training."
+This reverts commit a4e6436066f3a6a6fb1cf6d3f45b7913756a79bb.
+Wed Jan 31 10:34:32 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 8cc454c11920c8874e077315acb48230ade186ea 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:45:07 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: dfc004beb3ac9c2e24d551c34502c1df8ed1c5b5
+Original commit date: Mon Jan 29 12:33:34 2018 -0800
+Change-Id: Ib5e3bf465b9a3494c34fc0bb8b795ea77dfdd43f
+[NO HSD] Update BIOS ID as 114.13 and FSP/RC version to be 7.x.18.3C
+Mon Jan 29 12:33:34 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 05ae082f9e1575e141ca5b6007d723b36164433f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:45:06 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 2e130c8567b723f052bc2625e9b8255b9310653b
+Original commit date: Mon Jan 29 12:19:46 2018 -0800
+Change-Id: I7910dd2d6c79551d166cc2870eff918c5445add6
+[NO_HSD] Integrate CNL D0 Patch 0x16
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: ee375d2e56211b335d87269343262ff0be274d38 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:44:58 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a4e6436066f3a6a6fb1cf6d3f45b7913756a79bb
+Original commit date: Mon Jan 22 11:25:13 2018 +0200
+Change-Id: I2e19439e433188d10f2e574003709b3ebdfa6bf0
+CannonLakeSiliconPkg: [CNL][MRC] Enable Park Mode during MRC training.
+Request:
+Park Mode Enable after MRC for now, need to enable it also during training.
+Change:
+Move Enable ParkMode to memory init.
+Hsd-es-id: 1305409069
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 583689d544e4062ad4c2552db46fd26c9aa4adbd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:17:21 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: e7d0a0595fefe0751a156f506f617807c125f2df
+Original commit date: Sun Jan 21 10:26:00 2018 +0200
+Change-Id: Ic302b19023e5317a087a93f2742931ea0a419640
+[CNL][MRC] Minor fix for read amplifier training in DDR4 done in MRC 0,5,1,27
+Issue: In MRC 0,5,1,27 DDR4 Read amplifier was unintentionally changed to train IComp & RComp instead of IComp & RxbiasCb
+Root Cause: Unintentional change in Read amplifier training.
+Change: Restore DDR4 IComp / RxCben training
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 86445d334ba0988fed8cd0a3d9582bfb417693bc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:17:20 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: b99266cd76678ab8ac536a5eac6bca48df76b168
+Original commit date: Tue Jan 16 18:29:01 2018 +0200
+Change-Id: I420a5a23b31935949acb67b256c36db2012dfbae
+CannonLakeSiliconPkg: [CNL][MRC] Read amplifier settings are causing failures on marginal units.
+Issue: Due to marginal RxBias RComp initial values and limited sweep in MRC, some CNL Y12 units which originated from new material failed in PPV.
+Root Cause: Initial RxBias setting and Read Amplifier Training
+Change: Program new initial RxBias values based on EV data collection on Y11, Y12, U11 new and old material.
+Additionally for LPDDR4 we do a 2D sweep of RComp and IComp instead of Doing a sweep combinig both ICOmp & RComp vs RxCben
+Hsd-es-id: 1305531376
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGlobal.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 735dd192b26399415558fe5a24d68f178d5da5df 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:17:17 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: c480b2dcc0fe7b38815be93be7b222e193c18d15
+Original commit date: Tue Jan 9 15:08:42 2018 -0800
+Change-Id: If3460aa886bb5f500f6e293dc0edb019bc6b3813
+CFL-S/H + CNP-H : WoWLAN from S4 stops working after 10 cycles with JFP2 QS sample
+Description : Need to change Byte Access to Dword access
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Library/Private/PeiCnviPrivateLib/PeiCnviPrivateLib.c
+
+================================================================================ 
+Commit: 6428158e0437a5e89e4706fb1b5c1ea2600e8ce5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:17:16 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 7cfb980bfd300ee70f1f9e0d75ae26b9e43c212d
+Original commit date: Wed Dec 27 12:14:15 2017 +0100
+Change-Id: Ifb5d18716422e3eff323acc4c6a302fab565ae08
+CannonLakeSiliconPkg: RTC Top Swap Bit is non-accessible during BIOS Upgrade.
+Resolution: Add IA_POSTBOOT to SAI Policy during BIOS Upgrade.
+Note: This fix requires CSE 1042 or newer.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Include/Register/PchRegsLpc.h
+CannonLakeSiliconPkg/Pch/Library/Private/PeiRtcLib/PeiRtcLib.c
+CannonLakeSiliconPkg/Pch/PchInit/Dxe/PchInit.c
+
+================================================================================ 
+Commit: 2bcc2943bb7f07a0ca125ff6925ae51a4f4e5faf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:17:15 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 83733b73a9fcfda2cd419a31402caf233d54a6b5
+Original commit date: Wed Jan 3 16:59:54 2018 -0800
+Change-Id: If85fe2f810f39ad5a0ba091c3c4f43620e27c060
+[NO HSD] Update BIOS ID as 114.12 and FSP/RC version to be 7.x.18.3B
+Wed Jan 3 16:59:54 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 91afd9f9d82f4fb4b7db75ea14879d84d31a82e6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:17:14 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 684e1b4480c80e7d061add0f696c551c252f4e07
+Original commit date: Wed Jan 3 16:56:07 2018 -0800
+Change-Id: I9834751c34c78fe73ca103dce1528c1d1a83fb89
+[CNL U11][GT0] Inclusion of BIOS option for "Type C support" Enable/Disable
+[Description] Add a setup option to force enable PcdUsbTypeCSupport
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Board/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/PlatformInit/PcdInitDxe/PcdInitDxe.c
+CannonLakePlatSamplePkg/PlatformInit/PcdInitDxe/PcdInitDxe.inf
+CannonLakePlatSamplePkg/Setup/Advanced.vfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.uni
+
+================================================================================ 
+Commit: b4af324b764f46cbcbb6f424b815d5fa37e3c034 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Feb 2 17:17:12 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a738c26ee454bc792f3170e0406e98a851620321
+Original commit date: Wed Jan 3 13:50:21 2018 -0800
+Change-Id: I83ca37fedb6cd2afb66945c8cf578a89d5f162bc
+[Ingredient] Integrate CNL D0 Patch 0x12
+A new patch has been released for CNL D0
+Resolution: Patch 0x12 needs to be integrated into CNL D0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
