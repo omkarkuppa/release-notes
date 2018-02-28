@@ -101,7 +101,7 @@ Date: Fri Feb 23 16:48:23 2018 -0800
 Original commit hash: a05bdddf8f06bb73b531f8533ddadbe23616e1dc
 Original commit date: Thu Feb 15 17:12:21 2018 -0800
 Change-Id: I091ef587ced59ae38424a8c8bceb5a749a62c231
-CannonLakeSiliconPkg: [2202315629][CNL][MRC_WA] Workaround for RCH_REQ_TIMEOUT MCA and PC "10ad" in 1st boot
+CannonLakeSiliconPkg: [CNL][MRC_WA] Workaround for RCH_REQ_TIMEOUT MCA and PC "10ad" in 1st boot
 As MRC W/A for this issue, SAGV Low will be set to 1867 until root cause and proper fix is identified.
 This change will only be applied to LPDDR4 on any D-Stepping U/Y SKU CPU.
 
@@ -119,7 +119,7 @@ Date: Fri Feb 23 16:48:22 2018 -0800
 Original commit hash: 1eb6707141324457426a64adc38320ec6b2bc692
 Original commit date: Mon Feb 5 15:26:09 2018 -0800
 Change-Id: Id9a8cdedd6bdccf6f68f135376344bd1e9d62664
-CannonLakeSiliconPkg: [KBL][CNL][ICL][MRC] Remove DIMM ODT Hi-Z from DDR4 sweep, 1DPC platforms
+CannonLakeSiliconPkg: [MRC] Remove DIMM ODT Hi-Z from DDR4 sweep, 1DPC platforms
 Change: MRC does not center TxVref correctly on DDR4 when ODT is disabled (Hi-Z). Remove Hi-Z option from sweep, as there is no power benefit from applying it
 
 -------------------------------------------------------------------------------- 
@@ -140,7 +140,6 @@ Issue: Recently ODT was re-enabled in CNL MRC, however several important steps t
 Need to re-enable these steps.
 Root Cause: Incomplete MRC change.
 Change: These can be found by search for entries in the code ((Outputs->Frequency == f1067) && (Lpddr4)) and remove them.
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -190,7 +189,7 @@ Date: Fri Feb 23 16:48:20 2018 -0800
 Original commit hash: 5c7d49a23d70c17e7d9c9ec47101d8534c81842f
 Original commit date: Thu Jan 25 12:03:32 2018 -0800
 Change-Id: I7d60532baef02749969573796eb163a92365eee7
-CannonLakeSiliconPkg: [2201978554][CNL][MRC] MrcIssueMRR bit level deswizzling is incorrect for LPDDR4 Byte Mode parts
+CannonLakeSiliconPkg: [CNL][MRC] MrcIssueMRR bit level deswizzling is incorrect for LPDDR4 Byte Mode parts
 After the MRR command is sent using MRH, the MR results will be held in DDR_MR_RESULT_0_0_0_0_MCHBAR.
 For LPDDR4, only Device[0] and Device[1] within this register will hold the MR result data, for both x8 and x16 devices. So for MRC to correctly deswizzle the MR data, adjustments need to be made to account for only having feedback from half of the devices within a SubChannel for LP4 x8 parts.
 
@@ -304,7 +303,6 @@ CannonLakeSiliconPkg: [CNL][MRC] Mrc should not allow mixed DQVREF ranges across
 Issue: MRC is required to enforce a single channel does not mix different dqvref ranges when running DDR4.
 Change: Added new step at then end of MRC training, which enforces a single Dq Vref value for all DRAMs and ranks in each channel. EV data shows a common range should always exist, thus MRC
 simply sweeps through all DRAMs and ranks and if mixed ranges are chosed enforces a new Vref to Offset mapping which uses only one of the ranges.
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
