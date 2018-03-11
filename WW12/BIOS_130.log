@@ -1,0 +1,2624 @@
+================================================================================ 
+Commit: 62b1612b40705f5144fb1ef9e0fb2607b8081806 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:11:14 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ff7519954090897f2bc2c2fa4d6166254a206b96
+Original commit date: Wed Mar 7 18:17:46 2018 -0800
+[TeamCity] Auto-Commit FSP
+Wed Mar 7 18:17:46 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspBinPkg/Fsp.fd
+
+================================================================================ 
+Commit: 215b63306949cbab41a079027ec16613d18987a8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:11:10 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a0d5e798e5d20c4a0cd0e97a0f3b3abb525a1161
+Original commit date: Wed Mar 7 18:03:10 2018 -0800
+Change-Id: I950489de05bf760213f971247d01e5bdabb3b52b
+[NO_HSD] Update BIOS ID to 130 and FSP/RC Version
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 3dfbd001ac510966971046e911b10b64db69e658 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:11:08 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 8845b35aa3977e46988bac9ce344cadde79ff644
+Original commit date: Wed Mar 7 16:06:30 2018 -0800
+Change-Id: Ic68feba5a180b0983b94faa5394e3242b330b1c0
+Title: CFL/CNL BIOS support for workstation VR overrides
+Resolution: Add workstation skus to VR override table and update power limit programming.
+Impacted Platform: CFL/CNL platforms
+HSD: none
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/Include/ConfigBlock/CpuPowerMgmtVrConfig.h
+CannonLakeSiliconPkg/Cpu/Include/CpuPowerMgmt.h
+CannonLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuInitLib/CpuInitPreResetCpl.c
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerLimits.c
+
+================================================================================ 
+Commit: 40a8bde68427f3ced2acc6e644b1dbcc94471765 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:55 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 6db18873a81653efc5202141f0cc8ee0ce44d005
+Original commit date: Mon Mar 5 14:55:28 2018 -0800
+Change-Id: I6933ef5172e9d29e91d97de26cb6f2411a7b84b8
+CannonLakeSiliconPkg: [2202482858][CNL][MRC] Remove legacy change for RxDqsAmpOffset from SenseAmpOffsetTraining
+Issue:
+Within MrcSenseAmpOffsetTraining, there is a legacy change which adds a value of 8 to RxDqsAmpoffset. This was needed for LPDDR3 technology, but is currently also applied to LPDDR4.
+This change is legacy and is not needed for LPDDR4, and if left implemented could have negative effects on Rx Margin and RxDqs SI.
+Solution:
+Remove legacy change for RxDqsAmpOffset of "vref += 8" which is not needed for LPDDR4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: 31e61d4bde3ede116b05d848c97f3a4713915992 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:48 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 8828add7617851485f6f460abbdc5523f88b1d00
+Original commit date: Mon Mar 5 15:29:15 2018 +0200
+Change-Id: Ic346f1d8ef6a01be4e9c979ec947e4cdd2c41d11
+CannonLakeSiliconPkg: [CNL][MRC] ODT CA/CS/CK needs to support separate rank 0 ODT programming for CNLH 4 rank.
+Request:
+MRC needs to support separate rank 0 vs rank 1/2/3 ca/ck/cs ODT, by setting the enable/disable bit for the 'new mode' of operation.
+Change:
+Add new CNL-H step flag whch newer than P0
+set spare_rw bit for LP4x with new flag
+Enable RDODT back and take care MR22
+Hsd-es-id: 1406820229
+https://hsdes.intel.com/appstore/article/#/1406820229
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/Include/Cannonlake/MrcInterface.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+
+================================================================================ 
+Commit: 09911b224c3216727615787203a8c721de27480d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:38 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ce0d0a1d4a5f2d483a0b747f035b2908cd9b119f
+Original commit date: Wed Mar 7 11:53:59 2018 +0100
+Change-Id: I86ef29694d02396a44c5f9bad2364ee72e427753
+[1406678070] BIOS should perform global reset instead of a cold one after HSIO Sync
+[Description] Changed the reset type from cold to platformspecific.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Me/Library/PeiMeLib/HeciMsgPeiLib.c
+
+================================================================================ 
+Commit: 7c250f22187b17bcb47e49222c2ee22ac4ec1307 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:24 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 21e1fc40e0a3761b3478844d849bc65c5b7f6d6f
+Original commit date: Tue Mar 6 11:23:28 2018 +0800
+Change-Id: I140bfddaff986d69c5af3502030369e3f6649284
+CFL: TopSwap(TS) bit could not be accessed via SMM using SBI interface when BIOS Guard is enabled.
+When BIOS GUARD is enabled, the MSR 1FEh is invalid and accessing to this MSR causes exception.
+BIOS should not try to access MSR 1FEh if BIOS GUARD is enabled.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Features/CapsuleUpdate/Library/PlatformFlashAccessLib/PlatformFlashAccessLib.c
+CannonLakePlatSamplePkg/Features/CapsuleUpdate/SystemFirmwareUpdate/SystemFirmwareDxe.h
+CannonLakePlatSamplePkg/Features/CapsuleUpdate/SystemFirmwareUpdate/SystemFirmwareUpdateDxe.inf
+CannonLakeSiliconPkg/Cpu/Include/Library/CpuPlatformLib.h
+CannonLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+CannonLakeSiliconPkg/Pch/Library/Private/SmmPchPrivateLib/SmmPchPrivateLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/SmmPchPrivateLib/SmmPchPrivateLib.inf
+
+================================================================================ 
+Commit: 7c93b58031fd8e3217b939fd7d63ecd4ab1661d4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:18 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: d36ec841a3bc8d5fe9cb0cdb01a89bb086d6b359
+Original commit date: Tue Feb 27 14:24:37 2018 +0530
+Change-Id: I780f6b0cb0cc6b0c31f6372aa8ecafa11eb301da
+Fixes ECDH security threat described in BT-4014
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Bluetooth/BluetoothBusDxe/iLE/core/src/smp.c
+
+================================================================================ 
+Commit: 186c83531b82f96a4921630e2c04ecc22e6c6d48 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:16 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: e6188d794c0073cfd4baba037c37362134606453
+Original commit date: Tue Feb 27 10:00:43 2018 +0530
+Change-Id: I6bfec686389bab68129612d0480b92cd04404ab6
+Implements the USB Unload Handler
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Bluetooth/UsbBtHciDxe/UsbBtHciDxe.c
+BpCommonPkg/Bluetooth/UsbBtHciDxe/UsbBtHciDxe.inf
+
+================================================================================ 
+Commit: 33546621e4ee0000004a89335d9837f989de3ffa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:14 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 9cf2e0baada5305bdd88648d1d185b92b18aa4e6
+Original commit date: Fri Feb 23 10:30:21 2018 +0530
+Change-Id: I881435e695a53d1c1fb8754854fea4245868e379
+Switches to Sync Event collection only if the stack was initialized earlier
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Bluetooth/BluetoothBusDxe/iLE/apps/src/uefi_app.c
+
+================================================================================ 
+Commit: 6c5c351b0e51144eea3d81d842d395b8911d747b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:13 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 821423a33c2694b2d0fc94966fb16afc0575badc
+Original commit date: Thu Mar 1 14:30:42 2018 +0800
+BpCommonPkg WifiConnectionManagerDxe: Trigger scan when network disconnection occurs
+* In previous code, network disconnection will not issue a new scan command. When a
+  connected network is RF killed, it is still in network list till next time's scan.
+  We should remove it directly, this patch is to fix this issue.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Universal/WifiConnectionManagerDxe/WifiConnectionMgrImpl.c
+
+================================================================================ 
+Commit: adca576b8d6086ed6643de8f081a0bf11ca5a46b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:11 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 4b9b8b19d6393830b94cdd6d7273065b33e03b91
+Original commit date: Thu Mar 1 20:00:39 2018 +0800
+BpCommonPkg BpmGen: Regenerate version 0.50 binary with VS2015
+Update version to 0.50 and regenerate the binary with VS2015.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Tools/BpmGen/BpmGen.exe
+BpCommonPkg/Tools/BpmGen/BpmGen.h
+
+================================================================================ 
+Commit: b7d2dc4ae4af652ee5f0d8db19f3ce794382ce1c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:09 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 8eab666d5dc757a85f7c37552db6997d6bf3d44a
+Original commit date: Thu Mar 1 19:57:49 2018 +0800
+BpCommonPkg SignFv: Regenerate version 0.7 binary with VS2015
+Update version to 0.7 and regenerate the binary with VS2015.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Tools/SignFv/SignFv.exe
+BpCommonPkg/Tools/SignFv/SignFv.h
+
+================================================================================ 
+Commit: 1a262e98451bff62ed97ce55821895789d925703 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:07 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 0e8b5d6d11d84bfed6babc90ba39742633eff0c3
+Original commit date: Thu Mar 1 19:49:29 2018 +0800
+BpCommonPkg GenBiosId: Regenerate version 2.0c binary with VS2015
+Update version to 2.0c and regenerate the binary with VS2015.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Tools/GenBiosId/GenBiosId.c
+BpCommonPkg/Tools/GenBiosId/GenBiosId.exe
+
+================================================================================ 
+Commit: 804696b3527bfc4db03fbb9504b25946a2ec4964 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:05 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: c8a2759140c5cbeb8048b48dbba718fb44132864
+Original commit date: Thu Mar 1 14:52:28 2018 +0800
+FMMT Tool: Update binary to match with latest Source
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Tools/FMMT/FMMT.exe
+
+================================================================================ 
+Commit: 0900c713ba637e37e49eee5157712c6d1672b0d2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:03 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ac17cf7063213434f491495a4b7c5f6983b8964f
+Original commit date: Thu Mar 1 14:52:11 2018 +0800
+FCE Tool: Update binary to match with latest Source
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Tools/FCE/BfmLib.exe
+BpCommonPkg/Tools/FCE/FCE.exe
+
+================================================================================ 
+Commit: b9feef99915d0a5760c5a8b15b18f494f5fc06f7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:10:01 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a5b857dc879f9a3b5b71189a466bb82b6b91d73e
+Original commit date: Sat Feb 24 15:12:57 2018 +0800
+BpCommonPkg: Update SignFv tool doesn't depend on WIN_CERTIFICATE_UEFI_GUID
+WIN_CERTIFICATE_UEFI_GUID structure is the flexible size. Its size can't
+be used to jump the data. New logic uses below code to get its header size.
+This is the compatible change.
+OFFSET_OF (WIN_CERTIFICATE_UEFI_GUID, CertType) + sizeof (EFI_GUID))
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Tools/SignFv/SignFv.c
+
+================================================================================ 
+Commit: b6f6f8a0b63fe399c3bb75778fe52ad40e9c1aa1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:59 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 1e97c3a88a6867c5fe4632248105f94456cd875e
+Original commit date: Thu Mar 1 11:24:48 2018 +0800
+BpCommonPkg WifiConnectionManagerDxe: Did some enhancement in code logic.
+* Set driver version to a higher number than network upper layer drivers, to make
+  sure this driver can be earlier connected before other drivers using wireless
+  network functions.
+* To reduce the time between first scan and connect, add a trigger to connect
+  saved network right after scan finished if this network is newly found in scan
+  result.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Universal/WifiConnectionManagerDxe/WifiConnectionMgrDxe.h
+BpCommonPkg/Universal/WifiConnectionManagerDxe/WifiConnectionMgrImpl.c
+
+================================================================================ 
+Commit: cae0a73cd6edf82173638d64243ab88e1a3960cc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:58 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 7b56735b06175d82272fd7b0d357bbbdbfe3fd5b
+Original commit date: Tue Mar 6 11:44:14 2018 +0800
+Change-Id: Ibc693ab2e97c68ebbef0dedcb85d95902960c48f
+CannonLakePlatSamplePkg: [CNL][Y7/Y8]: SUT is getting hung with M.2 7360 connected, when system is in idle state in S0 - take #2
+Resolution: Bump revision for SETUP data
+Impacted Platform: CNL
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+
+================================================================================ 
+Commit: 5b758fd1cdb9e861702f20690d7014e69b021b62 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:56 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 257cfab64fa6422e3d7fabce1ae8a0313802ce06
+Original commit date: Mon Mar 5 16:37:05 2018 +0800
+Change-Id: I8703288095506bf7d49502a84d18806f7110c218
+[CFL-H62_CNP][S&S][PM][CORP]Multiple hungs observed During S3 cycle - Take 2
+Resolution: Dynamic override PcdCpuMaxLogicalProcessorNumber based on MSR_CORE_THREAD_COUNT 0x35[15:0]
+Impacted Platform: CNL and CFL All SKUs
+HSD: 1604745426
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/FspInit/Pei/FspInit.c
+CannonLakeFspPkg/FspInit/Pei/FspInit.h
+CannonLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+CannonLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+
+================================================================================ 
+Commit: a9aa15f4fa58ee1ca4bb21c4821db1443916c0eb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:48 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: e818b4eb4b90b9d5539050642e5333dcb71d010e
+Original commit date: Mon Mar 5 18:08:08 2018 -0800
+Change-Id: Ide8d0f3b0503c05a2527a017ff6d9025a22d87b4
+CNL BIOS: Sporadically SUT hangs at PC 9A7F during S3 cycles with AMD LEXA external graphics card.
+Revert "Title: CNL-U BIOS:- Display is not Observed with External AMD Graphic Card is connected on X4 slot."
+This reverts commit b2dd9cd0268b9ef96fdfbb24d93ce420aab2f306.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlUDdr4.h
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlUDdr4PreMem.h
+
+================================================================================ 
+Commit: 9db256427249d902bc73c2e3071ca62fb50101ba 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:42 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 8bcf92d838f645f5c2ee2ad2279bbdddbd41342e
+Original commit date: Tue Mar 6 11:33:27 2018 -0800
+Change-Id: I066073374ea24907ef3e119e1b75849e2da4c833
+CNP-H B1 Integrate Chipsetinit Version 7
+Hsd-es-id: 2202447795
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/ChipsetInit/Binaries/CnlPchHChipsetInitTable_Bx.bin
+CannonLakeSiliconPkg/Pch/ChipsetInit/Binaries/CnlPchHChipsetInitTable_Bx_Edbc.bin
+CannonLakeSiliconPkg/Pch/Include/Private/CnlPchHHsioBx.h
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/CnlPchHHsioBx.c
+
+================================================================================ 
+Commit: 45863e55f2c15543db4ca371e802febdc2606c1e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:40 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: f977176c9d995ac4c2d4c591291508a110f3eb7f
+Original commit date: Fri Mar 2 11:26:50 2018 -0800
+Change-Id: Ia088b91308073fa6e6db98bd8d029e2e3939d492
+CannonLakeSiliconPkg: [1406872253][WHL][GDC][PO][WHL-U42] ChHashMask  value 0, expected 0x30C8
+Issue:
+ Reading the value of the HASH_MASK, we read 0x0000. The default value is 0x30C8, in the logs even frist boot we are reading ChHashMask = 0 so at least first boots should be 0x30C8 until SA_SETUP block it and change to defined value(0)
+Solution:
+ Fix SaPolicyLib initial value for MEMORY_CONFIGURATION.ChHashMask to be 0 (AUTO)
+ Change CFL MRC to match CNL implementation with ChHashMask AUTO setting.
+ Update UPD default value for ChHashMask to match SA_SETUP and MEMORY_CONFIGURATION
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/Upd/FspmUpd.dsc
+CannonLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+
+================================================================================ 
+Commit: 76b8b9099aa97942569a7585d47b5881e7133dfc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:34 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: eb2e0e9a74e2427ea85480353eabd1bb42031259
+Original commit date: Fri Mar 2 13:36:01 2018 -0800
+Change-Id: I2ba4d5298c03ce16dc2402e372cc0b2a9e1dfe05
+CannonLakeSiliconPkg: [2006797394][WHL][GDC][PO][WHL-U42] MRC Warning: Unknown CPU stepping, using MRC for last known step = Ah
+Behavior:
+   The system is booting correctly, all memory and speed refelcted in BIOS correctly, however checking the serial log(attached), we are seeing the following warning
+              *WARNING: Unknown CPU stepping, using MRC for last known step = Ah(line 2494)
+Solution:
+   Add new stepping check in when identifying CPUID information for latest stepping.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/MemoryInit.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/MiniBios/MEMORY/MrcOemPlatform.c
+
+================================================================================ 
+Commit: 64425af6855ef590f2e6a406d7c6e072ddbe2eab 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:16 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: e9086ddb0c27a9381bb99f62eb78f8b58a541781
+Original commit date: Mon Mar 5 10:37:35 2018 +0800
+Change-Id: Ie0065673234b50029ea22e255a311760e81506c5
+FPDT cannot show all performance data
+Resolution: Removed platform override and synced up to ClientCommonPkg.
+Impacted Platform: All
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Override/ClientCommonPkg/Library/DxeCoreFpdtPerformanceLib/DxeCoreFpdtPerformanceLib.c
+CannonLakePlatSamplePkg/Override/ClientCommonPkg/Library/DxeCoreFpdtPerformanceLib/DxeCoreFpdtPerformanceLib.inf
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+ClientCommonPkg/Library/DxeCoreFpdtPerformanceLib/DxeCoreFpdtPerformanceLib.c
+
+================================================================================ 
+Commit: 9f47df10cb5f9ca837c0550cb95db8717d31d619 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:11 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: d3fb4567725b0e1c0068fbf11e2418330d956efb
+Original commit date: Thu Mar 1 17:23:28 2018 +0800
+Change-Id: I4365b47c4e9895645da00d0e9b96a0753710e98c
+The SUT will halt on CP "0xb1" when memory is 56GB
+[Description]
+System hangs when memory is 32G + 16G + 8G in FSP per-mem stage.
+Enlarge above 4GB memory size to be power of two aligned to reduce MTRRs number.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/FspInit/Pei/FspInitPreMem.c
+
+================================================================================ 
+Commit: 25187216d5a99429fbf61fb6193b02b4ad6e0e53 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:08 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 1a84965678e82da7c45c5f304ae0f371f51a3e83
+Original commit date: Mon Mar 5 17:11:43 2018 -0800
+Change-Id: Ife7c885aa27da6825cae024f06f4fca7c690f703
+Revert "Integrate CNL D0 Patch 0x1C"
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 633e20f61a7e1f7feac100bcc0b56476dfcd82a8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:09:04 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 8c0d6de77e07dc8a45a98edd09f3711dfcd1e6ab
+Original commit date: Mon Mar 5 15:54:37 2018 -0800
+Change-Id: Iefc9771c9b66343e3ac4418a61a17cd2c1d3c0d9
+Revert "Title: Reverse additional FV from other region"
+This reverts commit ff3cb76eccfd049753c1c93c930bf867e3bd68d8.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.fdf
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_FSP_WRAPPER.fdf
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_UEFI_BOOT.fdf
+CannonLakePlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: acb561451b576d690f30d0f76e8f5c6230f38b13 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:45 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: dab7e47c600c1906453e3c72bb8b18a9ca6c7345
+Original commit date: Fri Mar 2 15:04:54 2018 +0800
+Change-Id: Ib25a1fc8523cdb237f75e2aeb85a7ccb28d24f9c
+Title: Remove the IntelFrameworkModulePkg and IntelFrameworkPkg usage from CNL and later projects
+Resolution: Override BPCommonPkg
+Impacted Platform: ICL
+HSD: 1504688413
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientCommonPkg/Override/BpCommonPkg/Csm/LegacyInterruptHookDxe/LegacyInterruptHook.c
+ClientCommonPkg/Override/BpCommonPkg/Csm/LegacyInterruptHookDxe/LegacyInterruptHook.inf
+ClientCommonPkg/Override/BpCommonPkg/Csm/Library/LegacyInterruptSupportLib/Ia32/SwSmi.asm
+ClientCommonPkg/Override/BpCommonPkg/Csm/Library/LegacyInterruptSupportLib/Ia32/SwSmi.nasm
+ClientCommonPkg/Override/BpCommonPkg/Csm/Library/LegacyInterruptSupportLib/Ia32/SwSmi.s
+ClientCommonPkg/Override/BpCommonPkg/Csm/Library/LegacyInterruptSupportLib/LegacyInterruptSupportLib.c
+ClientCommonPkg/Override/BpCommonPkg/Csm/Library/LegacyInterruptSupportLib/LegacyInterruptSupportLib.inf
+ClientCommonPkg/Override/BpCommonPkg/Csm/Library/LegacyInterruptSupportLib/X64/SwSmi.asm
+ClientCommonPkg/Override/BpCommonPkg/Csm/Library/LegacyInterruptSupportLib/X64/SwSmi.nasm
+ClientCommonPkg/Override/BpCommonPkg/Csm/Library/LegacyInterruptSupportLib/X64/SwSmi.s
+ClientCommonPkg/Override/PcAtChipsetPkg/8259InterruptControllerDxe/8259.c
+ClientCommonPkg/Override/PcAtChipsetPkg/8259InterruptControllerDxe/8259.h
+ClientCommonPkg/Override/PcAtChipsetPkg/8259InterruptControllerDxe/8259.inf
+ClientCommonPkg/Override/PcAtChipsetPkg/8259InterruptControllerDxe/Legacy8259.uni
+ClientCommonPkg/Override/PcAtChipsetPkg/8259InterruptControllerDxe/Legacy8259Extra.uni
+ClientCommonPkg/Override/RoyalParkCommonOverride.md
+
+================================================================================ 
+Commit: 6a327a56903dda3609283964c790c01c2b4dcf4c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:41 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 25f72e90fdecab42d8e09a58447e063c2f9c341e
+Original commit date: Wed Feb 21 14:32:51 2018 +0800
+Change-Id: Ib736e0a05ac79efc659e69f4b69cb23d9eb79b26
+[CNL] ACPI 6.x support in CNL BIOS - BERT
+Modified to be compliant with ACPI 6.1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Features/CrashLogDxe/CrashLogDxe.c
+CannonLakePlatSamplePkg/Features/CrashLogDxe/CrashLogDxe.h
+
+================================================================================ 
+Commit: dec605410f55c513c4c08f731412cf43b47eff42 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:40 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 8e6544cbf1ded95c3e62e70ddef0ac74d8614380
+Original commit date: Sun Mar 4 22:25:42 2018 -0800
+[TeamCity]  Daily Update_FSP/RC
+Sun Mar 4 22:25:42 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 1ec6bcd05cb76386817e29673c552074b36a2f37 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:35 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: f23411957d171d0a136a9edc473fb2f50a9f7f7c
+Original commit date: Mon Mar 5 09:09:56 2018 +0800
+Change-Id: Ie1c59de069e21f5c41402dc3b6f86065d0a799d4
+SUT hangs at postcode 1096 after enabling CSM.
+System boot fails due to 8254CGE is set on CSM ON case.
+8254CGE is default enabled. When CSM is on it should disable the 8254CGE.
+So bind the S0ix enable with 8254 CGE setting. Platform will only
+enable 8254CGE when S0ix is enabled.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+CannonLakePlatSamplePkg/Setup/PchSetup.hfr
+
+================================================================================ 
+Commit: db5271832c19335ab9b1ff57f1e9eca33d02039c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:33 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ff3cb76eccfd049753c1c93c930bf867e3bd68d8
+Original commit date: Thu Mar 1 16:58:31 2018 +0800
+Change-Id: I4bc3e344aa6b7d5ccd297f3c6ee2e6a41352f6b7
+Title: Reverse additional FV from other region
+Resolution: Adjust Flash map
+Impacted Platform: CFL/CNL
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.fdf
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_FSP_WRAPPER.fdf
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_UEFI_BOOT.fdf
+CannonLakePlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: 955371e6b3d7de881cbe8f0d7be8a9327b2ca9c5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:31 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: f25643c67ac721c81ae5888b48040bbca01ac713
+Original commit date: Fri Mar 2 15:36:03 2018 +0800
+Change-Id: I6c17fa856a5c794f259cf57ef95d50e2e3876869
+Title: [CNL] Add support for PCI segments in Cannonlake code using pcisegmentlib - Part5
+Resolution: Support PCI segment for Cannonlake and use PciSegmentLib to replace MmPciLib
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dsc
+CannonLakeFspPkg/FspInit/Pei/FspInit.inf
+CannonLakeFspPkg/FspInit/Pei/FspInitPreMem.c
+CannonLakeFspPkg/FspInit/Pei/FspInitPreMem.h
+CannonLakeFspPkg/FspInit/Pei/FspInitPreMem.inf
+CannonLakePlatSamplePkg/Board/Library/BasePlatformHookLib/BasePlatformHookLib.c
+CannonLakePlatSamplePkg/Board/Library/BasePlatformHookLib/BasePlatformHookLib.inf
+CannonLakePlatSamplePkg/Setup/Setup.c
+CannonLakePlatSamplePkg/Setup/Setup.inf
+CannonLakeSiliconPkg/Cpu/Library/PeiCpuPolicyLib/PeiCpuPolicyLib.c
+CannonLakeSiliconPkg/Cpu/Library/PeiCpuPolicyLib/PeiCpuPolicyLib.inf
+CannonLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+CannonLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/PeiDxeSmmCpuPlatformLib.inf
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PeiCpuPowerMgmtLib.inf
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerMgmtCommon.h
+CannonLakeSiliconPkg/SiPkg.dec
+CannonLakeSiliconPkg/SiPkgCommonLib.dsc
+CannonLakeSiliconPkg/SystemAgent/SaInit/Dxe/SaInitDxe.inf
+CannonLakeSiliconPkg/SystemAgent/SaInit/Dxe/SwitchableGraphicsInit.c
+CannonLakeSiliconPkg/SystemAgent/SaInit/Dxe/SwitchableGraphicsInit.h
+
+================================================================================ 
+Commit: 9e95da49fbcd259e54d4138354f33907c66e9704 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:26 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 3f70ed138cecd07f1084e9afc235047b318b5bf7
+Original commit date: Fri Mar 2 11:19:57 2018 +0800
+Change-Id: I0060385ac95163c6caeb7ef090a8faab0486a352
+FSP issues reset directly instead of return "FSP_STATUS_RESET_REQUIRED"
+FSP 2.0 spec defines that FSP should not call platform reset directly,
+instead should return FSP with reset required.
+The SiScheduleResetPerformReset should go through ResetSystem2.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dsc
+CannonLakeSiliconPkg/Pch/Include/Private/SiScheduleResetHob.h
+CannonLakeSiliconPkg/Pch/Library/Private/BaseSiScheduleResetLib/BaseSiScheduleResetLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/BaseSiScheduleResetLib/BaseSiScheduleResetLib.inf
+CannonLakeSiliconPkg/Pch/Library/Private/BaseSiScheduleResetLib/BaseSiScheduleResetLibCommon.c
+CannonLakeSiliconPkg/Pch/Library/Private/BaseSiScheduleResetLib/BaseSiScheduleResetLibFsp.c
+CannonLakeSiliconPkg/Pch/Library/Private/BaseSiScheduleResetLib/BaseSiScheduleResetLibFsp.inf
+
+================================================================================ 
+Commit: 3ea5c233afcc9ca5cde0c893d58788159f813001 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:23 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: f7cc2d4a23c63b9e4232ea47f915183e9138c082
+Original commit date: Sun Mar 4 12:08:15 2018 -0800
+[TeamCity] Weekly Update FSP/RC
+Increment FSP Revision Number and reset FSP Build Number to 1
+Sun Mar 4 12:08:15 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 2df69eb8b15c45dc2a46f0a6a5b9237046bc6c76 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:15 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 825fc2bb21538a23c699e2f3b1c3e045e8fa1922
+Original commit date: Sun Mar 4 08:37:43 2018 +0800
+Change-Id: I9961181c61e0b8e1f41b47f77b4d7a0eaa398535
+[CFL-H62_CNP][S&S][PM][CORP]Multiple hungs observed During S3 cycle
+Resolution: Increase Timeout to 50ms for the BSP to detect all APs for the first time
+Impacted Platform: CNL and CFL All SKUs
+HSD: 1604745426
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+
+================================================================================ 
+Commit: d66747ae8d8653de24504e474a1f14a9cee572e2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:08:00 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 4ac2139b4bb03f3134d098704af6a194b8ee59c3
+Original commit date: Tue Feb 27 16:23:48 2018 -0800
+Change-Id: Ifdcb4df02bc3d9c532e7eb44b519e9ea317649fb
+CannonLakeSiliconPkg: [1305619114][CNL][MRC] Read Timing Centering 2D doesn't do proper 2D sweep due to a cache coherency problem
+Issue:
+Read Timing Centering 2D is required to optimize RxDQS for various Vref values, however since the same register (DDRDATA_CR_DDRCRDATAOFFSETTRAIN_0_0_0_MCHBAR) holds both RxVrefOffset and RxDqsOffset, the RxVrefOffset value returns to 0 during RxDqsOffset sweep
+Solution:
+For ChangeMargin calls within DataTimeCentering2D set UpdateHost = 1 when used with RxV Parameter. This ensures within MrcGetBERMarginByte, as RxDqsOffset is sweeped, the cached value for RxVrefOffset is maintained throughout the sweep.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: 79be01d9593b38cccd948c45b732d0c754862281 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:07:52 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ceca96a8c76a8bdd4da6df98f55d8242a472da41
+Original commit date: Thu Mar 1 09:51:58 2018 -0800
+Change-Id: Icee08cf200ed277062e524a8329fca6624258f6a
+Updating CNL-H LPDDR4 RVP GPIO Table settings to match latest mapping doc
+GPIO Config Table update
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlHLpDdr4.h
+
+================================================================================ 
+Commit: bf2d9a3b4403b8dc90efdd3d57919ef4110cd383 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:07:39 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 3869f9659856563bd90d2665d3f59f8f5581c43b
+Original commit date: Wed Feb 28 16:46:59 2018 -0800
+Change-Id: Ie8a121fdf3b13924a4cdc8ec7e437be2f2a6ecd5
+CannonLakeSiliconPkg: [2202464637][CNL][MRC] LPDDR4x Byte Mode Fails in Late Command Training at 2667
+Issue:
+LCT is failing with byte mode for Rank 0x3 during CTL centering. It's only failing at 2667, we don't have this problem at 2400. Attempting different termination values didn't have any effect.
+Solution:
+Change CPGC Configuration for Late Command Training
+1. Changed NTHSOE to NSOE in SetupIOTestCADB input.
+2. Disabled the reconfiguration of Address Inc (Column, Row, Bank, Rank) done for CTL centering, using the same values programmed for Cmd centering.
+3. Disabled the reconfiguration of the Wrap Address done for CTL centering, using the same values programmed for Cmd centering.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+
+================================================================================ 
+Commit: 7dace3a9ee44acdc328d1ece137d74dfe791298b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:07:23 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: d010afa12b886e576f8ca4835cb66f4a20939f08
+Original commit date: Thu Mar 1 15:23:11 2018 +0800
+Change-Id: Ia00c448c95c405fb6583b786e307b20473f8fb0d
+Title: Transfer all the asm files under ClientSiliconPkg to nasm
+Resolution:  Transfer all the asm files under ClientSiliconPkg to nasm
+Impacted Platform:CNL/CFL
+Hsd-es-id: 1504730233
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientSiliconPkg/Library/CpuExceptionHandlerLib/DxeCpuExceptionHandlerLib.inf
+ClientSiliconPkg/Library/CpuExceptionHandlerLib/Ia32/ExceptionHandlerAsm.asm
+ClientSiliconPkg/Library/CpuExceptionHandlerLib/PeiCpuExceptionHandlerLib.inf
+ClientSiliconPkg/Library/CpuExceptionHandlerLib/SecPeiCpuExceptionHandlerLib.inf
+ClientSiliconPkg/Library/CpuExceptionHandlerLib/SmmCpuExceptionHandlerLib.inf
+ClientSiliconPkg/Library/CpuExceptionHandlerLib/X64/ExceptionHandlerAsm.asm
+ClientSiliconPkg/Library/CpuStackSwitchExceptionHandlerLib/DxeCpuExceptionHandlerLib.inf
+ClientSiliconPkg/Library/CpuStackSwitchExceptionHandlerLib/Ia32/ExceptionHandlerAsm.asm
+ClientSiliconPkg/Library/CpuStackSwitchExceptionHandlerLib/Ia32/ExceptionHandlerAsm.nasm
+ClientSiliconPkg/Library/CpuStackSwitchExceptionHandlerLib/Ia32/ExceptionTssEntryAsm.nasm
+ClientSiliconPkg/Library/CpuStackSwitchExceptionHandlerLib/PeiCpuExceptionHandlerLib.inf
+ClientSiliconPkg/Library/CpuStackSwitchExceptionHandlerLib/SecPeiCpuExceptionHandlerLib.inf
+ClientSiliconPkg/Library/CpuStackSwitchExceptionHandlerLib/SmmCpuExceptionHandlerLib.inf
+ClientSiliconPkg/Library/CpuStackSwitchExceptionHandlerLib/X64/ExceptionHandlerAsm.asm
+ClientSiliconPkg/Library/CpuStackSwitchExceptionHandlerLib/X64/ExceptionHandlerAsm.nasm
+
+================================================================================ 
+Commit: acb5023efc94bd23debbcc79ffdd8db908e6c24b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:07:19 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: d38ca301d137856c7c4fddb5e42042a372eedad1
+Original commit date: Thu Mar 1 15:15:44 2018 -0800
+Change-Id: I9a198eeda7e810e5f700d592e01787d7d7352947
+Add WHL CPU ID.
+Hsd-es-id: No
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Setup/CpuSetup.c
+CannonLakeSiliconPkg/Cpu/Include/CpuRegs.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/Include/Coffeelake/MrcInterface.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/MiniBios/Common/CpuRegs.h
+
+================================================================================ 
+Commit: bd5035b7afcba13500014a1f053d68f945b14342 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:07:12 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: d43de9dbe5896ff116e08d11822db95eba1e9ff4
+Original commit date: Thu Mar 1 15:52:26 2018 -0800
+Change-Id: I5601c1eeed283ed9a6383943cef7e43270892982
+Update PL1 Tau programming for cTDP enabled CFL-S CPU's
+PL1 Tau for CFL-S CPU's is supposed to be 28 seconds. For other DT CPU's the default is 8 seconds. The 28 s support was missing for CFL-S skus that have cTDP enabled since the cTDP programming flow is handled separately from the non-cTDP flow. This change adds the 28 second tau override to the cTDP PL programming flow.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerLimits.c
+
+================================================================================ 
+Commit: 75b22636590ec38b8f12652f92f96844796b55d9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:07:06 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 2992b81993d098b99377d63bcda27ee5ab6664aa
+Original commit date: Thu Mar 1 09:44:53 2018 -0800
+Change-Id: Ic53493cca49ef22785e4adc475ab4fc544d9236e
+[CNLH 8+2] LPDDR4 PEG60 Not Training (https://hsdes.intel.com/appstore/article/#/2202062160)
+1.) PEG Slot PWREN and PEG Slot RST must be configured prior to memory init in order for the PEG60 slot to train properly on CNL-H82 LPDDR4 platforms.
+2.) WA needed to skip VRefRxDet programming
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardPchInitPreMemLib.c
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlHLpDdr4PreMem.h
+CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaPcieInitLib/PeiSaPcieInitLib.c
+
+================================================================================ 
+Commit: 9f356458f6e8a4a3bfd3e84b37f6a3d834da11e7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:07:03 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 4872d770bd0f4ad5a9c529b2021b5ea15e6a759f
+Original commit date: Tue Feb 13 11:08:21 2018 -0800
+Change-Id: If1ce16b6f58bff6069f75a0fbd82fa16164d5818
+Integrate CNL C0 Patch 0x28
+Ucode
+1305493007
+PUSH from CNL: ILP SENTER/ENTERACC wrongly sends LLC INVD/WBINVD special cycle
+1305551262
+fix patchlet 1305493007: wrong usage of MS_FAST_RET
+Pcode
+Added
+1305505448
+Calibrate The DDR power meter in CNL.
+1305534046
+Dynamic Ring Cdyn Factor from CFL to CNL
+Removed
+1305336721
+PUSH from CNL: PUSH from CNL: Disabling or Enabling C6DRAM feature does not change the Sustain-Ungated power in PC10
+Resolution: Update CNL C0 with Patch 0x28
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 2c47fde8231e0f5d46c374296cec806f506ef395 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:58 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ceb80b4981a1e6becb22c7eb04556e103b51c826
+Original commit date: Thu Mar 1 10:29:33 2018 -0800
+Change-Id: Ib26727fa9fda51a63a97a280b403a80ef947d98d
+[HP][CFL-S][Dyson] PL2 of G5400 CPU is not programmed
+Added checks for other CFL S DT Skus.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerLimits.c
+
+================================================================================ 
+Commit: 0ad4d7110d384188487f583d36706addb110c6ef 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:56 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 1fb0be4044e8d11fde6d4ce574cdf33d8063361a
+Original commit date: Thu Mar 1 09:36:09 2018 -0800
+Change-Id: I6a3db9921490acca297c847a5459423d4dc8ef17
+Updating to latest production uCode patch (0x0A) for CNL-H82
+CNL G0 production patch 0xA.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: e01eb63b4b8b2492bf34b41e15b8cd7e593801d1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:47 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: d1978414c73d0e353dd51bad181e13cd7d30338f
+Original commit date: Thu Feb 15 09:21:18 2018 -0800
+Change-Id: Ic45a064705f4ce4034db0aa999a38bfb642f4617
+CannonLakeSiliconPkg: [2201433960][CNL-H][MRC] RTL Values must be the same when ERM is enabled
+After sending a read request the safe logic loads a value into the dummy CAS tracker indicating when it will be allowed, this is based on the rank of the request (As when the dummy CAS executes it gets the roundtrip value of its rank)
+The safe logic only has one safe indication per rank, while in ERM there are actually two different roundtrip values allowed for the non ERM and the ERM rank.
+This is the buggy code in mc_safe.vs, in relation to ERM as different groups are translated to different ranks.
+In order to fix this, the dummy cas safe indication along with its counters need to increase from counter per rank to counter per ERM rank.
+As a possible workaround for this, we could match the roundtrip values of the ERM rank and the non ERM rank (i.e. sc_roundtrip_latency_0_0_0_mchbar.rank_i_latency==sc_roundtrip_latency_0_0_0_mchbar.rank_i+4_latency
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+
+================================================================================ 
+Commit: d4c0f99c7b9c22455f55504b5607e1444b5e6cd4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:42 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a4ae614f640b500fdd20943aff407d2d05ad4a8f
+Original commit date: Thu Mar 1 12:35:17 2018 +0100
+Change-Id: Iffe8fe15698048422af0167898b9a1b01d56a6a0
+Klocwork fixes for Icelake PCH code (ASSERT FIX)
+Resolution: Fixed ASSERT failiure after Klocwork fixes
+Hsd-es-id: 1805979699
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Library/Private/PeiEspiInitLib/PeiEspiInitLib.c
+
+================================================================================ 
+Commit: ec74e78b7280b48379a0a5cc7deadd8e566d3bea 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:36 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: aeef4e096168fb701bb0e7b20500a4e29eab2426
+Original commit date: Fri Feb 23 17:46:14 2018 +0800
+Change-Id: I0061f7469b5c917c0dee15c462eb955455295947
+Linux boot hang with Low Power S0 Idle Capability enabled
+Set 8254CGE inside ACPI entry SMI and on S3 resume using PMC command for CFL
+and onwadrs directly with SMM SAI for CNL/ICL to avoid legacy SW issues.
+Note ACPI entry SMI may not execute in S3 resume even though this is the case
+for ClientBIOS.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+CannonLakeFspPkg/Upd/FspsUpd.dsc
+CannonLakePlatSamplePkg/FspWrapper/Library/PeiFspPolicyInitLib/PeiFspPchPolicyInitLib.c
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+CannonLakePlatSamplePkg/Platform/SmmPlatform/Smm/SmmPlatform.c
+CannonLakePlatSamplePkg/Platform/SmmPlatform/Smm/SmmPlatform.inf
+CannonLakePlatSamplePkg/Setup/PchSetup.hfr
+CannonLakePlatSamplePkg/Setup/PchSetup.uni
+CannonLakeSiliconPkg/Pch/Include/ConfigBlock/IoApicConfig.h
+CannonLakeSiliconPkg/Pch/Include/Library/ItssLib.h
+CannonLakeSiliconPkg/Pch/Include/Library/PmcLib.h
+CannonLakeSiliconPkg/Pch/Include/Private/Library/PmcPrivateLib.h
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmItssLib/ItssLib.c
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmItssLib/PeiDxeSmmItssLib.inf
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPmcLib/PmcLib.c
+CannonLakeSiliconPkg/Pch/Library/PeiPchPolicyLib/PchPrintPolicy.c
+CannonLakeSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiItssLib/ItssLib.c
+CannonLakeSiliconPkg/SiPkgCommonLib.dsc
+
+================================================================================ 
+Commit: 5cba4fcb99da7ad6525c62db7f9943cf24f14e07 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:33 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ea57b4ffa05358b615dd2ed37020efe27f2137e4
+Original commit date: Tue Feb 20 16:32:56 2018 -0800
+Change-Id: I579b978c60e0bb29804947d5f94a701dc23973bf
+Integrate CFL P0 Patch 0x84
+Contains Ucode and Pcode PO patch changes for 8 cores P0.
+Resolution: Update CFL P0 with Patch 0x84
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: c197b6ec1cb9c143728a620d41f40356a57eef6e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:31 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: be9d414dbc7fb7a7710e941b59d29810c822afc6
+Original commit date: Wed Feb 28 19:49:41 2018 -0800
+[TeamCity] Auto-Commit NVS
+Wed Feb 28 19:49:41 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+CannonLakePlatSamplePkg/Include/PlatformNvsAreaDef.h
+
+================================================================================ 
+Commit: 4891751a86996c05ed731f634ca5ac15196d1b67 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:29 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 03bcb5658c1ffde7c15a6679569ce320b2fc8d21
+Original commit date: Wed Feb 28 19:24:31 2018 -0800
+[TeamCity] Auto-Commit FSP
+Wed Feb 28 19:24:31 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspBinPkg/Fsp.fd
+
+================================================================================ 
+Commit: 795c4e12f58e6e4a856b258aa152daa0390c1e37 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:27 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 4ba3b9d4e1febd6bca268a4bd79604c25ab4e831
+Original commit date: Wed Feb 28 19:08:43 2018 -0800
+[TeamCity] Weekly Update BIOS ID
+Increment BIOS Major Version and reset Minor Version to 0
+Wed Feb 28 19:08:43 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 5426d91493ac3defb89fe1712251ac0c4ca2b7a7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:25 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a7175a0a0d83fc311c8ad90042b0422e5e9d8d13
+Original commit date: Tue Feb 27 17:47:53 2018 +0800
+Change-Id: I9cc0596064778163319480f7adc1d9652ff83260
+[CFL-S] Unused gap in Variable MTRRs programmed by BIOS
+[Description]
+We set SMRAM region as CacheUncacheable in per-mem stage and change it to CacheWriteBack after end of PEI.
+It may have a release a variable MTRR.
+I move it to latest MTRR in per-mem stage.
+It will not have unused MTRRs before enter OS.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/FspInit/Pei/FspInitPreMem.c
+
+================================================================================ 
+Commit: 9be3b92cebdf98963bc1e541fc22f5acb2763a9d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:23 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 7476275df7334c1ceefa7db2eaa28a6f863be0da
+Original commit date: Wed Feb 28 17:06:43 2018 -0800
+Change-Id: I67607a44c53371b8e08a5d6f98fa343225a3d884
+Adjust Flash map to support additional microcode patches and remove reserved flash map region.
+We need 2 additional blocks for patches, and the reserved region is no longer needed.
+Hsd-es-id: No
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_FSP_WRAPPER.fdf
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_UEFI_BOOT.fdf
+CannonLakePlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: 9e4553b3cedaccace547f83da216236bd236c2ae 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:18 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 91b063a60e59b7a56b10327eada59a8027dc8151
+Original commit date: Wed Feb 28 14:31:38 2018 +0800
+Change-Id: I2fe77119a161a3512e07a7baf20c03cc7c61b654
+[2202451566] CFL/CNL: SOL driver EFI_SERIAL_IO_PROTOCOL.SetAttributes() does not use max. supported value for BaudRate & ReceiveFifoDepth
+Resolution: Return maximum nearest supported value for BaudRate & ReceiveFifoDepth
+Impacted Platform: All CNL/CFL platform.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Me/ActiveManagement/Sol/Dxe/SerialOverLan.c
+CannonLakeSiliconPkg/Me/ActiveManagement/Sol/Dxe/SerialOverLan.h
+CannonLakeSiliconPkg/Me/ActiveManagement/Sol/Dxe/SerialOverLan.inf
+
+================================================================================ 
+Commit: c7535557984b38ea36ab637066a2dd7761ba1a93 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:12 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: bac830c2f38fbaf883d53acbaa78beb1624c22fc
+Original commit date: Fri Feb 9 19:05:10 2018 +0800
+BpCommonPkg: Make sure TraceHub PEI catch the initialized MMMIO address
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Library/TraceHubDebugLibSvenTx/PeiTraceHubDebugLib.c
+
+================================================================================ 
+Commit: 4f1a578d2b0d5a3b5cee14210d1713c35c35079d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:08 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 755ae497d60e12ba0b298722e7e4b5e4f242f456
+Original commit date: Wed Feb 28 12:07:44 2018 -0800
+Change-Id: I0799e7a6ed9742f945950935d3954f6ce261cc61
+Part2: [CFL-S][OC] The system does not boot after Power Limit 4 is set to max value
+Fix the mask for PL3 duty cycle and PL3 time.
+Tracker-link:https://hsdes.intel.com/appstore/article/#/2202280497
+Hsd-es-id:2202280497
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/Upd/FspsUpd.dsc
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerLimits.c
+
+================================================================================ 
+Commit: c5e2842e6e1a49d275bd0caf1bce841aaddee568 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:06:04 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a4ae9e3d4ec62bcaa5c4cda78ed3eab0574c5844
+Original commit date: Mon Feb 26 15:05:27 2018 -0800
+Change-Id: If36723d9d3188c2031cf3811f073bb9b3a9c4642
+CannonLakeSiliconPkg: [1604746885][CFL_H][BIOS][OC]: After selecting Memory Profile as XMP Profile 2 in BIOS, SUT is hanging at dd80 post code followed by CATERR
+Issue:
+When selecting XMP2 Profile from Setup Menu, SUT fails during MRC SPD Processing
+Solution:
+Ensure that in the setup menu the XMP2 Profile cannot be selected if it is not enabled within the SPD.
+Additional Changes:
+Add support for CFL CPUID and update VS Proj for MiniBIOS.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Setup/OverClockSetup.hfr
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 085355f5643988e78c7c04a026df1258846dbcad 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:05:50 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: dc272858d6863c9e587a226b4ca0520b6c00e309
+Original commit date: Mon Feb 26 15:29:17 2018 +0800
+Change-Id: I9b71c46dfa6844a78bdb43e6842fe0dd85b13fca
+[1504573058] FSP UPD generation tool enhancement to support Natural Alignment.
+1. GenCfgOpt supports using "*" as offset in Fsp[t/m/s]Upd.dsc files to calculate offset in output H files, no need to hardcode offset anymore.
+2. GenCfgOpt supports adding padding automatically to maintain structure alignment for UPD structures in H files generated by GenCfgOpt.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientSiliconPkg/Override/ClientSiliconPackageOverride.md
+ClientSiliconPkg/Override/IntelFsp2Pkg/Tools/GenCfgOpt.py
+
+================================================================================ 
+Commit: 33384014050662555f1747d1581f23a2f3f253ec 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:05:27 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 87209a78ba09ba71050c47a3de76614cdd804839
+Original commit date: Tue Feb 27 14:07:54 2018 -0800
+Change-Id: I80368cc46510c073db2b763b8ae45fd6e218ea92
+CannonLakeSiliconPkg: [1406791886][CFL][CNL][MRC] SMBIOS Type 17 Offset 15h Speed report incorrectly
+MRC Version needs to be updated for CNL
+MRC should report the speed each DIMM is capable of within SMBIOS type 17 at offset 0x15.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: bcef650ab225af019e7763c72f8a2336cabee37f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:05:20 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 1fa9bd6d83998ddd18119d792ed0108418d9b439
+Original commit date: Mon Feb 26 10:37:33 2018 -0800
+Change-Id: Icebee59b5a79641961835c6bef49a46f4dbd0749
+[CFL] 3rd Party PCIe device cannot enter L1 state at CFL platform
+Increase the depth for each upstream port rather than downstream port in Aspm configuration function
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchPciExpressHelpersLib/PchPciExpressHelpersLibrary.c
+
+================================================================================ 
+Commit: ebc464040fefa7b10a237616b3b00557a5e53673 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:05:17 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a0cbba6682e204b953b243abf77aed028d2c7216
+Original commit date: Wed Feb 21 11:54:27 2018 -0800
+Change-Id: I4b36d7ec76dd344ce45ddfc155ba9cf1e369a5ae
+CannonLakeSiliconPkg: [1406791886][CFL][CNL][MRC] SMBIOS Type 17 Offset 15h Speed report incorrectly
+MRC should report the speed each DIMM is capable of within SMBIOS type 17 at offset 0x15.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/FspWrapperHobProcessLib.c
+CannonLakeSiliconPkg/SystemAgent/Include/MemInfoHob.h
+CannonLakeSiliconPkg/SystemAgent/Library/Private/DxeSmbiosMemoryLib/SmbiosType17.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/Include/Cannonlake/MrcInterface.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/Include/Coffeelake/MrcInterface.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/MemoryInit.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+
+================================================================================ 
+Commit: 61617f4dadb8d4fc2414bcf65602b6ae3f94b646 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:05:14 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: f6d26bffa13fb6bfc8a2d87a044b56cbf22053b8
+Original commit date: Mon Feb 26 15:59:21 2018 -0800
+Change-Id: Ic92a277ed154af85d24e6b3e6ab8c7ff0ac715aa
+Change 2nd Microcode patch reload debug message.
+2nd Microcode patch reports failure when it doesn't load. Update debug message to specify that this is normal when SGX is disabled.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuInitLib/Features.c
+
+================================================================================ 
+Commit: 366c75d085f55104423aff30c50604661fc3d05e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:05:09 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 15d8b05c8f3d4339124f4057d2477a8001792b5b
+Original commit date: Thu Feb 8 10:52:14 2018 -0800
+Change-Id: I9bc0a7f4fa0264ea2383f94687b6515718388afd
+CannonLakeSiliconPkg: ECC CNL H DDR4 ALias check failed using ch0 fully populated and 1 dimm ch1
+Change: Fixed channel, ranks loops for second dimm along with logical to physical rank mapping.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: 9f7cb486afd7a04c91d8a231bec760e469426100 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:04:44 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 1ff94dfeacfca8474a5495073ff677afcb6921ac
+Original commit date: Mon Feb 26 10:29:21 2018 +0800
+Change-Id: I534fe0e11ea347857441c1bc7540a1982981f4fd
+Clean up InternalOnly override from Client packages
+Clean up InternalOnly tags from the ClientCommonPkg/Override as no IP concerns.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientCommonPkg/Override/BpCommonPkg/Csm/VariableSmiInt15Dxe/VariableSmiInt15Dxe.c
+ClientCommonPkg/Override/BpCommonPkg/Csm/VariableSmiInt15Dxe/VariableSmiInt15Dxe.h
+ClientCommonPkg/Override/BpCommonPkg/Csm/VariableSmiInt15Dxe/VariableSmiInt15Dxe.inf
+ClientCommonPkg/Override/BpCommonPkg/Universal/VariableSmi/VariableSmiExportHii.c
+ClientCommonPkg/Override/BpCommonPkg/Universal/VariableSmi/VariableSmiSmm.c
+ClientCommonPkg/Override/RoyalParkCommonOverride.md
+
+================================================================================ 
+Commit: 60a021629bd143ec58166e52ade8f9b80e38fb76 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:04:38 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 4ba6b376186f58136473c747f2fde7d905dad6c9
+Original commit date: Tue Feb 27 11:37:45 2018 +0530
+Change-Id: I780eaf33eba2d26be21fbfc9c4d986006450b3f9
+Title : [CFL+CNP] Integrate latest CFL GOP V1077
+Resolution : Latest GOP Driver integration for CFL
+Impacted Platforms : CFL all
+Hsd-es-id: 1604751487
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCfl.efi
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCflDebug.efi
+
+================================================================================ 
+Commit: eecbb7dc2daf6b9d67918b5d5b30827a93e745a6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 22:04:36 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: de25b84782b8b7109480681543165da8994a9893
+Original commit date: Mon Feb 26 17:57:27 2018 -0800
+Change-Id: Ie1599dcc89ea5aed5a6d1e1e765eb43ab0c6e17d
+Revert "[1305551106] BiosKnobsData.bin need to be  compressed to fit into BIOS"
+This reverts commit 11c344ded52840f134a48b8da884e94caf966719.
+Hsd-es-id: 1305551106
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xls
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_FSP_WRAPPER.fdf
+
+================================================================================ 
+Commit: f30c9a0834969a036abb65c34714c0f97f0a4f63 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:40:18 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 5ade54e6d95b3a5209c1e054f93f450a8cb79b68
+Original commit date: Mon Feb 26 18:42:56 2018 +0800
+Change-Id: Iecae3ce8d7c2a9ceea42f50308bdd31bb5626c77
+CannonLakePlatSamplePkg: [CNL/CFL] Update ACPI NVS
+Keep deprecated NVS without removing it.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Include/Protocol/PlatformNvsArea.h
+
+================================================================================ 
+Commit: 6dafe7c47a30e5112fd069a9e05a80c610df5f33 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:40:15 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 31534eed65150aad6765c7bb9b3367627a1a3e23
+Original commit date: Mon Feb 26 15:13:25 2018 +0800
+Change-Id: I883c9ff295d9ca92eafb6982a314648aca59c449
+Title:[CNL][Camera]Extend camera sensor PLD buffer  based on MSFT spec
+Add ACPI_PLD_SPATIAL_BUFFER for PLD method of Camera sensor
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/MipiCamSensors.asl
+
+================================================================================ 
+Commit: a15d9bf26801d8a5e7de5f3e5b02455c45652a29 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:40:08 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 42bdf9a7afab7ab2a6d3de9d081d16a8e8ecbb89
+Original commit date: Fri Feb 23 15:40:12 2018 +0800
+Change-Id: Ibfe62aa398a1c9739aa6ef1457e543445ee331e3
+CannonLakePlatSamplePkg: [CNL][Y7/Y8]: SUT is getting hung with M.2 7360 connected, when system is in idle state in S0
+Resolution:
+ 1.Updated modem preboot power on sequence with PERST added
+ 2.Updated modem RTD3 flow based on Rtd3Pcie.asl
+ 3.Disabled USB2 port#2 as WA for WWAN according to WWAN team's request
+ 4.Optimized modem rigorous cycle
+ 5.Added ACPI PEP constraint for WWAN
+Impacted Platform: CNL
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.c
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.inf
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/DiscreteConnectivity.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/DiscreteConnectivityReset.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CnlURvpRtd3.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CnlYRvpRtd3.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieWwan.asl
+CannonLakePlatSamplePkg/Board/Include/OtherBoardConfigPatchTable.h
+CannonLakePlatSamplePkg/Board/Library/PeiPlatformHookLib/PeiPlatformHooklib.c
+CannonLakePlatSamplePkg/Board/Library/PeiPlatformHookLib/PeiPlatformHooklib.inf
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitLib.c
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitLib.inf
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitPreMemLib.inf
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardPchInitPreMemLib.c
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlUDdr4.h
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlUDdr4PreMem.h
+CannonLakePlatSamplePkg/Features/Pep/AcpiTables/Pep.asl
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/PlatformPkg.dec
+CannonLakePlatSamplePkg/Setup/ConnectivitySetup.hfr
+CannonLakePlatSamplePkg/Setup/ConnectivitySetup.uni
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.uni
+
+================================================================================ 
+Commit: 7583c415ff6915138f46d785287a2ec7c4290ab2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:40:00 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 84433cc0447722839b1869b98a1600923f38a411
+Original commit date: Wed Jan 31 14:40:23 2018 -0800
+Change-Id: I6197c3cab8fa312e22c75ff2bed17dd8125170ab
+CannonLakeSiliconPkg: [1406771946][CNL-H][MRC] SPD Processing Quad Rank error says too many ranks
+Need to change SPD Processing in MRC to allow 4 ranks to be enabled in full bios.
+Additional Changes:
+Enabling Local Stub Mode with LPDDR4 4-Rank SPD
+GsmMccRankOccupancy
+RoundTripDelay
+ValidCkeBitMask
+ZqCal Timing Changes
+Dimm[] Host Structure Accesses
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/Include/Cannonlake/MrcInterface.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/MiniBios/MEMORY/MrcOemPlatform.c
+
+================================================================================ 
+Commit: 86219fbcf2266747ea8a5f5b6eb1c084ae1e332d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:39:49 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 824b69c59852fc502434de3ec796fadd28d21185
+Original commit date: Mon Feb 26 13:49:05 2018 +0200
+Change-Id: Ic0ec5d8f53db64701c5699e0e2a859f41acda4fb
+[CNL][MRC] RxAnalogGraceCount is misconfigured in MRC due to an
+implementation bug
+Issue: RxAnalogGraceCnt is misconfigured due to MaxRdDataValid not being
+set as the maximum between the subchannels in the same frequency,
+ultimately causing calc_in_prgs to get stuck in retraining flow.
+Change: fix MaxRdDataValid to be correct, add guardband of 8 as
+suggested from Design.
+Hsd-es-id:1305629289, 1305559667
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: b78e53604aae07e4b1e96c72d598a49cdfa5649b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:39:38 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a1cccc52eec03bc7c5d4b1420f4495ba1bd481cf
+Original commit date: Mon Feb 26 19:22:34 2018 +0800
+Change-Id: I15ee3e660d48c16a53b94a841f878194e99a1fdf
+Integrate CNL D0 Patch 0x1C
+Impacted Platform: CannonLake U/Y
+HSD: NO HSD
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 81327c284054a1c3d4cb75a3ff37fe495c24ccc7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:39:34 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 5571225847e130fd03c32426d80e6c68061908fa
+Original commit date: Wed Feb 21 13:56:27 2018 +0100
+Change-Id: If15371d2081b312ccdb77c136f2c474eb63ba619
+Implement PMC IPC command to disable ME devices
+Since disabling access to ME devices in PSF is not possible
+due to POST_BOOT_SAI protection we are utilizing new PMC IPC command
+to disable all ME devices in ME partially disabled and on EOP message failure.
+New command details:
+CmdId = 0xA9, SubCmdId = 0 -> Enable ME devices
+CmdId = 0xA9, SubCmdId = 0 -> Disable ME devices
+CMD A9 must be sent on every boot only once.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Me/HeciInit/Dxe/MeInit.c
+CannonLakeSiliconPkg/Me/HeciInit/Dxe/MeInitFsp.c
+CannonLakeSiliconPkg/Pch/Include/Private/Library/PmcPrivateLib.h
+CannonLakeSiliconPkg/Pch/Include/Register/PchRegsPmc.h
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PmcPrivateLibCnl.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PmcPrivateLibInternal.h
+
+================================================================================ 
+Commit: f1a0a99c891d646bc68042bf41fc1e818feac62a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:39:25 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: fa7cac51e6e0301e616189510c46789038ea300e
+Original commit date: Sun Feb 25 14:43:15 2018 +0200
+Change-Id: Ic427b016e21c2c58c1d69e79ae0511447bcd4d9f
+[CNL][MRC] RxAnalogGraceCount is misconfigured in MRC
+Issue: RxAnalogGraceCnt is misconfigured, causing calc_in_prgs to get
+stuck in retraining flow.
+Change: set RxAnalogGraceCnt to max until correct formula is given by
+design and tested. revert WA for the same issue (setting low point as
+1867).
+Hsd-es-id:1305626147, 1305559667
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 01c77f6376a0a05be5af959439433ccb6bd908f3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:39:23 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 11c344ded52840f134a48b8da884e94caf966719
+Original commit date: Fri Feb 16 12:20:44 2018 +0530
+Change-Id: I19896589149ccbf360c072f80f8aac871aa4c3e4
+[1305551106] BiosKnobsData.bin need to be  compressed to fit into BIOS
+Resolution: Changed Fv Map to embeded BiosKnobsData.bin into FV_main_compact and an error checking codition for this in build process
+Impacted: CNL/CfL
+Hsd-es-id: 1305551106
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xls
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_FSP_WRAPPER.fdf
+
+================================================================================ 
+Commit: da68a2cc8b5824d6286e792489e54b0ba0d1cc40 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:39:13 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: bc769576073826305901025d81a76c1d823ead99
+Original commit date: Sun Feb 25 12:05:12 2018 -0800
+[TeamCity] Weekly Update FSP/RC
+Increment FSP Revision Number and reset FSP Build Number to 1
+Sun Feb 25 12:05:12 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 26dc3c9d5d12946e77c26964e0dfe75d41e09949 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:53 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a6978fa1809805f22d106a4e6d65705055b18fb6
+Original commit date: Thu Feb 22 14:24:16 2018 +0800
+Change-Id: I6f0687f12d1690aea703f81b62ca581f0469d370
+Title:[CNP] CNP Gbe w/a with VM disabling settings
+Resolution:
+Hsd-es-id: 1504729842
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLib.c
+
+================================================================================ 
+Commit: e16f89a5e3a4bdf388d041595890bc0004805b90 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:51 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 8d4150938de1d6c8920ca70f1e82deb8f4a34321
+Original commit date: Thu Feb 22 17:36:54 2018 -0800
+Change-Id: I8fa9c413abebfc3d0010e7a44c8a47ca30c9ffff
+[CFL-H] [CFL-U] : Default and Expected value mismatch observed in Serial IO config page
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Setup/PchSetup.hfr
+
+================================================================================ 
+Commit: e729fb20598c402bacead763c36a41beae1a7722 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:40 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: e5e5efcba0a00fc8ce90edff7f0400c27b4e59cc
+Original commit date: Wed Feb 21 17:05:53 2018 -0800
+Change-Id: I98b9146772604d89725090cd9a9a06e3186bd67c
+[Title]:  [CFL-S][OC] The system does not boot after Power Limit 4 is set to max value
+[Resolution]: PL4 mask value is correctly applied. The max value in UI is fixed.
+[Impacted Platform]:all
+[HSD]:2202280497
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/Upd/FspsUpd.dsc
+CannonLakePlatSamplePkg/Setup/CpuSetup.hfr
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerLimits.c
+
+================================================================================ 
+Commit: 61ea4198743531d8123454af5981b5e2f15015a5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:37 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 2aeb084c98dd52f53c10873fdeae3bc539a8c9e0
+Original commit date: Tue Feb 20 13:52:23 2018 -0800
+Change-Id: I7e45b97a17ee2e54a5df50752c2a9eb3625177a3
+CannonLakeSiliconPkg: [1504723273][CFL] Read Equalization is disabled by default
+Issue:
+In a change in MRC input policies for CNL, the Read Equalization training step was moved to disabled by default.
+This has negative impact on RdV margin results on CFL, as the training step should be enabled by default.
+Solution:
+Add CFL specific build flags where CNL/CFL diverge in training enables defaults.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Setup/SaSetup.hfr
+CannonLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
+
+================================================================================ 
+Commit: 7407dd61610ace9332bafcff54688571d7ac3118 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:26 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 8c1095bdd43f90d676b8df2147585603f0e85f12
+Original commit date: Fri Feb 9 18:39:22 2018 +0800
+Change-Id: I53657a3e5c3490de1ab388d7896cfc13dc3775d1
+The NMI2SMI enable bit isn't be set by NmiRegister
+In CFL, the NMI register is not accessible after POSTBOOT_SAI.
+PMC provides IPC cmd 0xAA to access NMI register.
+BIOS should use PMC IPC cmd to set and get PCR[ITSS] NMI register.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Include/Library/PmcLib.h
+CannonLakeSiliconPkg/Pch/Include/Private/Library/PmcPrivateLib.h
+CannonLakeSiliconPkg/Pch/Include/Register/PchRegsItss.h
+CannonLakeSiliconPkg/Pch/Include/Register/PchRegsPmc.h
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPmcLib/PmcLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
+CannonLakeSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmiDispatch.c
+CannonLakeSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmmHelpers.c
+
+================================================================================ 
+Commit: 4d0ea1073dc980a4efa59e060d7e67c7ce30ae21 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:12 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: edb2201f6ee911e30802c784ddb3bb2bf253fd4a
+Original commit date: Tue Feb 13 10:35:01 2018 +0800
+BpCommonPkg Usb3DebugPortLib: Use 2 infs for compatibility
+For compatibility, use 2 infs for Usb3DebugPortLib,
+one is original without IOMMU support, another is
+new with IOMMU support.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/BpCommonPkg.dsc
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibDxe.c
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibDxe.inf
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibDxeIoMmu.c
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibDxeIoMmu.inf
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibPei.c
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibPei.inf
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibPeiIoMmu.c
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibPeiIoMmu.inf
+
+================================================================================ 
+Commit: 31794e6ac4ba035eeed19acf2edba729f601f94a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:06 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 31f047fc5ac610705bb9646fc493baa3fc33d658
+Original commit date: Fri Feb 9 09:47:17 2018 +0800
+BpCommonPkg Usb3DebugPortLib: Check mUsb3Instance before dereferencing it
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibDxe.c
+
+================================================================================ 
+Commit: 59b795927b4e2a418910dd27e3d697da47596c58 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:05 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 0fe661b52e41b94b951244a62ca34d960d76bf12
+Original commit date: Thu Feb 8 15:18:12 2018 +0800
+BpCommonPkg WifiConnectionManagerDxe: Fixed a potential NULL reference bug in WCM
+* In function WifiMgrWritePasswordToKMS(), KeyWrapper was allocated buffer
+  but not had buffer NULL check. If this process failed, NULL will be referred.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Universal/WifiConnectionManagerDxe/WifiConnectionMgrMisc.c
+
+================================================================================ 
+Commit: 07eea8e8e4ffc826a2039db6a5d59da77348ca87 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:03 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 4019e701f2e36a2fa99cf698f615e43846224177
+Original commit date: Wed Jan 10 17:56:24 2018 +0800
+BpCommonPkg Usb3DebugPortLib: Support IOMMU
+For PEI, allocate granted DMA buffer from IOMMU PPI.
+For DXE, map DMA buffer by PciIo.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Library/Usb3DebugPortLib/MiscServices.c
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortDataTransfer.c
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortInitialize.c
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibDxe.c
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibDxe.inf
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibInternal.h
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibPei.c
+BpCommonPkg/Library/Usb3DebugPortLib/Usb3DebugPortLibPei.inf
+
+================================================================================ 
+Commit: 4b212e8035628e3b2621926614885dbad2970f6d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:38:00 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a3935bfe96b22a0768575df886b1aa2e91094413
+Original commit date: Wed Feb 7 11:21:52 2018 +0800
+BpCommonPkg WifiConnectionManagerDxe: Implemented delete function for internal KMS key
+* Delete key function is not supported in previous version, and the key can't be
+  removed from NV region. Considering it brings extra burden for memory space, this
+  patch is to implement the delete key function.
+* Correct the connection result message when connect to a network with wrong password.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Universal/WifiConnectionManagerDxe/Kms/KmsImpl.c
+BpCommonPkg/Universal/WifiConnectionManagerDxe/Kms/KmsProtocol.c
+BpCommonPkg/Universal/WifiConnectionManagerDxe/Kms/KmsService.h
+BpCommonPkg/Universal/WifiConnectionManagerDxe/WifiConnectionMgrImpl.c
+BpCommonPkg/Universal/WifiConnectionManagerDxe/WifiConnectionMgrMisc.c
+BpCommonPkg/Universal/WifiConnectionManagerDxe/WifiConnectionMgrMisc.h
+
+================================================================================ 
+Commit: 94d71f91bf6087b60d7988f463150733f118f58c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:37:54 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 93935562abf66a6ca6372ef832cc676657a717b0
+Original commit date: Thu Feb 22 11:52:35 2018 +0800
+Change-Id: Ia3f7683d9ba261fbafd228ae54d6d0715d4507f0
+Title:[CFL][CNP][OC]: VddQ Voltage override doesn't work - Take 2
+Resolution: Correct VddQ formula to be 510mv + (VID x 10mv)
+Impacted Platform: CoffeeLake OC
+HSD: 1305586504
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.c
+
+================================================================================ 
+Commit: 91f7fd2b3eb30134b0b143daf6bba166257b1d2a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:37:47 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: c1f820ed00ecaf676120fcc915ebaa0dd70cbfb9
+Original commit date: Thu Feb 22 14:18:25 2018 -0800
+[TeamCity]  Daily Update_FSP/RC
+Thu Feb 22 14:18:25 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 96f27b2b061a321d2d8dadbdc60ffbbdf7e7e814 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:37:34 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 87a210873482d57dcc0022952f31ac728c8954b1
+Original commit date: Tue Feb 20 15:00:55 2018 -0800
+Change-Id: If58f93314f2f788b5ecef54c6bc5d44bbddf7741
+CannonLakeSiliconPkg: [2202291241][CFL][MRC] Adding new DDR4 spec defines tDLLK for 2667 and 2933
+The new JEDEC Specificiation 79-4B defines additional timings for tDLLK latency.
+This helps reduce self refresh exit latency for improved Display Engine performance.
+The change adds the new spec defined tDLLK timings for 2667 and 2933.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.h
+
+================================================================================ 
+Commit: 464bf6575338fc997fb3500921cc601dcd870244 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:37:31 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ee73f405c6c58df47274a745f8676b762ca8a510
+Original commit date: Tue Feb 13 15:39:01 2018 -0800
+Change-Id: I43833c900d8ce307c4058170cdddeaed1115f37f
+CannonLakeSiliconPkg: [2202058124][CNL_H][MRC] LPDDR4 RVP is pulling the wrong addresses for the SPD
+When MRC detects the CNL_H LPDDR4 RVP (Board_ID = 0xD) with SPD_PRSNT set it's not defining the SPD addresses correctly.
+Instead of A0/A2 and A0/A2, it's defining the devices as A0/A2/A4/A6.  This needs to be updates so MRC sees both channels.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/MiniBios/BUILD/MiniBios.mak
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/MiniBios/MEMORY/MrcOemPlatform.c
+
+================================================================================ 
+Commit: ce5e26be19170df1ae9e9fc413c350e7fe986c6f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:37:14 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: c4ed2772030146ec04d3d611533d98e121d9d38d
+Original commit date: Thu Feb 15 17:47:44 2018 +0530
+Change-Id: I737618c14f00f9439429a9a9cb9633bbb9c88bb1
+Title: Fix bug in LibPcieFindCapId ()
+Resolution: use BIT4 of PCI_PRIMARY_STATUS_OFFSET to find PCI capability
+Hsd-es-id: 2201938524
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/Library/Private/DxeSmmSaPcieLib/DxeSmmSaPcieLib.c
+
+================================================================================ 
+Commit: 139e04ed476bdc025d412a8f032a20d710235567 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:37:09 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 8f3272140b1cde9c4e17a2aae3c0eb982c5d2fd0
+Original commit date: Tue Feb 13 19:28:10 2018 +0800
+Change-Id: I7a65ec6cfba3cd811c7fdb503790075b5fc14887
+Title: Remove the IntelFrameworkModulePkg and IntelFrameworkPkg usage from CNL and later projects
+Resolution: Move IntelFrameworkModulePkg and IntelFrameworkPkg to ClientSilconPkg/SampleCode/
+Impacted Platform: All CNL and CFL SKUs
+HSD: 1504688413
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientCommonPkg/Csm/IntelRaidAtaAtapiPassThru/IntelRaidAtaAtapiPassThru.inf
+ClientCommonPkg/Csm/IntelRaidBiosThunk/IntelRaidBiosThunk.inf
+ClientCommonPkg/Csm/IrqTableInfo/IrqTableInfo.inf
+ClientCommonPkg/Csm/SmmThunk/SmmThunk.inf
+ClientCommonPkg/Library/BaseLegacyBiosPlatformLib/BaseLegacyBiosPlatformLib.inf
+ClientCommonPkg/Override/BpCommonPkg/Csm/VariableSmiInt15Dxe/VariableSmiInt15Dxe.inf
+ClientCommonPkg/Override/IntelFrameworkModulePkg/Csm/BiosThunk/VideoDxe/BiosVideo.h
+ClientCommonPkg/Override/IntelFrameworkModulePkg/Csm/BiosThunk/VideoDxe/VideoDxe.inf
+ClientCommonPkg/Override/IntelFrameworkModulePkg/Csm/LegacyBiosDxe/LegacyBiosDxe.inf
+ClientCommonPkg/Override/IntelFrameworkModulePkg/Csm/LegacyBiosDxe/LegacyBiosInterface.h
+ClientSiliconPkg/ClientSiliconPkg.dec
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Csm/BiosThunk/BlockIoDxe/BiosBlkIo.c
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Csm/BiosThunk/BlockIoDxe/BiosBlkIo.h
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Csm/BiosThunk/BlockIoDxe/BiosInt13.c
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Csm/BiosThunk/BlockIoDxe/BlockIoDxe.inf
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Csm/BiosThunk/BlockIoDxe/BlockIoDxe.uni
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Csm/BiosThunk/BlockIoDxe/BlockIoDxeExtra.uni
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Csm/BiosThunk/BlockIoDxe/ComponentName.c
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Csm/BiosThunk/BlockIoDxe/Edd.h
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Include/Guid/BlockIoVendor.h
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Include/Guid/LegacyBios.h
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Include/Guid/LegacyDevOrder.h
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Include/Protocol/IsaAcpi.h
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Include/Protocol/IsaIo.h
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Include/Protocol/VgaMiniPort.h
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Library/LegacyBootManagerLib/InternalLegacyBm.h
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Library/LegacyBootManagerLib/LegacyBm.c
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Library/LegacyBootManagerLib/LegacyBootManagerLib.inf
+ClientSiliconPkg/SampleCode/IntelFrameworkModulePkg/Library/LegacyBootManagerLib/LegacyBootManagerLib.uni
+ClientSiliconPkg/SampleCode/IntelFrameworkPkg/Include/Framework/StatusCode.h
+ClientSiliconPkg/SampleCode/IntelFrameworkPkg/Include/Protocol/Legacy8259.h
+ClientSiliconPkg/SampleCode/IntelFrameworkPkg/Include/Protocol/LegacyBios.h
+ClientSiliconPkg/SampleCode/IntelFrameworkPkg/Include/Protocol/LegacyBiosPlatform.h
+ClientSiliconPkg/SampleCode/IntelFrameworkPkg/Include/Protocol/LegacyInterrupt.h
+
+================================================================================ 
+Commit: 0df1105a9b685838aee410454bf0541076bb7d66 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:37:00 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 16cc5e304ca87b0ee787d8322ca2b9358a162928
+Original commit date: Wed Feb 21 17:27:08 2018 -0800
+[TeamCity] Auto-Commit NVS
+Wed Feb 21 17:27:08 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+CannonLakePlatSamplePkg/Include/PlatformNvsAreaDef.h
+
+================================================================================ 
+Commit: 4955dc8a16cf0a3299ff21cfb3e84a6db758d037 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:57 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 65d5c59010db474f2e5fe9b7a749e910cc01fe95
+Original commit date: Wed Feb 21 16:50:52 2018 -0800
+[TeamCity] Auto-Commit FSP
+Wed Feb 21 16:50:52 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspBinPkg/Fsp.bsf
+CannonLakeFspBinPkg/Fsp.fd
+
+================================================================================ 
+Commit: 4d8146d5dafdae4754eda9db5589d15aec92f7b6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:55 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: e9e85fe4f17f17fe3f37f3320fa86f1f4ee41d72
+Original commit date: Wed Feb 21 16:25:28 2018 -0800
+Change-Id: I691bb9d850f7712bd8a86c71af7dad36ad0e82d2
+Daily Update FSP/RC
+Hsd-es-id: NO_HSD
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: f57cdb1fab23b75326be37827e86cdcfad5e8337 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:54 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: abdbc234aebac29500e55971d21052d77a5ed44e
+Original commit date: Wed Feb 21 16:33:39 2018 -0800
+[TeamCity] Weekly Update BIOS ID
+Increment BIOS Major Version and reset Minor Version to 0
+Wed Feb 21 16:33:39 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 4f6d6265591d19f6a2d55185038591afe0707e58 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:38 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: e2ef31ef27d50f8c6a6e8bb614051ff0535421cb
+Original commit date: Thu Jan 25 10:34:18 2018 -0800
+Change-Id: I887ca138cf5cc75c926b3981ae10d795709bc5a7
+Adding PCIe _DSM for energy efficient destkop
+New energy efficient desktop design requires platform
+to provide additional functions in PCIe _DSM.
+Function index 10 - allows bus driver to negotiate
+with the platform maximum supported auxilary current
+the hierarchy will consume while in D3Cold state.
+Function index 11 - allows bus driver to insert a
+delay between PME_TO_Ack and PERST# assertion in RTD3 flow
+A new _DSD object has been added to indicate to the bus
+driver a support for auxilary power budgeting.
+Checking in for Ankit Sinha <ankit.sinha@intel.com>
+Hsd-es-id: 220157152
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.c
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CflSRvpRtd3.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/PcieAuxPowerBudgeting.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/Rtd3Pcie.asl
+CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/Pch.asl
+CannonLakeSiliconPkg/Pch/AcpiTables/Dsdt/PchPcie.asl
+CannonLakeSiliconPkg/SystemAgent/AcpiTables/PegSsdt/PegCommon.asl
+CannonLakeSiliconPkg/SystemAgent/AcpiTables/PegSsdt/SaPcieDsm.asl
+
+================================================================================ 
+Commit: d554b7b9137d37ad8f19b73b02b3ae876acdb5db 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:34 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ce3691edd1f3f8e20eb831bb8f4869324dcc5be9
+Original commit date: Thu Feb 15 11:49:26 2018 -0800
+Change-Id: I8831c3ccf5d4930d21c32242c072160d5e376e56
+CannonLakeSiliconPkg: [1406817300][CNL-H][MRC] ECC fix error display in Write Leveling Flyby
+Issue:
+Assert seen in JWL with ECC DIMMs due to LShiftU64 is attempting to shift out of bounds, due to ECC Byte and limitation of UINT64 variable
+Solution:
+Fix for-byte loop to be only for non-ECC bytes, and handle ECC Byte printing separately, as Bit-level ECC error information would not fit within UINT64 variable.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+
+================================================================================ 
+Commit: e6839926d27de90ecf4f1704c9b491dc4c3be0fc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:24 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 51df302975fce72ea7e26f95c4442024daa70783
+Original commit date: Wed Feb 21 12:13:03 2018 +0800
+Change-Id: I87320328bd332d2b10d277c59657015d87a057dd
+CannonLakePlatSamplePkg: Fixed CNL Xcode release build fail cause by FV image size is overflow
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_UEFI_BOOT.fdf
+
+================================================================================ 
+Commit: 3da08957faf819496169f86424bf3a6f8a6befae 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:23 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: cf89326ee8190f5b12821968f6c4a2bf0cc4715c
+Original commit date: Tue Feb 13 13:29:25 2018 +0800
+Change-Id: Idc7e2264fe2cbcbfffc6f786c59fa24eeb409e38
+Title: [PVMF][CFL/CNL] BIOS support required for CFL LP3 Config and CNL LP4x Config
+Resolution:Set PEP AUDIO and Audio Dsp to disable
+Hsd-es-id: 1604537179
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Board/Include/OtherBoardConfigPatchTable.h
+CannonLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.c
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitPreMemLib.c
+
+================================================================================ 
+Commit: 4c5147ad1a2267e1d02c2ac6cc5ce1dc82536d2b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:14 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 0aba0e129552601de46e6c0a8ba42e62ba60317f
+Original commit date: Fri Feb 9 14:47:39 2018 +0800
+Change-Id: Ibeb043bca0b5d6a05f25f4527ecc0c50ddbc69fb
+[1305346599] [CFL-S][CNP][ICC Menu] Set Profile field is grayed out.
+[1406657057] CFL-S "ICC profile 0 in BIOS page must be customized  - currently shows 0 and grayed out"
+Resolution: Remove ME EndOfPost check, ICC agent supports ICC commands before/after EOP, except MPHy setting.
+Impacted Platform: All CNL/CFL platform.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Features/Icc/IccPlatformDxe/IccPlatform.c
+CannonLakePlatSamplePkg/Setup/IccSetup.c
+CannonLakeSiliconPkg/Me/Library/DxeMeLib/HeciMsgDxeLib.c
+
+================================================================================ 
+Commit: f66228ac24c75ff2819431e5bb5defcac5b060a1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:07 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 54dbb3d5b9c3838f616be2d8daf416eab2f035d9
+Original commit date: Mon Feb 19 13:01:50 2018 -0800
+Change-Id: I1d6394ab55fb366d1e3f73697d684999fda76d81
+Title: [CFL][BIOS Guard]Include Production signed Bios Guard binary (2.0.4269) in CFL Bios
+-Production signed BIOS Guard binary is released for CFL PV
+-Fix contains BiG unable to access Top Swap (TS) bit related to 1305614585
+-Revert Ranveer's w/a for Top Swap (Commit Id: ba76f71859e130d659c74a115b2a5bed432b2d84)
+Resolution: Update BIOS Guard binary
+Impacted Platform: CFL
+HSD: 1305614585
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+
+================================================================================ 
+Commit: 6e2b60be744d4f0c11df44cb285185aa86ba0d5a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:36:01 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 24b027805e5188d9dee2097244646a883ab206aa
+Original commit date: Tue Feb 20 16:50:19 2018 +0200
+Change-Id: Id0311c308ef8860b3d4445af2488777d09526590
+Title: [CNL] Need to remove MMIO allocation for Azora
+Description: Due to lack of memory the SV BIOS failed to boot.
+This issue was solved by removing the memory allocation
+for the Azora card which is not supported anymore.
+Hsd-es-id: 1305587275
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaInitLib/SaInitPreMem.c
+
+================================================================================ 
+Commit: d572ecb58bed53d33384477f3b873973b1676f64 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:52 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 3fc807e43ba16e28553491f97466184fbebba29f
+Original commit date: Tue Feb 20 11:50:58 2018 -0800
+[TeamCity] Daily Update FSP/RC
+Increment FSP Build Number
+Tue Feb 20 11:50:58 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 4a821fa3b219bf58bf8866d19eb0dc2e4bba2517 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:44 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 28a43c898d3887abe18b866da2ee87d4bcf38282
+Original commit date: Tue Feb 20 10:46:42 2018 +0100
+Change-Id: I4580f4e1569c812b6cf0c6057763bc80b72e579b
+[CNL] Klocwork fixes for Cannonlake PCH code (ASSERT fix)
+Resolution: Fixed code issues based on Klocwork Static Analysis.
+Impacted Platform: CannonLake
+HSD: 1805546729
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmGpioLib/GpioLib.c
+
+================================================================================ 
+Commit: fbc942131beff69e0a99e6c73236b53b91b261f7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:40 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 9f3c15250697c1fbf32ba49e31f33c6ccaded515
+Original commit date: Mon Feb 12 12:36:27 2018 +0100
+Change-Id: I87f257f4177a3a371867a598816d1277b4a489c3
+Add Setup option to enable/disable MSI in FADT
+[Description] Setup options of MSI enabling in FADT moves from TbtSetup to AcpiSetup
+Hsd-es-id: 1805946900
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.c
+CannonLakePlatSamplePkg/Setup/AcpiSetup.hfr
+CannonLakePlatSamplePkg/Setup/AcpiSetup.uni
+CannonLakePlatSamplePkg/Setup/TbtSetup.hfr
+CannonLakePlatSamplePkg/Setup/TbtSetup.uni
+
+================================================================================ 
+Commit: 4b4553e724cdf3823e7bf83b3cc9f9be3d1482d1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:38 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 29931edf0c821e24b6cd2913549957b140484c3e
+Original commit date: Mon Feb 19 12:47:32 2018 +0530
+Change-Id: Ibe7ff6aa41b8ce2d524e926fab2860af56cf1ec2
+Title: nvidia specific gpio init method on S3/S4 resume
+Resolution: Need to add the GPIO intialization in S3/S4 specific to nvidia for their power sequence
+Hsd-es-id: 1604593968
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/Platform.asl
+
+================================================================================ 
+Commit: cbe713f83afdcb724af094d93a9aa25b648435e4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:36 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: cd64e3c3f23275ffb3290045ce71749af50e2ea5
+Original commit date: Mon Feb 19 20:54:38 2018 -0800
+Change-Id: I665cd6b89cdd0139681f6dedae77379426faeda2
+Integrate CNL D0 Patch 0x1A
+Hsd-es-id: NO_HSD
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: d01f2677b6f4331df40b504fdcf4666481a7deb0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:33 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 437c141963bb81e7fabee4959ba18e8330157e66
+Original commit date: Mon Feb 19 11:48:28 2018 -0800
+[TeamCity] Daily Update FSP/RC
+Increment FSP Build Number
+Mon Feb 19 11:48:28 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 966feb86968b864297f342bc01099174715b3565 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:23 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: a982fea72ebd3cb9c0419cf58e8b4bd0e639d8ae
+Original commit date: Fri Feb 16 10:50:19 2018 +0530
+Change-Id: I91f24347f69c249f566a7ce8e77016e926bb2462
+Title : [CNL]CNLY_Y11_EDK_Debug gets assert and hang up post code 1096 when boot to OS but Y8 can not reproduce.
+Resolution : CD clock initialization as per Bspec if not initialized by PEI GOP for iDisp Audio codec enumeration
+Impacted Platforms : CNL/CFL all
+Hsd-es-id: 1504690626
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/Include/Private/Library/GraphicsInitLib.h
+CannonLakeSiliconPkg/SystemAgent/Include/Register/SaRegsIgd.h
+CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiGraphicsInitLib/PeiGraphicsInitLib.c
+CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiGraphicsInitLib/PeiGraphicsPmInit.c
+CannonLakeSiliconPkg/SystemAgent/Library/Private/PeiSaInitLib/SaInit.c
+
+================================================================================ 
+Commit: ff3b0dfe2a3f5c3a55cf7922baa560688224aa78 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:21 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: f007744f978f4d7f97b24f9dc0d74e9c7db0ad68
+Original commit date: Mon Feb 12 10:56:57 2018 +0100
+Change-Id: I2d4ecfb1ad5c3f25e2ef88376cd41d5148bfb6f3
+[1604557513] Initialize iDisp Codes and verb tables after pcode is ready (after RESET_CPL is done)
+[Description] Moving Codec initialization flow at the end of EndOfPei
+Hsd-es-id: 1504690626
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Include/Private/Library/PeiHdaInitLib.h
+CannonLakeSiliconPkg/Pch/Library/Private/PeiHdaInitLib/PeiHdaInitLib.c
+CannonLakeSiliconPkg/SiInit/Pei/SiInit.c
+CannonLakeSiliconPkg/SiInit/Pei/SiInit.inf
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: c02231d9a5e46535bf89cc85b98525aecd515f8f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:18 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: f761b7ded4104f4658e459bd16480a7e07176855
+Original commit date: Fri Feb 16 16:44:49 2018 +0100
+Change-Id: I5b15abac3cc8fe3f98d0d4494edaba0f07efb9ea
+SUT hangs upon booting to OS [With in ~10sec] on CFL-H-LPC configuration
+Resolution:
+To mitigate this issue SPI PM programming will be done only in eSPI mode where
+there's no issue with boot or PG enabled.
+Please note this change will compromise SLP_S0 functionality in LPC mode
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Library/Private/PeiEspiInitLib/PeiEspiInitLib.c
+
+================================================================================ 
+Commit: 476db1cf20fb7dda91c25704b3583bb110799f3f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:13 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 65b6fdbfc5d85ca58f249cfb809d8a4e60aade39
+Original commit date: Sun Feb 18 12:03:57 2018 -0800
+[TeamCity] Weekly Update FSP/RC
+Increment FSP Revision Number and reset FSP Build Number to 1
+Sun Feb 18 12:03:57 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 379e87a0797ded84895af56dac469df18b21bc0c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:11 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 67ba3568db4a60b1e929b82a98a94bf5eeabb10a
+Original commit date: Sun Feb 18 11:48:36 2018 -0800
+[TeamCity] Daily Update FSP/RC
+Increment FSP Build Number
+Sun Feb 18 11:48:36 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 828ab5f0685d0eb3718acd4aeb9151041f0b1c5c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:07 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 102cd55a7f1799d9dfd1d00dc0fd6ce5a147b34d
+Original commit date: Sat Feb 17 11:51:51 2018 -0800
+[TeamCity] Daily Update FSP/RC
+Increment FSP Build Number
+Sat Feb 17 11:51:51 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 75b0b981f91abb03f7af01cd4ca545392376d37d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:04 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 20736a0dca8905c355464ada11eedc4dcb23eb11
+Original commit date: Thu Feb 15 17:12:21 2018 -0800
+Change-Id: I091ef587ced59ae38424a8c8bceb5a749a62c231
+CannonLakeSiliconPkg: [2202315629][CNL][MRC_WA] Workaround for RCH_REQ_TIMEOUT MCA and PC "10ad" in 1st boot
+As MRC W/A for this issue, SAGV Low will be set to 1867 until root cause and proper fix is identified.
+This change will only be applied to LPDDR4 on any D-Stepping U/Y SKU CPU.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 047682de425de75331574ea0e0d50865e97f25ed 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:35:02 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 6b86b806a6b3ae2c140f3ff8b3602ef58a39f0bc
+Original commit date: Thu Feb 8 11:36:50 2018 -0800
+Change-Id: I8e0ab411cb1458f576f6c58fa8a7782c7fee4a7a
+CannonLakeSiliconPkg: [2201092350][CFL][MRC] Memory Margin issue with DDR4 2667 UDIMMs
+Issue:
+Turnaround Training instability is seen with certain DDR4 UDIMM 2667 2DPC systems.
+Root Cause:
+CmdT margin in particular is reduced significantly due to differences between write delay between ranks within the DIMM and within the Channel.
+To resolve this, the WR_Add_Delay for each rank within a Channel must be the same for any 2667 2DPC system, a step has been addded in JEDEC Write Leveling to accomplish this.
+In addition, a per-rank CLK centering step has been added at the end of Late Command Training to resolve any un-even CmdT margins as a result of previous training steps.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+
+================================================================================ 
+Commit: 91774ad0f2e8130bb4e45600891cbefbbe237b92 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:59 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 4dff3978d3993653958e7d3c0c3dcee49bd45c83
+Original commit date: Fri Feb 16 11:35:56 2018 -0800
+Change-Id: I07fa02c0803afde6c991850109fb9ff3abde2bfd
+Include XCODE va_args warning override in Silicon Pkg builds
+Previously only applied in Platform Pkg
+Original commit: ad0c957962725df64572c873f7cd1d6bf62fbb21
+Hsd-es-id: N/A
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SiPkgBuildOption.dsc
+
+================================================================================ 
+Commit: 097eb5ff126fa19dc6ba137c05979919490576bc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:52 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 038a7639cb4b97fb5c3f72befa462292bdb816a9
+Original commit date: Wed Feb 14 16:17:25 2018 -0800
+Change-Id: Ifc58ff174348ad0d3b9d0107e84dae76cbf625c9
+[Title]:  [CFL-S][CNP][OC] VR Current Limit max value is incorrect
+[Resolution]: The max value in the UI for IccMax should be 1023. IccMax goes up to 255A in 1/4A increments.
+[Impacted Platform]: All
+[HSD]: 2202281257
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Setup/CpuSetup.hfr
+
+================================================================================ 
+Commit: 08bfb280ba7030d34015e1cf50c8237b491eaf19 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:51 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ee985af9666a283f0c78ed76f6472d31ebe46617
+Original commit date: Fri Feb 16 10:56:46 2018 -0800
+Change-Id: Ia6a986670918fb6d912e087707c608b51cbc96b8
+[Title]: Porting from ICL
+ICL IFWI :SUT is hanging at 9C71 with Intel Turbo boost max option disabled in BIOS
+[Resolution]: We cannot access 771h until 770h [0] = 1. So instead, we will
+be using OC mailbox command to get the fused max ratio.
+[Impacted Platform]: CNL H/S
+[HSD]: 1604731356
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/AcpiTables/CpuSsdt/Cpu0Hwp.asl
+CannonLakeSiliconPkg/Cpu/Include/Library/CpuMailboxLib.h
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PerformanceStates.c
+
+================================================================================ 
+Commit: 19c422fdb4b6563c5c6a5a0ec7222ece4ee9a0df 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:47 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 5430bc6f2463fffcbde024e71da7e321a4c172e3
+Original commit date: Fri Feb 16 11:50:13 2018 -0800
+[TeamCity] Daily Update FSP/RC
+Increment FSP Build Number
+Fri Feb 16 11:50:13 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 325fbf1834c54cabc437adf020f68ef07e8da9c7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:40 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 32caf6bc5c30b1d6029f56ff432c3f1d0b9d167a
+Original commit date: Mon Jan 22 16:08:34 2018 +0100
+Change-Id: Ibe84ed087ef8a8aeb90f1edfa72335e2a34225a1
+Title:[CNL] Klocwork fixes for Cannonlake PCH code
+Resolution: Fixed code issues based on Klocwork Static Analysis.
+Impacted Platform: CannonLake
+HSD: 1805546729
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Include/Library/GpioLib.h
+CannonLakeSiliconPkg/Pch/Library/DxeResetSystemLib/DxeResetSystemLib.c
+CannonLakeSiliconPkg/Pch/Library/DxeRuntimeResetSystemLib/DxeRuntimeResetSystemLib.c
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmGpioLib/GpioInit.c
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmGpioLib/GpioLib.c
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmGpioLib/GpioLibrary.h
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPchEspiLib/PchEspiLib.c
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLib.c
+CannonLakeSiliconPkg/Pch/Library/PeiResetSystemLib/PeiResetSystemLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchPciExpressHelpersLib/PchPciExpressHelpersLibrary.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PmcPrivateLibWithS3.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiEspiInitLib/PeiEspiInitLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchHsio.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchHsioPreMem.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchInitPreMem.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiSataPrivateLib/PeiSataPrivateLib.c
+CannonLakeSiliconPkg/Pch/PchInit/Dxe/PchAcpi.c
+CannonLakeSiliconPkg/Pch/PchInit/Dxe/PchInit.h
+CannonLakeSiliconPkg/Pch/PchInit/Smm/PchInitSmm.h
+CannonLakeSiliconPkg/Pch/PchInit/Smm/PchPcieSmm.c
+CannonLakeSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmmEspi.c
+CannonLakeSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmmPeriodicTimer.c
+CannonLakeSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmmSw.c
+CannonLakeSiliconPkg/Pch/PchSmiDispatcher/Smm/PchxSmmHelpers.c
+CannonLakeSiliconPkg/Pch/PchSmiDispatcher/Smm/PchxSmmHelpers.h
+
+================================================================================ 
+Commit: a14d160e3bfe1fc8810eaaecf3fd2240be356d13 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:34 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 85d6a0ae5b82f8ce478e4435b29a235838458d29
+Original commit date: Fri Feb 16 15:35:26 2018 +0530
+Change-Id: Ie21d35f03e70d6da2ce60f327b6cbd59251ab312
+Title : [CNL] Integrate latest GOP V1016
+Resolution : Update CNL GOP V1016
+Impacted Platforms : CNL all
+Hsd-es-id: 1604739676
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspBinPkg/SampleCode/Vbt/Vbt.bin
+CannonLakeFspBinPkg/SampleCode/Vbt/Vbt.bsf
+CannonLakeSiliconPkg/SampleCode/IntelGraphicsVbt/Vbt.bin
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCnlDebug.efi
+
+================================================================================ 
+Commit: 56200d8c04f1235f075219f398b8ae6e3458eeac 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:26 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: dba3b04be2e290331a0387dd4b78c10e9941d8f9
+Original commit date: Mon Feb 5 15:26:09 2018 -0800
+Change-Id: Id9a8cdedd6bdccf6f68f135376344bd1e9d62664
+CannonLakeSiliconPkg: [KBL][CNL][ICL][MRC] Remove DIMM ODT Hi-Z from DDR4 sweep, 1DPC platforms
+Change: MRC does not center TxVref correctly on DDR4 when ODT is disabled (Hi-Z). Remove Hi-Z option from sweep, as there is no power benefit from applying it
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: 8f94768c4f7a3c7ab78f10f599c42e90edf6ec5c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:22 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: c15ac99f5891b8e584e9dcd20ea3981843b33b8b
+Original commit date: Thu Feb 15 15:32:01 2018 -0800
+Change-Id: I8082c046e08507558d8ea57e03dc76d401ce075b
+Title: CFL/CNL: Smbios Type 4 -> CurrentSpeed uses the hard-coded BCLK value as 0x100.
+Resolution: Update Current Speed calculation to use actual BCLK frequency
+Impacted Platform: CFL and CNL platforms
+HSD: 2202256112
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiSmbiosCpuLib/PeiSmbiosCpuLib.inf
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiSmbiosCpuLib/SmbiosType4.c
+
+================================================================================ 
+Commit: 9d0425e8c5acfb18bdcccd51ec2e76a553d4438a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:10 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: ea5bc6ab3eaa1b92544f81956524379fb82b5d92
+Original commit date: Thu Feb 15 12:47:33 2018 -0800
+Change-Id: I2cc6d55dcba1d9609b14bc0c9ad6f034fa093f4e
+Title: CFL: Voltage/Frequency Override data looks to be wrongly interrupted from the generic OC Mailbox Data in GetVoltageFrequencyItem().
+Resolution: Updates offsets to match overclocking mailbox spec
+Impacted Platform: CFL and CNL platforms
+HSD: 2201947275
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/Include/Private/Library/CpuOcLib.h
+
+================================================================================ 
+Commit: e4c5e3f7de2d593daedc8a41fba09d15c3863f69 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:34:03 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 82b3b3e4ced623c6ad9effeebb00116a38880931
+Original commit date: Thu Feb 15 11:50:47 2018 -0800
+[TeamCity] Daily Update FSP/RC
+Increment FSP Build Number
+Thu Feb 15 11:50:47 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 5a74c9dd303c49437ac988451074a9d195f8e70c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 21:30:02 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: d2a7703b71a0155af8ab98c4049370372ead1722
+Original commit date: Wed Feb 14 19:09:32 2018 -0800
+[TeamCity] Auto-Commit FSP
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Tools/FCE/Source/FCE/IfrParse.c
+BpCommonPkg/Tools/KeyEnroll/KeyEnroll.c
+BpCommonPkg/Tools/KeyEnroll/KeyEnroll.exe
+BpCommonPkg/Universal/WifiConnectionManagerDxe/WifiConnectionManagerDxe.vfr
+BpCommonPkg/Universal/WifiConnectionManagerDxe/WifiConnectionMgrHiiConfigAccess.c
+CannonLakeFspBinPkg/Fsp.bsf
+CannonLakeFspBinPkg/Fsp.fd
+CannonLakeFspBinPkg/SampleCode/Vbt/Vbt.bin
+CannonLakeFspBinPkg/SampleCode/Vbt/Vbt.bsf
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeFspPkg/CannonLakeFspPkg.dsc
+CannonLakeFspPkg/CannonLakeFspPkg.fdf
+CannonLakePlatSamplePkg/2017CannonLake.sln
+CannonLakePlatSamplePkg/2017CannonLake.vcxproj
+CannonLakePlatSamplePkg/2017CannonLake.vcxproj.filters
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.c
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.inf
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiTables.inf
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CflHRvpTbtRtd3.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CflUKcRvpRtd3.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieTbt.asl
+CannonLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.c
+CannonLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.inf
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlUDdr4.h
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlUDdr4PreMem.h
+CannonLakePlatSamplePkg/BuildIafw.sh
+CannonLakePlatSamplePkg/EC/EC.c
+CannonLakePlatSamplePkg/Features/Pep/AcpiTables/Pep.asl
+CannonLakePlatSamplePkg/Features/Tbt/Include/Library/DxeTbtSecurityLib.h
+CannonLakePlatSamplePkg/Features/Tbt/Include/Protocol/DisableBmeProtocol.h
+CannonLakePlatSamplePkg/Features/Tbt/Include/Protocol/DxeTbtPolicy.h
+CannonLakePlatSamplePkg/Features/Tbt/Library/DxeTbtPolicyLib/DxeTbtPolicyLib.c
+CannonLakePlatSamplePkg/Features/Tbt/Library/DxeTbtSecurityLib/DxeTbtSecurityLib.c
+CannonLakePlatSamplePkg/Features/Tbt/Library/DxeTbtSecurityLib/DxeTbtSecurityLib.inf
+CannonLakePlatSamplePkg/Features/Tbt/Library/DxeTbtSecurityLib/PciExpressHelperLib.c
+CannonLakePlatSamplePkg/Features/Tbt/Library/DxeTbtSecurityLib/PciExpressHelperLib.h
+CannonLakePlatSamplePkg/Features/Tbt/TbtInit/Dxe/TbtDxe.c
+CannonLakePlatSamplePkg/Features/Tbt/TbtInit/Dxe/TbtDxe.inf
+CannonLakePlatSamplePkg/Include/OemSetup.h
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+CannonLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/BpmGen2 User Guide.pdf
+CannonLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/BpmGen2.exe
+CannonLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/BpmGen2GUI User Guide.pdf
+CannonLakePlatSamplePkg/Override/DoxygenRpOverride.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/Dxe/FwVol/FwVol.c
+CannonLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.c
+CannonLakePlatSamplePkg/PlatformPkg.dec
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+CannonLakePlatSamplePkg/PlatformPkgExtConfig.dsc
+CannonLakePlatSamplePkg/Setup/Boot.vfr
+CannonLakePlatSamplePkg/Setup/ConnectivitySetup.uni
+CannonLakePlatSamplePkg/Setup/CpuSetup.hfr
+CannonLakePlatSamplePkg/Setup/CpuSetup.uni
+CannonLakePlatSamplePkg/Setup/PchSetup.hfr
+CannonLakePlatSamplePkg/Setup/SaSetup.hfr
+CannonLakePlatSamplePkg/Setup/SetupCallbackExList.h
+CannonLakePlatSamplePkg/Setup/SetupId.h
+CannonLakePlatSamplePkg/Setup/TbtSetup.c
+CannonLakePlatSamplePkg/Setup/TbtSetup.hfr
+CannonLakePlatSamplePkg/Setup/TbtSetup.uni
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+CannonLakeSiliconPkg/Cpu/Library/PlatformSecLib/Ia32/SecCore.i
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuInitLib/CpuInitPreResetCpl.c
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PerformanceStates.c
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerLimits.c
+CannonLakeSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
+CannonLakeSiliconPkg/Pch/Include/ConfigBlock/HdAudioConfig.h
+CannonLakeSiliconPkg/Pch/Include/Library/PchPcrLib.h
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPchPcrLib/PchPcrLib.c
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPchSerialIoLib/PchSerialIoLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchPsfPrivateLib/PchPsfPrivateLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiEspiInitLib/PeiEspiInitLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiHdaInitLib/PeiHdaInitLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiHdaInitLib/PeiHdaInitLib.inf
+CannonLakeSiliconPkg/Pch/Library/Private/PeiIshInitLib/PeiIshInitLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiScsLib/PeiIosf2Ocp.c
+CannonLakeSiliconPkg/SampleCode/IntelGraphicsVbt/Vbt.bin
+CannonLakeSiliconPkg/SiPkg.dec
+CannonLakeSiliconPkg/SiPkgBuildOption.dsc
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCnlDebug.efi
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+ClientCommonPkg/Tools/BpmGen2/BpmGen2 User Guide.pdf
+ClientCommonPkg/Tools/BpmGen2/BpmGen2.exe
+ClientCommonPkg/Tools/BpmGen2/BpmGen2GUI User Guide.pdf
+ClientCommonPkg/Universal/FpdtPei/FpdtPei.c
+ClientSiliconPkg/Include/HstiFeatureBit_1_1a.h
+CryptoPkg/CryptoPkg.dec
+CryptoPkg/CryptoPkg.dsc
+
+================================================================================ 
+Commit: c262cffd31b65a6500a22f4762cf6d775a72b933 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 11:15:11 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: dae69c8186a06b76a9c4bbe82b3c8194d7efab72
+Original commit date: Sat Mar 3 14:11:30 2018 +0800
+Change-Id: I8ca8b287c4066b60c7a260967b227895fbde8c78
+[NO HSD] Update BIOS ID to 126.6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 998d2e5ceda6bf8780de7f5f347623182a2d8c80 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Mar 9 11:13:13 2018 -0800 
+-------------------------------------------------------------------------------- 
+Original commit hash: 2b27940032cecb9bab3a113c2809d716398327d2
+Original commit date: Thu Mar 1 21:09:34 2018 -0800
+Revert "Title: CNL-U BIOS:- Display is not Observed with Discrete Graphic Card if connected on X4 slot."
+This reverts commit b2dd9cd0268b9ef96fdfbb24d93ce420aab2f306.
+Thu Mar 1 21:09:34 2018 -0800
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlUDdr4.h
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCnlUDdr4PreMem.h
