@@ -57,7 +57,7 @@ Date: Fri Mar 9 22:10:55 2018 -0800
 Original commit hash: 6db18873a81653efc5202141f0cc8ee0ce44d005
 Original commit date: Mon Mar 5 14:55:28 2018 -0800
 Change-Id: I6933ef5172e9d29e91d97de26cb6f2411a7b84b8
-CannonLakeSiliconPkg: [2202482858][CNL][MRC] Remove legacy change for RxDqsAmpOffset from SenseAmpOffsetTraining
+CannonLakeSiliconPkg: [CNL][MRC] Remove legacy change for RxDqsAmpOffset from SenseAmpOffsetTraining
 Issue:
 Within MrcSenseAmpOffsetTraining, there is a legacy change which adds a value of 8 to RxDqsAmpoffset. This was needed for LPDDR3 technology, but is currently also applied to LPDDR4.
 This change is legacy and is not needed for LPDDR4, and if left implemented could have negative effects on Rx Margin and RxDqs SI.
@@ -83,8 +83,6 @@ Change:
 Add new CNL-H step flag whch newer than P0
 set spare_rw bit for LP4x with new flag
 Enable RDODT back and take care MR22
-Hsd-es-id: 1406820229
-https://hsdes.intel.com/appstore/article/#/1406820229
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -363,8 +361,6 @@ Original commit hash: 8bcf92d838f645f5c2ee2ad2279bbdddbd41342e
 Original commit date: Tue Mar 6 11:33:27 2018 -0800
 Change-Id: I066073374ea24907ef3e119e1b75849e2da4c833
 CNP-H B1 Integrate Chipsetinit Version 7
-Hsd-es-id: 2202447795
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -404,7 +400,7 @@ Date: Fri Mar 9 22:09:34 2018 -0800
 Original commit hash: eb2e0e9a74e2427ea85480353eabd1bb42031259
 Original commit date: Fri Mar 2 13:36:01 2018 -0800
 Change-Id: I2ba4d5298c03ce16dc2402e372cc0b2a9e1dfe05
-CannonLakeSiliconPkg: [2006797394][WHL][GDC][PO][WHL-U42] MRC Warning: Unknown CPU stepping, using MRC for last known step = Ah
+CannonLakeSiliconPkg: Fix MRC Warning: Unknown CPU stepping, using MRC for last known step = Ah
 Behavior:
    The system is booting correctly, all memory and speed refelcted in BIOS correctly, however checking the serial log(attached), we are seeing the following warning
               *WARNING: Unknown CPU stepping, using MRC for last known step = Ah(line 2494)
@@ -685,7 +681,7 @@ Date: Fri Mar 9 22:08:00 2018 -0800
 Original commit hash: 4ac2139b4bb03f3134d098704af6a194b8ee59c3
 Original commit date: Tue Feb 27 16:23:48 2018 -0800
 Change-Id: Ifdcb4df02bc3d9c532e7eb44b519e9ea317649fb
-CannonLakeSiliconPkg: [1305619114][CNL][MRC] Read Timing Centering 2D doesn't do proper 2D sweep due to a cache coherency problem
+CannonLakeSiliconPkg: [CNL][MRC] Read Timing Centering 2D doesn't do proper 2D sweep due to a cache coherency problem
 Issue:
 Read Timing Centering 2D is required to optimize RxDQS for various Vref values, however since the same register (DDRDATA_CR_DDRCRDATAOFFSETTRAIN_0_0_0_MCHBAR) holds both RxVrefOffset and RxDqsOffset, the RxVrefOffset value returns to 0 during RxDqsOffset sweep
 Solution:
@@ -719,7 +715,7 @@ Date: Fri Mar 9 22:07:39 2018 -0800
 Original commit hash: 3869f9659856563bd90d2665d3f59f8f5581c43b
 Original commit date: Wed Feb 28 16:46:59 2018 -0800
 Change-Id: Ie8a121fdf3b13924a4cdc8ec7e437be2f2a6ecd5
-CannonLakeSiliconPkg: [2202464637][CNL][MRC] LPDDR4x Byte Mode Fails in Late Command Training at 2667
+CannonLakeSiliconPkg:[CNL][MRC] LPDDR4x Byte Mode Fails in Late Command Training at 2667
 Issue:
 LCT is failing with byte mode for Rank 0x3 during CTL centering. It's only failing at 2667, we don't have this problem at 2400. Attempting different termination values didn't have any effect.
 Solution:
@@ -773,7 +769,6 @@ Original commit hash: d38ca301d137856c7c4fddb5e42042a372eedad1
 Original commit date: Thu Mar 1 15:15:44 2018 -0800
 Change-Id: I9a198eeda7e810e5f700d592e01787d7d7352947
 Add WHL CPU ID.
-Hsd-es-id: No
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -883,7 +878,7 @@ Date: Fri Mar 9 22:06:47 2018 -0800
 Original commit hash: d1978414c73d0e353dd51bad181e13cd7d30338f
 Original commit date: Thu Feb 15 09:21:18 2018 -0800
 Change-Id: Ic45a064705f4ce4034db0aa999a38bfb642f4617
-CannonLakeSiliconPkg: [2201433960][CNL-H][MRC] RTL Values must be the same when ERM is enabled
+CannonLakeSiliconPkg: [CNL-H][MRC] RTL Values must be the same when ERM is enabled
 After sending a read request the safe logic loads a value into the dummy CAS tracker indicating when it will be allowed, this is based on the rank of the request (As when the dummy CAS executes it gets the roundtrip value of its rank)
 The safe logic only has one safe indication per rank, while in ERM there are actually two different roundtrip values allowed for the non ERM and the ERM rank.
 This is the buggy code in mc_safe.vs, in relation to ERM as different groups are translated to different ranks.
@@ -1103,7 +1098,7 @@ Date: Fri Mar 9 22:06:04 2018 -0800
 Original commit hash: a4ae9e3d4ec62bcaa5c4cda78ed3eab0574c5844
 Original commit date: Mon Feb 26 15:05:27 2018 -0800
 Change-Id: If36723d9d3188c2031cf3811f073bb9b3a9c4642
-CannonLakeSiliconPkg: [1604746885][CFL_H][BIOS][OC]: After selecting Memory Profile as XMP Profile 2 in BIOS, SUT is hanging at dd80 post code followed by CATERR
+CannonLakeSiliconPkg: [CFL_H][BIOS][OC]: After selecting Memory Profile as XMP Profile 2 in BIOS, SUT is hanging at dd80 post code followed by CATERR
 Issue:
 When selecting XMP2 Profile from Setup Menu, SUT fails during MRC SPD Processing
 Solution:
@@ -1141,7 +1136,7 @@ Date: Fri Mar 9 22:05:27 2018 -0800
 Original commit hash: 87209a78ba09ba71050c47a3de76614cdd804839
 Original commit date: Tue Feb 27 14:07:54 2018 -0800
 Change-Id: I80368cc46510c073db2b763b8ae45fd6e218ea92
-CannonLakeSiliconPkg: [1406791886][CFL][CNL][MRC] SMBIOS Type 17 Offset 15h Speed report incorrectly
+CannonLakeSiliconPkg: [CFL][CNL][MRC] SMBIOS Type 17 Offset 15h Speed report incorrectly
 MRC Version needs to be updated for CNL
 MRC should report the speed each DIMM is capable of within SMBIOS type 17 at offset 0x15.
 
@@ -1172,7 +1167,7 @@ Date: Fri Mar 9 22:05:17 2018 -0800
 Original commit hash: a0cbba6682e204b953b243abf77aed028d2c7216
 Original commit date: Wed Feb 21 11:54:27 2018 -0800
 Change-Id: I4b36d7ec76dd344ce45ddfc155ba9cf1e369a5ae
-CannonLakeSiliconPkg: [1406791886][CFL][CNL][MRC] SMBIOS Type 17 Offset 15h Speed report incorrectly
+CannonLakeSiliconPkg: [CFL][CNL][MRC] SMBIOS Type 17 Offset 15h Speed report incorrectly
 MRC should report the speed each DIMM is capable of within SMBIOS type 17 at offset 0x15.
 
 -------------------------------------------------------------------------------- 
@@ -1268,8 +1263,6 @@ Original commit date: Mon Feb 26 17:57:27 2018 -0800
 Change-Id: Ie1599dcc89ea5aed5a6d1e1e765eb43ab0c6e17d
 Revert "[1305551106] BiosKnobsData.bin need to be  compressed to fit into BIOS"
 This reverts commit 11c344ded52840f134a48b8da884e94caf966719.
-Hsd-es-id: 1305551106
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xls
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1356,7 +1349,7 @@ Date: Fri Mar 9 21:40:00 2018 -0800
 Original commit hash: 84433cc0447722839b1869b98a1600923f38a411
 Original commit date: Wed Jan 31 14:40:23 2018 -0800
 Change-Id: I6197c3cab8fa312e22c75ff2bed17dd8125170ab
-CannonLakeSiliconPkg: [1406771946][CNL-H][MRC] SPD Processing Quad Rank error says too many ranks
+CannonLakeSiliconPkg: [CNL-H][MRC] SPD Processing Quad Rank error says too many ranks
 Need to change SPD Processing in MRC to allow 4 ranks to be enabled in full bios.
 Additional Changes:
 Enabling Local Stub Mode with LPDDR4 4-Rank SPD
@@ -1398,7 +1391,6 @@ set as the maximum between the subchannels in the same frequency,
 ultimately causing calc_in_prgs to get stuck in retraining flow.
 Change: fix MaxRdDataValid to be correct, add guardband of 8 as
 suggested from Design.
-Hsd-es-id:1305629289, 1305559667
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1463,7 +1455,6 @@ stuck in retraining flow.
 Change: set RxAnalogGraceCnt to max until correct formula is given by
 design and tested. revert WA for the same issue (setting low point as
 1867).
-Hsd-es-id:1305626147, 1305559667
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1482,8 +1473,6 @@ Change-Id: I19896589149ccbf360c072f80f8aac871aa4c3e4
 [1305551106] BiosKnobsData.bin need to be  compressed to fit into BIOS
 Resolution: Changed Fv Map to embeded BiosKnobsData.bin into FV_main_compact and an error checking codition for this in build process
 Impacted: CNL/CfL
-Hsd-es-id: 1305551106
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xls
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1515,8 +1504,6 @@ Original commit date: Thu Feb 22 14:24:16 2018 +0800
 Change-Id: I6f0687f12d1690aea703f81b62ca581f0469d370
 Title:[CNP] CNP Gbe w/a with VM disabling settings
 Resolution:
-Hsd-es-id: 1504729842
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1754,7 +1741,7 @@ Date: Fri Mar 9 21:37:31 2018 -0800
 Original commit hash: ee73f405c6c58df47274a745f8676b762ca8a510
 Original commit date: Tue Feb 13 15:39:01 2018 -0800
 Change-Id: I43833c900d8ce307c4058170cdddeaed1115f37f
-CannonLakeSiliconPkg: [2202058124][CNL_H][MRC] LPDDR4 RVP is pulling the wrong addresses for the SPD
+CannonLakeSiliconPkg: [CNL_H][MRC] LPDDR4 RVP is pulling the wrong addresses for the SPD
 When MRC detects the CNL_H LPDDR4 RVP (Board_ID = 0xD) with SPD_PRSNT set it's not defining the SPD addresses correctly.
 Instead of A0/A2 and A0/A2, it's defining the devices as A0/A2/A4/A6.  This needs to be updates so MRC sees both channels.
 
@@ -1774,8 +1761,6 @@ Original commit date: Thu Feb 15 17:47:44 2018 +0530
 Change-Id: I737618c14f00f9439429a9a9cb9633bbb9c88bb1
 Title: Fix bug in LibPcieFindCapId ()
 Resolution: use BIT4 of PCI_PRIMARY_STATUS_OFFSET to find PCI capability
-Hsd-es-id: 2201938524
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1932,7 +1917,7 @@ Date: Fri Mar 9 21:36:34 2018 -0800
 Original commit hash: ce3691edd1f3f8e20eb831bb8f4869324dcc5be9
 Original commit date: Thu Feb 15 11:49:26 2018 -0800
 Change-Id: I8831c3ccf5d4930d21c32242c072160d5e376e56
-CannonLakeSiliconPkg: [1406817300][CNL-H][MRC] ECC fix error display in Write Leveling Flyby
+CannonLakeSiliconPkg: [CNL-H][MRC] ECC fix error display in Write Leveling Flyby
 Issue:
 Assert seen in JWL with ECC DIMMs due to LShiftU64 is attempting to shift out of bounds, due to ECC Byte and limitation of UINT64 variable
 Solution:
@@ -2027,8 +2012,6 @@ Title: [CNL] Need to remove MMIO allocation for Azora
 Description: Due to lack of memory the SV BIOS failed to boot.
 This issue was solved by removing the memory allocation
 for the Azora card which is not supported anymore.
-Hsd-es-id: 1305587275
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -2077,8 +2060,6 @@ Original commit date: Mon Feb 12 12:36:27 2018 +0100
 Change-Id: I87f257f4177a3a371867a598816d1277b4a489c3
 Add Setup option to enable/disable MSI in FADT
 [Description] Setup options of MSI enabling in FADT moves from TbtSetup to AcpiSetup
-Hsd-es-id: 1805946900
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -2098,8 +2079,6 @@ Original commit date: Mon Feb 19 12:47:32 2018 +0530
 Change-Id: Ibe7ff6aa41b8ce2d524e926fab2860af56cf1ec2
 Title: nvidia specific gpio init method on S3/S4 resume
 Resolution: Need to add the GPIO intialization in S3/S4 specific to nvidia for their power sequence
-Hsd-es-id: 1604593968
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -2167,8 +2146,6 @@ Original commit date: Mon Feb 12 10:56:57 2018 +0100
 Change-Id: I2d4ecfb1ad5c3f25e2ef88376cd41d5148bfb6f3
 [1604557513] Initialize iDisp Codes and verb tables after pcode is ready (after RESET_CPL is done)
 [Description] Moving Codec initialization flow at the end of EndOfPei
-Hsd-es-id: 1504690626
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -2252,7 +2229,7 @@ Date: Fri Mar 9 21:35:04 2018 -0800
 Original commit hash: 20736a0dca8905c355464ada11eedc4dcb23eb11
 Original commit date: Thu Feb 15 17:12:21 2018 -0800
 Change-Id: I091ef587ced59ae38424a8c8bceb5a749a62c231
-CannonLakeSiliconPkg: [2202315629][CNL][MRC_WA] Workaround for RCH_REQ_TIMEOUT MCA and PC "10ad" in 1st boot
+CannonLakeSiliconPkg: [CNL][MRC_WA] Workaround for RCH_REQ_TIMEOUT MCA and PC "10ad" in 1st boot
 As MRC W/A for this issue, SAGV Low will be set to 1867 until root cause and proper fix is identified.
 This change will only be applied to LPDDR4 on any D-Stepping U/Y SKU CPU.
 
@@ -2294,8 +2271,6 @@ Change-Id: I07fa02c0803afde6c991850109fb9ff3abde2bfd
 Include XCODE va_args warning override in Silicon Pkg builds
 Previously only applied in Platform Pkg
 Original commit: ad0c957962725df64572c873f7cd1d6bf62fbb21
-Hsd-es-id: N/A
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -2425,7 +2400,7 @@ Date: Fri Mar 9 21:34:26 2018 -0800
 Original commit hash: dba3b04be2e290331a0387dd4b78c10e9941d8f9
 Original commit date: Mon Feb 5 15:26:09 2018 -0800
 Change-Id: Id9a8cdedd6bdccf6f68f135376344bd1e9d62664
-CannonLakeSiliconPkg: [KBL][CNL][ICL][MRC] Remove DIMM ODT Hi-Z from DDR4 sweep, 1DPC platforms
+CannonLakeSiliconPkg: [MRC] Remove DIMM ODT Hi-Z from DDR4 sweep, 1DPC platforms
 Change: MRC does not center TxVref correctly on DDR4 when ODT is disabled (Hi-Z). Remove Hi-Z option from sweep, as there is no power benefit from applying it
 
 -------------------------------------------------------------------------------- 
