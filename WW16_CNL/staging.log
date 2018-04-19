@@ -243,8 +243,7 @@ Date: Mon Apr 16 16:24:47 2018 -0700
 Original commit hash: 207b2856035ec585c7ee537a66a1719ab7d2e2af
 Original commit date: Tue Apr 10 17:55:03 2018 -0700
 Change-Id: If0e4b492829b64adaf993b31357ed5039eb60b88
-[CNL] Klocwork issues for PCH based on Daily_139_00_142
-Minor changes to check for NULL ptr (ChipsetInitTblHdrPtr) before using them.
+[PCH] Minor changes to check for NULL pointer (ChipsetInitTblHdrPtr) before using them.
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -329,8 +328,7 @@ Date: Mon Apr 16 16:24:21 2018 -0700
 Original commit hash: c09002af4bdadf5aa2027ceaf0652e203f661e6a
 Original commit date: Thu Apr 5 13:17:42 2018 -0700
 Change-Id: I9ac14f76d91f2b28473f84ca07a19ebeebe7bf60
-[CNL] Klocwork issues for PCH based on Daily_139_00_142
-Minor changes to check for NULL ptrs and initialization of ptrs and variables before using them.
+[PCH] Minor changes to check for NULL pointer and initialization of ptrs and variables before using them.
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -745,11 +743,7 @@ Date: Mon Apr 16 16:24:03 2018 -0700
 Original commit hash: 0119f1ead5b9159f0acb64f06d8ec6871ca3bedb
 Original commit date: Tue Apr 3 11:08:37 2018 +0200
 Change-Id: I973bcc4fe2ed5925a2ae768085f380186157c029
-Allow for PMC IPC CMD 0xA9 sending on PMC patch v12
-We didn't allow to send the PMC IPC CMD 0xA9 on CNP-H B0
-PMC patch v12. This was a mistake due to miscommunication
-between BIOS and PMC firmware. PMC for CNP-H B0 supports
-IPC CMD 0xA9 in v12.
+[PCH] Allow for PMC IPC CMD 0xA9 sending on CNP-H B0 PMC patch v12
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -833,10 +827,7 @@ Date: Mon Apr 16 16:23:59 2018 -0700
 Original commit hash: b85daaf4fb6674205825babfa9c3b771366ee5f1
 Original commit date: Tue Apr 3 12:35:49 2018 -0700
 Change-Id: I15a4d5266e6f0cf3102bbeb1dfd33595142674af
-[CNL] Incorrect code flow in PchHsio.c
-[CFL_Ebat_Validation][CFL-U LPDDR3 KC ][Windows RS3] First time S3 fail after flash BIOS and clear CMOS
-Changed new flow SUS PG code to prevent global reset if the writing new ChipsetInit table to CSME fails.
-Changed backward compatability code to trigger cold reset after writing new ChipsetInit table to CSME.
+[PCH] Incorrect code flow in PchHsio.c causing first time S3 fail after flash BIOS and clear CMOS
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1077,8 +1068,12 @@ Date: Mon Apr 16 16:23:27 2018 -0700
 Original commit hash: cb1fd43491fe8f7b041e9be8bfcc218d644a4d0f
 Original commit date: Wed Nov 15 15:05:31 2017 -0800
 Change-Id: I15b1f14a29f74338fdd67dde558122d8cf23b0f8
-PHY SUS Restore Delivery through CSE
-Resolution: Changes required for RCR
+[PCH] PHY SUS Restore Delivery through CSE
+ModPHY and USB2 AFE SUS-well power gating requires PMC to restore the OEM PHY settings configured via BIOS platform policies.
+Once new ChipsetInit format is deployed BIOS reference code will no longer include a BASE ChipsetInit table. The payload for BASE or OEM GPIO table update (if any) must be provided by platform BIOS code.
+ChipsetInit BASE or OEM GPIO update requires global reset, however SUS table update does not require reset, hence CSME will no longer promote the first reset following ChipsetInit update to a global reset if new ChipsetInit format is used.
+
+For this reason BIOS must directly issue global reset after ChipsetInit update if new version of BASE or OEM GPIO table in included. If the difference is only in SUS settings BIOS does not perform a reset.
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1161,7 +1156,7 @@ Date: Mon Apr 16 16:10:10 2018 -0700
 Original commit hash: e946388d402eadd768b641b089d786d40e14834e
 Original commit date: Thu Mar 29 17:56:09 2018 -0700
 Change-Id: If1f71550c4c7a682acfbf3bbf76d54021a297e8b
-CNL SECURITY: Bios Lock Enable and Bios Enable InSMM_STS bit are set to 0
+[PCH] Bios Lock Enable and Bios Enable InSMM_STS bit are set to 0
 Updated setup logic so that BIOS Lock Enable is set correctly and not overwritten.
 
 -------------------------------------------------------------------------------- 
