@@ -298,14 +298,11 @@ Date: Wed Apr 25 17:55:56 2018 -0700
 Original commit hash: 1002b3b6276c3eee25921648d1f46d5a80ddf052
 Original commit date: Mon Apr 16 14:23:40 2018 -0700
 Change-Id: Ic888cf1bdd492cb59c4ebfb7a11c277e7a902ef0
-[HSD-ES][client_platf][bug][1305645265][ICL MRC][CLK DCC dont take lp4 clk connectivity  into account]
+[ICL MRC][CLK DCC dont take lp4 clk connectivity  into account]
 In LP4 the clock is per subchannel and not per rank, hence during CLK DCC we need to program dccclkcontrol3.activedccrank0
 according to number of populated subchannels and not number of ranks like in DDR4.
 Additional change:
  - Don't allow using Gear1 at frequencies above 2400 - shoud use Gear2.
-Hsd-es-id: 1305645265
-Tracker-link: https://hsdes.intel.com/resource/1305645265
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -403,8 +400,8 @@ Original commit date: Thu Apr 12 15:12:13 2018 -0700
 Change-Id: I5bf6ff6014ac013effad6f3de16424d25858251a
 IceLakeSiliconPkg: [ICL MRC] Resolve fast boot flow issues by using SSKPD_PCU_SKPD_REG
 Using scratch pad register to indicate  SSKPD_PCU_CNL_SKPD_TRAIN_DONE and SSKPD_PCU_CNL_SKPD_MEM_TEST_DONE, which cover the below CNL changes:
-1. [0.5.1.0] Fix fastboot failure in normal mode memtest causes infinite fastboot loops instead of causing cold boot (1305290502)
-2. [0.5.1.63] Fix warm reset after S3 will be treated as a failing fastboot (1305659673)
+1. [0.5.1.0] Fix fastboot failure in normal mode memtest causes infinite fastboot loops instead of causing cold boot 
+2. [0.5.1.63] Fix warm reset after S3 will be treated as a failing fastboot
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -753,7 +750,7 @@ Date: Wed Apr 25 17:54:11 2018 -0700
 Original commit hash: f336466888ca394282c5bd932febe04c014cdcb8
 Original commit date: Fri Apr 13 16:16:31 2018 -0700
 Change-Id: I85dc85fe4d5edb2e5ec941652d77336f5a1a32cf
-[HSD-ES][client_platf][bug][1305619797][ICL U_LP][Si_Fused_A2][Corporate]:Platform sporadically freezes with PC 0080 while performing Cold-Reset Stress test [Failure rate = ~1/30 iteration]
+[ICL U_LP][Si_Fused_A2][Corporate]:Platform sporadically freezes with PC 0080 while performing Cold-Reset Stress test [Failure rate = ~1/30 iteration]
 Issue:
   DCC FSM times out in DCC Replica task.
 Root cause:
@@ -765,9 +762,6 @@ Additional changes:
  - Add MCMISCS_DCCMAINFSMCONTROL0 to the list of register cache entries
  - Do not use CR cache for MCMISCS_DCCCONTROL0, as it controls the FSM and cache is not really needed.
  - Disable RMT on Fast flow as we don't build DCC LUT on fast flow.
-Hsd-es-id: 1305619797
-Tracker-link: https://hsdes.intel.com/resource/1305619797
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -929,7 +923,7 @@ Original commit hash: fb513f393a49128d34c8966c78cafa808b7770f2
 Original commit date: Wed Apr 11 15:57:38 2018 -0700
 Change-Id: I0973ddfafb5bd05155ec2f86f016aebb44c40325
 IceLakeSiliconPkg: [ICL MRC] Include the new RL/WL for LPDDR4 x8 devices. And fix Byte Mode issues.
-Update with the below CNL changes:
+Update with the below changes:
 1. [0.5.1.10] Support new RL/WL for LPDDR4 x8 devices. Modifed RL/WL values based on frequency range in x8 and x16 modes.
 2. [0.5.1.14] LPDDR4 x8 Dies have different tWR and tWTR than x16. Updated the tWTR and tWR calculation if x8 mode.
 3. [0.5.1.19] Updated ther MR1 write recovery latencies..
@@ -992,7 +986,7 @@ Date: Wed Apr 25 17:53:08 2018 -0700
 Original commit hash: 85d1a9adc84f3ac1076f08b3db9e560656b0c40b
 Original commit date: Tue Apr 10 10:04:23 2018 -0700
 Change-Id: I66e3acc0f6b39925bac0b22287981a0fb36920f7
-IceLakeSiliconPkg: [Sync with CNL MRC 0.5.1.50] Fix the RxAnalogGraceCount
+IceLakeSiliconPkg: Fix the RxAnalogGraceCount
 Issue: RxAnalogGraceCnt is misconfigured due to MaxRdDataValid not being
 set as the maximum between the subchannels in the same frequency,
 ultimately causing calc_in_prgs to get stuck in retraining flow.
@@ -1173,9 +1167,6 @@ Root Cause:
 H/W bug in ICL A0
 Change:
 In B step PBR was fixed in HW, and now should be enabled by default for B step and above.
-Hsd-es-id:1305695483
-Tracker-link:https://hsdes.intel.com/appstore/article/#/1305695483
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1242,16 +1233,13 @@ Date: Wed Apr 25 17:51:48 2018 -0700
 Original commit hash: 124d9ba7813c81082b4e304c5a0ba25447ada9cf
 Original commit date: Fri Apr 6 22:17:47 2018 -0700
 Change-Id: I2a24a76b3ce1db435bba97295d4a33c518e47745
-[HSD-ES][client_platf][bug][1406978256][][ICL MRC][Update Bank Mapping in EccClean and other fixes]
+[ICL MRC][Update Bank Mapping in EccClean and other fixes]
 1. EccClean: Program Bank Logical to Physical mapping per channel / rank, to ensure B2B traffic during scrub.
  Also wait till all writes are completed after each RunIOTest, not just the last one.
 2. MrcRestoreTrainingValues: bring SC_GS_CFG register to the CR cache, otherwise code is using early cached version before the register restore.
 3. GetSet: use MRC_IGNORE_ARG instead of 0 in MrcGetSetDdrIoGroupController0, to avoid printing "C0" for controller-level params.
 4. RMT: restore previous value of CmdTriState, instead of disabling it (at the end of the task)
 5. Make sure CPGC registers are only accessed when MC_CPGC_CMI.cpgc_active is set.
-Hsd-es-id: 1406978256
-Tracker-link: https://hsdes.intel.com/resource/1406978256
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -1320,8 +1308,8 @@ Date: Wed Apr 25 17:51:23 2018 -0700
 Original commit hash: 4b13bd0ca5c99d0e0aea83f2b612423c242eb411
 Original commit date: Fri Apr 6 17:07:34 2018 -0700
 Change-Id: I83d6486c8a68b242d4cbd23e9a31b3d54fa8f82b
-IceLakeSiliconPkg: [ICL MRC][Sync with CNL MRC 0.5.0.0] Merge relevant fixes and changes from KBL/CFL
-Sync CNL 0.5.0.0 with these changes:
+IceLakeSiliconPkg: 
+Sync with these changes:
 1. Update GetCpuTime() to take parameter Inputs->BClkFrequency instead of fixed 100
 2. Update the definition of "Command Rate Enable" Option Inputs->EnCmdRate to accept values 0-7
 3. Update the center point calculation for WriteVoltageCentering2D_DDR4()
@@ -1377,7 +1365,6 @@ Change-Id: I9f7c0e5922b5c7b71144e2b55cfd3d205aad655f
 Issue: MRS_FSM was changed in ICL B step to fix CNL bugs
 Change: set MRS_FSM bits LPDDR4_split_transition, GV_auto_enable,
 Clear_VRCG in ICL B step and above
-Hsd-es-id: 1305695482
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -2558,7 +2545,7 @@ Date: Thu Apr 19 15:47:31 2018 -0700
 Original commit hash: 2e4226819f5f3686f27d2774e47cef0e9a59a323
 Original commit date: Sat Mar 31 01:14:57 2018 -0700
 Change-Id: I598266a80f7888e5e7c8966559c9bd6790e9e533
-[HSD-ES][client_platf][bug][2202675941][][ICL MRC][ICL S81 changes from CTE]
+[ICL MRC][ICL S81 changes from CTE]
 1. Added MEMORY_CONFIGURATION.Lp4ClockMirror to select if LPDDR4 CLK Mirroring is used on the board
 2. Changed maximum supported DRAM size to 64GB
 3. Program DDR4_MR6_VREF_DIMM1_VALUES
@@ -2569,9 +2556,6 @@ Change-Id: I598266a80f7888e5e7c8966559c9bd6790e9e533
 8. Fix issue with ddr4_1dpc enabling flow on DIMM1
 9. Fix DDRCRCTLRANKSUSED programming in CCC fub for LPDDR4
 10.Fix DDRCRCCC4CKERANKSUSED programming in CCC fub for DDR4 and LPDDR4
-Hsd-es-id: 2202675941
-Tracker-link: https://hsdes.intel.com/resource/2202675941
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -2699,7 +2683,6 @@ programming
 Change: loop on all available devices according to x8 or x16 to program
 them all, program dev2/3 RoCount regs. program the correct DevUse
 register in A step. Set Clock_on_with_rxanalogen bit in ICL B/P/I
-Hsd-es-id: 1305682579, 1305677682
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -3216,7 +3199,7 @@ Date: Thu Apr 19 15:46:21 2018 -0700
 Original commit hash: 262aaf035c48bc8cc9a18f011d05710495c13cc5
 Original commit date: Thu Mar 29 10:32:27 2018 -0700
 Change-Id: I0696ea8ffa5de400b56a47c1953cea6fb03a54af
-[HSD-ES][client_platf][bug][1305567214][ICL-U A2 - Low DDR Memory BW in G1 2R]
+[ICL-U A2 - Low DDR Memory BW in G1 2R]
 Issue:
   Low memory BW in G1 when ddr4_1dpc feature is enabled.
 Solution:
@@ -3225,9 +3208,6 @@ Solution:
   XARB_CFG_BUBBLE_INJ.bubble_inj_enable_any_cas_switch = 0
   XARB_CFG_BUBBLE_INJ.bubble_inj_enable_write_switch = 0
   XARB_CFG_BUBBLE_INJ.bubble_inj_enable_read_switch = 0
-Hsd-es-id: 1305567214
-Tracker-link: https://hsdes.intel.com/resource/1305567214
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -3436,7 +3416,7 @@ Date: Thu Apr 19 15:45:50 2018 -0700
 Original commit hash: 33e288be35226b71a5c9b574dafe1bbae9a9de18
 Original commit date: Fri Mar 23 17:12:47 2018 -0700
 Change-Id: Ia1f0b21a213399b16ac92336caf7b9129b9bb386
-IceLakeSiliconPkg: [Sync CNL MRC 0.3.0.111] Resolve conflict between Retraining and Refresh in Alias check
+IceLakeSiliconPkg: Resolve conflict between Retraining and Refresh in Alias check
 Include the following changes and fixes:
 1. [0.3.0.111]- Resolve conflict between Retraining and Refresh in Alias check fix
 2. [0.3.0.110]- Spid_low_power_ctl and blkr register values are incorrect for B step and above
@@ -3674,16 +3654,13 @@ Date: Thu Apr 19 15:45:22 2018 -0700
 Original commit hash: 0945f71ebf159d90f10cf3350cfaefb637ecaac3
 Original commit date: Thu Mar 22 20:18:18 2018 +0200
 Change-Id: I7df47487e42ac38a4198e1e50ff0d1c3c4fdb8ba
-IceLakeSiliconPkg: [HSD-ES][client_platf][bug][1406418240][ice_lake][ICL MRC][Add support for DDR speed up to 8400]
+IceLakeSiliconPkg: [ICL MRC][Add support for DDR speed up to 8400]
 Issue:
 Need To support DDR Speed 8400
 Root Cause:
 Change:
 1. Add support 8400 DDR Speed
 2. remove OddRatioMode
-Hsd-es-id:1406418240
-Tracker-link: https://hsdes.intel.com/resource/1406418240
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -3827,12 +3804,9 @@ Date: Thu Apr 19 15:44:45 2018 -0700
 Original commit hash: ec859ed8aa10a94221c90bb383bf370c643066df
 Original commit date: Sat Mar 24 11:41:50 2018 -0700
 Change-Id: I29548c132b68d20ac9554f5360a9b2224fa2dc03
-[HSD-ES][client_platf][bug][2202622736][][ICL MRC][MRC W/A for Warm reset on B0]
+[ICL MRC][MRC W/A for Warm reset on B0]
 DDR4 Warm reset is broken on ICL B0 due to CKE bug.
 Adding an MRC W/A to enable warm reset - issue a JEDEC Reset in Warm flow, instead of taking DRAM out of SR.
-Hsd-es-id: 2202622736
-Tracker-link: https://hsdes.intel.com/resource/2202622736
-Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -4205,7 +4179,7 @@ Date: Thu Apr 19 15:43:42 2018 -0700
 Original commit hash: 43a1dc93e310c9fa31e848bdd55292c966f41a8d
 Original commit date: Mon Mar 12 13:57:22 2018 -0700
 Change-Id: Iff20dfc1f0efed4a4b9b0f4eb6bb6fddcd90052e
-IceLakeSiliconPkg: [Sync to CNL 0.3.0.106] Updated RdOdt training on lp4/x to prevent illegal settings
+IceLakeSiliconPkg: Updated RdOdt training on lp4/x to prevent illegal settings
 Change:
 1. Added better estimation of Dynamic, Static leg strength for better ODT calculation
 2. Modified function which returns the corresponding SOC ODT to avoid ilegal values.
@@ -4990,7 +4964,6 @@ Change-Id: If615ac31bae8627f1c5084e08e9f6901e18f9a60
 Issue: B step units failed normal mode memtest when DQ/DQS retraining
 was enabled due to devusemap register change in B step
 Change: fix devusemap register programming in command training
-Hsd-es-id: 1305676748
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -5111,7 +5084,7 @@ Date: Thu Apr 19 15:41:38 2018 -0700
 Original commit hash: 4aeaf7edc872541ba3ebdf80299d7ea6deb5614b
 Original commit date: Wed Mar 14 14:49:29 2018 +0200
 Change-Id: I500296498ecd1a6a8d37862bbe3b6e65b6e59d79
-IceLakeSiliconPkg: [HSD-ES][client_platf][bug][1305622073][ice_lake][ICL MRC] MRC Interpreter new commands and improvments
+IceLakeSiliconPkg: [ICL MRC] MRC Interpreter new commands and improvments
 Issues:
 1.  Exit command does not work properly (does not continue execution)
 2.  When Sagv Enabled - Interpreter commands (step,execute ...) does not work properly.
@@ -5122,9 +5095,6 @@ Change:
 4. A new command "c" (continue) is added - the command will execute all remaining command in the table and return to Interpreter loop.
 5. if the Mrc training is done the all execution commands such as Step,Execute.Goto.. are blocked, only non training commands are allowed.
 6. update MrcInterpreter.docx
-Hsd-es-id:1305622073
-Tracker-link: https://hsdes.intel.com/appstore/article/#/1305622073
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
