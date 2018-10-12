@@ -1,0 +1,1543 @@
+================================================================================ 
+Commit: 34b8e856efead190a84a4903a89198fca50ef22e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 10 17:07:05 2018 -0700 
+-------------------------------------------------------------------------------- 
+Integrate Opal driver and solve S3 hang issue
+
+Add Opal/Pyrite 2.0 override.
+Fix S3 10Sec at PC "00E1" hang issue.
+
+Hsd-es-id: 1506771465
+Original commit date: Thu Oct 4 16:17:01 2018 +0800
+Change-Id: I58ac25c3e1514285107b7726cc67221241e0021f
+Original commit hash: c0af9986b74a588062931db8a61ee7d16f02deb6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+CannonLakePlatSamplePkg/Override/DoxygenRpOverride.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Dependency.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Dispatcher.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Handle.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/InstallConfigurationTable.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Locate.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/MemoryAttributesTable.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Notify.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Page.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCoreExtra.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCorePrivateData.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Pool.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Smi.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/SmiHandlerProfile.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/SmramProfileRecord.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Include/Library/LockBoxLib.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxLibPrivate.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/LockBox/SmmLockBox/SmmLockBox.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/LockBox/SmmLockBox/SmmLockBox.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/LockBox/SmmLockBox/SmmLockBox.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Universal/LockBox/SmmLockBox/SmmLockBoxExtra.uni
+CannonLakePlatSamplePkg/Override/MdePkg/Include/IndustryStandard/TcgStorageCore.h
+CannonLakePlatSamplePkg/Override/MdePkg/Include/IndustryStandard/TcgStorageOpal.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Include/Library/OpalPasswordSupportLib.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Include/Library/TcgStorageOpalLib.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/OpalPasswordSupportLib/OpalPasswordSupportLib.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/OpalPasswordSupportLib/OpalPasswordSupportLib.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/OpalPasswordSupportLib/OpalPasswordSupportNotify.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageCoreLib/TcgStorageCore.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageCoreLib/TcgStorageCoreLib.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageCoreLib/TcgStorageUtil.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalCore.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalLib.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalLibInternal.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalUtil.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/ComponentName.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalAhciMode.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalAhciMode.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalDriver.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalDriver.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHii.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHii.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHiiCallbacks.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHiiFormStrings.uni
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHiiFormValues.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalNvmeMode.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalNvmeMode.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalNvmeReg.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordCommon.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordDxe.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordForm.vfr
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalDriver.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalDriverPrivate.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalHii.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalIdeMode.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalIdeMode.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalPasswordSmm.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalPasswordSmm.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalPasswordSmm.inf
+CannonLakePlatSamplePkg/PlatformPkg.dec
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.uni
+
+================================================================================ 
+Commit: 88cf67ae72f09c3a00ca842cd6c172caad323331 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 10 17:07:00 2018 -0700 
+-------------------------------------------------------------------------------- 
+Integrate CFL Px Patch 0xA2
+
+Update CFL Px with Patch 0xA2
+
+Hsd-es-id: 1606713051
+Original commit date: Thu Oct 4 12:37:41 2018 -0700
+Change-Id: I955721dbdbe99b8194fe9a216cc465ad8b9ae253
+Original commit hash: 4f7806ff6b09b764452c85e85dd424a1c98d30b8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 0930d328713d1d5c667c9d555e86b671755b9d6a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 10 17:06:58 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Thu Oct 4 11:36:55 2018 -0700
+Original commit date: Thu Oct 4 11:36:55 2018 -0700
+Original commit hash: 5323583f32a265b19daeb9b3686dad7c9aa2341c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 7570bf4c74218868367daacee892aa340fb61121 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 10 17:06:57 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] Weekly Update BIOS ID
+
+Increment BIOS Major Version and reset Minor Version to 0
+
+Wed Oct 3 18:35:21 2018 -0700
+Original commit date: Wed Oct 3 18:35:21 2018 -0700
+Original commit hash: 96b1f77503c5b19e93583584a8ce35f46949e8b9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 9de6206f084f92c7a83db1158f940b9c11c935c6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 10 17:06:55 2018 -0700 
+-------------------------------------------------------------------------------- 
+CS Exit Latency is failed to meet the PV target.
+
+Adding Gfx dependency for TBT RP.
+
+Hsd-es-id: 1605400631
+Tracker-link: <http link to related tracker>
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Tue Aug 28 15:18:25 2018 +0530
+Change-Id: Ifec694b202623068305456a9d9a533d596f32282
+Original commit hash: f46d22bac7292b65273ddcab7ebbc80d4753ddbc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieTbt.asl
+
+================================================================================ 
+Commit: fba58b47a624decb62866c30106cf1124cff4674 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 10 17:06:52 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Wed Oct 3 11:34:44 2018 -0700
+Original commit date: Wed Oct 3 11:34:44 2018 -0700
+Original commit hash: d25cb7005ffb94b0dbb33718d151ed0ac6590edd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 8904bb21715e78d15ce3aead116202692a469ef6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 10 17:06:50 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Tue Oct 2 11:34:48 2018 -0700
+Original commit date: Tue Oct 2 11:34:48 2018 -0700
+Original commit hash: 2db26c4df8d353e6fa15913775bf1a359cad004d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: bb305734fe302605d1765961a89a03d4d5d58bbe 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 10 17:06:48 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Mon Oct 1 11:34:53 2018 -0700
+Original commit date: Mon Oct 1 11:34:53 2018 -0700
+Original commit hash: 4409abea09f4d7fc0e52bc8f4a8d7b908a4cee97
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+================================================================================ 
+Commit: 49b01e59b7bcb2fe5690166b1d1ef93a7f59eb62 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:43:47 2018 -0700 
+-------------------------------------------------------------------------------- 
+[NO_HSD] Update BIOS ID to v169
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: c724b5eaf63d304d39ccf7f33a1c17e3f87f6d20 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:39:08 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] CNL Weekly Update_FSP/RC
+
+Sun Sep 30 12:06:01 2018 -0700
+Original commit date: Sun Sep 30 12:06:01 2018 -0700
+Original commit hash: c27e831276f7e297639fa7e595dc557b413df446
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: b06d326ea93f9c7a71d9fa29b1d03e708f57ea53 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:39:06 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sun Sep 30 11:34:27 2018 -0700
+Original commit date: Sun Sep 30 11:34:27 2018 -0700
+Original commit hash: 88ddb8541be4b49a88b5a921569e46574fa82df4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 9a426c54f7c89a5dedd9828fa4f2d997dfb42bc6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:39:04 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sat Sep 29 11:35:47 2018 -0700
+Original commit date: Sat Sep 29 11:35:47 2018 -0700
+Original commit hash: aec2845fbe1a093a2394ece79ec6e8497b455bf9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 9d13f8104394f7b13bd5cd8f3fc34714c9ee87d7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:39:02 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Fri Sep 28 11:38:48 2018 -0700
+Original commit date: Fri Sep 28 11:38:48 2018 -0700
+Original commit hash: 1e30d41b65cb2026c500304b69c8ea357780eaa1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 6e1982174df98d63bd3164d83a2ef6af0f1bc04b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:39:00 2018 -0700 
+-------------------------------------------------------------------------------- 
+[CFL-S82][CNP-PCH][CONS]:SUT halts for 10Sec at PC "00E1",While waking from S3
+
+This reverts commit c88aad83e59fc64c93c76bfac9ffd3dbbfbd3eeb and 3f55ed6d2817cf433d72f774d62c84362b6457b8
+
+Hsd-es-id: 1606705987
+Original commit date: Thu Sep 27 14:57:06 2018 -0700
+Change-Id: Id6443939d2d9c92ed4bab37b3b005c813cbb9f19
+Original commit hash: 000ff17964fa70badfbc3d13c5e350330c77f6f3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+CannonLakePlatSamplePkg/Override/DoxygenRpOverride.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Dependency.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Dispatcher.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Handle.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/InstallConfigurationTable.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Locate.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/MemoryAttributesTable.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Notify.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Page.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCoreExtra.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCorePrivateData.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Pool.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Smi.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/SmiHandlerProfile.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/SmramProfileRecord.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Include/Library/LockBoxLib.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxLibPrivate.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.uni
+CannonLakePlatSamplePkg/Override/MdePkg/Include/IndustryStandard/TcgStorageCore.h
+CannonLakePlatSamplePkg/Override/MdePkg/Include/IndustryStandard/TcgStorageOpal.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Include/Library/OpalPasswordSupportLib.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Include/Library/TcgStorageOpalLib.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/OpalPasswordSupportLib/OpalPasswordSupportLib.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/OpalPasswordSupportLib/OpalPasswordSupportLib.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/OpalPasswordSupportLib/OpalPasswordSupportNotify.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageCoreLib/TcgStorageCore.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageCoreLib/TcgStorageCoreLib.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageCoreLib/TcgStorageUtil.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalCore.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalLib.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalLibInternal.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalUtil.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalDriver.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordCommon.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/ComponentName.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalDriver.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalDriver.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalDriverPrivate.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalHii.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalHii.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalHiiCallbacks.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalHiiFormStrings.uni
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalHiiFormValues.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalHiiPrivate.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalPasswordDxe.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalPasswordForm.vfr
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalAhciMode.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalAhciMode.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalIdeMode.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalIdeMode.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalNvmeMode.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalNvmeMode.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalNvmeReg.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalPasswordSmm.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalPasswordSmm.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalPasswordSmm.inf
+CannonLakePlatSamplePkg/PlatformPkg.dec
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.uni
+
+================================================================================ 
+Commit: dd4161a29cb6286485fc6c0103083cd48badacb3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:56 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Thu Sep 27 11:41:04 2018 -0700
+Original commit date: Thu Sep 27 11:41:04 2018 -0700
+Original commit hash: 9a2487cc3fe7e3ef840eaf1b557878f0be7b3ef7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: ff9c27d97d72eda7ea5c7831fdd047222025e412 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:54 2018 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakePlatSamplePkg: Update year number in copyright
+
+Update year number in copyright according to RC review.
+
+Hsd-es-id: None
+Original commit date: Thu Sep 27 11:45:21 2018 +0800
+Change-Id: I6c845ce88f4cbb2f03f1e930dc11f3fccc592303
+Original commit hash: 5c6ff19d33f61f74496797afc81bf344b2a5824b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Features/Tbt/Include/Private/Library/PeiDTbtInitLib.h
+CannonLakePlatSamplePkg/Features/Tbt/Library/Private/PeiDTbtInitLib/PeiDTbtInitLib.inf
+
+================================================================================ 
+Commit: f1406b358d90b64aa10fa8905b09cda648e684c5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:52 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] Weekly Update BIOS ID
+
+Increment BIOS Major Version and reset Minor Version to 0
+
+Wed Sep 26 19:22:45 2018 -0700
+Original commit date: Wed Sep 26 19:22:45 2018 -0700
+Original commit hash: d4a08bee0edb3c3c282bf071911d49ceeb35e808
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: c6c84637925e81a93965011c3245a0aac1a31baa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:50 2018 -0700 
+-------------------------------------------------------------------------------- 
+[PCH] Dynamic PCIe port configuration to support Teton Glacier Part2
+
+Cleaned up the code, created a ppi to avoid having to send a second heci message
+
+Original commit date: Mon Sep 17 10:36:28 2018 -0700
+Change-Id: I46063fe9beef54568448a63a95c51a1ccfd9c6fb
+Original commit hash: a7e74d6f129b193c344b3d70972ac74add89ead9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Me/Include/CoreBiosMsg.h
+CannonLakeSiliconPkg/Me/Include/Library/PeiMeLib.h
+CannonLakeSiliconPkg/Me/Library/PeiMeLib/HeciMsgPeiLib.c
+CannonLakeSiliconPkg/Pch/Include/Private/Ppi/TetonGlacierPpi.h
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchRootPorts.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchPcieClocksLib/PeiPchPcieClocksLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchPcieClocksLib/PeiPchPcieClocksLib.inf
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: d0fb69d392fbb13a58bbd1c2e47ceb117f79c18c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:48 2018 -0700 
+-------------------------------------------------------------------------------- 
+TBT RTD3 OFF Delay Optimization
+
+Add some checking conditions to reduce the delay in TBT
+RTD3 _OFF method.
+
+Hsd-es-id: 1806127592
+Tracker-link: https://hsdes.intel.com/appstore/article/#/1806127592
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Original commit date: Thu May 24 11:54:46 2018 +0800
+Change-Id: I63758bf8bd23537b6b5d8e3905f85c38c053bad2
+Original commit hash: 1d6a6f2f96dfbaad19997f118ba5952b6f79235f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieTbt.asl
+CannonLakePlatSamplePkg/Features/Tbt/Library/DxeTbtPolicyLib/DxeTbtPolicyLib.c
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.uni
+
+================================================================================ 
+Commit: d30ea6db231457456e6d5a2d8e958595d5b53095 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:46 2018 -0700 
+-------------------------------------------------------------------------------- 
+VCCSA TDC Current Limit of Coffee lake H mismatch between Reference BIOS and PDG Spec
+
+Fix the board overrides in the platform code.
+
+Hsd-es-id: 1506755273
+Tracker-link: https://hsdes.intel.com/appstore/article/#/1506755273
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Original commit date: Thu Sep 20 14:13:01 2018 -0700
+Change-Id: I09c45742d2ab1a44de4c761c8b90b5fe172d8372
+Original commit hash: bb3b3e475d2fb242e1965b4bc97d01e31d46b8ba
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+CannonLakeSiliconPkg/Cpu/Include/CpuPowerMgmt.h
+
+================================================================================ 
+Commit: 953dabc289e9d2aeb36259f81c2139576b3dff5d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:44 2018 -0700 
+-------------------------------------------------------------------------------- 
+ClientCommonPkg:System hang-up during serial port loopback test
+
+If ins/outs is executing on a thread, a page fault will occur if SMI is generated.
+
+Hsd-es-id: 1504966132
+Original commit date: Thu Sep 20 14:57:55 2018 +0800
+Change-Id: I6a83b284d67bfb68d0ae84497ec08d85e3e3581c
+Original commit hash: 84ab149cac9227fafbf21b8dae33bf2c00148422
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientCommonPkg/ClientCommonPkg.dec
+ClientCommonPkg/Override/RoyalParkCommonOverride.md
+ClientCommonPkg/Override/UefiCpuPkg/PiSmmCpuDxeSmm/SmramSaveState.c
+
+================================================================================ 
+Commit: 2a5287e13c79497e3102713f3a4861df19d89f86 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:42 2018 -0700 
+-------------------------------------------------------------------------------- 
+[CFL] In S3 resume chain-of-trust, FvRecovery3 is not verified
+Hsd-es-id: 2205371586
+Attestation-link: CannonLakePlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
+
+Original commit date: Wed Sep 19 11:09:49 2018 +0530
+Change-Id: I7127e49d309920fc48b8147f195df23886cb21ef
+Original commit hash: 62c37b2bd3bb9d9a88285a2bd463df7b14c701a7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Platform/BiosInfoChecker/BiosInfoChecker.c
+
+================================================================================ 
+Commit: 8d162af1f65c905b8a316a9e0f75fbfc5752f805 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:40 2018 -0700 
+-------------------------------------------------------------------------------- 
+[WHL] Add support for Pyrite 2.0 to Opal BIOS Password management functionality for optane volume configuration
+
+Support BlockIo protocol not found case in EFI Opal driver for Optane volume configuration
+
+Hsd-es-id: 1407391815
+Original commit date: Tue Sep 25 14:40:55 2018 +0800
+Change-Id: If8238a1657e80bfbdcc708e4b7e6970c3c048da0
+Original commit hash: c88aad83e59fc64c93c76bfac9ffd3dbbfbd3eeb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Override/DoxygenRpOverride.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalDriver.c
+
+================================================================================ 
+Commit: 4de9c95f81eacd490707fe33888fdf3a95db89ef 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:37 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Wed Sep 26 11:35:57 2018 -0700
+Original commit date: Wed Sep 26 11:35:57 2018 -0700
+Original commit hash: f3aa6ebdbe4990d5f7a43674c318f28f0df16417
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 35b890c093ccdf3a3c0a08c0236682eea35a3540 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:34 2018 -0700 
+-------------------------------------------------------------------------------- 
+[WHL]Port TEVT from ICL to WHL
+
+Used for debugging and validation.Calling this method will generate an event of the event code as given in parameter 2 for the participant given in parameter 1.
+
+Hsd-es-id: 2204077650
+Original commit date: Fri Sep 14 12:22:27 2018 -0700
+Change-Id: Ie68977725417ab1db136a68fa931d192c6446e70
+Original commit hash: 5efe4866c619cdb86fa860d1b0e242a02d69985f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Features/Dptf/AcpiTables/Dptf.asl
+CannonLakePlatSamplePkg/Features/Dptf/AcpiTables/DptfTriggerEvent.asl
+
+================================================================================ 
+Commit: 4703b955b8bd25df07a7ba65e274c47f99c84249 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:31 2018 -0700 
+-------------------------------------------------------------------------------- 
+[CFL] Klocwork issues for ME based on Daily_167_00_343
+
+Removed the code where we might be using a vrable without initializing it.
+
+Hsd-es-id: 1506765045
+
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+
+Original commit date: Tue Sep 25 13:22:35 2018 -0700
+Change-Id: Ic258c9de2151ca22865eb6baa9a03a01782a553a
+Original commit hash: ead6cac86c85a1dcb06624daaac411e1de460d3a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Me/Library/PeiMeLib/HeciMsgPeiLib.c
+
+================================================================================ 
+Commit: a4c29639dabd70da20c7a0a5b299718b12ef15b4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:27 2018 -0700 
+-------------------------------------------------------------------------------- 
+[CFL] Klocwork issues for Platform based on Daily_167_00_343
+
+Initialize variables pointers to Null
+
+Hsd-es-id: 1506765059
+Original commit date: Tue Sep 25 14:48:47 2018 -0700
+Change-Id: I3537076508284b579d7bdbb7ca20b39ab52905bf
+Original commit hash: 241bfe9fbfccaacef68391f5891448b052bfac92
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Vtio/Dxe/VtioDxe.c
+
+================================================================================ 
+Commit: 9b9551cae99586ed6c90faa461e0e4bc0e8ab248 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:23 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Tue Sep 25 11:42:29 2018 -0700
+Original commit date: Tue Sep 25 11:42:29 2018 -0700
+Original commit hash: ed99c8ed2344e5e0c4174f0c6d706de5d6fe373a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: ea456ba0ab34bdcd79375c7810907110942bba9b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:13 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Mon Sep 24 11:34:51 2018 -0700
+Original commit date: Mon Sep 24 11:34:51 2018 -0700
+Original commit hash: a6ef0b15cc5c9b073563fe8c6bddaeb27c15d199
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 72b5dfd82689613b45e47ede5ac18fa861c14831 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:08 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] CNL Weekly Update_FSP/RC
+
+Sun Sep 23 12:14:16 2018 -0700
+Original commit date: Sun Sep 23 12:14:16 2018 -0700
+Original commit hash: bcea497702dde57c7d8b6d701141b9fbe467f267
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 21a9fa96ad9a89c2a54f1f65ee57f4591f5ba507 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:38:03 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sun Sep 23 11:34:35 2018 -0700
+Original commit date: Sun Sep 23 11:34:35 2018 -0700
+Original commit hash: a20fd0e09b8016624e65e432549972a3b66bcc65
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 5304146e2712d316883df86cc5dd2eca5badfb03 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:58 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sat Sep 22 11:36:15 2018 -0700
+Original commit date: Sat Sep 22 11:36:15 2018 -0700
+Original commit hash: 7f849a6e541ae86b1f9b89758903dc7a57618851
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: bb2705c861e298c1d0db6fdeba7ea8040331af62 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:54 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Fri Sep 21 11:34:52 2018 -0700
+Original commit date: Fri Sep 21 11:34:52 2018 -0700
+Original commit hash: 205b6878c2d301feef424de3955ee9c3e88ebdc9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: b8a8f0eb326e71048f2f6d0f2e01da6427f17486 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:44 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Thu Sep 20 11:34:58 2018 -0700
+Original commit date: Thu Sep 20 11:34:58 2018 -0700
+Original commit hash: 29fb608dad99095075ac7ae6aebb1e5cc4f248eb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 6a6156d13a893f5e7e3659a69560ffc6aa9a12f8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:40 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] Auto-Commit NVS
+
+Wed Sep 19 19:22:28 2018 -0700
+Original commit date: Wed Sep 19 19:22:28 2018 -0700
+Original commit hash: 2346a044fb01bd9a9e63237c0c9cfb9e6f5c0a7c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+CannonLakePlatSamplePkg/Include/PlatformNvsAreaDef.h
+
+================================================================================ 
+Commit: 9bba55d064a2b14bab18c55de52af6731a9b254d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:36 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] Weekly Update BIOS ID
+
+Increment BIOS Major Version and reset Minor Version to 0
+
+Wed Sep 19 18:52:42 2018 -0700
+Original commit date: Wed Sep 19 18:52:42 2018 -0700
+Original commit hash: f7e3058b00236636921f99e6340000597dbbd952
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 9ccf82f12034f97af782f6c3a18a63af507f94d8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:32 2018 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakePlatSamplePkg: Add TrustedDeviceSetupRestricted Feature
+
+Port changes to support Trusted Device Setup feature in WHL.
+
+Hsd-es-id: 1806365631
+Original commit date: Thu Jul 26 14:16:40 2018 -0700
+Change-Id: I98d706ee07c75cec1abd83d5a02bcb6c968d198b
+Original commit hash: 93256839cb9b8bf1d65cddb3e4bf1ba035b912fe
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Features/Me/MeSmbiosDxe/MeSmbios.h
+CannonLakePlatSamplePkg/Features/Me/MeSmbiosDxe/MeSmbiosDxe.inf
+CannonLakePlatSamplePkg/Features/Me/MeSmbiosDxe/MiscOemType0x83Function.c
+CannonLakePlatSamplePkg/FlashMap/SIZE_100_TRUSTED_DEVICE_SETUP.fdf
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerHiiFreeLib.inf
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerHiiFreeLibCsm.inf
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerLib.inf
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerLibCsm.inf
+CannonLakePlatSamplePkg/PlatformPkg.dec
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+CannonLakePlatSamplePkg/PlatformPkgBuildOption.dsc
+CannonLakePlatSamplePkg/PlatformPkgConfig.dsc
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+CannonLakeSiliconPkg/Me/Include/Amt.h
+
+================================================================================ 
+Commit: 6891a096464fad7c298bafab42bd924e8f93ca29 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:25 2018 -0700 
+-------------------------------------------------------------------------------- 
+[WHL] DPTF: Support Battery Participant in BIOS
+
+Adding BatteryParticipant.asl. Removed PTYP, PMAX, PBSS, CTYP, and DPSP ACPI methods from Power Participant and added in battery participant. _BIX and _BST methods are not required anymore, removing it. Updating notification code to send the BATTERY_STATUS from Battery Participant
+
+Hsd-es-id: 2204077478
+Original commit date: Mon Sep 17 16:31:02 2018 -0700
+Change-Id: I613e7be57dc77aaff4129d486a8249e94066db3f
+Original commit hash: 85aa22cb23807cea57ca42bb1f622f6da1b0d2a9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.c
+CannonLakePlatSamplePkg/EC/Asl/EC.ASL
+CannonLakePlatSamplePkg/Features/Dptf/AcpiTables/BatteryParticipant.asl
+CannonLakePlatSamplePkg/Features/Dptf/AcpiTables/Dptf.asl
+CannonLakePlatSamplePkg/Features/Dptf/AcpiTables/TPwrParticipant.asl
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/Library/DxeAcpiGnvsInitLib/DxeAcpiGnvsInitLib.c
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.uni
+
+================================================================================ 
+Commit: ff50bc2b0e1597106ea1ee1326f9924a307b712e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:20 2018 -0700 
+-------------------------------------------------------------------------------- 
+[PCH][VTIO] USB Device reassignment Setup
+
+Provide Setup Menu options to program xHCI Devices
+Impacted Platform: CNL/CFL
+
+Original commit date: Wed Apr 25 15:49:17 2018 -0700
+Change-Id: Iffe841959a3bf96f7e7a04330c35d567e778007d
+Original commit hash: 7fc557691c60c9a95358c0748d5829163f9e3026
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.c
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflHDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflHDdr4TbtRvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflSDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflSDdr4TbtRvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflULpDdr3KcCrb.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCnlHDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCnlUDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCnlULpDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCnlYLpDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciSds.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciWhlUDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciWrapper.asl
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/Setup/PlatformSetup.c
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.uni
+CannonLakePlatSamplePkg/Setup/SetupCallbackExList.h
+CannonLakePlatSamplePkg/Setup/SetupId.h
+CannonLakePlatSamplePkg/Vtio/Dxe/VtioDxe.c
+CannonLakePlatSamplePkg/Vtio/Dxe/VtioDxe.h
+
+================================================================================ 
+Commit: 2bccf1418325e134b1807cd13f870158afd01140 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:16 2018 -0700 
+-------------------------------------------------------------------------------- 
+[PCH] Add PCD flag to allow for WDT support in debug BIOS builds.
+
+Add a PCD that would control, when the WDT is disabled.
+This is enabled by default for release BIOS.
+
+Original commit date: Wed Sep 5 15:56:50 2018 -0700
+Change-Id: Ic69615746403fec430c01760d40d94e0587e3f1f
+Original commit hash: 622297db8cf37a2ea44b3e063411c957521b3df1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkgConfig.dsc
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPchWdtCommonLib/PeiDxeSmmPchWdtCommonLib.inf
+CannonLakeSiliconPkg/Pch/Library/PeiDxeSmmPchWdtCommonLib/WdtCommon.c
+CannonLakeSiliconPkg/Pch/Library/PeiOcWdtLib/PeiOcWdtLib.c
+CannonLakeSiliconPkg/Pch/Library/PeiOcWdtLib/PeiOcWdtLib.inf
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: e46ce6be25d6e14b14a46a80f07fbf1798615e8f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:14 2018 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed Sep 19 23:16:11 2018 +0000
+Original commit date: Wed Sep 19 23:16:11 2018 +0000
+Original commit hash: d1533688a6fbbe369f7aa60c8b26ad773e2ce7c9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 8e01b574cefa3dfbd081c0d1fb86ab4fed572e88 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:10 2018 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakeSiliconPkg: [2007351445][CFL-S82][MRC] CatError: "LLC_COMMAND_TIMEOUT" starting Windows RS4 with a specific Memory Configuration
+
+Issues seen booting Windows, and also running memory stress at OS with certain 1R-2R 2DPC memory configurations
+
+Root Cause:
+During DIMM ODT training, Rtt Park for Slot 1 should be set based on traffic on the same DIMM slot, not the traffic on Slot 0. This only applies to very specific 2DPC DIMM populations, where slot 0 does not have 2R populated.
+
+Hsd-es-id: 2007351445
+Original commit date: Wed Sep 5 11:58:45 2018 -0700
+Change-Id: Ifeb03f6947b68b36b757d1acdb906499e9ceb723
+Original commit hash: fd0c682b9e16d96a3de0f14000c3573f74fe7645
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcCommon.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: a2d7a29a7763157c35bc770e6d50377b07ffd8ce 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:05 2018 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed Sep 19 22:51:33 2018 +0000
+Original commit date: Wed Sep 19 22:51:33 2018 +0000
+Original commit hash: c4012f89862a1bee660904a949fc4475516ac78f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 88cb46f8bee9d7e6eff15907cc11b0d21134e8d4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:37:01 2018 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakeSiliconPkg: [1506757662]Incorrect parameters in  CFL-S MRC reference code
+
+The MrcProgramSequenceAddress input parameters within SetupIOTest are not ordered correctly. The WrapCarryEn and the WrapTriggerEn are swapped.
+
+Hsd-es-id: 1506757662
+Original commit date: Tue Sep 18 15:11:24 2018 -0700
+Change-Id: I6e21089bd77c1bb6221a493e29cde8f54bf00b8b
+Original commit hash: 13fb9a7249fe5d217093fdb243535911759241c4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: 687d5df186e1153f9a331df520e775601e30ff11 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:58 2018 -0700 
+-------------------------------------------------------------------------------- 
+Read and Set BIOS operation failed with XML-CLI tool
+
+Enhacement to Read the Memory size displayed in BIOS front page in XMLCli
+Restructuring it as common and restricted package
+
+Hsd-es-id: 1605862229
+Original commit date: Mon Sep 17 10:01:49 2018 +0530
+Change-Id: Ied1ae97b518601a131951cb5887ee7a2bc0480fb
+Original commit hash: d21060f18d041a89008776738d17043aed36a67e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+CannonLakePlatSamplePkg/Setup/Setup.uni
+CannonLakePlatSamplePkg/Setup/UqiList.uni
+
+================================================================================ 
+Commit: ee68c319ad75f3f16783e3da6c6aed1c3f93a058 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:55 2018 -0700 
+-------------------------------------------------------------------------------- 
+CFL-S[8+2] [CFL_H6+2+CNP_PCH][CFL-H82] [TBT RS4 TR NE+RTD3] : TBT device not enumerating & USB devices 10b4 Caterror observed after waking from DSx
+
+During DS4/S5/G3/Reset resume, toggle GPIO K4 to high, wait for 10ms and then toggle it to low .
+
+Hsd-es-id: 1604915004
+Original commit date: Tue Aug 21 16:51:52 2018 +0800
+Change-Id: Ifb50f085e0044ffa744d6af264118d2eb5d3d699
+Original commit hash: 8576223bceefde94ca93221ef332616a086bc61f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitLib.c
+CannonLakePlatSamplePkg/Features/Tbt/Include/Private/Library/PeiDTbtInitLib.h
+CannonLakePlatSamplePkg/Features/Tbt/Include/TbtPolicyCommonDefinition.h
+CannonLakePlatSamplePkg/Features/Tbt/Library/Private/PeiDTbtInitLib/PeiDTbtInitLib.c
+CannonLakePlatSamplePkg/Features/Tbt/Library/Private/PeiDTbtInitLib/PeiDTbtInitLib.inf
+
+================================================================================ 
+Commit: 884b29476f883b06a1d32f8165ade98b44ebde1d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:52 2018 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed Sep 19 22:38:04 2018 +0000
+Original commit date: Wed Sep 19 22:38:04 2018 +0000
+Original commit hash: 44ba6026e4e365aa394cfbec4e9f3210f9c907ad
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 8e4fab84fc5e86be9840571b7b0887aaac33ca5c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:50 2018 -0700 
+-------------------------------------------------------------------------------- 
+[OC][CFL] Real-time memory controls disappear in XTU after system crash (although it is enabled in BIOS)
+
+WDT expiration logic was bypassing reprogramming of realtime memory enable on the first boot after the failure.
+
+Hsd-es-id: 2205326981
+Tracker-link: https://hsdes.intel.com/appstore/article/#/2205326981
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Original commit date: Wed Sep 12 18:04:51 2018 -0700
+Change-Id: I800d78bef7dc2f90bde65804c327f83d691cc20c
+Original commit hash: 798ec65757d5b808f64cd0bc187612eefc13e9a8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+
+================================================================================ 
+Commit: 1431356dd74c44345696bf988c9787aa2c44c8fd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:48 2018 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakePlatSamplePkg: Fix ACPI TAD device _GRT() buffer is accessed over bounds
+
+Fix a buffer overrun in the ACPI TAD _GRT method
+
+Hsd-es-id: 1806420580
+Original commit date: Thu Sep 13 13:27:23 2018 -0700
+Change-Id: I94a513bec298128aa81ef2f53babe6e9d8b0a9fc
+Original commit hash: b02e9ff83467c25ec96f69f879a66b528d4f283b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/TimeAndAlarmDevice.asl
+
+================================================================================ 
+Commit: 219ee7863bc58902866048a759e49b9da552b6e1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:46 2018 -0700 
+-------------------------------------------------------------------------------- 
+Correct BIOS logic error in WWAN PSTA method
+
+Changing "If(Not(\PIN.STA(PWRG)))" to "If(LNot(\PIN.STA(PWRG)))"
+
+Hsd-es-id: 1506756728
+Tracker-link: https://hsdes.intel.com/appstore/article/#/1506756728
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Original commit date: Mon Sep 17 17:26:00 2018 +0800
+Change-Id: Ia4b6b76237023db7ccf99fe96d05160ede6b11cb
+Original commit hash: 7f1e0516009cce92015f0c36889f2f23a89ec5bb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieWwan.asl
+
+================================================================================ 
+Commit: c08f155001d4153b29d0722476c5147163ed2068 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:44 2018 -0700 
+-------------------------------------------------------------------------------- 
+[PCH] BIOS WA for CNL-PCH XHCI Debug mode
+
+BIOS WA for CNL-PCH XHCI Debug mode
+
+Original commit date: Wed Aug 22 15:23:20 2018 -0700
+Change-Id: I1a16241ef782fc0f4462ffb9bd367d81cbbfe1da
+Original commit hash: 137b85372400487b0582ceab853a2859d951bcb3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Include/Register/RegsUsb.h
+CannonLakeSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmDciPrivateLib/DciPrivateLib.c
+CannonLakeSiliconPkg/Pch/PchInit/Smm/PchInitSmm.c
+CannonLakeSiliconPkg/Pch/PchInit/Smm/PchInitSmm.inf
+
+================================================================================ 
+Commit: dcd8077e2dfd8f4ebbbbd11f56c8ae09865289d9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:43 2018 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakeSiliconPkg: Enable CMDDSEQ step for WHL LP3 2133
+
+Necessary to improve CMD timing margin
+
+Hsd-es-id: 1305915531
+Original commit date: Thu Sep 13 12:08:11 2018 +0300
+Change-Id: I7d7e3e2d6643cbc2038a0497806435703d0788d2
+Original commit hash: 34f8c7e47ca220325941cb35ab1c6e21c3bc46ee
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+
+================================================================================ 
+Commit: 563b2938d1673f6006891f5ecabc2dab3860a66d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:39 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Wed Sep 19 11:35:57 2018 -0700
+Original commit date: Wed Sep 19 11:35:57 2018 -0700
+Original commit hash: 81a4e12d426416d825456ad704462fb040d24e75
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 9b0012a93f320e03ffbd98cfb95276ed9db706f5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:37 2018 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakePlatSamplePkg: [CFL-H82][CFL-S 82][BIOS][Regression]: Yellow bangs are observed at PCI express upstream and PCI-to -PCI bridge after hot plugging TBT devices.
+
+Use PeiServicesCreateHob to create Hob and remove GET_GUID_HOB_DATA when copy Hob data.
+
+Hsd-es-id: 1606681600
+Tracker-link: https://hsdes.intel.com/appstore/article/#/1606681600
+Original commit date: Tue Sep 18 16:08:27 2018 +0800
+Change-Id: Ie4dd2428b63a72d619e1d0b15c333bb17bf51d8a
+Original commit hash: 6e2f7c8f58b811bca0380505657e6935613908f8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Features/Tbt/TbtInit/Pei/PeiTbtInit.c
+CannonLakePlatSamplePkg/Features/Tbt/TbtInit/Smm/TbtSmm.c
+
+================================================================================ 
+Commit: 1ff560d8e234cabfea55beef1cd5723f6bbdff12 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:35 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Tue Sep 18 11:34:58 2018 -0700
+Original commit date: Tue Sep 18 11:34:58 2018 -0700
+Original commit hash: fb367f5967ee6a8d1bbe3b67a3c8fa39b96cd9b4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 4406fcd2d1b320cb9a178a6f58808c0bb57826f4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:33 2018 -0700 
+-------------------------------------------------------------------------------- 
+Integrate latest CFL GOP V1082 and VBIOS V1015
+
+Hsd-es-id: 1606682394
+Original commit date: Mon Sep 17 11:54:57 2018 +0530
+Change-Id: I41a6d74266e05208357ab744e8d660172fd69ddd
+Original commit hash: 03cde18f6919786e741f18186b71a9b3269495a0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspBinPkg/SampleCode/Vbt/VbtCfl.bin
+CannonLakeFspBinPkg/SampleCode/Vbt/VbtCfl.bsf
+CannonLakeSiliconPkg/SampleCode/IntelGraphicsVbt/VbtCfl.bin
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCfl.efi
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCflDebug.efi
+
+================================================================================ 
+Commit: bc9737e40c3af404939c8bd4100daf96b5b0ec55 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:31 2018 -0700 
+-------------------------------------------------------------------------------- 
+Integrate CFL P0 patch 0xA0 for CFL H/S 82 SKUs
+
+Update CFL Px with Patch 0xA0
+
+Hsd-es-id: 2205485155
+Original commit date: Mon Sep 17 14:09:01 2018 -0700
+Change-Id: If6efc1a4d24093de1fde326ec3ceb7ea3276f5bf
+Original commit hash: 9f939c532cd6c1f0a00b74e32cf5cb7381a969c8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: fa1aa292dd5871add49afaa6de71133b4c5b3d81 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:29 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Mon Sep 17 11:35:06 2018 -0700
+Original commit date: Mon Sep 17 11:35:06 2018 -0700
+Original commit hash: 75f34f0db9081a0d4383008ffed7b90f7af529ea
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 4e6c952f58bb6704229b8191a1437bf525b0c6a8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:27 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] CNL Weekly Update_FSP/RC
+
+Sun Sep 16 12:08:38 2018 -0700
+Original commit date: Sun Sep 16 12:08:38 2018 -0700
+Original commit hash: 5af47574d53b4603bfceae627ee65eb93dd73874
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 0e8767b6b81b033d11336a048a3431805ea94819 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:25 2018 -0700 
+-------------------------------------------------------------------------------- 
+[NO_HSD] Update BIOS ID to v166.1
+
+Hsd-es-id: N/A
+Original commit date: Fri Sep 14 17:03:46 2018 -0700
+Change-Id: I95c906d06bbfa7649c149037f00ce8c2d702cf13
+Original commit hash: 46b24e81bbfb5073b377ae434919e56155d37376
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 07f9a446e97af5b164a935776022b414bd766ac9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:36:23 2018 -0700 
+-------------------------------------------------------------------------------- 
+[WHL] Add support for Pyrite 2.0 to Opal BIOS Password management functionality
+
+Pyrite 2.0 is supported from BP 1.6.1.0, so it needs to be covered by platform override as of now.
+Mainly override Opal driver, LockboxLib
+
+Hsd-es-id: 1407391728
+Original commit date: Fri Sep 7 12:37:28 2018 +0800
+Change-Id: Ib26b6abcb85830dc20fe478ab2812b22c062ba65
+Original commit hash: 3f55ed6d2817cf433d72f774d62c84362b6457b8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+CannonLakePlatSamplePkg/Override/DoxygenRpOverride.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Dependency.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Dispatcher.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Handle.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/InstallConfigurationTable.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Locate.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/MemoryAttributesTable.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Notify.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Page.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCore.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCoreExtra.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/PiSmmCorePrivateData.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Pool.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/Smi.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/SmiHandlerProfile.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Core/PiSmmCore/SmramProfileRecord.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Include/Library/LockBoxLib.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.uni
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxLibPrivate.h
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.c
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.inf
+CannonLakePlatSamplePkg/Override/MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.uni
+CannonLakePlatSamplePkg/Override/MdePkg/Include/IndustryStandard/TcgStorageCore.h
+CannonLakePlatSamplePkg/Override/MdePkg/Include/IndustryStandard/TcgStorageOpal.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Include/Library/OpalPasswordSupportLib.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Include/Library/TcgStorageOpalLib.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/OpalPasswordSupportLib/OpalPasswordSupportLib.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/OpalPasswordSupportLib/OpalPasswordSupportLib.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/OpalPasswordSupportLib/OpalPasswordSupportNotify.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageCoreLib/TcgStorageCore.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageCoreLib/TcgStorageCoreLib.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageCoreLib/TcgStorageUtil.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalCore.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalLib.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalLibInternal.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Library/TcgStorageOpalLib/TcgStorageOpalUtil.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/ComponentName.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalAhciMode.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalAhciMode.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalDriver.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalDriver.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHii.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHii.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHiiCallbacks.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHiiFormStrings.uni
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalHiiFormValues.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalNvmeMode.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalNvmeMode.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalNvmeReg.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordCommon.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordDxe.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordForm.vfr
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPassword/OpalPasswordPei.inf
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalDriver.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalDriverPrivate.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordDxe/OpalHii.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalIdeMode.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalIdeMode.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalPasswordSmm.c
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalPasswordSmm.h
+CannonLakePlatSamplePkg/Override/SecurityPkg/Tcg/Opal/OpalPasswordSmm/OpalPasswordSmm.inf
+CannonLakePlatSamplePkg/PlatformPkg.dec
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.uni
+
+================================================================================ 
+Commit: 7c84ec3366b939299b5e3705b44b9afce9263fed 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:33:09 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] Weekly Update BIOS ID
+
+Increment BIOS Major Version and reset Minor Version to 0
+
+Fri Sep 14 17:00:26 2018 -0700
+Original commit date: Fri Sep 14 17:00:26 2018 -0700
+Original commit hash: 018ac6c042137f9e67dc6ecb46eb65c907361518
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 61509302143735d57d99234c57431bff02e72ed6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:33:07 2018 -0700 
+-------------------------------------------------------------------------------- 
+[PCH] V165 WHL and CFL system's SLP S0 sleep failed, but it will pass after PCH IO LAN controller disable.
+
+Original commit date: Fri Sep 14 15:38:38 2018 -0700
+Change-Id: I23dce61ddf7811f3c38f5236af12a75758404957
+Original commit hash: cd8e1b89dd7e1ab71d611587485d27a9887be433
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLib.c
+
+================================================================================ 
+Commit: 3cd2fd46930d0772a7bbf1a0c4a13e383478750c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:33:04 2018 -0700 
+-------------------------------------------------------------------------------- 
+[PCH] Optimze PCH BIOS source code
+
+Original commit date: Fri Sep 14 09:08:13 2018 -0700
+Change-Id: I4650f7e6ed239ca0709a30247aa3a49baa4c1a4b
+Original commit hash: ee22453bef505a5101856f9f6765ec1b2369da2c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Me/Include/Library/PeiMeLib.h
+CannonLakeSiliconPkg/Me/Library/PeiMeLib/HeciMsgPeiLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchRootPorts.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchPcieClocksLib/PeiPchPcieClocksLib.c
+
+================================================================================ 
+Commit: cf80998fb9403b8db166151d1502d196778ffdfa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:33:02 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Thu Sep 13 11:35:03 2018 -0700
+Original commit date: Thu Sep 13 11:35:03 2018 -0700
+Original commit hash: f356fd0dceecddc755fd9dbb504d284bf714648e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 0e1654b19dd21c504a495846c7c73528334fcb5d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:33:00 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Wed Sep 12 11:39:37 2018 -0700
+Original commit date: Wed Sep 12 11:39:37 2018 -0700
+Original commit hash: da91077b626c5c11845c1629f94f8ade5a436655
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: bb95f43f7cd10c4f52697276eb174f42fac23f11 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 9 18:27:50 2018 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] Auto-Commit FSP
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CFL_CNL_version decode WW39'18.pdf
+CannonLakeFspBinPkg/Docs/CannonLake_FSP_Integration_Guide.chm
+CannonLakeFspBinPkg/Docs/CannonLake_FSP_Integration_Guide.pdf
+CannonLakeFspBinPkg/Fsp.bsf
+CannonLakeFspBinPkg/Include/FspmUpd.h
+CannonLakeFspBinPkg/Include/FspsUpd.h
+CannonLakeFspBinPkg/SampleCode/Vbt/Vbt.bsf
+CannonLakeFspBinPkg/SampleCode/Vbt/VbtCfl.bin
+CannonLakeFspBinPkg/SampleCode/Vbt/VbtCfl.bsf
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeFspPkg/FspInit/Pei/FspInitPreMem.c
+CannonLakeFspPkg/Include/FspmUpd.h
+CannonLakeFspPkg/Include/FspsUpd.h
+CannonLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+CannonLakeFspPkg/Library/PeiPolicyUpdateLib/PeiSecurityPolicyUpdate.c
+CannonLakeFspPkg/Upd/FspsUpd.dsc
+CannonLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.c
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/TimeAndAlarmDevice.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieWwan.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflHDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflHDdr4TbtRvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflSDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflSDdr4TbtRvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCflULpDdr3KcCrb.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCnlHDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCnlUDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCnlULpDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCnlYLpDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciSds.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciWhlUDdr4Rvp.asl
+CannonLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciWrapper.asl
+CannonLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitLib.c
+CannonLakePlatSamplePkg/Docs/PlatApi.chm
+CannonLakePlatSamplePkg/Features/Amt/AmtPetAlertDxe/AmtPetAlert.c
+CannonLakePlatSamplePkg/Features/Amt/AmtPetAlertDxe/AmtPetAlert.h
+CannonLakePlatSamplePkg/Features/Tbt/Include/Private/Library/PeiDTbtInitLib.h
+CannonLakePlatSamplePkg/Features/Tbt/Include/TbtPolicyCommonDefinition.h
+CannonLakePlatSamplePkg/Features/Tbt/Library/Private/PeiDTbtInitLib/PeiDTbtInitLib.c
+CannonLakePlatSamplePkg/Features/Tbt/Library/Private/PeiDTbtInitLib/PeiDTbtInitLib.inf
+CannonLakePlatSamplePkg/Features/Tbt/TbtInit/Pei/PeiTbtInit.c
+CannonLakePlatSamplePkg/Features/Tbt/TbtInit/Smm/TbtSmm.c
+CannonLakePlatSamplePkg/Include/PlatformNvsAreaDef.h
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/Library/PeiPolicyDebugLib/PeiCpuPolicyDebugLib.c
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakePlatSamplePkg/PlatformPkg.fdf
+CannonLakePlatSamplePkg/Setup/CpuSetup.hfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.c
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+CannonLakePlatSamplePkg/Setup/PlatformSetup.uni
+CannonLakePlatSamplePkg/Setup/SetupCallbackExList.h
+CannonLakePlatSamplePkg/Setup/SetupId.h
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+CannonLakePlatSamplePkg/Vtio/Dxe/VtioDxe.c
+CannonLakePlatSamplePkg/Vtio/Dxe/VtioDxe.h
+CannonLakePlatSamplePkg/capsulebuild.bat
+CannonLakeSiliconPkg/Cpu/Include/CpuRegs.h
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerLimits.c
+CannonLakeSiliconPkg/Docs/SiPkgApi.chm
+CannonLakeSiliconPkg/Include/Register/RegsUsb.h
+CannonLakeSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
+CannonLakeSiliconPkg/Me/Include/Library/PeiMeLib.h
+CannonLakeSiliconPkg/Me/Library/PeiMeLib/HeciMsgPeiLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmDciPrivateLib/DciPrivateLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLib.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchRootPorts.c
+CannonLakeSiliconPkg/Pch/Library/Private/PeiPchPcieClocksLib/PeiPchPcieClocksLib.c
+CannonLakeSiliconPkg/Pch/PchInit/Smm/PchInitSmm.c
+CannonLakeSiliconPkg/Pch/PchInit/Smm/PchInitSmm.inf
+CannonLakeSiliconPkg/SampleCode/IntelGraphicsVbt/VbtCfl.bin
+CannonLakeSiliconPkg/SiPkg.dec
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCfl.efi
+CannonLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimCflDebug.efi
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcCommon.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Services/MrcCommon.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+ClientCommonPkg/ClientCommonPkg.dec
+ClientCommonPkg/Docs/ClientCommonPkgApi.chm
+ClientCommonPkg/Docs/ClientCommonPkgApi.pdf
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/ComponentName.c
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpress.c
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpress.h
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressBlockIo.c
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressBlockIo.h
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressDiskInfo.c
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressDiskInfo.h
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressDxe.inf
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressDxe.uni
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressDxeExtra.uni
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressHci.c
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressHci.h
+ClientCommonPkg/Override/MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressPassthru.c
+ClientCommonPkg/Override/RoyalParkCommonOverride.md
+ClientSiliconPkg/Docs/ClientSiliconPkg.chm
+ClientSiliconPkg/Docs/ClientSiliconPkg.pdf
