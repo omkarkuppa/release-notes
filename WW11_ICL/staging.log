@@ -177,7 +177,7 @@ Commit: be3bd1b4af8b7cea01e836dba7629171b796742f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:44:48 2019 -0700 
 -------------------------------------------------------------------------------- 
-[ICL Security [TXT] : Debug BIOS v2462.01 asserts at PC 757F with TXT enabled environment]
+[SA][PCH][TXT] Debug BIOS v2462.01 asserts at PC 757F with TXT enabled environment
 
 Reserve the whole TXT space [0xFED20000 .. 0xFED7FFFF] in InstallEfiMemory(), similar to how we already reserve TSEG, GFx stolen, DPR etc.
 This is to avoid overlapping reservations of this range from multiple drivers.
@@ -541,7 +541,7 @@ Commit: d4cd5d581e701a89032f955811f485a6c4b80d94
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:43:35 2019 -0700 
 -------------------------------------------------------------------------------- 
-IceLakePlatSamplePkg: External V1P05 ICC Max Value should default to 200mA
+[PCH] External V1P05 ICC Max Value should default to 200mA
 
 V1P05 PS10 Threshold Limit ICCMAX value should default to 200mA as V1.05_BYP VR can handle 200mA of current
 
@@ -778,7 +778,7 @@ Commit: bbd9cb3e98318a9306ca3c04c5a27d248114c3f1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:42:33 2019 -0700 
 -------------------------------------------------------------------------------- 
-Remove all VTIO reference from HSTI code and update Measured boot Enforcement Test 1
+[Security][PCH] Remove all VTIO reference from HSTI code and update Measured boot Enforcement Test 1
 
 Removed all VTIO references for the P2SB and ACS Tests to align with PCH Security Configuration Table of the ICL BIOS Platform FAS v1.4
 
@@ -821,7 +821,7 @@ Commit: 79a92bbb041b484770acedd8d214c3a51e7e9563
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:42:27 2019 -0700 
 -------------------------------------------------------------------------------- 
-IceLakeSiliconPkg: [ICL][Chipset_Init format v2.0] Platform policies for SATA applied via BIOS only, and never via PMC using PGR
+[PCH] Platform policies for SATA applied via BIOS only, and never via PMC using PGR
 
 PPI created for SUS table does not keep valid data if it is created in PreMem PEI phase
 
@@ -844,10 +844,9 @@ Commit: e12fc6cea8a511894aff1abfeb102eeb3caba3df
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:42:25 2019 -0700 
 -------------------------------------------------------------------------------- 
-[ICL] Correction of Serial io devices S3 boot script stores
+[PCH] Correction of Serial io devices S3 boot script stores
 
 Added function to get address of S3 boot script
-Impacted: ICL platform.
 
 Hsd-es-id: 1507015101
 Tracker-link: https://hsdes.intel.com/appstore/article/#/1507015101
@@ -913,7 +912,7 @@ Commit: 0a19d1f1ef87a2507385f44b8bd5a7289e200745
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:42:19 2019 -0700 
 -------------------------------------------------------------------------------- 
-[ICL] Move EnableAbove4GBMmio policy to Pre-Mem from Dxe
+[SA][PCH] Move EnableAbove4GBMmio policy to Pre-Mem from Dxe
   1. Move EnableAbove4GBMmio policy to Pre-Mem from Dxe and check it if count 64 bit BARs in Pre-Mem.
   2. Update DxePciHostBridgeLib to use SA HOBs to get the policy value of EnableAbove4GBMmio.
 
@@ -951,7 +950,7 @@ Commit: ca79765a9e02bd8ad782730c3d6f66db317e24d2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:42:15 2019 -0700 
 -------------------------------------------------------------------------------- 
-IceLakePlatSamplePkg: [ICL] Remove BIOS PEP constraint for Intel Display Audio / D3
+[PCH] Remove BIOS PEP constraint for Intel Display Audio with D3 state
 
 Remove the BIOS PEP constraint for Intel Display Audio due to difficulties with new DA hot-plug driver model.
 Due to adrress conflict between intel sst driver and mircosoft HDA driver.
@@ -1143,13 +1142,8 @@ Commit: c0ed85c6f8e30b74f2d50de2b8e6a14cdd8a5742
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:41:47 2019 -0700 
 -------------------------------------------------------------------------------- 
-USB-C virtual wire OC pin-per-port for USB Overcurrent
+[PCH][TCSS] Enable USB port virtual wire OC pin-per-port for USB Overcurrent
 
-Following the related HSD link:
-  https://hsdes.intel.com/appstore/article/#/1408871657
-  https://hsdes.intel.com/appstore/article/#/1208915026
-
-Solution:
   1. Add Virtual Wire GPIO pad goup in PeiDxeSmmGpioPrivateLib.
   2. PeiUsbInitLib update Pch.U2OCM[PortIndex] and CPUU3OCM[Index] for Virtual Wire GPIO setting.
   3. Update IclUN CPU OC Pin mapping in PeiBoardInitLib
@@ -1184,7 +1178,7 @@ Commit: ea64fe3f135d78643b475f04fb48ed266e53e91e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:41:44 2019 -0700 
 -------------------------------------------------------------------------------- 
-KC is unable to unhide P2SB after SetBiosDone, blocking critical factory validation
+[PCH] Unable to unhide P2SB after SetBiosDone, blocking critical factory validation feedbacked by customer
 
 Provide PCH secure register access protocol for customer to acceess USB2 reigster during shell.
 This is for manufactory only.
@@ -1240,7 +1234,7 @@ Commit: 137b2d29bc1d3aa1fa53dca54698796a39e7399e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:41:40 2019 -0700 
 -------------------------------------------------------------------------------- 
-Allocate Trace Hub memory in SiPkg for non-fsp boot.
+[CPU][PCH] Allocate Trace Hub memory in SiPkg for non-fsp boot.
 
 Hsd-es-id: 1408323689
 Original commit date: Tue Nov 27 18:18:47 2018 +0800
@@ -1342,7 +1336,7 @@ Commit: 304889e7fcdb91da58516571c3da6cc925c4cd08
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:40:55 2019 -0700 
 -------------------------------------------------------------------------------- 
-ICL Mintree: IceLakeOpenSiliconPkg scrubbing.
+[SA][PCH] IceLakeOpenSiliconPkg scrubbing.
 
 1. Remove unnecessary ACPI table updates (SerialIo, Cnvi, Emmc, SdCard)
 2. Remove unused Pch Smi Dispatch Protocols (gPchTcoSmiDispatchProtocolGuid,
@@ -1891,7 +1885,7 @@ Commit: 94d08f61e4cf4c12e37a562a5dbb54bb9f7a46dc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:39:24 2019 -0700 
 -------------------------------------------------------------------------------- 
-Remove BIOS LVM settings for debug for it may be done by tool.
+[PCH] Remove BIOS Low Voltage Margin(LVM) settings for debug for it may be done by tool.
 
 1. Remove setting CPPMVRICs for disqualify bits per debug probe (Deprecated SlpS0DisQForDebug)
 2. Remove IPC1 0xA1 implementation. (Deprecated SlpS0Override)
@@ -2018,7 +2012,7 @@ Commit: 365c1ef2b982a47b7d7047a62d60362031eab040
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:39:13 2019 -0700 
 -------------------------------------------------------------------------------- 
-[ICL] _allshr unresolved build errors from PchSerialIoUartPrivateLib.c
+[PCH] _allshr unresolved build errors from PchSerialIoUartPrivateLib.c
 
 Hsd-es-id: 1507044430
 Original commit date: Tue Jan 29 11:08:18 2019 +0800
@@ -2034,7 +2028,7 @@ Commit: 6e4e64fad3e2fecc4da2a4ee6c467138979c0d09
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:39:12 2019 -0700 
 -------------------------------------------------------------------------------- 
-[ICL][UART] Bad Return type for PIO/DMA _DSM in ASL.
+[PCH] Bad Return type for PIO/DMA _DSM in ASL.
 
 Fixed return type as Integer.
 
@@ -2052,7 +2046,7 @@ Commit: 0a6b475b672eead4c3404385fb95c579dc5ea40e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:39:09 2019 -0700 
 -------------------------------------------------------------------------------- 
-ICP BIOS WG updated to add new IPC1 0xAD command for register lock security work-around
+[PCH] ICP BIOS WG updated to add new IPC1 0xAD command for register lock security work-around
 
 Re-program GCR registers via IPC1 command to be locked. Noted:PMC V23(UY), V20(YN) started to supprot 0xAD command
 
@@ -2310,7 +2304,7 @@ Commit: 54094be2489659389377049cc2eac77c41c7f7fd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:38:20 2019 -0700 
 -------------------------------------------------------------------------------- 
-[Merge CNL/CFL to ICL] [VTIO] USB Device reassignment Setup
+[PCH][VTIO] USB Device reassignment Setup
 
 Provide Setup Menu options to program xHCI Devices
 
@@ -2426,7 +2420,7 @@ Commit: 3c5cf24e6e0427363537f339661fd9ffee3a2f41
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:38:07 2019 -0700 
 -------------------------------------------------------------------------------- 
-[ICL][ICL-U][UART][BIOS]After update CPU from A2 to B1 and update IFWI, UART 1 RW fail
+[PCH] After update CPU from A2 to B1 and update IFWI, UART 1 RW fail
 
 Restored disabling inversion if such was set by default in the hardware.
 Also covered PinMux settings.
@@ -2483,7 +2477,7 @@ Commit: 501bb5a538cfd6e5fb9240ef8f875762ddc23a76
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Mar 11 09:38:01 2019 -0700 
 -------------------------------------------------------------------------------- 
-IceLakeSiliconPkg: SUT hangs at PC 9B15 on assertion of FDO Jumper short
+[PCH] SUT hangs at PC 9B15 on assertion of FDO Jumper short
 
 BIOS should not assert if CSME is not healthy (MBP not found)
 
