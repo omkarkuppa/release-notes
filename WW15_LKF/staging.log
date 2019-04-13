@@ -19,7 +19,7 @@ Commit: a9cfe6942b772bf67673296709e0369441fe2d4a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:20:20 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF_A1] [ES1] [Imaging][LKF_A1 ES1]Green Led lights always glowing in UF camera  IMX351 sensor module in WW10.4 IFWI and during boot time  green led continuously blinks in both sensors and off
+[Fixed} LED lights always ON in UF camera IMX351 sensor module during boot time.
 
 Unit test done:
 1. SUT is booting with expected behaviour
@@ -38,7 +38,7 @@ Commit: 710d70e456a2dc450357d35a88d0184188894043
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:20:17 2019 +0530 
 -------------------------------------------------------------------------------- 
-MRC Version 133,15,0,00: Removing Hard Code value of Inputs->CpuStepping,
+[Change][MRC] Remove Hard Code value of CpuStepping
 
 Original commit date: Mon Mar 25 15:10:18 2019 +0530
 Change-Id: I5b36bb6e3f45fbb0a9d2ec0bd0f55c69d347fd42
@@ -60,28 +60,16 @@ Commit: 89efe97668ae6ec800d9501f5983a51fe1d8775d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:20:12 2019 +0530 
 -------------------------------------------------------------------------------- 
-ICL to LKF (ww36 - ww08) PCH Changes
+Update Base Block Changes
 
-Below reviewed ICL PCH related changes, we need to merge in LKF.
-
-SHA1-ID	Title	HSD
-c04f7e3af07db822d0f1c5235ce5ead02cce5f70	Platform policy to disable PCH force idle	                    1407501305
-8595c47a2b1a5a3f7cc8c22a3bae5990ff1c1e1b	IceLakeSiliconPkg: TestUsbTsLdoShutdown policy to be removed	 1407811102
-94dd1131fc56f4cde397a23d49d6add10a3be4a8	Not validate data buffer in SmmSpiHandler	                    1506867194
-6055ebb0caa7eba19bf058132f869429e2be46bd	IceLakeSiliconPkg: Merge KBL commit id
-                                         123724e6e48608677144e5eafc876527600178a8 BIOS workaround to do
-					 speed change earlier for Intel Wireless-AC 9260, so that
-					 Endpoint will be in correct state by the time downstream
-					 devices configuration is executed.	                           1606680526
-6378903d20764d3234254daf8beac42040b9ac9c	[ICL] Add missing function to OcWdtLibNull	                   1406784140
-c9cec3f4d4f614cf79ae92d3813e573d6d95d557	Add clarity/specificity to PCH PCI Express Clock Gating Knob
-                                         and remove redundant Pch Knob	                                1408396344
-472e735342136948c3c92ea041d7a50da4a9d7bd	System hang observed while connecting NvmExpressDxe driver and
-                                         if 8259 driver is not included	                               2206278436
-
-UNIT_TEST:
-SPI - Booted to OS.
-BFX - Booted to OS.
+-Platform policy to disable PCH force idle	
+-Remove TestUsbTsLdoShutdown policy
+-Fixed: SmmSpiFlashRead->Buffer needs to be validate if it is outside SMM.
+-BIOS workaround to do speed change earlier for Intel Wireless-AC 9260, so that 
+ Endpoint will be in correct state by the time downstream devices configuration is executed.	
+-Add missing function to OcWdtLibNull
+-Add clarity/specificity to PCH PCI Express Clock Gating Knob and remove redundant Pch Knob.
+-Fixed: System hang observed while connecting NvmExpressDxe driver and if 8259 driver is not included.
 
 Hsd-es-id: https
 Original commit date: Fri Mar 22 09:57:52 2019 +0530
@@ -108,11 +96,8 @@ Commit: da4a1a435e3b6b7aa1d889cb6e2453d3a14f77c9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:20:08 2019 +0530 
 -------------------------------------------------------------------------------- 
-[HP DT][ENT19] Offset DCh of Bus0 Dev1F Fun0 can be changed
+[FIXED] Need to set SMI_EN_TCO while doing SPI/LPC BIOS WP SMI registration.
 
-Need to set SMI_EN_TCO when doing SPI/LPC BIOS WP SMI registration.
-
-Hsd-es-id: 1507119100
 Original commit date: Wed Mar 20 16:47:20 2019 +0800
 Change-Id: I35923c5bc30807a7e5646466afaaa3a3b2835326
 Original commit hash: 012fbcde22bc485860934cc3ac1ff254744cfb48
@@ -126,9 +111,8 @@ Commit: 1e92e3fe0130f8d3142e448db6e5915a1bf6618d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:20:07 2019 +0530 
 -------------------------------------------------------------------------------- 
-USB IP Version 18.0 BIOS programming update (rev14)
+USB IP Version 18.0 BIOS programming update 
 
-Hsd-es-id: 1807216789
 Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Thu Mar 14 12:54:52 2019 +0100
 Change-Id: I7e62a10071e9be74875e74d5f37c04817b9c3747
@@ -143,31 +127,17 @@ Commit: 8b9e16065884d7075eb938267a6545fd597de50d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:20:04 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] ICL Sync Pending Changes till WW35 & WW 28 changes.
+Update:
+-Remove obsolete SMBIOS Table Type 10 (On Board Devices Information)
+-support CSE ARB SVN commands
+-Move IgfxOpGbda.asl and IgfxOpSbcb.asl out side GSCI()
+-FSP build batch update.
+-CPU SMM PCDs implementation clean up
+-BIOS may write uninitialized MOR variable  
+-Fixed: SUT hang issue after disabling cameras in bios with debug bios
+-Fixed:Bios reset at PC 9E06 when Skip System Reset setup option is enabled
+-Remove PrepareBaseTools.cmd bat file.
 
-SHA ID from b62de4c4b9c57873c22b030b68d17764f2f837f0 to 407fa727d27553f47e0a6514cb790d5db8e302d2
-
-ICl WW28 Changes:
-
-a83c004e73e46228ba47cc547f7ab7bb3bb94c5c   Consume IceLakeSiliconPkgConfig.dsc on PlatformPkg.dsc and FspPkg.dsc
-293f13b4b020cf92fcbb8e30c01cd40f5fd8f466   [ICL] Remove obsolete SMBIOS Table Type 10 (On Board Devices Information)
-67d30d877ba8a18038700cddaefcce0bcd0777cd   Merge SHA-ID: 5d298703ac4e75b271f3066758224cad8b0244eb CNL BIOS to support CSE ARB SVN commands
-8c7abd45e18cf8aa1b21629e0122bbb4a8a32aa2   Move IgfxOpGbda.asl and IgfxOpSbcb.asl out side GSCI()
-b62de4c4b9c57873c22b030b68d17764f2f837f0   IceLakeFspPkg: FSP build batch update.
-
-ICL Sync Pending Changes:
-
-aee40d7ceee1717625ffc62f16d7d025651a829b   CPU SMM PCDs implementation clean up
-604e3f7fc085b65ba2a2d0df741fb130888976f4   Title: [ICL HaT] BIOS may write uninitialized MOR variable Resolution: Return failure for unknown definitions of TCG MOR
-a26a02ed526fd68b746ba91a90493217f2449567   Title: [ICL-U DAILY CI] SUT is hanging at 0E29 post code after disabling cameras in bios with debug bios
-18d29d4a1d776d41aed04c0c3fcb55b53e98ca46   IceLakeSiliconPkg: Bios reset at PC 9E06 when Skip System Reset setup option is enabled
-e726e8cf80528bf909f7c1ee2881e7be50dc979f   Remove PrepareBaseTools.cmd bat file.
-
-Unit Testing Done:
-1. Booting to OS and Shell and S4/S5 for FSP SPI Release/Debug is fine.
-2. Booting to OS and Shell and S5 for FSP BFX Release/Debug is fine
-
-Hsd-es-id: 1607063150
 Original commit date: Fri Mar 22 01:07:14 2019 +0530
 Change-Id: If19343342464e67269f7474d4671edb761619945
 Original commit hash: de873cfb18668606348686f0e2e875535919e49e
@@ -222,8 +192,7 @@ Commit: 4fb08644a0406afa97897540e0b16663f6113881
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:56 2019 +0530 
 -------------------------------------------------------------------------------- 
-Description: Porting of ICL changes.
-Impacted Platform: LKF
+Porting security code changes
 
 Original commit date: Mon Mar 11 12:50:01 2019 +0530
 Change-Id: I36e9acd9295bd7361ccfc03ff0c62cf7f2c3a095
@@ -269,12 +238,8 @@ Commit: be16268edc618954fa78ba5b8bc688f98f9651ee
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:50 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF RVP PO] [A1 SOC] Memory type & manufacturer info showing as Unknown under Memory Configuration in BIOS.
+Fixed: [MRC] Memory type & manufacturer info showing as Unknown under Memory Configuration in BIOS.
 
-Verified that Memory type is shown as LPDDR4 in BIOS setup page.
-
-Tracker-link: https://hsdes.intel.com/appstore/article/#/1606784090
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Tue Mar 19 12:11:19 2019 +0530
 Change-Id: If3c0dc26ea0a54cd24d63f6d91c0e8e54d1f3c5f
 Original commit hash: abaedd63f724d570069267823a18e491866a52a1
@@ -290,13 +255,7 @@ Commit: 9aa9a85071c3cd9dd4e2ad5b7b4a16dbf18f4cde
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:49 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Return safely from ISH CS handler.
-
- Unit Test :
- Able to return safely from ISH CS handler.
-
- Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1507013902
- Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Fixed: ISH CS handler return function issue
 
 Original commit date: Tue Mar 19 12:13:23 2019 +0530
 Change-Id: I1731bd84a59b4e38ca3237f3b48783f28cfc4148
@@ -311,27 +270,16 @@ Commit: e9e99ee85e12ded3b70ccf64ba5c9c6025d1b569
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:47 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] :- ICL Sync for WW40.2 & WW41.3 changes
+Update: 
+-Doxygen: Add PackageDocumentTools routine as alternative approach
+-Fixed:Virtual Keyboard not showing after setting EDK Shell as a First Boot Order.
+-Fixed: System is not booting to BIOS page while pressing F2 at first boot after flashing Performance Bios
+-Clean up ACPI/ASL warning message
+-Fixed: 3rd Party PCIe device cannot enter L1 state at CFL platform
+-Request to reintroduce the knob of GPIO ACPI device enable/disable BIOS policy
+-Fixed: Read Clock Frequency showing invalid setting
+-Fixed: AES Setup option is missing after disable from CPU Configuration Page-Not having option to enable back.
 
-Below reviewed ICL check-ins are merged into LKF.
-
-95b6d4a12e48f1112b8c94fa5d591e2ea0b95202  --  Doxygen: Add PackageDocumentTools routine as alternative approach
-8f3e40e0103442c8cc48f4a0342f349c437b52b9  --  ICL-U-SDS:Virtual Keyboard not showing after setting EDK Shell as a First Boot Order. -- done
-81d1e5a613d8685f2414c68a9c8d56ffddf306a4  --  ICL YN BIOS[B1 Stepping] : System is not booting to BIOS page while pressing F2 at first boot after flashing Performance Bios -- Done
-f7850323d3227185fd9c8fc8fcbb346f08ab061f  --  [ICL] Clean up ACPI/ASL warning message -- done
-c2c278e3da2cfd786a9b34a3135a7abfd8787a2f  --  [Merging CNL to ICL]Customer reports suspected coding error in pchrootports.c -- Done
-51c462ff508057a2f3db41d37f678881f462b047  --  [Merging CNL to ICL][CFL] 3rd Party PCIe device cannot enter L1 state at CFL platform -- Done
-830136c23939f59ca4c26c24e089d147d8d120ae  --  Request to reintroduce the knob of GPIO ACPI device enable/disable BIOS policy -- Done
-d3921f62eb302e2b102d1e1f2465c5e84084888a  --  Read Clock Frequency showing invalid setting -- Done
-9a486073855293629b8d202b3b65a07dea8dc868  --  ICL-SDS/RVP:AES Setup option is missing after disable from CPU Configuration Page-Not having option to enable back. -- Done
-c2c278e3da2cfd786a9b34a3135a7abfd8787a2f  --  [Merging CNL to ICL]Customer reports suspected coding error in pchrootports.c -- Done
-
-Unit Testing:
-1. SPI & BFX FSP Debug Bios Booting to OS
-2. SPI & BFX FSP Release Bios Booting to OS - Restart & Shutdown working fine.
-
-Hsd-es-id: 1507109909
-Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
 Original commit date: Thu Mar 14 19:40:28 2019 +0530
 Change-Id: Ibe1f4bbb4e4f0dfac227b5e71670353347879dbc
 Original commit hash: fca843f3908d84f964ae648e96200b19f2699cb2
@@ -356,49 +304,12 @@ LakeFieldSiliconPkg/Pch/Library/Private/PeiDxeSmmPchPciExpressHelpersLib/PchPciE
 LakeFieldSiliconPkg/Pch/Library/Private/PeiPcieRpInitLib/PeiPcieRpInitLib.c
 
 ================================================================================ 
-Commit: 21ad9da84056cd498e857759ca3e072d97b388df 
-Author: ClientSysFWGit <clientsysfwgit@intel.com> 
-Date: Wed Apr 10 17:19:43 2019 +0530 
--------------------------------------------------------------------------------- 
-Labelling LKF Bios Label 3125 - First Official B0 drop
-
-Fri Mar 22 21:33:05 2019 +0530
-Original commit date: Fri Mar 22 21:33:05 2019 +0530
-Change-Id: Ifd131a0bb6cc7ce8ffdbc0bf031595c715fd1171
-Original commit hash: 533f3fa7c73ab0ba3d1d3ac1437e8cd7c4f14a2d
-
--------------------------------------------------------------------------------- 
-[Changed Files]
-LakeFieldPlatSamplePkg/Tools/GenBiosId/BiosId.env
-
-================================================================================ 
-Commit: d45f497a64ccdb8cb53a2ccfa60fb4af8f05d1a2 
-Author: ClientSysFWGit <clientsysfwgit@intel.com> 
-Date: Wed Apr 10 17:19:41 2019 +0530 
--------------------------------------------------------------------------------- 
-Skip the Power button check for Simics and HSLE build.
-
-Hsd-es-id: NA
-Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
-Original commit date: Fri Mar 22 11:46:00 2019 +0530
-Change-Id: Ie39ba4ad9f9b95aa29ddd71d46125887ff02cbcb
-Original commit hash: 3e346a419036d2bcfb45882b07cfed947fc76810
-
--------------------------------------------------------------------------------- 
-[Changed Files]
-LakeFieldPlatSamplePkg/Setup/PchSetup.hfr
-
-================================================================================ 
 Commit: b70a3ecb23645be76a24de9ad9f36214d728020e 
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:39 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF-A1][Security]:FW ISH Pdt Update is not happening from EFI/OS with Harmonized  Standalone Capsule
+Fixed:FW ISH Pdt Update is not happening from EFI/OS with Harmonized  Standalone Capsule
 
-Veriifed the ISH pdt update with changes ,its happened successfully and booted to OS.
-
-Hsd-es-id: 1507110142
-Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
 Original commit date: Thu Mar 21 20:27:59 2019 +0530
 Change-Id: I683ac08ba6ecd253c5919a4ab6e097684fcfb7d8
 Original commit hash: 442f93c693e8bd5352195b75caf4808ddb0ad4df
@@ -413,13 +324,9 @@ LakeFieldPlatSamplePkg/Features/CapsuleUpdate/Library/FwUpdateLib/FwUpdateLib.in
 Commit: 0527fff36772fdb369929093128c5e7be3bf5256 
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:37 2019 +0530 
--------------------------------------------------------------------------------- 
-LKF: Carry forward the WAs from LKF Basedie A0 and A1 to  B0 for power-on
+--------------------------------------------------------------------------------
 
-This request came from MVE team and they are aware and confirmed that there
-wont be any side effects of having the WA on B0 even though B0 have the
-silicon fix. As soon as first boot to OS on B0 completes, we need to review
-this and retain the WAs that are only required for B0.
+Carry forward the WAs from LKF Basedies
 
 Hsd-es-id: 1607085758
 Original commit date: Tue Mar 19 20:31:35 2019 +0530
@@ -440,7 +347,7 @@ Date: Wed Apr 10 17:19:34 2019 +0530
 -------------------------------------------------------------------------------- 
 Remove LKF PO Flags around the workaround for Set Variable not updating before reset
 
-Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1606898585
+
 Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 
 Original commit date: Wed Mar 20 14:55:00 2019 +0530
@@ -456,7 +363,7 @@ Commit: 8d0cc8d492e3004efcbf47092f735943475cf6dd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:32 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Update Processor Revision table for LKF B0
+[LKF] Update Processor Revision tables
 
 Hsd-es-id: 1607088498
 Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
@@ -517,7 +424,7 @@ Commit: 6e64bbc2014ddfadaf2ace95a0dfdfdf297764c3
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:17 2019 +0530 
 -------------------------------------------------------------------------------- 
-MRC Version 132,2,2,23: Enabling of DCC causes Bios boot to Hang at system boot
+[MRC] Fixed: Enabling of DCC causes Bios boot to Hang at system boot
 
 i) Enabled DccTraining for ddrfrequency 4267Mhz.
 ii) By Default, DccTraining is disbled.
@@ -551,15 +458,6 @@ Date: Wed Apr 10 17:19:11 2019 +0530
 -------------------------------------------------------------------------------- 
 Remove Tier2 mapping check in GPIO APIs that gets & clears GPE status and interrupt status
 
-GPI_IS and GPI_GPE_STS registers reflects the status regardless of Tier1
-and Tier2 mapping of the given GPIO pad. And hence removed Tier2 mapping
-check from the input validation for the following GPIO APIs
-GpioGetGpiIntSts
-GpioClearGpiSts
-GpioGetGpiGpeSts
-GpioClearGpiGpeSts
-
-Hsd-es-id: 1607043986
 Original commit date: Tue Feb 26 17:15:08 2019 +0530
 Change-Id: I3f27abd3515f0fba48d0b25d2ccff02c93d63e41
 Original commit hash: 4f30c7e20bede9362ed5a009806ceae9c9e68223
@@ -573,17 +471,8 @@ Commit: e2853d93586f0202c2dbcdee9c7c9190035f7874
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:10 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF:Remove code under LKF_PO_FLAG in PCH RC which was done during A0&A1 power-on.
+LKF:Remove touch over i2C. This was a WA done during A0 PO.
 
-We had enabled Touch over i2c to unblock A0 and A1 as USB was not working and
-only mode of OS input was touch. Now as we have the USB up and THC also
-working, there is no need of touch over i2c which is not POR.
-With this only Touch inteface supported is Touch controller and is the POR.
-
-Currently PCie Gen2 is supported and Gen3 would be enabled after the PMC FW
-fix i.e. HSD#1409021262.
-
-Hsd-es-id: 1607085569
 Original commit date: Tue Mar 19 18:54:25 2019 +0530
 Change-Id: I061ea3b85a404231a34ebb347fcc42df0d2e2e61
 Original commit hash: 9c0185f5c7dd74c53178449af0372a5a15c384a5
@@ -614,19 +503,8 @@ Commit: 90f4c8237f2c99300f5a2c0016268147a3aeaa63
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:06 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] AutoRestart is happening when we remove charger while we are in Charging OEMxt
+Fixed: AutoRestart when charger is removed while in Charging OEMxt
 
-In SxCallBackForCharging function. based on below two condition, we are restarting
-system to boot to Charging OEMxt.
-1. Charging OEMxt is enabled and Charger is present(mPlatformNvsAreaPtr->PowerState).
-By default mPlatformNvsAreaPtr->PowerState) set as 1 in ACPIPlatform.c,so it is restarting,
-if we remove charger in charging OEMxt.
-
-Testing:
-System is not restarting, after removing charger in charging OEMxt.
-
-Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1607088116
-Attestation-link:LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Wed Mar 20 21:20:56 2019 +0530
 Change-Id: I65812ee8b1eace64977ffa942da3fce0c7b091c6
 Original commit hash: b103c032b36073479cdfe713751f8bfa7d5650f0
@@ -640,10 +518,10 @@ Commit: 6460d2326c2b6f9f0364879a37f8769062ca6bdc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:04 2019 +0530 
 -------------------------------------------------------------------------------- 
-Need a setup option to de-feature MSFT requirement to "Boot from Sx only on PB press" to allow RTC wake
+setup option to de-feature MSFT requirement to "Boot from Sx only on PB press" to allow RTC wake
 
-Verified with this changes system booting to OS without Power Button press.
-If you enabled the Setup option "State After G3", Need to Press the Power button system boot to OS.
+With this changes system boots to OS without Power Button press.
+If Setup option "State After G3" is selected, Need to Press the Power button system boot to OS.
 
 Hsd-es-id: 1507108857
 Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
@@ -663,7 +541,7 @@ Commit: abb7bb47ca4879d8ba77381936ef3d3e8d3eab78
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:19:01 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Use SLP_TYPE register to check S4/S5 when we do S4/S5 from OS.
+Use SLP_TYPE register to check S4/S5 when we do S4/S5 from OS.
 
 Modifying logic mistake for SHA-ID c3b367f54257c4541d780430db9abf524f324549
 
@@ -697,16 +575,8 @@ Commit: 62e10195b1619e6ac162c73eab8ce541d5610ea6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:57 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] SUT is not entering into Charging OEMxt in External Display
+Fixed: SUT not entering into Charging OEMxt in External Display
 
-we have added Brightness protocol in depex session,So for external display
-Brightness protocol is not installed. because of that charging OEMxt is not loaded.
-
-Testing:
-Charging OEMxt is coming in External Display
-
-Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1607078493
-Attestation-link:LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Tue Mar 19 21:11:38 2019 +0530
 Change-Id: I7965f51fb1f3a5fe6159924a4da2d2544e57b16d
 Original commit hash: e643b399e6fb14de20e50df36dc505d95f586597
@@ -720,13 +590,7 @@ Commit: 10ebc149a36b387681be7e30dcf58caf197fafbe
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:56 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF RVP A1] [UFS BIOS] W/A for External FSP and External EDK builds are not booting to BIOS & OS
-
- Unit Test :
- Able to boot to Os : debug ufs bios
-
- Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1607081339
- Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+W/A for External FSP and External EDK builds not booting to BIOS & OS
 
 Original commit date: Tue Mar 19 20:29:00 2019 +0530
 Change-Id: I869d865411202e6577f6591defecf945a7e84dc0
@@ -743,13 +607,6 @@ Date: Wed Apr 10 17:18:54 2019 +0530
 -------------------------------------------------------------------------------- 
 LakeFieldSiliconPkg/IshHeciCore: Replace CopyMem with DWORD copy loop
 
-The CopyMem call attempts a 64-bit (QWORD) copy, which is not a valid
-access of the HECI device, leading to data corruption. This replaces the
-CopyMem call inside IshHeciReceivePacket and IshHeciSend with a DWORD
-copy loop.
-
-Hsd-es-id: 2207134443
-Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Mon Mar 18 18:09:52 2019 -0700
 Change-Id: Idf1964994702367126c30821455c9d3c7f772d77
 Original commit hash: 25923bca3ea27e9950d2876884dc2b9e9d6006a0
@@ -781,7 +638,7 @@ Commit: 0a0fe1fdb6898af8b7f005adc01f092b4992538e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:51 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF][ A1 ][19H1][Debug & Trace] [NVMe & UFS] Windbg not connecting through com port (UART)
+Fixed: Windbg not connecting through com port (UART)
 
 * Added Missing DBG2 policy for Fsps
 
@@ -801,7 +658,6 @@ Commit: 39ffc8f92fdec667a6af6f817aab524e419d5e31
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:48 2019 +0530 
 -------------------------------------------------------------------------------- 
-Revert:: Forcing PL Limits to 0, Even Package TDP FUSE provides some value.
 
 Removed WA in BIOS : BIOS to force PL limits to 0 immaterial of the tdp_power_of_sku.
 
@@ -818,18 +674,12 @@ Commit: 82b6e581e8acd4aff78b6b1dbb64a257cd0e6545
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:46 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF A1 PO] RTC date and time saved in BIOS not reflecting in both OS and BIOS level
+Fixed: RTC date and time saved in BIOS not reflecting in both OS and BIOS level
 
 i) Changed Index and Data register of RTC_IO to 0x70 and 0x71 in TimeAndAlarmDevice.asl
 ii) Changed the default value of setup variable SystemTimeAndAlarmSource to ACPI Time and Alarm Device
 iii) Changed the RTC write sequence to Year,Month,Day,Hour,Minute,Seconds in PcRtcSetTime()
 
-Unit test done: FSP SPI release BIOS
-i) Boot to setup -> Change date and time -> Reset from setup -> Boot to setup (Changes Reflected)->Boot to OS (Changes reflected)
-ii) Boot to OS -> Change date and time -> Restart from OS -> Boot to Setup (Changes Reflected) -> Boot to OS (Changes reflected)
-
-Tracker-link: https://hsdes.intel.com/appstore/article/#/1606806754
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Wed Mar 13 17:17:15 2019 +0530
 Change-Id: Iebf5b80053c09a357c70f176633e5c8e599992c9
 Original commit hash: 3ceb00fdccdb4508808d9967c138e507cc6b35d9
@@ -853,10 +703,7 @@ Commit: 6eda0c186508c239de19105613259c81035f54f8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:42 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF-SSKU][WW 11.3][CNVi][19h1]Co-ex Manager not enabled in BIOS by default
-
-Unit test done:
-1. SUT is booted to OS with UFS-FSP after made Co-Ex Manager enabled by default
+Enable Co-ex Manager in BIOS by default
 
 Original commit date: Fri Mar 15 18:34:49 2019 +0530
 Change-Id: I7d315d0151f645b5c17757bc9bb959906183f4d6
@@ -871,7 +718,7 @@ Commit: 7c6fb51d44499c33c87e6e3fd2623ea4b2ece9e8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:41 2019 +0530 
 -------------------------------------------------------------------------------- 
-Description: Removed unnecessary Flags
+Description: Removed Flags which are not required
 
 Original commit date: Mon Mar 18 10:57:57 2019 +0530
 Change-Id: I5cc798737744032788b8360aa9c7c56254062dde
@@ -903,11 +750,8 @@ Commit: 7f2acd5e981a981b6a3bdede4275223f80b301af
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:37 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Battery Participants (BTY#) do not populate values or Battery Tracker when plugged in
-UID should be same b/w Battery reported to OS and DPTF Battery Participants
-
-Tracker-link: https://hsdes.intel.com/appstore/article/#/2206511078
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Fixed: Battery Participants (BTY#) do not populate values or Battery Tracker when plugged in
+UID. should be same b/w Battery reported to OS and DPTF Battery Participants
 
 Original commit date: Thu Mar 14 06:27:55 2019 +0530
 Change-Id: I063938df06a4ed1ea5b6ae4fccc1d97e571bbd7c
@@ -926,8 +770,6 @@ Date: Wed Apr 10 17:18:35 2019 +0530
 BIST WA Removal.
 ACM has fixed the BIST value in Version 1.8.3. Removing the WA added.
 
-Hsd-es-id: 1606747848
-Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xls
 Original commit date: Wed Mar 13 10:40:11 2019 +0530
 Change-Id: I36a9a6d56006e0eab5e474eb40bd5be0f10be0e7
 Original commit hash: aab972c3844539a4a0684e07802fcac15a1f675e
@@ -950,13 +792,8 @@ Commit: 36d532f9030db0a27ef7fc12df3b45b553b6ca31
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:32 2019 +0530 
 -------------------------------------------------------------------------------- 
-[ICL to LKF][ICL_FSP] FSP explicitly make GSPI device in D3 and disable MMIO space if UPD set as PCI mode
+Update:FSP explicitly make GSPI device in D3 and disable MMIO space if UPD set as PCI mode
 
-* Added Save and Restore in Pci mode
-  During Serial Io initialization any device in Pci mode will have its BAR0 assigned.
-  if true BAR0, MSE, PMECSR (D0/D3) and PPR reset (MMIO) settings are saved and restored after initialization,
-
-Hsd-es-id: 1606725845
 Original commit date: Tue Feb 26 14:24:16 2019 -0800
 Change-Id: I72ede996cea013b3b7c73c7db4614fe7e4afdd59
 Original commit hash: 7a8386e94489b1e0229126cafc1a16616b05e954
@@ -991,7 +828,6 @@ Commit: f7306311b65ebb9acd4d6e62eb0b4c3c4014ae45
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:28 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF-A1] [Automation] [SPI] : SUT is not booting with V3103_00_253 SPI EDK release bios in DAILY CI Build.
 
 Fix I3c iteration during policy update
 
@@ -1027,15 +863,8 @@ Commit: 992be7265289a083a4760c0ae630a2acb600f9aa
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:25 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF- Haptics SW support through separate client driver rather than EC-Lite mail box driver.
+Haptics SW support through separate client driver rather than EC-Lite mail box driver.
 
-Unit test done: FSP SPI release BIOS
-i)	Booted to OS successfully, Verified restart from OS and reset w
-ii)	HPTI device is listed under unknown device in device manager
-iii)	Verified that SB.HPTI device is mapped in DSDT table using RW Tool
-
-Tracker-link: https://hsdes.intel.com/appstore/article/#/1606821545
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Wed Mar 13 11:38:18 2019 +0530
 Change-Id: I5470b071b6f0ccb61341dc1a6529070896954c67
 Original commit hash: fc7b294d850cd1749f5d539f3217cd9aa9bc0ae5
@@ -1051,16 +880,8 @@ Commit: 372c35358833fce9daab63a45ddd826c24aabd80
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:22 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF RVP] [A1 SOC] LPDDR4 Write DQ DQS Retraining Memory Training option not present under BIOS setup
+setup option for DDR4 Write DQ DQS Retraining Memory Training under BIOS/Intel Advanced Menu/Memory Configuration/Memory Training Algorithms/
 
-moving setup option "LPDDR4 Write DQ DQS Retraining" to BIOS/Intel Advanced Menu/Memory Configuration/Memory Training Algorithms/
-
-test cases done:
-i) Setup option "LPDDR4 Write DQ DQS Retraining" enabled by default and verified Write DQ/DQS training is executed (LpDdrDqDqsReTraining : 1h) using debug log.
-ii) Boot to setup -> Disabled "LPDDR4 Write DQ DQS Retraining" -> Reset from setup -> verified in debug log that Write DQ/DQS training not executed (LpDdrDqDqsReTraining : 0h)
-
-Tracker-link: https://hsdes.intel.com/appstore/article/#/1606930040
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Tue Mar 12 10:36:42 2019 +0530
 Change-Id: I7776e44ae6f5cec2235cefd17efc06d92c65859b
 Original commit hash: 091a9455cba9dccf6b0abfe13af413f638d2abf9
@@ -1075,7 +896,7 @@ Commit: 46ee849ecdea083fc453eb51f0b61c2f2a6c401e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:20 2019 +0530 
 -------------------------------------------------------------------------------- 
-Revert "Revert "[LKF RVP A1] ACPI0003 value not present in ACPI dump""
+Revert - ACPI0003 value not present in ACPI dump""
 
 This reverts commit e0cd0a84f35988be1d2536872ab669ebe5b6607c.
 
@@ -1095,18 +916,10 @@ Commit: 8896410a6ca1beba81bf85f013acbbd067f87f94
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:18 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF][SDcard] BIOS to update SDcard configuration for Clk source and DLL setting
+BIOS to update SDcard configuration for Clk source and DLL setting
 
-Changed the Clock Source and DLL settings as per recommended values -
+modified the Clock Source and DLL settings as per recommended values -
 
-Tx CMD Delay        (820h)   0x00000505
-Tx Data Delay 1     (824h)   0x00000a12
-Tx Data Delay 2     (828h)   0x22262727
-Rx CMD/Data Delay 1 (82Ch)   0x36393131
-Rx CMD/Data Delay 2 (834h)   0x00010022
-
-Hsd-es-id: 1507103681
-Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Wed Mar 13 11:47:06 2019 +0530
 Change-Id: I1b03684dea28e83a81b990d9f18c1cf77e848ec8
 Original commit hash: 5fb38b347fd7680c0d2dd5fb38f9c90f609d0a72
@@ -1120,28 +933,8 @@ Commit: 7e80fab30d60bcca972d3b5a1032fa12f191902b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:16 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Enable Fault Tolerant BIOS update for SPI
+Enable Fault Tolerant BIOS update for SPI
 
-Verified all the BIOS recovery flows on SPI boot are working fine.
-Also confirmed Capsule stored on NVME will be used to continue update process and recovered the system in the cases of power-loss conditions.
-
-Unit Test:
-Below mentioned Boots are verified, its booted to OS.
-
-SPI:
-FSP Debug BIOS
-FSP Release BIOS
-EDK Debug BIOS
-EDK Release BIOS
-
-UFS:
-FSP Debug BIOS
-FSP Release BIOS
-EDK Debug BIOS
-EDK Release BIOS
-
-Hsd-es-id: 1607029315
-Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
 Original commit date: Sat Feb 9 08:07:49 2019 +0530
 Change-Id: I282ebae083975ebc7568b68d32b110ede0d4b9a7
 Original commit hash: b24fac18546b291f72397641065e3c85525b3f6f
@@ -1209,13 +1002,6 @@ Date: Wed Apr 10 17:18:07 2019 +0530
 -------------------------------------------------------------------------------- 
 Remove MKHI Client support for MCA messages
 
-The MCHI client will be used for BIOS MCA messages. This change removes
-HECI messages used to get the MCA client address for the given boot that
-were introduced during the transition period of the client change for
-backward compability.
-
-Hsd-es-id: 2207077872
-Attestation-link: LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
 Original commit date: Fri Mar 8 11:57:41 2019 -0800
 Change-Id: I954985fdf68934f546da558900f6434cb949b8cd
 Original commit hash: e1b198697143306bb296ae93784a12db6c6bbe5f
@@ -1268,12 +1054,8 @@ Commit: 1dbb5c5408562dc4b467c6f5c8199250f629f143
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:18:01 2019 +0530 
 -------------------------------------------------------------------------------- 
-[ICL to LKF] UART TRC Part 3 - Add Debug Library support for Uart configuration and higher baud rate benefit
+Add Debug Library support for Uart configuration and higher baud rate benefit
 
-Redesign UART Debug Lib Property usage by adding new librarires and setup option to support UARTs configuration
-Fixed Pei Debug Property Lib
-
-Hsd-es-id: 1408348238
 Original commit date: Thu Feb 28 13:05:01 2019 -0800
 Change-Id: I9b2588bbc6d718abfc9d9a264bfc9458d1847130
 Original commit hash: ba2ec471f092727d1ae5b14260d43f15b2ac6f66
@@ -1325,8 +1107,6 @@ Commit: 3897a847c39b5e85092f2eb5950013a001d6f10c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:17:54 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF][PO][A1] I3C Instance 1 doesn't work due to SCL being hold as low
-
 Added I3C1 support for GPIO and ACPI related settings.
 
 Hsd-es-id: 1506777951
@@ -1364,14 +1144,8 @@ Commit: ac2c999e3ad5cabc0ebecd523752fc998fb8a9f7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:17:49 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Use SLP_TYPE register to check S4/S5 when we do S4/S5 from OS.
+Use SLP_TYPE register to check S4/S5 when we do S4/S5 from OS.
 
-When we do S4/S5 from OS, we need to boot to charging OEMxt if it is enabled. so for that we are updating NVRAM variable in smmplatform.c and resetting the system. by next boot check NVRAM variable and booting to Charging OEMxt.
-but there is issue with updating NVRAM variable in UFS.(https://hsdes.intel.com/appstore/article/#/1606875914)
-To avoid above issue,in smmplatform.c just reset the system for S4/S5 and next boot read SLP_TYPE register. it is S4/S5 we can boot to charging OEMxt.
-
-Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1607070410
-Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 Original commit date: Fri Mar 8 17:18:40 2019 +0530
 Change-Id: Icfa8a3be6fa8e8b2ff94a4317dfcf0329701bb27
 Original commit hash: c3b367f54257c4541d780430db9abf524f324549
@@ -1390,15 +1164,8 @@ Commit: aebaa37460b25cfe90974cd1ab555961687bdb37
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:17:47 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Logic mistake in PbpWresetCresetPboNvmCase function  in DxeChargingOEMxt.c
+Fixed PbpWresetCresetPboNvmCase function logic to ensure if power button is pressed boot to OS always.
 
-if power button is pressed boot to OS always.
-
-Testing:
-Booting to OS if power button is pressed.
-
-Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1607070895
-Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
 Original commit date: Sat Mar 9 11:31:18 2019 +0530
 Change-Id: Iaa2cfd1a2f019aaa23bd5a1307b696674f072ddf
 Original commit hash: d9b3a14540598c552572ae6aed65b14458c8d14e
@@ -1412,29 +1179,19 @@ Commit: 1e2b94faad0fc96eda8a8d9d4fdc11ad94c4cbbf
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:17:45 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] :- ICL Sync for WW37.2 & WW38.2 changes
+Update:
 
-ICL Sync done for WW37.2 & WW38.2.
+-Warning items in Intel SelfTest Execution test for Fixed MTRRs
+-Clean up the platform override of ClientCommonPkg
+-Remove _CID for all DPTF PCHP participant in BIOS
+-Hide or Disable BIOS Side PEP Constraint options for PEP EMMC and PEP SDXC are not ICL-YN POR
+-Move Cpu Nvs protocol to private folder
+-Pre-OS Virtual keyboard not disappear when tap on it.
+-ACPI event viewer error observed during reboot cycling
+-Klocwork issues for Platform based on ICL Release_2361_00
+-Clean up CpuRestrictedConfig block (HwpReqFastUncoreMsr policy)
+-Removed the Set HW Req Fast Uncore MSR Enabled & Set Thread Info Fast Uncore MSR Enabled in CPU_POWER_MGMT_RESTRICTED_CONFIG block
 
-Below SHA-ID changes are covered:
-9a4fdc9a9c2b03523c9fa86a338a1a22e91865c0    Title: [ICL]- Warning items in Intel SelfTest Execution testfor Fixed MTRRs
-47df8e4310d7575c71f778c8509549d8776a87a1    Clean up the platform override of ClientCommonPkg
-66fbff5068d75fdd4af0b4d852d7789e7a5b2cc7    Remove _CID for all DPTF PCHP participant in BIOS
-7e62f92099e406cd7f016c9c28b462e797aa3c35    [PM][ICL-YN] Hide or Disable BIOS Side PEP Constraint options for PEP EMMC and PEP SDXC are not ICL-YN POR
-5a6c278a23aea15590bcf9203b2554e1021d2f0b    ICL Move Cpu Nvs protocol to private folder
-2da3ed2eee09f9b60dae002a0a5f8b4bc0c794b0    [ICL-Y][ICL-U][BIOS][ICL-SDS] Pre-OS Virtual keyboard not disappear when tap on it.
-80b1d2d7e06cc1e314e585625fee39e124011199    [1x1][ICL-U][RVP][BIOS]:ACPI event viewer error observed during reboot cycling
-7f691a1051af49101d8ec253fd3043e7ce91323f    Klocwork issues for Platform based on ICL Release_2361_00
-73b0bc10a757fb7b975728240b6a510e862884a3    [ICL] Clean up CpuRestrictedConfig block (HwpReqFastUncoreMsr policy) in ICL codebase Impacted: ICL
-
-Removed the Set HW Req Fast Uncore MSR Enabled & Set Thread Info Fast Uncore MSR Enabled in CPU_POWER_MGMT_RESTRICTED_CONFIG block
-
-Unit Testing:
-SPI FSP - Release & Debug booted to OS.
-BFX FSP - Release & Debug booted to OS.
-
-Hsd-es-id: 1607062291
-Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
 Original commit date: Mon Mar 4 17:13:17 2019 +0530
 Change-Id: I8b00a36b6aa5dc0d8a4569f477aa2a33b47c7798
 Original commit hash: 4244801d903e119b548f74c58b241f6c73813353
@@ -1476,13 +1233,8 @@ Commit: 1c2958c035d8e6658e085cdf912021a2d2590756
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:17:38 2019 +0530 
 -------------------------------------------------------------------------------- 
-Unable to install the ITH driver with latest IFWI
+Fixed: Unable to install the ITH driver with latest IFWI
 
-Forgot to Modified the year on below check-in files
-SHA-ID : 574382285f6d173a4be5ce5163ee375736fbad8a
-
-Hsd-es-id: 1507092736
-Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Mon Mar 11 10:23:01 2019 +0530
 Change-Id: Ia083b9368faccd52fb9b02d40c57a1d940e86192
 Original commit hash: ca4ecf271b8c5fd01e2de7bce5b36e7ada268992
@@ -1514,13 +1266,8 @@ Commit: 6b3889115e9a59c4a422f570ac9bce634bf51e5b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:17:34 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF][ A1 ][19H1][Debug & Trace] [NVMe] Unable to install the ITH driver with latest IFWI
+Fixed: Unable to install the ITH driver with latest IFWI
 
-By Default enabled the PCH Trace Hub Mode for enumerating ITH device in Device manager.
-Verified ITH device exposed in Device manager.
-
-Hsd-es-id: 1507092736
-Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Fri Mar 8 17:42:11 2019 +0530
 Change-Id: I2c61019587476d82d691fafcae0829eb103cdbd8
 Original commit hash: 574382285f6d173a4be5ce5163ee375736fbad8a
@@ -1593,13 +1340,9 @@ Commit: 42cc88cceed28d18240f2115c8c8328fc7e7e08e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Apr 10 17:17:27 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] AC Power Status and Battery Status are wrong in CapsuleUpdate Policy
+Fixed: AC Power Status and Battery Status are wrong in CapsuleUpdate Policy
 
-Verified the AC Power and Battery status.
-
-Hsd-es-id: 1607055730
-Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
-Original commit date: Mon Mar 4 10:03:30 2019 +0530
+sOriginal commit date: Mon Mar 4 10:03:30 2019 +0530
 Change-Id: Ia319f240b2e5c735b98d0b1e4652071e91c01a23
 Original commit hash: 1c8fe599dce11103a58b6bf9b7a03cb510f79507
 
