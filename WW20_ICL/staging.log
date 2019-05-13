@@ -1,0 +1,1176 @@
+================================================================================ 
+Commit: 001103d80b03e3fc32fa849d7ecddfbf14ae0171 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:37 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Wed May 1 20:16:09 2019 -0700
+Original commit date: Wed May 1 20:16:09 2019 -0700
+Original commit hash: 849729750c3c923da1995a67f7ef97ecbac0b491
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 29e67f675a80b0fa12eafef578a71ca771c4a47f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:36 2019 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu May 2 03:05:55 2019 +0000
+Original commit date: Thu May 2 03:05:55 2019 +0000
+Original commit hash: 9cc452803c545490b5fd163cedd5eecedc3318bc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: ef8fa186d3a172ba40f219e247c65bd36edc2ee7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:35 2019 -0700 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][2207472047][ICL-U SDS][ICL-YN][ICL-Y][CI Build- SUT is not booting with release BIOS hang @ PC-0080]
+
+Issue:
+  Some ICL parts fail ERDTC2D step at LPDDR4-3200 sporadically, only in Release BIOS build.
+Root cause:
+  JWL FlyBy algorithm has an "early exit" feature where we break from the DqOffset loop once all bytes have passed.
+  This is only done when debug prints are disabled, hence only Release build failed.
+Solution:
+  With the current usage model we need go over all DqOffset values, to properly do the early Tx DqDqs centering in JWL FlyBy.
+
+Additional changes:
+ - Double the Gear2 ReadMPR range for LP4, to be the same as DDR4. This allows better early Rx DqDqs centering.
+ - Moved ERDTC2D back to before RDVC1D.
+ - Remove Early WrV at the end of JWL FlyBy, it's not needed if we run EWRTC2D after this step.
+ - Added "_BIOSVER_" signature right before MRC Version so that it can be easily located in BIOS ROM file.
+
+Hsd-es-id: 2207472047
+Tracker-link: https://hsdes.intel.com/resource/2207472047
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Wed May 1 15:37:42 2019 -0700
+Change-Id: I31c4bdd652c42043720f5de660f6e81cac04a6b0
+Original commit hash: a5b44421c3fdc725578300113d344dcfd4107943
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/Include/MrcInterface.h
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+
+================================================================================ 
+Commit: f09d7a5357b5599e3a9ad6eed73f76a51baa8aa2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:32 2019 -0700 
+-------------------------------------------------------------------------------- 
+[ICP-LP] Enable CNVi VnnAONREQ as an S0ix Wake Source
+
+CNVi work-around for power-saving.
+
+Hsd-es-id: 1409334457
+Original commit date: Fri Apr 26 08:41:45 2019 -0700
+Change-Id: If87a55615f2c044c14c7dd100bba46c8f9b67101
+Original commit hash: 09845fe3f9452f22deb926ed6185216bf8e426e4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLib.c
+
+================================================================================ 
+Commit: 92612c350b86c623ec5d0f2536d64a701cf5b2c1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:31 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Tue Apr 30 20:22:46 2019 -0700
+Original commit date: Tue Apr 30 20:22:46 2019 -0700
+Original commit hash: 7664ca4c2be108a10e7df8ae4ac2b45e58306405
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 57722a632f5dcd6e0efaac87c4a6d7e5d9e20145 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:30 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Tue Apr 30 20:11:41 2019 -0700
+Original commit date: Tue Apr 30 20:11:41 2019 -0700
+Original commit hash: 4ebbdef2c5f6217f8161d87f4b71e1b3da68ce57
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: cb05b5e6b624813adda7e8a564f270fe4b71a790 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:29 2019 -0700 
+-------------------------------------------------------------------------------- 
+Retimer_Non_TBT_Capsule_Update.
+
+Adding Retimer Capsule update support for Non-TBT Retimer Device.
+
+Hsd-es-id: 1409302850
+Tracker-link: <http link to related tracker>
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Mon Apr 29 16:16:00 2019 +0800
+Change-Id: I508a7873f3f7f2e25234ed31232f110d40ea08ba
+Original commit hash: d449ea7d3a2cbe0ca7874a3687b5264e32116693
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.c
+IceLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.h
+IceLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.inf
+IceLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitLib.c
+IceLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitLib.inf
+IceLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibTbtRetimer/FmpDeviceLib.c
+IceLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibTbtRetimer/FmpDeviceLibTbtRetimer.inf
+IceLakePlatSamplePkg/Features/TbtRetimerCapsuleUpdate/RetimerCapsuleUpdate.c
+IceLakePlatSamplePkg/Features/TcssRetimerCapsuleUpdate/RetimerCapsuleSupportDriver/NonTbtI2cRetimerSlaveDevice.c
+IceLakePlatSamplePkg/Features/TcssRetimerCapsuleUpdate/RetimerCapsuleSupportDriver/RetimerCapsuleUpdate.c
+IceLakePlatSamplePkg/Features/TcssRetimerCapsuleUpdate/RetimerCapsuleSupportDriver/RetimerCapsuleUpdate.inf
+IceLakePlatSamplePkg/Features/TcssRetimerCapsuleUpdate/RetimerCapsuleSupportDriver/TbtPdRetimerDevice.c
+IceLakePlatSamplePkg/Include/Library/EcTcssLib.h
+IceLakePlatSamplePkg/Include/Protocol/RetimerCapsuleUpdate.h
+IceLakePlatSamplePkg/Library/BaseEcTcssLib/BaseEcTcssLib.c
+IceLakePlatSamplePkg/PlatformPkg.dec
+IceLakePlatSamplePkg/PlatformPkg.dsc
+IceLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 844a5728e8c7c58190e8f5ac82a1834f5febb7f9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:26 2019 -0700 
+-------------------------------------------------------------------------------- 
+[ICL-SDS-U42][HDA]Scream/Beep sound observed when trying to play audio on onboard speakers
+
+Update verbs table for alc700.
+
+Hsd-es-id: 1606797841
+Tracker-link: https://hsdes.intel.com/appstore/article/#/1606797841
+Attestation-link: Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Original commit date: Tue Apr 30 08:53:16 2019 +0200
+Change-Id: I68339465d92f400355b431fd631fac79ef6370c8
+Original commit hash: f20d0f70c6338b810b901da3c93a776da2464c05
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitLib.c
+IceLakePlatSamplePkg/Board/Others/PeiBoardInitLib/PchHdaVerbTables.h
+
+================================================================================ 
+Commit: fb81a38f830f1d6146aee114fe7f12dafaee93c2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:25 2019 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Tue Apr 30 05:59:40 2019 +0000
+Original commit date: Tue Apr 30 05:59:40 2019 +0000
+Original commit hash: a189d67d08cb1a0c85c8b97cfbb09125900473d1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 2d3250dc9d2d764af39b99554e7693ca7ab2a9c4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:24 2019 -0700 
+-------------------------------------------------------------------------------- 
+ICL-EBAT[ Y/U ] -SUT hangs at "00E9" POST Code with Latest XCODE_EXT_Release Bios while waking from s3 Cycle.
+
+Increase PcdS3AcpiReservedMemorySize pcd size.
+
+Hsd-es-id: 1507180556
+Original commit date: Fri Apr 26 10:08:05 2019 -0700
+Change-Id: I5b2493e1022f54b6322183513ef2a629a11372b1
+Original commit hash: a7e580e3e355339259e93ade02f16eb17afa7797
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/PlatformPkg.dsc
+
+================================================================================ 
+Commit: f6ccadd9745eb6b524d6421af8b511e01c8f6001 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:22 2019 -0700 
+-------------------------------------------------------------------------------- 
+[ICL][D2][TCSS] - xHCI gets to D3 with pme_en = 0
+
+Add BIOS W/A to check PME_EN in _PS0/PS3, and program the correct value when the register is not expected value.
+
+Hsd-es-id: 1306400880
+Original commit date: Thu Apr 25 11:52:02 2019 +0800
+Change-Id: I6f9a7507de1635c0e55e712f4c95a2edb7f78274
+Original commit hash: 2b9a590f0f71a31eabca2a5e6419cac96ee6d425
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/AcpiTables/TcssSsdt/TcssItbtPcieRp.asl
+IceLakeSiliconPkg/SystemAgent/AcpiTables/TcssSsdt/TcssXhci.asl
+
+================================================================================ 
+Commit: 6ce24314ae4061f2fa87b8b6693d2e3eb6f50ee2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:21 2019 -0700 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][1409320400][ICL MRC][Move ERDTC2D before EWRTC2D]
+
+Issue:
+  Some ICL D1 parts fail EWRTC2D step at LPDDR4-3733.
+Root cause:
+  Insufficient RD margins after ReadMPR cause early write centering to fail.
+Solution:
+  Move ERDTC2D before EWRTC2D, right after JWL FlyBy step.
+  Update JWL FlyBy to keep TxDq centered per byte.
+  Run early WrV centering at the end of JWL FlyBy using same stress as in JWL FlyBy.
+
+Additional change:
+ - Fix CPGC Chunk Error reporting and add it to DQTimeCentering1D routine.
+
+Hsd-es-id: 1409320400
+Tracker-link: https://hsdes.intel.com/resource/1409320400
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Mon Apr 29 11:28:19 2019 -0700
+Change-Id: If8d4c1d001842ddb41bd2355aa3a9497b2aa10a2
+Original commit hash: 501b23d62d4499309a3a564b267cfc2e4b5ee2ec
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/Include/MrcInterface.h
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+
+================================================================================ 
+Commit: ca0306913a165307d4e0ac76b8f73895f6b1b789 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:19 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit WeeklyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Mon Apr 29 20:31:55 2019 -0700
+Original commit date: Mon Apr 29 20:31:55 2019 -0700
+Original commit hash: 57bd3dc3988d22911e6c0cd2fe06b5e9f0287c60
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 0090afdb3539f8f5d418ddfe3e4c80975666077d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:18 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Mon Apr 29 20:16:50 2019 -0700
+Original commit date: Mon Apr 29 20:16:50 2019 -0700
+Original commit hash: c73c97c304cf0c894fb081c39b0b225b30fc04eb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 0e9094188976946b1eca51ff399315f188677981 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:17 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Mon Apr 29 20:12:22 2019 -0700
+Original commit date: Mon Apr 29 20:12:22 2019 -0700
+Original commit hash: 0a729b3db09e1fb3d2736ef6c6945c1d6c9ad833
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: a9129dacce5482b71a6d6bccc3ab14581fd510c8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:16 2019 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Mon Apr 29 17:41:32 2019 +0000
+Original commit date: Mon Apr 29 17:41:32 2019 +0000
+Original commit hash: 632f2db2cf69116c429eae7a6c990fd2cbf9dcd7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 4bde8288fb21637ac01a082696c43e39aa5e90e8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:15 2019 -0700 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][2206925757][Nanya NT6AP256T32AV-J2  LPDDR4x can't boot at  3733 on ICL-U]
+
+Issue:
+ MRC fails in basic training at high speed LP4/x due to wrong initial CmdV setting.
+
+Solution:
+ Added new training step - Early Command Voltage Centering.
+ This should run on LP4 at high speeds (above 2400), right after ECT.
+ It uses MPR stress to center CmdV.
+
+Additional changes:
+ - Change LP4X initial Cmd Ron target from 20 to 30 Ohm
+ - Repeat each point test 10 times during CA training in ECT.
+ - Remove CmdVoltageCenteringPreLCT - it's no longer needed.
+ - Added Nanya to SMBIOS table strings list
+
+Hsd-es-id: 1406691040
+Tracker-link: https://hsdes.intel.com/resource/1406691040
+Attestation-link: CannonLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Wed Apr 17 15:41:07 2019 -0700
+Change-Id: I93e09e06d06c1c0c6ccf408e5b6f6977ea5b9d73
+Original commit hash: 6b9f1b8903b2d4b5ae3cdb30465e2f51190f478e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/Library/Private/DxeSmbiosMemoryLib/SmbiosType17Strings.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/Include/MrcDebugHook.h
+IceLakeSiliconPkg/SystemAgent/MemoryInit/Include/MrcInterface.h
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.h
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: de3d7168e8b910f53ac850eb5bf21bc748a07097 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:13 2019 -0700 
+-------------------------------------------------------------------------------- 
+ICL SECURITY : SATA-SSD Storage device password functionality not working in Bios
+
+Change to HddPassword2 module.
+
+Hsd-es-id: 1607187351
+Original commit date: Wed Apr 24 18:54:26 2019 +0800
+Change-Id: I1e5c918750dbd1460b015923beb09ef8643a5f94
+Original commit hash: 9dbfcd2cee1e2b6b01970ac57351ad87d444df02
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientCommonPkg/Override/BpCommonPkg/Universal/HddPassword/Dxe/HddPassword.vfr
+ClientCommonPkg/Override/BpCommonPkg/Universal/HddPassword/Dxe/HddPasswordDxe.c
+ClientCommonPkg/Override/BpCommonPkg/Universal/HddPassword2/HddPassword.vfr
+ClientCommonPkg/Override/BpCommonPkg/Universal/HddPassword2/HddPassword2Dxe.c
+ClientCommonPkg/Override/BpCommonPkg/Universal/HddPassword2/HddPassword2Dxe.h
+ClientCommonPkg/Override/BpCommonPkg/Universal/HddPassword2/HddPassword2Dxe.inf
+ClientCommonPkg/Override/BpCommonPkg/Universal/HddPassword2/HddPasswordCommon.h
+ClientCommonPkg/Override/BpCommonPkg/Universal/HddPassword2/HddPasswordHiiDataStruc.h
+ClientCommonPkg/Override/BpCommonPkg/Universal/HddPassword2/HddPasswordStrings.uni
+IceLakePlatSamplePkg/PlatformPkg.dsc
+IceLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 1e6a71678da841bf77b17bebdff788d315f2d58e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:11 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Sun Apr 28 20:21:11 2019 -0700
+Original commit date: Sun Apr 28 20:21:11 2019 -0700
+Original commit hash: 358cef02021cd1806f61fbcd6c187183870f9c38
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 8f193a5f7615b4661a790a228542374a1f9441c4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:10 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Sun Apr 28 20:12:31 2019 -0700
+Original commit date: Sun Apr 28 20:12:31 2019 -0700
+Original commit hash: b69af9870b88d95827fa2a4b7487a77de80101c6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 19922eb58f1046a72fcde0acdc489276b3d97ebe 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:09 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Sat Apr 27 20:29:03 2019 -0700
+Original commit date: Sat Apr 27 20:29:03 2019 -0700
+Original commit hash: 0da5096fa37c809dad42374dd25804c99e1c6b03
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: a2f8f8475a617d405cf96d24027bbee4036f7f3b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:08 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Sat Apr 27 20:11:54 2019 -0700
+Original commit date: Sat Apr 27 20:11:54 2019 -0700
+Original commit hash: 68c05efb3288c4da94ae3d5c24127574b162839f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: c2f5cc4dfb7e051705da34338c41079fb6c2eeb9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:07 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Fri Apr 26 20:12:06 2019 -0700
+Original commit date: Fri Apr 26 20:12:06 2019 -0700
+Original commit hash: 4b446746b8b55853ff280a10587bc3bed9055a11
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: b571c5fce74763d193205ec2f252d1556fd4b9ae 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:06 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Fri Apr 26 06:26:03 2019 -0700
+Original commit date: Fri Apr 26 06:26:03 2019 -0700
+Original commit hash: fc791a277f1b88878dd9812bb5d1c4b97041f0be
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: c752222fe685f8b420c74ad4eac0df809ab8b359 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:05 2019 -0700 
+-------------------------------------------------------------------------------- 
+Revert [ICL-U/Y/UN/YN ][B4/D1/D1 Production] TBT / Type C Devices not Enumerating after WR when done after S5 flow with VCCST set-up option enabled
+
+Set replay enable to IOM if the boot mode isn't S3 and S4 wake
+
+Hsd-es-id: 1607186449
+Tracker-link: https://hsdes.intel.com/appstore/article/#/1607186449
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Fri Apr 26 18:11:04 2019 +0530
+Change-Id: I908706f28a69ce921c37f865e7664a87ece5e580
+Original commit hash: ad8518845d9d4534667761b71c4ba89dfeb51f13
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/Library/Private/PeiTcssInitLib/TcssInit.c
+
+================================================================================ 
+Commit: 13e1448c2a910534d0c086e2d6e7790261011d56 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:04 2019 -0700 
+-------------------------------------------------------------------------------- 
+[ICL] [GPIO] GPIO debug printout
+
+- Moved GpioGetGroupName declaration from GpioLibrary.h to GpioLib.h
+- Added group name and group max pads to debug printout in GpioIsPadValid()
+
+Hsd-es-id: 1807392603
+Tracker-link: https://hsdes.intel.com/appstore/article/#/1807392603
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Original commit date: Mon Apr 8 12:28:43 2019 +0200
+Change-Id: Ifecd2a320342c1a1034f1392e6b1ec67ccfbe7ae
+Original commit hash: c9963467f32d02ec3c5085a93bafb1d5586c3bdf
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/Pch/Include/Library/GpioLib.h
+IceLakeSiliconPkg/Pch/Library/PeiDxeSmmGpioLib/GpioLibrary.h
+IceLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioPrivateLib.c
+
+================================================================================ 
+Commit: f19d2e9bcd10862df73e60e8527d7a730b260826 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:03 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Thu Apr 25 20:23:35 2019 -0700
+Original commit date: Thu Apr 25 20:23:35 2019 -0700
+Original commit hash: c3208ff447c9df8bf59e607ba5af4f392d4df5c7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: a03322470694416e69fc85f7cf62f5c2682523f2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:02 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Thu Apr 25 20:13:04 2019 -0700
+Original commit date: Thu Apr 25 20:13:04 2019 -0700
+Original commit hash: 8c79d5a3befbda927078ac55c39e1ea39dc6ba5d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: b62e11a7c7c2a4d26d0a35732f19f0109b511106 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:01 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Wed Apr 24 20:25:49 2019 -0700
+Original commit date: Wed Apr 24 20:25:49 2019 -0700
+Original commit hash: 50b01a3d50a9e6d0d7383d01278c24d232db12ab
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 92880ef2cf8c6093ae951b4c982b4c14fda76f79 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:11:00 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Wed Apr 24 20:12:11 2019 -0700
+Original commit date: Wed Apr 24 20:12:11 2019 -0700
+Original commit hash: a05e39b0626622095521316bf87093a27fda07f0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: b06eacdf969751e856778267bf2518d82aeefeaa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:59 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Wed Apr 24 16:32:57 2019 -0700
+Original commit date: Wed Apr 24 16:32:57 2019 -0700
+Original commit hash: 56ac15af3459cb382656401cc9d2ea218ca4ed4c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 8af34869d6939da5a42cd0fbb1c2af669177fa73 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:58 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Wed Apr 24 07:04:49 2019 -0700
+Original commit date: Wed Apr 24 07:04:49 2019 -0700
+Original commit hash: 5a43f5a00322f982afe4ed2c7c486e1b7ecb2c51
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 85bc8baf16c2f29aa2358f8074bfc0e84cc14887 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:57 2019 -0700 
+-------------------------------------------------------------------------------- 
+IceLakeSiliconPkg: ICL-PCH: BIOS WA update POR OPDMI register settings
+
+System takes around 1.5minutes to enter S0ix after display off
+Clear gen2pllc and gen3pllc bits OP-DMI
+
+Hsd-es-id: 1409300385
+Original commit date: Tue Apr 23 16:16:35 2019 -0700
+Change-Id: If960d7abdffb67823a639d460287cb83f8612a2c
+Original commit hash: 07c0b4b7fb3f2b10facd7164b0b907fb9a760d63
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmPchDmiLib/PeiPchDmi14.c
+
+================================================================================ 
+Commit: e0adbb4c625a2bff58e847d0102d7230c9bfb3c6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:56 2019 -0700 
+-------------------------------------------------------------------------------- 
+[ICL-U/Y/UN/YN ][B4/D1/D1 Production] TBT / Type C Devices not Enumerating after WR when done after S5 flow with VCCST set-up option enabled
+
+Set replay enable to IOM if the boot mode isn't S3 and S4 wake
+
+Hsd-es-id: 1607186449
+Tracker-link: https://hsdes.intel.com/appstore/article/#/1607186449
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Tue Apr 23 07:03:26 2019 +0800
+Change-Id: I013753731720e9451fccafb073badee1b8e8200d
+Original commit hash: bf38fdd3af05d2f22d9b1d8a91c01d25ef4dab21
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/Library/Private/PeiTcssInitLib/TcssInit.c
+
+================================================================================ 
+Commit: 8d801cd8a2759280705b3b49292e4fb74f4f062e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:54 2019 -0700 
+-------------------------------------------------------------------------------- 
+[ICL- U42][PM][RS-5][D1-Prod][STABILITY]:SUT Hung@PC:B504  (FORCE_PG_POK_ACK_TIMEOUT) CATERROR while running Hybrid S5 cycle
+
+Bring TBT group0/1 out of D3 cold if it is in D3 cold state
+
+Hsd-es-id: 1607177253
+Original commit date: Tue Apr 23 11:15:24 2019 +0800
+Change-Id: I73d0bb8455e5ec19929f5fd9817cb75e21c09b96
+Original commit hash: ef15ada4faac53f3f49665c47fcbe6a57b7fb989
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/Platform.asl
+IceLakeSiliconPkg/SystemAgent/AcpiTables/TcssSsdt/TcssSsdt.asl
+
+================================================================================ 
+Commit: edfccf2eddd612799e7720104936a64c49bc73ff 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:53 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit NVS CI Update auto-generated NVS structure definitions
+
+Tue Apr 23 20:54:42 2019 -0700
+Original commit date: Tue Apr 23 20:54:42 2019 -0700
+Original commit hash: 7c05b9e9ffe9b11aec11bc00294f0ed0bc7a5806
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/Tbt/AcpiTables/ITbtNvs.asl
+IceLakeSiliconPkg/Tbt/Include/Private/ITbtNvsAreaDef.h
+
+================================================================================ 
+Commit: 5568d0c6d3036f5f821bf926eef033fbb14cfa18 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:52 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Tue Apr 23 20:17:58 2019 -0700
+Original commit date: Tue Apr 23 20:17:58 2019 -0700
+Original commit hash: de86f054a5a66ac4103f3e231bc657538555012a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 522c90253595b3b1b2822222f114f7968991b755 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:51 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Tue Apr 23 20:12:42 2019 -0700
+Original commit date: Tue Apr 23 20:12:42 2019 -0700
+Original commit hash: 1a86d98a32df27f50b5b3827ff9bf1e77426b2e3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 752df8463d8ebe9552f20cef0f3eae841cf8acb9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:50 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit FSP Daily
+
+Tue Apr 23 19:56:09 2019 -0700
+Original commit date: Tue Apr 23 19:56:09 2019 -0700
+Original commit hash: 1e1ad575818b34a5548ef2bb421811c79ad6aefc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspBinPkg/Fsp.bsf
+
+================================================================================ 
+Commit: 6cd51f7cf3a5f4556eae4526a510c3ef76698b3a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:48 2019 -0700 
+-------------------------------------------------------------------------------- 
+TBT BIOS: RTD3 Support: During D3Cold exit, the TBT BIOS shall execute CONNECT_TOPOLOGY mailbox command with default timeout of 5 sec
+
+1. Implement TBT Mailbox ASL interface
+2. Send CONNECT_TOPOLOGY command in _PS0 of TBT DMA controller
+
+Hsd-es-id: 1305714413
+Original commit date: Tue Sep 4 11:36:37 2018 +0800
+Change-Id: I0dba0488e7c77fd571b24cd9bc42556bddc87ef2
+Original commit hash: 3553926847a969996ab5622237168db52d7e3148
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/AcpiTables/TcssSsdt/TcssDma.asl
+IceLakeSiliconPkg/SystemAgent/AcpiTables/TcssSsdt/TcssSsdt.asl
+IceLakeSiliconPkg/SystemAgent/AcpiTables/TcssSsdt/TcssSsdt.inf
+IceLakeSiliconPkg/Tbt/AcpiTables/ITbt.asl
+IceLakeSiliconPkg/Tbt/AcpiTables/ITbtMailBox.asl
+IceLakeSiliconPkg/Tbt/ITbtInit/Dxe/ITbtDxe.c
+IceLakeSiliconPkg/Tbt/Include/ITbtInfoHob.h
+IceLakeSiliconPkg/Tbt/Include/Library/TbtCommonLib.h
+IceLakeSiliconPkg/Tbt/Include/PeiITbtGenericStructure.h
+IceLakeSiliconPkg/Tbt/Include/TbtMailBoxCmdDefinition.h
+IceLakeSiliconPkg/Tbt/Library/PeiDxeSmmTbtCommonLib/TbtCommonLib.c
+IceLakeSiliconPkg/Tbt/Library/Private/PeiITbtInitLib/PeiITbtInitLib.c
+
+================================================================================ 
+Commit: a0fa1447d41b7bc4eda4c479c556bfc8d040eeba 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:43 2019 -0700 
+-------------------------------------------------------------------------------- 
+DP resource lock down - SW ability to release a DP resource (AKA Empty dongle support)
+
+  1. Create set Iom MailBox command and Data method.
+  2. Add IgfxDpDsm.asl
+  3. Only ICL-PCHN support the Display Dsm function
+
+Hsd-es-id: 1406932131
+Tracker-link: https://hsdes.intel.com/appstore/article/#/1406932131
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Fri Mar 8 19:26:40 2019 +0800
+Change-Id: I68716ea23af2fc58d56b0d9c4ce67345ca31e1eb
+Original commit hash: 08deb9c0f602843615887d916661df0f08ac1273
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/AcpiTables/SaSsdt/IgfxDsm.asl
+IceLakeSiliconPkg/SystemAgent/AcpiTables/TcssSsdt/TcssSsdt.asl
+IceLakeSiliconPkg/SystemAgent/Include/Register/SaRegsIom.h
+
+================================================================================ 
+Commit: e5780a4c2074acd11ee62416960887503902a77d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:42 2019 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Tue Apr 23 08:17:09 2019 +0000
+Original commit date: Tue Apr 23 08:17:09 2019 +0000
+Original commit hash: 6d23e1eef691a45607d475a8ac042d4dd2af0516
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: f2c0fb324cf5ffd07ec8913108f3c6d42ce2e93a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:40 2019 -0700 
+-------------------------------------------------------------------------------- 
+Revert "Integrate  ICL GOP 14.0.1022"
+
+This reverts commit 008c3ca8f55f44030ae8c745139a4b5a1a272d18.
+
+Hsd-es-id: 1607187063
+Original commit date: Mon Apr 22 21:15:51 2019 -0700
+Change-Id: I41b7bd97552d7e57c3e30c10cd1c0ef28a475c76
+Original commit hash: 3209bffb8895f769f0034660bcb80ed5c9cc5fa6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimSimics.efi
+
+================================================================================ 
+Commit: 23bf77d5248ea895dc05ddd7fb4ad03277457643 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:39 2019 -0700 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][1409253863][][ICL MRC][Power Training updates in RDAPT and RDODT]
+
+1. Skip Read Amplifier Power step in Margin training mode, because it can cause RdT margin degradation.
+2. Update sweep range of RdODT step in Margin training mode to [-15..15].
+3. Disable SOTC step.
+4. Enable ERDTC2D for LPDDR4 (it was enabled on DDR4 only)
+
+Hsd-es-id: 1409253863
+Tracker-link: https://hsdes.intel.com/resource/1409253863
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Tue Apr 16 15:47:13 2019 -0700
+Change-Id: Ib10f0919afdee52649c0417ea3543a6059d52d9a
+Original commit hash: 8c5c91c128158773d7ea89044370926a71c1447d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/Upd/FspmUpd.dsc
+IceLakePlatSamplePkg/Setup/SaSetup.hfr
+IceLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/MiniBios/MEMORY/MrcSetup.c
+
+================================================================================ 
+Commit: 05df2ff77356a66435e3d47e3dc1a754db5ff2af 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:37 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit WeeklyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Mon Apr 22 20:25:10 2019 -0700
+Original commit date: Mon Apr 22 20:25:10 2019 -0700
+Original commit hash: 6338f8faa814372a98ccae2a869bc8553c0be6c1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 3ee8f0ee88002efbad086f80289c9aee1a6336dd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:36 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Mon Apr 22 20:17:27 2019 -0700
+Original commit date: Mon Apr 22 20:17:27 2019 -0700
+Original commit hash: d8b5f603555ac6b4106cb2b193cb55569ba6024c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 1b9f797dafcc6cc45b2acad21ce1c38552e761af 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:35 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Mon Apr 22 20:11:56 2019 -0700
+Original commit date: Mon Apr 22 20:11:56 2019 -0700
+Original commit hash: 74763ee5f2ce8a8a0f28380825c300a5c6cf02fc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 7a78b18de94ec7a23be0797d49dc0351a1646448 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:34 2019 -0700 
+-------------------------------------------------------------------------------- 
+Integrate ICL Bx Patch 0x42; Dx Patch 0x1E
+
+Update ICL Bx with Patch 0x42; Dx with Patch 0x1E
+
+Hsd-es-id: <HSD-ES Number>
+Original commit date: Mon Apr 22 14:27:59 2019 -0700
+Change-Id: Ic41b91d3b56e8d58ddab720cca8ab42c2f90626d
+Original commit hash: a9214335bca680fa621e609b7ee8a11f452ebb2d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeOpenBoardPkg/IclUDdr4Type3Tcpd/OpenBoardPkg.fdf
+IceLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 970093500b200b709cbcb392a1a3b99beb9b34ed 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:32 2019 -0700 
+-------------------------------------------------------------------------------- 
+Integrate  ICL GOP 14.0.1022
+
+Integrate ICL GOP 14.0.1022
+
+Hsd-es-id: 1607187063
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/ClientBIOS IP Plan.xlsx
+Original commit date: Mon Apr 22 14:51:37 2019 +0530
+Change-Id: I95071e0fc049560a7f5d74705d391cb0a8025a9b
+Original commit hash: 008c3ca8f55f44030ae8c745139a4b5a1a272d18
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimSimics.efi
+
+================================================================================ 
+Commit: 54b51ada2dc8ecc6e69eaa8f05bb8f23b6e00602 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:30 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Sun Apr 21 20:17:08 2019 -0700
+Original commit date: Sun Apr 21 20:17:08 2019 -0700
+Original commit hash: 306f083a4888913b3da1e58f1b82a9026ecd7d85
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: fadccd0438cffce7387a3731283ef7cb5fdc8507 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:29 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Sun Apr 21 20:12:37 2019 -0700
+Original commit date: Sun Apr 21 20:12:37 2019 -0700
+Original commit hash: 0aa3b1639176db3d7e12b8718f93689250c4aa4b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: c4ed294300e1c11a8e972ae9e64b7a6503b71eea 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:28 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Sat Apr 20 20:11:54 2019 -0700
+Original commit date: Sat Apr 20 20:11:54 2019 -0700
+Original commit hash: 90f665d241322f4ff1eff38db56ece422acec3b7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: d891457812cc913185fc840992356aa1ae85238e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:27 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Fri Apr 19 20:10:39 2019 -0700
+Original commit date: Fri Apr 19 20:10:39 2019 -0700
+Original commit hash: 06fc3fe3a622b4fa133ef54fb3834664b85d4a5c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 3d7166793fc367cef40e2234cd0d88edafa7fae1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:26 2019 -0700 
+-------------------------------------------------------------------------------- 
+Add support for BIOS to dynOEMxcally load locked vs unlocked RST binary
+
+Phase 2 : Add support for dual RstSecPeim binary
+
+Hsd-es-id: 1409262738
+Original commit date: Fri Apr 12 15:51:57 2019 -0700
+Change-Id: Ic9b7c3e2d04538336a5498e38206d21508c52548
+Original commit hash: a163e19f7b0a0050486e7c978fa888870dd3fa7a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/FlashMap/SIZE_100_UEFI_BOOT.fdf
+IceLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInit.c
+IceLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInit.inf
+IceLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitFsp.inf
+IceLakePlatSamplePkg/PlatformPkg.dec
+IceLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: bbca414579958b8c5580187f680951947a2d6c98 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:24 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Thu Apr 18 20:16:04 2019 -0700
+Original commit date: Thu Apr 18 20:16:04 2019 -0700
+Original commit hash: 5af6b53e48a2f461bc57d9718054bcb5130352c6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 569de7388b58f4421bfa653e60db228cf48e909a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:23 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Thu Apr 18 20:11:19 2019 -0700
+Original commit date: Thu Apr 18 20:11:19 2019 -0700
+Original commit hash: 4ccb6c5d18d76d421dae1d8fae49f5d617bc5ce0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 3da8b4e0b5be92a622a5f040b9cc2759b6487402 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:22 2019 -0700 
+-------------------------------------------------------------------------------- 
+[ICL]V3162_YN_Xcode_Debug get assert and post code:00E9  during S3 resuming.
+
+Hsd-es-id: 1507165719
+Original commit date: Wed Apr 17 16:44:30 2019 -0700
+Change-Id: Ifa38fb799403205d863e37823a7fdb51ab753469
+Original commit hash: c0883130944c59bb53c8f0f16372ab4aa877a794
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/PlatformPkg.dsc
+
+================================================================================ 
+Commit: 7b8210ee52052261572efbec3c6459a03f111fb4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:21 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Wed Apr 17 20:18:29 2019 -0700
+Original commit date: Wed Apr 17 20:18:29 2019 -0700
+Original commit hash: e1acc19b6be12160b6c9200dac35db1aa80227d6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: c3b7c5b931102e7c532bcd1437e689ef6a6775bd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:20 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Wed Apr 17 20:11:42 2019 -0700
+Original commit date: Wed Apr 17 20:11:42 2019 -0700
+Original commit hash: 616f544cdfe9dd2ff3c8d04b6aa49588c985431a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 9e36924933d2e2fbba320157bb8050ac69c46d33 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:18 2019 -0700 
+-------------------------------------------------------------------------------- 
+ACPI BIOS Error (bug): Could not resolve symbol [\_GPE._L69.D1F0]
+
+Correct scope for D1F0, D1F1, D1F2 and D6F0
+
+Hsd-es-id: 1807453496
+Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Original commit date: Mon Apr 15 16:42:05 2019 -0700
+Change-Id: Ib00ef6884330a8e97e00bf0d8f1cc4319bdc4bc8
+Original commit hash: da8f76854df2d194b7a1aa20b8e035b9702e6334
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeOpenBoardPkg/Acpi/BoardAcpiDxe/Dsdt/Gpe.asl
+IceLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/Gpe.asl
+
+================================================================================ 
+Commit: 1c9c9f445a558eb2901f2fb7f4b1e9d70dce6c25 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:17 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI
+
+Tue Apr 16 20:24:22 2019 -0700
+Original commit date: Tue Apr 16 20:24:22 2019 -0700
+Original commit hash: 0310cc19162f75d139ce9182cb13c664f4b96528
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: e2d126a7b7e8358c85e404f682b0025e01018cf1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:15 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Tue Apr 16 20:11:33 2019 -0700
+Original commit date: Tue Apr 16 20:11:33 2019 -0700
+Original commit hash: 017a595fcc64ecff8f218f06db216cdc60dd6784
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dec
+IceLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: f24c59276d51bbfd8c82202e6d061a4b0410f8a5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 09:10:10 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit FSP Daily
+
+Tue Apr 16 12:36:42 2019 -0700
+Original commit date: Tue Apr 16 12:36:42 2019 -0700
+Original commit hash: 959aaf4b7b24eb1205a5907b46834b424b41d641
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspBinPkg/Fsp.bsf
+IceLakeFspBinPkg/Include/FspmUpd.h
+IceLakeFspPkg/Include/FspmUpd.h
