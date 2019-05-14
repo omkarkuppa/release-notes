@@ -1,4 +1,375 @@
 ================================================================================ 
+Commit: 16cd47ab40d5261431439768d5f981fc777b9344 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 15:00:02 2019 -0700 
+-------------------------------------------------------------------------------- 
+Auto-Gen file Sync
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspBinPkg/Fsp.bsf
+CannonLakeFspBinPkg/Include/FspmUpd.h
+CannonLakeFspPkg/Include/FspmUpd.h
+
+================================================================================ 
+Commit: 5377719a4040e4707ac266b5030f7a021d579207 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:51 2019 -0700 
+-------------------------------------------------------------------------------- 
+[CFL_Ebat_Validation][CFL U KC][D8 QDF: QS0J] CPU frequency downgrade to 0.4Ghz
+
+Resolution: Revert "CFL [CNP-PCH] New CFL Platform VR POR file WW1219"
+            This reverts commit d9ed4156f6d4e234aa3a741b5caee9109e4b8f53.
+Impacted: CFL-U LP3 platform.
+
+Hsd-es-id: 1507199927
+Original commit date: Thu May 9 17:20:26 2019 +0800
+Change-Id: I99b90a3da8200086714461f24399ec39d24687bd
+Original commit hash: d73e92e33e80bbdcf3864c01e7b633411e6ad122
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/Include/CpuPowerMgmt.h
+CannonLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuInitLib/CpuInitPreResetCpl.c
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerLimits.c
+CannonLakeSiliconPkg/SystemAgent/Include/Register/SaRegsHostBridge.h
+
+================================================================================ 
+Commit: 2b6fb7a973cb5f7e513c44fa064cedef15bb26eb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:49 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] Weekly Update BIOS ID
+
+Increment BIOS Major Version and reset Minor Version to 0
+
+Wed May 8 20:47:29 2019 -0700
+Original commit date: Wed May 8 20:47:29 2019 -0700
+Original commit hash: fffb1812eed85b26e0c04a6e9ddcfd19b2cb9613
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: d704e6eb814302d78078784a068fca7f46000b31 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:48 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] Auto-Commit FSP
+
+Wed May 8 20:35:46 2019 -0700
+Original commit date: Wed May 8 20:35:46 2019 -0700
+Original commit hash: c0953577a70b8def6f79a10fb9bc21f9b33106d6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspBinPkg/Fsp.bsf
+CannonLakeFspBinPkg/Include/FspmUpd.h
+CannonLakeFspPkg/Include/FspmUpd.h
+
+================================================================================ 
+Commit: b3d4faa091bec5055029c3a26a49a23dc5492088 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:46 2019 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu May 9 01:36:43 2019 +0000
+Original commit date: Thu May 9 01:36:43 2019 +0000
+Original commit hash: bbdf5801dd308d70a1ffae489a24ea9a4813bf2c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 12f7106011e44a075da536ed8ec13e49458dc2d2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:45 2019 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu May 9 01:20:50 2019 +0000
+Original commit date: Thu May 9 01:20:50 2019 +0000
+Original commit hash: 6e423de9762f65ba6ea1d7560a57d53647f86bd9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 9780898a33bd95a43dc22fd0f8cfee77bd073ae2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:43 2019 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakeFspPkg: Single stack between FSP and BL.
+
+Cherry-picked from EDK2 master:
+1 - 35897da27ed289f086d2b528800fa60d6ef2407d
+2 - 12a0a80b4aeeb9a8435ee785e685e33eb7ee451c
+
+Current FSP utilizes pre-allocated temporary memory from
+boot loader for both heap and stack. To reduce overall
+temporary memory usage FSP may share the same stack with
+boot loader and only needs a smaller memory for heap,
+no separate memory required for stack.
+Setting PcdFspHeapSizePercentage to 0 to enable FSP sharing
+stack with boot loader, in this case boot loader stack
+has to be large enough for FSP to use. Default is 50
+(half memory heap and half memory stack) for backward
+compatible with original model.
+
+Also updated Platform and FSP PCDs to enable this stack
+sharing by default.
+
+Hsd-es-id: 1507179082
+Original commit date: Tue Apr 30 08:23:32 2019 +0800
+Change-Id: Id10f21d04e5df38921dc8279a1db907640b4d2a5
+Original commit hash: 0240203079fc3c75cca7ea65b310569cc6a99358
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeFspPkg/CannonLakeFspPkg.dsc
+CannonLakeFspPkg/Override/DoxygenFspOverride.h
+CannonLakeFspPkg/Override/IntelFsp2Pkg/FspSecCore/FspSecCoreM.inf
+CannonLakeFspPkg/Override/IntelFsp2Pkg/FspSecCore/Ia32/FspApiEntryM.nasm
+CannonLakeFspPkg/Override/IntelFsp2Pkg/FspSecCore/Ia32/ReadEsp.nasm
+CannonLakeFspPkg/Override/IntelFsp2Pkg/FspSecCore/SecMain.c
+CannonLakeFspPkg/Override/IntelFsp2Pkg/FspSecCore/SecMain.h
+CannonLakeFspPkg/Override/IntelFsp2Pkg/Include/Library/FspCommonLib.h
+CannonLakeFspPkg/Override/IntelFsp2Pkg/Library/BaseFspCommonLib/BaseFspCommonLib.inf
+CannonLakeFspPkg/Override/IntelFsp2Pkg/Library/BaseFspCommonLib/FspCommonLib.c
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+
+================================================================================ 
+Commit: 852f477a74d290fb03690fc38b0332af3ab6e550 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:41 2019 -0700 
+-------------------------------------------------------------------------------- 
+CFL [CNP-PCH] New CFL Platform VR POR file WW1219
+
+Added CFL-U 4+2 15W + 2+2 15W PM support
+
+Hsd-es-id: 1306336259
+Original commit date: Thu Mar 21 12:17:53 2019 -0700
+Change-Id: I70c01e90a8df05afe93f07e8efe45cd1f1f47d56
+Original commit hash: d9ed4156f6d4e234aa3a741b5caee9109e4b8f53
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/Include/CpuPowerMgmt.h
+CannonLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuInitLib/CpuInitPreResetCpl.c
+CannonLakeSiliconPkg/Cpu/Library/Private/PeiCpuPowerMgmtLib/PowerLimits.c
+CannonLakeSiliconPkg/SystemAgent/Include/Register/SaRegsHostBridge.h
+
+================================================================================ 
+Commit: 7a1cd10aedd96fbfdcc34980adc6439021a402d6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:39 2019 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakeSiliconPkg: [2206102020][CFL][MRC] Add Relaxed JEDEC Reset Sequence during DDR4 Late Command Training
+
+During CtlClockCentering() when testing CMD/CTL values, an error in JEDEC Reset Sequence due to bad CMD/CTL timings can cause DRAM to be put into a bad state.
+A new policy named "RelaxedJedecReset" has been added which sets 3N CMD rate and default CMD/CTL/CLK PI settings during each JEDEC Reset during CtlClkCentering().
+After the JEDEC Reset Sequence is complete the CMD Rate and CMD/CTL/CLK PI settings are restored.
+
+Additional Changes:
+Disable Page Table Idle Timer during LCT
+Fix ExitOnFailure behavior, to update MarginResult if LCT fails
+
+Hsd-es-id: 2206102020
+Original commit date: Tue Apr 30 19:00:15 2019 -0700
+Change-Id: I41ff4fe17aa5106abd6643db25d621109ee54088
+Original commit hash: 9e0ac8044d51e169c4bb90226e5d4324a3c0beb2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+CannonLakeFspPkg/Upd/FspmUpd.dsc
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+CannonLakePlatSamplePkg/Setup/SaSetup.hfr
+CannonLakePlatSamplePkg/Setup/SaSetup.uni
+CannonLakeSiliconPkg/SystemAgent/Include/ConfigBlock/MemoryConfig.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInit/Include/Coffeelake/MrcInterface.h
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+CannonLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Services/MrcReset.c
+
+================================================================================ 
+Commit: 341fd659a6be77337043fab98663ca0c61d6477b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:37 2019 -0700 
+-------------------------------------------------------------------------------- 
+dTBT BIOS: RTD3: The _OFF method delay shall be decreased from 5 sec to 1 sec
+
+Adjust timeout valuse to 1sec by default in Rtd3TbtOffDelay
+
+Hsd-es-id: 1409295157
+Original commit date: Wed May 8 14:51:26 2019 +0800
+Change-Id: I9a8511e22d2211f5c060cdff8eb80ef2d8215998
+Original commit hash: 0fb95d207304d772fa498c103a27eabcac7ae2f4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Setup/PlatformSetup.hfr
+
+================================================================================ 
+Commit: 09801e50ff929cf30ccda14ce42dad1d4913a11b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:36 2019 -0700 
+-------------------------------------------------------------------------------- 
+CannonLakeFspPkg: Fsp-T is using the default UPD parameters and not taking the FSP-T UPD passed by bootloader
+
+Getting UPD region from input parameter (boot loader UPD region) instead of FSP's header.
+
+Hsd-es-id: 1506921245
+Original commit date: Tue May 7 14:57:21 2019 +0800
+Change-Id: I9ac683cfc1b47b51f1c331eb52dd61379de77103
+Original commit hash: 946633622007502457b931eebc3ffca4d14dec4d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dsc
+CannonLakePlatSamplePkg/FspWrapper/Library/SecFspWrapperPlatformSecLib/SecFspWrapperPlatformSecLib.inf
+CannonLakePlatSamplePkg/FspWrapper/Library/SecFspWrapperPlatformSecLib/SecRamInitData.c
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakeSiliconPkg/Library/SecGetFsptApiParameterLib/Ia32/SecGetFsptApiParameter.nasm
+CannonLakeSiliconPkg/Library/SecGetFsptApiParameterLib/SecGetFsptApiParameterLib.inf
+CannonLakeSiliconPkg/Pch/Library/SecPchLib/SecPchLib.c
+CannonLakeSiliconPkg/Pch/Library/SecPchLib/SecPchLibFsp.inf
+
+================================================================================ 
+Commit: e393391b6c36a169df442e21a59e9fa080dc23ec 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:34 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Wed May 8 11:39:51 2019 -0700
+Original commit date: Wed May 8 11:39:51 2019 -0700
+Original commit hash: 2dcaa7abf88ef08456b4625196b1cc2fd0847a51
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 359ee10f8be1df1c86ca3eca54b65612b156340b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:33 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Tue May 7 11:39:27 2019 -0700
+Original commit date: Tue May 7 11:39:27 2019 -0700
+Original commit hash: 45765304216e4dbf04dbda56efc1f6bb1ca20631
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 316ace1a68928768bd3743f3e870fb958c225b55 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:32 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Mon May 6 11:38:36 2019 -0700
+Original commit date: Mon May 6 11:38:36 2019 -0700
+Original commit hash: 0ec0541ab8024183f68af029135f5bdfeabf7d00
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: aa746a6725c6e4988fe71c5fcb37af7bb21c062f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:31 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] CNL Weekly Update_FSP/RC
+
+Sun May 5 12:08:57 2019 -0700
+Original commit date: Sun May 5 12:08:57 2019 -0700
+Original commit hash: 9b9c2a6bb11b0c5613897271fc948791b42ef9c3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: ec49884ff96babd49ac723e05a86edc7b890901e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:29 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sun May 5 11:37:49 2019 -0700
+Original commit date: Sun May 5 11:37:49 2019 -0700
+Original commit hash: 68d361150ccdf9db757fabed803a77595ec5a220
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: dc6da7b75979604b5f6a85e90a4b93be1cef6918 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:28 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sat May 4 11:42:10 2019 -0700
+Original commit date: Sat May 4 11:42:10 2019 -0700
+Original commit hash: 89ddf1f2d2068fb8c5b7c0f6e100f061d8533d8a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: fcee6e92df8433b51b1b8c21125d6f1524e9fb0d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:27 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Fri May 3 11:40:48 2019 -0700
+Original commit date: Fri May 3 11:40:48 2019 -0700
+Original commit hash: 5d9b7c1f960fbb296316865406a5811cc1ed3aa3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 8284f5b8bed7e6427508a19e21204f433b46e4ab 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon May 13 14:33:26 2019 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Thu May 2 11:39:50 2019 -0700
+Original commit date: Thu May 2 11:39:50 2019 -0700
+Original commit hash: 44ed8ff36337e8308f2a5a1a5fadc5e2935742c2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspPkg/CannonLakeFspPkg.dec
+CannonLakeSiliconPkg/SiPkg.dec
+================================================================================ 
 Commit: ed35c33ca46692d4546abc22aaeda1da3bdcb7e1 
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed May 8 20:54:47 2019 -0700 
