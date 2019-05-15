@@ -128,7 +128,7 @@ Commit: b744108c5d75a7e80f74d35e4862693fc97a7147
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:51:47 2019 +0530 
 -------------------------------------------------------------------------------- 
-xHCI programming doesn't enable USB3 Port Clock Gating feature
+[PCH] xHCI programming doesn't enable USB3 Port Clock Gating feature
 
 This change enables USB3 Port Clock Gating feature by clearing BIT16 in AUX_CTRL_REG1
 
@@ -212,7 +212,7 @@ Commit: 808cb5f746160e7954c153d4377d408aab1ad71b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:51:12 2019 +0530 
 -------------------------------------------------------------------------------- 
-Add power resource dependencies for RAID class storage
+[PCH] Add power resource dependencies for RAID class storage
 
 Since we don't describe dependency on the power resource in
 PCIe enpoint device. OS turns off the power to the device when
@@ -518,7 +518,7 @@ Commit: 80b5946955e8486f62938deb0031b286958123c5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:40:54 2019 +0530 
 -------------------------------------------------------------------------------- 
-BIOS change required in HWEQ settings to improve CML-LP EV margins
+[PCH] BIOS change required in HWEQ settings to improve CML-LP EV margins
 
 Created a new policy to control the number of coefficients to be used for PCIe root port link equalization and changed the default number of coefficients to 3.
 
@@ -623,7 +623,7 @@ Commit: c9d94120f93dbe74cc75ef844f9ac873c07c4ac8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:39:34 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML-U42-HDA][Audio]: HDA Driver is getting enumerated in device manager with SNDW Bios Settings
+[PCH] HDA Driver is getting enumerated in device manager with SNDW Bios Settings
 
 Disabled SDI lines when HDA controller is disabled.
 
@@ -731,7 +731,7 @@ Commit: 9a868f1e584d2f6c5a62e910ca389c38f1059b75
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:38:27 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CMLV] [ITSS] Fix ITSS IPC for non-shareable IRQs
+[PCH] Fix ITSS IPC for non-shareable IRQs
 
 This implementation fixes issue of FSP explicity clearing out
 the ITSS IPC bits for external devices mapped to non-shareable
@@ -916,10 +916,11 @@ Commit: cb52c1f178303affd43a7ee214872cd325b2c7de
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:34:17 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML] Verb table for HD-A configuration in CML-U
- updated verb table to version 5.0.3.1
-Ref ID:1607018957
+[PCH] Update verb table for HDA configuration in CML-U
 
+Updated verb table to version 5.0.3.1
+
+Ref ID:1607018957
 Original commit date: Wed Mar 27 16:19:19 2019 +0530
 Change-Id: I90eded65c41e25301b115b98c91a8d0fc7f29b9f
 Original commit hash: a2314c482d02501a867b1548692c3e406218ea85
@@ -1082,11 +1083,10 @@ Commit: 0009cea9f178d723ad314589b537f4b9f2161c5b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:25:47 2019 +0530 
 -------------------------------------------------------------------------------- 
-CometLakeSiliconPkg: [CML]Update default Path_PLL and clk_source values in CML BIOS
+[PCH] Update default DLL values for emmc and sdcard in CML BIOS
 
-Update the path_pll and clk_source with the next values:
-
-emmc rx_cmd_data_dly_2 = 0x10008
+Update the path_pll and clk_source with the values:
+emmc   rx_cmd_data_dly_2 = 0x10008
 sdcard rx_cmd_data_dly_2 = 0x10013
 
 Ref ID: 2007808598
@@ -1122,9 +1122,9 @@ Commit: 4957efceddf59c190691a3f1814434e6b364c9d3
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:24:51 2019 +0530 
 -------------------------------------------------------------------------------- 
-USB v16 BIOS Guide update (rev21)
+[PCH] USB v16 BIOS Guide update (rev21)
 
-Updated xHCI init code to align with BIOS Guide rev21 which accounted for Si fixes.
+Updated xHCI init code to align with BIOS Guide rev21
 
 Ref ID: 1807446216
 Original commit date: Mon Apr 15 15:26:06 2019 +0200
@@ -1140,7 +1140,7 @@ Commit: 312e7e19f3910d3cb3b5fd266a84284999e9190d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:24:35 2019 +0530 
 -------------------------------------------------------------------------------- 
-Chipset init code refactoring.
+[PCH] Chipset init code refactoring.
 
 1. Split the code into multiple subfunctions
 2. Free allocated memory after it is no longer needed.
@@ -1168,9 +1168,13 @@ Commit: 0bfbcd5be3d8be0ff6d1a4e46e058dc826925579
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:24:26 2019 +0530 
 -------------------------------------------------------------------------------- 
-CometLakeSiliconPkg: [CML]V1155 WHL and CML's S3 resume failed with "9b04", it pop ASSERT (Failure rate about 40%)
+[PCH] Platform stuck at post code 0x9B04 during S3 resume 
 
-CRC calculation issue already fixed.
+Some AFE registers might have RO bits that may change between write and read back
+to verify programming. This led to ASSERT being hit on data mismatch on bits that
+weren't programmed at all during boot flow.
+
+Resolution: CRC calculation issue already fixed.
 Remove read only bits mask used for work around
 
 Ref ID: 1507161171
@@ -1248,7 +1252,7 @@ Commit: 80bc35604c36552efd2c2a35964929e55d59b4ce
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:19:13 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML] [GPIO] GPIO debug printout
+[PCH] Add more information in GPIO debug printout
 
 - Moved GpioGetGroupName declaration from GpioLibrary.h to GpioLib.h
 - Added group name and group max pads to debug printout in GpioIsPadValid()
@@ -1550,7 +1554,7 @@ Commit: f7963378d7f9df0e4fdf6549a2210e8abe41cc0b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:06:10 2019 +0530 
 -------------------------------------------------------------------------------- 
-[ICL to CML] FSP explicitly make GSPI device in D3 and disable MMIO space if UPD set as PCI mode
+[PCH] FSP explicitly make GSPI device in D3 and disable MMIO space if UPD set as PCI mode
 
 * Added Save and Restore in Pci mode
   During Serial Io initialization any device in Pci mode will have its BAR0 assigned.
@@ -1597,9 +1601,7 @@ Commit: 6085bcce322289fff06a724c78e1eb58f9dbf87d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:05:53 2019 +0530 
 -------------------------------------------------------------------------------- 
-CometLakeSiliconPkg: [CML]Update default DLL values for eMMC in WHL BIOS
-
-Update default DLL values for eMMC in WHL BIOS
+[PCH] Update default DLL values for eMMC in WHL-U platform with CML BIOS.
 
 Ref ID: 1409210334
 Original commit date: Wed Apr 10 17:28:58 2019 -0700
@@ -1618,7 +1620,6 @@ Date: Tue May 14 20:05:43 2019 +0530
 [CML] Sync CML SA with WHL SA
 
 Ref ID: NA
-
 Original commit date: Mon Apr 1 15:56:35 2019 +0530
 Change-Id: I9a104fe230f629bb0d698aecf52f779b0384360d
 Original commit hash: b029775b327167b204eec970f62a1734cea21040
@@ -1684,12 +1685,11 @@ Commit: d134a32241de57f6c9f5c1b8752137823ae4acd5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 14 20:03:31 2019 +0530 
 -------------------------------------------------------------------------------- 
-PCI Express Root Port9 setup item grayed out after enable Pcie Controller 3 Lane Reversal in ME
+[PCH] PCI Express Root Port9 setup item grayed out after enable Pcie Controller 3 Lane Reversal in ME
 
-Merging changes from CNP
+Added a check for lane reversal when displaying setup options
 
 Ref ID: 1407982953
-
 Original commit date: Tue Apr 2 09:14:22 2019 -0700
 Change-Id: I64ec6553f48f987eedb2811553c87685af882ae9
 Original commit hash: af13cafa6bcc5086debc37c770fd8e332e665ee6
