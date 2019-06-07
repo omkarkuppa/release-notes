@@ -148,7 +148,7 @@ Commit: a647643ff17fd7052e83acd665ea96f1b8c656dd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 5 15:07:20 2019 -0700 
 -------------------------------------------------------------------------------- 
-CannonLakePlatSamplePkg/Acpi: [OEMx 2x2] ACPI BIOS should implement another way than _L72 GPE handler to notify OS about ACPI TAD wake at S4 resume.
+CannonLakePlatSamplePkg/Acpi: ACPI BIOS should implement another way than _L72 GPE handler to notify OS about ACPI TAD wake at S4 resume.
 
 1. Create a new protocol PLATFORM_NON_NVS_AREA_PROTOCOL to manage the OpRegion which is allocated with EfiReservedMemoryType (AddressRangeReserved). The content of this region will NOT be restored at S4 resume.
 2. Add a member TimeAndAlarmDeviceWake (TADW) to this OpRegion.
@@ -156,7 +156,6 @@ CannonLakePlatSamplePkg/Acpi: [OEMx 2x2] ACPI BIOS should implement another way 
 4. Update the value of TADW in SMM EnableAcpiCallback by WADT GPE status (R_ACPI_IO_GPE0_STS_127_96).
 5. Check TADW in _WAK method at S4 resume. If TADW is 1 (WADT GPE status is set), notify the OSPM of Alarm Device (AWAC) Wake.
 
-Hsd-es-id: 2207536423
 Original commit date: Tue May 28 23:10:43 2019 +0800
 Change-Id: I1861857ef48dddeb3b2458d93b351daf22c89691
 Original commit hash: 75c0e8de5be21bf2c3d0edd430d387a8fb260782
