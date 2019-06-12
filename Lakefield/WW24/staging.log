@@ -61,12 +61,11 @@ Commit: dec6eb2d17b107452b05fb40216e5c8e7cb81c56
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:24:19 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF A1/B0: MCHECK failue due to IOAPIC size in BIOS is overlapped.
+Description: MCHECK failure due to IOAPIC size in BIOS is overlapped.
+Solution: IOAPIC size was considered as 4KB and based on that MCHBAR which got increased to 512KB in size assigned with 0xFEC80000.
+ It is causing overlapping with IOAPIC size 1MB.To avoid overlap, MCHBAR needs to be allocted to new address to 0xFEA80000.
+Impacted Platforn: LKF
 
-IOAPIC size was considered as 4KB based on LKF HAS and based on that MCHBAR which got increased to 512KB in size in LKF was assigned with 0xFEC80000. That is actually overlapping with IOAPIC size 1MB.
-To avoid this overlap, MCHBAR needs to be allocted to new address and that is derived to 0xFEA80000.
-
-Hsd-es-id: 1507195007
 Original commit date: Tue May 21 14:31:25 2019 +0530
 Change-Id: I0ec2b6724b34f90caad2c955cfe1d0718039440b
 Original commit hash: 78117b63185793d3b2bba71c12b915fd1ef8d21f
@@ -116,10 +115,10 @@ Commit: 806c65f0ea75dae845ce249479fcfb859ffd8c74
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:24:14 2019 +0530 
 -------------------------------------------------------------------------------- 
-Forcing DDR frequency to 2133 MHz for CPU stepping A0/A1 and
+Description: Forcing DDR frequency to 2133 MHz for CPU stepping A0/A1 and
 Default DDR Frequency is 4267 MHz for remaining.
+Impacted Platform: LKF
 
-Hsd-es-id:NA
 Original commit date: Thu May 23 15:56:37 2019 +0530
 Change-Id: I66122f270cce6a8db8890ded8aa9130e1ee2165e
 Original commit hash: 92170b0cfb123f8ba3bf4e6d2c1296491457d68f
@@ -531,9 +530,8 @@ Commit: 06a508eafcd17f3bbfd11299c66560dec16d5d0d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:23:35 2019 +0530 
 -------------------------------------------------------------------------------- 
-Integrate latest LKF GOP 1020
+Description: Integrate GOP 1020
 
-Hsd-es-id: No_HSD
 Original commit date: Wed May 15 15:52:29 2019 +0530
 Change-Id: I552945c84717ddf3d5c82ff6f06d762898a0a5d2
 Original commit hash: fc17666de51ba09714767cc8a5c3fa05f733a30f
@@ -553,16 +551,7 @@ Commit: 518ba7534d952a162f17f2765370996b84bab62b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:23:33 2019 +0530 
 -------------------------------------------------------------------------------- 
-Fix klocwork issue for LakefieldPlatsamplepkg & LakeFieldFspPkg
-
-Problem: KW tool reported code related issues
-Part:5 Solution: Resolved the issues based on 3193 KW report.
-contains critical & High level issue resolutions.
-
-Unit TestDone:
-checked OS boot status for
-1. SPI-FSP & EDK  -Release &Debug
-2. BFX-FSP & EDK  -Release &Debug
+Description: Fix klocwork issue.
 
 Original commit date: Wed May 15 10:20:46 2019 +0530
 Change-Id: I30ba06bc1059a7d2478b66d8a065783f57cd98d6
@@ -950,12 +939,11 @@ Commit: 2976f60dd7789b9d7eadaae255ec42a40358016f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:22:55 2019 +0530 
 -------------------------------------------------------------------------------- 
-Incorrect Loadline values programmed by bios (GT Rails & Core Rails) - impacting higher power on Power KPI
- - The AC/DC Correction for VCC CORE and GT was always been added on a boot. This impacted Core and GT Rails.
- - Updated logic to fix this.
+Description: Incorrect Loadline values programmed by bios (GT Rails & Core Rails) - impacting higher power on Power KPI
+The AC/DC Correction for VCC CORE and GT was always been added on a boot. This impacted Core and GT Rails
+Solution: Corrected the loadline value from BIOS.
+Impacted Platform: LKF
 
-Tracker-link: https://hsdes.intel.com/appstore/article/#/1507188130
-Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Mon May 13 15:15:55 2019 +0530
 Change-Id: I399786c6d2997b43ec5ca7c3fba22f40ad33a591
 Original commit hash: 85bcd5f326165a67855687f7dc9dbf333fdac7b7
@@ -1036,11 +1024,10 @@ Commit: 929a9d166102ba9c30999ccadae4ec9919bce2f7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:22:42 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] MRC 130 cause hang when PSMI enable
-
-The issue is introduced with BP1520 core update when using AllocateAlignedReservedPages.
+Description: MRC cause hang when PSMI enable
+Solution: Issue is introduced with BP1520 core update when using AllocateAlignedReservedPages.
 Code changes here is to fix it temporary by replacing that function with AllocateReservedPages.
-Once Core team identifies fix for it, will update the code changes.
+Impacted Platform: CML
 
 Hsd-es-id: 1507167368
 Original commit date: Thu May 9 10:30:38 2019 +0530
@@ -1235,23 +1222,9 @@ Commit: b847d78b11b698672e81f1a2a9c5568e943102ab
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:22:23 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] System booting to OS without pressing power button (SNC disabled in BIOS)
-
-issue :
-   if we change CPU Strap data from setup,system will boot to
-   OS with out pressing power button.
-
-Root Cause:
-   we are issuing reset if any CPU strap data mismatch between descriptor and Setup.
-   and updating to PMC. so PMC will have updated CPU straps data upon ColdReset/WarmReset,Not G3.
-   In Boot Selection function,if Cold reset happen we will consider ColdReset from Shell,So we will boot to OS.
-
-Solution:
-   If any CPU Strap data mismatch between descriptor and Setup,then write New
-   CPU Strap data to Descriptor.
-
-Testing:
-   Verified both SPI and UFS.
+Description: System booting to OS without pressing power button (SNC disabled in BIOS)
+Solution: If any CPU Strap data mismatch between descriptor and Setup,then write New CPU Strap data to Descriptor.
+Impacted Platform: LKF
 
 Original commit date: Tue May 7 13:08:22 2019 +0530
 Change-Id: I3d121fecebb05698bfd38123c07e58cf66f0aa60
@@ -1330,16 +1303,8 @@ Commit: 3a44e2d346bb5261a1214eebc7342fb7cbc09fe1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:22:17 2019 +0530 
 -------------------------------------------------------------------------------- 
-Fix klocwork issue for LakefieldPlatsamplepkg & LakeFieldFspPkg
-
-Problem: KW tool reported code related issues
-Part:4 Solution: Resolved the issues based on 3182 KW report.
-contains critical & High level issue resolutions.
-
-Unit TestDone:
-checked OS boot status for
-1. SPI-FSP & EDK  -Release &Debug
-2. BFX-FSP & EDK  -Release &Debug
+Description: Klocwork tool report code related issue.
+Impacted Platform: LKF
 
 Original commit date: Mon May 6 20:12:27 2019 +0530
 Change-Id: I8c0b57b8063c9fd70744685c24096983adbd0d61
@@ -1397,34 +1362,24 @@ Commit: 00d7d41b197d2f78998e41a8ef8510d3006a9110
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:22:11 2019 +0530 
 -------------------------------------------------------------------------------- 
-ICL to LKF SYNC(WW09 - WW15) - PART 2
 
-Below changes were ported from ICL to LKF,
-c405a8381339acd68998f2bf68fac47a792d22e9  IcelakePlatSamplePkg : [ICL-U42-D0] unexpected error on wrong variable size usage         2206852226
-40e36a0d92ee53558bb77fd786a20417523b4a48  [ICL-U/Y][B4][D0/D1][PM] Content Restore is not happening only on first S4/Deep S4 Cycle  1607042487
-bf8270287c04f4ff39b52fc5491c36827a481422  ICL-U BIOS Does not flush Correct VccIN IMON Offset                                       1306256000
-451d6dc558fa2d390cab8c5f9fc12ab5b52b2c7b  EDK boot fails to execute Global reset with Resetsystem2-PlatformSpecific in early premem
-                                          phase. (Silicon init pre mem)                                                             1408907161
-3e5ebf11191a67f911f795ac80debecd83a9ba98  [CrashLog] Add the support for CPU triggered crashlog                                     1409092161
-f2a6eb0041a93ed05320ca04d3bf2b1e9b6e61f1  ICL-U BIOS Does not flush Correct VccIN IMON Offset                                       1306256000
-5f9274d5b58d32b4838bbc659a5f5314711c543c  IceLakePlatSamplePkg: S4 resume got twice unexpected global reset.                        1507101540
-5cd001333c762da123c8a88590886c0c9640d756  [ICL]Clean up override folder under IceLakePlatSamplePkg                                  1507030617
-a5fe07941c4cb37245c9fed7677175ddb2cacbdc  IceLakeSiliconPkg: Add DWORD9 register for USB 3.1 Gen2 Tx tuning                         1409194828
-95bb13839556b40f862fcd784ceb16b6c850f06b  New I2C settings to improve electrical margins                                            1409112530
-1aae9f0f2b8cc3fd631a8b4b38f90fcbd47abd05  [ICL-U42/Y42][BIOS RCR] Verb Table Changes to be integrated in BIOS for DMIC connection
-                                          through on-board codec                                                                    1507109856
-c9ccf5bb1317fbdfa4eb8707c1c9f228ccf6ba3c  IceLakePlatSamplePkg: BIOS support for new Device PMAX for 19H1 support                   1408989006
-2d5f9093c278b45197ac634032434f8767a5316f  [ICL-YN]PCIe PTM is getting enabled even when Device does not support it.                 1409063335
-06ebb0b82131d7a908798e699f6f87cc0128af13  The Error "(A7) Me FW Downgrade - Request MeSpiLock Failed" Pops up after ME FW Recovery
-                                          when ME is in Soft-Temp Disable Mode                                                      2206527873
-49c5771240d92be0debde71526cacaa773a390a0  ICL Security[Harmonized Capsule] : CSME Fw Fails to upgrade on FDO Jumper assertion via
-                                          Standalone CSME Capsule                                                                   1607091368
+Code Change sync of LKF:
 
-UNIT TEST:
-SPI - Boot to OS. S5, S4 Success.
-BFX - Boot to OS. S5, S4 Success.
+1:Content Restore is not happening only on first S4/Deep S4 Cycle.
+2:BIOS Does not flush Correct VccIN IMON Offset.
+3:Add the support for CPU triggered crashlog.
+4:BIOS Does not flush Correct VccIN IMON Offset.
+5:S4 resume got twice unexpected global reset.
+6:Platformsample folder Clean up.
+7:Add DWORD9 register for USB 3.1 Gen2 Tx tuning.
+8:New I2C settings to improve electrical margins.
+9:Verb Table Changes to be integrated in BIOS for DMIC connection through on-board codec.
+10:BIOS support for new Device PMAX for 19H1 support.
+11:PCIe PTM is getting enabled even when Device does not support it.
+12:Error "(A7) Me FW Downgrade - Request MeSpiLock Failed" Pops up after ME FW Recovery when ME is in Soft-Temp Disable Mode                                                      2206527873
+13:CSME Fw Fails to upgrade on FDO Jumper assertion via Standalone CSME Capsule.
+Impacted Platform: LKF
 
-Hsd-es-id: https
 Original commit date: Thu Apr 25 17:05:07 2019 +0530
 Change-Id: I75d06b5e1acb2ce5b2821e99a256186bdb4c4286
 Original commit hash: 6f37a0f12c0056fc2ce8e5a6991515405eb62ac9
@@ -1582,15 +1537,8 @@ Commit: 44bf9fa76e7222ac0ebfce6ac0fb8cbfb0a55728
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:21:54 2019 +0530 
 -------------------------------------------------------------------------------- 
-Fix klocwork issue for LakefieldPlatsamplepkg & LakeFieldFspPkg
-
-Problem: KW tool reported code related issues
-Part:3 Solution: Resolved the issues related to MRC.
-
-Unit TestDone:
-checked OS boot status for
-1. SPI-FSP  -Release &Debug
-2. BFX-FSP  -Release &Debug
+Description: Klocwork tool report code related issue.
+Impacted Platform: LKF
 
 Original commit date: Thu May 2 18:28:43 2019 +0530
 Change-Id: I76f68fbca4166ebdadd67f439b07362d06594943
@@ -1640,9 +1588,8 @@ Commit: 0a723e0a2e1f122b5202c16552693b068372d1ca
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:21:50 2019 +0530 
 -------------------------------------------------------------------------------- 
-Integrate latest GOP V1019
+Description: Integrate GOP V1019
 
-Hsd-es-id: No_HSD
 Original commit date: Sun May 5 11:22:19 2019 +0530
 Change-Id: Ic49dff987b174963c30cfb1a8752cbe2c94f4292
 Original commit hash: 79bffc075c974360de643b150ab1a11c993cdcd2
@@ -1812,12 +1759,9 @@ Commit: 59cc0e7c3fa02d5bd4b0ad79512749993961b076
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:21:35 2019 +0530 
 -------------------------------------------------------------------------------- 
-Update Setup Strings and help text
-- Modified Active Small Core to Disable Small Core
-- Modified IMON Slope range
+Description: Update Setup Strings and help text
+Impacted Platform: LKF
 
-Hsd-es-id: NoHsd
-Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xls
 Original commit date: Mon Apr 29 17:36:52 2019 +0530
 Change-Id: I2db44ce37745660038d02b0ad87435ffc4b83776
 Original commit hash: a143e17e02256e397eff1d70b2eb7dad31948780
@@ -2071,11 +2015,10 @@ Commit: 157a74b97776b2e311e012c21f7efd456ae8cb76
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:21:11 2019 +0530 
 -------------------------------------------------------------------------------- 
-[MRC 144.23.0.0] Adding B step MRC PO changes [MRC 142 to MRC 144] into LKFBranch
+Description: Integrate MRC 144.23.0.0
+Imapcted Platform: LKF
 
-Hsd-es-id: NA
-Tracker-link: NA
-Attestation-link: NA
+
 Original commit date: Mon Apr 22 20:43:08 2019 +0530
 Change-Id: I3dc1da9fc705c18b7b23b801406e03a31f1ab06d
 Original commit hash: 6d6161803077236ea21ef98b6e24d562d8380284
@@ -2191,15 +2134,8 @@ Commit: eecbd270ca134dd349c3e96aeb09a6dfd90ac38e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:20:58 2019 +0530 
 -------------------------------------------------------------------------------- 
-Fix klocwork issue for LakefieldPlatsamplepkg & LakeFieldFspPkg
-
-Problem: KW tool reported code related issues
-Solution: I have resolved the issues presence in PlatSample , Silicon,FSP & Client Common packages.
-
-Unit TestDone:
-checked OS boot status for
-1. SPI-FSP & EDK -Release &Debug
-2. BFX-FSP & EDK -Release &Debug
+Description: Fix klocwork issue 
+Impacted Platform: LKF
 
 Original commit date: Fri Apr 26 17:02:12 2019 +0530
 Change-Id: I709b0e75d76895c239d3c86f9b1d980321cd8102
@@ -2403,10 +2339,11 @@ Commit: 3f9b5472507fd128a7eeb22ed342648139e08048
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:20:36 2019 +0530 
 -------------------------------------------------------------------------------- 
-1. Resolve external build error caused by MRC B0 changes.
-2. Apply WA for forcing VDDQ to 0.6v only for A0/A1 silicon.
+Desription: 
+1: Resolve build issue.
+2: Apply WA for forcing VDDQ to 0.6v only.
+Impacted Platform: LKF
 
-Hsd-es-id: NA
 Original commit date: Fri Apr 26 07:41:02 2019 +0530
 Change-Id: Ia1c72e098485f33000038f7a494e4542966de17d
 Original commit hash: cd890747c86bef2ca0ca871e6a0a30da45f57206
@@ -2455,11 +2392,9 @@ Commit: 06d91afaadf3002034e7c701ca535590bb611455
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:20:29 2019 +0530 
 -------------------------------------------------------------------------------- 
-[MRC 141.22.0.0] Adding B step MRC PO changes [MRC 136 to MRC 141] into LKFBranch
+Description: Integrate MRC 141.22.0.0.
+Impacted Platform: LKF
 
-Hsd-es-id: NA
-Tracker-link: NA
-Attestation-link: NA
 Original commit date: Thu Apr 25 15:17:40 2019 +0530
 Change-Id: If34423c97ae8474d87ef0fe6bdbb481f793e9950
 Original commit hash: e937204962e06f70ddbb4502a05ca1853bde4193
@@ -3067,15 +3002,11 @@ Commit: a288f6dd24e0e8b263f5f7b651aaca73174f7f0b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 10 12:19:18 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF MRC RMT needs to not touch the CLK PI code, and shift all PI's by 128 for CMD
+Description: MRC RMT needs to not touch the CLK PI code, and shift all PI's by 128 for CMD
+Solution: Add latency, feature is disabled by default, where the CMD/CTRL pi would default to 0, not 128.
+  Will only run with 128 when this feature is enabled.
+Impacted Platform: LKF
 
-Unit Test done:
-Enabled the RMT option in setup and verified that FSP SPI 8gb 2133 (debug & release)
-Sucessfully Booted to OS.
-Restart & reset -w also working.
-
-Tracker-link: https://hsdes.intel.com/appstore/article/#/2206866305
-Attestation-link: IceLakePlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Tue Apr 16 14:20:00 2019 +0530
 Change-Id: Iddbf0d6040b4736c3f2fc9245f3d0ddf32afa3fc
 Original commit hash: 29204bb1e159c4de3b6b5644873ad2de271b6085
