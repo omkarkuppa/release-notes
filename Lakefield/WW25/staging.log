@@ -35,7 +35,7 @@ Commit: 3bcecd24092a70f6a9aacc4f18318a773d6d2387
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:40 2019 +0530 
 -------------------------------------------------------------------------------- 
-Revert "[LKF_A1 ES1][ISH]:RVP not booting to OS after disabling ISH driver in Device manager with 3193 BIOS"
+Revert "RVP not booting to OS after disabling ISH driver in Device manager with 3193 BIOS"
 
 This reverts commit f5b5f4c548f1eb2ddf0dab52ec92d0cb23d2d939.
 
@@ -184,13 +184,10 @@ Commit: b5232b07a497c932c6c961bcd79870727d66253d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:22 2019 +0530 
 -------------------------------------------------------------------------------- 
-[MRC 146.23.0.0] Removing hardcoding of SafeMode Enabling for Lkf B stepping
+Description: Removing hardcoding of SafeMode Enabling.
+Solution: SafeMode value can be changed by Setup Option.
+Impacted Platform: LKF
 
-After this commit SafeMode value can be changed by Setup Option.
-
-Hsd-es-id: NA
-Tracker-link: NA
-Attestation-link: akeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Wed May 29 15:54:24 2019 +0530
 Change-Id: I0658dfbd59868295c75b5853ec75f69e4ba6244b
 Original commit hash: 356dd7ae658b4a63c0d24b1951102e834cdf0818
@@ -307,14 +304,12 @@ Commit: b6d13f3d2df88ea8993c751c3f62a9496b20a94a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:09 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF_A1 ES1][ISH]:RVP not booting to OS after disabling ISH driver in Device manager with 3193 BIOS
-Issue :
+Description: RVP not booting to OS after disabling ISH driver in Device manager with 3193 BIOS.
  LID Value is closed default resulting in boot issues if ISH  driver is not present.
 Solution :
 1. Added default to open and later if ISH driver is present, it will update the LID state.
 2. Removed dependancy of ISH to cover the cases where driver is not present.
-Hsd-es-id: 1607283477
-Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
+Impacted Platform: LKF
 
 Original commit date: Wed May 29 08:24:49 2019 +0530
 Change-Id: I7b9e6d0a49df41e1b9076cc831182ccbfc0c25bc
@@ -428,16 +423,11 @@ Commit: dcfc8e40c1266edbb8efdda9afbeb7f25d0d118a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:45:54 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF B0] 4266 showing memory corruption when dynamic sense amp is enabled
-
-Change:
+Description: Memory corruption when dynamic sense amp is enabled
+Solution: 
 1)Added Force Rx SenseAmp setup option to set Forcexon bit to "one" in MrcSagvSwitch
 2)Force Rx SenseAmp Enabled by default
-
-Unit test done:
-1)Booted to shell -> verified Forcexon bit set to 1 for ddr freq 2133/3200/4267
-2)Enabled Sagv -> verified Forcexon bit set to 1 for 4267 freq
-3)Verified the boot to OS on QRVT(SPI),QS35(BFX)
+Impacted Platform: LKF
 
 Original commit date: Fri May 10 18:14:59 2019 +0530
 Change-Id: I2d22ad6256cde7f72ed4d7829bdd71e1a5fbebbe
@@ -519,12 +509,11 @@ Commit: 419423b5941dd7affd3822ffe5734099954c8b7f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:45:42 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF A1/B0: MCHECK failue due to IOAPIC size in BIOS is overlapped.
+Description: MCHECK failure due to IOAPIC size in BIOS is overlapped.
+Solution: IOAPIC size was considered as 4KB and based on that MCHBAR which got increased to 512KB in size assigned with 0xFEC80000.
+ It is causing overlapping with IOAPIC size 1MB.To avoid overlap, MCHBAR needs to be allocted to new address to 0xFEA80000.
+Impacted Platforn: LKF
 
-IOAPIC size was considered as 4KB based on LKF HAS and based on that MCHBAR which got increased to 512KB in size in LKF was assigned with 0xFEC80000. That is actually overlapping with IOAPIC size 1MB.
-To avoid this overlap, MCHBAR needs to be allocted to new address and that is derived to 0xFEA80000.
-
-Hsd-es-id: 1507195007
 Original commit date: Tue May 21 14:31:25 2019 +0530
 Change-Id: I0ec2b6724b34f90caad2c955cfe1d0718039440b
 Original commit hash: 78117b63185793d3b2bba71c12b915fd1ef8d21f
