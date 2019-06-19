@@ -18,7 +18,7 @@ Commit: 236c1043bb15aa69124f44bfe07158c05dc8768b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:42 2019 +0530 
 -------------------------------------------------------------------------------- 
-Revert "1607182912 [LKF ]  Reporting  LID status as Always Open to OS"
+Revert "Reporting  LID status as Always Open to OS"
 
 This reverts commit f02bee7a8589886db0b79dcf2ca04108d317b1a4.
 
@@ -55,8 +55,6 @@ Date: Mon Jun 17 16:46:37 2019 +0530
 -------------------------------------------------------------------------------- 
 Get battery status by direct PMIC register access in ME recovery boot
 
-Issue: In ME recovery boot ISH and EC-Lite services are not available and hence BIOS cannot get battery status using EC-Lite and fails to trigger Capsule Update.
-Solution: Check for VBAT ADC Result PMIC register (0x4f8a) for battery voltage and Charger Selection Register (0x5186) for charger presence in ME recovery mode and continue capsule update if battery level requirements are met
 Hsd-es-id: 1409178017
 Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
 Original commit date: Mon May 27 19:15:11 2019 +0530
@@ -82,7 +80,7 @@ Commit: 2493ae1d1b0870f6518fcbb64e29c49f6172e2b4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:34 2019 +0530 
 -------------------------------------------------------------------------------- 
-Revert "Revert "USB 3.0 Device mode in not working in Pre OS environment using Type C to USB 3.0 Cable""
+Revert "Revert "USB 3.0 Device mode doesn't work in Pre OS environment using Type C to USB 3.0 Cable""
 
 This reverts commit 5e1b87d388530985136c155721dc793733c546e5.
 
@@ -103,7 +101,7 @@ Commit: 750e684e6f44660d55cd39faad231b0eae696fbb
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:31 2019 +0530 
 -------------------------------------------------------------------------------- 
-Revert "USB 3.0 Device mode in not working in Pre OS environment using Type C to USB 3.0 Cable"
+Revert "USB 3.0 Device mode doesn't work in Pre OS environment using Type C to USB 3.0 Cable"
 
 This reverts commit 35fb5726bc726bed6839c3887236a9ec10da34d6.
 
@@ -140,11 +138,8 @@ Commit: 12e3cd869ffd3f0048d4b288f4fb123b8e732a70
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:26 2019 +0530 
 -------------------------------------------------------------------------------- 
-[BIOS]BIOS charging applet modification to handle intermittent VBUS drop
-Issue :
-LKF ECLite Typc policy manager(TCPM) implements "Error Recovery" mechanism(electronically disconnecting the CC and reconnecting) to restore the connection with the port partner, which has entered in to a wrong state. While recovery, there will be intermittent power loss. BIOS charging applet, detects it as no charger connected and initiates shutdown.
-Solution :
-The change request is for BIOS to wait for 2S to see the psrc loss before deciding to shutdown the platform.
+Fixed: BIOS charging applet modification to handle intermittent VBUS drop
+
 Hsd-es-id: 1607169668
 Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
 
@@ -161,7 +156,7 @@ Commit: c0c139927e472f10bd079bd28b6e9be041405f1c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:24 2019 +0530 
 -------------------------------------------------------------------------------- 
-Remove modPHY progrraming from PCIe NCC port init
+Remove modPHY programming from PCIe NCC port init
 
 Since LKF SoC doesn't have modPHY IP and DEKEL IP doesn't
 require any additional programming for NCC to work we need
@@ -202,16 +197,8 @@ Commit: 6276f917b6835e3ee0cd524f8e4b4e41d1994f8a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:20 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF UFS Boot CSE in Temporary Disable/Recovery Mode Support
-    Issue : System should boot to OS in Cse Recovery Mode.
-    Solution :
-    1. Added logic to detect CSE Recovery mode after Memory Init and set PCD if CSE recovery detected.
-    2. Added code to Read Security Variables using HECI1 and call once Variable Arch Protocol is available.
-    3. Skipped Trusted Channel HECI2 , Storage Proxy and relavant supported code.
-    4. Added logic in Variable driver to update Emulation mode upon Recovery detection.
-    5. Few Clean up in the files.
-
-    Impact : This change will make sure we boot to OS even if Recovery detected.
+Fixed : System doesn't to OS in Cse Recovery Mode.
+    
     Hsd-es-id: 2206771876
     Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
 
@@ -245,7 +232,7 @@ Commit: 0f7267a50ef67554e9ebf1a1045282347d18ba35
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:16 2019 +0530 
 -------------------------------------------------------------------------------- 
-Changing BIOS ID to 3223 for 19'WW22.3 BIOS label.
+Changing BIOS ID to 3223 
 
 Original commit date: Wed May 29 10:58:56 2019 +0530
 Change-Id: I1035c26f3bbb1367b74ac11610f8e7c568a8acd2
@@ -260,10 +247,7 @@ Commit: 638de04d1029a03de0491880f010d02b3224f915
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:14 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF B0 Ucode + Pcode + HTC debug patch release - 0x9c001000
-Major Fixes in Pcode 0x3
- - Fixes the FIL RDY issue in PKC exit
- - Enable HGS. The optimised HGS algorithm is added to this release
+Microcode Update
 
 Hsd-es-id: NA
 Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
@@ -280,10 +264,8 @@ Commit: 11ba3cef2a81f3a136be6c03e8f869d36f2f4747
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:12 2019 +0530 
 -------------------------------------------------------------------------------- 
-USB 3.0 Device mode in not working in Pre OS environment using Type C to USB 3.0 Cable
-Solution :
-1. Increased Timeout based on WDT.
-2. Add ZLP issue fixes.
+Fixed: USB 3.0 Device mode doesn't work in Pre OS environment using Type C to USB 3.0 Cable
+
 Hsd-es-id: 1607219407
 Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
 
@@ -304,13 +286,8 @@ Commit: b6d13f3d2df88ea8993c751c3f62a9496b20a94a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:09 2019 +0530 
 -------------------------------------------------------------------------------- 
-Description: RVP not booting to OS after disabling ISH driver in Device manager with 3193 BIOS.
- LID Value is closed default resulting in boot issues if ISH  driver is not present.
-Solution :
-1. Added default to open and later if ISH driver is present, it will update the LID state.
-2. Removed dependancy of ISH to cover the cases where driver is not present.
-Impacted Platform: LKF
-
+Fixed: RVP doesn't to OS after disabling ISH driver in Device manager with 3193 BIOS.
+ 
 Original commit date: Wed May 29 08:24:49 2019 +0530
 Change-Id: I7b9e6d0a49df41e1b9076cc831182ccbfc0c25bc
 Original commit hash: f5b5f4c548f1eb2ddf0dab52ec92d0cb23d2d939
@@ -341,21 +318,8 @@ Commit: da336f3e74cd38e5ca8a5fdb89cb43389fda1623
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:04 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Charging Applet is not working through power button
+Fixed: Charging Applet is not launch while power button press
 
-issue :
-System is not booting to charging applet, when we do S4/S5 through power button from OS.
-
-Root Cause:
-if we do S4/S5 through power button,then system will restart for booting to charging applet.
-on next boot, since power button is pressed we will consider, user pressed power so will boot to OS,
-instead of charging applet.
-
-Fix:
-Need to clear power button timer in SXCallback function.
-
-Testing:
-System is booting to Charging applet through power button.
 
 Hsd-es-id: https
 Original commit date: Tue May 21 11:09:41 2019 +0530
@@ -371,10 +335,7 @@ Commit: e582750de89d4dd437eab634e97aa8cf9bdd55bb
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:46:02 2019 +0530 
 -------------------------------------------------------------------------------- 
-Squelch direction programming for TC port - fix
-
-Override Squelch Direction for Squelch Propagation
-on Type C Controller (Controller 0)
+Fixed: Squelch direction programming for TC port
 
 Hsd-es-id: 2206868655
 Tracker-link: https://hsdes.intel.com/appstore/article/#/2206868655
@@ -394,17 +355,7 @@ Commit: c9088a70ecddfc6b4c9451f2ba1d503c40764a7d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:45:59 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF BIOS change request for Flash enabling of POR camera OV7251 on Link4
-
-Problem: Enable the flash for link4
-Solution: Enabled the flash by differentiating flash LED.
-Suppressed the Gpio parameters if flash mode is IR LED.
-
-Unit TestDone:
-1. Verified the setup for flash parameters for link4
-2. Checked OS boot status for
-   1. SPI-FSP   -Release &Debug
-   2. BFX-FSP   -Release &Debug
+Implemented: Flash enabling of OV7251 camera
 
 Original commit date: Wed May 15 16:25:57 2019 +0530
 Change-Id: I735ab25ccbfe81d815506beffc6c676eebcc33a5
@@ -483,15 +434,13 @@ Commit: ddc47123d3898747d22caf8ad39773aba9364a69
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:45:44 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF]- Fix the Build error for network build
+Fixed: Build error for network build
 
 Issue:
 Fv main size is not enough to build for both SPI and BFX
 
 Solution:
 Increased the FV main size based on the Free memory.
-
-Verfied the FSP SPI & BFX network Build, Bios built successfully.
 
 Hsd-es-id: NA
 Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
@@ -509,10 +458,8 @@ Commit: 419423b5941dd7affd3822ffe5734099954c8b7f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jun 17 16:45:42 2019 +0530 
 -------------------------------------------------------------------------------- 
-Description: MCHECK failure due to IOAPIC size in BIOS is overlapped.
-Solution: IOAPIC size was considered as 4KB and based on that MCHBAR which got increased to 512KB in size assigned with 0xFEC80000.
- It is causing overlapping with IOAPIC size 1MB.To avoid overlap, MCHBAR needs to be allocted to new address to 0xFEA80000.
-Impacted Platforn: LKF
+
+Fixed: MCHECK failure due to IOAPIC size in BIOS is overlapped.
 
 Original commit date: Tue May 21 14:31:25 2019 +0530
 Change-Id: I0ec2b6724b34f90caad2c955cfe1d0718039440b
@@ -529,7 +476,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Mon Jun 17 16:45:39 2019 +0530 
 -------------------------------------------------------------------------------- 
 
-Integrate LKF A0 MCU Patch 0x10
+Microcode Update
 
 Original commit date: Fri May 24 11:35:45 2019 +0530
 Change-Id: I5d105924e9b165e09a18a3c47690af4129266f5b
