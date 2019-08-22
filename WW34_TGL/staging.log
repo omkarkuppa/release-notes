@@ -8,12 +8,6 @@ ClientOneSiliconPkg/MemoryInit:[TGL][MRC] SpineGating settings
 McMiscSpineGating.EnableSpineGate must remain disabled in ddrioint but should be enabled for LP4 and LP5 post training before
 register save restore.
 
-Testing
-SV tested the minibios on Lp4 which passed
-DDR4 failed at RdMPR and we discovered that SpineGating should be enabled only for LP tech. Got confirmation from the phy team.
-Tested on MRC DDR4 platform with SAGV enabled and both Controllers enabled. Passes all the way through memtest
-
-Hsd-es-id: <2205463212>
 Original commit date: Wed Jul 31 17:31:57 2019 -0700
 Change-Id: Ic6f9a53112262d8cd0d559a735f5876115502d83
 Original commit hash: 19a6ba1ecd0142d42a8fb6eab43c41dd9e2d67e3
@@ -67,7 +61,6 @@ ClientOneSiliconPkg/MemoryInit/Tgl: Resolve MiniBIOS Memory Test Failure
 Resolved MiniBIOS memory test failure introduced by
 commit fc8c481978d3a5a0e810c785546846bd7467f3c8
 
-Hsd-es-id: 1607346379
 Original commit date: Fri Aug 2 18:29:37 2019 -0700
 Change-Id: I549a0d3bec3d85aabe3e45b2ae79d2064228e562
 Original commit hash: 6b0a7a388d85961473be8ef91472bb1a242a1729
@@ -133,19 +126,10 @@ Commit: 38adc45463bd48333bedb97e057e384c252964da
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:08:32 2019 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/SmmCpuFeatureLib: Enable 5 level paging when CPU supports
-
+Description: Enable 5 level paging when CPU supports
 UefiCpuPkg/PiSmmCpu driver by default enables 5 level paging when CPU
 supports.
-It doesn't cause problem to TGL platform because TGL CPU doesn't
-support 5-level paging. But ADL CPU supports 5-level paging, if
-SmmCpuFeatureLib doesn't set the CR4 BIT12 properly before using
-the 5-level page table created by PiSmmCpu driver, system hangs.
-
-The patch updates SmmCpuFeatureLib to set CR4 BIT12 when CPU
-supports 5-level paging.
-
-Hsd-es-id: 1607553182
+Solution: SmmCpuFeatureLib to set CR4 BIT12 when CPU supports 5-level paging.
 
 Original commit date: Wed Jul 31 17:41:32 2019 +0800
 Change-Id: Iec8a2fa7bed4b04cde1fb5619afce727e3c4021c
@@ -284,12 +268,11 @@ Commit: 80ead733e21793b37fa3d5efc3a0460b168c0aec
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:08:10 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL A0][TXT Enabling]SINIT flow with Internal Graphics enabled fails due to multiple reserved ranges in DMAR table programmed in BIOS
+SINIT flow with Internal Graphics enabled fails due to multiple reserved ranges in DMAR table programmed in BIOS
 
 DISM reserved region should be skipped if it is not a 2LM boot.
 Added API to detect 2LM boot and put a check for DISM reserved range.
 
-Hsd-es-id: 1409623066
 Original commit date: Fri Aug 2 15:30:23 2019 +0530
 Change-Id: Ia383f290cab490825faa95ee2ba44f3393007d44
 Original commit hash: ac4ef47593eb528a46995bef8ae23272818ac7b1
@@ -392,7 +375,6 @@ Resolved MRC GCC build failure introduced in commit
 
 Turned off Power Training in safe mode
 
-Hsd-es-id: 2208129902
 Original commit date: Fri Aug 2 10:03:27 2019 -0700
 Change-Id: I7a59fef195725722e079392f474f425dd88052dd
 Original commit hash: 28768101ad910dfb3f96bf9be1167f91e312de06
@@ -433,7 +415,6 @@ Disabled compilation of the following functions:
 - MrcTurnAroundTiming
 - ReadMprTraining
 
-Hsd-es-id: 1409132130
 Original commit date: Fri Aug 2 15:33:11 2019 -0700
 Change-Id: Ibc82e25f29a5292810cfc1705a277fdedd2a37cf
 Original commit hash: 13f1c6bc311d7190112e0e2be1404ad8fafde429
@@ -511,12 +492,8 @@ Commit: 830bcce223216358f7a748935d5d78abf700326e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:07:30 2019 -0700 
 -------------------------------------------------------------------------------- 
-[PCH][SA]PCIe convergence - create common IP block for Client CPU and PCH PCIe - take 1
-Create PreMem file and move all premem functions there as a first step.
-This is required since CpuPcie does the following configuration in premem and having a seperate file will be a cleaner solution.
-ClockReqMsg, LinkDownGpio Config, Dekel Programming and brings the link up in Gen1 in Premem.
-
-Hsd-es-id: 1607459865
+[PCH][SA]PCIe convergence - create common IP block for Client CPU and PCH PCIe 
+Create PreMem file and move all premem functions.This is required since CpuPcie does the following configuration in premem.
 
 Original commit date: Thu Jul 25 15:07:27 2019 +0530
 Change-Id: I66cedb914d3c57b2d07ed38d6b3939badab96708
@@ -557,7 +534,6 @@ Date: Mon Aug 19 12:07:26 2019 -0700
 -------------------------------------------------------------------------------- 
 Move GnaRegs.h from Include to IncludePrivate
 
-Hsd-es-id: 1607551867
 Original commit date: Wed Jul 31 11:42:13 2019 +0530
 Change-Id: I4d289f709e3c9c7986e931f6fc148b457fbb94ec
 Original commit hash: 8dbae491f3d29da4d19d7de436e8bfd6c356edc2
@@ -680,7 +656,6 @@ TigerLakePlatSamplePkg : IAFW should store the Crash Log records into separate G
 
 Create separate structure for Mainlog, Telemetry and Trace Cpu Crashlog
 
-Hsd-es-id: 2207392472
 Original commit date: Tue Jul 30 19:25:52 2019 +0800
 Change-Id: I862ac51e1c46ab671e74a661610e75bf8166541d
 Original commit hash: 6075f66055186e810102995bb8c97eba05880348
@@ -719,7 +694,6 @@ Date: Mon Aug 19 12:07:11 2019 -0700
 -------------------------------------------------------------------------------- 
 Move IGD Register header file from Fru\Include to Fru\IncludePrivate
 
-Hsd-es-id: 1607527881
 Original commit date: Sun Jul 28 14:22:56 2019 +0530
 Change-Id: I0fc4ade2e04ec1cd4e90b1be1af68d1202dfe346
 Original commit hash: 6cbf9aac4b19b219e2fa389b02cf3b561107257a
@@ -781,10 +755,8 @@ Commit: 555e5c579587a1926f8ba59d8366fd98cb4c1944
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:07:07 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL] Remove ICL specific settings from TGL code base for System Agent
-	- Take 2 : Remove the ICL and Z0 GOP
-
-Hsd-es-id: 2206761554
+Description: Code clean up for TGL code base.
+	
 Original commit date: Tue Jul 30 23:55:24 2019 +0530
 Change-Id: I288a458d88c5c2d0c516eb30310edbf5287d6702
 Original commit hash: 8e9965264da1957f7b7359dc71af2c90a576a6f4
@@ -837,17 +809,8 @@ Date: Mon Aug 19 12:07:02 2019 -0700
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: MRC - Power Training Cleanup
 
-Removed TGL_POWER_TRAINING tags that have been resolved
-Cleaned up the algorithms based on HAS reviews
-Added 2MC support
-Added Comp Optimization
-Verified on DDR4 1/2R
-Verified on LP4x 1/2R
-Verified on LP5  1R
-
 Change: Clean up Power Training Algorithms. Add Comp Optimization.
 
-Hsd-es-id: 1409132130
 Original commit date: Fri Jun 7 11:32:19 2019 -0700
 Change-Id: I3e4e275be547b7b9b81978800a58981c88440db9
 Original commit hash: 51f3477fd5a3b719dfa64d6df67fba28f1a53af9
@@ -1051,9 +1014,8 @@ Commit: 2870d61552325949e847ace4ce6e36165d63dfa7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:06:43 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL][C1S] Create a separate Ip Block to implement memory map related programming being done as part of SA.
+Description: Create a separate Ip Block to implement memory map related programming being done as part of SA.
 
-Hsd-es-id: 1607346379
 Original commit date: Tue Jun 11 10:27:33 2019 +0800
 Change-Id: Ib01cf7abb898f46162fb6a575b08a4dfa4da9124
 Original commit hash: fc8c481978d3a5a0e810c785546846bd7467f3c8
@@ -1087,13 +1049,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Mon Aug 19 12:06:37 2019 -0700 
 -------------------------------------------------------------------------------- 
 TigerLakePlatSamplePkg/PolicyUpdate headers: Clean up duplicated PolicyUpdate headers
-
-Clean up the duplicated policy update header files
-in TigerLakePlatSamplePkg\Include\Library\
-which are all present in
-TigerLakePlatSamplePkg\Library\PeiPolicyUpdateLib\
-
-Hsd-es-id: 1507331731
 
 Original commit date: Wed Jul 31 20:15:28 2019 +0800
 Change-Id: I11630dee3044a3072d0cdbe95890ced1ce214c46
@@ -1267,13 +1222,12 @@ Commit: 490c6100cd8e9f77790423a1d5efd3fce1b06b10
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:06:21 2019 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl:  [TGL][MRC] DG1 MRC - Sync with HSLE changes
+ClientOneSiliconPkg/MemoryInit/Tgl:  [TGL][MRC] DG1 MRC - Sync for TGL changes
 
 Changes:
 *Add a new define MRC_WAIT_TIMEOUT to replace inline values
 *Prevent redefiniation of MRC_DEBUG_PRINT and BITS
 
-Hsd-es-id: 1409530517
 Original commit date: Tue Jun 18 20:42:31 2019 -0700
 Change-Id: Ia0165f65056309f89e094caaabf42e5a869cedc9
 Original commit hash: a4d96b03d2823cef4a7b68f4f7c8d6fee97810e2
@@ -1343,9 +1297,8 @@ Commit: 4f29acc7a41fa2dcfc68658f96c3efd6f5041a71
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:06:09 2019 -0700 
 -------------------------------------------------------------------------------- 
-[2LM-PMEM] Move TwoLm Register header file to FRU IncludePrivate.
+Move TwoLm Register header file to FRU IncludePrivate.
 
-Hsd-es-id: 1409739337
 Original commit date: Tue Jul 30 11:30:17 2019 -0700
 Change-Id: Ia4a7d9c119cd7b9a62054e8a30b688231419b7c1
 Original commit hash: a32670a9b0862fa9ec16cb3aed7764bf2d9f70fe
@@ -1400,7 +1353,6 @@ ClientOneSiliconPkg/MemoryInit: [TGL][MRC] Minibios support for BomId support
 
 Minibios is currently not pulling in the BOM_ID of the platform, it's only pulling in the Board_ID.  BOM_ID support is needed to identify the LPDDR4 interposer on the DDR4 base board and pull in proper collateral for DQ/DQS.  The BOM_ID of the current LP4 interposer is 0x2 but there will be additional interposers coming.
 
-Hsd-es-id: <https
 Original commit date: Tue Jul 16 15:21:28 2019 -0700
 Change-Id: Ie28dc7b8717e40727f9fadb1f6a686a403e59fd0
 Original commit hash: 1aa2a98d50c418c0dfc5eb801572bbf2a08da008
@@ -1524,7 +1476,6 @@ DDR4 2R Fixes:
 - Revert Rcomp Down calculation for DDR4 2R systems
 - Revert PBD starting values for PBD disabled configurations
 
-Hsd-es-id: 2208091491
 Original commit date: Mon Jul 29 15:35:43 2019 -0700
 Change-Id: I4ce756214539f124196001e29fdebb98fd09483c
 Original commit hash: 5ab0c62de3335a498cc5686d8d31b578d920d751
@@ -1655,7 +1606,6 @@ Date: Mon Aug 19 12:05:43 2019 -0700
 -------------------------------------------------------------------------------- 
 HWP is still enabled when disabling it in BIOS setup
 
-Hsd-es-id: 1807919158
 Original commit date: Mon Jul 29 16:55:47 2019 +0530
 Change-Id: Iba7ec1db378fe0b8ba91baa7e36fe47dc54a7f88
 Original commit hash: d94fa80a3893e46206eaa723119fd153b271bca2
@@ -1707,7 +1657,6 @@ Date: Mon Aug 19 12:05:35 2019 -0700
 -------------------------------------------------------------------------------- 
 [TGL] Program TSCU Frequency of TraceHub upon xtal.
 
-Hsd-es-id:2207938614
 Original commit date: Tue Jul 9 17:11:24 2019 +0800
 Change-Id: Ic5b524eace5223009c48a7dcd32c285f2ffa2be8
 Original commit hash: a73a0352bd708569f2e076943498d026c071815e
@@ -1729,7 +1678,6 @@ Changes:
 *Added the BDAT support in MiniBIOS
 *Connected DG1 settings to MRC CMOS functions
 
-Hsd-es-id: 1409530517
 Original commit date: Tue Jul 23 00:12:00 2019 -0700
 Change-Id: Iec1a6f5f02fa4adf9aaa8954eb980dad22233f75
 Original commit hash: f31a6dbedbde5d2b7fc84e3f0bb00f31446ad306
@@ -1786,7 +1734,6 @@ Per DV:
 3. Correct the Pbiascalibration formula
 4. Sideclkpulse needs to be set to 7 before firstcomp. After Scomp is calculated, sideclkpulse is calculated based on Scomp code.
 
-Hsd-es-id: 2207621700
 Original commit date: Thu Jul 25 10:09:13 2019 -0700
 Change-Id: Id587b2c9e94548c9fb6251e5abbdc8ede0f66990
 Original commit hash: 8ca75c7597eca969a1f6429ce103bec0771bf179
@@ -1824,11 +1771,6 @@ We used to set BlockTrainReset to False at the beginning of ECT and set it to Tr
 because its only required for Clk training to sync the CA Pi with PiSyncDivider. But both Lp4 and Lp5 do not do Clk training
 during ECT. Somehow BlockTrainReset must be set to False for LP4 G1 training. G2 works fine.
 
-Testing
-LP4 2133 G2 PASS
-LP4 2933 G1 TGL Y PASS ECT but Wr1D fails. EV team has confirmed that Wr1D failure is unrelated to this change. Wr1D failed for 2933 even for a old MRC version 3_0_14
-
-Hsd-es-id: <2208035856,2208091596>
 Original commit date: Wed Jul 24 11:57:14 2019 -0700
 Change-Id: Iae8ca005d2f15d3f6e28397e995802856622a4c1
 Original commit hash: c61789964ff75847d9e12f09d8875db59277e3b2
@@ -1842,11 +1784,10 @@ Commit: ab5c7f68b0d0a0522680947645a46bc712279dbc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:05:20 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL-U A0]VMD exposes 3 undocumented IO BARs to software during PCI enumeration
+VMD exposes 3 undocumented IO BARs to software during PCI enumeration.
 
-Added CPU Stepping check for IO BAR WA to enable only for CPU A-Steppings since HW fix is approved for B0 and SP0 CPU steppings.
+Added CPU Stepping check for IO BAR WA to enable only for specific CPU Stepping.
 
-Hsd-es-id: 1409604640
 Original commit date: Wed Jul 24 17:08:09 2019 -0700
 Change-Id: I5748dedf9a145f498e01756630d922f20df8a7ca
 Original commit hash: d74a4b283203f259c3c42849d72e9a607cb91a40
@@ -1931,7 +1872,6 @@ Issue:
 Change:
   Set DriftLimit for Global and Local to 0.
 
-Hsd-es-id: 2208047247
 Original commit date: Tue Jul 23 13:59:39 2019 -0700
 Change-Id: I25f76f0e741db5630f50416e2dc5840ff8fba1a5
 Original commit hash: a61ef38c15d23175dd6f6692c3ca15245b6199b2
@@ -1963,9 +1903,8 @@ Commit: c09b089bb735fa2bddb153cdb53774a74a0f8fa9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:05:05 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL] Remove ICL specific settings from TGL code base for System Agent
+Description: Code cleanup of TGL code base for System Agent
 
-Hsd-es-id: 2206761554
 Original commit date: Tue Jul 16 18:31:44 2019 +0530
 Change-Id: Id20f3f929663640378f48dbbdab6f1afdf12431b
 Original commit hash: 11b8a3f72dc83bd1af7f8f46aebcb362d5660d4d
@@ -2008,12 +1947,8 @@ Commit: d9056888b9298e3f4799fa66592bc683096212be
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:05:00 2019 -0700 
 -------------------------------------------------------------------------------- 
-Improve error checking in BIOS Guard
-
 Improve error checking in BIOS Guard and Spi Flash Common files.
-Fix of original check in.
 
-Hsd-es-id: 1409273169
 Original commit date: Wed Jun 5 07:55:02 2019 -0700
 Change-Id: Ib46e2153c64bff529b6c40f4192bc7df349ff5ba
 Original commit hash: 9057ea5966fc1bfc64bd0437cbc29a674e6bf3bb
@@ -2050,11 +1985,8 @@ Commit: 06cc04a7bce2f77db9adb1c8669ab6e0699388a2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:04:54 2019 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: [TGL][IOTG] Fix MSR writing exception error when there is an invalid ACM binary
+Fix MSR writing exception error when there is an invalid ACM binary
 
-[TGL][IOTG] Fix MSR writing exception error when there is an invalid ACM binary
-
-Hsd-es-id: 1507333000
 Original commit date: Sun Jul 28 23:36:44 2019 +0800
 Change-Id: I6aab7832012d83220edfa2df584c8d742e228330
 Original commit hash: 3568362cf11279b60a469a2a302d6d43b8a2f45c
@@ -2125,18 +2057,9 @@ Commit: ecc243f51df9409e47a718dfcccc576ea8e4b7b6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:00:27 2019 -0700 
 -------------------------------------------------------------------------------- 
-TGL [TGL-PCH] New TGL Platform VR POR file WW2719
+Description: TGL Platform VR.
+Solution: Updated PL4 override for TGL
 
-Changes:
-TGL-U 28W VCCIN IccMax Perf. updated from 71A to 65A
-TGL-U 28W  VCCIN TDC Performance updated from 48A to 43A
-TGL-Y 9W PL2 Performance changed from 50W to 40W
-TGL-Y 9W PL4 Performance changed from 86W to 83W
-TGL-U 28W PL2 Performance changed from 88W to 64W.
-TGL-U 28W PL4 Performance changed from 133W to 121W
-TGL-U CTDP 15W PL2 Performance changed from 64W to 60W
-
-Hsd-es-id: 1409637371
 Original commit date: Thu Jul 18 11:27:09 2019 -0700
 Change-Id: I1a1858818719908a547e7d4e029a85238e029308
 Original commit hash: cd3771efae409b9a00a9de20a4f1c362c6c7f2da
@@ -2208,13 +2131,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Mon Aug 19 11:59:59 2019 -0700 
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/MemoryInit: [TGL][MRC] Fix ASCII build
-
-previous uCode check in was submitted with the wrong end of line (LR insted of CRLR) causing the ASCII buid to fail.
-
-Change:
-	update the correc EOL in ucode file
-
-Hsd-es-id: N/A
+Solution: Update the correc EOL in ucode file
 
 Original commit date: Mon Jul 29 11:30:36 2019 -0700
 Change-Id: If941aee77ff216eb4bb590cc158860cfac9ed3c5
@@ -2248,7 +2165,6 @@ ClientOneSiliconPkg/MemoryInit/Tgl: Update ucode patch in minibios
 
 Update the ucode patch in minibios collateral from 0x8 to latest (0x20)
 
-Hsd-es-id: 1409709769
 Original commit date: Wed Jul 24 09:59:37 2019 +0800
 Change-Id: Ia51f4da67b5e3e569f7165ead441c9269b6a2050
 Original commit hash: 2c8b0631124fcbf81f41a3c56734221530fb8f55
@@ -2277,11 +2193,11 @@ Commit: 90082af984eb7fbead0f7fbac79596cd2a62ad46
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 11:59:53 2019 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaInitLib: Adding Hybrid graphics pcd to the inf list
+Description: Adding Hybrid graphics pcd to the inf list
 
-Missing HgEnable pcd in inf file was causing the skip of HybridGraphic init in PEI phase. That led to missing HG HOB and skipping the Hybrid Graphichs init in DXE phase.
+Missing HgEnable pcd in inf file was causing the skip of HybridGraphic init in PEI phase.
+That led to missing HG HOB and skipping the Hybrid Graphichs init in DXE phase.
 
-Hsd-es-id: 1409512492
 Original commit date: Thu Jul 25 16:16:02 2019 -0700
 Change-Id: I9f6cad5d6050a3dfe3f3fdf27d8cad01bfcfbe3a
 Original commit hash: 55cb7bf7cf2c6bc5445d08e1e58bc02f9b55287a
@@ -2333,7 +2249,6 @@ Move Display GPIO Programming from Post-Mem to Pre-Mem phase
 
 To avoid any timing issue for any eDP/MIPI during PEI Gfx phase, its better to program Display GPIOs in Pre-Mem phase.
 
-Hsd-es-id: 1607514480
 Original commit date: Fri Jul 26 10:52:51 2019 +0530
 Change-Id: I77119f4b55071cbb845b64aee97a97b1db6cc4d6
 Original commit hash: 9d4f2d8068b80c66c1691f70bdf1142c8d42263c
@@ -2369,11 +2284,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Mon Aug 19 11:59:48 2019 -0700 
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/MemoryInit: [TGL][MRC][U/Y] Warm Resets turn into Fast Boots
-
-Implementation ported from ICL
 New fucntion MrcWmRegSetBits created to set scratchpad register.
-
-Hsd-es-id: 1409671939
 
 Original commit date: Thu Jul 18 12:58:29 2019 -0700
 Change-Id: Ieb61d3d032c871d3008858685ab8a3180b0d4e7e
@@ -2443,9 +2354,8 @@ Commit: 64c224fd824fd96f891410fc5e92463d22afcf13
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 11:59:38 2019 -0700 
 -------------------------------------------------------------------------------- 
-move SaRegsHostBridge.h to respective FRU folders
+Move SaRegsHostBridge.h to respective FRU folders
 
-Hsd-es-id: 1607510066
 Original commit date: Thu Jul 25 10:37:43 2019 +0530
 Change-Id: Id21f0acf92f6668dbe3377c24d8cdf5761df53e6
 Original commit hash: 76eb79b0146fa8ab48ebb49b64d668680e6ed521
@@ -2715,11 +2625,9 @@ Commit: e74392da5da56e0d7a3e1760ed19ffdd884f0c8f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 11:58:57 2019 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/Cpu: Fix C-state latency values for ACPI tables
+Description: Fix C-state latency values for ACPI tables
+Solution: Update with correct Latency values.
 
-Latency values were wrongly declared as hexadecimal for actual decimal values
-
-Hsd-es-id: 2207992925
 Original commit date: Fri Jul 19 15:56:18 2019 -0700
 Change-Id: Ifcef783da19f732bb60ea078e137f36d2d5c0a18
 Original commit hash: 66bd47338250d8a53722a52a1bb812721e6fd7a2
@@ -2734,8 +2642,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Mon Aug 19 11:58:42 2019 -0700 
 -------------------------------------------------------------------------------- 
 [TGL][PEG] Change the naming of some setup options for CPU PCIe
-
-Hsd-es-id:1607438944
 
 Original commit date: Sat Jul 13 17:03:33 2019 +0530
 Change-Id: Ie82eeadc191a43e76a6036d910594ad7cbad4897
@@ -2765,8 +2671,6 @@ Date: Mon Aug 19 11:58:34 2019 -0700
 
 PCIe Controller sends DLFE with bit-0 (Scale Flow Control) cleared. Per spec, the feature must be supported for Ports supporting 16GT/s or higher speed.
 
-Hsd-es-id:2208027914
-
 Original commit date: Fri Jul 19 09:29:53 2019 +0530
 Change-Id: I6689cfa329fc0645379da35302bd6146a5c9a8f0
 Original commit hash: f8d1bf2129d9f2558ed6af4cde3630879a9e31d8
@@ -2784,7 +2688,6 @@ Date: Mon Aug 19 11:58:31 2019 -0700
 -------------------------------------------------------------------------------- 
 SUT is getting hang at postcode 9C71 when Intel(R) Turbo Boost Max Technology 3.0 is Disabled
 
-Hsd-es-id: 1607477328
 Original commit date: Wed Jul 24 14:00:11 2019 +0530
 Change-Id: Ic5703aa32d26196c490e2774d30dbab09ea0397a
 Original commit hash: f33527cc593c192b6750e732a501242f0bc2caae
@@ -2854,7 +2757,6 @@ TigerLakeBoardPkg:[TGL] EDK201905 sync-up to consume PcdFspModeSelection.
 
 Switch to PcdFspModeSelection and clean PcdFspApiModeEnable.
 
-Hsd-es-id: 1507320446
 Original commit date: Fri Jun 28 10:44:18 2019 +0800
 Change-Id: Ieb24e5b27d6bf1d80320b4812cae23fbd333e014
 Original commit hash: 2ecf262b2cb706acc1b51ac28293fcad5d0af98f
@@ -3010,7 +2912,6 @@ ClientOneSiliconPkg/MemoryInit/Tgl: [TGL-A0] TGL Y LPDDR4: DDR4 Latest BIOS NOT 
 Resolved bug in MrcRestoreTrainingSaGv where a missmatch between the
 Save and Restore flow resulted in LPDDR4 Fast Boot failuress.
 
-Hsd-es-id: 1409712320
 Original commit date: Wed Jul 24 14:00:32 2019 -0700
 Change-Id: I2f9c19b7e3a7f1095f9f2039eab7aae1bcb5de54
 Original commit hash: 8c121bde89943dd4aa8f071ede4c327fcd4081ef
@@ -3089,11 +2990,7 @@ Commit: b1c9b170156d682951a54910cb4dc7093596753b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 11:57:44 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL] [PCIE] Need to program the registers as per the BWG
-
-there are some of the CPU PCIe registers which are not programmed according to BWG. That got captured through the BIOS checker script.
-
-Hsd-es-id:1607458250
+[TGL] [PCIE] Need to program the CPU PCIE registers as per the BWG
 
 Original commit date: Wed Jul 17 14:37:25 2019 +0530
 Change-Id: Ia16e5c152354ea22b1aaecd3e33dbc2702c66f42
@@ -3262,11 +3159,10 @@ Commit: 08d7a940a0dbb9c43c9517652f5a8dcbdf944ee4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 11:57:22 2019 -0700 
 -------------------------------------------------------------------------------- 
-Title: [1507186560] DP resource lock down - SW ability to release a DP resource (AKA Empty dongle support)
+Description: DP resource lock down - SW ability to release a DP resource (AKA Empty dongle support)
 
-Resolution:  Need to sync up implemented ICL code change to TGL. For SW ability to release a DP resource.
+Resolution: Need to sync up implemented ICL code change to TGL. For SW ability to release a DP resource.
 
-Hsd-es-id: 1507186560
 Original commit date: Mon Jun 17 14:29:17 2019 +0800
 Change-Id: I745f3b6fd7db5ac45328e0e0366d00ea31940fb0
 Original commit hash: 6193f25800d071212a91c21e0c01212a7ffec722
@@ -3354,8 +3250,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Mon Aug 19 11:57:10 2019 -0700 
 -------------------------------------------------------------------------------- 
 TGL: Request for BIOS setup options
-
-Hsd-es-id: 1409506382
 
 Original commit date: Tue Jun 18 11:46:08 2019 +0530
 Change-Id: Ic1ab765cfdc706d4475d8d43865126136e08e333
@@ -3576,8 +3470,6 @@ Dekel recipe needs to be intercepted in the BIOS next release-Phase2
 
 Since there was a gap in the dekel recipe file, DEKEL team has provided updated recipe which has more registers to program for DEKEL phy.
 
-Hsd-es-id: 1607451309
-
 Original commit date: Fri Jul 19 18:01:34 2019 +0530
 Change-Id: I2b41db7a93a8511c0bbef74556ea9c48ae3cc814
 Original commit hash: 9521eef9e4f6a5090c3453c48911600bebc1e37d
@@ -3599,7 +3491,6 @@ ClientOneSiliconPkg/MemoryInit/Tgl: TGL Y minibios needs mrcoemplatform.c and Pl
 - Align to full BIOS implementation from:
   Intel\TigerLakeBoardPkg\TigerLakeYBoards\Library\BoardInitLib\Pei\BoardSaInitPreMemLib.c
 
-Hsd-es-id: 1409566460
 Original commit date: Thu Jul 18 14:03:33 2019 -0700
 Change-Id: I553a3223c285563852eebd4644795f4e8f442fa9
 Original commit hash: 2e4afba51caa08088953bbb5ffdf27700fddfc9e
@@ -3613,11 +3504,8 @@ Commit: e11af7e2df82ffc182b322735e83e144ac3b222c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 11:56:18 2019 -0700 
 -------------------------------------------------------------------------------- 
-Intel GNA Controller error in Intel PEP Checker tool - constraint required
-
-Add GNA controller PEP constraint and enaable it by default.
-
-Hsd-es-id: 2207721634
+Description: Intel GNA Controller error in Intel PEP Checker tool - constraint required
+Solution: Add GNA controller PEP constraint and enaable it by default.
 
 Original commit date: Wed Jul 3 17:08:06 2019 +0800
 Change-Id: I79f0ef041d133269068a4286b408bd17f295a5d0
@@ -3672,7 +3560,6 @@ ClientOneSiliconPkg/MemoryInit/Tgl: [TGL-A0] TGL-U42 DDR4 /TGL Y LPDDR4: DDR4 La
 
 Resolved bug in MrcCalcMaxVrefMargin which causes RMT to hang.
 
-Hsd-es-id: 1409706005
 Original commit date: Tue Jul 23 11:47:00 2019 -0700
 Change-Id: Ib5375bc70eb2eebe5326228ea4f6e71e881da0cd
 Original commit hash: df9a93f5858310ec03ea67fa4850e76569ffed36
@@ -3723,10 +3610,9 @@ Commit: b1db6feb6909dd6fc0a2b3eced1bef57d29d4988
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 11:55:55 2019 -0700 
 -------------------------------------------------------------------------------- 
-ADL: SMM Enable, Delayed, Blocked MSR's been changed from Bitvectors to Counters
-- BIOS needs to remove support for HaswellLogProcEnBit in SMM SYNC Feature. ucode will update the counter in SMM MSR's(Blocked, Delayed and Enable)
+Description: SMM Enable, Delayed, Blocked MSR's been changed from Bitvectors to Counters
+Solution: Microcode will update the counter in SMM MSR's(Blocked, Delayed and Enable)
 
-Hsd-es-id: 1607278867
 Original commit date: Fri Jul 19 12:35:46 2019 +0530
 Change-Id: Ie440d7f81005b95f543ed909005bdef8142eb6c5
 Original commit hash: 08a003fc71a82cc1e61209855df6c8f1dd40f278
@@ -3769,9 +3655,8 @@ Commit: 4507aa6009f563f49990a94e11a6809b9539ef7e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 11:55:48 2019 -0700 
 -------------------------------------------------------------------------------- 
-Create BASE Lib for Graphics Ip block
+Create BASE Lib for Graphics block
 
-Hsd-es-id: 1607453161
 Original commit date: Sat Jul 13 23:00:48 2019 +0530
 Change-Id: I71493fda8f31db7ebc7d09db978722c9543f629f
 Original commit hash: 0530a7fa3d1006dccb4d4ec765a7dfe551c89627
@@ -3858,11 +3743,10 @@ Commit: a05e4997cbbe82a80102861357f2e099703aaa85
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 11:55:38 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL-A0] [PCIE] Hot-Plug Enabled with No Device fails to load Dekel FW BIOS Assert
+Description: Hot-Plug Enabled with No Device fails to load Dekel FW BIOS Assert
 
-When Hot-plug is enabled but no device is connected then DEKEL will not load and so it will return the FW download status to unsupported. So need to execute that flow only in case device is detected
-
-Hsd-es-id: 2207924431
+When Hot-plug is enabled but no device is connected then DEKEL will not load and so it will return the FW download status to unsupported.
+Execute the flow only when device is detected.
 
 Original commit date: Fri Jul 12 16:34:13 2019 +0530
 Change-Id: Iacd8ddad0042f91c7b690aed06564aa08ba0126c
@@ -3983,10 +3867,6 @@ ClientOneSiliconPkg/MemoryInit: [TGL][MRC] Read Spd from smbus for memory down
 Minibios currently always run EnableMemoryDown() which hard codes Spd information from the SPD table mLpddr4Ddp16Gb200b1r4267Spd defined in MrcOemPlatform.c.
 However for memory down configuration, spd should be read from the smbus. Therefore EnableMemoryDown should be run if MemoryDownSupport is set and Spd is not present.
 
-Testing
-SV has tested this fix and it works on LP4 board
-
-Hsd-es-id: <2207776649>
 Original commit date: Thu Jul 18 16:16:44 2019 -0700
 Change-Id: Ic4139af84797f45739fdf6aaaa10393e858fa870
 Original commit hash: f708679ae3b3e6eb608c6a32b0140ff76223d7fb
@@ -4043,11 +3923,7 @@ ClientOneSiliconPkg/MemoryInit/Tgl: Add support for  DIMM Vref changes in Deskto
 - Split MrcSaveRestore tables to prevent writing to
   registers that do no exist on the run-time architecture
   (TGL-U\Y vs TGL-h).
-- Added workaround for Simics bug that causes MrcNormalMode
-  function to hang:
-  https://hsdes.intel.com/appstore/article/#/2207961965
 
-Hsd-es-id: 2207692391
 Original commit date: Tue Jul 9 16:02:29 2019 -0700
 Change-Id: Ic8c00db7ad7c4b47211bfe1915efe11b26fc2f8a
 Original commit hash: 2e5b2602533bda05f80604b0ce31695e1f137dd7
@@ -4119,7 +3995,6 @@ Fixed initial TX DQ/DQS PBD placement:
   Original code placed them in the middle of their range, but TxDQS has less range than TxDQ.
   TxDqBitPi uses the same value as TxDQS to keep a matched delay in both paths.
 
-Hsd-es-id: 2207756005, 2207801147
 Original commit date: Fri Jun 28 17:43:36 2019 +0800
 Change-Id: I13f40c246419621da530b6c07b48381e0913aaa6
 Original commit hash: 3e4d51caa206ba705215da81d0bc2c42bf067d04
