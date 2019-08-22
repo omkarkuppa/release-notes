@@ -214,7 +214,7 @@ Commit: a043ad949dab0276aad34e4c6602c1550b4ca0fa
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:08:19 2019 -0700 
 -------------------------------------------------------------------------------- 
-Mitigation to unblock internal validation when use 3rd party IOMMU un-compliant devices
+Unblock validation when use 3rd party IOMMU un-compliant devices
 
 Add exception list and one option for IOMMU.
 
@@ -671,7 +671,7 @@ Date: Mon Aug 19 12:07:13 2019 -0700
 -------------------------------------------------------------------------------- 
 [TGL]TGL PM: EC doesnt get notification from BIOS on Low Power Mode
 
-Removed useless code to send EC command.
+Clean code bening send EC command.
 
 Hsd-es-id: 1409514687
 Original commit date: Mon Jul 29 11:44:52 2019 +0800
@@ -846,7 +846,7 @@ Commit: 130c02d1a358e97dad177c634c9c7edacff90162
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:06:54 2019 -0700 
 -------------------------------------------------------------------------------- 
-[PCH] BIOS Workaround required to avoid PCIe PTM bug preventing S0ix
+[PCH] BIOS Workaround required for PCIe PTM preventing S0ix
 
 Hsd-es-id: 1409192347
 
@@ -1775,7 +1775,7 @@ Commit: ab5c7f68b0d0a0522680947645a46bc712279dbc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 19 12:05:20 2019 -0700 
 -------------------------------------------------------------------------------- 
-[CPU][TGL-U A0]VMD exposes 3 undocumented IO BARs to software during PCI enumeration
+[CPU][TGL-U A0]Clean IO BARs during PCI enumeration
 
 Added CPU Stepping check for IO BAR WA to enable only for CPU A-Steppings.
 
@@ -1858,7 +1858,7 @@ Date: Mon Aug 19 12:05:12 2019 -0700
 ClientOneSiliconPkg/MemoryInit/Tgl:[TGL-A0][MEM][MRC] Lp4x 4267 g2 No longer passing Read Mpr with Mrc 3.0.11 and above
 
 Issue:
-  When implementing the DDRIO HAS formula for global drift programming, LPDDR4 begins to fail above 3200.  Design reviewed the code and found it to be correct but could not explain why the HW was failing.  Until design comes back and provides an update, we will revert the value back to the previous bios (0) which was passing as a Workaround.
+  When implementing the DDRIO HAS formula for global drift programming, LPDDR4 begins to fail above 3200.  Revert to workaround that was passing till issue is debuged.
 
 Change:
   Set DriftLimit for Global and Local to 0.
@@ -3270,12 +3270,7 @@ Date: Mon Aug 19 11:57:07 2019 -0700
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/Testmenu: BIOS Changes for disabling MSBDD
 Issue: This options is to disable Internal Graphics device so that OEMx basic display driver (MSBDD) does not gets enabled.
-This is required by internal validation team to enable headless mode as Win10 RS5 beyond MSBDD is enabled by default.
 
-Solution:
-1. Added setup option inside the Test menu to handle below things.
-2. Skipped SetBIOSDone from Bios flow
-3. Clear bit4 of PCI reg( 0,0,0) offset 0x54 after PCI enumeration is complete.
 
 Hsd-es-id: https://hsdes.intel.com/resource/1607102742
 Original commit date: Wed Jul 10 09:40:08 2019 +0530
