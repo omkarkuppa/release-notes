@@ -88,22 +88,11 @@ Commit: f58e6bb0ea3acd0cbd0764f481d46d185f3b116c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-08-28 13:52:59 -0700 
 -------------------------------------------------------------------------------- 
-ClientCommonPkg/Override: Second Addendum to SecurityPkg for RPCO-0095
+ClientCommonPkg/Override: Update o SecurityPkg 
 
-While porting the Tpm2GetIdleByPass () into the current ICL Tpm2Ptp.c override a
-bug was introduced, which made the function always return the value 0,
-regardless of the feedback from the TPM HW.
-
-The latest implementation of Tpm2Ptp.c is using an updated version of the
-industry standards. The PTP_CRB_INTERFACE_IDENTIFIER structure now defines one
-of the previously reserved bits for reporting this
-capability: (CapCRBIdleBypass: BIT-9).
-
-Since such definition is not currently available in the Icelake definitions, the
-value was read directly from the structure as an UINT32 variable, masked with
-BIT-9 and finally cast to the return type UINT8. Unlike the result from reading
-the bitfield, casting the entire UINT32 value will only preserve the lower 8
-bits, thus always returning 0.
+The implementation of Tpm2Ptp.c is updated to use industry standards. 
+The PTP_CRB_INTERFACE_IDENTIFIER structure now defines is Tpm2GetIdleByPass ()
+(CapCRBIdleBypass: BIT-9).
 
 Hsd-es-id: 1607633893
 Original commit date: 2019-08-21 20:12:28 -0700
@@ -180,9 +169,9 @@ Commit: 035b03525f6f7438fc86b6b345909424971d62bd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-08-28 13:52:52 -0700 
 -------------------------------------------------------------------------------- 
-ICL_security[ICL_UN/YN] : System is on shutdown mode while running shutdown /r command and (pressing ESC) with opal password
+System is on shutdown mode while running shutdown /r command and (pressing ESC) with opal password
 
-Added additional power pin pull low to make the behavior of M.2 device on ICL-YN/UN in sync with ICL-Y/U after system reset
+Added additional power pin pull low to make the behavior of M.2 device on  all ICL SKUS after system reset
 
 Hsd-es-id: 1607485397
 Original commit date: 2019-08-20 14:07:58 +0800
@@ -378,9 +367,9 @@ Commit: 39147b400af1390f1e14ff13de03cff90dd9f3cb
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-08-28 13:52:38 -0700 
 -------------------------------------------------------------------------------- 
-ICL UN: Enable External Bypass VR by default
+Enable External Bypass VR by default on some SKU
 
-Enable external VR Rails for all S0ix/Sx states by default for ICL-UN
+Enable external VR Rails for all S0ix/Sx states by default for some SKUS
 
 Hsd-es-id: 1409699424
 Original commit date: 2019-08-16 10:51:39 -0700
@@ -559,7 +548,7 @@ Date: 2019-08-28 13:52:26 -0700
 -------------------------------------------------------------------------------- 
 [ICL][MRC][2208073021] Memory Training Fails in 32GB SKU (low RdT/RdV margins)
 Issue:
-  Customer board fails on Ch1 Byte5 in Early Read Timing Centering 2D due to low RdT / RdV margins.
+  Some board may fail on Ch1 Byte5 in Early Read Timing Centering 2D due to low RdT / RdV margins.
 Solution:
   Set the MinRequired Eye width to 1 in GetMinRequiredEyeWidth for EarlyCentering.
 
@@ -765,7 +754,7 @@ Commit: f11bb854added221f18389ecd84fb287e1f55342
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-08-28 13:52:10 -0700 
 -------------------------------------------------------------------------------- 
-Title: [1607614934] IFWI ICL_U/Y_D1D0 : PROD : World Facing/ primary Camera is not working with the latest IFWI
+Title: [1607614934] IFWI ICL_U/Y_D1D0 : PROD : World Facing/ primary Camera is not working with the latest IFWI image on RVP
 
 Resolution:  Revert Commit ID: 2f1854b565e495d2ece2d4926ef3633bf104fa7a
              It will cause primary camera issue.
@@ -897,17 +886,11 @@ Commit: 2e41211fa3616c550c4751bfa5751034938bb7e7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-08-28 13:52:00 -0700 
 -------------------------------------------------------------------------------- 
-ClientCommonPkg/Override: Addendum to SecurityPkg for RPCO-0095
+ClientCommonPkg/Override: Change to SecurityPkg 
 
 The dynamic PCD PcdCRBIdleByPass defaults to 0xFF at build time, and it should
 be synced with TPM hardware capabilities at runtime. The current ICL override is
 missing the functions to properly read and sync the CrbIdleBypass capability.
-
-When such capability is reported by the TPM hardware, BIOS should directly
-transition from CMD completion to CMD ready state. Due to this misconfiguration
-when the TPM hardware does report CrbIdleBypass capability, BIOS is still
-polling for the PTP_CRB_CONTROL_AREA_STATUS_TPM_IDLE bit when it should not,
-causing random timeouts.
 
 Ported the missing functions from EDK Tpm2DeviceLib.
 
@@ -1280,8 +1263,7 @@ Date: 2019-08-28 13:51:36 -0700
 -------------------------------------------------------------------------------- 
 Potential BIOS Guard bypass via CpuSetup variable
 
-Move BiosGuard setup option form CpuSetup to SetupData scope
-Set BiosGuard  setup option as Restricted
+Remove BiosGuard setup option form CpuSetup
 
 Hsd-es-id: 1409272845
 Original commit date: 2019-07-30 22:11:42 -0700
@@ -1422,7 +1404,7 @@ Commit: 957ede13ee13448e460d345637763ae90a82a73e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-08-28 13:51:26 -0700 
 -------------------------------------------------------------------------------- 
-[ICL-U42-D1][Y42 D2 Pre production][19H1][Audio][SNDW]Microphone Array is not enumerating in Recording devices under Sound option after fresh OS Installation.
+[ICL-U42][Y42 Pre production][19H1][Audio][SNDW]Microphone Array is not enumerating in Recording devices under Sound option after fresh OS Installation.
 
 Revert "I2S audio codec appears when Audio Link Mode is set to HD Audio Link"
 This reverts commit 8615d66791afa3942c518bff2067df2ce1f46ce5.
