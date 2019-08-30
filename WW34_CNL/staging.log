@@ -662,8 +662,6 @@ Date: 2019-08-26 21:58:41 -0700
 -------------------------------------------------------------------------------- 
 [CannonLakePlatSamplePkg]: Prevent runtime access to SiSetup variable and restore default value if deleted.
 
-Backport ICL changes: https://git-amr-7.devtools.intel.com/gerrit/#/c/32305/
-
 Added the SiSetup variable to the mSetupVariableList to prevent runtime access.
 
 Refactored logic to iterate over a table containing all the variables which
@@ -737,8 +735,7 @@ Date: 2019-08-26 21:58:37 -0700
 -------------------------------------------------------------------------------- 
 SMBIOS Type 4 Process Voltage may be incorrect due to MSR 0x198 value is floating
 
-Cherry pick EDK2 MdeModulePkg SmbiosMeasurementDxe: Add Type4 Voltage field to blacklist
-BZ: https://bugzilla.tianocore.org/show_bug.cgi?id=1922
+Add EDK2 MdeModulePkg SmbiosMeasurementDxe: Add Type4 Voltage field
 
 - The Type4 Voltage field may be various. So this patch adds it into the blacklist.
 
@@ -1578,7 +1575,7 @@ Commit: 598c30c87c76c662c6f9ab1503c22ff1f6c08d24
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-08-26 21:57:40 -0700 
 -------------------------------------------------------------------------------- 
-[CFL_Ebat_Validation][CFL U KC][D8 QDF: QS0J][Power management] S3 resume black screen or BSOD
+S3 resume black screen or BSOD
 
 Check Gbe present before notifying SB.PCI0.GLAN.
 
@@ -1637,28 +1634,11 @@ Date: 2019-08-26 21:57:37 -0700
 -------------------------------------------------------------------------------- 
 Fix for regression issue: SUT is hanging at 10B4 after S4 cycle with TBT Dock connected with 3.1 pendrive
 
-Description:BP core issue. Creation of 2 Resource nodes of same memory type causes ASSERT.
-When a PCI device requests all PMEM64, PMEM32, MEM32 kind of memories, PMEM32 gets degraded
-to MEM32 resulting 2 resources of same type MEM32.
-
-EDK2 open source already has the solution for this. Below is the info of EDK2 commits
+EDK2 open source already has the solution for this.
 
 1) SHA-1: 728d74973c9262b6c7b7ef4be213223d55affec3
 
 * MdeModulePkg/PciBus: Count multiple hotplug resource paddings
-
-REF: https://bugzilla.tianocore.org/show_bug.cgi?id=720
-
-The current implementation assumes there is only one hotplug resource
-padding for each resource type. It's not true considering
-DegradeResource(): MEM64 resource could be degraded to MEM32
-resource.
-
-The patch treat the resource paddings using the same logic as
-treating typical/actual resources and the total resource of a bridge
-is set to the MAX of typical/actual resources and resource paddings.
-
-Contributed-under: TianoCore Contribution Agreement 1.1
 
 Hsd-es-id: 1607201709
 Original commit date: 2019-05-29 12:13:34 -0700
