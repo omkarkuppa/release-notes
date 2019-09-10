@@ -1,0 +1,2002 @@
+================================================================================ 
+Commit: 8f5425ca7dd9c7223c566209b8b455ae5ada6e8e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:20:34 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Fri Sep 6 03:17:14 2019 -0700
+Original commit date: Fri Sep 6 03:17:14 2019 -0700
+Original commit hash: fcaa2b94bd138b3abd4f683cf97029b075eef93f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 0e0819c2c5287a7789e6d69f1b8e4a0355c3b463 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:20:30 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML] EDK201905 sync up
+
+1)Removed ShellBinPkg
+    REF: https://bugzilla.tianocore.org/show_bug.cgi?id=1675
+
+    We will remove ShellBinPkg from edk2 master,
+    so updated platform to use shell directly now.
+2)Removed PcdFrameworkCompatibilitySupport
+    REF: https://bugzilla.tianocore.org/show_bug.cgi?id=1464
+
+    Currently Framework compatibility is no needed and
+    PcdFrameworkCompatibilitySupport will be removed from edk2.
+    so remove the usage of this PCD in platforms firstly.
+3)Removed EDK2Master flag
+
+4)Removed IpsecDxe.inf
+    REF: https://bugzilla.tianocore.org/show_bug.cgi?id=1697
+
+5)Move network related components from MdeModulePkg to NetworkPkg
+    REF:https://bugzilla.tianocore.org/show_bug.cgi?id=1293
+
+Hsd-es-id:N/A
+Original commit date: Tue Aug 13 16:56:02 2019 +0530
+Change-Id: Ib568742ecdcd21d19f0aad10b836a580482ff43f
+Original commit hash: 69de0d041c4ac81b148257c1fccaece3555dbb25
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dsc
+CometLakeFspPkg/CometLakeFspPkg.fdf
+CometLakePlatSamplePkg/Library/PeiPlatformRecoveryLib/PeiPlatformRecoveryLib.c
+CometLakePlatSamplePkg/Library/PeiPlatformRecoveryLib/PeiPlatformRecoveryLib.inf
+CometLakePlatSamplePkg/PlatformPkg.dec
+CometLakePlatSamplePkg/PlatformPkg.dsc
+CometLakePlatSamplePkg/PlatformPkg.fdf
+CometLakePlatSamplePkg/PlatformPkgConfig.dsc
+
+================================================================================ 
+Commit: a8cceb1d8b029a22102bc5f9a4b8053d1774a538 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:20:18 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Fri Sep 6 01:16:20 2019 -0700
+Original commit date: Fri Sep 6 01:16:20 2019 -0700
+Original commit hash: aeecfea373b04a9f4846c728ab25692a4491726a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: c96f234ae5fdad299082dd3026664ae1c9da8566 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:20:16 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit FSP CI [TeamCity] Auto-Commit FSP
+
+Fri Sep 6 01:05:32 2019 -0700
+Original commit date: Fri Sep 6 01:05:32 2019 -0700
+Original commit hash: 318270aa05e1d355eea97a8448ed11bcf0dc8d46
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspBinPkg/Fsp.bsf
+CometLakeFspBinPkg/Include/FspsUpd.h
+CometLakeFspPkg/Include/FspsUpd.h
+
+================================================================================ 
+Commit: 2c060337d509704cf86b56119412d49003f6fd78 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:20:14 2019 +0530 
+-------------------------------------------------------------------------------- 
+TGL Lpddr4/DDR4 hitting hard hangs (core 0 can't enter probe mode)
+
+After FSP 2.1 FSP will share bootloader stack and only needs separate
+temp ram region for Heap. Basing on the debug BIOS log file FSP does
+not really need 0x40000 for Heap so reduced to 0x20000 thus gave back
+more temp ram to bootloader.
+Also PcdPeiCoreMaxPeiStackSize has to be larger in FSP Wrapper build
+too so moved to outside PcdFspWrapperEnable check.
+
+Hsd-es-id: 1409873559
+Original commit date: Wed Sep 4 20:19:31 2019 +0800
+Change-Id: I5739f98126bcd8e79101d96237007352c9f6f8ae
+Original commit hash: cb4ce9515a074a7626520f877b466b1ff3150b13
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dsc
+CometLakePlatSamplePkg/PlatformPkg.dsc
+
+================================================================================ 
+Commit: f3de0ef5b17eb962c2e5378e9b99c2a24c91b237 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:20:02 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML] BIOS PowerMeter Support
+
+Added PowerMeter support only for CML U V1.
+
+Hsd-es-id: 1507176493
+Original commit date: Mon Jul 8 14:38:22 2019 +0530
+Change-Id: I4160e7bf1e814b4bbd221b1f6f812735dd702d2a
+Original commit hash: dd0ebcc91ad7fa6da258131334be853a4c7ca686
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/PAC193x.asl
+CometLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/SerialIoDevices.asl
+
+================================================================================ 
+Commit: 556fd1db8c50f50d8cf7b30f377fb60fdc877a2a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:19:57 2019 +0530 
+-------------------------------------------------------------------------------- 
+Title:[CML]-DGR: [CML-S] 10+2-SUT hang at 1090 PC with Q3WC, QTB2.
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1607723996
+
+Description: System hangs with Release build due to SKU has more cores.
+             Increasing TSEG to 16 MB resolved this issue.
+             Removed WA added to unsupport DGR during CML S 10+2 PO time.
+
+Original commit date: Thu Sep 5 11:51:47 2019 +0530
+Change-Id: I85eb0694f4b6980afc133c037c964e485ab66c7f
+Original commit hash: 37ebbf72f5e0879f4483e39c31ff1f5ccd5113fa
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/PlatformPkg.dsc
+CometLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+
+================================================================================ 
+Commit: e547033b3349eb5976ef3d7a9ed42ab0c90601a7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:19:25 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Thu Sep 5 11:33:28 2019 -0700
+Original commit date: Thu Sep 5 11:33:28 2019 -0700
+Original commit hash: 0495f605df677bf708c9944e4640e6d7ec0c21b5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: c615b857de035cdbff353c2eea0e66a154701f10 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:19:21 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Sep 5 17:56:11 2019 +0000
+Original commit date: Thu Sep 5 17:56:11 2019 +0000
+Original commit hash: dd9e2799b62a3c3ccc4174d26bbcb8ddd6578ad8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: bd5bb1246959800abd46e7241d526ec329c9d2aa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:19:19 2019 +0530 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][1306735029][CML U][K0][LPDDR4x][Data corruptions at 2933]
+
+Issue:
+ Data corruptions seen when PPD is enabled on LP4x at 2933.
+Root cause:
+ Wrong power down indication in LP4x case inside DDRIO.
+Solution:
+ Set DDRCTL_DDRCRCTLCONTROLS.CtlSRDrv = 0 on LP4x.
+
+Additional changes:
+ - Avoid copying of DDRCLK_DDRCRCLKCONTROLS.LPDDR4_Mode into CMD/CTL/CKE fubs which don't have this bit
+ - Disable Early Command Voltage Centering step
+
+Hsd-es-id: 1306735029
+Original commit date: Wed Sep 4 17:27:54 2019 -0700
+Change-Id: I026f276caf79784378a79194b1a901cfbd1ff5a7
+Original commit hash: 176feae8f38b763aaf0557ff6c85677cb56835f8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 32f5f0aedc292eea8dd3a731ed7aa8a4d1fecc11 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:19:07 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML-U]  SUT  did not load RTD3 SSDT for WHL when Thunderbolt in BIOS
+Assist Mode. Added CnlURvpRtd3.asl.
+
+Hsd-es-id: 1507364427
+
+Original commit date: Thu Aug 29 14:35:23 2019 +0530
+Change-Id: I26b1c9b7a00ae5616d5f4c8293af6353204bc943
+Original commit hash: 33a434866d2787158b867462d93b26935fa04025
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Acpi/AcpiTables/AcpiPlatform/Dxe/AcpiPlatform.c
+CometLakePlatSamplePkg/Acpi/AcpiTables/AcpiTables.inf
+CometLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CnlURvpRtd3.asl
+
+================================================================================ 
+Commit: cb6001f9d256c6fb1a58526331b8234bf9609f40 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:18:43 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Thu Sep 5 01:13:06 2019 -0700
+Original commit date: Thu Sep 5 01:13:06 2019 -0700
+Original commit hash: d8664091e653f57ee0218c6727d5f0810c7f5447
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: a3a84e7a7e1aabf9ebf1ddbb1e58bec7e42b88d5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:18:09 2019 +0530 
+-------------------------------------------------------------------------------- 
+TrustedDeviceSetup: Move PBA to Internal folder
+
+Hsd-es-id: 1409875396
+Original commit date: Thu Aug 29 09:25:49 2019 +0800
+Change-Id: Ic009436f4e66c5cc1f4c4d7a561ad566eefeee7e
+Original commit hash: a4f1b6fb98c59935fc5510da7647d50419ed1500
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Features/TrustedDeviceSetup/Intel_TDS_Extension.efi
+CometLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 737e398332cccdefc2e8b545bbcb1d2daedb38ed 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:17:45 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Wed Sep 4 11:37:17 2019 -0700
+Original commit date: Wed Sep 4 11:37:17 2019 -0700
+Original commit hash: cb70e41b43727cf3b7395a5930bf21459a5eab4c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: fd4bee3b1e79201ca2f6cd2b8f0647067ad7f271 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:17:09 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Wed Sep 4 01:13:25 2019 -0700
+Original commit date: Wed Sep 4 01:13:25 2019 -0700
+Original commit hash: c0f0ac56783ce3c1998fe14e77dbfc3a6737f2bb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 07e5bf1b5ce6b8a39b6d0174fbac6c5cf86db1e5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:16:17 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Tue Sep 3 11:36:47 2019 -0700
+Original commit date: Tue Sep 3 11:36:47 2019 -0700
+Original commit hash: 49cc8a1f29e598261de1d96b61d31ed369df2e56
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: d231d964eccf80cdef29caec7ff4eb54ad372270 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:15:23 2019 +0530 
+-------------------------------------------------------------------------------- 
+Add support for FWU for HAP platforms
+
+Added support for FW update for HAP platforms
+
+Hsd-es-id: 1806160905
+Original commit date: Thu May 23 14:39:44 2019 +0200
+Change-Id: Iec9591c09e9a8e7a30b2e66e6e71c2fecc700938
+Original commit hash: 3bf844de2ede810c3c1a50af74e5194a37fc4bca
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dsc
+CometLakeFspPkg/Library/PeiPolicyUpdateLib/PeiMePolicyUpdate.c
+CometLakeFspPkg/Upd/FspsUpd.dsc
+CometLakePlatSamplePkg/FspWrapper/Library/PeiFspPolicyInitLib/PeiFspMePolicyInitLib.c
+CometLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCmlvMePolicyUpdate.c
+CometLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCmlvPolicyUpdateLib.inf
+CometLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiMePolicyUpdate.c
+CometLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+CometLakeSiliconPkg/Include/Library/PeiSiPolicyUpdateLib.h
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciInit.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/MeInit.c
+CometLakeSiliconPkg/Me/Include/BupMsgs.h
+CometLakeSiliconPkg/Me/Include/ConfigBlock/MePeiConfig.h
+CometLakeSiliconPkg/Me/Include/HeciRegs.h
+CometLakeSiliconPkg/Me/Include/Library/PeiMeLib.h
+CometLakeSiliconPkg/Me/Include/MeState.h
+CometLakeSiliconPkg/Me/Include/Private/Library/HeciInitLib.h
+CometLakeSiliconPkg/Me/Include/Private/Library/PeiMeEnhancedDebugLib.h
+CometLakeSiliconPkg/Me/Include/Private/MeEnhancedDebugHob.h
+CometLakeSiliconPkg/Me/Library/PeiMeLib/HeciMsgPeiLib.c
+CometLakeSiliconPkg/Me/Library/PeiMeLib/MePolicyPeiLib.c
+CometLakeSiliconPkg/Me/Library/PeiMePolicyLib/PeiMePolicyLib.c
+CometLakeSiliconPkg/Me/Library/Private/PeiDxeHeciInitLib/HeciCore.c
+CometLakeSiliconPkg/Me/Library/Private/PeiMeEnhancedDebugLib/MeEnhancedDebugSupport.c
+CometLakeSiliconPkg/Me/Library/Private/PeiMeEnhancedDebugLib/PeiMeEnhancedDebugLib.inf
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/PchMeUma.c
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/PeiMeInitLib.inf
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/PeiMeInitLibFsp.inf
+CometLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchHsio.c
+CometLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PeiPchInitLib.inf
+CometLakeSiliconPkg/Pch/Library/Private/PeiPchInitLib/PeiPchInitLibFsp.inf
+CometLakeSiliconPkg/SiPkgPeiLib.dsc
+
+================================================================================ 
+Commit: 951a5ac41dca0b9ea65be08ca91668265bf0f8ed 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:15:06 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Tue Sep 3 01:12:55 2019 -0700
+Original commit date: Tue Sep 3 01:12:55 2019 -0700
+Original commit hash: 62263607970564f2b915b9c4d0552e54876ebb0d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: e03a2c07fee5408c3eaa95fe0781121f601fe0d7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:15:04 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML] TBT cannot be assigned the expected buses in pre-boot environment
+
+Count the consumer for upstream port, and downstream port in the calculation.
+
+Hsd-es-id: 2208038781
+Original commit date: Fri Aug 2 18:55:32 2019 +0800
+Change-Id: I9649b31a0660ba4772c1abc4181d7099b01120fb
+Original commit hash: 88cde2df3554be72b352515c9be03ffcdcee1153
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlug.c
+CometLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlug.h
+CometLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlugHelpers.c
+CometLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlugHelpers.h
+
+================================================================================ 
+Commit: 8f5c211d174789b8913073a0a2a4bcbeb53185f8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:14:53 2019 +0530 
+-------------------------------------------------------------------------------- 
+TigerLakeFspPkg/ClientOneSiliconPkg: Backport solution for missing debug message in FSP Dispatch mode
+
+Use FspT UPD data to initialize serial port.
+Add support for sending debug message by ReportStatusCode service which is defined by FSP 2.1 spec.
+
+Hsd-es-id: 1607599018
+Original commit date: Wed Aug 14 16:29:49 2019 +0800
+Change-Id: I0d88f0d6e88ab1c790e9c1775f4dbcc8d494fcba
+Original commit hash: 08e70345f153c4d010752f1362c129f0bd92c170
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientCommonPkg/Universal/PlatformStatusCodeHandler/Pei/PlatformStatusCodeHandlerPei.c
+ClientCommonPkg/Universal/PlatformStatusCodeHandler/Pei/SerialStatusCodeWorker.c
+ClientCommonPkg/Universal/PlatformStatusCodeHandler/Pei/TraceHubStatusCodeWorker.c
+CometLakeFspPkg/Library/FspSiliconCommonLib/FspSiliconCommonLib.c
+
+================================================================================ 
+Commit: abe1912bd5fe19a95ead7517bd2fe731b37a47f6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:14:38 2019 +0530 
+-------------------------------------------------------------------------------- 
+Revert "Title:[CML]-DGR: [CML-S] 10+2 - Removing WA added for DGR during PO."
+
+This reverts commit 521b8f0218811f750d7f2ff6113ac2ca2491bb4a.
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1607723996
+Original commit date: Mon Sep 2 04:31:43 2019 -0700
+Change-Id: I226480863863397f92a3f98769b86352af94b789
+Original commit hash: 6afb3c968a3ee979f0687d6aa4581bcd4aa5293f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+
+================================================================================ 
+Commit: ce94c791f198cdac6640ecb1f7b397db3eb30d85 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:14:35 2019 +0530 
+-------------------------------------------------------------------------------- 
+System hang up at post code "0C13"
+
+In FSP build, set PcdReportStatusCodePropertyMask
+from 0x7 to 0x3 for release. This disables BIT2
+Debug Code which should not be enabled in release
+build.
+Also in FspError StatusCode handler all inputs should
+be validated before using.
+
+Hsd-es-id: 1507385533
+Original commit date: Mon Sep 2 21:06:43 2019 +0800
+Change-Id: Ic6341a83e4fa58d5cdebcb30763e4d3dfe927b5b
+Original commit hash: 87f7208e4a6086a4fff72051f1a290314b958cb4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dsc
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/Pei/PlatformStatusCodeHandlerPei.c
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/Pei/PlatformStatusCodeHandlerPei.inf
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/RuntimeDxe/PlatformStatusCodeHandlerRuntimeDxe.c
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/RuntimeDxe/PlatformStatusCodeHandlerRuntimeDxe.inf
+CometLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/FspWrapperHobProcessLib.c
+CometLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/PeiFspWrapperHobProcessLib.inf
+CometLakeSiliconPkg/Include/Guid/FspErrorInfo.h
+CometLakeSiliconPkg/Include/Library/FspErrorInfoLib.h
+CometLakeSiliconPkg/Library/FspErrorInfoLib/FspErrorInfo.c
+CometLakeSiliconPkg/Library/FspErrorInfoLib/PeiDxeFspErrorInfoLib.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciInit.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciInitDxeFsp.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/MeReadyToBoot.c
+
+================================================================================ 
+Commit: 17e29fb9a77927677b6875f2a132c2f0c85ceba3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:14:15 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Mon Sep 2 11:34:44 2019 -0700
+Original commit date: Mon Sep 2 11:34:44 2019 -0700
+Original commit hash: 9f8da7bcaf2bc34b6e0c07757beee209824412be
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: 9f3c11b1eb03715d35e345e4836c97ee987784ea 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:13:55 2019 +0530 
+-------------------------------------------------------------------------------- 
+System hang up at post code "0C13"
+
+Revert "Send status code in dispatch mode for FSP_ERROR_INFO."
+This reverts commit 84d737be8e9369f7e39f635c9c21bf72f0493ca8.
+
+Hsd-es-id: 1507385533
+Original commit date: Mon Sep 2 15:02:56 2019 +0800
+Change-Id: I2202e007a361dbb5ccb46953a98d3dbed725bf86
+Original commit hash: 69b9ff32bb9af68713df7fb08299e5903963acd0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dsc
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/Pei/PlatformStatusCodeHandlerPei.c
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/Pei/PlatformStatusCodeHandlerPei.inf
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/RuntimeDxe/PlatformStatusCodeHandlerRuntimeDxe.c
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/RuntimeDxe/PlatformStatusCodeHandlerRuntimeDxe.inf
+CometLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/FspWrapperHobProcessLib.c
+CometLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/PeiFspWrapperHobProcessLib.inf
+CometLakeSiliconPkg/Include/Guid/FspErrorInfo.h
+CometLakeSiliconPkg/Include/Library/FspErrorInfoLib.h
+CometLakeSiliconPkg/Library/FspErrorInfoLib/FspErrorInfo.c
+CometLakeSiliconPkg/Library/FspErrorInfoLib/PeiDxeFspErrorInfoLib.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciInit.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciInitDxeFsp.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/MeReadyToBoot.c
+
+================================================================================ 
+Commit: 5e14c20dde404dfa155a304166f6bc1be129e1f1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:13:42 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Mon Sep 2 01:12:49 2019 -0700
+Original commit date: Mon Sep 2 01:12:49 2019 -0700
+Original commit hash: 14453ba12d477ecc95dc5bf619e44d2293a68b10
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 39668ac3b3d8d5558a944eeb6f6c3b884fc0d79c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:13:16 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Weekly Update_FSP/RC
+
+Sun Sep 1 12:09:02 2019 -0700
+Original commit date: Sun Sep 1 12:09:02 2019 -0700
+Original commit hash: a9857e1a5d21840c0632d152825cd0f4f6fd4ced
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: ea13870ca1eb2c4b07264ee61a824645ac927fd5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:13:14 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sun Sep 1 11:35:16 2019 -0700
+Original commit date: Sun Sep 1 11:35:16 2019 -0700
+Original commit hash: 7a108d0d86c349500e509f951c4f712f972dfbc6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: 7b81613fb9ed732852dd7a7a8196e947bb9113a8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:13:04 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Sun Sep 1 01:11:57 2019 -0700
+Original commit date: Sun Sep 1 01:11:57 2019 -0700
+Original commit hash: 47f64b74149df621e64ba090fd2710c63f5e8ffc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: c18e7d9f68f27d1fd7d1d83cf149a482d39aa39b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:12:52 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sat Aug 31 11:35:13 2019 -0700
+Original commit date: Sat Aug 31 11:35:13 2019 -0700
+Original commit hash: 0b61b38e8fcf3f768998f66227acdc2e7c51abe5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: a603ea03e402e07c6f9c862cfa997609fe56e8ad 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:12:40 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Sat Aug 31 01:10:20 2019 -0700
+Original commit date: Sat Aug 31 01:10:20 2019 -0700
+Original commit hash: ff6f11f3031481de57f4878b827f944cf1083049
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 1082881cb30aad15438e91b4e5e79511eea6b9e3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:12:02 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Fri Aug 30 11:37:04 2019 -0700
+Original commit date: Fri Aug 30 11:37:04 2019 -0700
+Original commit hash: 3ecc19b14b075bbdc7b37a0ba599315f8a8149a7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: 9d05d3503cc54f67a93031cd0e5816603e202849 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:11:20 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Fri Aug 30 01:14:12 2019 -0700
+Original commit date: Fri Aug 30 01:14:12 2019 -0700
+Original commit hash: 171665b03bbd154fb68deaf149393cd49ec85a9f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 492a4a2d6838754faf06f1e90a68d0918e8d343e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:11:00 2019 +0530 
+-------------------------------------------------------------------------------- 
+Title: [1507378689] Syncup some asl code changes to match ACPI spec rule - to CML
+
+Resolution:  ICL Commit ID: accfffb173de1cf9a79af4a0db9385267fb8111a
+             Syncup some asl code changes from ICL to match ACPI spec rule.
+             Check and modify arguments/return value to match Spec.
+
+Hsd-es-id: 1507378689
+Original commit date: Thu Aug 29 15:01:00 2019 +0800
+Change-Id: I06ac1494e22eaf7b896b2d6bd926bf2328064269
+Original commit hash: 9ab701ae60664bed3188ca7a912d9ebc8a25b019
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/PCIEDOCK.ASL
+CometLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/SpiFingerprint.asl
+CometLakePlatSamplePkg/Features/Dptf/AcpiTables/B0d4Participant.asl
+
+================================================================================ 
+Commit: c42f68ac95f8072b4ca2099f8f023dae21b8c361 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:10:54 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit FSP CI [TeamCity] Auto-Commit FSP
+
+Thu Aug 29 20:11:29 2019 -0700
+Original commit date: Thu Aug 29 20:11:29 2019 -0700
+Original commit hash: 6406ae5fc2ac6e7af9d718b3de91d1330070521f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspBinPkg/Fsp.bsf
+CometLakeFspBinPkg/Include/FspmUpd.h
+CometLakeFspPkg/Include/FspmUpd.h
+
+================================================================================ 
+Commit: 6348904f4aae11a10af0bff99dcfcedbc39bb1de 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:10:36 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Aug 29 19:57:58 2019 +0000
+Original commit date: Thu Aug 29 19:57:58 2019 +0000
+Original commit hash: e94d958c0b29ee329a0a753bc3160dadcb69f042
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: a28034bcecafdfd4250f461318c216f2e08ca465 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:10:31 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Aug 29 19:18:36 2019 +0000
+Original commit date: Thu Aug 29 19:18:36 2019 +0000
+Original commit hash: 87048215cfcb00787c6ccb5b0a9b46892cc87c0c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 539f16b38230f7828733b60852d2a21f58c0b955 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:10:28 2019 +0530 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][1607560615][CML-U62_V2][LP4x][Display][CONS][SI]:Flicker and blank out noticed at vertical and horizontal DP ports
+
+Issue:
+  IGFX display flickering with LP4x
+Root cause:
+  Not enough memory bandwidth, due to specific display memory traffic, which causes channels to go into Self Refresh periodically.
+  SR exit latency is impacting the memory BW.
+Solution:
+  Increase PM_SREF_CONFIG.Idle_timer from 512 nCK to 2us
+
+Additional changes:
+ - remove PM_SREF_CONFIG programming from MrcThermalConfig() / MrcMcActivate(), and only do it in MrcRefreshConfiguration().
+ - save PM_SREF_CONFIG per SAGV point in save/restore table, instead of in the common section.
+ - Change SrefCfgIdleTmr input policy to be 0 (Auto) by default, with ability to override.
+
+Hsd-es-id: 1607560615
+Original commit date: Wed Aug 28 22:11:00 2019 -0700
+Change-Id: I7e9aeb52ebe2b6df90ca6175db834ba6c3eb75e2
+Original commit hash: 51e8ad639deb05b5e1f1dd5a6c76fdea6911f3a9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Setup/SaSetup.hfr
+CometLakePlatSamplePkg/Setup/SaSetup.uni
+CometLakeSiliconPkg/SystemAgent/Include/ConfigBlock/MemoryConfig.h
+CometLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Include/MrcInterface.h
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/MiniBios/MEMORY/MrcSetup.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/Include/MrcInterface.h
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/MiniBios/MEMORY/MrcSetup.c
+
+================================================================================ 
+Commit: abb3b471f9cde044b043a59d23edb1c324ae8a77 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:10:23 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Aug 29 19:04:07 2019 +0000
+Original commit date: Thu Aug 29 19:04:07 2019 +0000
+Original commit hash: 9ee2e9a27b4d1b23ca868ef49c02bdf72b391b7e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 67ad9dfc68b3d3a276bafb9fa2ab0ab40e7a5e46 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:10:21 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Thu Aug 29 11:42:31 2019 -0700
+Original commit date: Thu Aug 29 11:42:31 2019 -0700
+Original commit hash: 0b666dc8eb475c25a1fd1fd1da14b1eb3dc40f22
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: 5ba6ad002b5ce2e9e8c7eb29a8e2ea4a9ae95a33 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:10:19 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakeSiliconPkg: [1306711139][CMLS][MRC] Add Board Support for CML-S sodimm CMP - miniBIOS
+
+Issue:
+MRC MiniBIOS fails to boot on CML-S SO-DIMM CMP Board
+Solution:
+Dq Pins Interleaved setting was incorrect for this board layout. DqPinsInterleaved should be set to 1
+
+Hsd-es-id: 1306711139
+Original commit date: Wed Aug 28 14:01:15 2019 -0700
+Change-Id: Iffad3552d6f83f32e48059b637a399ffdd594db2
+Original commit hash: b88f8b7e8d1ae46739f9743586c2d8ebe2c989e6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/MiniBios/MEMORY/MrcSetup.c
+
+================================================================================ 
+Commit: a7c90b15d57a2099f8561c9d8ce54b045e296c0b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:09:58 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Aug 29 17:12:09 2019 +0000
+Original commit date: Thu Aug 29 17:12:09 2019 +0000
+Original commit hash: 1c45e4cd43337db0bc19460a1751ef570fe0e86e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 84f333da8e8f9f687347ca9446f9a5e5622a9a76 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:09:50 2019 +0530 
+-------------------------------------------------------------------------------- 
+BpmParams Memory scrubbing policy and CleanSecretsBit ICL port
+
+Proposed changes to support CBnT in CML-S.
+
+This change still requires the integration of the MRC scrubbing implementation and
+only scopes the CML-S support.
+
+Note additional changes are required to maintain support for legacy ACM on other
+CML SKUs:
+a) The CML-S PCD can be used to decide at compile time the inclusion of
+LaunchBiosAcmSclean() or LaunchBiosAcmClearSecrets() call.
+
+b) The memory scrubbing policy defined in bpmgen2.params will need to be
+adjusted accordingly during post-build.
+
+Hsd-es-id: NA
+Original commit date: Wed Jul 31 12:25:55 2019 -0700
+Change-Id: I9e960eed6226d87bcddbaf6ae2194be0ed5bcf7c
+Original commit hash: a1b2dcab63cb650d051f677ca33cf30dbdcc21e2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/CometLakeSiliconPkg.dsc
+CometLakeSiliconPkg/Cpu/Include/Private/Library/TxtPeiLib.h
+CometLakeSiliconPkg/Cpu/Library/Private/PeiTxtLib/Ia32/TxtPeiBsp.nasm
+CometLakeSiliconPkg/Cpu/Library/Private/PeiTxtLib/PeiTxtLib.inf
+CometLakeSiliconPkg/Cpu/Library/Private/PeiTxtLib/TxtPei.c
+CometLakeSiliconPkg/Cpu/Library/Private/PeiTxtLib/TxtPeiLib.c
+CometLakeSiliconPkg/SiPkgBuildOption.dsc
+
+================================================================================ 
+Commit: 50b3adc3971d07b402f868d62cf9b26194b9b467 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:09:48 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML-S]: Updated microcode for CML CML 10+2 Die
+ CML P0 Production patch ID 0xBA
+https://hsdes.intel.com/appstore/article/#/1306709424
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1306709424
+
+Original commit date: Thu Aug 29 18:46:58 2019 +0530
+Change-Id: Id72beaf40db21e618975d879399334829f71ea8b
+Original commit hash: 1dec00e040853480a72249c2a2250b481a547e7e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 204c74f48842baea9279fe360b9fd6cdef977f87 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:09:45 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakeSiliconPkg: [1607573387][CMLS][MRC][Security] SCLEAN Functionality is failing with Secrets asserted.
+
+Issue:
+SCLEAN functionality is failing during Warm Reset flows.
+Solution:
+Modify MRC Warm reset execution flow to include Memory Scrubbing code
+
+Hsd-es-id: 1607573387
+Original commit date: Fri Aug 23 12:50:28 2019 -0700
+Change-Id: I7387c4bf04021a4c5ef33b2bf2a52e9e466c2238
+Original commit hash: 20195a33d1dbb5420a1ffc691cc79f1696170f2e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+
+================================================================================ 
+Commit: ddfcea7bb1ecabbb3f23e4f33daf200969f2cae9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:09:26 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Aug 29 12:53:43 2019 +0000
+Original commit date: Thu Aug 29 12:53:43 2019 +0000
+Original commit hash: 8bdebb46743b4dc7361d95ec2a5bf2cf5aac94f3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 8deeac70e2b1a4c4805eff89ec049bf0452b8dae 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:09:22 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakeSiliconPkg: [1507376899][CML][MRC] Update GEN_PMCON_A register support for CMP-V
+
+Issue:
+Need to update MRC usage of PCH GEN_PMCOM_A register, which is used to determine Boot Mode.
+Solution:
+Add CMP-V GEN_PMCOM_A Register offset information
+Implement access methods for CMP-V PMC register offsets
+
+Hsd-es-id: 1507376899
+Original commit date: Mon Aug 26 17:32:12 2019 -0700
+Change-Id: Ibd18c0e0b60d7f3a058811a083518474345ac261
+Original commit hash: 023f1358ec75c0840d8a6614ae00ba5a2ceabc98
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Api/MrcGeneral.h
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/MiniBios/BUILD/MiniBios.mak
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/MiniBios/Common/uart16550.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/MiniBios/MEMORY/MiniMrc.mak
+
+================================================================================ 
+Commit: 93dbf6addf403ef7280b3c25e096b60026fed8ae 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:09:15 2019 +0530 
+-------------------------------------------------------------------------------- 
+Title:[CML]-DGR: [CML-S] 10+2 - Removing WA added for DGR during PO.
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1607675441
+
+Description: Removed WA added for DGR during CML S 10+2 PO time.
+
+Original commit date: Thu Aug 29 10:20:16 2019 +0530
+Change-Id: I5a0850121888bb1d7d5ee88e0779da060d06d4b3
+Original commit hash: 521b8f0218811f750d7f2ff6113ac2ca2491bb4a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+
+================================================================================ 
+Commit: 505e74a74459b30d983e58470463cbb9c52d9339 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:09:03 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakePlatSamplePkg: Add support for CML-H Board RVP5 with Dual TBT Part #3
+Adding TBT Specific board related porting for CML-H Dual TBT RVP5.
+
+Impacted: All CML platforms.
+
+Hsd-es-id: 1607462915
+Original commit date: Thu Aug 8 17:04:13 2019 +0530
+Change-Id: I317819468110150b84dfbbbb9c0cd7b65318f349
+Original commit hash: f29985ce6d5a8ee3b3308d9b79cde4d215aeb02a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CmlHRvpDualTbtRtd3.asl
+CometLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/Rtd3Common.asl
+CometLakePlatSamplePkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciCmlHDualTbtRvp.asl
+CometLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.c
+CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitLib.c
+CometLakePlatSamplePkg/Features/Acpi/AcpiTables/TbtTypeC/TbtTypeC.asl
+CometLakePlatSamplePkg/Features/Acpi/AcpiTables/TbtTypeC/TbtTypeCWrapper.asl
+CometLakePlatSamplePkg/Features/Pep/AcpiTables/Pep.asl
+
+================================================================================ 
+Commit: 9b830de55b924b0a61f03cca94c2c4aec7b65d00 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:08:57 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Thu Aug 29 01:14:20 2019 -0700
+Original commit date: Thu Aug 29 01:14:20 2019 -0700
+Original commit hash: 215182fe0a11dffec2d20cf42dd77ff1cdb286e0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: a686ec68e19f56ae9df9f1dc624c727d273b400d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:08:41 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML] Clean up override folder under Intel/***pkg.
+
+Phase 3: Remove overrid unused tools.
+
+Hsd-es-id: 1507293041
+Original commit date: Wed Aug 28 13:33:08 2019 +0800
+Change-Id: I323b8e989a33049bffd60fc61024314db9ee3276
+Original commit hash: 51d390e8029580519cfe073610b1d3a8c47e8eb5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/BpmGen2 User Guide.pdf
+CometLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/BpmGen2.exe
+CometLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/BpmGen2GUI User Guide.pdf
+CometLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/BpmGen2_User_Guide.docx
+CometLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/ippccp8-9.0.dll
+CometLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/ippcore-9.0.dll
+CometLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/ippcp-9.0.dll
+CometLakePlatSamplePkg/Override/ClientCommonPkg/Tools/BpmGen2/ippcpp8-9.0.dll
+
+================================================================================ 
+Commit: 6da2cabf505ea6df9bf87ab9d33cbfa9bfde129e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:08:24 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakePlatSamplePkg\Acpi: VRAMSR implementation - phase2
+
+ACPI changes for supporting VRAM Self-refresh
+
+Hsd-es-id: <1607064202>
+Original commit date: Wed Aug 21 20:38:38 2019 +0530
+Change-Id: I10e3452c8fdc3e3533f4c08672879cd541b315a7
+Original commit hash: 7669cb1542458e7535510453121e3c5b76834ac4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CmlUDg1Rtd3OnBoardTbt.asl
+CometLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieDg1.asl
+
+================================================================================ 
+Commit: 5fbe9221029305ca11fa17256c8e015a74f7052e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:07:46 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed Aug 28 19:03:33 2019 +0000
+Original commit date: Wed Aug 28 19:03:33 2019 +0000
+Original commit hash: 2c59c17c14b0a9fdd73135e87f9500914a947103
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 43406cff2459575b166bc2824d758bfe3bb47991 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:07:39 2019 +0530 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][1407895442][TXT][CML][Scrubbing code implementation for LP3 and LP4 Si SKUs]
+
+Added CML2 DDR4/LP4 support to legacy TXT SCLEAN ACM.
+Added Sclean entry point code (MrcLtMemoryScrub) in PeiMemoryInitLib\Restricted\MrcAcmScrub.c.
+Added MiniBios support to test this code using ACM_SCLEAN switch in MiniBios.mak.
+
+Additional changes:
+ - LP4: program MAD_DIMM_CHx.DLW/DSW same as in CNL, this is not used in LP4 mode.
+ - Move MrcCPUStepGet() from MrcSetup.c to MrcOemPlatform.c so that it can be consumed from MrcLtMemoryScrub.
+
+Hsd-es-id: 1407895442
+Original commit date: Mon Aug 26 19:22:13 2019 -0700
+Change-Id: I9a9a828645d3ed11813d11eae412da10b366120f
+Original commit hash: 62b54261b9749c31c31382dc4d1175ddd3fb4586
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/MiniBios/BUILD/MiniBios.mak
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/MiniBios/MEMORY/MiniMrc.mak
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/MiniBios/MEMORY/MrcOemPlatform.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/MiniBios/MEMORY/MrcOemPlatform.h
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/MiniBios/MEMORY/MrcSetup.c
+
+================================================================================ 
+Commit: ba2f9444b1b4683a73b1d143f1d285d8d44d756a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:07:35 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Wed Aug 28 11:36:57 2019 -0700
+Original commit date: Wed Aug 28 11:36:57 2019 -0700
+Original commit hash: d50e910a8f0178d7ac701c0d2db53e1de1211845
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: 2d61aefe77b31b0c436369b57151b830caf14347 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:07:32 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed Aug 28 18:23:59 2019 +0000
+Original commit date: Wed Aug 28 18:23:59 2019 +0000
+Original commit hash: 2b37cf545c7b385e31bb3884808a2926889bfea0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 97b9942b3627269f4691a8b59e8b23f38208cb57 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:07:29 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed Aug 28 18:05:26 2019 +0000
+Original commit date: Wed Aug 28 18:05:26 2019 +0000
+Original commit hash: 0b6300a88e8930251f852e54df1ab24315f9d11b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 1c8e2245584356b20deb91acd7a857b884272fff 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:07:26 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakeSiliconPkg: [1409784193][CML1][MRC] Clean Up MRC Solutions and Project files
+
+Visual Studio Solution and Project files for CML1 MRC are out of date, and should be updated for new MRC file additions, and support for new Visual Studio programs (2015/2017)
+
+The MRC VS Solutions are used for MiniBIOS compilation, and MRC development.
+
+Hsd-es-id: 1409784193
+Original commit date: Fri Mar 22 12:11:59 2019 -0700
+Change-Id: Ibfca6bd150dfe08abdc5a25e42de88d4c9e1eea8
+Original commit hash: ac45c100ed4bcf8b19f25bc2c8e4eec3d366b7a7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/MiniBios/MiniBIOS_VS2017_Win7.txt
+
+================================================================================ 
+Commit: e54526d0471b22282a092fa6107c8c78f6c6f0d8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:07:22 2019 +0530 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][1409822931][][CML2 MRC][Enable SAGV with dis_lpmode_on_sagv]
+
+Issue:
+  SAGV fails when low and high points are not close together.
+Root cause:
+  SCHED_THIRD_CBIT.dis_lpmode_on_sagv is 0 - it should be set according to DDRIO DE.
+Solution:
+  Set SCHED_THIRD_CBIT.dis_lpmode_on_sagv = 1.
+
+Additional change:
+ - Keep SCHED_CBIT.duplicate_spid_rank as zero, it should not be set in CML2.
+
+Hsd-es-id: 1409822931
+Original commit date: Sat Aug 17 23:03:29 2019 -0700
+Change-Id: Ib2e54960015f88ad9f86516dbb612143b82a68a0
+Original commit hash: fcab78563f9214b5ce462e4f47a391152fad65bc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Setup/SaSetup.hfr
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcApi.h
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+
+================================================================================ 
+Commit: e64953cde604dc142b96b9a9f1ce0dba5963a6c5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:06:43 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML] Fsp Minor Version updation in Set Up page
+
+Fsp Minor version is not showing correctly in SetUp so updated that.
+
+Hsd-es-id: NA
+
+Original commit date: Wed Aug 28 14:23:22 2019 +0530
+Change-Id: I6276374d52d75d886447b9e07f11aa28edba458b
+Original commit hash: 843b7f970498826f0a176c3279535dbf57170498
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Setup/Setup.c
+
+================================================================================ 
+Commit: 98905f0e18388ef7c0e3c25079b8c4e40775e56c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:06:35 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakePlatSamplePkg: Add support for CML-S DDR4 UDIMM/SODIMM ERB/CRB Part4
+
+Resolution: BIOS support for waking from PEG.
+Impacted: All CML-S platforms.
+
+Hsd-es-id: 1606950781
+Original commit date: Mon Jul 22 11:51:51 2019 +0800
+Change-Id: Ic06dc48346d3ce209df032d412cf4ebdd8fa590d
+Original commit hash: e8a8692cbb18b0871d23473036fb04591e66919e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.c
+CometLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.inf
+CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCmlSDdr4.h
+
+================================================================================ 
+Commit: 1f7c81ca99a70cea24c239219ea3105fe5c66c16 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:06:13 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Wed Aug 28 01:11:33 2019 -0700
+Original commit date: Wed Aug 28 01:11:33 2019 -0700
+Original commit hash: 3e72aaf7247081d3da2923ac327742d3dae8a664
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: dba0e85e5f7b42dd878c041d625f38ecd7f129bb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:06:08 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML-H82][CNPH][BIOS]:SLPS0 LED is not blinking
+keeping SlpS0WithGbeSupport always true for PCH H series.
+
+Hsd-es-id:1607663866
+
+Original commit date: Wed Aug 28 08:43:58 2019 +0530
+Change-Id: I2b0039ba82dbc6548404529f9e8913165fd84c83
+Original commit hash: 6ad06e5421952ea6a2b1fbbf38d9c102abff9267
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.c
+CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitPreMemLib.c
+
+================================================================================ 
+Commit: 9a6c5b17031047c8764a019a876a04822c02a0b5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:06:05 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed Aug 28 06:50:54 2019 +0000
+Original commit date: Wed Aug 28 06:50:54 2019 +0000
+Original commit hash: 2905a97371de4ce4b63e8b7d905bb785eed97baa
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 7e5302c71150589fcb19c4b918286f0d21fcc44d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:06:00 2019 +0530 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][1409831005][CML2 MRC][Roundtrip Latency Training step fails on LP4x]
+
+Issue:
+  Roundtrip Latency optimization step fails on LP4x, during initial setting testing.
+Root cause:
+  ShiftCh2Ch() is called with UpdateHost = 1, hence CLK/CMD/Data data PI's are shifted +25 and not restored back after each iteration.
+  After 3-4 iterations the CMD PI's are saturated and DRAM starts failing.
+Solution:
+  Call ShiftCh2Ch() with UpdateHost = 0, so that the PI settings are shifted and then restored back to original values.
+
+Additional changes:
+ - Increase initial Roundtrip Latency guardband from 5 to 7 in Read Leveling step
+ - Enable Roundtrip Latency optimization step by default
+
+Hsd-es-id: 1409831005
+Original commit date: Mon Aug 19 23:47:19 2019 -0700
+Change-Id: I28c22a8500009b6e1b0bdbcc5db02e9115d1610e
+Original commit hash: 0219b10d631cd79a3a9802967212c2174a519bd6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.h
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: 2df86e0fb4c555a4f35c7123527c5df1f7c12b0b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:05:58 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CMPV] SUT is not entering SLP_S0 with RP17 set 'RST controlled' with carson beach connected
+
+BIOS needs to configure PCIE PM before hidden PCIE root port for RST.
+
+Hsd-es-id: 1607659430
+Original commit date: Wed Aug 28 10:11:53 2019 +0800
+Change-Id: I17d546e06c10aa6d678815b7c07c1fcf67e8e097
+Original commit hash: ba2d789325328ac53aa97d5391832cf653c62a02
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/CmlvPch/Library/Private/PeiRstPrivateLib/PeiRstPrivateLib.c
+
+================================================================================ 
+Commit: 7ecd1181ec01424601e1989e89d540dc4c171450 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:05:54 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML] Updated PCD to reflect Fsp Minor Version
+
+Update PcdFspVersionMinor in dsc file instead of PcdSiliconInitVersionMinor, so that fsp minor version is updated not Rc minor version.
+
+Hsd-es-id: 1607665713
+
+Original commit date: Wed Aug 28 08:33:26 2019 +0530
+Change-Id: I10fccd6afbb4b33e74e406d8aa38984ff9188e14
+Original commit hash: 6bc4a9bfc40a1892f0d51fd5ce23dd9e7db16c8e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dsc
+CometLakePlatSamplePkg/PlatformPkg.dsc
+
+================================================================================ 
+Commit: 7f6270a1ca1012e84a1647034968cecd4bb443bf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:05:44 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakeSiliconPkg: CML-S/CMP-V: Missing USB2PHY related powergating configuration
+
+-Allow USB2 PHY Core Power Gating bit set to 1
+-reg_gblcore_pwrgate_en set to 1
+-pwrgate_force_on set t0 0
+
+Hsd-es-id: 1409836299
+Original commit date: Tue Aug 20 16:00:28 2019 -0700
+Change-Id: I6d42e050050a5ddfc11006ac6f418a5688b834b4
+Original commit hash: c394c49e55f9bd030438c548c54ee4fb740e87f1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/CmlvPch/Library/Private/PeiPchInitLib/PchPm.c
+CometLakeSiliconPkg/CmlvPch/Library/Private/PeiPchInitLib/PchUsb.c
+
+================================================================================ 
+Commit: 81d32a2af2734542dd9a1cb17942e73a52eaf350 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:05:34 2019 +0530 
+-------------------------------------------------------------------------------- 
+Make python 3.X as default mode to run all python scripts
+
+Due to Python 2.X will be out of maintain soon and Basetools start
+supported python scripts in 3.7 from EDK201903 Stable tag,
+this patch is to make python 3.X as default mode to run all python scripts
+so we can support the current usage model and align with future goal.
+
+Hsd-es-id: 1507331089
+Original commit date: Tue Aug 20 16:41:28 2019 +0800
+Change-Id: I9911add5f8f3e9d6e40f2e9e4fb98d260b0352c3
+Original commit hash: 0039c9e64be63b0013db8ad2bea8f1df2658ca03
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientCommonPkg/Tools/FspBinRebase/RebaseAndPatchFspBinBaseAddress.py
+ClientSiliconPkg/BuildFsp.cmd
+
+================================================================================ 
+Commit: 3a5990591c53d64dfd70a7113638c843455e8fb8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:04:53 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Tue Aug 27 11:37:03 2019 -0700
+Original commit date: Tue Aug 27 11:37:03 2019 -0700
+Original commit hash: 299d531e83ce37f731c05869ed77cb8aab726dce
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: f1c9c6ada009389ba3164962e8586dc832008a61 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:04:33 2019 +0530 
+-------------------------------------------------------------------------------- 
+1. [CML]There is no way to send CSME halt command from outside FSP.
+2. SATA Storage device NOT detected after integrating ChipsetInit with Format version 2.
+
+Issue: After chipset init called, platform needs to perform global reset to adopt new format.
+       But HECI PPI is not installed on wrapper side, it caused global reset fail through CSME
+Resolution: Install HECI PPI in FSP and Wrapper side.
+Impacted: All CML platforms.
+
+Hsd-es-id: 1607665629
+Original commit date: Tue Aug 27 16:00:17 2019 +0800
+Change-Id: I4204383b02dfe65e6fa4481d4e7477d0a991b51c
+Original commit hash: a04b6fb669023f2412d9ac034fa735e1c3bc4c31
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/FspWrapperHobProcessLib.c
+CometLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/PeiFspWrapperHobProcessLib.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciFlow.c
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciInit.c
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciInit.h
+CometLakeSiliconPkg/Me/Include/Library/PeiMeLib.h
+CometLakeSiliconPkg/Me/Include/Private/Library/MeInitLib.h
+CometLakeSiliconPkg/Me/Library/PeiMeLib/HeciPpiInit.c
+CometLakeSiliconPkg/Me/Library/PeiMeLib/MeHeciReset.c
+CometLakeSiliconPkg/Me/Library/PeiMeLib/PeiMeLib.inf
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/HeciInit.c
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/HeciInit.h
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/MeInitPostMem.c
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/MeInitPreMem.c
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/PchMeUma.c
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/PeiMeInitLib.inf
+CometLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/PeiMeInitLibFsp.inf
+CometLakeSiliconPkg/SiInit/Pei/SiInitPreMem.c
+
+================================================================================ 
+Commit: 66152bcdc3bcfc631d43fd68212dceebeb67d153 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:04:31 2019 +0530 
+-------------------------------------------------------------------------------- 
+CML: The size of 4KN HDD is not correct in SATA And RSTe BIOS Setup Configuration page.
+
+Check bit 12 of word 106 from IdentifyDriveInfo
+   - If is set to 1, then logical sector size should be read from words 117 and 118.
+   - If bit 12 is cleared, then logical sector size is 256 words.
+
+Hsd-es-id: 2207845176
+Original commit date: Fri Aug 16 13:34:04 2019 +0200
+Change-Id: Ib920a720d49de21d59a11d3f4dd782dd335b0a64
+Original commit hash: cc2cd83468d54c362a2973fc0e11ad95406e0759
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Setup/PchSetup.c
+
+================================================================================ 
+Commit: 151e93af7b4b7e061ad9730d73be4511f5e95118 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:04:25 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML-S CSLP] Intel EDK build BIOS would not be bootable on RVP
+
+Issue:
+  EDK BIOS hang at PC_00D0
+Root Caused:
+  Data stack was overlap as WP, so it will be fail to write and caused cache verified fail
+
+Hsd-es-id: 1607661953
+Original commit date: Tue Aug 27 10:10:15 2019 +0800
+Change-Id: If3e76577c55183f0b27764231f80fb29caf93812
+Original commit hash: 4b76a51a038a61dcea252d7aec27f917fbf81376
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/PlatformPkg.dsc
+CometLakeSiliconPkg/Cpu/Library/SecCpuLib/Ia32/SecCpuLib.S
+CometLakeSiliconPkg/Cpu/Library/SecCpuLib/Ia32/SecCpuLib.asm
+CometLakeSiliconPkg/Cpu/Library/SecCpuLib/Ia32/SecCpuLib.nasm
+
+================================================================================ 
+Commit: cbfcca5d5d418be89346485d529ad3ad58839324 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:04:20 2019 +0530 
+-------------------------------------------------------------------------------- 
+Add support for CML U V1 DG1 MDRVP Board Part2
+Resolve issue with DG RTD3 SSDT load
+
+Hsd-es-id:https://hsdes.intel.com/appstore/article/#/1607462920
+Original commit date: Tue Aug 27 15:19:25 2019 +0530
+Change-Id: I2b4e9db18189d91c5af3cc76abd18731b63c07df
+Original commit hash: 1ba76b10d89a605af864f4dd024a2266824c515d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CmlUDg1Rtd3OnBoardTbt.asl
+
+================================================================================ 
+Commit: 480c385ec852183e93672e48a4b9ccfba24241cc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:04:08 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Tue Aug 27 01:16:07 2019 -0700
+Original commit date: Tue Aug 27 01:16:07 2019 -0700
+Original commit hash: 1e70d3d89d5510c25112c22334d655384adeeca4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 5cfa5462868e6339bf0fdc607cf60e824f07295e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:03:36 2019 +0530 
+-------------------------------------------------------------------------------- 
+Reassigning BAR1 of DG card to 64 bit granularity to support 4GB MMIO
+
+BAR1(LMEM) of DG card requests 4GB MMIO, to accomodate this MMIO assignment must happen above 4GB boundary to avoid running out of resources.
+
+Hsd-es-id: 2208175234
+Original commit date: Thu Aug 8 10:00:14 2019 -0700
+Change-Id: I4e44919c19a6a2b1c5d3c83feae6d418d2f60b03
+Original commit hash: cfd22827a8364b4bbda9a5b8af54952d3474e420
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SiInit/Dxe/IncompatiblePciDeviceSupport.c
+
+================================================================================ 
+Commit: 7d60362324589adaa3c66f0ee7f4a321898fa854 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:03:30 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Mon Aug 26 20:36:52 2019 -0700
+Original commit date: Mon Aug 26 20:36:52 2019 -0700
+Original commit hash: f120d19762624070b4402fe087209668569dc982
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: 3ca22a85a27d9b3d94691492bad6c423ba22ffe6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:03:28 2019 +0530 
+-------------------------------------------------------------------------------- 
+Core ratio limit overrides reverts back to '0' on loading Bios defaults
+
+Problem: Core ratio limit values are retaining 0 after Load defaults
+Solution: Updated setup variable to 0 while loading to defaults
+
+Unit TestDone:
+1. Core ratio limit values are retaining to its original values after load defaults
+2. Checked OS boot status for
+   1. SPI-FSP   -Release &Debug
+
+Hsd-es-id: 1607365681
+Original commit date: Thu Aug 22 22:35:29 2019 +0530
+Change-Id: Ic5efdc03aa1d646413d3242c77b690eb983e06dd
+Original commit hash: 28c32ddc405a152720043f8452d1beff6308fb7c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Setup/CpuSetup.c
+
+================================================================================ 
+Commit: 0ccb44e787e03e4490eabd01fdc6ea36ce7add59 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:02:59 2019 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Mon Aug 26 18:28:38 2019 +0000
+Original commit date: Mon Aug 26 18:28:38 2019 +0000
+Original commit hash: 472be83b8d512dc091f543ec28650144601ea6ca
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/Library/Private/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 48aa079861dd38a6acf9b77c454cb419549108f3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:02:57 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakeSiliconPkg: [1306706005][CMLS][MRC] Add Board Support for CML-H sodimm  with CMP H- miniBIOS
+
+Issue:
+MRC MiniBIOS fails to boot on CML-H SO-DIMM RVP with CMP-H PCH
+Solution:
+Add missing PCH Device IDs to MRC MiniBIOS macros
+
+Hsd-es-id: 1306706005
+Original commit date: Fri Aug 23 17:35:35 2019 -0700
+Change-Id: Ibefb22309ebfb2f611369537be24fc410e982f78
+Original commit hash: abcf6d41728fd5abe3012f4d0a94049211b4e5fe
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/SystemAgent/MemoryInitCfl/MiniBios/Common/PchRegsLpc.h
+
+================================================================================ 
+Commit: 43620fbc3b7e0d28e6f9ab470676c745d9f21784 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:02:29 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML S] SMBIOS type 04 upgrade error
+
+ - It will be ProcessorUpgradeSocketLGA1200 once it's assigned by DMTF
+ - Processor Upgrade return "Other (01h)" till get value of LGA1200
+ - Resolved Setup should show LGA1200.
+
+Hsd-es-id: 1409837175
+Original commit date: Fri Aug 23 00:04:53 2019 +0800
+Change-Id: Ie3560c70ed8f942a26c2777b1fbeee5cc02f76eb
+Original commit hash: 51b0f6c8bb6bd6790847cbb4c8673fb30bfed224
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Setup/CpuSetup.c
+CometLakeSiliconPkg/Cpu/Library/Private/PeiSmbiosCpuLib/SmbiosType4.c
+
+================================================================================ 
+Commit: 35b1a2f50946bbeb8eef8e73a77d76a0849de260 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:02:26 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML S102] Update to Turbo ratio limits MSR configuration and control
+
+- Resolved MSR 0x1AE NumCore showing incorrect and fail to apply issue.
+
+Hsd-es-id: 1607279834
+Original commit date: Fri Aug 23 15:38:46 2019 +0800
+Change-Id: I4d713c4163a53994d2b7d20e186e3abf24397cfa
+Original commit hash: 50951e0fadb119a5d21d09416232a566a227f4ff
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Setup/CpuSetup.c
+
+================================================================================ 
+Commit: 75fc773f550bb0b51560a4354ac58c839efa81db 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:02:23 2019 +0530 
+-------------------------------------------------------------------------------- 
+Title:[CML]-DGR: Support DGR on CML 4+2 Platform where WHL CPU exists.
+
+Hsd-es-id: https://hsdes.intel.com/appstore/phoenix/#/integration/article?id=1607663611
+
+Description: Support DGR on CML 4+2 Platform where WHL CPU exists.
+
+Original commit date: Fri Aug 23 18:07:49 2019 +0530
+Change-Id: Ie19633016124bd4a2a570ddcccaca399fb38d293
+Original commit hash: 3ed37d0fee0c10558bb714edeb37b675faa5bc59
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/Cpu/Include/CpuRegs.h
+CometLakeSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+
+================================================================================ 
+Commit: 7db6c128a7841710d7c7695ca815b5aac8383f9b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:02:20 2019 +0530 
+-------------------------------------------------------------------------------- 
+PcdCpuApTargetCstate definition is incorrect and used incorrectly for setting the max c-state prior to OS boot
+ - Updated the Pcd Value in CpuInit to use only Target C State.
+
+Hsd-es-Id: 2208229412
+Original commit date: Fri Aug 23 14:24:28 2019 +0530
+Change-Id: Ibb6425623dc4adfcd2dc4c0def7e9f29482fa692
+Original commit hash: f9312ff6ca7e8bdc11d685155b49381d75f14e92
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/Cpu/CpuInit/Dxe/CpuInitDxe.c
+
+================================================================================ 
+Commit: 3e26d6908fbadeb0577e61e8302cba161cc52a16 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:02:13 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Mon Aug 26 01:11:20 2019 -0700
+Original commit date: Mon Aug 26 01:11:20 2019 -0700
+Original commit hash: c9315ff48fd385d6906c26cd2d00b4659f524244
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: f62cfebf5962706105e7255a20f423bca94f8214 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:02:04 2019 +0530 
+-------------------------------------------------------------------------------- 
+Title:[CML]-DGR: Set SMM Info Table Page as Non-executable.
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/2207416893
+
+Description: Set SMM Info Table Page as Non-executable as part of
+             Ring seperation policy.
+
+Original commit date: Fri Aug 23 17:50:55 2019 +0530
+Change-Id: I6fd46891353eee00766d5b627643bc044568bf37
+Original commit hash: 5a59dfba91d222fc4b847f180279d3d6fd0b13f7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmSps.c
+
+================================================================================ 
+Commit: a669666143fdc2d7f010943af85e3adfe77365bd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:01:49 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakeSiliconPkg/Me: Please add info text on Platform Information Menu / PCH Information to display "PMC Patch Version" - take #3
+Merge from ICL: 59c51e0c95b5cd231f0539cd4448dab69357f124
+
+Resolution: Remove nonused partition ID since the ID number might change from generation to generation.
+Impacted: All CML platforms.
+
+Hsd-es-id: 2202320125
+Original commit date: Fri Aug 23 10:36:27 2019 +0800
+Change-Id: I9ef99f74822df7420cc2ba562fcc5a1e91121582
+Original commit hash: c2e42c2726aea4ea55cb48c7b320ef0d00f48946
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Setup/PlatformSetup.c
+CometLakeSiliconPkg/Me/Include/Library/DxeMeLib.h
+CometLakeSiliconPkg/Me/Include/MkhiMsgs.h
+CometLakeSiliconPkg/Me/Library/DxeMeLib/HeciMsgDxeLib.c
+
+================================================================================ 
+Commit: 08fd654d5fdb531f77ad41f51105fe4057e7bdfb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:01:38 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Weekly Update_FSP/RC
+
+Sun Aug 25 12:06:49 2019 -0700
+Original commit date: Sun Aug 25 12:06:49 2019 -0700
+Original commit hash: 2cab363ca81284629148ad3cbfe10d07f2bb38ea
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: a8dced65a9c6b43c4420a4109619a50f7dc03c5e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:01:36 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sun Aug 25 11:35:19 2019 -0700
+Original commit date: Sun Aug 25 11:35:19 2019 -0700
+Original commit hash: 9e3445919d37540b3b16ed5399802ab2f83041d3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: 2dabfaa253190b0ba86407f9e24bcdfaf4af46e6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:01:26 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Sun Aug 25 01:12:17 2019 -0700
+Original commit date: Sun Aug 25 01:12:17 2019 -0700
+Original commit hash: 9fef9ea0b567cdc932e29fd7f673bc6667a336a8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: bed5e7d3058c11554917d2d678b931ac1794d879 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:01:21 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Sat Aug 24 11:35:35 2019 -0700
+Original commit date: Sat Aug 24 11:35:35 2019 -0700
+Original commit hash: 577183943ed64dc54c84ab9cae3dbc374b8f2d2e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: 86b090dd537bddb056341356e4f07e8a87cc1f8c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:01:13 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Sat Aug 24 01:11:17 2019 -0700
+Original commit date: Sat Aug 24 01:11:17 2019 -0700
+Original commit hash: b25197dcbb309fabff30f2c6e40c8d9cadc50925
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 9431205fbf72072df2519b80ce567de82e8b6b35 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:00:46 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Fri Aug 23 11:35:42 2019 -0700
+Original commit date: Fri Aug 23 11:35:42 2019 -0700
+Original commit hash: a307178d20d6d3f010f00cde87e563b97239e04c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: c13f60590369ec2363b67ac509bfeb230563565e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:00:23 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CMLV2_AEP] Added [BoardIdCometLakeULpddr4xAep] board id for CMLV2 AEP
+
+Hsd-es-id: NA
+
+Original commit date: Mon Aug 19 14:34:11 2019 +0530
+Change-Id: Ic536be2b60953dab213cc74db50ce2826280d597
+Original commit hash: 9f126d9d4d4c3aba0c531b8975dd9ade7d499546
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Board/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+CometLakePlatSamplePkg/Board/Others/DxeBoardInitLib/BoardInitLib.c
+CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitLib.c
+CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardInitPreMemLib.c
+CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/BoardPchInitPreMemLib.c
+CometLakePlatSamplePkg/Features/Tbt/Library/DxeCheckIommuSupportLib/DxeCheckIommuSupportLib.c
+CometLakePlatSamplePkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+
+================================================================================ 
+Commit: f2473c03601eba9d942a9387a9abe0c0ed6e07fa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:00:18 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] CML Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Fri Aug 23 01:11:39 2019 -0700
+Original commit date: Fri Aug 23 01:11:39 2019 -0700
+Original commit hash: 3a9dcb3f9e6c0e153ffe205272963b1031c08fe4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: cd941f5efe3bc9bffeecbe4bf5ad038159f834ab 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 11:00:09 2019 +0530 
+-------------------------------------------------------------------------------- 
+Send status code in dispatch mode for FSP_ERROR_INFO.
+
+For dispatch mode the FSP_ERROR_INFO should be sent
+by ReportStatusCode service.
+
+This also implemented Platform ReportStatusCode
+listener to capture those errors and print the
+debug message in debug build.
+
+Hsd-es-id: 1507290509
+Original commit date: Wed Aug 14 08:59:55 2019 +0800
+Change-Id: I3923a81098c6eb9781ece0946f0458be08ef96c5
+Original commit hash: 84d737be8e9369f7e39f635c9c21bf72f0493ca8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dsc
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/Pei/PlatformStatusCodeHandlerPei.c
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/Pei/PlatformStatusCodeHandlerPei.inf
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/RuntimeDxe/PlatformStatusCodeHandlerRuntimeDxe.c
+CometLakePlatSamplePkg/Features/PlatformStatusCodeHandler/RuntimeDxe/PlatformStatusCodeHandlerRuntimeDxe.inf
+CometLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/FspWrapperHobProcessLib.c
+CometLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/PeiFspWrapperHobProcessLib.inf
+CometLakeSiliconPkg/Include/Guid/FspErrorInfo.h
+CometLakeSiliconPkg/Include/Library/FspErrorInfoLib.h
+CometLakeSiliconPkg/Library/FspErrorInfoLib/FspErrorInfo.c
+CometLakeSiliconPkg/Library/FspErrorInfoLib/PeiDxeFspErrorInfoLib.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciInit.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/HeciInitDxeFsp.inf
+CometLakeSiliconPkg/Me/HeciInit/Dxe/MeReadyToBoot.c
+
+================================================================================ 
+Commit: 77f90dcc6f47db09176955b5904971c0bfd02cf2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 10:59:59 2019 +0530 
+-------------------------------------------------------------------------------- 
+[CML] Align with EDK2 to support new NVMe/ATA pei device driver model - part 1
+
+Remove redundant code of password driver and Capsule update seamless recovery.
+
+1. Remove AtaDeviceDriverPei & NvmExpressHcPlatformPei driver from PlatformPkg.
+2. Add AhciPciHcPei & NvmePciHcPei driver to produce gEdkiiPeiAtaAhciHostControllerPpiGuid
+   & gEdkiiPeiNvmExpressHostControllerPpiGuid.
+3. Add new PPI for RST driver produce passthru PPI and SSCP PPI.
+
+Hsd-es-id: 1507301753
+Original commit date: Fri Aug 16 20:55:21 2019 +0800
+Change-Id: Ibc2920c4c040c79bfca6f17269145e80b598d65f
+Original commit hash: a76203521791553552cabe35ed3e851fdd05f180
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakePlatSamplePkg/Features/Nvme/NvmExpressHcPlatformPei/NvmePciHcPei.c
+CometLakePlatSamplePkg/Features/Nvme/NvmExpressHcPlatformPei/NvmePciHcPei.h
+CometLakePlatSamplePkg/Features/Nvme/NvmePciHcPei/NvmePciHcPei.c
+CometLakePlatSamplePkg/Features/Nvme/NvmePciHcPei/NvmePciHcPei.h
+CometLakePlatSamplePkg/Features/Nvme/NvmePciHcPei/NvmePciHcPei.inf
+CometLakePlatSamplePkg/Features/Sata/AhciPciHcPei/AhciPciHcPei.c
+CometLakePlatSamplePkg/Features/Sata/AhciPciHcPei/AhciPciHcPei.h
+CometLakePlatSamplePkg/Features/Sata/AhciPciHcPei/AhciPciHcPei.inf
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/AhciMode.c
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/AhciMode.h
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/AtaBlockIoPei.c
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/AtaBlockIoPei.h
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/AtaHostDriver.c
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/AtaHostDriver.h
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/AtaPassThruExecute.c
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/AtaPassThruPei.c
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/AtaPassThruPei.h
+CometLakePlatSamplePkg/Features/Sata/AtaDeviceDriverPei/IdeMode.h
+CometLakePlatSamplePkg/Include/Ppi/AtaHostControllerPpi.h
+CometLakePlatSamplePkg/Include/Ppi/AtaPassThruPpi.h
+CometLakePlatSamplePkg/Include/Ppi/RstConfigPpi.h
+CometLakePlatSamplePkg/PlatformPkg.dec
+CometLakePlatSamplePkg/PlatformPkg.dsc
+CometLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 745f4d1afb647127146d4436341ba308b6837fdc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 10:59:29 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity]  Daily Update_FSP/RC
+
+Thu Aug 22 11:36:04 2019 -0700
+Original commit date: Thu Aug 22 11:36:04 2019 -0700
+Original commit hash: 6b7dfff6d6d715f9c9a45afc6fad8654699fe86b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CometLakeFspPkg/CometLakeFspPkg.dec
+
+================================================================================ 
+Commit: 5b7e8ba7dc07baec011222eded7aeea95365edbc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 10 10:56:05 2019 +0530 
+-------------------------------------------------------------------------------- 
+CometLakePlatSamplePkg: Add support for CML-V DDR4 UDIMM ERB/CRB Part #5
+
+Updating native functions for GPIO since RC code does not handle.
+Impacted: CMPV platform.
+
+Hsd-es-id: 1607364892
+Original commit date: Thu Aug 22 20:22:32 2019 +0800
+Change-Id: I44bb44aa50c956f0b2c4e167894bac0e7a199aff
+Original commit hash: 8a1741291c73eb0b1a7f7562e69a03cfbcc7b117
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientCommonPkg/Docs/ClientCommonPkgApi.chm
+ClientCommonPkg/Docs/ClientCommonPkgApi.pdf
+ClientSiliconPkg/Docs/ClientSiliconPkg.chm
+ClientSiliconPkg/Docs/ClientSiliconPkg.pdf
+CometLakeFspBinPkg/Include/FspmUpd.h
+CometLakeFspBinPkg/Include/FspsUpd.h
+CometLakeFspBinPkg/Include/FsptUpd.h
+CometLakeFspBinPkg/Include/GpioConfig.h
+CometLakeFspPkg/BuildFv.cmd
+CometLakeFspPkg/BuildFv.sh
+CometLakeFspPkg/CometLakeFspPkgExtConfig.dsc
+CometLakeFspPkg/Docs/CometLake_FSP_Integration_Guide.pdf
+CometLakeFspPkg/Include/FspmUpd.h
+CometLakeFspPkg/Include/FspsUpd.h
+CometLakeFspPkg/Include/FsptUpd.h
+CometLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/PlatformNonNvs.asl
+CometLakePlatSamplePkg/CapsulePkg.dsc
+CometLakePlatSamplePkg/CapsulePkg.fdf
+CometLakePlatSamplePkg/Docs/PlatApi.chm
+CometLakePlatSamplePkg/Library/DxePlatformBootManagerLib/PlatformBootOption.c
+CometLakePlatSamplePkg/Setup/PlatformSetup.c
+CometLakeSiliconPkg/CmlvPch/AcpiTables/Dsdt/PchNvs.asl
+CometLakeSiliconPkg/CmlvPch/Include/Private/PchNvsAreaDef.h
+CometLakeSiliconPkg/Docs/SiPkgApi.chm
+CometLakeSiliconPkg/SiPkg.dec
+CometLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/MrcOemPlatform.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/MiniBios/MEMORY/MrcOemPlatform.c
+CometLakeSiliconPkg/SystemAgent/MemoryInitCml/MiniBios/MEMORY/MrcSetup.c
