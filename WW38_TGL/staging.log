@@ -196,9 +196,9 @@ Date: Tue Sep 17 19:16:15 2019 -0700
 Description: FSP Wrapper and External - EDK II Builds are Failing
 
 -Edit to RocketLakeFspPkg.dsc to resolve missing !endif issue
--Removing InternalOnly Tags in BAT files from build.
+-Optimize Tags in BAT files from build.
 -Edit to SaSetup.uni for  MRC
--Removing Restricted Tags from  code in ClientOneSiliconPkg
+-Removing Tags from  code in ClientOneSiliconPkg
 
 Original commit date: Thu Aug 22 14:58:58 2019 -0700
 Change-Id: If9d9c79da93ce040ccf2991b3157ea60900c50e6
@@ -221,10 +221,10 @@ Commit: 54125dc3f78d949e9d6ca328a36f83f74bfb858e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 19:16:05 2019 -0700 
 -------------------------------------------------------------------------------- 
-Description: Boot regression issue.
+Description: Boot issue.
 Solution:
 Revert Commit ID Iecec20fda4cb661c487c1e001f64f4ce9580e225
-WA SaNvs is moved to Dsdt from Ssdt in C1S and this is causing Boot regression issue.
+WA SaNvs is moved to Dsdt from Ssdt in C1S and this is causing Boot issue.
 
 Original commit date: Thu Aug 29 17:28:10 2019 +0530
 Change-Id: I99252abd97075253e64e07fd4268137ade211d09
@@ -260,7 +260,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Tue Sep 17 19:15:46 2019 -0700 
 -------------------------------------------------------------------------------- 
 Description: Remove old PCIe/DMI IP Silicon code
-Removed the restricted tag around the CpuPcieSmm which was kept earlier for initial implementation.
+Removed tag around the CpuPcieSmm which was kept earlier for initial implementation.
 Removed the CpuPcie from SaPlatform
 
 Original commit date: Wed Aug 28 15:54:48 2019 +0530
@@ -371,7 +371,7 @@ The module has 128KB alignment option in FDF which is based on FV base address,
 so Firmware Binaries FV base absolute address needs to meet 128KB alignment as well.
 It will break system boot otherwise.
 This commit adds quick check in bld script to capture the requirement violation
-in build process. This is for internal use only.
+in build process.This change is for RVP BIOS only.
 
 Hsd-es-id: 2208260914
 Original commit date: Wed Aug 28 03:54:46 2019 -0700
@@ -664,7 +664,7 @@ Date: Tue Sep 17 19:10:44 2019 -0700
 [TGP A3][PCH] [IPM] Sata clockreq asserted during platform in S0i2.1
 
 SATA BWG update.
-Removal of step 4 in the SATA Controller Disabling flow is applicable for TGP_LP, TGP_H, ADP_S, ADP_LP and onward.
+Removal of step 4 in the SATA Controller Disabling flow is applicable for TGP_LP, TGP_H and onward.
 
 Original commit date: Fri Aug 23 12:52:27 2019 -0700
 Change-Id: Ibfe680f8cc9a8cecfa9e693a8477ca29d1025d62
@@ -708,9 +708,8 @@ Commit: 39df4bec32d0f8cbb0a668d7e90c8cc0d34bd0e8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 19:09:49 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL][PCH][IOTG]TigerLakePlatSamplePkg\Setup: Remove restricted flag for IEH setup option
+[TGL][PCH][IOTG]TigerLakePlatSamplePkg\Setup: Remove flag for IEH setup option
 
-IEH mode is disabled by default in CCG and it is under restricted flag.
 This change is to enable the code for IOTG to enable IEH mode
 
 Hsd-es-id: 1409430447
@@ -925,7 +924,7 @@ Make python 3.X as default mode to run all python scripts
 Due to Python 2.X will be out of maintain soon and Basetools start
 supported python scripts in 3.7 from EDK201903 Stable tag,
 this patch is to make python 3.X as default mode to run all python scripts
-so we can support the current usage model and align with future goal.
+so we can support the current usage model.
 
 Hsd-es-id: 1507331089
 Original commit date: Tue Aug 20 16:41:28 2019 +0800
@@ -1444,9 +1443,9 @@ Commit: 90a3a048ba3165c40bb2a878788eaffefde9bb0f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 19:03:33 2019 -0700 
 -------------------------------------------------------------------------------- 
-TGL Security[A2] : SGX EPOCH values exposed in the External BIOS debug log
+TGL Security[A2] : Update External BIOS print debug statments
 
-Tag SGX EPOCH debug print statements as restricted
+
 
 Original commit date: Thu Aug 22 12:36:00 2019 -0700
 Change-Id: If627be60960dee756ffdae9c16c7bfaa45c5cdbd
@@ -1937,14 +1936,9 @@ Commit: 1176bfb9cae39c9979035c1fdc35a2dbbeb61444
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 18:59:06 2019 -0700 
 -------------------------------------------------------------------------------- 
-[JSL] Workaround to fix boot regression in JasperLakeplus, caused by
- review - https://git-amr-7.devtools.intel.com/gerrit/56759.
- SaNvs is moved to Dsdt from Ssdt in C1S and this is causing
- Boot regression issue in jasperlake project.
- Keeping W/A because it is blocking critical PO release - JSL.
+W/A to SaNvs move to Dsdt from Ssdt in C1S causing
+ Boot regression issue with some platforms.
  Will remove this WA after proper fix.
-
-Unit Test : Able to boot on RVP after this change.
 
 Original commit date: Fri Aug 23 16:28:01 2019 +0530
 Change-Id: I3c6b0fa5638f9ffe70c08b114e367f0bd87b4792
@@ -2498,7 +2492,7 @@ Date: Tue Sep 17 18:55:15 2019 -0700
 -------------------------------------------------------------------------------- 
 [TGL] Remove useless definition
 
-  Remove useless definition in PeiSaPolicyBoardConfig.c
+  Remove definitions in PeiSaPolicyBoardConfig.c  that are not in use
 
 Hsd-es-id: 1507331731
 Original commit date: Tue Aug 20 14:49:00 2019 +0800
@@ -2933,7 +2927,7 @@ Commit: dceb69c76a686cf37c1cc928c6d8f2e4d8902720
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 18:51:10 2019 -0700 
 -------------------------------------------------------------------------------- 
-Revert[TGL LP][PCIe]RTD3 flow broken in recent BIOS versions
+Revert[TGL LP][PCIe]RTD3 flow is broken 
 
 This reverts commit 24eb8f00c11b86114df961ded71865c1e99bf6ae.
 Changes caused BSOD issue
@@ -3455,9 +3449,9 @@ Commit: c82cd39eb957676ace5fa1a4c8647df384ecf7c8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 18:45:31 2019 -0700 
 -------------------------------------------------------------------------------- 
-Revert "Switch FSP Dispatch mode as default mode."
+Revert "Switch FSP Dispatch mode as default mode." due to issue.
 
-This reverts commit f9b769f986487975ad79c80e5f15401acde6154c.
+This reverts commit f9b769f986487975ad79c80e5f15401acde6154c till issue is fixed.
 
 Hsd-es-id: 1507359795
 Original commit date: Sun Aug 18 20:49:54 2019 -0700
@@ -3600,7 +3594,7 @@ Commit: 55f6672086b7c66800c24e39b96d8edb61c75f4f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 18:43:38 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL-A0][PO] SGX SW Controlled enablement not maintained over S4/S5 shutdown (ES1 / alpha blocker)
+[TGL-A0][PO] SGX SW Controlled enablement not maintained over S4/S5 shutdown
 
 Apply mask to Policy to only account for Enable/Disable and not Software Controlled
 
@@ -3654,7 +3648,6 @@ ClientOneSiliconPkg/MemoryInit/Tgl: [TGL][MRC] Updated base GetSet function's Bi
 
 1. Change the "Bit" parameter name to "Lane" parameter to make it more ambiguous in that it is not Data centric
 2. Add a LaneMax variable that will be updated in a function call which determines whether it should be limited to Data bits or some other limit
-3. Add a restricted tag to expand the above function call to other parameters
 
 Original commit date: Thu Aug 1 17:53:12 2019 -0700
 Change-Id: I3c15c337dbb56b82fb89d2a62f185012ffac9210
@@ -3781,7 +3774,7 @@ Commit: ec1e10cc7bb1391a6c8ba2d4a27e6f4181198d48
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 18:41:37 2019 -0700 
 -------------------------------------------------------------------------------- 
-Revert "[JSL] Removed TME feature from JSL+ code as not POR"
+Revert "Removed TME feature from some code as not POR"
 
 This reverts commit 8e37b2d6ede0ecc832cdd970c5e7987e5ce6935f.
 
@@ -4194,7 +4187,7 @@ Date: Tue Sep 17 18:38:53 2019 -0700
 -------------------------------------------------------------------------------- 
 Decouple DMI and CpuPcie
   1. Move SaDmiTcVcInit() and MaxPayloadSizeInit() out of PcdCpuPcieEnable control
-  2. Move some restricted DMI policy from PCIE_PEI_PREMEM_CONFIG to SA_SV_MISC_CONFIGURATION
+ 
 
 Original commit date: Mon Aug 5 18:03:26 2019 +0800
 Change-Id: Iefdead5427f375ae3fc618999d8b572b97b8c5ec
@@ -4275,10 +4268,7 @@ Commit: 7173dc51c68d7b40921d3cece9b3642c009c8132
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 18:38:18 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL][SV] These changes are required to allow the TGLU LPDDR4 SV board to boot
-
-The BoardId for TGL U LPDDR4 SV boards is different from the TGL U LPDDR4 RVP board. Without these changes, the SV board will not boot to UEFI shell.
-Further work will be needed to implement the correct GPIO, but this is the first step toward a working SV board.
+[TGL][SV] These changes are required to allow the TGLU LPDDR4 validation board to boot due to diffrence from regular RVP
 
 Original commit date: Tue Aug 13 16:16:45 2019 -0700
 Change-Id: I52a0948fa213d23a2a53921c459090e03b39aac0
@@ -5903,9 +5893,9 @@ Commit: 35668c4752bebb68a42a5867cca56b17afd5bc1d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 17 14:44:21 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL][A2][Automation][REGRESSION]: SUT hangs at 9CAd while performing Restart with EXT FSPWrapper [Alpha Blocker]
+[TGL][A2][Automation][REGRESSION]: SUT hangs at 9CAd while performing Restart with EXT FSPWrapper
 
-Removed Restricted tag for PCH Stepping Z0
+Removed tag for PCH Stepping
 
 Hsd-es-id: 1607540050
 Original commit date: Thu Aug 29 11:09:22 2019 -0700
@@ -6945,7 +6935,7 @@ Commit: 9dac2c0944c6c29b95e6d3ebd8f7eab29f51e5ab
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Sep 4 10:40:34 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL] Remove Workaround RTD3 flow broken in recent BIOS versions.
+[TGL] Remove Workaround RTD3 flow broken that is broken.
 It might cause side effect of system get into S4 becomes S5.
 Change-Id: I113d14ca60aec001d6e056aaac31f4bc7b333be9
 
