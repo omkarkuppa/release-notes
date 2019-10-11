@@ -1,0 +1,1256 @@
+*********************************************************************************
+Commit: 00dc72344f67c66971acf35269c8665cbfa6cf26 
+*********************************************************************************
+
+[PCH], [PlatformPkg]
+
+  FSP Dispatch mode BIOS may ASSERT because PeiMemory not installed.
+  In FSP dispatch mode and EDK2 build the policy PPI is already
+  installed when calling DefaultPolicyInit PPI function, the duplicate
+  InstallPolicy step should be removed.
+  ALso the PolicyReadyPPI should be always installed regardless
+  FSP API, Dispatch or EDK2 native builds.
+  Change-Id: I8157b0849bf85495fb46a6caf79437f6e0c9a956
+  
+  
+  ClientOneSiliconPkg/Pch/PchInit/Dxe/PchInitDxeFspIcl.inf
+  TigerLakePlatSamplePkg/Library/PeiPolicyInitLib/PeiPolicyInitPreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: e6b8095ea8ad759928d36a9ffe2f22e35246230f 
+*********************************************************************************
+
+[CPU]
+
+  ClientOneSiliconPkg/PeiCpuPowerMgmtLib: Fix when hwp and itbm disable exception
+  When itbm and hwp are disable, hit general protection execption being
+  cause by accessing a msr that unaddressable.
+  Change-Id: If1153c8aac13504ee173206a5bb02d77a6275f8e
+  
+  
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PerformanceStates.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 3a85cc57ac9232f451f29f22235ed0822f5fdab1 
+*********************************************************************************
+
+[CPU]
+
+  [TGL][TXT] Update MLEFLAGS into BIOSDATA table
+  Update MLE flags into BIOSDATA table to reflect the current MLE DG for ICL
+  [0] - TXT/VT-x/VT-d ACPI PPI specification (0 for client]
+  [2:1] 1 = Client, 2= Server
+  [31:3] reserved an dmust be zero
+  MSR 0x13A[Bit 34-LT_SX_FUSE]:0 = client, 1= server
+  Change-Id: I84e441fe0d97b29ea3b95a71d28e799d1366cdeb
+  
+  
+  ClientOneSiliconPkg/Cpu/TxtInit/Dxe/TxtDxeLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+
+*********************************************************************************
+Commit: 3cec301e1b5d9653f03afea16734590d50524b8d 
+*********************************************************************************
+
+[CPU], [PlatformPkg]
+
+  [Security][HSTI] leverage UEFI CPU registers from HSTI - MSR UEFI CPU Clean up/refactoring
+  - Leverage CPU MSR from UefiCpu and CPU CRIF MSR
+  Change-Id: Ic0133201470f3084c7f941296a6b07169fabda77
+  
+  
+  ClientOneSiliconPkg/Cpu/Include/Register/CommonMsr.h
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.h
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureCpuConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 6073bb35cd3fbd5da5124f711f14cccb81098937 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Change FID to 0 for enterprise root port sideband access
+  New Simics version alligns model to the real hardware
+  and uses FID=0 while processing sideband messages to
+  enterprise PCIe root ports.
+  Change-Id: I67871abbb517bea28f9c0dc95f65394c69ef37c8
+  
+  
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieBifurcation.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: 7ab23347315849eb6f01643cfc6d3289c6a49954 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  ClientOneSiliconPkg/MemoryInit/Tgl: Fix for wrong frequency/gear on LPDDR Fast Boot
+  Issue:
+  Fast Boot fails normal mode memory test for LPDDR4 and SAGV.
+  Root Cause:
+  For SAGV, PI divider needs to be synchronized before issuing JEDEC sequence.
+  For LPDDR, PI divider must not be changed after PLL update in JEDEC sequence.
+  Change:
+  Revert d58fc5bd73fc9d35a6e928a9b92efd03780f31a5 which disabled FastBoot.
+  Fixed a bug in MrcMcActivate where a channel loop doing direct access to MC CR's did not modify the channel instance to handle IP implementation.
+  Added new variable to MrcOutputs: HighGear.
+  This is used to save the current gear value through the Frequency Switch flow for LPDDR.
+  Removed HighFrequency from MrcSave as this gets overwritten by the current SAGV point frequency in the restore path.
+  Added code to synchronize the PI Divider after restoring the CR's.
+  Reset CR cache after CR restore.
+  Removed MrcDdrCompCalPre and MrcDccInitPreJedec from fast flow.
+  Updated McFrequencySet to move flow logic out of the function for detecting the LPDDR frequency switch flow and place the logic at the caller level.
+  Added param to the function to indicate we should not look at OC overrides: LpJedecFreqSwitch.
+  Removed MrcSetGear2() from the function as this functions job is to interact with locking the PLL.
+  Removed MrcUpdateFrequencyParams() as it is no longer needed.
+  Updated MrcFreqencySwitch to take the new gear ratio to align to how frequency is handled.
+  MrcFrequencySwitch() now calls MrcSetGear2() before calling McFrequencySet().
+  This ensure the correct PI Divider configuration is updated before the DCLK.EN toggling which synchronizes the PI Divider.
+  MrcFrequencyLock now only calls McFrequencySet() instead of logic to select between McFrequencySet() and MrcFrequencySwitch().
+  This function now calles MrcSetGear2() after McFrequencySet() as these CR's cannot be written to until first PLL lock.
+  Updated MrcResetSequence() to print the frequency switches on fast boot.
+  Updated MrcJedecInitLpddr4() to print the MR's on FastBoot JEDEC Sequence.
+  Updated instructions on running FastBoot in MiniBIOS.
+  Change-Id: Ie76a0ea5f1e540c07a62cb345458ffa0c46d7afc
+  
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+  TigerLakeFspPkg/Upd/FspmUpd.dsc
+  TigerLakePlatSamplePkg/Setup/SaSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 104a83310dac46b6a754701b80e2d0e5a9a87cd2 
+*********************************************************************************
+
+[BoardPkg]
+
+  [TGL-Y][A2] - System is not booting to OS with bios 2372_00 (Regression BIOS v2372_00)
+  Workaround to set ACPI D3Cold Support disabled by default for TGL-Y RVP only
+  Change-Id: I94e4ec74caf1cee44505e4ec93f6990eb94a5e31
+  
+  
+  TigerLakeBoardPkg/TigerLakeYBoards/Include/TigerLakeYBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: e1e00381d29a49d4b64a31d27f93efc96d543951 
+*********************************************************************************
+
+[SiliconPkg]
+
+  IFWI TGL-U-A2: LAN PHY Revision showing as N/A in BIOS after reboot from OS by reset Button (LAN Cable should not be connected)
+  - Added override LANPHYPC_VAL to bring up LCD, then revert it once Phy Rev is obtained.
+  Change-Id: If673664c7bfbe5f42332d2b9dbbfc134581bd3b9
+  
+  
+  ClientOneSiliconPkg/IpBlock/Gbe/IncludePrivate/Register/GbeRegs.h
+  ClientOneSiliconPkg/IpBlock/Gbe/LibraryPrivate/PeiDxeSmmGbeMdiLib/GbeMdiLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 7ee70aa727eaee2115aef4002662172561d61ca0 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  Add enterprise root ports initialization code to ClientOneSiliconPkg
+  To avoid building PCIe code with different set of defines in
+  ServerSiliconPkg and to simplify package dependencies for the
+  server platform we moved all PCIe ERP init code into ClientOneSilicon.
+  Following changes have been made to make it possible:
+  1. All code from PchPcieRpLib that was present in ServerSiliconPkg
+  implementation but is missing in ClientOneSiliconPkg was moved
+  to PeiEnterprisePcieRpInitLib
+  2. PchPcieRpLib has been split into generation specific content
+  and common content to allow different set of definitions for EBG
+  3. New register header file has been created to cover enterprise
+  PCIe register definitions
+  Change-Id: Icbeef9c8eb47b2f6b349d28b71a49e05ad9ad826
+  
+  
+  ClientOneSiliconPkg/Fru/TglPch/CommonLib.dsc
+  ClientOneSiliconPkg/Include/PcieRegs.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Library/PeiEnterprisePcieRpInitLib.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/EnterprisePcieRpRegs.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/Generated/EnterprisePcieCfgRegs.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/Generated/EnterprisePcieMmioExpptmbarRegs.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/Generated/EnterprisePcieMmioExpptmbarSbRegs.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/Generated/EnterprisePcieMsgRegs.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLib.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLibInternal.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLibVer1.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLibVer2.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLibVer3.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PeiDxeSmmPchPcieRpLibVer1.inf
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PeiDxeSmmPchPcieRpLibVer2.inf
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PeiDxeSmmPchPcieRpLibVer3.inf
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieBifurcation.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieCapsInit.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieRpInitInternal.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieRpInitLib.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieRpInitLib.inf
+  ClientOneSiliconPkg/Pch/Library/PeiDxeSmmPchInfoLib/PchInfoLibEbg.c
+  TigerLakeFspPkg/TigerLakeFspPkg.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 4bac041813f3271ace72dddc65e65ee35877b177 
+*********************************************************************************
+
+[SiliconPkg], [SA], [BoardPkg], [PlatformPkg]
+
+  Revert "Implement the CPU Dmi IpBlock and move the DMI code into the IpBlock - phase 1"
+  Change-Id: I3b06185cebcafaffa6ed130150eed180408c642c
+  
+  
+  ClientOneSiliconPkg/Fru/RklCpu/Include/Register/CpuDmi16Regs.h
+  ClientOneSiliconPkg/Fru/RklCpu/Include/Register/CpuDmiRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/PeiLib.dsc
+  ClientOneSiliconPkg/Fru/TglCpu/Include/Register/CpuDmi16Regs.h
+  ClientOneSiliconPkg/Fru/TglCpu/Include/Register/CpuDmiRegs.h
+  ClientOneSiliconPkg/Fru/TglCpu/PeiLib.dsc
+  ClientOneSiliconPkg/Include/ConfigBlock/CpuDmi/CpuDmiPreMemConfig.h
+  ClientOneSiliconPkg/IpBlock/CpuDmi/IncludePrivate/Library/PeiCpuDmiPolicyLib.h
+  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibVer2/PeiCpuDmi16.c
+  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibVer2/PeiCpuDmiInitLib.inf
+  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiPolicyLib/PeiCpuDmiPreMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPciePolicyLib/PeiCpuPciePolicyLib.c
+  ClientOneSiliconPkg/Library/PeiSiPolicyLib/PeiSiPolicyLib.inf
+  ClientOneSiliconPkg/Library/PeiSiPolicyLib/PeiSiPolicyLibPreMem.c
+  ClientOneSiliconPkg/Library/PeiSiPolicyLib/PeiSiPolicyLibrary.h
+  ClientOneSiliconPkg/Product/RocketLake/RocketLakeSiliconPkg.dsc
+  ClientOneSiliconPkg/Product/RocketLake/SiPkgPeiLib.dsc
+  ClientOneSiliconPkg/Product/TigerLake/SiPkgPeiLib.dsc
+  ClientOneSiliconPkg/Product/TigerLake/TigerLakeSiliconPkg.dsc
+  ClientOneSiliconPkg/SiPkg.dec
+  ClientOneSiliconPkg/SystemAgent/IncludePrivate/Library/SaDmiInitLib.h
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaDmiInitLib/PeiSaDmiInitLib.c
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaDmiInitLib/PeiSaDmiInitLib.inf
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaDmiInitLibNull/PeiSaDmiInitLibNull.c
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaDmiInitLibNull/PeiSaDmiInitLibNull.inf
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaInitLib/PeiSaInitLib.inf
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaInitLib/PeiSaInitLibFsp.inf
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaInitLib/SaInitPreMem.c
+  TigerLakeBoardPkg/BoardPkgConfig.dsc
+  TigerLakeBoardPkg/BoardPkgConfigDefault.dsc
+  TigerLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  TigerLakeFspPkg/TigerLakeFspPkg.dsc
+  TigerLakeFspPkg/TigerLakeFspPkgConfig.dsc
+  TigerLakeFspPkg/Upd/FspmUpd.dsc
+  TigerLakePlatSamplePkg/Library/PeiPolicyDebugLib/PeiPolicyDebugLib.inf
+  TigerLakePlatSamplePkg/Library/PeiPolicyDebugLib/PeiPolicyDebugLibFsp.inf
+  TigerLakePlatSamplePkg/Library/PeiPolicyDebugLib/PeiSaPolicyDebugLib.c
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 4f08aba0a9c786f172e1e5067b31e99c66c9f5f2 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Apply TGL Display work around to all Gen12Lp products
+  Change-Id: Ib88febee216875765629f17c5e5378d99c6b1d18
+  
+  
+  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayInitLibGen12/PeiDisplayInitLib.c
+  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayInitLibGen12/PeiDisplayInitLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: work around
+
+*********************************************************************************
+Commit: b904cd78dcce6871bcbe17571c149a4596f80364 
+*********************************************************************************
+
+[BoardPkg]
+
+  TigerLakeBoard/BoardInit: Enabling PortB HPD and DDC
+  The code change is to enable HPD and DDC for DDI PortB on TGLU LP4 board
+  Change-Id: I38a8f3bf5c480b9a83998389189d802b211cdc02
+  
+  
+  TigerLakeBoardPkg/TigerLakeUBoards/Library/BoardInitLib/Pei/BoardSaConfigPreMem.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+*********************************************************************************
+Commit: 94e51bc4c2324506f32a4ac60b562869a1510fa8 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  CCA fail to be connected after enabling PDC (DCI OOB)
+  1. Configure DCI ModPHYPg regardless of probe attached or not.
+  2. TGL and beyond, remove sending LVM IPC1 command, which is done by OpenIpc; ICL, remove static LVM programming
+  Change-Id: I5be9a83b68a28082e1eeeddb965cd3f92f261d15
+  
+  
+  ClientOneSiliconPkg/Fru/TglPch/CommonLib.dsc
+  ClientOneSiliconPkg/Include/ConfigBlock/Dci/DciConfig.h
+  ClientOneSiliconPkg/IpBlock/Dci/IncludePrivate/Library/DciPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/Dci/IncludePrivate/Register/DciRegs.h
+  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDciInitLib/PeiDciInitLib.c
+  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDciPolicyLib/PeiDciPreMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDxeSmmDciPrivateLib/DciPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDxeSmmDciPrivateLib/DciPrivateLibVer1.c
+  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDxeSmmDciPrivateLib/DciPrivateLibVer2.c
+  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDxeSmmDciPrivateLib/PeiDxeSmmDciPrivateLibVer1.inf
+  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDxeSmmDciPrivateLib/PeiDxeSmmDciPrivateLibVer2.inf
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLibVer1.c
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLibVer2.c
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLibInternal.h
+  ClientOneSiliconPkg/LibraryPrivate/PeiPolicyOverrideLib/PeiSiPolicyOverrideLibPreMem.c
+  TigerLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiPchPolicyUpdatePreMem.c
+  TigerLakeFspPkg/TigerLakeFspPkg.dsc
+  TigerLakeFspPkg/Upd/FspmUpd.dsc
+  TigerLakePlatSamplePkg/Include/SetupVariable.h
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdatePreMem.c
+  TigerLakePlatSamplePkg/Setup/DebugSetup.c
+  TigerLakePlatSamplePkg/Setup/DebugSetup.hfr
+  TigerLakePlatSamplePkg/Setup/DebugSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: ff52d7d7a4d8cf531c6e7d7e0bfc6e16e38497a3 
+*********************************************************************************
+
+[PlatformPkg]
+
+  TigerLakeSamplePkg: Some system enclosure fields are missing under SMBIOS Type 3.
+  -Update Smbios type3 SkuNumber item
+  -Add SkuNumber default string
+  -Correct the length of type 3
+  -Correct the wrong define type
+  Change-Id: I013064aaf03d738eaca48e76cea883b69a76a4d4
+  
+  
+  TigerLakePlatSamplePkg/Features/Smbios/SmbiosMiscDxe/SmbiosMiscStrings.h
+  TigerLakePlatSamplePkg/Include/SmbiosPlatformInfoDefault.h
+  TigerLakePlatSamplePkg/Platform/SmbiosPlatformInfo/SmbiosPlatformInfo.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 5a00a175d5b70d9efa055441fd1b7568c9ee4c8f 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Folder to Folder Cherry Pick from TGL to RKL
+  Cherry Picking the following commits:
+  cefb4f1b8cc6e33598d70a8b8a41f32e39b7f49b: Invalid SPI Clock Freq info shown in BIOS Setup
+  610b445fbfe6c88827352458174e6c0ab2cf972b: Add Hostbridge DID checking which need support for JasperLake
+  2121f4b3c7bdf546f696b181e985c0515c4936ff: Enable TGL VTd A-step workaround by providing memory for tbt driver
+  dbacff6b73cb7a2ecbb86d1d1b0c793b630f1e3b: [C1S] Serial Io IP Block refactoring - Part 7 Serial IO Registers
+  5bc6351944e94d5fd7c506f949fd46fca6918128: TigerLakeBoardPkg/BoardPkgPcd DSC: Set PcdEdkiiFpdtStringRecordEnableOnly to TRUE for performance build
+  14e459815220366ef2ec783bd52d90f8e719174d: [TGL][PEG] Enable Multi VC for CpuPcie
+  a204105baf8b1af5c2170d8100282ab7211a7eb2: TigerLakePlatSamplePkg/Setup: TCC Mode Wrc
+  2de4ace17e9c92c8e40dd1f09a90789b59585824: [TGL] BIOS does not build when PcdITbtEnable == FALSE
+  76efa8ed82ecb8267d7eb12f895cc3ce5dafb770: [TGL LP][PCIe]RTD3 flow broken in recent BIOS versions [Alpha Blocker]
+  3cece7ba5282782716b8754f58fbe408c3e3d4e2: TGL_Y AEP - MRC Failure due to Channel 1 Byte 4
+  67b8ac70c2946462e45764735cc35046501592d0: ClientOneSiliconPkg/TigerLakeBoardPkg/TigerLakeFspPkg: Hybrid storage support commit broke FSP Dispatch mode booting.
+  2b1b40cb558c774a4446e7d1afc08573d4599179: [TGL][A0][PEG60] Request BIOS to program/update the pcie register (gates alpha, ES1)
+  5fab8b98966937ceefdc49620e5594d01157ac12: GPIO Enable USB OC Assert
+  59be71fe6e55f5551181c8e49ac33d55a7c9c6b4: TigerLakeFspPkg/BuildFv.sh: Set toolchain variable
+  c64cf1dc07b2cd64e6f05945f4fc2f6c20fb0396: [TGL_U]CRB BIOS[TGL_U A2:Debug bios hangs at PC:dd00 with baud rate 9600/19200.
+  4dabcf422de3b2951dfbb357a6105273f38b5112: [TGL] Remove useless definition
+  984017422a39b4b204bd20fe5b5506bde69da905: [TGL] Change S5 wake up control in BIOS setup.
+  782c93787fca55c1ee029583ea63ba3e968ebcd3: [C1S] Disable full MRC trace message in run time and build time
+  b659d8a1e5e683a273fd265de0732912c13ced8c: TigerLakeBoardPkg/MultiBoardInit: Add SkuID support to MultiBoardInitLib
+  0cb1928a11cc473255dd993951bcd62178480074: [2LM-PMEM]For ADL A0 and TGL P0, CAPID0_A[8] to indicate 2LM_SUPPORT.
+  6897ce06d67e82053a2ed63846ef2380968561d7: Intel logo is not seen while booting to OS.
+  37c7b23a191ef5ec55199cedeb8b150043459587: TGL: Request for BIOS setup options
+  98f728494b6beb3dfbc0eaa0065e1b7e1bffb663: [TGL]Change the BIOS default path to enable BT offload for integrated bluetooth and disabled for discrete bluetooth for TGL
+  9d89024974d47191b095e4530866f24ec0294cd1: [TGL] Sync EC.c with ICL.
+  0a43538ec15dce6c82229733082dc0ec69fb5c10: Move ItbtPcieRpLib.h and ItbtPcieRpInitLib.h to IpBlock
+  c0d871399b5d235644b085102beed0cf01d3cba6: ClientOneSiliconPkg/SystemAgent - Remove
+  c3290ac2e97374062d20fa1faf2239e8a16510ae: IPU Code removal for RKL
+  ec4af03ff4ba7918b4863d9241ccca871e8ba891: Ament TGL H patch config table to keep it consistent with current design
+  6555c431e7d65154a9b3fa9a5650dee20189562f: Revert[TGL LP][PCIe]RTD3 flow broken in recent BIOS versions
+  0b865b42fbd0738896add48dc2f84cdc67e45fb8: Enable Intel Dynamic Tuning by default
+  24eb8f00c11b86114df961ded71865c1e99bf6ae: [TGL LP][PCIe]RTD3 flow broken in recent BIOS versions [Alpha Blocker]
+  0efed2146c29dd271eb16ecf6a49c50a3248ec12: TigerlakeBoardPkg: [TGL][IOTG] Fix Flashmap build error for embedded bios build
+  3fafb24996b0cf543d2aebafeea54d89fee01d93: Move VtdRegs.h file to includePrivate from Include folder
+  c60deaca673ee7c35514fcbfde846c35ed9affa1: [TGL][NHLT] Update of Dmic configuration
+  0b5ba589db134e7a55c8ebd6c3f7a737bf2c1004: Add EBG support and detection to PchRasLib
+  d907bdb7fee44a0abb83214de0b613174ce9e17b: Remove BP core version information.
+  c90aa03b3537a31c2b91a57d2b2b5ad1dea879a4: [TGL] Remove duplicate header file in Platfomr PKG.
+  ee8981ee9c05d27c7bdd84f1c8eaab96ec53816c: [WWAN] _DSM with function 0(Query) impementation is not as per the ACPI Spec.
+  e5257c65e90bf8b656215dddfbc08c9986acc0c7: Move VMD register header from Include to IncludePrivate in FRU.
+  bc8adf6d1e5255ad127ff962ecaa08612391e174: TigerLake A0 Unified (uCode+Punit) Production Patch 0x28
+  54e9c65be119d8ff351567f8a54207279e2d3a2c: Gen Release notes script not capturing all changes in commit log
+  c67cad43553f24dd58f57ac1f71b6958719c9e43: Adopting Optane Memory Hybrid Modules(TGL platform)
+  aae0a1e0341a7199ba939229f42c50a21dfefdbc: TigerLakeBoardPkg/PeiMultiBoardInitPreMemLib: Run GetBoardConfig in IsTglX when BoardId is not set
+  f93f969aa962a4fe4e276545bc99e347e97e3ac1: Remove redundant override path and tag
+  9848dd7ca15fd9870e282e91b382de58391755a2: Revert "Switch FSP Dispatch mode as default mode."
+  f9b769f986487975ad79c80e5f15401acde6154c: Switch FSP Dispatch mode as default mode.
+  7b45f20bb86de5acfbc0a5cc94dfb596f4101dc1: [C1S] Expand Display DDI Configuration policy to support different display on DDI port-A and B
+  aa524078fee2d368a2f76a71bda51cd4ef1dbc60: Modify GopConfigPei module.
+  0f2fd32da3c99d838add58a77df67b3eb5e6ffd5: [TGL-A0][PO] SGX SW Controlled enablement not maintained over S4/S5 shutdown (ES1 / alpha blocker)
+  4dd7a255e46567d8b227bf6499b618b3dd9e0abd: TigerLakeSamplePkg/PCT: PEIM Merge
+  75d740bab695865d18c49eecdc6accab84bb75a7: [TGL][IOTG] TSN Default MAC address and GPIO programming PART 2
+  8c36d79d28ad0e4192337922bae1522b311f06ab: [TGL][C1S][CPU] Move VR Silicon code to IP block
+  bfe609d9120c29d14810b16b28b775eee63bbe8c: TigerlakeBoardPkg/TigerlakeSamplePkg: [TGL][IOTG] Fix Tsn Device Gpio mapping overidden
+  9bab10bf2905637a41075e248594921796f8375d: Add new APIs support for Platform FmpDeviceLib
+  599aceaf33bce0097303e310279696d3a737c936: Build batch should support fspapi parameter for FSP API mode.
+  598fd52a54ada5e69b133133c6b841f0f5cdebf8: ClientOneSiliconPkg/IpBlock/Me: Please add info text on Platform Information Menu / PCH Information to display "PMC Patch Version" - take #2
+  d0112bae421483dcec67c90ef5a0734cf8ac2ff9: Fix PCD_Parsing and Flag_Parsing issue
+  9e105e1f16871eaf1491c0d10e83d891bd62a13d: Update FSP Integration guide for DefaultPolicyInit and Debug message.
+  cd41845d6668a055fe2379dc142ad9bad0edcf35: Decouple DMI and CpuPcie
+  f07e84f796f8caf3441acc5e9ba7adc6558bbfd4: [TGL][SV] Migrate ValidationMegaBlock2.0 feature from ICL
+  bab78668e28220ff0864e05ced2fb87c686669fe: [TGL][SV] These changes are required to allow the TGLU LPDDR4 SV board to boot
+  fb0c1b8c1a9fb70df8050f1a76b32399c2437c68: MMIO Register address FE001048h offset 00 with bit 30 is not set to 1, after enabling C10 exit Debug latch event.
+  ad0b691979a28ae172c70a4520fba1fc816a27b8: [TGL] Implement silicon DefaultPolicyInitPpi
+  412085dead73d59bfb3f7569f57cffd14233ce0b: [TGL][RKL] UniTools.py doesn't report the error condition (always exit with success) and UniTools.bat assigned a wrong path of UqiList.uni
+  2982251a65926e7f51a8d9ef2bcc407296460cc7: [TGL LP][PCIe]RTD3 flow broken in recent BIOS versions [Alpha Blocker]
+  244feccb3121eb21ca4dea7668f5690060c03682: TigerLakeBoardPkg/BoardPkgPcd.dsc: Increase ACPI Reserved Memory
+  ba68c3451d49c2cb2de52d7570f681b08a14d85d: System does not enter into DeepSx state in DC Mode
+  7f116c5abc6181cb2eb3309bd7dd173b50329b7a: TGL_U CRB IFWI(TGL_U A0/A2 ) : A2 TBT All Ports IFWIs are not booting with BIOS V2321 + TGL_U_IFWI_31.5.00
+  0a8f845e7f5826fd5457e9557fd67c66b68f3f36: [TGL] Responsiveness regressions observed in S5 due to KeyboardDevicePath
+  2aa8f65b3afdf703198be4dbce5e0390fe289f78: TigerLakeBoardPkg/TglXBoardDetect : Clean up redundant PCD set in Board Detection
+  8fbb92c994453e9f9121acef4827db6cf7579bdf: TigerLake A0 Unified (uCode+Punit) Production Patch 0x26
+  8decb8ab503ecd314fb1e9024143a655e4bee33a: TigerLakeBoardPkg/PeiInitPostMemLib: TGL H boards battery icon issue fix
+  0c6ea435cc8078b1458c3795ddad5425cf714fd0: [TGL] TigerLakePlatSamplePkg/PolicyUpdate headers: Remove the violation usage header.
+  8fe3cc8869abd9280dacd560631dd7325ab1f995: TigerLakeBoardPkg/Performance PCD support: Performance Build Support
+  Change-Id: I7877550637ce6d9237386e87289bb509f7cec086
+  
+  
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Library/VtdInitFruLib.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/CpuPcieRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/PeiLib.dsc
+  ClientOneSiliconPkg/Product/RocketLake/RocketLakeSiliconPkg.dsc
+  ClientOneSiliconPkg/Product/RocketLake/SiPkgCommonLib.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: Workaround
+  --Commit Message Contains Key Word: useless
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: ee34b29dd5593577ccfc22957f8fbfe990b74c12 
+*********************************************************************************
+
+[SiliconPkg]
+
+  FSP Dispatch mode MRC Error Handling bug.
+  Current MRC error handling is to switch stack and
+  return control back to bootloader, but this can only
+  work for API mode, so made it as API mode only step.
+  A generic SendFspErrorInfo () should be called in both
+  API and Dispatch mode to report such MRC error.
+  Also cleaned obsolete SiAssertErrorHandlerLib consumer
+  code as it has been replaced by FspErrorInfoLib.
+  SiAssertErrorHandlerLib instance will be still there
+  for backward compatibility.
+  Change-Id: I5f85e7b0df0367ae30d7a1a1ab53b32d70a945f4
+  
+  
+  ClientOneSiliconPkg/Include/Library/FspErrorInfoLib.h
+  ClientOneSiliconPkg/IpBlock/Me/HeciInit/Dxe/HeciInit.inf
+  ClientOneSiliconPkg/IpBlock/Me/HeciInit/Dxe/HeciInitDxeFsp.inf
+  ClientOneSiliconPkg/IpBlock/Me/HeciInit/Dxe/HeciInitFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFspRkl.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibRkl.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFsp.inf
+  ClientOneSiliconPkg/SiPkg.dec
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: f6cbe98fde443cb28842c910c46309619b5097f4 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [TGL] TGL Security[A2] : Unexpected error captured in HSTI debug log (0x00080003 - Non lockable MMIO ranges overlap other critical regions)
+  Change-Id: Iec33d95dbbc3a1dae678cd2dc812d3c82397ba8f
+  
+  
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureMemoryMapConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 2ff6faa1334f420c58eac0b6712aec1e23d87157 
+*********************************************************************************
+
+[BoardPkg]
+
+  Update ACPI Debug and ACPI uart debug to Disable by default on Y/U SKUs
+  After P1 ticket from WOS PM for chaning ACPI Debug = Disabled by default on all SKUs of TGL BIOS.
+  Team commented to remove this option to go towards "POR setting"
+  Change-Id: I77840c6ea50356bab28b38d6b5f105227c9e03b6
+  
+  
+  TigerLakeBoardPkg/TigerLakeUBoards/Include/TigerLakeUBoardConfigPatchTable.h
+  TigerLakeBoardPkg/TigerLakeYBoards/Include/TigerLakeYBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: e8cf666343e916afaff3cb337b8605fda10d3e64 
+*********************************************************************************
+
+[SiliconPkg]
+
+  1808448603: [ME] Add MeUtils library
+  Add MeUtils library that fills gap
+  in API between old and new HECI driver.
+  Library supports deriving ME state not related to type detection
+  e.g.:
+  - if SPS supports NM
+  - WS is corporate SKU
+  - ME is in recovery
+  to remove this functionality from ME type library and in the future make
+  a common ME detection library for client and server
+  Change-Id: Ieb9a65122c0449946c68f53b5e1ad3ff1e3110a1
+  
+  
+  ClientOneSiliconPkg/Include/Library/MeUtilsLib.h
+  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsCommon.c
+  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsDxeLib.c
+  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsDxeLib.inf
+  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsPeiLib.c
+  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsPeiLib.inf
+  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsSmmLib.c
+  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsSmmLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: future
+
+*********************************************************************************
+Commit: f71f61c52e4d7dc6d78b99d34c7bcf283da907f6 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  ServerSiliconPkg/Iio: [Workaround EGS] UEFIFW shall enable and initialize NorthPeak (NPK) controller embeded in North Cluster
+  - New function in ClientOneSiliconPkg to get PCH TH config from PCH config HOB which is defined in ClientOneSiliconPkg
+  - New Library created for CDF in SeverSiliconPkg counterpart of PchTraceHubInfoLib from C1S with function to get PCH TH config
+  - Changed definition of TRACE_HUB_CONFIG struct for unification between ClientOneSiliconPkg and ServerSiliconPkg
+  - Changed function to get Trace Hub PCI bus. Added Stack as a parameter.
+  - SPR specific code to handle NPK init in DxeTraceHubLib which handle 4 NPKs per CPU added to TraceHubMemAllocation CDF version (all platform specific functions will be merged into one to handle NPK init in all platforms in final implementation)
+  - Changed IioConfig to have two dimensional array for NPK configs since we have 4 NPKs per CPU in SPR
+  - New setup for SPR to have 4 sets of knobs for NPKs (Please provide some tips how to handle this in more clever way if possible)
+  - New DxeTraceHubLibSprSnr.inf file needed since we have library classes only available for SPR/SNR (PchTraceHubInfoLib)
+  - IioNpkInit Library now works also for SPR and performs FW_BAR initialization
+  - Added BSE/MSE not writeable in command register of OOB-MSM device on PCI WA to SPR workaround list
+  Please note that final implementation is in progress and there is plan to refactor all this redundant code as clearly as possible.
+  Change-Id: Idab4ef4be1fd06a36972f70ae67645636d56c722
+  
+  
+  ClientOneSiliconPkg/Include/Library/PchTraceHubInfoDxeLib.h
+  ClientOneSiliconPkg/IpBlock/TraceHub/Library/PeiDxeSmmPchTraceHubInfoLib/DxePchTraceHubInfoLib.c
+  ClientOneSiliconPkg/IpBlock/TraceHub/Library/PeiDxeSmmPchTraceHubInfoLib/PeiDxeSmmPchTraceHubInfoLib.inf
+  ClientOneSiliconPkg/Pch/IncludePrivate/PchConfigHob.h
+  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchHobs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: c2888c720875bb8df064682b54ead484985cd86f 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "ClientOneSiliconPkg/Fru/EbgPch: Enabling bifurcation for PCIe"
+  All the SNR Systems are not able to boot after this change with this error:
+  k:\intel\ServerSiliconPkg\Pch\SouthClusterCdf\Library\PeiDxeSmmPchPcieRpLib\PchPcieBifurcationCdf.c (176): !EFI_ERROR
+  Change-Id: Id5f7c9bea49ac9e6acd2f9e1d9294c5df2c89b88
+  
+  
+  ClientOneSiliconPkg/Include/Library/PchPcieRpLib.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: d463b09d6478b21f614cb675a8b63e14f7ac64d2 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  TGL: Request for BIOS setup options
+  Moved restricted policies from Intel Advanced Menu to Intel Test Menu
+  Change-Id: Ibc3fd71b92be64783ea36baea64672ebdb02ec89
+  
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/CpuPcieRp/CpuPcieConfig.h
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPciePolicyLib/PeiCpuPciePolicyLib.c
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+  TigerLakeFspPkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdate.c
+  TigerLakeFspPkg/Upd/FspsUpd.dsc
+  TigerLakePlatSamplePkg/Include/SetupVariable.h
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdate.c
+  TigerLakePlatSamplePkg/Setup/SaPcieSetupSinglePort.hfr
+  TigerLakePlatSamplePkg/Setup/SaPcieStringPool.hfr
+  TigerLakePlatSamplePkg/Setup/SaSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: 28cf415160f5f92c1388dbe667fb9576e98c80f0 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [TGL PCIe] PCH PCIe Register names cleanup - PCIe convergence
+  Change due to convergence of Client and Server codebase.
+  Done in preparation to open-sourcing not restricted registers.
+  Change-Id: I22352b2e9958d9094640f78089b85f8dde17378e
+  
+  
+  ClientOneSiliconPkg/Include/PcieRegs.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PciExpressHelpersLibrary/PciExpressHelpersLibrary.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: dd3d9dc329909a33a6a574accff2f2591db4b8ed 
+*********************************************************************************
+
+[CPU], [SA], [BoardPkg]
+
+  Revert "[C1S] Remove public APIs from SaPlatformLib and use the similar APIs (GetCpuSku) from CpuPlatformLib"
+  Change-Id: I5567561c9dd31655e869b34ff084ca612add69f6
+  
+  
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerLimits.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/PeiMemPolicyLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/PeiMemPolicyLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Library/PeiMemPolicyLib/PeiMemPolicyLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Library/PeiMemPolicyLib/PeiMemPolicyLibFsp.inf
+  ClientOneSiliconPkg/SystemAgent/Include/Library/SaPlatformLib.h
+  ClientOneSiliconPkg/SystemAgent/Library/PeiDxeSmmSaPlatformLib/SaPlatformLibrary.c
+  TigerLakeBoardPkg/Library/BasePlatformHookLib/BasePlatformHookLib.c
+  TigerLakeBoardPkg/Library/BasePlatformHookLib/BasePlatformHookLib.inf
+  TigerLakeOpenBoardPkg/TigerLakeSimics/Library/BasePlatformHookLib/BasePlatformHookLib.c
+  TigerLakeOpenBoardPkg/TigerLakeSimics/Library/BasePlatformHookLib/BasePlatformHookLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: da67829bbfbedf9215b2b94e5282797b082686aa 
+*********************************************************************************
+
+[SiliconPkg], [SA], [PlatformPkg]
+
+  [2LM-PMEM]Changing 2LM related low level debug prints to verbose and making them internal only.
+  This is to avoid reporting 2LM information in external code/binary releases.
+  Change-Id: I01d88d7d9eba5b646ec6c1a2b1e44f751747c18a
+  
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMemoryMap.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/Bzm/BzmDxe.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/Library/PeiDxeSmmTwoLmLib/PeiDxeSmmTwoLmLib.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/LibraryPrivate/FmssMbLib/FmssMailboxCommands.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/LibraryPrivate/FmssMbLib/FmssMailboxInterface.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/LibraryPrivate/TwoLmInitLib/BzmInit.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/LibraryPrivate/TwoLmInitLib/MbCmdParser.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/LibraryPrivate/TwoLmInitLib/TwoLmInitLib.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/LibraryPrivate/TwoLmPreMemPolicyLib/TwoLmPreMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/LibraryPrivate/TwoLmPreMemPolicyLib/TwoLmPreMemPolicyLib.inf
+  ClientOneSiliconPkg/IpBlock/TwoLm/Nvdimm/Dxe/NfitDxe.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/Nvdimm/Dxe/NfitDxe.inf
+  ClientOneSiliconPkg/IpBlock/TwoLm/Nvdimm/Smm/NvdimmSmm.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/Nvdimm/Smm/NvdimmSmm.inf
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaInitLib/SaInit.c
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaInitLib/SaInitPreMem.c
+  TigerLakePlatSamplePkg/Setup/Setup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: c384317b06c01b0ae512cfa027c0fb5b59de861e 
+*********************************************************************************
+
+[PlatformPkg], [ASL]
+
+  Remove unnecessary ACPI methods from Power Participant [TigerLake, RocketLake, AlderLake, JasperLake]
+  as this change was required as part of
+  on ICL/CML and any future platforms
+  Change-Id: I5bf9ea36748d23351daa2e8a2b6e2d289285c9b0
+  
+  
+  TigerLakePlatSamplePkg/EC/Asl/EC.ASL
+  TigerLakePlatSamplePkg/Features/Dptf/AcpiTables/Dptf.asl
+  TigerLakePlatSamplePkg/Features/Dptf/AcpiTables/Sds/DptfSds.asl
+  TigerLakePlatSamplePkg/Features/Dptf/AcpiTables/TPwrParticipant.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: future
+
+*********************************************************************************
+Commit: 171eb7622dcbb5d3ef3b130cfb2aab81de6fd4a3 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  ClientOneSiliconPkg/MemoryInit: [TGL][MRC] Lpddr4x Bytemode analog changes reverted
+  After getting frequency switch flow enabled, we noticed that we didnt need different Drive Strengths, Rd Odt values.
+  Still keeping a separate array for Lp4xByteMode in case things change in future.
+  CCC comp equation has been reverted back to POR.
+  Change-Id: I6421c38101355efa4cebee078a1c7456cd60c4fc
+  
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/MEMORY/MrcSetup.c
+  TigerLakeFspPkg/Upd/FspmUpd.dsc
+  TigerLakePlatSamplePkg/Setup/SaSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: future
+
+*********************************************************************************
+Commit: f2bd25aaeec8db0d2fe3e3bfae1fd70831ed46c9 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg], [PlatformPkg]
+
+  ClientOneSiliconPkg/MemoryInit/Tgl: LP4 4267 1xR Enabling
+  Change:
+  Fixed alignment of Training enables between MemoryConfig.h and MrcInterface.h.
+  Enabled the following training steps:
+  DIMM ODT, Rd ODT, RD Bias, RD Eq, PVTT, RD Vref DC, DIMM RON, TX TCO, TX TCO DQS, TX Slew Rate, TX DriveStrength/Eq, TX Drive Strength Up/Dn, CLK TCO, and Per Bit Deskew.
+  Enable 4267 for 1xR x16.
+  Limit the NUI value in Gear2 for LPDDR4 Unmatched.
+  Updated the Drift Limit for Local and Global to 12/32.
+  Updated 2xR LP4 RTT_CA to 60 Ohms.
+  Updated W/a on RCOMP Down.
+  Updated Receiver configuration to speed up DQ in unmatched LP4:
+  BiasRloadVref = 7
+  BiasPwrMuxSelVdd2 = 1
+  VccDllDqsDelay.RxPBDCode = 0
+  DqsPadMuxSelVdd2 = BiasPwrMuxSelVdd2
+  RxDqsBitPi = 0xC
+  TxDqsBitPi = TxDqBitPi = 0
+  Disabled SAGV in Interpreter
+  Temporary reduction of stack usage through removing ranks 2/3 storage for BDAT.
+  Change-Id: Ic2b8013622d305c88453ccfe73372c8c552dfb31
+  
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver2/MemoryConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/MEMORY/MrcSetup.c
+  TigerLakeBoardPkg/Library/PeiBoardConfigLib/PeiSpdTables.c
+  TigerLakeFspPkg/Upd/FspmUpd.dsc
+  TigerLakePlatSamplePkg/Setup/SaSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: da823c7e5e7b9c93d858b80a0a9cbe224f7d2cef 
+*********************************************************************************
+
+[SiliconPkg], [SA]
+
+  [TGL][SA]Remove old PCIe/DMI IP Silicon code
+  Removing the DxeSmmCpuPcieLib and move all necessary APIs of SMM into SaLateInitSmm.
+  Change-Id: I4771aed96b45a8250338bc70817a91780fce243d
+  
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/CpuPcieRp/CpuPcieConfig.h
+  ClientOneSiliconPkg/IpBlock/TwoLm/IncludePrivate/Library/TwoLmInitLib.h
+  ClientOneSiliconPkg/IpBlock/TwoLm/LibraryPrivate/TwoLmInitLib/TwoLmInitLib.c
+  ClientOneSiliconPkg/IpBlock/TwoLm/LibraryPrivate/TwoLmPreMemPolicyLib/TwoLmPreMemPolicyLib.c
+  ClientOneSiliconPkg/Product/RocketLake/SiPkgDxeLib.dsc
+  ClientOneSiliconPkg/Product/TigerLake/SiPkgDxeLib.dsc
+  ClientOneSiliconPkg/SystemAgent/IncludePrivate/Library/CpuPcieLib.h
+  ClientOneSiliconPkg/SystemAgent/Library/DxeSaPolicyLib/DxeSaPolicyLib.c
+  ClientOneSiliconPkg/SystemAgent/Library/DxeSaPolicyLib/DxeSaPolicyLibrary.h
+  ClientOneSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/DxeSmmCpuPcieLib/DxeSmmCpuPcieLib.c
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/DxeSmmCpuPcieLib/DxeSmmCpuPcieLib.inf
+  ClientOneSiliconPkg/SystemAgent/SaInit/Dxe/SaInitDxe.inf
+  ClientOneSiliconPkg/SystemAgent/SaInit/Dxe/SaInitDxeJsp.inf
+  ClientOneSiliconPkg/SystemAgent/SaInit/Smm/SaLateInitSmm.c
+  ClientOneSiliconPkg/SystemAgent/SaInit/Smm/SaLateInitSmm.h
+  ClientOneSiliconPkg/SystemAgent/SaInit/Smm/SaLateInitSmm.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: cd9bbd3041263e45fbdd73a1d0dff2b08e6d6290 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Folder to Folder Cherry Pick from TGL to RKL
+  Pending the following commits after switch to EDK201905
+  58f3f0d818a62985b0ccc30be70983688982a0c8: FSP Dispatch mode cannot boot
+  9f2b5055d1ba194fc794b2a8381d2e5e0f0328e5: FSP wrapper build will not patch DSC.
+  2ecf262b2cb706acc1b51ac28293fcad5d0af98f: TigerLakeBoardPkg:[TGL] EDK201905 sync-up to consume PcdFspModeSelection.
+  Cherry Picking the following commits:
+  bda15dfe9415b2d1d4277ed1af3a4905ba76e2f0: TigerLakeBoardPkg: Include BiosInfoChecker module
+  9ee1a879c8f63692e1e4b29d3fbcf08562f26b12: [TGL A0 PO] SUT hang at PostCode 9Cb3 after enabling Discete NIC (Foxville) in IFWI using FIT [Alpha]
+  f5f513ed4e55ee177e41037eed328d20d432d902: Disabling VMD Bar related configurations in BIOS setup menu.
+  1befcb7bf44c4386ab9cd9858a23bdd40466362a: [TGL][PCIe] L1SS should be enabled by default
+  5716a3043f44df925e5401c42a339a049f8c3a6c: [TGL][HG] Need to configure HG GPIOs properly
+  5959cc173fc033de654040ca41dcba02aced422d: Remove ClientSiliconPkg dependency in C1S
+  3756f5c460c7af07780d4b608119ea748866ec80: Modify dekel firmware version to DEKEL PCIe GEN4 PHY VERSION
+  9d874e4968ce539bb33d3ff78ee009125d4f74a4: Update DXE Gfx code for Gen9 Gfx IpBlock
+  f389ab88bfe8b2a36da25f983747a19f8b424f8e: [TGL][C1S] Move TGLZ0 Graphics Gen9 code from SystemAgent to IpBlock folder
+  1c0a2f5c00e2be0f72f247daa1eef088463b8dbb: Potential BIOS Guard bypass via CpuSetup variable
+  89d04efb5160f46b8cd698a276142ec087f0b755: ClientOneSiliconPkg/MemoryInit/Tgl: Disable Safe Mode
+  a25c0a406c6f70c6bf078a3196f9bdacce9b6f9e: TGL_Y AEP - MRC Failure due to Channel 1 Byte 4
+  3c7f60a5b3aed2ef4b29bd5f642b370c9475790d: Invalid SPI Clock Freq info shown in BIOS Setup
+  e8c4485ac7d3be479eb8873a78f74cfa82cfc51b: [TGL] Prevent to checkout all non-autogen files on cln.bat
+  3691be9546645e9a46be2cbefe0622f776bab9cd: Fix C1S Doxygen Silicon build
+  bf9076948fc326db665c5902da19a02071a7b717: Revert "[C1S] Serial Io IP Block refactoring - Part 6 PeiSerialIoPolicyLib"
+  51aab3d9db133bd11e2533c3357767d4c65f3f6d: Code to check for "skip reset" knob was removed
+  cde3846a03007dbbbd8bf80a21e44dca86afd506: [TGL_U A2] Bluetooth LED is not turning off when the SUT is in S5 state
+  6fdfc9a2dd31a83be20d906b644a31462fdd1036: [TGL-U-A2] Discrete Wake on Wi-Fi not waking SUT
+  25175d91352c2b4287e55fc7f584ddba0fac49de: SUT BSOD (Stop Code: Internal Power Error) observed while entering to OS in Consumer release build - v2314_00_239
+  4f4fe6c0feae52f140c5001f0c61eaf0166a58c5: ClientOneSiliconPkg/MemoryInit:[TGL][MRC] Update debug cmos hooks
+  fcc891956476ba6d4c95484ba1cd4555a8ffba92: [C1S] Serial Io IP Block refactoring - Part 6 PeiSerialIoPolicyLib
+  e7772980612833c342a21fcc2cdab39d1883678a: [C1S] Serial Io IP Block refactoring - Part 5 PchSerialIoUartLib
+  Change-Id: I39b5306cbae8981f2af89d2a494b395c0f17c823
+  
+  
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/TwoLmRegs.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 66895b6f3a0810748120dc557612747e2819d62b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  1806541146: Add new HECI Protocol stack
+  Implements new HECI Stack.
+  It contains 3 drivers:
+  1. HeciAccess (abstracts hardware)
+  2. HeciTransport (implements communication)
+  3. HeciControl (Intend to be used by end-user, contains messages filters)
+  Change-Id: Iffad2a97d8220e4b1c0378c22d5e3672bdd6dcaf
+  
+  
+  ClientOneSiliconPkg/Include/Library/HeciCommonLib.h
+  ClientOneSiliconPkg/Include/Library/HeciTraceLib.h
+  ClientOneSiliconPkg/Include/Library/HeciTransportCoreLib.h
+  ClientOneSiliconPkg/Include/Ppi/HeciAccessPpi.h
+  ClientOneSiliconPkg/Include/Ppi/HeciControlPpi.h
+  ClientOneSiliconPkg/Include/Ppi/HeciTransportPpi.h
+  ClientOneSiliconPkg/Include/Protocol/HeciAccessProtocol.h
+  ClientOneSiliconPkg/Include/Protocol/HeciControlProtocol.h
+  ClientOneSiliconPkg/Include/Protocol/HeciTransportProtocol.h
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/DxeSmm/HeciTransportDxe.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/DxeSmm/HeciTransportDxe.inf
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/DxeSmm/HeciTransportDxeSmm.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/DxeSmm/HeciTransportSmm.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/DxeSmm/HeciTransportSmm.inf
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciCommonLib/HeciCommonDxeSmmLib.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciCommonLib/HeciCommonLib.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciCommonLib/HeciCommonLib.inf
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciCommonLib/HeciCommonPeiLib.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTrace.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceCore.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceCore.h
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceLib.inf
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceMini.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceMiniLib.inf
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceNull.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceNullLib.inf
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTransportCoreLib/HeciTransportCore.h
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTransportCoreLib/HeciTransportCoreLib.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTransportCoreLib/HeciTransportCoreLib.inf
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/Pei/HeciTransportPei.c
+  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/Pei/HeciTransportPei.inf
+  ClientOneSiliconPkg/SiPkg.dec
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: 95126c3a798b9ac0df9bb661599487f33b4b9308 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  [TGL][A2][Automation][REGRESSION]: SUT hangs at 9CAd while performing Restart with EXT FSPWrapper [Alpha Blocker]
+  Removed Restricted tag for PCH Stepping Z0
+  Change-Id: I8bf012838cc76eaaa51274bab7099fb23a8639d7
+  
+  
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLibVer2.c
+  ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/XhciInit.c
+  ClientOneSiliconPkg/Pch/Include/Library/PchInfoLib.h
+  ClientOneSiliconPkg/Pch/Include/Register/PchRegsLpcTgl.h
+  ClientOneSiliconPkg/Pch/Library/PeiDxeSmmPchInfoLib/PchInfoLibTgl.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: 49392c50ff4ec364d6cf1c7392091cd7676e644f 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  [JSL]Revert "[TGL] GPIO IO Standby State"
+  - As this changes are blocking critical relase for JSL.
+  we are reverting this changes.
+  UnitTest: Able to boot after revert this changes.
+  Change-Id: Ic89e89116b79cd5af78dd99f318271c1b210356a
+  
+  
+  ClientOneSiliconPkg/Include/Library/GpioConfig.h
+  ClientOneSiliconPkg/Include/Register/GpioRegs.h
+  ClientOneSiliconPkg/IpBlock/Gpio/IncludePrivate/Library/GpioNativePads.h
+  ClientOneSiliconPkg/IpBlock/Gpio/IncludePrivate/Library/GpioPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLib.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibInternal.h
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer1.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer2.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer3.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibVer1.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibVer2.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibVer3.c
+  ClientOneSiliconPkg/IpBlock/Thc/LibraryPrivate/PeiThcInitLib/PeiThcInitLib.c
+  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: c31ba291dc13889a14eeb9c63008ed8e7f213420 
+*********************************************************************************
+
+[ASL]
+
+  TCSS DEVEN save/restore mechanism is needed for TGL all stepping
+  Remove stepping check for TCSS DEVEN save/restore mechanism
+  Change-Id: If9fc0402209c5e50b9dcc56d3bf0bcab4af4af94
+  
+  
+  ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssSsdt.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: f8c1903864c9424011d7c84a2249eeb9c19a5a29 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  TrustedDeviceSetup: Move PBA to Internal folder
+  Change-Id: I05d7c0175062287c9f4da161697e536592039ad7
+  
+  
+  TigerLakeBoardPkg/BoardPkg.fdf
+  TigerLakePlatSamplePkg/Features/TrustedDeviceSetup/Intel_TDS_Extension.efi
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: ffaf18b5b603ef2918442909488d9df950247222 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Cherry pick CometLake solutions to other ClientMaster platforms (ADL/JSL/RKL/TGL)
+  * CometLakePlatSamplePkg/CapsuleUpdate: When FW is in recovery mode platform does not boot
+  Problem:
+  1. ME FWU API FwuGetIshPdtVersion() is invoked to report PDT version info of ISH PDT FMP during POST.
+  2. SVME or CSME in Recovery mode does not support the HECI commands in FwuGetIshPdtVersion()
+  Solution:
+  1. Deprecating PDT version string reporting as of now since reporting a version which is always fixed does not have much value.
+  This should resolve system hanging/delay issue on both SV ME and regular CSME in Recovery mode during POST.
+  (If PDT version is more meaningful in the future and is planned to be reported in PDT FMP, we can apply the same condition check described below.)
+  2. Adding ME mode/status check before updating PDT in FmpDeviceSetImage(), system only proceeds the PDT update when ME is in Normal Mode with ME_READY status.
+  Change-Id: Iac8b2255ea85051c6f09702655f1f3569b618ad3
+  
+  
+  TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibIshPdt/FmpDeviceLib.c
+  TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibIshPdt/FmpDeviceLibIshPdt.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: future
+
+*********************************************************************************
+Commit: a29cf06ab86feb26633715e34fdf698291d4953c 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  [TGL] GPIO IO Standby State
+  IO Standby State and IO Standby Termination configuration
+  Change-Id: I4a178116b7d3140ae788d2f6e734b42edfea5450
+  
+  
+  ClientOneSiliconPkg/Include/Library/GpioConfig.h
+  ClientOneSiliconPkg/Include/Register/GpioRegs.h
+  ClientOneSiliconPkg/IpBlock/Gpio/IncludePrivate/Library/GpioNativePads.h
+  ClientOneSiliconPkg/IpBlock/Gpio/IncludePrivate/Library/GpioPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLib.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibInternal.h
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer1.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer2.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer3.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibVer1.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibVer2.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibVer3.c
+  ClientOneSiliconPkg/IpBlock/Thc/LibraryPrivate/PeiThcInitLib/PeiThcInitLib.c
+  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+################################################################################
+
+Report Summary: Backstop found 37 suspect commits for review 
+
+Warnings Found:
+  Commit: 00dc723    --Commit Message Contains Key Word: step
+  Commit: e6b8095    --Commit Message Contains Key Word: HW
+  Commit: 3a85cc5    --Commit Message Contains Key Word: fuse
+  Commit: 3cec301    --Commit Message Contains Key Word: security
+  Commit: 6073bb3    --Commit Message Contains Key Word: hardware
+  Commit: 7ab2334    --Commit Message Contains Key Word: revert
+  Commit: 104a833    --Commit Message Contains Key Word: Workaround
+  Commit: e1e0038    --Commit Message Contains Key Word: revert
+  Commit: 7ee70aa    --Commit Message Contains Key Word: internal
+  Commit: 4bac041    --Commit Message Contains Key Word: revert
+  Commit: 4f08aba    --Commit Message Contains Key Word: work around
+  Commit: b904cd7    --Commit Message Contains Oem: HP
+  Commit: 94e51bc    --Commit Message Contains Key Word: internal
+  Commit: ff52d7d    --Commit Message Contains Key Word: sku
+  Commit: 5a00a17    --Commit Message Contains Key Word: step
+  Commit: 5a00a17    --Commit Message Contains Key Word: Workaround
+  Commit: 5a00a17    --Commit Message Contains Key Word: useless
+  Commit: 5a00a17    --Commit Message Contains Key Word: sku
+  Commit: 5a00a17    --Commit Message Contains Key Word: revert
+  Commit: ee34b29    --Commit Message Contains Key Word: step
+  Commit: f6cbe98    --Commit Message Contains Key Word: security
+  Commit: 2ff6faa    --Commit Message Contains Key Word: sku
+  Commit: e8cf666    --Commit Message Contains Key Word: sku
+  Commit: e8cf666    --Commit Message Contains Key Word: future
+  Commit: f71f61c    --Commit Message Contains Key Word: Workaround
+  Commit: c2888c7    --Commit Message Contains Key Word: revert
+  Commit: d463b09    --Commit Message Contains Key Word: restricted
+  Commit: 28cf415    --Commit Message Contains Key Word: restricted
+  Commit: dd3d9dc    --Commit Message Contains Key Word: revert
+  Commit: da67829    --Commit Message Contains Key Word: internal
+  Commit: c384317    --Commit Message Contains Key Word: future
+  Commit: 171eb76    --Commit Message Contains Key Word: revert
+  Commit: 171eb76    --Commit Message Contains Key Word: future
+  Commit: f2bd25a    --Commit Message Contains Key Word: step
+  Commit: da823c7    --Commit Message Contains Oem: NEC
+  Commit: cd9bbd3    --Commit Message Contains Key Word: bypass
+  Commit: cd9bbd3    --Commit Message Contains Key Word: revert
+  Commit: cd9bbd3    --Commit Message Contains Key Word: internal
+  Commit: 66895b6    --Commit Message Contains Key Word: hardware
+  Commit: 95126c3    --Commit Message Contains Key Word: step
+  Commit: 95126c3    --Commit Message Contains Key Word: stepping
+  Commit: 95126c3    --Commit Message Contains Key Word: restricted
+  Commit: 49392c5    --Commit Message Contains Key Word: revert
+  Commit: 49392c5    --Commit Message Contains Key Word: internal
+  Commit: c31ba29    --Commit Message Contains Key Word: step
+  Commit: c31ba29    --Commit Message Contains Key Word: stepping
+  Commit: f8c1903    --Commit Message Contains Key Word: internal
+  Commit: ffaf18b    --Commit Message Contains Key Word: future
+  Commit: a29cf06    --Commit Message Contains Key Word: internal
