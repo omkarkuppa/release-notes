@@ -6,7 +6,7 @@ Date: Thu Oct 10 22:16:32 2019 -0700
 FSP Dispatch mode BIOS may ASSERT because PeiMemory not installed.
 In FSP dispatch mode and EDK2 build the policy PPI is already
 installed when calling DefaultPolicyInit PPI function, the duplicate
-InstallPolicy step should be removed.
+InstallPolicy step should be removed.  
 ALso the PolicyReadyPPI should be always installed regardless
 FSP API, Dispatch or EDK2 native builds.
 Change-Id: I8157b0849bf85495fb46a6caf79437f6e0c9a956
@@ -203,7 +203,7 @@ Commit: 5e1ac4dd12e93315028356e6c49965a89bd57877
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 22:12:45 2019 -0700 
 -------------------------------------------------------------------------------- 
-PchPciBdfLib: [1/14] Introduce the library
+
 PchPciBdfLib library is intended to deliver methods to obtain
 Bus, Device, Function and PCI configuration space base address
 for PCH devices.
@@ -219,21 +219,7 @@ but integrated in SoC in different way (B:D:F is different).
 This patch introduces the library for,
 adds it to compilation for all projects
 but usage of the library is not enabled.
-The change is split to patch series:
-[1/14] Introduce the library                         <- this patch
-[2/14] Enable the library for ClientOneSiliconPkg
-[3/14] Enable the library for PCH PCIe RootPorts code
-[4/14] Enable the library for TigerLake code
-[5/14] Enable the library for AlderLake code
-[6/14] Enable the library for JasperLake code
-[7/14] Enable the library for RocketLake code
-[8/14] Enable the library for EagleStream code
-[9/14] Introduce PCH FRU Mapping
-[10/14] Remove redundant PchPcieRpInfo header
-[11/14] Remove redundant PchTraceHubInfoLib library
-[12/14] Remove redundant ScsLocationLib library
-[13/14] Unify SATA library for all PCH generations
-[14/14] Final code cleanup
+
 Change-Id: Id87ecbe6c9f2025b1d5b115822403c49ca40f143
 
 
@@ -472,7 +458,7 @@ Commit: bb4280583f5dd5386ab9963a1f5d600b20846e97
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 22:09:13 2019 -0700 
 -------------------------------------------------------------------------------- 
-TigerLakePlatSamplePkg/CapsuleUpdate: BtGACM Capsule Update
+BtGACM Capsule Update
 Add BtG ACM Binary capsule update support.
 Change-Id: Id5ecc1e30d4e4ab20fe6f4824a9804edeab844aa
 
@@ -2014,7 +2000,7 @@ Commit: 520464ff3843b98c1496b2b2dea8946a47364a50
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 21:50:28 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL-U][Daily][A2/A3]:Yellow bang observed for "Intel RST VMD Controller 9A0B (TGL)" under Storage Controllers with  v2373_00_290
+Yellow bang observed for "Intel RST VMD Controller 9A0B (TGL)" under Storage Controllers with  v2373_00_290
 Disabled VMD by default
 Change-Id: Iaecd6d45cbf6ac87e40af19e88d4a0df760b7fb2
 
@@ -2246,7 +2232,7 @@ Commit: 94e51bc4c2324506f32a4ac60b562869a1510fa8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 21:48:02 2019 -0700 
 -------------------------------------------------------------------------------- 
-CCA fail to be connected after enabling PDC (DCI OOB)
+CCA failed to be connected after enabling PDC (DCI OOB)
 1. Configure DCI ModPHYPg regardless of probe attached or not.
 2. TGL and beyond, remove sending LVM IPC1 command, which is done by OpenIpc; ICL, remove static LVM programming
 Change-Id: I5be9a83b68a28082e1eeeddb965cd3f92f261d15
@@ -3162,18 +3148,17 @@ Commit: f71f61c52e4d7dc6d78b99d34c7bcf283da907f6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 21:35:11 2019 -0700 
 -------------------------------------------------------------------------------- 
-ServerSiliconPkg/Iio: [Workaround EGS] UEFIFW shall enable and initialize NorthPeak (NPK) controller embeded in North Cluster
+ServerSiliconPkg/Iio: UEFIFW shall enable and initialize NorthPeak (NPK) controller embeded in North Cluster
 - New function in ClientOneSiliconPkg to get PCH TH config from PCH config HOB which is defined in ClientOneSiliconPkg
 - New Library created for CDF in SeverSiliconPkg counterpart of PchTraceHubInfoLib from C1S with function to get PCH TH config
 - Changed definition of TRACE_HUB_CONFIG struct for unification between ClientOneSiliconPkg and ServerSiliconPkg
 - Changed function to get Trace Hub PCI bus. Added Stack as a parameter.
-- SPR specific code to handle NPK init in DxeTraceHubLib which handle 4 NPKs per CPU added to TraceHubMemAllocation CDF version (all platform specific functions will be merged into one to handle NPK init in all platforms in final implementation)
+- SPR specific code to handle NPK init in DxeTraceHubLib which handle 4 NPKs per CPU added to TraceHubMemAllocation CDF version 
 - Changed IioConfig to have two dimensional array for NPK configs since we have 4 NPKs per CPU in SPR
-- New setup for SPR to have 4 sets of knobs for NPKs (Please provide some tips how to handle this in more clever way if possible)
+- New setup for SPR to have 4 sets of knobs for NPKs
 - New DxeTraceHubLibSprSnr.inf file needed since we have library classes only available for SPR/SNR (PchTraceHubInfoLib)
 - IioNpkInit Library now works also for SPR and performs FW_BAR initialization
 - Added BSE/MSE not writeable in command register of OOB-MSM device on PCI WA to SPR workaround list
-Please note that final implementation is in progress and there is plan to refactor all this redundant code as clearly as possible.
 Change-Id: Idab4ef4be1fd06a36972f70ae67645636d56c722
 
 
@@ -4990,7 +4975,7 @@ Commit: 6bf08ec8a5effacd7b933c7f79b5dfcd104eb6a2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 20:27:03 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL A3] [cAVS] [BIOS] Requesting to change default BIOS setting for Audio Link Mode to Soundwire to match TGL POR
+Requesting to change default BIOS setting for Audio Link Mode to Soundwire to match TGL POR
 Default Audio Link Mode in BIOS settings set to Soundwire
 Change-Id: I57cdc940468914743ac0c8c5ec99781b0636b8ef
 
@@ -5068,7 +5053,7 @@ Commit: e580ec53b6fbcc8d20979d46de3b39a82ee9f05b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 20:25:53 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGP][PCIe] Register values not set according to PCIe BWG 0.93
+Register values not set according to PCIe BWG 0.93
 Updated programming based on latest BWG
 Change-Id: Ib73937a465deae9cb99a70c7bbe4d3745dbf16d7
 
@@ -5262,8 +5247,8 @@ Commit: 95126c3a798b9ac0df9bb661599487f33b4b9308
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 20:23:14 2019 -0700 
 -------------------------------------------------------------------------------- 
-[TGL][A2][Automation][REGRESSION]: SUT hangs at 9CAd while performing Restart with EXT FSPWrapper [Alpha Blocker]
-Removed Restricted tag for PCH Stepping Z0
+SUT hangs at 9CAd while performing Restart with EXT FSPWrapper
+
 Change-Id: I8bf012838cc76eaaa51274bab7099fb23a8639d7
 
 
@@ -5412,8 +5397,8 @@ Commit: 49392c50ff4ec364d6cf1c7392091cd7676e644f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 20:20:57 2019 -0700 
 -------------------------------------------------------------------------------- 
-[JSL]Revert "[TGL] GPIO IO Standby State"
-- As this changes are blocking critical relase for JSL.
+[JSL]Revert "GPIO IO Standby State"
+- As this changes are blocking release
 we are reverting this changes.
 UnitTest: Able to boot after revert this changes.
 Change-Id: Ic89e89116b79cd5af78dd99f318271c1b210356a
@@ -5455,8 +5440,8 @@ Commit: d2a5e8205b4a304418ec747aaa77e0741e760547
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 10 20:20:32 2019 -0700 
 -------------------------------------------------------------------------------- 
-EagleStreamRpPkg/Uba: SPR clean up local headers missing from .inf files
-SPR/C1S clean up local headers missing from .inf files
+SPR clean up local headers missing from .inf files
+
 Change-Id: I6abd726b61fe2680ca44794460665de12c645c0c
 
 
