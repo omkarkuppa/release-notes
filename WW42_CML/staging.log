@@ -56,11 +56,10 @@ Commit: bac7f292be9479123e3d041a6b868319ec97db25
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Oct 14 08:52:05 2019 +0530 
 -------------------------------------------------------------------------------- 
-Move OVERCLOCKING_LOCK earlier for CVE-2019-11157
+[CPU][OC] Move OVERCLOCKING_LOCK earlier.
 
 - Change to lock the OC mailbox interface prior to the second microcode patch load
 
-Hsd-es-id: 2208962673
 Original commit date: Thu Oct 3 17:38:56 2019 +0800
 Change-Id: Ib70a91f167b9bd20a94e857f381e992f59cb21e4
 Original commit hash: 37d7805644bbfbc52c35c7fdd417c7bc3b71aa75
@@ -129,12 +128,11 @@ Commit: a671c662c9e81df80e5996d5c1235eb36603acde
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Oct 14 08:51:19 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML_U62-V2][4Star][Hybrid GFX] : Hybrid graphics not working while running the benchmarks
+[CML_U62-V2][Hybrid GFX] : Hybrid graphics not working while running the benchmarks
 
-Applied PcdRootPortIndex and GPIO porting changes only if  SecondConfigReworkOption == x4 PCIe slot.
+Applied PcdRootPortIndex and GPIO porting changes only if SecondConfigReworkOption is configured to x4 PCIe slot.
 Because x4 slot is secondary config only for CML V2 LP4x/DDR4 boards.
 
-Hsd-es-id: 1607854264
 
 Original commit date: Thu Sep 19 13:03:16 2019 +0530
 Change-Id: Ic9597b7b46b5e9d8e50c5a69a30f25db31aac8eb
@@ -237,11 +235,8 @@ Commit: 5f404fd5d4ede69a7e4a71201657dfe8e4469bd7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Oct 14 08:49:57 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML] BIOS do not touch MSR 0xc80[0] and always set MSR 0xc80[30]
+[CML] [CPU] BIOS doesn't not touch MSR 0xc80[0] and always set MSR 0xc80[30] during POST
 
-- Part 1: BIOS doesn't touch MSR 0xc80[0] during POST
-
-Hsd-es-id: 1507349715
 Original commit date: Fri Jun 21 18:30:28 2019 +0800
 Change-Id: I0870d206c1db06ed6e8fabda8ea8d7e83e7e6e14
 Original commit hash: f712c5283aebdfcc531f565e122c424e78e6c54c
@@ -345,15 +340,14 @@ Commit: c673693741599edbedf28abdbbec24bf9f69717e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Oct 14 08:48:03 2019 +0530 
 -------------------------------------------------------------------------------- 
-CometLakePlatSamplePkg:[1507394006][CML][MRC] CML-S 62/102 and CML-H DDR4(SoDIMM/ UDIMM) Memory Speed and BIOS Board type configuration
+[CML][MRC] Update CML-S 62/102 and CML-H DDR4(SoDIMM/ UDIMM) Memory Speed and BIOS Board type configuration
 
 MRC Board Inputs must be updated to properly constrain the Maximum memory frequency per board design.
 Changes Implemented:
-Reusing existing 2DPC DMFC limitations which are still applicable for CML-S/H.
-MrcBoardType enumeration 'btUser1' has been repurposed for CML-S 6L boards, for 3200 support.
-Refactored frequency limitations due to Mixed 2DPC memory configurations.
+- Reusing existing 2DPC DMFC limitations which are still applicable for CML-S/H.
+- MrcBoardType enumeration 'btUser1' has been repurposed for CML-S 6L boards, for 3200 support.
+- Refactored frequency limitations due to Mixed 2DPC memory configurations.
 
-Hsd-es-id: 1507394006
 Original commit date: Tue Sep 3 15:42:29 2019 -0700
 Change-Id: I21d5eec678b967210833ad3021841d528dba0f17
 Original commit hash: 0f9af15daf6064082f0528a05cb8de444cddcc56
@@ -448,7 +442,7 @@ Commit: 0920dfaca27699db79e48ebbe59919c5121506e1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Oct 11 13:45:11 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML U][MRC][K0] [DDR4\LPDDR4x] Hang w\ ch1 only populated
+[CML U][MRC][K0] [DDR4\LPDDR4x] Hang with ch1 only populated
 
 Issue:
 
@@ -456,7 +450,7 @@ DDR4\LPDDR4 systems get soft hang when ch1 only populated  and SAGV enabled.
 
 Cause:
 
-W\ Ch1 only population, dis_lpmode_on_sagv WA is applied at Ch1 only
+With Ch1 only population, dis_lpmode_on_sagv WA is applied at Ch1 only
 Ch1 get clocks from Ch0 s we need to set this bit in Ch0 even if not populated
 (will be fixed in K1 Step )
 cpu.uncore.mchbar_ch0_mem.mchbar_ch0.mchbar_ch0_cr_sched_third_cbit_0_0_0_mchbar.dis_lpmode_on_sagv = 0x0
@@ -465,7 +459,6 @@ cpu.uncore.mchbar_ch1_mem.mchbar_ch1.mchbar_ch1_cr_sched_third_cbit_0_0_0_mchbar
 Solution:
 We need to set dis_lp_mode_on_sagv for Ch0 since Ch1 uses its clocks.
 
-Hsd-es-id: 1306799131
 Original commit date: Thu Sep 19 14:04:09 2019 +0300
 Change-Id: I5febc7f8af13d2d19951b975c7a4063d90a94956
 Original commit hash: d6e06e0d0a45841e4e13e22c01bd5c130422e90b
@@ -510,7 +503,7 @@ Commit: 12d949081ca739eb6a4a898865129b31e24726f7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Oct 11 13:45:05 2019 +0530 
 -------------------------------------------------------------------------------- 
-Move OVERCLOCKING_LOCK earlier for CVE-2019-11157
+[CPU][OC] Move OVERCLOCKING_LOCK earlier 
 
 - Change to lock the OC mailbox interface prior to the second microcode patch load
 
@@ -643,12 +636,10 @@ Commit: 8685fb295fe5fb311092ccdf2514a9fc0368c05f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Oct 11 13:43:54 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML_U62-V2][4Star][Hybrid GFX] : Hybrid graphics not working while running the benchmarks
+[CML_U62-V2][Hybrid GFX] : Hybrid graphics not working while running the benchmarks
 
-Applied PcdRootPortIndex and GPIO porting changes only if  SecondConfigReworkOption == x4 PCIe slot.
+Applied PcdRootPortIndex and GPIO porting changes only if SecondConfigReworkOption is configured to x4 PCIe slot.
 Because x4 slot is secondary config only for CML V2 LP4x/DDR4 boards.
-
-Hsd-es-id: 1607854264
 
 Original commit date: Thu Sep 19 13:03:16 2019 +0530
 Change-Id: Ic9597b7b46b5e9d8e50c5a69a30f25db31aac8eb
@@ -761,11 +752,8 @@ Commit: e9e75ec00eb0015e2d3f95c1f4780658d5f7b482
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Oct 11 13:41:44 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML] BIOS do not touch MSR 0xc80[0] and always set MSR 0xc80[30]
+[CML][CPU] BIOS does not touch MSR 0xc80[0] and always set MSR 0xc80[30] during POST
 
-- Part 1: BIOS doesn't touch MSR 0xc80[0] during POST
-
-Hsd-es-id: 1507349715
 Original commit date: Fri Jun 21 18:30:28 2019 +0800
 Change-Id: I0870d206c1db06ed6e8fabda8ea8d7e83e7e6e14
 Original commit hash: f712c5283aebdfcc531f565e122c424e78e6c54c
@@ -861,11 +849,10 @@ Commit: 00f3520947644cd9e96dd9d6660eec52635c3148
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Oct 11 13:39:25 2019 +0530 
 -------------------------------------------------------------------------------- 
-CometLakeSiliconPkg/SystemAgent: Opregion fixes for DG1
+[SA][DG1] Opregion fixes for DG1
 The changes is to check for Device Id present in PCI config space header instead of
 PCIR header. Also calculate the OpRegion size based on ROM image size.
 
-Hsd-es-id: <14010069287>
 Original commit date: Fri Sep 27 11:23:21 2019 +0530
 Change-Id: Ic96b3c42384b2c53cac4ca59094917b1acd5a0cc
 Original commit hash: d22d2baa08229b5a559d51631b2f316ddf3d2875
@@ -910,15 +897,14 @@ Commit: c340cfda5b14e415171323ed784688ba328abe4e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Oct 11 13:39:07 2019 +0530 
 -------------------------------------------------------------------------------- 
-CometLakePlatSamplePkg:[1507394006][CML][MRC] CML-S 62/102 and CML-H DDR4(SoDIMM/ UDIMM) Memory Speed and BIOS Board type configuration
+[CML][MRC] Update CML-S 62/102 and CML-H DDR4(SoDIMM/ UDIMM) Memory Speed and BIOS Board type configuration
 
 MRC Board Inputs must be updated to properly constrain the Maximum memory frequency per board design.
 Changes Implemented:
-Reusing existing 2DPC DMFC limitations which are still applicable for CML-S/H.
-MrcBoardType enumeration 'btUser1' has been repurposed for CML-S 6L boards, for 3200 support.
-Refactored frequency limitations due to Mixed 2DPC memory configurations.
+-Reusing existing 2DPC DMFC limitations which are still applicable for CML-S/H.
+-MrcBoardType enumeration 'btUser1' has been repurposed for CML-S 6L boards, for 3200 support.
+-Refactored frequency limitations due to Mixed 2DPC memory configurations.
 
-Hsd-es-id: 1507394006
 Original commit date: Tue Sep 3 15:42:29 2019 -0700
 Change-Id: I21d5eec678b967210833ad3021841d528dba0f17
 Original commit hash: 0f9af15daf6064082f0528a05cb8de444cddcc56
@@ -947,11 +933,9 @@ Commit: 8e496d9d72d34d7d540535cb1e8e4a93f79de174
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Oct 11 13:38:28 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CMLS 102] Incorrect Turbo settings in bios
+[CMLS 102][CPU] Incorrect Turbo settings in bios
 
 Reading the MSR 0x1AE and updating Turbo Ratio Limit NumCores.
-
-Hsd-es-id:  https://hsdes.intel.com/appstore/article/#/2208946796
 
 Original commit date: Fri Sep 27 13:04:21 2019 +0530
 Change-Id: Ice8985333de3c854f43ddca39cc7433c4f606f81
