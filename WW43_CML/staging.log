@@ -378,15 +378,15 @@ Commit: 972947c414e3bf105a4ba923b81f427f320fb5cc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Oct 22 11:54:50 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CMP-V] Frequent wakes observed while SUT is in PS_ON state
+[CMLV][PCH] Fix frequent wakes observed while SUT is in PS_ON state
 
-POR value change MAXTSST to b'111 to disable thermal sensor wake from shutdown after timer expiration
+POR value change MAXTSST (Maximum Thermal Sensor Shutdown Time) to b'111 
+to disable thermal sensor wake from shutdown after timer expiration.
 
 Hsd-es-id: 1608106085
 Original commit date: Wed Oct 16 14:09:08 2019 +0800
 Change-Id: I6c04853a1416b057da9140467388ee7e85a33943
 Original commit hash: 6526d100a0341f18b384f5a364f2122c587e69a2
-
 -------------------------------------------------------------------------------- 
 [Changed Files]
 CometLakeSiliconPkg/CmlvPch/Library/Private/PeiPchInitLib/PchThermal.c
@@ -396,7 +396,7 @@ Commit: 00b75bbd65275b5a66e89b7fba0c394b648575a9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Oct 22 11:54:40 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML] Heap Guard of Special Pool Feature doesn't work for flash read to get GbE UUID
+[PCH] Fix Heap Guard of Special Pool Feature doesn't work for flash read to get GbE UUID
 
 SPI DXE protocol can only allocate the buffer for SmmCommunication before EndOfDxe.
 
@@ -404,7 +404,6 @@ Hsd-es-id: 2204514993
 Original commit date: Tue Oct 15 18:21:35 2019 +0800
 Change-Id: I706927f22cc4ba89f78f8fe407a91ca59ae5b7fc
 Original commit hash: b612b06b7349eaa6d7e29840c10f3e9b99199018
-
 -------------------------------------------------------------------------------- 
 [Changed Files]
 CometLakeSiliconPkg/CmlvPch/Spi/Dxe/SpiSmmDxe.c
@@ -432,16 +431,14 @@ Commit: 71f3049cf494163852e83ce8c47ea7089d4221ab
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Oct 22 11:53:54 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CMLV] GpioOutputStateUnlock is not working properly for CMLV
+[CMLV][PCH] Fix GpioOutputStateUnlock is not working properly
 
-Root Cause: The Old value for Lock Tx register was read from a wrong register.
-After updating the Corect register it is working fine.
+Update the register of PADCFGLOCKTX for Pad Configuration GPIOTXState lock.  
 
 Hsd-es-id: 1607959381
 Original commit date: Mon Oct 14 11:59:41 2019 +0530
 Change-Id: Ibd68ca71b3d5bd9e2e925374c87ebc5bd9c26209
 Original commit hash: d46ee410fddbe62ba16a9b1f6c902bb4133ff1a0
-
 -------------------------------------------------------------------------------- 
 [Changed Files]
 CometLakePlatSamplePkg/CmlvBoard/Others/PeiBoardInitLib/GpioTableCmlVDdr4.h
@@ -452,14 +449,10 @@ Commit: 6ef4e73c94bed3c7f52eaad3b110e7fa0f5b4346
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Oct 22 11:53:51 2019 +0530 
 -------------------------------------------------------------------------------- 
-Missing part of w/a for xHCI back-to-back resets
+[PCH] Update XHCI BIOS programming based on silicon requirement 
 
-Adding missing programming of XHCI w/a for back-to-back resets without
-those systems may hang ocassionaly when resets are done in a short succession.
 Setting HWTHCRST and clearing WTONSWHCRST.
-
 Hsd-es-id: 1608012913
-
 Original commit date: Mon Oct 14 15:51:30 2019 +0200
 Change-Id: Ic427b5e282474ff8a99f86278bb4e2cc7d0aaa09
 Original commit hash: ebf3a22e1b6aa9aeee3dbf5244d4f2352e9ba475
@@ -711,9 +704,7 @@ Commit: dcfa0054c8ccf39d62c22d4612328454e8c98ca2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Oct 22 11:50:59 2019 +0530 
 -------------------------------------------------------------------------------- 
-Revert "[SERIALIO][ACPI] Missing _PS0 implemention for all LPSS devices"
-
-This reverts commit 00c17c95105b6e40763096d6cdae0beb5e017160.
+Revert "[PCH] Implement _PS0 for all LPSS devices"
 
 Hsd-es-id: N/A
 Original commit date: Fri Oct 11 05:48:33 2019 -0700
@@ -886,7 +877,7 @@ Commit: b9b2bef91fc67bec37edabd28dffe18b175996f8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Oct 22 11:48:56 2019 +0530 
 -------------------------------------------------------------------------------- 
-[SERIALIO][ACPI] Missing _PS0 implemention for all LPSS devices
+[PCH] Implement _PS0 for all LPSS devices
 
 - Added _PS0 and D0 ACPI programing for LPSS
 
@@ -988,16 +979,15 @@ Commit: e88f16f6cc3d6e0ae735741c9348a7ed0e6cbbbd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Oct 22 11:47:43 2019 +0530 
 -------------------------------------------------------------------------------- 
-CometLakePlatSamplePkg/Acpi: Enabled Rtd3PcieDg1 asl and Setup option for VRAMSR
+[CMLU V1 DG1][PCH] Updated DG1 Rtd3 sequence for DG1 RVP board. 
 
-Added new platform setup option to enable VRAMSR. Aslo enabled Rtd3PcieDg1.asl file
-for RP01
+ 1.Enable the policy to support VRAM Self Refresh feature. 
+ 2.Enable Rtd3PcieDg1.asl file for RP01
 
 Hsd-es-id: 14010064174
 Original commit date: Thu Oct 3 13:06:45 2019 +0530
 Change-Id: If3e770fbe924597c9a623e8682b3afc5d4e78f7f
 Original commit hash: 2cd3e0cfdc94f4814b5bd341bb214aabe575bd55
-
 -------------------------------------------------------------------------------- 
 [Changed Files]
 CometLakePlatSamplePkg/Acpi/AcpiTables/SsdtRtd3/CmlUDg1Rtd3OnBoardTbt.asl
