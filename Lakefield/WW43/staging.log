@@ -19,13 +19,10 @@ Commit: cfdbdc777b0e1ddf1c9b6679269011baf2cda3ec
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 24 14:46:51 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF ROW][B0/B2] Writes to I2C slaves on I2C1 bus failing
-
-As per the GPIO offset change in RDL, Modified the GPIO address in bios for GPIO72 & GPIO73.
+Description: Writes to I2C slaves on I2C1 bus failing
+Solution: Modified GPIO address in bios for GPIO72 & GPIO73.
 Pad termination disabled for I2C1-SDA and SCL GPIO.
 
-Hsd-es-id: 1607865106
-Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Thu Oct 10 13:10:51 2019 +0530
 Change-Id: I421604e1943033eee621db1ca80febb76537f438
 Original commit hash: 965b0a4830bbfbb9ef7b7f998f74bec6abfb3975
@@ -99,14 +96,8 @@ Commit: c97166cd867eec144f6bfec912c3802bf0b7e3ab
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 24 14:46:44 2019 +0530 
 -------------------------------------------------------------------------------- 
-CCA connection break after releasing holdhook after G3
+Fix: CCA connection reset bug.
 
-There is no RTC for LKF, bits in RTC well in ECTRL may not retain after G3. It's auto consent that retains connection after G3,
- after release hook it encounters a global reset which breaks the connection. Prevent global reset when connection has been established;
-Add w/a for ICL to enable rosc fast clock gating when debug is disabled.
-
-Hsd-es-id: 1507383403, 14010033987
-Tracker-link: https://hsdes.intel.com/resource/1507383403
 Original commit date: Mon Sep 23 18:08:21 2019 +0800
 Change-Id: I9d4bf60e5ff16722682c597734e4f04fc4681b34
 Original commit hash: 3f9937f11db55c8a0d85d7279297fbb08c8bf33e
@@ -208,9 +199,8 @@ Commit: 25a4b9986b97a1f855b3d9fc3c7f3cf034ae2e6d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 24 14:46:36 2019 +0530 
 -------------------------------------------------------------------------------- 
-Add Index argument to I3C Policy prints
+Description: Enable 3C Policy prints
 
-Hsd-es-id: 2209165366
 Original commit date: Thu Oct 3 18:51:36 2019 -0700
 Change-Id: I84aeb234b88b74bbc6c3e92d3d73dd13a1ba30af
 Original commit hash: 7b2c3536fbec726c870dfc58eb0ed5cc0e6673fa
@@ -322,14 +312,11 @@ Commit: dec624c4ebb651c43e13c5f4e8054414e2662c67
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 24 14:46:27 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Changing the following Bios setup options to support S0ix by default
-
+Description: Support Si0x by default in BIOS menu:
 1. Intel Advanced Menu -> Connectivity configuration -> Discrete Bluetooth Mode -> Thunder Peak.
 2. Intel Advanced Menu ->PCH IO Configuration -> THC Configuration -> (1st Option) THC Port Configuration -> THC0
 3. Intel Advanced Menu ->PCH IO Configuration -> THC Configuration -> (2nd Option) THC Port Configuration -> THC1
 
-Hsd-es-id: 1607951418
-Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Tue Oct 1 11:16:09 2019 +0530
 Change-Id: I04d6310834bf0976e1b3527e0296c179c269e2ee
 Original commit hash: e30076c3813b3f34f6b1ff3ab16eece18a87d6e2
@@ -344,45 +331,8 @@ Commit: 5bc467d39a8ad6c44b39b053e1e3655cb07d7988
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 24 14:46:26 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Add the following GPIO pins to IoStandby list to set IOSSTATE to 0xF
+Description: Add GPIO pins to IoStandby list to set IOSSTATE to 0xF
 
---------------------------------------------------
-GPIO       |     Net Name
---------------------------------------------------
-GPIO96     |     ROP_PMIC_PWRBTN_B
-GPIO106    |     VOLUMEUP_N
-GPIO122    |     MODEM_READY
-GPIO143    |     VOLUMEDOWN_N
-GPIO147    |     CODEC_IRQ_N
-GPIO148    |     BT_M.2_HOST_WAKE
-GPIO161    |     WIFI_M.2_PCIE_WAKE_N
-GPIO183    |     MODEM_PCIE_WAKE_N
-GPIO184    |     MODEM_PCIE_CLKREQ_N
-GPIO186    |     WIFI_M.2_PCIE_CLKREQ_N
-GPIO173    |     SDCARD_CD_B
----------------------------------------------------
-ISH GPIO   |   GPIO        |   Net Name
----------------------------------------------------
-ISH_GP_0   |   GPIO151     |   FG1_FG2_ALERT
-ISH_GP_1   |   GPIO152     |   CHRGR2_ISH_GP_1
-ISH_GP_2   |   GPIO153     |   TCPC2_ALERT_N
-ISH_GP_13  |   GPIO104     |   SNSR_ACL_GYRO1_INT_ISH_GP_3
-ISH_GP_4   |   GPIO155     |   SNSR_ALS2_INT
-ISH_GP_5   |   GPIO156     |   SNSR_SAR1_INT
-ISH_GP_6   |   GPIO157     |   SNSR_RVP
-ISH_GP_7   |   GPIO158     |   SNSR_MAG2_INT
-ISH_GP_8   |   GPIO159     |   SNSR_SAR2_INT_ISH_GP_8
-ISH_GP_12  |   GPIO222     |   BATTID2
-ISH_GP_16  |   GPIO243     |   SNSR_ALS1_INT_ISH_GP_16
-ISH_GP_21  |   GPIO220     |   SNSR_ACL_GYRO2_INT
-ISH_GP_22  |   GPIO221     |   SNSR_MAG1_INT
-ISH_GP_23  |   GPIO180     |   SNSR_HALL_INT_ISH_GP_23
-ISH_GP_30  |   GPIO193     |   PMIC_SW1_SW2_INT
-ISH_GPIO31 |   GPIO204     |   TCPC1_ALERT_N
---------------------------------------------------
-
-Hsd-es-id: 1607964663
-Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Tue Oct 1 10:26:41 2019 +0530
 Change-Id: I44973aaeb91190891c9e66f60f070ba1ac74f9b1
 Original commit hash: 3cc7b262d22c3f26942e727838c0de5ac7650f68
@@ -396,19 +346,10 @@ Commit: e9da3932cde0aaa731526f3b983742593c2bb156
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 24 14:46:25 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF: Add a PSF dummy read to make sure previous posted PSF write gets completed.
-
-Following is the sequence of events causing the Problem and the Solution:
-1) There is a Memory write to PSF through P2SB to disable a device.
-2) Shortly after the above Memory write, there is a config write to mask the PSF endpoints.
-3) Since the Memory write is posted write, it didnot arrive before the config write and caused P2SB hang.
-4) After this there is a I/O port 0x76 access.
-   The I/O port 0x76 goes to RTC. Because RTC is not on PSF, RTC I/O cycles are routed there via P2SB,
-   which is presently hung due to the previous sideband cycle attempt.
+Fix : Add a PSF dummy read to make sure previous posted PSF write gets completed.
 By adding dummy read after posted write, It is made sure that write complets
 before the config write and avoid the P2SB hang and hence I/O and PSF cycles.
 
-Hsd-es-id: 1607629585
 Original commit date: Tue Oct 1 13:04:52 2019 +0530
 Change-Id: Ib5157b827286aa979313e281b46d00c9595a2f1b
 Original commit hash: c26d864b8668447631995887b55e842739273c77
@@ -438,12 +379,8 @@ Commit: 2548e935379a37b802d7f2508d3354d2196b4373
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 24 14:46:22 2019 +0530 
 -------------------------------------------------------------------------------- 
-LKF BIOS need to Program MMP Virtual Fuse registers to enable a RTL fix
+Fix: Program MMP Virtual Fuse registers to enable a RTL fix
 
-LKF BIOS need to write MMP Virtual Fuse registers to enable a RTL fix
-that fixes inactive lane (TX1) issue during UFS link startup
-
-Hsd-es-id: 1607967662
 Original commit date: Tue Oct 1 14:53:24 2019 +0530
 Change-Id: Icc5c2e10bf2bcf139c59f77c0fa2b6e24f20145d
 Original commit hash: c42d81959d5f9210c63619b47248c8382ff8e6fc
@@ -477,13 +414,10 @@ Commit: 5e8a51775663fdf97a264c4d969a1c18b6d1f02c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 24 14:46:19 2019 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Adding GPIO191, GPIO192 and ISH_I3C0_SCL_FB to IOSTANDBY list
-
-System wake from S0ix through shake sensor is not working.
+Description: Adding GPIO191, GPIO192 and ISH_I3C0_SCL_FB to IOSTANDBY list
+Solution: System wake from S0ix through shake sensor is not working.
 Adding ISH I3C pins to IOSTANDBY list to enable wake from CS through this sensor.
 
-Hsd-es-id: 1507427562
-Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Thu Sep 26 16:26:39 2019 +0530
 Change-Id: I4a011f9208652993d1d3c88b1f72551ca09e16ec
 Original commit hash: f08c94959835d487bdd34b6636d75b442df812eb
@@ -560,19 +494,8 @@ Commit: bdfed6f025dfc18e7d741674a30f98b761c7a9af
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Oct 24 14:46:12 2019 +0530 
 -------------------------------------------------------------------------------- 
-Few Bios setup options needs to be made default for S0ix
+Fix: Default BIOS setup option for S0ix
 
-Problem: we disabled the configuration options in past as Soix has issues
-Solution: Now Enabling Soix configuration by default in bios setup
-Unit TestDone:
-1. Checked the required setup options in setup page
-2. Checked OS boot status for
-   1. SPI-FSP   -Release
-   2. UFS-FSP   -Debug
-
-Hsd-es-Id: 1607949718
-Tracker-link: https://hsdes.intel.com/appstore/article/#/1607949718
-Attestation-link: LakeFieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Wed Sep 25 12:36:28 2019 +0530
 Change-Id: Idf07bf0933b6a526c031ea6b99fbe22c33ec8496
 Original commit hash: 5fb60e20d11d57e011534fd9cfad31bb47002789
