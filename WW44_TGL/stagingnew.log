@@ -937,7 +937,7 @@ ClientOneSiliconPkg changes:
 Platform changes:
 -Updated BIOS Svn version
 -Clean-up: removal of Bios Guard NV from Dsdt main body since separate .aht created for Bios Guard Nvs
--Clean-up: Set correctly marketing name: BIOS Guard through all comments
+-Clean-up: Set correctly name for BIOS Guard through all comments
 
 Hsd-es-id: 1607663218
 Original commit date: 2019-08-23 13:22:37 -0700
@@ -2854,10 +2854,8 @@ Issue:
 
 Root Cause:
   Spec miss on the FSM configuration.
-    MRC must configure the LPDDR4_split_transition to tell the hardware to do the frequency switch in the middle of the sequence.
-    MRC must then specify which index in the Generic MRS FSM array where the frequency switch should occur.
   MRS FSM control is not being updated due to a check on (!Outputs->JedecInitDone).
-  MRC must configure GenMrsFsmCtl.Bits.FSP_CONTROL = 2 for all MR 16's after switching the FSP-OP point.  This is due to the HW doesn't flip its bit until the end of the MRS FSM.
+  MRC must configure GenMrsFsmCtl.Bits.FSP_CONTROL = 2 for all MR 16's after switching the FSP-OP point. 
 
 Change:
   Added variable to the MRC_GEN_MRS_FSM_MR_TYPE to specify that a frequency switch needs to occur at this entry.
@@ -3327,8 +3325,6 @@ Date: 2019-10-28 16:26:00 -0700
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/MemoryInit/Tgl: [TGL][MRC] Resolve CTE Build Failures
 
-Resolved build failures observed in the CTE Restricted build.
-
 Hsd-es-id: 2208911785
 Original commit date: 2019-09-13 14:57:39 -0700
 Change-Id: Ie8119bf0f4ab3f7db44832b6df645b2ecec863b2
@@ -3530,7 +3526,7 @@ Commit: d3655e589b4b215413d296b8f70adc1e8a871d6f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-10-28 16:25:44 -0700 
 -------------------------------------------------------------------------------- 
-TigerLakePlatSamplePkg: Use PcdFeatureFlag and replace trusted consoles check.
+Use PcdFeatureFlag and replace trusted consoles check.
 
 After the integration of the MinPlatform changes, some PCDs got redefined
 affecting their scope. For this particular issue, PcdTpm2Enable was a
@@ -3823,10 +3819,7 @@ Commit: cb8ecbb27ab8c75faed9f5ae23cdb961fb745e81
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-10-28 16:24:35 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/CpuPrintPolicy:SGX EPOCH values are exposed in the External BIOS debug log.
-
-SGX EPOCH values are exposed in the External BIOS debug log. Keeping the SGX EPOCH debug messages
-under CPU restricted tag to prevent exposing the values to External debug bios
+ClientOneSiliconPkg/CpuPrintPolicy:remove SGX EPOCH values from debug log.
 
 Hsd-es-id: 1607809794
 Original commit date: 2019-09-30 12:50:59 +0530
@@ -4445,12 +4438,11 @@ Commit: 9b9e9eda1d7f2eafecdc8e77b4e36414ccc99a68
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: 2019-10-28 16:23:11 -0700 
 -------------------------------------------------------------------------------- 
-Extend PM_SYNC hysteresis for TGL A0/P0 CPU
+Extend PM_SYNC hysteresis for TGL U/Y/H CPU
 
 Power management team has found out that PkgC3
 residency is low if PM_SYNC hysteresis is set to
-4us. The new recommendation for TGL U/Y A0 processors
-and TGL H/S P0 processors is to set 48us hysteresis
+4us. The new recommendation for TGL U/Y/H is to set 48us hysteresis
 to PM_SYNC indications.
 
 Hsd-es-id: 1306835346
