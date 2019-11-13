@@ -1,0 +1,227 @@
+================================================================================ 
+Commit: 04e11c219029a432b4a1fd943e9a1300a568153d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:30 2019 +0530 
+-------------------------------------------------------------------------------- 
+Changing BIOS ID to 3443.00 for 19'WW44.3 BIOS label
+
+Hsd-es-id: NA
+Original commit date: Wed Oct 30 20:20:21 2019 +0530
+Change-Id: I4cfa65f3ee6c7dbc575b049a5f3ae712f5aee4bd
+Original commit hash: bf6b9a9da53248e413cb93e77cc860cb73aa015d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: e354d885a4fd49e5f3dc2fee9f73185fe96e0957 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:29 2019 +0530 
+-------------------------------------------------------------------------------- 
+LakeFieldSiliconPkg: xHCI programming update up to BIOS Guide rev19
+
+Enabling TRB prefetch for TTE, Enabling TTE prefetcher,
+updated LTV-Limit, Enabled USB2 U0 LTV,
+TTE policy updates regarding mis-uFrame checking and disable INTR
+Complete - split limit to 3 uFrames
+
+Hsd-es-id: 1808826627
+
+Original commit date: Wed Oct 23 10:11:42 2019 +0200
+Change-Id: I9dcd1e0c3fbaf670d141f8f17b34292ed88818fc
+Original commit hash: 2e9a840103bbd9ebbc01aea094c76f8477058f98
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
+
+================================================================================ 
+Commit: dd535cc2fb947c7f187c48df2c15fdda595c46be 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:28 2019 +0530 
+-------------------------------------------------------------------------------- 
+LKF: Improvements for reliable UFS Initialization and Usage.
+
+1) For reliable UFS controller Initialization Host Controller Enable Bit need
+to be toggled from 0 -> 1 for reset and 1 -> 0 for bringing out of reset
+2) After UIC command, Check for IS.Bit10 UIC Command Completion Status (UCCS)
+as that bit is set to '1' by the host controller upon completion of a UIC command.
+3) Currently Dme Link Startup is being tried only once, however this need to be
+tried again if the previous attempt is failed as per the host controller spec.
+Also in LKF, HCE reset is not attempted during every UFS Pass Thru Entry which
+used to happen in other targets in case UFS pass thru driver binding fails due
+to Dme Link start up failure.
+
+Hsd-es-id: 1607609737
+Original commit date: Tue Oct 29 23:37:58 2019 +0530
+Change-Id: I0ae96e63f20c753852d244fe97cf5c594f3fa2f2
+Original commit hash: 05ad6ef2cdb19269689b05b546bfb38f4ecdbcab
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Override/MdeModulePkg/Bus/Ufs/UfsPassThruDxe/UfsPassThruHci.c
+LakeFieldSiliconPkg/Pch/Library/Private/PeiScsLib/PeiScsUfs.c
+
+================================================================================ 
+Commit: c2d8b3cb0966fe898a59ce9637e1efdfc049d977 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:26 2019 +0530 
+-------------------------------------------------------------------------------- 
+LKF: Add a PSF dummy read to make sure previous posted PSF write gets completed.
+
+By adding dummy read after posted write, It is made sure that write complets
+before any other writes.
+In the past saw P2SB hang due to Write followed by Config Write Hsd-es-id: 1607629585.
+There is thin chance that two different writes can also cause issues if there is
+strict order dependency between these writes. Hence avoiding that situation with this.
+
+Hsd-es-id: 1607629585
+Original commit date: Tue Oct 29 23:47:06 2019 +0530
+Change-Id: I1bd484211b86199844ab65dfd9a72bae71a0a67a
+Original commit hash: 0929af5ceca2c9f8ee221ebd341d30b92c5e6e5f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/Pch/Library/Private/PeiDxeSmmPchPsfPrivateLib/PchPsfPrivateLib.c
+
+================================================================================ 
+Commit: 4739553d7bbab28a288c945421b3b9f95c590142 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:25 2019 +0530 
+-------------------------------------------------------------------------------- 
+Integrate latest GOP V1029
+
+Hsd-es-id: 1608288268
+Original commit date: Sun Oct 27 14:01:14 2019 +0530
+Change-Id: I466f0733aeaf08a37e2c8bb167e9642ced9d8000
+Original commit hash: 4653a7105bdba0d3465ed37072a61ec5b8b0760f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspBinPkg/SampleCode/Vbt/VbtSimics.bin
+LakeFieldSiliconPkg/SampleCode/IntelGraphicsVbt/VbtSimics.bin
+
+================================================================================ 
+Commit: 9f607a5479c75057bd90515b57ffc78007c64712 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:23 2019 +0530 
+-------------------------------------------------------------------------------- 
+[LKF] Fix for Security Strings that are printed in the BIOS Debug logs
+
+Unexpected Status 0x000A0003 Platform Security Specification  - PCH Security Configuration -  Reserved Check failure
+ Fix: Removing PmcIsXramAccessDisabled() check and
+      Removing Setup Option , Setup Variable as PMC_XRAM support is not there for LKF.
+
+Unexpected Status 0x00010001 Platform Security Specification  - SPI Flash Configuration - .SPI Flash not write protected
+ Fix: Removing Bootgaurd dependency on BIOS Lock making BiosLock Enable by default.
+
+Hsd-es-id: 1607548323
+Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Original commit date: Wed Oct 30 11:11:01 2019 +0530
+Change-Id: Ia69db238eb573bddf293f348104c98a74d8f0a90
+Original commit hash: 7c43aa56f18f8346175148c5dedc3523702a7872
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Features/Hsti/HstiIhvDxe/SecurePCHConfiguration.c
+LakeFieldPlatSamplePkg/Include/SetupVariable.h
+LakeFieldPlatSamplePkg/Setup/PchSetup.hfr
+LakeFieldSiliconPkg/Pch/Include/Private/Library/PmcPrivateLib.h
+LakeFieldSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
+
+================================================================================ 
+Commit: db9600e3eda4c73af18f3004950ba57e135f69b4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:21 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] LKF Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Tue Oct 29 13:21:41 2019 -0700
+Original commit date: Tue Oct 29 13:21:41 2019 -0700
+Original commit hash: c19d09fddc840778052972899746c993427917f5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/LakeFieldFspPkg.dec
+LakeFieldSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: ae69854873135deaad27a7b782e506fb5d4298e4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:20 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] LKF Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Mon Oct 28 11:06:45 2019 -0700
+Original commit date: Mon Oct 28 11:06:45 2019 -0700
+Original commit hash: 6df01c6a5ecef55767cbef9a4709a4c8dc9c8081
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/LakeFieldFspPkg.dec
+LakeFieldSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 5c8af5e55b173a9a62dfd79fb11cc106e2ccc377 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:19 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] LKF Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Sun Oct 27 11:38:16 2019 -0700
+Original commit date: Sun Oct 27 11:38:16 2019 -0700
+Original commit hash: c02366937a93886768eca1ea1c6945996b5b558a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/LakeFieldFspPkg.dec
+LakeFieldSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: b9329c94b48da2c4138cdb01628d28e7485363e3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:18 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] LKF Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Sat Oct 26 11:11:19 2019 -0700
+Original commit date: Sat Oct 26 11:11:19 2019 -0700
+Original commit hash: 0374a6f0203d08ff061188f0556799f96c7b64e5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/LakeFieldFspPkg.dec
+LakeFieldSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: a3a57e584b29a532d6c0c2d6e8e155a9bbe2ef5e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:16 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] LKF Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Fri Oct 25 10:44:47 2019 -0700
+Original commit date: Fri Oct 25 10:44:47 2019 -0700
+Original commit hash: c88fcaf7494db02a2c5dbc862a3d8ce0f6235db3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/LakeFieldFspPkg.dec
+LakeFieldSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: b8ba9ad86a484ab917315311b8732348db7e5d8d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 13 14:55:15 2019 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] LKF Auto-Commit DailyUpdate_FSP/RC version CI Increment FSP Revision Number and reset FSP Build Number to 1
+
+Thu Oct 24 11:01:54 2019 -0700
+Original commit date: Thu Oct 24 11:01:54 2019 -0700
+Original commit hash: 5f425a0815333f1d532f56fd106fea616eeee24c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/LakeFieldFspPkg.dec
+LakeFieldSiliconPkg/SiPkg.dec
