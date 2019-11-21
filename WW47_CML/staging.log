@@ -89,16 +89,15 @@ Commit: f5f145c32bb3e13e6334cdf876197b38dcb7d297
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Nov 20 19:48:58 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML]Interrupt capable GPIO pad need to be programmed with ACPI ownership settings
-SCI interrupt now onwed by ACPI and APIC interrupts are owned by GPIO controller.
+[PCH] SCI Interrupt capable GPIO pad need to be programmed with ACPI ownership settings
+
+SCI interrupts are onwed by ACPI and APIC interrupts are owned by GPIO controller.
 
 Hsd-es-id: 1607330835
 Tracker- https://hsdes.intel.com/appstore/article/#/1607330835
-
 Original commit date: Tue Oct 22 11:33:00 2019 +0530
 Change-Id: I966b29b8873d491ba88d9a38cfd7c381a9f19d6f
 Original commit hash: aeb05a0e8c4d7bfdf2754c0f067cbe19fbc399f0
-
 -------------------------------------------------------------------------------- 
 [Changed Files]
 CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCmlHDdr4.h
@@ -108,7 +107,6 @@ CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCmlSOC.h
 CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCmlULpddr3.h
 CometLakePlatSamplePkg/Board/Others/PeiBoardInitLib/GpioTableCmlUPreMem.h
 CometLakePlatSamplePkg/CmlvBoard/Others/PeiBoardInitLib/GpioTableCmlVDdr4.h
-
 ================================================================================ 
 Commit: 774a3e6f2f60d2c6748f234f53657026f90ace32 
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
@@ -636,7 +634,7 @@ Commit: 6bd63cb4c2286762a82fd12c952f6adce45b80b4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Nov 20 19:41:34 2019 +0530 
 -------------------------------------------------------------------------------- 
-[TGL_U][CSLP][Rainer_R] System can't enter Package C-state after updating 2321.08 RC
+System can't enter Package C-state after updating 2321.08 RC
 
 1. FirmwareConfiguration should be changed to "Test" so all the test policy will be updated correctly.
 2. FSP-S UPD Cx should be set to 1.
@@ -670,9 +668,7 @@ Commit: 52c9a6b630d6cb19605dcced4ef4a7ef83246875
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Nov 20 19:40:24 2019 +0530 
 -------------------------------------------------------------------------------- 
-NHLT: Devtype for PDM should be 00 due to specification
-
-Update NHLT.
+[PCH] Update NHLT table for PDM and SSP device depends on link type.
 
 Hsd-es-id: 1808092481
 Original commit date: Tue Jul 23 13:54:26 2019 +0200
@@ -848,13 +844,12 @@ Commit: c03b299327103c2df8015cdc941430dd8bea756c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Nov 20 12:29:49 2019 +0530 
 -------------------------------------------------------------------------------- 
-Add ESPI_SMI_LOCK setting to S3 BootScript
+[PCH] Add ESPI_SMI_LOCK setting to S3 BootScript
 
-ESPI_SMI_LOCK bit is reset after Sx hence in S3 case we're losing its setting.
-Due to that modified setting ESPI_SMI_LOCK bit and added it to S3 BootScript.
+ESPI_SMI_LOCK bit is reset after Sx and only be programed in DXE_SMM_DRIVER.
+Hence the setting is lose when S3 resume.
 
 Hsd-es-id: 2208294902
-
 Original commit date: Fri Oct 4 14:02:08 2019 +0200
 Change-Id: I75739933c875fa910833965aac3f9b64a33f3173
 Original commit hash: c04f93c12d6dee0a1a8edcf96f8e012b3df2fc11
@@ -919,12 +914,10 @@ Commit: eef0bd144dda8f4af8ee3b39f6ea6b643d4b9281
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Nov 20 12:27:46 2019 +0530 
 -------------------------------------------------------------------------------- 
-BIOS needs to enable EXI rosc fast clock gating if debug is disabled
+[PCH] DCI BIOS recommendation setting update.
 
-CMP: EXI IP wa for CNP and forwarding projects.
-CPUPWRGD might glitch when DCI debug is disabled, setting HEEN from 0->1.
-CSME disables fast rosc clock gate before setting MEEN, BIOS enables it back when DCI debug is disabled.
-CMPV: add global reset when debug status change to distribute debug consent from PCH to CPU for next boot.
+1 Enable fast rosc clock gate when DCI debug is disabled.
+2 Add global reset when debug status change to distribute debug consent from PCH to CPU for next boot for CMLV.
 
 Hsd-es-id: 1507501697
 Original commit date: Thu Oct 24 18:54:52 2019 +0800
