@@ -43,7 +43,7 @@ Commit: a0828ab44fb40fa01f0d0167869b0ab396c9bbbc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Nov 22 13:16:22 2019 +0530 
 -------------------------------------------------------------------------------- 
-Device Manager need to be scanned manually each time to enumerate TBT devices.
+[PCH] Device Manager need to be scanned manually each time to enumerate TBT devices.
 
 Platform Affected: CML-H RVP5 Dual TBT. AL6F handler for TBT RP are missing under _GPE Scope for CML-H RVP5 Platform.
 
@@ -101,7 +101,7 @@ Commit: 4e2ee80e4f7096f7c0aa95c26982ffe702dc9601
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Nov 22 13:16:19 2019 +0530 
 -------------------------------------------------------------------------------- 
-Control Iommu pre-boot behaviour is to be enabled in BIOS.
+[PCH] Control Iommu pre-boot behaviour is to be enabled in BIOS.
 
 Add IOMMU support for CML-H RVP5 Dual TBT Board.
 
@@ -137,13 +137,12 @@ Commit: 9696cb6955cc21714f26c0f14d91909666aafb04
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Nov 22 13:16:16 2019 +0530 
 -------------------------------------------------------------------------------- 
-CometLakeSiliconPkg: Do not enable USB2 PHY SUS PG on PCH-V
+[CMLV][PCH] Update USB2 PHY SUS PG BIOS programing on PCH-V
 
 USB2PHY SUS Well Power Gating is not supported on PCH-V and shouldn't
 be enabled on such.
 
 Hsd-es-id: 14010410324
-
 Original commit date: Wed Nov 13 14:59:21 2019 +0100
 Change-Id: Ib3903a98a4697cb5c6770321d54bc11deb579b0b
 Original commit hash: b4c665d75d8e4c2dc682cc95812788b399f456ec
@@ -187,14 +186,12 @@ Commit: 9cf2181c6d74bdfecc753db778ec2772c58a0025
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Nov 22 13:16:11 2019 +0530 
 -------------------------------------------------------------------------------- 
-CMLS/CMPH: SLP_S0 does not assert (only PC-10 asserts) with Audio playback via 3.5mm headset in CS.
-Disqualified pch.pmc.host.mem.cppmvric2.apllsdqdis. Instructed Changes Patch Applied.
+[PCH] Fix SLP_S0 does not assert (only PC-10 asserts) with Audio playback via 3.5mm headset in CS.
 
 Hsd-es-id: 1607835090
 Original commit date: Fri Nov 8 18:53:34 2019 +0530
 Change-Id: I52fe907de686890a6a7e5033a4b4057a2f5b6b97
 Original commit hash: 3c6aa79c5d8b29b7dd3be58708a873bedf8ca7b7
-
 -------------------------------------------------------------------------------- 
 [Changed Files]
 CometLakeSiliconPkg/CmlvPch/Library/Private/PeiPchInitLib/PchPm.c
@@ -283,7 +280,7 @@ Commit: ab5ee2fb3e3b06b98848927a17f470dbb8febce8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Nov 22 13:16:04 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CMLU V1 DG1] Add support for CML U V1 DG1 FAB 2
+[CMLU V1 DG1][PCH] Add support for CML U V1 DG1 FAB 2
 
 During BIOS boot, make default state of GPPC_H10 PCH_GPU_RESET to High before DG1 power supply (GPPC_A10) is given.
 As PREST Pin Polarity is changed in FAB2, we need to make sure that device reset pin is in low before power is enabled.
@@ -787,8 +784,9 @@ Commit: f993e6733aaff1f2497ce8583c4e8c9d37e8ad36
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Nov 22 11:35:19 2019 +0530 
 -------------------------------------------------------------------------------- 
-[CML]Interrupt capable GPIO pad need to be programmed with ACPI ownership settings
-SCI interrupt now onwed by ACPI and APIC interrupts are owned by GPIO controller.
+[PCH] SCI Interrupt capable GPIO pad need to be programmed with ACPI ownership settings
+
+SCI interrupts are onwed by ACPI and APIC interrupts are owned by GPIO controller.
 
 Hsd-es-id: 1607330835
 Tracker- https://hsdes.intel.com/appstore/article/#/1607330835
@@ -1373,9 +1371,7 @@ Commit: eb46e9f3441518b0e392438f88b273d701d6f078
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Nov 22 11:30:15 2019 +0530 
 -------------------------------------------------------------------------------- 
-NHLT: Devtype for PDM should be 00 due to specification
-
-Update NHLT.
+[PCH] Update NHLT table for PDM and SSP device depends on link type.
 
 Hsd-es-id: 1808092481
 Original commit date: Tue Jul 23 13:54:26 2019 +0200
@@ -1431,10 +1427,10 @@ Commit: 002b09176d21dc1252961bd43725d8a0b3f3dc16
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Nov 22 11:29:25 2019 +0530 
 -------------------------------------------------------------------------------- 
-Add ESPI_SMI_LOCK setting to S3 BootScript
+[PCH] Add ESPI_SMI_LOCK setting to S3 BootScript
 
-ESPI_SMI_LOCK bit is reset after Sx hence in S3 case we're losing its setting.
-Due to that modified setting ESPI_SMI_LOCK bit and added it to S3 BootScript.
+ESPI_SMI_LOCK bit is reset after Sx and only be programed in DXE_SMM_DRIVER.
+Hence the setting is lose when S3 resume.
 
 Hsd-es-id: 2208294902
 
@@ -1502,12 +1498,10 @@ Commit: b41e6b250f85181a605f7719d59cc06be3c8157c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Nov 22 11:28:05 2019 +0530 
 -------------------------------------------------------------------------------- 
-BIOS needs to enable EXI rosc fast clock gating if debug is disabled
+[PCH] DCI BIOS recommendation setting update.
 
-CMP: EXI IP wa for CNP and forwarding projects.
-CPUPWRGD might glitch when DCI debug is disabled, setting HEEN from 0->1.
-CSME disables fast rosc clock gate before setting MEEN, BIOS enables it back when DCI debug is disabled.
-CMPV: add global reset when debug status change to distribute debug consent from PCH to CPU for next boot.
+1 Enable fast rosc clock gate when DCI debug is disabled.
+2 Add global reset when debug status change to distribute debug consent from PCH to CPU for next boot for CMLV.
 
 Hsd-es-id: 1507501697
 Original commit date: Thu Oct 24 18:54:52 2019 +0800
