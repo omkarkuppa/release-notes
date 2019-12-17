@@ -1,0 +1,924 @@
+================================================================================ 
+Commit: 29d77bdc0210e7fc532a97d2703e76769035ec46 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-17 13:25:07 -0800 
+-------------------------------------------------------------------------------- 
+Update BIOS ID to v3512_00
+
+Hsd-es-id: No-HSD
+Original commit date: 2019-12-17 09:46:30 -0800
+Change-Id: Iaccb099b00d5c22ebb6403a7da9fca79d4b9d1dd
+Original commit hash: 09215ef08190747e43af0e545751d13285e82826
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: c23ae42db951020507238c9828adf6b795d81c91 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-17 13:25:05 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit FSP Daily
+
+Hsd-es-id: no sighting
+Original commit date: 2019-12-17 08:51:55 -0800
+Change-Id: Iace00f211942f49ea7f913b96528c342bb55726a
+Original commit hash: a8471031ad474a52ceb1909ad4ef0aa0e775e104
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspBinPkg/Fsp.bsf
+IceLakeFspBinPkg/Include/FspmUpd.h
+IceLakeFspPkg/Include/FspmUpd.h
+IceLakeFspPkg/Include/FspsUpd.h
+
+================================================================================ 
+Commit: cc348338cb5d557b4215ad469550ac024db3016d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-17 13:25:03 -0800 
+-------------------------------------------------------------------------------- 
+[1507577464] [ICL][PPV]New camera sensor OV13858 support for ICL-U PPV
+
+Resolution:  Current BIOS supports camera OV16860, POR for PPV is changeing to OV13858 for ICL-U which is not supported by BIOS.
+(Driver already support OV13858 for ICL-U).
+
+Under Link Options of Camera 3
+Add a Sensor option for "OV13858" and if select it will have callback function to sync below items to according value
+  - Custom HID --> OVTID858
+  - Camera module name --> YHCQ
+Rename CustomHID and ModuleName to distinguish Camera 1 ~ 4 (Link 0 ~ 3).
+
+Hsd-es-id: 1507577464
+Original commit date: 2019-11-21 14:59:19 +0800
+Change-Id: I42cdfedbe31bb023f0bc8ef0a0c3b0352166f96c
+Original commit hash: 2e3a6c2ff29dfa7ec11747bba7f5ab085b628ea7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Board/Include/OtherBoardConfigPatchTable.h
+IceLakePlatSamplePkg/Setup/SaSetup.c
+IceLakePlatSamplePkg/Setup/SaSetup.hfr
+IceLakePlatSamplePkg/Setup/SaSetup.uni
+IceLakePlatSamplePkg/Setup/SetupCallbackExList.h
+IceLakePlatSamplePkg/Setup/SetupId.h
+
+================================================================================ 
+Commit: b7da8e6c452cc449e59d242566f46be4613d5955 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-17 13:25:01 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+2019-12-17 08:21:08 +0000
+Original commit date: 2019-12-17 08:21:08 +0000
+Original commit hash: 895764439350487ac464396ac6b789e06abda5e5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: a5f6dceae13a9086fc98f5475938b42e07138842 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-17 13:24:59 -0800 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][14010242637][ICL-UN][J214K ICL-UN LP4x Memory corruption panics]
+
+Issue:
+  Memory corruption at runtime when PkgC7 is enabled.
+Root cause:
+  Glitch on CLK/CS/CKE pins during PkgC7 transitions.
+  Transmitter is generating a transient pull up during the early phase of the C7 entry flow; causing a glitch.
+Solution:
+  Program VSSHICONTROL to Open Loop mode, with Target = 1 (lowest value), for LP4 only.
+  This will elminate the glitch even though VssHiGndSel still changes from 1 to 0 during register restore
+
+Hsd-es-id: 14010242637
+Original commit date: 2019-12-10 15:02:40 -0800
+Change-Id: I5d989ecf3ba4860479fd2bb4057b83836ba1e2fb
+Original commit hash: 0db15eb2af185a81dffbcb346ea20fed2f3bd8a8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 766f3fdc1059dce3ba0bdacea15274d4e855624d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-17 13:24:56 -0800 
+-------------------------------------------------------------------------------- 
+ICL -U Psys reporting is wrong due to Psys slope changes in BIOS
+
+Updated Slope and Offset programming for Psys
+
+Hsd-es-id: 1306715761
+Original commit date: 2019-12-08 13:31:01 +0530
+Change-Id: I6be010a3cb92f8b6685d31a81768c0e5d64bd6d7
+Original commit hash: 649121735a2a247adccf896cb38b7f3f6c9d342c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+IceLakeFspPkg/Upd/FspsUpd.dsc
+IceLakePlatSamplePkg/Include/SetupVariable.h
+IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+IceLakePlatSamplePkg/Setup/CpuSetup.hfr
+IceLakePlatSamplePkg/Setup/CpuSetup.uni
+IceLakeSiliconPkg/Cpu/Include/ConfigBlock/CpuPowerMgmtVrConfig.h
+IceLakeSiliconPkg/Cpu/Include/CpuPowerMgmt.h
+IceLakeSiliconPkg/Cpu/Library/Private/PeiCpuInitLib/CpuInitPreResetCpl.c
+
+================================================================================ 
+Commit: 6a5c2f5378f6e36082757f7dde6f94323b64ece8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:54:12 -0800 
+-------------------------------------------------------------------------------- 
+ICL BIOS ID Major version update to 3503
+
+BIOS ID is updated from 3502 to 3503
+
+Hsd-es-id: No-HSD
+Original commit date: 2019-12-11 10:52:57 -0800
+Change-Id: I4ee97db54d46c92c78fb7aab7439a06ac342e435
+Original commit hash: 6395a0954d3307885ebe4b7a0e4e305e3b3ecd20
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: b2a3b2447785379fd8a97c1924f940e410741fa2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:54:10 -0800 
+-------------------------------------------------------------------------------- 
+[ICL] Integrate latest microcode patch
+
+Updated microcode patch to 0x5e
+
+Hsd-es-id: no_hsd
+Original commit date: 2019-12-11 08:49:36 -0800
+Change-Id: I1302f508379cf9b04ad4f679825c4c9ee0ac8420
+Original commit hash: 32bd82a17d3002ccb1bacc8e845cfb6b35588bbe
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeOpenBoardPkg/IclUDdr4Type3Tcpd/OpenBoardPkg.fdf
+IceLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: cd1060e3404944ddf0e35d5449cc6ce4fc89b3a0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:54:08 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI Increment BIOS Major Version and reset Minor Version to 0
+
+2019-12-10 12:17:14 -0800
+Original commit date: 2019-12-10 12:17:14 -0800
+Original commit hash: 8d67c99da44e8d79bf1e222359889503473e9e20
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: efaa0d75a6e2d010b83b552dbd866e6a88b1a2b1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:54:06 -0800 
+-------------------------------------------------------------------------------- 
+IceLakePlatSamplePkg: Add board serial number as secondary option for creating unique UUID
+
+4. Skip Variant/Version bits for Gbe MAC programmed device
+
+Hsd-es-id: 1507577811
+Original commit date: 2019-12-10 10:38:12 +0800
+Change-Id: Ib87115ff2f5311ef1cda5ebb8ac3b55e8c1d806f
+Original commit hash: a1fc28e67198a16d3e40dbe99a530290f85394b5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Platform/SmbiosPlatformInfo/SmbiosPlatformInfo.c
+
+================================================================================ 
+Commit: 82faa2c5c0ca40f0b6226e17d6ef9bc2270a26c4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:54:04 -0800 
+-------------------------------------------------------------------------------- 
+IceLakePlatSamplePkg: Add board serial number as secondary option for creating unique UUID
+
+1. Ignore invalid MAC address from LAN/WLAN.
+2. Add Board S/N from PSS (if available) as one of UUID sources: LAN MAC > Board S/N > WLAN MAC > default.
+3. Set Variant to 10xb and Version to 0101b as RFC 4122.
+
+Hsd-es-id: 1507577811
+Original commit date: 2019-12-02 11:29:08 +0800
+Change-Id: Ibfca9e885d98ef652fcec6efa468660737841005
+Original commit hash: 7ac372528cdac136ea581a3882a233d2b97645f8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Features/Smbios/SmbiosMiscDxe/SmbiosMiscEntryPoint.c
+IceLakePlatSamplePkg/Include/Library/PssLib.h
+IceLakePlatSamplePkg/Library/PssLib/PssLib.c
+IceLakePlatSamplePkg/Platform/SmbiosPlatformInfo/SmbiosPlatformInfo.c
+IceLakePlatSamplePkg/Platform/SmbiosPlatformInfo/SmbiosPlatformInfo.inf
+
+================================================================================ 
+Commit: e45aedc19c9bdcd01549cca51a042275f6a17b95 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:54:02 -0800 
+-------------------------------------------------------------------------------- 
+Incorrect MemoryTotalWidth of type17 for ECC memory.
+
+// MemoryTotalWidth = MemoryDataWidth + 8 * (MemoryBusWidthByte & 0x18);  <- Bug
+MemoryTotalWidth = MemoryDataWidth + (MemoryBusWidthByte & 0x18);  <- Fix
+
+Hsd-es-id: 1609247718
+Original commit date: 2019-12-05 17:31:43 +0800
+Change-Id: I718e58891a0ead36431fec4c5cc8402ef2e624a9
+Original commit hash: d46582e668f9f713a48048970639f533ea8adf65
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/Library/Private/DxeSmbiosMemoryLib/SmbiosType17.c
+
+================================================================================ 
+Commit: 8e07b5e1042c6f5d17057c7ee24f090b0d67687e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:54:00 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit Clear WhiteSpace-Git CI Replace tab characters with two spaces and trim trailing white space
+
+2019-12-07 16:05:57 -0800
+Original commit date: 2019-12-07 16:05:57 -0800
+Original commit hash: b04767af121c152aac8c340d81177acfb52f971b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/Expression.c
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/Setup.h
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: 9d08a88869fa9e58145a64528e4edfbe67c89fcc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:57 -0800 
+-------------------------------------------------------------------------------- 
+Bluetooth: [BT-9143][Security]BluetoothConnectionManagerDxe
+
+Security Fixes which may lead to stack overflow in BluetoothConnecteionManger.
+
+Cherry-pick: 7a230ba99687ba609c01c97e5333fafdba3d9470
+
+Hsd-es-id: 1609205142
+Original commit date: 2019-12-02 18:23:36 +0800
+Change-Id: Ia8ff790a7b747bef32b377eceb76a0191b238334
+Original commit hash: d100e72771846734e874bf04738219afff9f4532
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Bluetooth/BluetoothConnectionManagerDxe/BluetoothConnectionManagerDxe.c
+
+================================================================================ 
+Commit: 3f5820c28b111bd0f311b29486fea6c42d0167e5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:55 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+2019-12-06 07:03:43 +0000
+Original commit date: 2019-12-06 07:03:43 +0000
+Original commit hash: bbdaf439d655a857cfcec9fc6692782101fef4a6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 41a8f135c210466b5a40e7fbe7548b2de755a45f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:53 -0800 
+-------------------------------------------------------------------------------- 
+[ICL MRC] Read Timing Centering Optimization and RxV degradation enhancements
+
+Add the following changes to MrcReadTimingCenteringOpt():
+  - check if optimization is needed: if we have enough RdT margin then optimization not needed.
+  - Add margin RdV check on timing 0, instead of get it from previous RMT - get better results
+  - Run The Read Timing Centering Opimization after the Round Trip Latency Step -it resolves the degradation of 2-3 ticks in RxV.
+
+Additional changes:
+ - fix bug in CaFindEdge() - Status need to be cleared inside per channel loop
+ - Update Ron / ODT comp targets in CalcStaticDynamicLegSize() - they should be multiplied by number of segments
+
+Hsd-es-id: 1306995804
+Original commit date: 2019-11-18 14:17:53 +0200
+Change-Id: I0ea54ea975aa55e18ad2c96fd86accb72525e1c4
+Original commit hash: aec9022f7c98605483b66f00fca1e62a190c6ead
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: c4b2077f67b583c98a7e1bc25ac2b386928b436d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:51 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI Increment BIOS Major Version and reset Minor Version to 0
+
+2019-12-03 10:42:33 -0800
+Original commit date: 2019-12-03 10:42:33 -0800
+Original commit hash: ff22f2ec707c91a17701d90307699c6bebeb62b9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 423269f2a9756c9b9546819f1a3f621be254ff0e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:49 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+2019-12-03 13:06:58 +0000
+Original commit date: 2019-12-03 13:06:58 +0000
+Original commit hash: f3ebe94eed71b59d20ea495fcaf69539049c3ecb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: e6758426bb1cf6568c7245e0383e0c65472ce4f9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:47 -0800 
+-------------------------------------------------------------------------------- 
+[ICL MRC] HSD1306698594 Sense Amp Offset training at Low CM (Lp4/X only)
+
+According to Design SenseAmp offset training should be done at ~0.2Vdd for Lp4/X.
+
+Here is an algorithm for change CM to ~0.2Vdd:
+
+Calculate OdtUpCode according DynamicLeg, StaticLeg from CalcStaticDynamicLegSize
+
+Hsd-es-id: 1306698594
+Original commit date: 2019-09-15 17:08:05 +0300
+Change-Id: I3c4bae0f0b32c42712a08b0908fa0b00980633a8
+Original commit hash: 0f2997144e4a58551c5b1420927f391df7d60f22
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMcConfiguration.h
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 6eb481d6cb95dd95a749542f049382d9c2d7c5ae 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:44 -0800 
+-------------------------------------------------------------------------------- 
+[ICL MRC] HSD1306715082 Dimm ODT Training - Update
+
+Update DIMM ODT training with latest EV changes in Power score calculation.
+
+Hsd-es-id: 1306715082
+Original commit date: 2019-08-28 16:32:16 +0300
+Change-Id: Ic4e28058b6ef9b8a7d22cc7654cd472b159ab09e
+Original commit hash: 99d72291c7bce7d755577ac82a27181fec36726a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: bb7c3ebb458bf1d2e4eb53ce72b9b49980714fe3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:42 -0800 
+-------------------------------------------------------------------------------- 
+[ICL] memory leak without clearing data in PrepareMeBiosPayload()
+
+Issue: MBP contains sensitive data and it is resided in memory after calling PrepareMeBiosPayload ().
+Resolution: Clear buffer content before exiting function call.
+Impacted: All ICL platforms.
+
+Hsd-es-id: 2208925899
+Original commit date: 2019-11-18 16:21:15 -0800
+Change-Id: Iac088c590c1665ae729c202d6a45605959c4b65c
+Original commit hash: 5e1369020c39a9c2020db5de6b90e32aa4fc963f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/Me/Library/PeiMeLib/HeciMsgPeiLib.c
+IceLakeSiliconPkg/Me/Library/Private/PeiMeInitLib/MbpData.c
+
+================================================================================ 
+Commit: ccbc8e864c36fe562a561d9e00ff178237ec7b5a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:40 -0800 
+-------------------------------------------------------------------------------- 
+Check ConfigAccess protocol in case it's destroyed
+
+Check ConfigAccess protocol is available before process user input.
+(cherry picked from commit 034a3b4f555c6844673a5ee6b7aa4faa74e90a6e)
+
+Hsd-es-id: 1606848594
+Original commit date: 2019-07-16 10:44:40 +0800
+Change-Id: I9be6b186fcca938a4e16a445a6cabb2ed6859fcf
+Original commit hash: f62348a02d9460dea350e88fccc67ea095fad772
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Override/DoxygenRpOverride.md
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/Expression.c
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/Expression.h
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/IfrParse.c
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/Presentation.c
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/Setup.c
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/Setup.h
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowser.uni
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
+IceLakePlatSamplePkg/Override/MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserExtra.uni
+IceLakePlatSamplePkg/PlatformPkg.dsc
+IceLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 1e9f0b160583d3dc25cd78a6f5d99c17cf84b78b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:36 -0800 
+-------------------------------------------------------------------------------- 
+System fails to enter S0iX after an S4 cycle
+
+Added additional Read of LPSS PciConfig Pme Control Status to avoid ordering and noncoherency problems.
+
+Hsd-es-id: 14010275930
+Original commit date: 2019-11-19 13:51:03 -0800
+Change-Id: Ie040f2db693fa447e195e9ff227c3c7731170fb7
+Original commit hash: 043d2e45ab2c67ea660c07a95f051d12195ccbd1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/Pch/Library/Private/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLib.c
+
+================================================================================ 
+Commit: b7de322016723d5c63ec594c0ba1350daaa2003a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:34 -0800 
+-------------------------------------------------------------------------------- 
+Bluetooth: [BT-9143][Security]iLE Stack
+
+Security Fixes in Bluetooth iLE stack.
+
+Cherry-pick: bb87572cda73eb0861b676b15b816bb4a8433991
+
+Hsd-es-id: 1609205142
+Original commit date: 2019-12-02 11:16:27 +0800
+Change-Id: Ibf524a6a93407c7101bb6306775272734ca18414
+Original commit hash: 77ad4e87197b85d68e9a4fdeb1b480f348f00efb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+BpCommonPkg/Bluetooth/BluetoothBusDxe/iLE/hwal/uefi/src/tl.c
+BpCommonPkg/Bluetooth/BluetoothBusDxe/iLE/utils/src/utils.c
+
+================================================================================ 
+Commit: 3293d845dbc82307f714944b9d5504878a1947c7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:32 -0800 
+-------------------------------------------------------------------------------- 
+[ICL] Integrate latest microcode patch
+
+Updated microcode patch to 0x5c
+
+Hsd-es-id: no_hsd
+Original commit date: 2019-12-02 09:09:45 -0800
+Change-Id: I1e295051305e23bcf489fae89ee5df6f2750ddb7
+Original commit hash: 266f03493dbbc09e39eef4f3e055eac0885c4eb3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeOpenBoardPkg/IclUDdr4Type3Tcpd/OpenBoardPkg.fdf
+IceLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 0dd1f0ae78aaffa1671b6ad641a71544542c9c59 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:30 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+2019-12-02 17:40:06 +0000
+Original commit date: 2019-12-02 17:40:06 +0000
+Original commit hash: 17c9fecb653aef7eb310c8a46ad89ada8686f7f4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: e8b89d2595193246831e1663cb88f4a9ab0656c9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:28 -0800 
+-------------------------------------------------------------------------------- 
+[ICL] Port Boot Time Reduction Changes to ICL
+
+ICL PPV team has asked Embedded Firmware team to port the boot time reduction changes from CML to ICL to reduce BIOS boot time
+
+This reverts commit cbf5f9ee92aaa26aad42415f90b4310d7e3112f1.
+
+Hsd-es-id: 14010282241
+Original commit date: 2019-11-11 16:38:05 -0700
+Change-Id: Ib6d2f703f62a5aa6d77edf6bf62a53025e4872a6
+Original commit hash: 8e60e32f60e23c32dfa33e99d7ea58215c31601d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Include/SetupVariable.h
+IceLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.c
+IceLakeSiliconPkg/Me/HeciInit/Dxe/MeHeciReset.c
+IceLakeSiliconPkg/Pch/Include/PchPolicyCommon.h
+IceLakeSiliconPkg/Pch/Library/Private/BaseSiScheduleResetLib/BaseSiScheduleResetLib.inf
+IceLakeSiliconPkg/Pch/Library/Private/BaseSiScheduleResetLib/BaseSiScheduleResetLibFsp.inf
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+
+================================================================================ 
+Commit: a814c2d5bbe2d80c47fd4cc8ebf1c71ff77b49fc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:25 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI Increment BIOS Major Version and reset Minor Version to 0
+
+2019-11-26 09:41:19 -0800
+Original commit date: 2019-11-26 09:41:19 -0800
+Original commit hash: 5b2288b1a38d3dcf4302e21487276a695a4d55f3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: f9c88d074278292ce62264709d04d852bd5bc08a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:23 -0800 
+-------------------------------------------------------------------------------- 
+Integrate  ICL GOP 14.0.1033
+Hsd-es-id: 1507581593
+Impacted Platforms: ICL
+
+Original commit date: 2019-11-20 17:43:54 +0530
+Change-Id: I1cdab3e1791f3db8958e7973d66cdc94c10df71b
+Original commit hash: 5bf24406df525a4378b4964ddfa737f5ae97e198
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspBinPkg/SampleCode/Vbt/Vbt.bin
+IceLakeFspBinPkg/SampleCode/Vbt/Vbt.bsf
+IceLakeSiliconPkg/SampleCode/IntelGraphicsVbt/Vbt.bin
+IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimSimics.efi
+
+================================================================================ 
+Commit: 62e299798f45380e784dc7088cbcedb10d244590 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:20 -0800 
+-------------------------------------------------------------------------------- 
+[ICL] U/Y/UN/YN - Not able to change iommu setup option for the first boot
+
+The HSD title is wrong. There's no extra reset in this situation.
+The problem is not able to change iommu setup option for the first boot after flashing BIOS image.
+
+Hsd-es-id: 1306959027
+Original commit date: 2019-11-19 13:06:50 -0800
+Change-Id: I80bf3a8b22ac8097b3c91843cf3436ca92521f4e
+Original commit hash: edc3ae775405c7f149b00bffe6183eef8dda0673
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Features/VTd/PlatformVTdInfoSamplePei/PlatformVTdInfoSamplePei.c
+
+================================================================================ 
+Commit: a37a919921f983eb65fd5a637e3b3e1ff112b997 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:18 -0800 
+-------------------------------------------------------------------------------- 
+Windows boot debugger does not work with MMIO based UART
+
+Set PortSubtype to EFI_ACPI_DBG2_PORT_SUBTYPE_SERIAL_16550_SUBSET_COMPATIBLE_WITH_MS_DBGP_SPEC
+for Dbg2DeviceTablePtr
+
+Hsd-es-id: 2207478826
+Original commit date: 2019-11-20 16:48:42 +0800
+Change-Id: If7f82377f8951cfad672dc82db8bf2ce7d77f9cb
+Original commit hash: 4aa30a04ca2f483b24cdf1b800825cb2c6b51dd1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Features/Acpi/AcpiTables/AcpiFeatures.c
+
+================================================================================ 
+Commit: 82a600bc5b12be895d072f71ae60ec7009a4d4ef 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:16 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI Increment BIOS Major Version and reset Minor Version to 0
+
+2019-11-19 14:46:34 -0800
+Original commit date: 2019-11-19 14:46:34 -0800
+Original commit hash: d5693022247989ea15394845a7ac911df16ab127
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 08dbed44abd3957ee4723d9a2da799426fd072cf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:14 -0800 
+-------------------------------------------------------------------------------- 
+[ICL] Integrate latest microcode patch
+
+Updated microcode patch to 0x5a
+
+Hsd-es-id: no_hsd
+Original commit date: 2019-11-19 11:31:00 -0800
+Change-Id: I8e8e15c9416fd828c76fd1c1b4563f3e6caa5e7a
+Original commit hash: 573eeb729954f383fd6f7216ff427564bfc8875f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeOpenBoardPkg/IclUDdr4Type3Tcpd/OpenBoardPkg.fdf
+IceLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 8adc2910710098319a3fdd0f58c7303ce8ac7116 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:11 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+2019-11-13 21:29:49 +0000
+Original commit date: 2019-11-13 21:29:49 +0000
+Original commit hash: b5d5bae0ec9d945b9beb287e107c53ee8bed68aa
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 2aa354a2ece2ab729469371bbd2d898443d70d48 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:09 -0800 
+-------------------------------------------------------------------------------- 
+[ICL MRC] HSD1306961468 Increase Training Range for Rdt/ RdV for better results
+
+Increase RdV/RdT range from 5 to 8
+
+This will improve results
+
+issue was raised  by MIO, see this HSD; https://hsdes.intel.com/appstore/article/#/1507374860
+
+Hsd-es-id: 1306961468
+Original commit date: 2019-11-07 13:39:21 +0200
+Change-Id: I81d13780c7c29724d88b5f3a6c4dc3a8a6e6c9ed
+Original commit hash: 4aa444268191085b3241381b43a9f982f56cd3f8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+
+================================================================================ 
+Commit: b664b5d0c2e69ae7fd0820565a058b6c11389075 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:06 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+2019-11-13 20:36:00 +0000
+Original commit date: 2019-11-13 20:36:00 +0000
+Original commit hash: 9e4e800449ce73104634881b907fec211d1898d4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: d2983277197db17a2c3e3c18fc6f83fddcc7b044 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:04 -0800 
+-------------------------------------------------------------------------------- 
+[ICL MRC] [HSD1409984559] ICL BIOS fails to build with VS2013
+
+Issue:
+ VS2013 compiler issues a linker error while building MRC.
+Root cause:
+ Array initialization code uses assignment in a loop.
+ This can be converted to an intrinsic memset() by a compiler, causing a link error because we do not link with a standard library.
+Solution:
+ Use MrcSetMem() to initialize arrays.
+
+Hsd-es-id: 1409984559
+Original commit date: 2019-09-18 22:28:52 +0300
+Change-Id: I84c08b7032f8fbe39db2377d64b4847cea4c703e
+Original commit hash: 5146bd8aa9b51c4eb2883a04f77cbae82be83fdd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: cba4e31cba5caca773a86b9580e5c9698a35edb6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:53:02 -0800 
+-------------------------------------------------------------------------------- 
+Add Sndw codecs initialization support for DXE phase only.
+
+BIOS are able to enumerate and controll Sndw codecs.
+Add PC beep support:
+- un-reset DSP core and enabling Sndw controller,
+- enumerating Sndw codecs,
+- initializing tone generator built in Sndw codecs,
+- install Protocol which allows to use beep in DXE phase.
+
+Hsd-es-id: 1409424558
+Original commit date: 2019-11-04 01:41:31 -0700
+Change-Id: I71e337e8d1dc6aa79c83e2de39dd43a07ea6d1f2
+Original commit hash: c005fbcca12db343adaeeeb0ee2eb51f6e9011ac
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+IceLakeFspPkg/Upd/FspsUpd.dsc
+IceLakePlatSamplePkg/Features/SndwBeepInit/Dxe/SndwBeepInitDxe.c
+IceLakePlatSamplePkg/Features/SndwBeepInit/Dxe/SndwBeepInitDxe.inf
+IceLakePlatSamplePkg/Include/Library/PeiDxeSndwCommonLib.h
+IceLakePlatSamplePkg/Include/Protocol/SndwBeepProtocol.h
+IceLakePlatSamplePkg/Include/SndwBeep.h
+IceLakePlatSamplePkg/Library/PeiDxeSndwCommonLib/PeiDxeSndwCommonLib.c
+IceLakePlatSamplePkg/Library/PeiDxeSndwCommonLib/PeiDxeSndwCommonLib.inf
+IceLakePlatSamplePkg/Library/PeiDxeSndwCommonLib/SndwMipiRegs.h
+IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
+IceLakePlatSamplePkg/PlatformPkg.dec
+IceLakePlatSamplePkg/PlatformPkg.dsc
+IceLakePlatSamplePkg/PlatformPkg.fdf
+IceLakePlatSamplePkg/PlatformPkgConfig.dsc
+IceLakeSiliconPkg/Pch/Include/ConfigBlock/HdAudioConfig.h
+IceLakeSiliconPkg/Pch/Include/Library/PchInfoLib.h
+IceLakeSiliconPkg/Pch/Include/Library/PeiDxePchSndwLib.h
+IceLakeSiliconPkg/Pch/Include/Register/PchRegsHda.h
+IceLakeSiliconPkg/Pch/Library/PeiDxePchSndwLib/PeiDxePchSndwLib.c
+IceLakeSiliconPkg/Pch/Library/PeiDxePchSndwLib/PeiDxePchSndwLib.inf
+IceLakeSiliconPkg/Pch/Library/PeiDxeSmmPchInfoLib/PchInfoLibIcl.c
+IceLakeSiliconPkg/Pch/Library/PeiPchPolicyLib/PchPrintPolicy.c
+IceLakeSiliconPkg/Pch/Library/Private/PeiHdaInitLib/PeiHdaInitLib.c
+
+================================================================================ 
+Commit: 7b49ae1a9b6e4a3484469278a0739656684058c2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:52:58 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ICL Auto-Commit BIOS ID update CI Increment BIOS Major Version and reset Minor Version to 0
+
+2019-11-11 16:03:57 -0800
+Original commit date: 2019-11-11 16:03:57 -0800
+Original commit hash: d99ebdba3003a975480a56a9f7e2cbf9e4d03168
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 73f0a6c3a8213f610b1e550b013a84c0c11eb9a9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:52:55 -0800 
+-------------------------------------------------------------------------------- 
+IceLakePlatSamplePkg: TXT remains enabled either by disabling the TPM or on loading defaults
+
+TXT should be disabled if the platform did not initialize a TPM device.
+This set of changes add the required dependencies and infrastructure for the
+TxtPei library to correctly detect the TPM device presence across the different
+build targets: EDK, FSP API mode and FSP Dispatch mode.
+
+The TXT BIOS menu option is an interactive knob, that controls some flags
+set in CMOS though a callback everytime its status is changed. There was a bug
+in the current implementation in which the "Load Defaults" would not be handled
+by the callback flow. To fix this issue additional instrumentation was required
+to properly handle the the defaults action, while simultaneously updating the
+knob value and syncing the CMOS flags.
+
+Hsd-es-id: 1607097155
+
+Original commit date: 2019-09-12 14:18:00 -0700
+Change-Id: I486ddd17162f02704d734f1de131bf9c58cf33e0
+Original commit hash: a1231b038351fd033a89496a1d921fac7d907a5f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/IceLakeFspPkg.dsc
+IceLakeOpenBoardPkg/IclUDdr4Type3Tcpd/OpenBoardPkg.dsc
+IceLakeOpenBoardPkg/IclUDdr4Type3Tcpd/OpenBoardPkg.fdf
+IceLakePlatSamplePkg/Features/Txt/Library/TpmInitDoneDepLib/TpmInitDoneDepLib.c
+IceLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.c
+IceLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.inf
+IceLakePlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMemFsp.inf
+IceLakePlatSamplePkg/PlatformPkg.dsc
+IceLakePlatSamplePkg/PlatformPkg.fdf
+IceLakePlatSamplePkg/Setup/CpuSetup.c
+IceLakeSiliconPkg/Cpu/Library/Private/PeiTxtLib/PeiTxtLibFsp.inf
+IceLakeSiliconPkg/Cpu/Library/Private/PeiTxtLib/TxtPei.c
+IceLakeSiliconPkg/Cpu/Library/Private/PeiTxtLib/TxtPeiLib.c
+
+================================================================================ 
+Commit: 53c7c0f91e5affa8bae595ec29fc91f2c911804a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:52:52 -0800 
+-------------------------------------------------------------------------------- 
+[ICL] Integrate latest microcode patch
+
+Updated microcode patch to 0x58
+
+Hsd-es-id: no_hsd
+Original commit date: 2019-11-11 13:52:38 -0800
+Change-Id: I0221b1c0453d5d5bdc02171cd139003fa46fcec5
+Original commit hash: 36036f34072049b7c58249a2b2d216518967aae0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeOpenBoardPkg/IclUDdr4Type3Tcpd/OpenBoardPkg.fdf
+IceLakePlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 5e4bdc3f1164ea8da574902032f979de0b165246 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:52:49 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+2019-11-08 10:41:26 +0000
+Original commit date: 2019-11-08 10:41:26 +0000
+Original commit hash: a557414ca03a1ac933ef93393f1d004a02821377
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: bc356460e8a151ac0145959282c8dd442c4865d7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:52:47 -0800 
+-------------------------------------------------------------------------------- 
+IceLakePlatSamplePkg/Setup: [ICL] Refine help message for CPU Hyper-Threading
+
+This patch is to refine the help message for CPU Hyper-Threading in
+BIOS setup.
+
+Hsd-es-id: 1507497381
+Original commit date: 2019-11-06 16:42:21 +0800
+Change-Id: If288c682ebedcea1de4c4a91ce991dbf1526e650
+Original commit hash: 1a93542e73d30285c90f76c20085f21897c98895
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakePlatSamplePkg/Setup/CpuSetup.uni
+
+================================================================================ 
+Commit: 4d3600cb5568c30c6daab774c16f02ef2c378207 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: 2019-12-13 18:52:45 -0800 
+-------------------------------------------------------------------------------- 
+[ICL][IOMMU] Phase 2 Move IOMMU out of MRC IP
+
+1. Move IOMMU out of MRC IP
+2. Fix FSP API DynamicPCD issue
+
+Hsd-es-id: 2209604767
+Original commit date: 2019-11-05 15:53:14 -0800
+Change-Id: Icd70cd1dd085a2ef0002cca1ef087f21833d0a4c
+Original commit hash: f7c2fab351efdf5441838a84d07646d63e4b776f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+IceLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+IceLakeFspPkg/Upd/FspmUpd.dsc
+IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
+IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+IceLakeSiliconPkg/SystemAgent/Include/ConfigBlock/MemoryConfig.h
+IceLakeSiliconPkg/SystemAgent/Include/ConfigBlock/VtdConfig.h
+IceLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
+IceLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.inf
+IceLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLibFsp.inf
+IceLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/SaPrintPolicy.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/Include/MrcInterface.h
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLib.inf
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFsp.inf
+IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMemoryMap.c
