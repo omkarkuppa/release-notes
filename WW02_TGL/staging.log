@@ -132,11 +132,8 @@ Commit: 7dd4e58739b325c9604ca5328701177db9e005b9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:17:13 2020 -0800 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL][MRC] Update MrcVersion.h and ReleaseNotes to master 0.5.0.0
+[TGL][MRC] Update MrcVersion.h and ReleaseNotes.
 
-Updating MrcVersion.h and ReleaseNotes
-
-Hsd-es-id: N/A
 Original commit date: Fri Dec 20 17:18:28 2019 -0800
 Change-Id: I1ba68cdb4edaf29d0820a9651f2c2266356ffc19
 Original commit hash: 738ed0b7cb9821f2a6d644667402ba785d2ae0f5
@@ -150,11 +147,8 @@ Commit: 9667b8b2fbad79f4d4e6fc8f8c233cab05acbd4f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:17:11 2020 -0800 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL][MRC] Update MrcVersion.h and ReleaseNotes to Development branch 0.4.11.6
+[TGL][MRC] Update MrcVersion.h and ReleaseNotes.
 
-Updating MrcVersion.h and ReleaseNotes
-
-Hsd-es-id: N/A
 Original commit date: Fri Dec 20 16:41:27 2019 -0800
 Change-Id: Ia2ca8dd87f0d6921ff5e1735bc4460a33138aa1a
 Original commit hash: 29ad54e62dcfa3abab19f557ab49e66de679100b
@@ -168,7 +162,7 @@ Commit: 760c46925a599eeec33b0a414b28fbd1ec828938
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:17:09 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: Enable EccClean for Warm Reset flow
+Description: Enable EccClean for Warm Reset flow
 
 Issue:
     Stuck in a boot loop since when TxtClean is enabled
@@ -176,10 +170,9 @@ Issue:
 Root Cause:
     Memory scrubbing is not running when TxtClean is enabled in warm reset flow, hence secrets bit is not cleared during warm resets.
 
-Change:
+Solution:
     Add in Warm Reset for MrcEccClean
 
-Hsd-es-id: 1609116641
 Original commit date: Fri Dec 20 09:10:34 2019 +0800
 Change-Id: If4f090a2fb4c7a78e8764fa4a9345b57f221c6c4
 Original commit hash: b7120b00b54701c0008904887d3a14a9e386e7e9
@@ -209,18 +202,10 @@ Commit: a171358b8d2fe369f8abff2fdfd22c5805b7f007
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:17:04 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: [TGL][MRC] Need to Disable OSR for Beta
-
-Issue:
-    Currently there is a tuning issue with Opportunistic SR causing screen flickers.
-
-Root Cause:
-    The near term solution is to disable Opportunistic Self-Refresh.
-
-Change:
+Description: [TGL][MRC] Disable OSR.
+Solution :
     Clearing MSR_POWER_CTL (0x1fc) BIT2 in PeimMemoryInit() function in MemoryInit.c, and also MrcSetup.c file.
 
-Hsd-es-id: 14010562823
 Original commit date: Tue Dec 17 15:50:13 2019 -0800
 Change-Id: I53e4a28d9767fb3ed9a66d624b7447391b73934e
 Original commit hash: c7df5e8a93a80e92207c81d8dea955d126c10101
@@ -251,8 +236,9 @@ Commit: ef5a4969d5161ebc7d58c24ce1fa4965b070628a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:59 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit:[TGL][MRC] LP5 enablement with ECT
+Description:[TGL][MRC] LP5 enablement with ECT
 
+Solution:
 update mLpddr5xQdp12Gb496bSpd in PeiSpdTables.c
 add support for LPDDR5 in GetSpdData (MrcOemPlatform.c)
 Add suport for the following frequencies in CMOS override 0x4B:
@@ -266,12 +252,6 @@ LP5 ECT enabling
 4) Changed the starting values of CMD, CTL and CLK Pi to the ones recommended by the PHY team.
 5) Commented out the Cbtphase1. For falling edge CMD sampling MRC was programming the CADB unisequencers with the same pattern as rising edge shifted by one cycle of 0 pattern. But on scope we found that the pattern was shifted by 1 tCK instead of half tCK. Until we program the CADB BUF and Unisequencers correctly, cbtphase1 training is disabled.
 
-Testing
-LP5 Minibios passes MRC at 2800 G2 with safe mode off.
-FV reported that Lp4 and DDR4 booted to EFI with full bios.
-I tested full bios on our Lp4 and ddr4 platforms, boots to efi.
-
-Hsd-es-id: <2209988699, 2209988791>
 Original commit date: Mon Dec 16 17:02:36 2019 -0800
 Change-Id: Id32a57dba6083882fc38334f4378963d74123e74
 Original commit hash: 173a5a8d5dae099c604e38fccd0cf73d19c047cc
@@ -314,19 +294,17 @@ Commit: a229cb027bf268ec7d5d91169e4afc2799b80e64
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:52 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: [TGL-U-A6][LP4][PM] S3 exit fail with WW46.5 IFWI (BIOS 2457) after using MRC saved param from 1st boot [instead of most recent] due to IMR address change
 
-Issue:
+Description: 
     On BIOS 2447 and 2453 (MRC 4.4.10) S3 exit on TGL-U-A6 LP4 platform/WINOS 45.1 fails with PC 0A7F
     The CPU and PCH are up at this point. It seems to be soft hang.
 
 Root Cause:
     Memorry Size might not be saved in S3 when CRC changed.
 
-Change:
+Solution:
     Adding function MrcUpdateSavedMCValues() from ICL to TGL MRC execution flow to perform saving values in Fast Boot and last SAGV point only.
 
-Hsd-es-id: 2209693415
 Original commit date: Thu Nov 21 15:57:19 2019 -0800
 Change-Id: Id1426589df04a417c0f30573955a2ef6f6d9d101
 Original commit hash: 83a16bd242ffc267ad3f40cfd6fb20645288df13
@@ -360,17 +338,12 @@ Commit: 22d08ebb09e8ddaa57863706dcc7687112d5df21
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:47 2020 -0800 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL Y][LP4][MRC] Default SPD for TGL Y LPDDR4x Type 4 Platform has incorrect memory capacity
-
-Issue: Memory Size of TGL-Y LP4x Type 4 Platform is incorrect
+Description: Memory Size of TGL-Y LP4x Type 4 Platform is incorrect
 
 Root Cause: SPD data provided is incorrectly setting these memory devices to 6Gb instead of 8Gb
 
-Fix: 1. Update the SPD data to be 8Gb
-     2. Also noticed that other LP4x boards that is using 6Gb technology was also referencing this SPD and needed
-        additional changes to include this SPD data
-
-Hsd-es-id: 14010570928
+Solution: Update the SPD data to be 8Gb
+     
 Original commit date: Thu Dec 12 18:20:41 2019 -0800
 Change-Id: Ifcc3d68d7e70ba152f67fe7a34b3414448c4958b
 Original commit hash: 679dcb8ea5aaac4612c6ed4f5a0765a50f4db4a0
@@ -403,11 +376,8 @@ Commit: c2ee6f27e22a810d2c023966efd5033b74ba4273
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:41 2020 -0800 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL][MRC] Update MrcVersion.h and ReleaseNotes to Development branch 0.4.11.0
+Description: [TGL][MRC] Update MrcVersion.h and ReleaseNotes.
 
-Updating MrcVersion.h and ReleaseNotes
-
-Hsd-es-id: N/A
 Original commit date: Mon Dec 16 14:37:07 2019 -0800
 Change-Id: Ie18661b373dc0bea9b11c75248397edb50013a52
 Original commit hash: 298f91ad6c65b5e0dfc14d6298c928fbac03e179
@@ -421,15 +391,9 @@ Commit: d00787f44cb75923a33c29a5423d538a7c3db54d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:38 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/TwoLm: ASTRO and FMHC remapping configurations are not required for TGL and and ADL.
-
-Removing WA in BIOS for remap as simics model implemented this support.
-FMHC Remap registers are not needed for TGL. In TGL remap is handled in CMF,
-before Astro and FMHC, so removing remap configurations for both FMHC and Astro.
-
-Hsd-es-id: 1807537238
-
-Impacted Platforms: TGL, ADL, SBX
+Description : ASTRO and FMHC remapping configurations are not required for TGL and and ADL.
+Soluton : Remapping is handled in CMF. So removing support of ASTRO and FMHC.
+Impacted Platforms: TGL, ADL
 
 Original commit date: Tue Dec 10 13:19:53 2019 -0800
 Change-Id: Iee7e024299b485f0b9a750bb32a19d7754c9f389
@@ -449,20 +413,8 @@ Commit: df20443d296af74a817584cf35ad12c4639b2f69
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:35 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: Fixing KW issues with array size and null pointer check
+Description : Code clean up
 
-Issue:
-  KW reported issues
-  12707:  Array 'Rank' of size 2 may use index value(s) 2..3
-  12706: Pointer 'DimmWrOdtVals' returned from call to function 'GetDimmOptParamValues' at line 2002 may be NULL and may be dereferenced
-Root Cause:
-  12707: Incorrect index
-  12706: Missing NULL pointer check
-Change:
-  12707: Altered array index
-  12706: Added NULL pointer check
-
-Hsd-es-id: 14010281376
 Original commit date: Thu Dec 12 15:04:19 2019 -0800
 Change-Id: I16f2e9d66bc39d193b5d1bd58171ba351f32d730
 Original commit hash: c178e9098b2cd55765b7243097ad8008f9740539
@@ -477,15 +429,8 @@ Commit: 45ea31a054176c6d70b42b973b38a103cbb32e8e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:33 2020 -0800 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL][MRC] Update MrcVersion.h and ReleaseNotes to master 0.4.10.0
+Description: [TGL][MRC] Update MrcVersion.h and ReleaseNotes
 
-Updating MrcVersion.h and ReleaseNotes
-
-Affected Files ...
-ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Restricted/ReleaseNotesMrcTgl.txt
-ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
-
-Hsd-es-id: N/A
 Original commit date: Fri Dec 13 15:16:32 2019 -0800
 Change-Id: I14d22e8277f411b8713f9e13e0018e9a3eca52b6
 Original commit hash: 879766834e12dc4e49bf730ca32b27ec72a2b9c3
@@ -515,15 +460,9 @@ Commit: 4bea1ccbbc14bf6639e90d92c734d7859a68bb8c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:28 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: [TGL][LP4]Asymmetry problem of CLk GrpPi on LP4
+Description: [TGL][LP4]Asymmetry problem is observed with LP4.
+Solution: Increasing all CLK, CTL and CMD initial values by 64.
 
-Issue:
-    Asymmetry problem is observed with LP4.
-
-Change:
-    Increasing all CLK, CTL and CMD initial values by 64.
-
-Hsd-es-id: 2209394922
 Original commit date: Wed Dec 11 15:08:40 2019 -0800
 Change-Id: I34f5e24122576bdc9dde2187dfac42444a00b9e4
 Original commit hash: 83c7683980ae267512cb985a2e31b099c4a9f6e0
@@ -553,7 +492,7 @@ Commit: 151b61a18943ed9fca707b77575795932a0983df
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:23 2020 -0800 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL][MRC]Updated limit equations for the Unmatched Rx
+Description: [TGL][MRC]Updated limit equations for the Unmatched Rx
 
 Issue: Unmatched Rx has more components in the delay path besides the picode and the offset
        New equation
@@ -563,7 +502,6 @@ Fix: Updated the TargetNUI and OffsetNUI settings as previous code was clearing 
      Implement the new formula when sweeping using RxDqsOffset
      Affected functions: MrcReadMprTrainingNormal, ReadMprTraining, MrcCalcMaxRxMargin, DQTimeCentering1D
 
-Hsd-es-id: 14010342377
 Original commit date: Mon Nov 4 14:41:08 2019 -0800
 Change-Id: I84c839a716b94e666c0d68c6f538add2ab702228
 Original commit hash: 68a635831fb9b241031c715d89351bb08ccfe70b
@@ -599,18 +537,10 @@ Commit: d30625db5b06eb6fab92cadd40a33bdbd74a38a9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:16 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: [TGL][LP4x][EV] Unsaturate RxLoad comp at 4267
-
-Issue:
-    If the Rx load is saturated, we cannot train . This could result in reduced margins.
-
-Root Cause:
+Description: [TGL][LP4x] Unsaturate RxLoad comp at 4267
+Solution: Removing the support of it.
     The Rx Load comp is being deliberately overridden and saturated in MrcDdrIoInit() at 4267, and this is not necessary to pass MRC at that speed.
 
-Change:
-    Getting rid of this code.
-
-Hsd-es-id: 2209859480
 Original commit date: Wed Dec 11 14:08:05 2019 -0800
 Change-Id: I90b1f51b4b169cb61b47f154dd848b58c41dc348
 Original commit hash: 0029acd968986b2584b2caaa9303854bbf42043e
@@ -640,18 +570,12 @@ Commit: 8e29d64868ee8417f154989677323746707d8892
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:12 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: CML_S_6+2/10+2 - Security :  SCLEAN Functionality is failing at PC :00D5.
-
-Issue:
-    SCLEAN Functionality is failing.
-
+Description: SCLEAN Functionality is failing at PC :00D5.
 Root Cause:
     PRMRR needs to be locked before calling TxtLib ClearSecretsBit().
-
-Change:
+Solution:
     Calling McRegistersLock() in MrcEccClean() function to get PRMRR locked.
 
-Hsd-es-id: 1608200683
 Original commit date: Mon Dec 9 15:30:36 2019 -0800
 Change-Id: Iee43acfdca623b3244368548b452c15687070fec
 Original commit hash: 2899d3d077b656e32af738a606a8062df5a6e047
@@ -681,17 +605,8 @@ Commit: 161ea71eed98ede9d622c740df426449542759e9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:08 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: Porting ICL changes to inclrease the Rd-Rd DR turnaround
-
-Issue:
-  We found that LPDDR4x fails 1D RxVref training due to insufficient rank-rank Rd-Rd turnarounds at 1600 Gear1
-Root Cause:
-  Insufficient rank-rank Rd-Rd turnaround
-Change:
-  Ported ICL changes to increase Rd-Rd turnaround
-  4119c9050de177a341f28d55bbe023266cd52e64 - [HSD-ES][client_platf][bug][1407122158][][ICL MRC][Memory corruption in LP4-2933]
-
-Hsd-es-id: 2209627455
+Description: LPDDR4x fails 1D RxVref training due to insufficient rank-rank Rd-Rd turnarounds at 1600 Gear1
+Solution : Increase the Rd-Rd turnaround.
 
 Original commit date: Wed Dec 11 15:26:13 2019 -0800
 Change-Id: I5cd9631d0288c74a9285299698bf78b231431448
@@ -725,19 +640,8 @@ Commit: 7df7e14a25e9d466c84975eb83ae388a2ded3c9d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:04 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: Commenting out the unreachable code and porting optimization of seeking Register Cache array
+Description: Code clean up for Seek Cache Location function. 
 
-Issue:
-  Unused code detected in SeekCacheLocation function.
-  Inefficient cache search algorithm is also used.
-Root Cause:
-  Unused code and linear cache search algorithm.
-Change
-  Ported change SHA-1: f9b2ad9956b318e8c56de89cc591e589326bf1f8
-  * [ICL MRC] sync CNL versions 5.1.73 | Optimization of seeking Register Cache array.
-  Commented out the unused code the same way it is done in ICL.
-
-Hsd-es-id: 1409605004
 Original commit date: Thu Nov 21 14:50:10 2019 -0800
 Change-Id: Ic43f3f46946922aa76890a41dc3be260be8cc2a7
 Original commit hash: c975533894f949b7692b83e0e0d4654b40cb684d
@@ -768,22 +672,13 @@ Commit: 8d2a432442586ba95c2c013d5a7a376caae68025
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:16:00 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include: Porting changes from ICL for MRC interpreter
-
-Issue:
-  Repeating JEDEC REset
-Root Cause:
-  Missing functionality detected
-Change:
-  Porting Git commit: 4aeaf7edc8
-  IceLakeSiliconPkg: [HSD-ES][client_platf][bug][1305622073][ice_lake][ICL MRC] MRC Interpreter new commands and improvments
+Description: Code Sync up
   1. Fix commands execution when Sagv enabled
   2. On "Exit" command the Interpreter will execute all the remaining MRC steps that were not executed and exit to Bios/Minibios.
   3. The command "Exe2pc" renamed to "Goto", a new optional parameter SaGv is added to the command (see help of interpreter).
   4. A new command "c" (continue) is added - the command will execute all remaining command in the table and return to Interpreter loop.
   5. if the Mrc training is done the all execution commands such as Step,Execute.Goto.. are blocked, only non training commands are allowed.
 
-Hsd-es-id: 2208881946
 Original commit date: Wed Nov 13 23:31:44 2019 -0800
 Change-Id: Ic29cf10fa2b70c199891d4077f08f02ea989e44b
 Original commit hash: 97734cd81a1fd4619d125b0c80160a3e490070d0
@@ -833,15 +728,8 @@ Commit: 49813f8d6ba6833d67c00d696a72f11e3398b00b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:15:52 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl:  Fixing incorrect offset calculation for MCMNTS_SPARE_0_0_0_MCHBAR if Channel > 0
-Issue:
-  Non updated value was reported for MCMNTS_SPARE_0_0_0_MCHBAR.Decoder_EBH field
-Root Cause:
-  MCMNTS_SPARE_0_0_0_MCHBAR.Decoder_EBH offset is incorrectly calculated for Channel > 0
-Change
-  MCMNTS_SPARE_0_0_0_MCHBAR.Decoder_EBH offset calculation was fixed and value was updated to 0x3 for channel 1 (or bigger)
-
-Hsd-es-id: 14010430431
+Description: Non updated value was reported for MCMNTS_SPARE_0_0_0_MCHBAR.Decoder_EBH field.
+Solution:MCMNTS_SPARE_0_0_0_MCHBAR.Decoder_EBH offset calculation was fixed and value was updated to 0x3 for channel 1 (or bigger)
 
 Original commit date: Wed Dec 4 23:21:35 2019 -0800
 Change-Id: I2e912509b7581c9205a579f30da2c9cfcbdea17a
@@ -888,21 +776,10 @@ Commit: a081c0c74a52725499e201f9bdaef70ade3e2a17
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:15:45 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: [TGL][MRC] Port BDAT from ICL MRC to TGL MRC
+Description: [TGL][MRC] TGL MRC data is not being populated in BDAT.
+Solution: Added support for 2xMC. Added the member MaxDqBits to the MrcOutput data structure. This stores the
+maximum number of Dq bits per memory technology.
 
-Issue:
-  The TigerLake MRC data is not being populated in BDAT.
-
-Root Cause:
-  TigerLake MRC has not been updated with the latest BDAT changes.
-
-Change:
-  Ported MRC code changes for BDAT from IceLake. Added support for 2xMC.
-
-  Added the member MaxDqBits to the MrcOutput data structure. This stores the
-  maximum number of Dq bits per memory technology.
-
-Hsd-es-id: 2209164950
 Original commit date: Fri Oct 18 16:21:00 2019 -0700
 Change-Id: I5bf335b4446eca4b7f29ccdc5a25b5614b292cd4
 Original commit hash: af7cacc095c5dbcf0db5b9011fe10122b45bddf7
@@ -933,11 +810,8 @@ Commit: faeee8a85c1e8730c901ad449d4a480007aea2c2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jan 9 13:15:41 2020 -0800 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL][MRC] Update MrcVersion.h and ReleaseNotes to Development branch 0.4.9.0
+[TGL][MRC] Update MrcVersion.h and ReleaseNotes 
 
-Updating MrcVersion.h and ReleaseNotes
-
-Hsd-es-id: None
 Original commit date: Wed Dec 4 17:10:23 2019 -0800
 Change-Id: I6c630eaf85c985de96190c6654d715ba54258cc3
 Original commit hash: 296ec48a5be988213664ad1c67ebc1363247a9a9
@@ -1016,7 +890,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu Jan 9 13:15:28 2020 -0800 
 -------------------------------------------------------------------------------- 
 [TGL] Integrate latest GOP V1029
-Hsd-es-id: 16010153745
 
 Original commit date: Thu Dec 19 16:06:01 2019 +0530
 Change-Id: I40dee11274e3c8bd97719a2b3c137be9f6d40fd8
