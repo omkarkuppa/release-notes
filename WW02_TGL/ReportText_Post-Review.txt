@@ -1,0 +1,1081 @@
+*********************************************************************************
+Commit: 01d33f2a54a6ae01a3c1f417443af36ab96e9b93 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "Revert "Suppressing PcieRootPortAspm setup option and set "L1" by default"
+  "
+  
+  This reverts commit d71223c40d2296621005b7700c47c7566f4c0bb8.
+  
+  Thu Dec 26 15:04:17 2019 -0800
+  Original commit hash: 466c4819e2ad64501bdf36d84a88d8de7464c8e2
+  
+  TigerLakePlatSamplePkg/Setup/SaPcieSetupSinglePort.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 616df098ca70aecf7f118668cace6fa5364b250d 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "Suppressing PcieRootPortAspm setup option and set "L1" by default"
+  
+  This reverts commit 394258ac41cb5830938ecfffb836d066342c0ee4.
+  
+  Mon Dec 23 18:28:07 2019 -0800
+  Original commit hash: d71223c40d2296621005b7700c47c7566f4c0bb8
+  
+  TigerLakePlatSamplePkg/Setup/SaPcieSetupSinglePort.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: ef5a4969d5161ebc7d58c24ce1fa4965b070628a 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg]
+
+  Description:[TGL][MRC] LP5 enablement with ECT
+  
+  Solution:
+  update mLpddr5xQdp12Gb496bSpd in PeiSpdTables.c
+  add support for LPDDR5 in GetSpdData (MrcOemPlatform.c)
+  Add suport for the following frequencies in CMOS override 0x4B:
+  2200, 2800, 3600, 4000, and 4800
+  added ucode 0x48 for SAGV stability
+  
+  LP5 ECT enabling
+  1) Frequency switch at the begining of ECT was forcing Gear1 but LP5 POR is Gear2. So frequency switch should happen selectively for lp4 and lp5.
+  2) For Lp5, CADB output are not synchronized to CkSyncCounter in MC. In order synchronize the CADB output we need to delay the CADB start. There is a counter in the CADB which decrements based on this StartDelay value, but the counter ignores any value < 4. Therefore CADB Start Delay should be set to 4 for all channels. This was found in preSi testing but wasnt being correctly set for ch2, ch3, ch6 and ch7.
+  3) RTL workaround for LP5 was removed for B0 but when it was removed the function call MrcDriveDq7 was also removed when we enter CBT mode. Therefore Dq7 was never asserted high, DRAM didnt switch the FSP thereby never sending any feedback on the dq pins.
+  4) Changed the starting values of CMD, CTL and CLK Pi to the ones recommended by the PHY team.
+  5) Commented out the Cbtphase1. For falling edge CMD sampling MRC was programming the CADB unisequencers with the same pattern as rising edge shifted by one cycle of 0 pattern. But on scope we found that the pattern was shifted by 1 tCK instead of half tCK. Until we program the CADB BUF and Unisequencers correctly, cbtphase1 training is disabled.
+  
+  Change-Id: Id32a57dba6083882fc38334f4378963d74123e74
+  Original commit hash: 173a5a8d5dae099c604e38fccd0cf73d19c047cc
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Library/PeiMemPolicyLib/MrcOemPlatform.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20Patterns.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMcConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/CPU/UCODE/m_80_806c0_00000048.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/Common/PlatformBoardId.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/MEMORY/MrcOemPlatform.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/MEMORY/MrcSetup.c
+  TigerLakeBoardPkg/Library/PeiBoardConfigLib/PeiSpdTables.c
+  TigerLakeBoardPkg/TigerLakeUBoards/Library/BoardInitLib/Pei/BoardSaConfigPreMem.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: d30625db5b06eb6fab92cadd40a33bdbd74a38a9 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Description: [TGL][LP4x] Unsaturate RxLoad comp at 4267
+  Solution: Removing the support of it.
+  The Rx Load comp is being deliberately overridden and saturated in MrcDdrIoInit() at 4267, and this is not necessary to pass MRC at that speed.
+  
+  Change-Id: I90b1f51b4b169cb61b47f154dd848b58c41dc348
+  Original commit hash: 0029acd968986b2584b2caaa9303854bbf42043e
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 8d2a432442586ba95c2c013d5a7a376caae68025 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Description: Code Sync up
+  1. Fix commands execution when Sagv enabled
+  2. On "Exit" command the Interpreter will execute all the remaining MRC steps that were not executed and exit to Bios/Minibios.
+  3. The command "Exe2pc" renamed to "Goto", a new optional parameter SaGv is added to the command (see help of interpreter).
+  4. A new command "c" (continue) is added - the command will execute all remaining command in the table and return to Interpreter loop.
+  5. if the Mrc training is done the all execution commands such as Step,Execute.Goto.. are blocked, only non training commands are allowed.
+  
+  Change-Id: Ic29cf10fa2b70c199891d4077f08f02ea989e44b
+  Original commit hash: 97734cd81a1fd4619d125b0c80160a3e490070d0
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/MEMORY/MrcSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 3686c18dbe3854858cdd9ee2612c017affb94199 
+*********************************************************************************
+
+[SiliconPkg], [SA], [ASL]
+
+  Weekly Label 2457.12
+  
+  ClientOneSiliconPkg/Fru/RklCpu/CommonLib.dsc
+  ClientOneSiliconPkg/Fru/RklCpu/CpuDmi/Library/PeiDxeSmmCpuDmiInfoFruLib/CpuDmiInfoFruLib.c
+  ClientOneSiliconPkg/Fru/RklCpu/CpuDmi/Library/PeiDxeSmmCpuDmiInfoFruLib/PeiDxeSmmCpuDmiInfoFruLib.inf
+  ClientOneSiliconPkg/Fru/RklCpu/CpuPcieRp/Library/PeiDxeSmmCpuPcieInfoFruLib/CpuPcieInfoFruLib.c
+  ClientOneSiliconPkg/Fru/RklCpu/CpuPcieRp/Library/PeiDxeSmmCpuPcieInfoFruLib/PeiDxeSmmCpuPcieInfoFruLib.inf
+  ClientOneSiliconPkg/Fru/RklCpu/CpuPcieRp/LibraryPrivate/PeiCpuPcieDekelInitLib/PeiCpuPcieDekelInitLib.c
+  ClientOneSiliconPkg/Fru/RklCpu/CpuPcieRp/LibraryPrivate/PeiCpuPcieDekelInitLib/PeiCpuPcieDekelInitLib.inf
+  ClientOneSiliconPkg/Fru/RklCpu/Dxe.dsc
+  ClientOneSiliconPkg/Fru/RklCpu/DxeLib.dsc
+  ClientOneSiliconPkg/Fru/RklCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+  ClientOneSiliconPkg/Fru/RklCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.inf
+  ClientOneSiliconPkg/Fru/RklCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+  ClientOneSiliconPkg/Fru/RklCpu/Graphics/Library/PeiDxeSmmGraphicsInfoFruLib/GraphicsInfoFruLib.c
+  ClientOneSiliconPkg/Fru/RklCpu/Graphics/Library/PeiDxeSmmGraphicsInfoFruLib/GraphicsInfoFruLib.inf
+  ClientOneSiliconPkg/Fru/RklCpu/HostBridge/Library/PeiDxeSmmHostBridgeInfoFruLib/HostBridgeInfoFruLib.c
+  ClientOneSiliconPkg/Fru/RklCpu/HostBridge/Library/PeiDxeSmmHostBridgeInfoFruLib/HostBridgeInfoFruLib.inf
+  ClientOneSiliconPkg/Fru/RklCpu/Include/Library/CpuDmiInfoFruLib.h
+  ClientOneSiliconPkg/Fru/RklCpu/Include/Library/CpuPcieInfoFruLib.h
+  ClientOneSiliconPkg/Fru/RklCpu/Include/Library/GraphicsInfoFruLib.h
+  ClientOneSiliconPkg/Fru/RklCpu/Include/Register/SaRegsHostBridge.h
+  ClientOneSiliconPkg/Fru/RklCpu/Include/TcssInfo.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/CpuSbInfo.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Library/IpuInitFruLib.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Library/PeiCpuPcieDekelInitLib.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Library/VoltageRegulatorDomains.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Library/VtdInitFruLib.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/CpuDmi16Regs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/CpuDmiRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/CpuPcieRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/CpuPsfRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/FusaRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/GnaRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/IgdRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/IomRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/IpuRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/VmdRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/IncludePrivate/Register/VtdRegs.h
+  ClientOneSiliconPkg/Fru/RklCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/Fru/RklCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.inf
+  ClientOneSiliconPkg/Fru/RklCpu/LibraryPrivate/BaseMsrFruLib/BaseMsrFruLib.c
+  ClientOneSiliconPkg/Fru/RklCpu/LibraryPrivate/BaseMsrFruLib/BaseMsrFruLib.inf
+  ClientOneSiliconPkg/Fru/RklCpu/Pei.dsc
+  ClientOneSiliconPkg/Fru/RklCpu/PeiLib.dsc
+  ClientOneSiliconPkg/Fru/RklCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  ClientOneSiliconPkg/Fru/RklCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.inf
+  ClientOneSiliconPkg/Fru/RklCpu/Vtd/LibraryPrivate/DxeVtdInitLib/DxeVtdInitFruLib.c
+  ClientOneSiliconPkg/Fru/RklCpu/Vtd/LibraryPrivate/DxeVtdInitLib/DxeVtdInitFruLib.inf
+  ClientOneSiliconPkg/Fru/SbxCpu/CpuPcieRp/LibraryPrivate/PeiCpuPcieDekelInitLib/PeiCpuPcieDekelInitLib.c
+  ClientOneSiliconPkg/Fru/SbxCpu/CpuPcieRp/LibraryPrivate/PeiCpuPcieDekelInitLib/PeiCpuPcieDekelInitLib.inf
+  ClientOneSiliconPkg/Fru/SbxCpu/IncludePrivate/Library/PeiCpuPcieDekelInitLib.h
+  ClientOneSiliconPkg/Fru/SbxCpu/IncludePrivate/Library/PeiDxeTelemetryFruLib.h
+  ClientOneSiliconPkg/Fru/SbxCpu/IncludePrivate/Register/CpuDmi16Regs.h
+  ClientOneSiliconPkg/Fru/SbxCpu/IncludePrivate/Register/CpuDmiRegs.h
+  ClientOneSiliconPkg/Fru/SbxCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/Fru/SbxCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.inf
+  ClientOneSiliconPkg/Fru/SbxCpu/Telemetry/LibraryPrivate/PeiDxeTelemetryFruLib/PeiDxeTelemetryFruLib.c
+  ClientOneSiliconPkg/Fru/SbxCpu/Telemetry/LibraryPrivate/PeiDxeTelemetryFruLib/PeiDxeTelemetryFruLib.inf
+  ClientOneSiliconPkg/Fru/SbxPch/Include/PchBdfAssignment.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MemoryInit.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MemoryTest.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcDebugHook.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcRmtData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcSpdData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/IncludePrivate/Library/MemoryInitLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.S
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.nasm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/MrcOemPlatform.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/MrcOemPlatform.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLibSample.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryTest.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcInterpreter.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcInterpreter.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20Patterns.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20Patterns.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/MrcCpgcApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/MrcCpgcApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApiInt.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcCpgcOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcCpgcOffsets.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoDefines.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcRegisterCache.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcRegisterCache.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/McAddress.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcDdr3.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcDdr3Registers.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcDdr4Registers.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGears.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGlobal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcIoControl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMalloc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMcConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMemoryMap.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl0xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl11xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl12xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl1Cxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl1Dxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl1Exxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl1Fxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl1xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl2xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl3xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl5xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl8xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdl9xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdlCxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdlDxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdlExxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterAdlFxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl0xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl11xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl12xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl1Cxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl1Dxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl1Exxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl1Fxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl1xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl2xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl3xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl5xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl8xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdl9xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdlCxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdlDxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdlExxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/MrcMcRegisterStructAdlFxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Alderlake/Pci000Tgl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl0xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl11xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl14xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl15xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Cxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Dxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Exxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Fxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl2xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl3xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl5xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl8xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl9xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglCxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglDxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglExxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglFxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl0xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl11xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl14xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl15xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Cxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Dxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Exxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Fxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl2xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl3xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl5xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl8xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl9xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglCxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglDxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglExxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglFxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/Pci000Tgl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcReset.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcMaintenance.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcMaintenance.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModesUpServer.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr4.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr4.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdrCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdrCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4Registers.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5Registers.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcDdr3.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcGears.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcIoControl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMalloc.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMemoryMap.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/Ddr4.S
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/Ddr4.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McDone.S
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McDone.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McInit.S
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McInit.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McMemoryMap.S
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McMemoryMap.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/Build.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/Cln.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/MinBuild.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/MiniBios.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/TOOLS/Bin/FindEntryPoint.exe
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/TOOLS/Bin/Fwpad.exe
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/TOOLS/Bin/PLACEPE.exe
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/TOOLS/Bin2Obj32/Bin2Obj32.pl
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC16/CpuRc16.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC16/crcpm32.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC16/far_jump.bin
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC16/near_jump.bin
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC16/padin_f.txt
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/CpuRc32.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcinit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcmacros.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcoem.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcoemhook.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcsetup.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcstart.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/LICENSE.TXT
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/m_80_806c0_80000008.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/ConfigBlock.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/CpuRegs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioLibrary.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativeLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativeLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativePrivateLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativePrivateLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativePrivateLibInternal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPinsIclLp.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPinsIclN.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPrivateLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Io.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Io.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/MemoryUtils.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/MemoryUtils.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchAccess.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchInfoLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchLimits.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPcrLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPcrLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPsfPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPsfPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPsfPrivateLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPsfPrivateLibInternal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchReservedResources.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoLibInternal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoUartLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PciLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PciSegmentLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PciSegmentLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PeiDxeSmmPchSerialIoUartLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PeiKscLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PeiKscLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PlatformBoardId.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsDmi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsGpio.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsGpioIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsIsh.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsLpc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsLpcIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPcr.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPmc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPmcCnl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPsf.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPsfIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsSerialIo.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsSerialIoIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsSmbus.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Smb.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Smb.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/uart16550.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/uart16550.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MiniMrc.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcMiniBiosEfiDefs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcOemPlatform.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcOemPlatform.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcSetup.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2008_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2010.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2010_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2012_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2013_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2015_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2017_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBios_VS2008.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Prep.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/Library/MemoryAddressEncodeLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MemoryInit.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MemoryTest.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MrcDebugHook.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MrcRmtData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MrcSpdData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MrcTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/IncludePrivate/Library/MemoryInitLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiDxeSmmMemAddrEncodeLib/MemAddrEncodeLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiDxeSmmMemAddrEncodeLib/PeiDxeSmmMemAddrEncodeLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.S
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.nasm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/MrcOemPlatform.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/MrcOemPlatform.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/PeiMemPolicyLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/PeiMemPolicyLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/PeiMemPolicyLibSample.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/MemoryTest.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFspRkl.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibRkl.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcInterpreter.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcInterpreter.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20Patterns.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20Patterns.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/MrcCpgcApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/MrcCpgcApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcCpgcOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcCpgcOffsets.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoDefines.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcRegisterCache.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcRegisterCache.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/McAddress.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcDdr4Registers.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGears.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGlobal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcIoControl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMalloc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMcConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMemoryMap.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterEnum.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl0xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl1xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl2xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl3xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl5xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl6xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl7xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl8xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl9xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclAxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclBxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclCxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclDxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclExxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclFxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl0xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl1xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl2xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl3xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl5xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl6xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl7xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl8xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl9xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclAxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclBxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclCxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclDxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclExxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclFxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/Pci000Icl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Skylake/MrcMcRegister.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Skylake/MrcMcRegisterCnl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Skylake/MrcMcRegisterStruct.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Skylake/MrcMcRegisterStructCnl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcReset.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcMaintenance.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcMaintenance.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModesUpServer.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr4.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr4.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdrCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdrCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4Registers.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcGears.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcIoControl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMalloc.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMemoryMap.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/BUILD/Build.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/BUILD/Cln.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/BUILD/MinBuild.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/BUILD/MiniBios.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/BUILD/TOOLS/Bin/FindEntryPoint.exe
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/BUILD/TOOLS/Bin/Fwpad.exe
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/BUILD/TOOLS/Bin/PLACEPE.exe
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/BUILD/TOOLS/Bin2Obj32/Bin2Obj32.pl
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC16/CpuRc16.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC16/crcpm32.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC16/far_jump.bin
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC16/near_jump.bin
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC16/padin_f.txt
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC32/CpuRc32.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC32/crc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC32/crcinit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC32/crcmacros.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC32/crcoem.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC32/crcoemhook.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC32/crcsetup.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/SRC32/crcstart.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/UCODE/LICENSE.TXT
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/UCODE/m_80_706e1_80000038.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/UCODE/m_80_706e3_81000008.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/UCODE/m_80_706e4_8000000a.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/UCODE/m_80_706e5_8000000a.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/CPU/UCODE/m_c0_706e0_80000028.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/ConfigBlock.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/CpuRegs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/EcCommands.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Io.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Io.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/MemoryUtils.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/MemoryUtils.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/GpioConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/GpioPinsIclH.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/GpioPinsIclLp.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/GpioPinsIclN.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Library/GpioLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Library/GpioNativeLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Library/PchInfoLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Library/PchPcrLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Library/PchSerialIoLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Library/PchSerialIoUartLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/PchLimits.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/PchReservedResources.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Private/GpioNativePads.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Private/Library/GpioPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Private/Library/PchPsfPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsDmi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsGpio.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsGpioIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsIsh.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsLpc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsLpcIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsPcr.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsPmc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsPmcCnl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsPmcIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsPsf.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsPsfIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsSerialIo.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsSerialIoIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsSerialIoUart.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Include/Register/PchRegsSmbus.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/PeiDxeSmmGpioLib/GpioLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/PeiDxeSmmGpioLib/GpioLibrary.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/PeiDxeSmmGpioLib/GpioNativeLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/PeiDxeSmmPchInfoLib/PchInfoLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/PeiDxeSmmPchPcrLib/PchPcrLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/PeiDxeSmmPchSerialIoLib/PchSerialIoLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/PeiDxeSmmPchSerialIoLib/PchSerialIoLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/PeiDxeSmmPchSerialIoLib/PchSerialIoLibInternal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/PeiDxeSmmPchSerialIoUartLib/PeiDxeSmmPchSerialIoUartLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibInternal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioPrivateLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmPchPsfPrivateLib/PchPsfPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmPchPsfPrivateLib/PchPsfPrivateLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmPchPsfPrivateLib/PchPsfPrivateLibInternal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/PciLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/PciSegmentLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Pch/PciSegmentLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/PeiKscLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/PeiKscLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/PlatformBoardId.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Smb.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/Smb.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/uart16550.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Common/uart16550.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MEMORY/MiniMrc.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MEMORY/MrcMiniBiosEfiDefs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MEMORY/MrcOemPlatform.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MEMORY/MrcOemPlatform.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MEMORY/MrcSetup.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MiniBIOS_VS2008_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MiniBIOS_VS2010.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MiniBIOS_VS2010_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MiniBIOS_VS2012_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MiniBIOS_VS2013_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MiniBIOS_VS2015_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MiniBIOS_VS2017_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MiniBios_VS2008.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/Prep.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/ReleaseNotes.txt
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/Library/MemoryAddressEncodeLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MemoryInit.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MemoryTest.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcDebugHook.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcRmtData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcSpdData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/IncludePrivate/Library/MemoryInitLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiDxeSmmMemAddrEncodeLib/MemAddrEncodeLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiDxeSmmMemAddrEncodeLib/PeiDxeSmmMemAddrEncodeLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.S
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.nasm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiMemPolicyLib/MrcOemPlatform.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiMemPolicyLib/MrcOemPlatform.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiMemPolicyLib/PeiMemPolicyLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiMemPolicyLib/PeiMemPolicyLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Library/PeiMemPolicyLib/PeiMemPolicyLibSample.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/MemoryTest.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFspRkl.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibRkl.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcInterpreter.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcInterpreter.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20Patterns.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20Patterns.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/MrcCpgcApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/MrcCpgcApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcCpgcOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcCpgcOffsets.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoDefines.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcRegisterCache.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcRegisterCache.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/McAddress.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcDdr4Registers.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGears.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGlobal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcIoControl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMalloc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMcConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMemoryMap.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterEnum.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl0xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl1xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl2xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl3xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl5xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl6xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl7xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl8xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIcl9xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclAxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclBxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclCxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclDxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclExxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterIclFxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl0xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl1xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl2xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl3xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl5xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl6xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl7xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl8xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIcl9xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclAxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclBxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclCxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclDxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclExxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/MrcMcRegisterStructIclFxxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Icelake/Pci000Icl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Skylake/MrcMcRegister.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Skylake/MrcMcRegisterCnl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Skylake/MrcMcRegisterStruct.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Skylake/MrcMcRegisterStructCnl4xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcReset.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcMaintenance.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcMaintenance.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModesUpServer.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr4.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr4.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdrCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdrCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4Registers.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcGears.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcIoControl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMalloc.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMemoryMap.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/BUILD/Build.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/BUILD/Cln.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/BUILD/MinBuild.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/BUILD/MiniBios.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/BUILD/TOOLS/Bin/FindEntryPoint.exe
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/BUILD/TOOLS/Bin/Fwpad.exe
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/BUILD/TOOLS/Bin/PLACEPE.exe
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/BUILD/TOOLS/Bin2Obj32/Bin2Obj32.pl
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC16/CpuRc16.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC16/crcpm32.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC16/far_jump.bin
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC16/near_jump.bin
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC16/padin_f.txt
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC32/CpuRc32.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC32/crc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC32/crcinit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC32/crcmacros.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC32/crcoem.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC32/crcoemhook.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC32/crcsetup.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/SRC32/crcstart.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/UCODE/LICENSE.TXT
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/UCODE/m_80_706e1_80000038.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/UCODE/m_80_706e3_81000008.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/UCODE/m_80_706e4_8000000a.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/UCODE/m_80_706e5_8000000a.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/CPU/UCODE/m_c0_706e0_80000028.inc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/ConfigBlock.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/CpuRegs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/EcCommands.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Io.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Io.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/MemoryUtils.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/MemoryUtils.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/GpioConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/GpioPinsIclH.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/GpioPinsIclLp.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/GpioPinsIclN.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Library/GpioLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Library/GpioNativeLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Library/PchInfoLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Library/PchPcrLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Library/PchSerialIoLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Library/PchSerialIoUartLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/PchLimits.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/PchReservedResources.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Private/GpioNativePads.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Private/Library/GpioPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Private/Library/PchPsfPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsDmi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsGpio.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsGpioIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsIsh.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsLpc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsLpcIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsPcr.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsPmc.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsPmcCnl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsPmcIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsPsf.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsPsfIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsSerialIo.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsSerialIoIcl.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsSerialIoUart.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Include/Register/PchRegsSmbus.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/PeiDxeSmmGpioLib/GpioLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/PeiDxeSmmGpioLib/GpioLibrary.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/PeiDxeSmmGpioLib/GpioNativeLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/PeiDxeSmmPchInfoLib/PchInfoLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/PeiDxeSmmPchPcrLib/PchPcrLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/PeiDxeSmmPchSerialIoLib/PchSerialIoLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/PeiDxeSmmPchSerialIoLib/PchSerialIoLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/PeiDxeSmmPchSerialIoLib/PchSerialIoLibInternal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/PeiDxeSmmPchSerialIoUartLib/PeiDxeSmmPchSerialIoUartLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibInternal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmGpioPrivateLib/GpioPrivateLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmPchPsfPrivateLib/PchPsfPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmPchPsfPrivateLib/PchPsfPrivateLibIcl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/Library/Private/PeiDxeSmmPchPsfPrivateLib/PchPsfPrivateLibInternal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/PciLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/PciSegmentLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Pch/PciSegmentLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/PeiKscLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/PeiKscLib.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/PlatformBoardId.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Smb.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/Smb.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/uart16550.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Common/uart16550.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MEMORY/MiniMrc.mak
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MEMORY/MrcMiniBiosEfiDefs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MEMORY/MrcOemPlatform.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MEMORY/MrcOemPlatform.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MEMORY/MrcSetup.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MiniBIOS_VS2008_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MiniBIOS_VS2010.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MiniBIOS_VS2010_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MiniBIOS_VS2012_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MiniBIOS_VS2013_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MiniBIOS_VS2015_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MiniBIOS_VS2017_Win7.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MiniBios_VS2008.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/Prep.bat
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/ReleaseNotes.txt
+  ClientOneSiliconPkg/Product/RocketLake/RocketLakeSiliconBuild.bat
+  ClientOneSiliconPkg/Product/RocketLake/RocketLakeSiliconPkg.dsc
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Dxe/IncompatiblePciDeviceSupport.c
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Dxe/SiInitDxe.c
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Dxe/SiInitDxe.h
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Dxe/SiInitDxe.inf
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Pei/SiInit.c
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Pei/SiInit.h
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Pei/SiInit.inf
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Pei/SiInitFsp.inf
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Pei/SiInitPreMem.c
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Pei/SiInitPreMem.h
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Pei/SiInitPreMem.inf
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Pei/SiInitPreMemFsp.inf
+  ClientOneSiliconPkg/Product/RocketLake/SiInit/Pei/TempRamExit.c
+  ClientOneSiliconPkg/Product/RocketLake/SiPkgBuildOption.dsc
+  ClientOneSiliconPkg/Product/RocketLake/SiPkgCommonLib.dsc
+  ClientOneSiliconPkg/Product/RocketLake/SiPkgDxe.dsc
+  ClientOneSiliconPkg/Product/RocketLake/SiPkgDxeLib.dsc
+  ClientOneSiliconPkg/Product/RocketLake/SiPkgPei.dsc
+  ClientOneSiliconPkg/Product/RocketLake/SiPkgPeiLib.dsc
+  ClientOneSiliconPkg/SiPkg.dec
+  ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/SaNvs.asl
+  ClientOneSiliconPkg/SystemAgent/IncludePrivate/SaNvsAreaDef.h
+  TigerLakeFspBinPkg/Fsp.bsf
+  TigerLakeFspBinPkg/Fsp.fd
+  TigerLakeFspBinPkg/Include/FspUpd.h
+  TigerLakeFspBinPkg/Include/FspmUpd.h
+  TigerLakeFspBinPkg/Include/FspsUpd.h
+  TigerLakeFspBinPkg/Include/FsptUpd.h
+  TigerLakeFspBinPkg/Include/MemInfoHob.h
+  TigerLakeFspBinPkg/Include/SmbiosCacheInfoHob.h
+  TigerLakeFspBinPkg/Include/SmbiosProcessorInfoHob.h
+  readme.txt
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+################################################################################
+
+Report Summary: Backstop found 6 suspect commits for review 
+
+Warnings Found:
+  Commit: 01d33f2    --Commit Message Contains Key Word: revert
+  Commit: 616df09    --Commit Message Contains Key Word: revert
+  Commit: ef5a496    --Commit Message Contains Key Word: Workaround
+  Commit: d30625d    --Commit Message Contains Oem: NEC
+  Commit: 8d2a432    --Commit Message Contains Key Word: step
+  Commit: 3686c18    --Commit Message Contains Key Word: internal
