@@ -1,0 +1,592 @@
+================================================================================ 
+Commit: ef48e2fd59a991e21609fba10ab270f63b055044 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:09:04 2020 +0530 
+-------------------------------------------------------------------------------- 
+Changing BIOS ID to 4031.00 for WW03.1'20 BIOS label.
+
+Hsd-es-id: NA
+Original commit date: Mon Jan 13 18:03:19 2020 +0530
+Change-Id: I9112030b99d9000faa0e7e948626fd73dabb64c1
+Original commit hash: 22cbc8a741f2284a1653afa525d9c0fb492f9103
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: c537e669bab2b608e4d9f447cc0381716188fa86 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:09:04 2020 +0530 
+-------------------------------------------------------------------------------- 
+Revert "Adding new microcode m_10_806a1_00000011 for B stepping."
+
+This reverts commit f567995fbf7861504bebd6961f5941660d9ad799.
+
+Reverting ucode 0x11 version as it is causing regression in PnP and PM team
+recommended to revert the ucode.
+
+Hsd-es-id: NA
+Original commit date: Mon Jan 13 16:49:34 2020 +0530
+Change-Id: I84f3bfe61eca90d95ed1485b0a61ad5c604e557c
+Original commit hash: 3dfe3d9b527f024a74a7b1e90ee939c1ccde2e85
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: aabeb4b79b549958bf990b663a4042fcb67b0487 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:09:02 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF]  BIOS Guide updates Rev21 and Rev22 for USB
+
+Rev21:  HOST_CTRL_SSP_LINK_REG2.Bit2 = 1 to enable SW to write to PORTLI and PORTSOFTERR registers.
+Rev22:  Removed XHCI_ECN_REG 0x82FC[2] bit programming requirement.  Now it should remain at default value of 0.
+
+Hsd-es-id: 14010657970
+Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Original commit date: Mon Jan 13 16:41:11 2020 +0530
+Change-Id: Iec406a319044c7cd3b12fa431f33f23905a476c4
+Original commit hash: cc79bbb53b5b4d1fab60b64adf7dd48245fe1a85
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/Library/Private/PeiDxeUsbInitLib/XhciInit.c
+
+================================================================================ 
+Commit: 560f68ccb3eb75c29f7f86aa5d1946d15ee20473 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:09:01 2020 +0530 
+-------------------------------------------------------------------------------- 
+Changing BIOS ID to 4024.00 for WW02.4'20 BIOS label.
+
+Hsd-es-id: NA
+Original commit date: Thu Jan 9 19:55:04 2020 +0530
+Change-Id: I79f37c704f4cb88e67a884717265e97741d7eaad
+Original commit hash: 0beeaeb754797de7a59b11a87a1fd086b87788a5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 3a1578f92b816912ca6fc38f3e9feca00073906d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:09:00 2020 +0530 
+-------------------------------------------------------------------------------- 
+THC ITSS MSI W/A
+
+Description:
+THC  is sending the incorrect Bus # 1, Dev # 5, Function # 0. ,SoC HSD: https://hsdes.intel.com/appstore/article/#/1607800075
+W/A is needed in touch driver and BIOS to address this issue
+
+BIOS changes needed - dedicated IRQ for THC0/1 - IRQ # 22 and 23 ,  configured as Edge triggered
+This change will work only only when paired with corresponding OS changes (changes need in OS as well to configure these interrupt lines as Edge triggered)
+Changes in OS have been checked in (test binaries available). this will make its way to the Manganese EEAP drops in Jan20. Backport request to 20H1, 19H2 and 19H1 in parallel.
+Until OS changes are available as service update /  official drops some teams will continue to work with private binaries from OS.
+If these changes are pushed now , teams who dont have these private binaries woudl see touch not working at all.
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/16010218358
+Original commit date: Fri Dec 27 14:51:40 2019 -0800
+Change-Id: Ica61227a1c5c7ffed3d399deebdebd3edc9afec6
+Original commit hash: 9b30a0292da2d73402de68e7eda476c2a919d65a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Acpi/AcpiTables/Dsdt/PciTree.asl
+LakeFieldSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLibLkf.c
+LakeFieldSiliconPkg/Pch/Library/Private/PeiItssLib/ItssLib.c
+
+================================================================================ 
+Commit: 97cbda7fdfce9e031e25d5cea062a0e16c2e4d1a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:59 2020 +0530 
+-------------------------------------------------------------------------------- 
+[MRC 165.28.0.0] : [LKF B3] Required MRC new biasiref equation for senseamp training and use the trained biasiref for power training
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1507652582
+
+Original commit date: Mon Dec 30 16:51:28 2019 +0530
+Change-Id: Ibf0fbef4e469761a9b2106e50c489c003f83738e
+Original commit hash: 93c711eea0fa28e51f6819aebafc8f313493f6ac
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/Include/MrcDebugHook.h
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/Include/MrcInterface.h
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMcConfiguration.h
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+LakeFieldSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 4c3efd54d1ccddc97826123f8e7f45e871cd59d5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:56 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF] Syetem detect only 4GB under WOS with 8GB SOC without Restricted codes included
+
+Putting ForceSingleRank Setup Option out of Restriced Section
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1507661237
+Original commit date: Tue Dec 24 14:11:09 2019 +0530
+Change-Id: I64aba55f323198e6a281120c3183014f36f11926
+Original commit hash: ab2a0ac036e5bd6a65ab6819bcc63f6c9ca6dc41
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+LakeFieldFspPkg/Upd/FspmUpd.dsc
+LakeFieldPlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+
+================================================================================ 
+Commit: 49c7f48fc3338536ae7b68e5cb3b6c6365abf185 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:55 2020 +0530 
+-------------------------------------------------------------------------------- 
+Update NHTL internal config to match NHLT binary:
+- endpoints
+- formats
+- formats configs
+
+Hsd-es-id: 1809399152
+Original commit date: Wed Dec 4 15:38:57 2019 +0100
+Change-Id: I51f135a244a7bc696f66575a0de8be6abfd660a7
+Original commit hash: 390558df6fe0e7247de8fe1c9a3707564341c470
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Library/DxeInstallNhltTableLib/DxeCreateNhltTableLib.c
+LakeFieldPlatSamplePkg/Library/DxeInstallNhltTableLib/NhltConfig.c
+LakeFieldPlatSamplePkg/Library/DxeInstallNhltTableLib/NhltEndpoints.c
+LakeFieldPlatSamplePkg/Setup/PchSetup.hfr
+LakeFieldSiliconPkg/Include/DxeHdaNhlt.h
+
+================================================================================ 
+Commit: b14296d7ae73c93bc9a5d3983c067381bab68f07 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:54 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF B0][USB][xDCI]xDCI not training after enter/exit from S4 (with cable connected between host and device throughout enter S4 to exit S4)
+
+Issue: XDCI training is not happenning after enter/exit from S4 with cable connected between host and device throughout the boot issue.
+       This is because S4 XDCI Context is restored before ECLITE HECI Comes up resulted in failure to get the cable status by XDCI driver via ACPI _DSM
+Changes: Added code in ECLITE _REG method to notify XDCI driver for Cable status.
+Testing: Changes verified by Validation team and detection is fine.
+Hsd-es-id:16010662845
+
+Original commit date: Wed Jan 8 10:57:10 2020 +0530
+Change-Id: I4c71fd52f2bef6d22f3e8d76c4f6b59fcc19e397
+Original commit hash: 38ea2268c2d6c449de7960e51679098c004a1e7e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Acpi/AcpiTables/Dsdt/EcLite.asl
+LakeFieldPlatSamplePkg/Acpi/AcpiTables/Dsdt/EcLiteDsm.asl
+
+================================================================================ 
+Commit: ac4e7ba9ac3c2a7770f8da65accc89206f49ef7d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:53 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF]-Cleanup Charging Applet Flows
+Cleaning up the code of Charging Applet.
+Issue:Lot of redundant code was available in Charging Applet code which had to be cleaned up.
+Changes:We have made changes in charging Applet DXE phase.Simplied the flow.
+Testing:Verified the different flows which are carried out in DXE charging Applet.
+Hsd-es-id:https://hsdes.intel.com/appstore/article/#/1608907447
+Attestation-link:Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xls
+
+Original commit date: Thu Dec 19 08:52:10 2019 +0530
+Change-Id: I5ec71a302f6b7a7af1d33264fcfec73af6002398
+Original commit hash: daae12afc0be4690bf0f999154b22b7a4ae5c9df
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Features/ChargingApplet/DxeChargingApplet/DummyCharger.h
+LakeFieldPlatSamplePkg/Features/ChargingApplet/DxeChargingApplet/DxeChargingApplet.c
+LakeFieldPlatSamplePkg/Features/ChargingApplet/DxeChargingApplet/DxeChargingApplet.h
+LakeFieldPlatSamplePkg/Features/ChargingApplet/DxeChargingApplet/StateMachine.c
+LakeFieldPlatSamplePkg/Features/ChargingApplet/PeiChargingApplet/PeiChargingApplet.c
+LakeFieldPlatSamplePkg/Features/ChargingApplet/PeiChargingApplet/PeiChargingApplet.h
+LakeFieldPlatSamplePkg/Features/ChargingApplet/PeiChargingApplet/PeiChargingApplet.inf
+LakeFieldPlatSamplePkg/Features/Pmic/Include/WarrenCovePmicRegisters.h
+LakeFieldPlatSamplePkg/Include/Library/PlatformMiscLib.h
+LakeFieldPlatSamplePkg/Library/PlatformMiscLib/PlatformMiscLib.c
+LakeFieldSiliconPkg/Pch/Include/Register/PchRegsPmcLkf.h
+
+================================================================================ 
+Commit: f661ac0575f0be0e20a346423ebf0a86c806b53c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:51 2020 +0530 
+-------------------------------------------------------------------------------- 
+Revert "Revert "[LKF] Remove PmcSerialIoSetD3 PCD from PeiChargingApplet.c since we have code in DXE to put into D3 for LPSS devices instead of Disabling the LPSS devices""
+
+This reverts commit 4fd7e9a0ea4cd38ba37d66bb31e464a0c99685e5.
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1609004846
+Original commit date: Tue Dec 31 15:58:33 2019 +0530
+Change-Id: Idb50024148206c361299b762a0186095943f4dca
+Original commit hash: 4ecd2cccba316443a5537c68b32c7194507018a9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Features/ChargingApplet/Library/Lpmmode.c
+LakeFieldPlatSamplePkg/Features/ChargingApplet/PeiChargingApplet/PeiChargingApplet.c
+LakeFieldPlatSamplePkg/Features/ChargingApplet/PeiChargingApplet/PeiChargingApplet.inf
+LakeFieldPlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+LakeFieldPlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+LakeFieldPlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
+LakeFieldPlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: f0408a193d173ba0a163c3c73bfeb7561d46b378 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:49 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF] [Capsule Update] - UfsBlockIo pei drivers needs to supported to enable seamless recovery in SPI-UFS configuration.
+
+Fixed below issue with this changes.
+
+1. To get the capsule image from UFS storage in recovery flow added supported drivers.
+2. Getting timout while reading the data from UFS device in PEI phase - Changed the UFS link speed to Gear mode to fix this timeout in PEI phase and we can read the capsule image from UFS device.
+
+Hsd-es-id: 1607949126
+Original commit date: Wed Oct 23 19:05:49 2019 +0530
+Change-Id: Ic84bbc7664164eaf595f1c0fd1e6cf429ca33898
+Original commit hash: b7b04c7d903e4008f709352d0b04c8eb6c0f83c6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/LakeFieldFspPkg.dsc
+LakeFieldFspPkg/LakeFieldFspPkg.fdf
+LakeFieldPlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+LakeFieldPlatSamplePkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPei.c
+LakeFieldPlatSamplePkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPei.h
+LakeFieldPlatSamplePkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPei.inf
+LakeFieldPlatSamplePkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPei.uni
+LakeFieldPlatSamplePkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPeiExtra.uni
+LakeFieldPlatSamplePkg/PlatformPkg.dsc
+LakeFieldPlatSamplePkg/PlatformPkg.fdf
+LakeFieldSiliconPkg/Override/DoxygenSiOverride.h
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPei.c
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPei.h
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPei.inf
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPeiBfx.inf
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Pci/UfsPciHcPei/UfsPciHcPeiExtra.uni
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Ufs/UfsBlockIoPei/UfsBlockIoPei.inf
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Ufs/UfsBlockIoPei/UfsBlockIoPei.uni
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Ufs/UfsBlockIoPei/UfsBlockIoPeiExtra.uni
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Ufs/UfsBlockIoPei/UfsBlockIoPeiFsp.inf
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Ufs/UfsBlockIoPei/UfsHci.c
+LakeFieldSiliconPkg/Override/MdeModulePkg/Bus/Ufs/UfsBlockIoPei/UfsHci.h
+
+================================================================================ 
+Commit: 5cc1eb91e41f2ebf9976d2e603a52648ac522edb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:47 2020 +0530 
+-------------------------------------------------------------------------------- 
+Description: HECI interfaces need to be enabled and disabled based on policy
+or boot device but most of the HECI interface enabled and disable codes are
+inside Restricted tag and this is effecting customers in acheiving
+low power states.
+
+Fix: Made changes in HECI interfaces enable and disable states based on
+policy and boot device.
+
+1. HECI1 must not be disabled in all cases hence put under
+   Restricted tag.
+2. HECI2 is handled through Policy, for SPI boot HECI2 will be disabled
+   UPDATE_POLICY (((FSPM_UPD *) FspmUpd)->FspmConfig.HeciCommunication2,
+   MePeiPreMemConfig->HeciCommunication2,(MeSetup.HeciCommunication2
+   || !BootMediaIsSpi()));
+3. HECI3 is handles through policy
+   UPDATE_POLICY (((FSPS_UPD *) FspsUpd)->FspsConfig.Heci3Enabled,
+   MePeiConfig->Heci3Enabled, MeSetup.Heci3Enabled);
+4. HECI4 must be mandatorily enabled for BFX boot and must be disabled for
+   SPI boot
+    // HECI4 is required for supporting BIOS proxy in the boot from UFS path
+    if (BootMediaIsUfs ()) {
+      MePeiPreMemConfig->HeciCommunication4 = FORCE_ENABLE;
+    } else {
+      MePeiPreMemConfig->HeciCommunication4 = FORCE_DISABLE;
+    }
+
+Special notes:
+1. In SPI boot only HECI1 must be enabled at all phases and all other HECI
+   interfaces must be disabled.
+2. In BFX boot HECI1, HECI2 and HECI4 must be enabled, HECI3 must be
+   disabled.
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1507661009
+Original commit date: Tue Dec 24 15:05:21 2019 +0530
+Change-Id: Ifa3335a7d4a22bd89770629fac7732214f3ec2f4
+Original commit hash: 01b3b3dc52504b85b5bf61520a38a6b49de127d0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/Upd/FspmUpd.dsc
+LakeFieldPlatSamplePkg/Setup/MeSetup.hfr
+LakeFieldSiliconPkg/Me/Include/ConfigBlock/MePeiConfig.h
+LakeFieldSiliconPkg/Me/Library/PeiMePolicyLib/PeiMePolicyLib.c
+LakeFieldSiliconPkg/Me/Library/Private/PeiMeInitLib/HeciInit.c
+
+================================================================================ 
+Commit: ad6c5063af3aa4889b02c39d79e3b1b1575c4adf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:45 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF] BIOS needs to send CORE_BIOS_DONE message in Recovery mode
+
+Issue: Request is to send CORE_BIOS_DONE message in Recovery mode to prevent exposure of some of the CSE APIs to 3rd Part Bios Code for security reasons.
+Changes: Added support to send CBD during recovery mode
+Testing: Cross verifed by using IFWI provided by CSE team which can enforce CSE to Recovery mode.
+Hsd-es-id:16010654580
+
+Original commit date: Fri Jan 3 17:38:18 2020 +0530
+Change-Id: I0fa3652a604cb3d1c81d3101c502a6d46b4278ff
+Original commit hash: 7f14ee2a94b80f0b6e55aea096abefa790c6e3a2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/Me/Library/DxeMeLib/HeciMsgDxeLib.c
+LakeFieldSiliconPkg/Me/Library/Private/HeciInitCommonLib/HeciCore.c
+
+================================================================================ 
+Commit: 7cc64eda8c9a0f7926e7bd3f899e5e00a43f4a2e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:44 2020 +0530 
+-------------------------------------------------------------------------------- 
+CHanging BIOS ID to 4016.01
+
+4016.01 = 4016.00 + ucode 0x11
+
+Hsd-es-id: NA
+Original commit date: Sat Jan 4 09:09:48 2020 +0530
+Change-Id: I60f18790907a7b8261d254a0b4ac8040f48ad616
+Original commit hash: 4fc18cc2d936a59e9d3667573570f02b8a369ac1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 2f618fe88d39f279724ebdcb33c6365d67bbfdfb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:43 2020 +0530 
+-------------------------------------------------------------------------------- 
+Adding new microcode m_10_806a1_00000011 for B stepping.
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1707137212
+Original commit date: Sat Jan 4 08:04:15 2020 +0530
+Change-Id: Ic9dcb22b2bfc8fead52c56667de92b70cbefb31c
+Original commit hash: f567995fbf7861504bebd6961f5941660d9ad799
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/PlatformPkg.fdf
+
+================================================================================ 
+Commit: 42fdf8f8df9ca44bd0276cc7d19eb4547afd8226 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:42 2020 +0530 
+-------------------------------------------------------------------------------- 
+Changing BIOS ID to 4016.00 for WW01.6'20 BIOS label.
+
+Hsd-es-id: NA
+Original commit date: Sat Jan 4 07:34:03 2020 +0530
+Change-Id: Ie779f22c4ba8ee304688597bdc680373b20b51f3
+Original commit hash: 51fad61dc86f91680500705d54bb9263b33f4842
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 001ef0d9ffbabcafe293f87be3487d0e62190593 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:41 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF_B2][LKF_B3][PM-SnS][UFS][PM-DPMO] : SUT hung with bootfsm 0x40 on PKGC8 exit during WR
+
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1609071363
+Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
+Original commit date: Fri Jan 3 12:31:33 2020 +0530
+Change-Id: I7ea3323667c3ae5b4dee54ccc01ab64e4d985272
+Original commit hash: 257f0d216263ad15b3b25019e8c1a36ad3a3df89
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/Pch/Library/Private/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLib.c
+
+================================================================================ 
+Commit: b9100bbcb927fc64509daabb468285be8848ef65 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:40 2020 +0530 
+-------------------------------------------------------------------------------- 
+[THC][BIOS][Write DMA]Wrong BIT for Poll on Write DMA complete.
+
+ThcWrDmaIeDmaCpl replaced with ThcWrDmaStart equal 0 to determine if Write DMA has compiled.
+
+Hsd-es-id: 14010649594
+Original commit date: Thu Jan 2 13:26:55 2020 -0800
+Change-Id: I8bc8d3b82c5263f07f709dee900724703086ba7e
+Original commit hash: e713a6e33375fae959d3d9fdf9c7eb8f7631149c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/Pch/Thc/ThcLibPrivate.c
+
+================================================================================ 
+Commit: 1e2092ecd01977f72bdf2535effdc1b0bbd78dd5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:40 2020 +0530 
+-------------------------------------------------------------------------------- 
+Touch Host Controller UEFI driver needs to support Enable after Reset functionality in THC Protocol.
+
+Added Enable After Reset functionality that could be called once the Reset is completed.
+It will read Touch Device registers and make sure Touch Enable is set.
+
+Hsd-es-id: 14010627566
+Original commit date: Tue Nov 12 03:01:31 2019 -0800
+Change-Id: I63ff1de94efca41739c0f8c44e26cfd553b711d4
+Original commit hash: 691d158fbe710b1c4a09b3ab2426d641ec0586f4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/Pch/Include/Protocol/Thc.h
+LakeFieldSiliconPkg/Pch/Thc/Thc.c
+LakeFieldSiliconPkg/Pch/Thc/ThcDriver.c
+LakeFieldSiliconPkg/Pch/Thc/ThcDriver.h
+LakeFieldSiliconPkg/Pch/Thc/ThcHid.c
+LakeFieldSiliconPkg/Pch/Thc/ThcHid.h
+LakeFieldSiliconPkg/Pch/Thc/ThcPrivate.h
+
+================================================================================ 
+Commit: 52dd51ec7d21edc1d05161145b0a5389e15090cf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:38 2020 +0530 
+-------------------------------------------------------------------------------- 
+Changing BIOS ID to 4014.00 for WW01.4'20 BIOS label.
+
+Hsd-es-id: NA
+Original commit date: Thu Jan 2 20:51:19 2020 +0530
+Change-Id: I256f8f978bd89c97c062bde15ab64e8544805b6a
+Original commit hash: 365a27fd957cb563c934a5fcc02610f086320982
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 411455ee1194dd3faf082f4b04149d198851574b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:37 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF-RVP1][B2]:Code cleanup for fPowerOnWPEn flows
+
+As per UFS 2.1 spec Section 14.2 modified the logic.
+
+Hsd-es-id: 1609374086
+Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
+Original commit date: Thu Dec 19 17:27:59 2019 +0530
+Change-Id: I9ef7e88f2456898214806c92fbf24e85a7d9fab9
+Original commit hash: a5bbb14c130bf7b7a2d5210e68efe437b4072e07
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/PlatformInit/PlatformInitDxe/PlatformInitDxe.c
+LakeFieldPlatSamplePkg/PlatformInit/PlatformInitDxe/PlatformInitDxe.h
+
+================================================================================ 
+Commit: 002e6859b210b641c4c338c7d318616f9c543742 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:36 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF]Call ConfigurePttBoot Guard as function to prevent corruption of EventLog
+
+The constructor registers callback which when executed more than once corrupts the Event Log
+Call ConfigurePttBoot Guard as function which is executed based on status of gTpmSelectedPpi instead of registering callback
+
+Hsd-es-id: 1608988983
+Attestation-link: Intel\LakeFieldPlatSamplePkg\InternalOnly\IpPlan\Client BIOS IP Plan.xlsx
+Original commit date: Tue Dec 31 16:50:18 2019 +0530
+Change-Id: If171d7d79dcfbb979b6feaf5e9d06cf9cc74237a
+Original commit hash: 7898d7b23491dc3137599e8b33956cb5b1f4aa13
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientCommonPkg/Override/SecurityPkg/Tcg/Tcg2Config/Tcg2ConfigPeim.c
+LakeFieldPlatSamplePkg/Library/PeiBootGuardEventLogLib/PeiBootGuardEventLogLib.c
+LakeFieldPlatSamplePkg/Library/PeiBootGuardEventLogLib/PeiBootGuardEventLogLib.inf
+
+================================================================================ 
+Commit: e158dbb922cf1c638e8fe4deb7394802369d920c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:35 2020 +0530 
+-------------------------------------------------------------------------------- 
+Revert "Revert "LKF: Latest 2.0 Format Chipset Init Binaries need to be integrated in BIOS""
+
+This reverts commit b8b076b0b23cb9694bfd40f10cce3345890d8f7b.
+
+Hsd-es-id: N\A
+Original commit date: Tue Dec 31 15:14:37 2019 +0530
+Change-Id: I4a8030583cf53bd7b0dd9cd7df1b33432cb4837c
+Original commit hash: cd4f1886be7bc5fea5d0858a3ad6e95d7fec3910
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldFspPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+LakeFieldFspPkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+LakeFieldFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiPchPolicyUpdatePreMem.c
+LakeFieldFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiPolicyUpdatePreMemLib.inf
+LakeFieldFspPkg/Upd/FspmUpd.dsc
+LakeFieldFspPkg/Upd/FspsUpd.dsc
+LakeFieldPlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+LakeFieldPlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdatePreMem.c
+LakeFieldPlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInit.c
+LakeFieldPlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInit.inf
+LakeFieldPlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitFsp.inf
+LakeFieldPlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.c
+LakeFieldPlatSamplePkg/PlatformInit/PlatformInitPei/PlatformInitPreMem.inf
+LakeFieldPlatSamplePkg/PlatformPkg.dec
+LakeFieldPlatSamplePkg/PlatformPkg.fdf
+LakeFieldSiliconPkg/Pch/Include/ConfigBlock/HsioConfig.h
+LakeFieldSiliconPkg/Pch/Include/Private/Library/PchInitLib.h
+LakeFieldSiliconPkg/Pch/Library/PeiPchPolicyLib/PchPreMemPrintPolicy.c
+LakeFieldSiliconPkg/Pch/Library/PeiPchPolicyLib/PchPrintPolicy.c
+LakeFieldSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLib.c
+LakeFieldSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLibLkf.inf
+LakeFieldSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPreMemPolicyLib.c
+LakeFieldSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchHsio.c
+LakeFieldSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchInit.c
+LakeFieldSiliconPkg/Pch/Library/Private/PeiPchInitLib/PchInitPei.h
+LakeFieldSiliconPkg/Pch/Library/Private/PeiPchInitLib/PeiPchInitLibFspLkf.inf
+LakeFieldSiliconPkg/SiInit/Pei/SiInitPreMem.c
+LakeFieldSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 86d1c9a9b007c04c7f7f6f846917cd7654c10353 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Jan 20 16:08:30 2020 +0530 
+-------------------------------------------------------------------------------- 
+Unexpected HSTI Strings are printing in the Debug log with HSTI image on Production  SPI/UFS boot
+
+ - Updated the SPI Tests flow to be excluded during UFS Flow.
+ - Added new PRMRR test that verify at least one feature is using PRMRR.
+
+Hsd-es-id: 1608525486
+Original commit date: Tue Dec 10 09:32:42 2019 -0800
+Change-Id: Ied489ea361f974c749d493dcf0beededff9f86f5
+Original commit hash: dfbb940081f668eda2dc33c07578c1f42a8627ac
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Features/Hsti/HstiIhvDxe/BootFirmwareMediaProtection.c
+LakeFieldPlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureCpuConfiguration.c
