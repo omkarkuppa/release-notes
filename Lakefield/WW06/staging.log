@@ -3,9 +3,8 @@ Commit: 4ca30c90d5a6b06b0b9431451a3a2939120e6066
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Feb 5 09:59:10 2020 +0530 
 -------------------------------------------------------------------------------- 
-Changing BIOS ID to 4051.00 for WW5.1 BIOS label.
+Changing BIOS ID to 4051.00.
 
-Hsd-es-id: NA
 Original commit date: Mon Jan 27 14:49:11 2020 +0530
 Change-Id: Ib4d71bfdc7534f4d1b3a02a47f1d2c8cc8490cd6
 Original commit hash: 00d9c68a5e302aa16ca2640c23d787ef1b088d4e
@@ -86,9 +85,8 @@ Commit: f71241191836d79556d0ad850381ad914999867c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Feb 5 09:59:06 2020 +0530 
 -------------------------------------------------------------------------------- 
-Changing BIOS ID to 4045.00 for WW4.5 BIOS label.
+Changing BIOS ID to 4045.00.
 
-Hsd-es-id: NA
 Original commit date: Sun Jan 26 12:51:14 2020 +0530
 Change-Id: Ibfa0b59a89b764174d152a165ead6cbcbdf693c8
 Original commit hash: 40878513814522a9430ddd45c8e385de72f95c94
@@ -106,10 +104,6 @@ Revert "Revert "Revert "[LKF][PTP] Requesting BIOS to enable PCH Energy Reportin
 
 This reverts commit 761a23acf0a2b322af989a2dc4c1a7da09ae08a6.
 
-Reverting this commit as enabling "PCH Energy Reporting" by default is
-causing multiple issues in SnS testing.
-
-Hsd-es-id: NA
 Original commit date: Sun Jan 26 12:42:50 2020 +0530
 Change-Id: Idfe94a7c9d2ce46b02370f2d0a5da86506eec322
 Original commit hash: df980d1c9d0e63e890cfe82070919cb3500dfe90
@@ -139,13 +133,8 @@ Commit: 6effd9bbb3149a149016f3ce515d449ed8ab0ae2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Feb 5 09:59:03 2020 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Skip ChipsetInitSync when ME is disabled
+Skip ChipsetInitSync when ME is disabled.
 
-BIOS will try to read the Chipsetinit binaries from CSME when chipsetinit sync is enabled,
-So, when ME is disabled, BIOS is unable to read the ChipsetInit binary from CSME
-By skipping the chipsetinit sync using the ME Mode check, this ASSERT can be eliminated.
-
-Hsd-es-id: 16010714019
 Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Thu Jan 23 18:59:36 2020 +0530
 Change-Id: Ic0d6155d3e33e375a2892e2a6f5314f9794d8389
@@ -160,12 +149,8 @@ Commit: a90eca8c73c6da9768cdc56bef0a2524531abde3
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Feb 5 09:59:02 2020 +0530 
 -------------------------------------------------------------------------------- 
-[LKF][THC][BIOS] THC Driver needs to make sure that any DMA transaction are DWord aligned.
+THC Driver needs to make sure that any DMA transaction are DWord aligned.
 
-Current POR: DW alignment forced on the protocol side (force to meet this req by the caller).
-Change: Additional data to ensure DW req. will be appended at the end of the buffer by the THC BIOS driver. Caller will ignore this req. it will be handled by BIOS THC driver.
-
-Hsd-es-id: 14010657004
 Original commit date: Fri Dec 27 14:42:55 2019 -0800
 Change-Id: I84f929a924e3196d317f32472a032dcae1c43e26
 Original commit hash: 9ff17761e8043d065030cdd606bb912d5019af6a
@@ -186,7 +171,6 @@ Chipset init feature is adding additional boot time delay in
 performance builds hence disabling the feature by default for
 performance builds.
 
-Hsd-es-id: https://hsdes.intel.com/appstore/article/#/16010663372
 Original commit date: Thu Jan 23 22:03:28 2020 +0530
 Change-Id: Ibb4e72a9ae11acceabc5a6f24a2a8582357dad3c
 Original commit hash: 18a4fb8c53912773b20ee43875e90070f974ef59
@@ -270,12 +254,9 @@ Commit: 04ae3b07263fa4fe51c2db4907da4eed36889510
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Feb 5 09:58:56 2020 +0530 
 -------------------------------------------------------------------------------- 
-[LKF] Changing number of bytes to read from chipsetinitable in CSME to get ChipsetInit Version info
+Changing number of bytes to read from chipsetinitable in CSME to get ChipsetInit Version info
 
-Reading first 12Bytes in the chipsetinit table in the CSME is sufficient to get the version info,
-instead of reading entire chipsetinit table.
 
-Hsd-es-id: 1608329380
 Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
 Original commit date: Wed Jan 22 16:14:51 2020 +0530
 Change-Id: I2a05e23a880dc4f96319376d5eb07d37d4dc5c73
@@ -291,23 +272,8 @@ Commit: ab678d77533c547a0fba7812b19f943f58d072a9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Feb 5 09:58:55 2020 +0530 
 -------------------------------------------------------------------------------- 
-Issue with the changes :[1609012364][LKF] Implementation of required HSTI P2SB checking
-Issue:
-"VarErrorFlag" variable is initialized using "UpdateVariable" call where we put the
-variable data in the Queue and set "mCommandInProgress" but will not update in the storage.
-Next variable call is from SMM to set "SecurePchSmmVariableName" with Volatile attribute which will be
-updated in the cache but will return to the VariableSmm call with CommandInProgress is set (because of mCommandInProgress).
-Further all subsequent Variable calls will be returnd by checking "VariableServicesInUse" flag.
-Root cause :
-If Next variable call is for Non Volatile update, we will not see any issue even if mCommandInProgress is set (This was the case without HSTI changes).
-as the flag inside VariableSmm will be cleared once we update in storage.
-Since it is volatile variable call, flag is not cleared.
-Fix :
-Clear the mCommandInProgress for direct updateVariable call and wait for next set variable call to update the data in storage.This is the
-behavior today without HSTI changes. However, further we need to consider making changes to avoid depending on next setvariable call to make the
-data availabe in storage.
+Updated the implementation of required HSTI P2SB checking.
 
-Hsd-es-id: NA
 Original commit date: Mon Jan 20 23:04:27 2020 +0530
 Change-Id: I16d1dd84a369fdc9e35ce722b673c2bd6600533b
 Original commit hash: b0c2e28971d3a63434817eb4ff1ad1e11e5f015a
@@ -325,10 +291,6 @@ Revert "Revert "[LKF][PTP] Requesting BIOS to enable PCH Energy Reporting by def
 
 This reverts commit 82f522421ef9ec7b42b48ee75893fd105616a5cd.
 
-PMC has fixed instability issues that are observed when PCH energy reporting
-is enabled in BIOS. Hence BIOS can enable PCH energy reporting by default.
-
-Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1507714651
 Original commit date: Mon Jan 20 15:52:50 2020 +0530
 Change-Id: Ie3c465d5d17f19fc17f9bb9bc8116e7c8f67486d
 Original commit hash: 761a23acf0a2b322af989a2dc4c1a7da09ae08a6
@@ -342,16 +304,8 @@ Commit: eef70d0bcf87ed3c30f2d5ee2789f528be353921
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Feb 5 09:58:53 2020 +0530 
 -------------------------------------------------------------------------------- 
-LKF: Reduce CPU I/O VR Ramp to minimum i.e. 10us to avoid unnecessary penalty to PKGC10 exit latency
+Reduce CPU I/O VR Ramp to minimum. 
 
-CPU I/O VR Ramp timer is an artifact from ICL project, and it doesn't apply
-to LKF. According to PMC IP HW team, we have dedicated stage for VCCIO
-ramp up during PKGC10 exit, so we don't need this timer anymore.
-This setting is adding unnecessary penalty to PKGC10 exit latency,
-so we need to reduce it to the minimum. So we request BIOS to program
-it to 0x1 (indicates minimum 10us)
-
-Hsd-es-id: 1507611056
 Original commit date: Mon Dec 2 12:27:04 2019 +0530
 Change-Id: I5846da39dc5e039985b62b659d99ce3d67db56a7
 Original commit hash: 7f7d7c6872670655962b2d6577059cf6c6ec4499
