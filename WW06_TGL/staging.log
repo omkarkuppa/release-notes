@@ -700,8 +700,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Mon Feb 3 20:10:50 2020 -0800 
 -------------------------------------------------------------------------------- 
 
-Description: Control Policy and CpuPcieHwEqDumpFoms removed from restricted tags.
-Make SecureRegisterLock to restricted.
+Description: Add Control Policy and CpuPcieHwEqDumpFoms. Remove SecureRegisterLock.
 
 Impacted Platforms:TGL
 
@@ -1671,7 +1670,7 @@ Date: Mon Feb 3 18:38:51 2020 -0800
 Description: BIOS to set GT security
 - Add check to verify DoorBellCtxBase and Rc6CtxBase is not getting locked before BIOS does
 - Set Gfx security lock bit before GT enteres RC6
-Impacted platform : TGL, ADL, RKL, JSL
+Impacted platform : TGL, RKL, JSL
 
 Original commit date: Tue Dec 10 22:30:53 2019 +0530
 Change-Id: Ic2ee7ba364a7bd51d191098d548e0181fdf9a7ad
@@ -3206,7 +3205,7 @@ Date: Mon Feb 3 17:50:33 2020 -0800
 
 Since PBAO offset and MSI-X Table offset are write once reference
 code should set it to 0 to lock the configuration. There is no
-functional impact on this change as hardware defaults are typically
+functional impact on this change as hardware defaults are
 good.
 
 Original commit date: Wed Dec 4 13:10:28 2019 +0100
@@ -3279,7 +3278,7 @@ Remove the following files:
   ClientCommonPkg/Include/CsmConfig.h
 And also modify related files.
 
-We don't support legacy BIOS any more, so remove them.
+TGL  desn't support legacy BIOS, so remove suport.
 
 Hsd-es-id: 1507645504
 Original commit date: Wed Dec 11 15:26:47 2019 +0800
@@ -3645,12 +3644,11 @@ Date: Mon Feb 3 17:48:55 2020 -0800
 -------------------------------------------------------------------------------- 
 Remove _DEP objects for PEP dependent devices
 
-BC-RQTBCLF-686 : ACPI _DEP was used in a non-standard way and a _DEP
+ACPI _DEP was used in a non-standard way and a _DEP
 method is no longer needed as PEP driver (intelpep.sys) loads as a
 boot start driver by OS
 
-Port ICL patch https://git-amr-7.devtools.intel.com/gerrit/#/c/44117/
-to ADL/RKL/TGL
+Port ICL patch TGL
 
 Hsd-es-id: 2204758901
 Original commit date: Tue Dec 17 22:12:17 2019 +0800
@@ -5040,7 +5038,7 @@ Root Cause:
     The Rx Load comp is being deliberately overridden and saturated in MrcDdrIoInit() at 4267, and this is not necessary to pass MRC at that speed.
 
 Change:
-    Getting rid of this code, unless design has a good reason for this.
+    Remove this code.
 
 Original commit date: Wed Dec 11 14:08:05 2019 -0800
 Change-Id: I90b1f51b4b169cb61b47f154dd848b58c41dc348
@@ -5553,11 +5551,7 @@ Commit: 295e03570fea78fc1914579b907696e06c7f84ba
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:41:42 2020 -0800 
 -------------------------------------------------------------------------------- 
-Improve build scripts for checking absence of internal template file and adapt
-
-Added checks for template file in script such that it will be generated only when required.
-External package will include it by default for given product choice.
-Deter from removing SiPkg.dec if already exists
+Improve build scripts for checking absence of some internal and external template file and adapt
 
 Hsd-es-id: 14010192849
 Original commit date: Fri Dec 6 17:20:08 2019 -0800
@@ -5997,8 +5991,8 @@ Date: Mon Feb 3 17:38:48 2020 -0800
 -------------------------------------------------------------------------------- 
 Platform not booting with some commits
 
-Revert "Partial Revert "[ME] Make HECI dumps enabled by default in internal releases."
-Revert "[ME] Make HECI dumps enabled by default in internal releases."
+Revert "Partial Revert "[ME] Make HECI dumps enabled by default."
+Revert "[ME] Make HECI dumps enabled by default."
 
 Original commit date: Tue Dec 10 13:35:16 2019 +0100
 Change-Id: I3984cd1e1905375e34b0ef45652be0ff78becb77
@@ -6040,7 +6034,7 @@ Commit: f502f8c065af764dc9cbd39843fd9f16ecaf5f27
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:38:21 2020 -0800 
 -------------------------------------------------------------------------------- 
-Remove PCH_ICL from AlderLake, TigerLake and RocketLake builds
+Remove PCH_ICL TigerLake and RocketLake builds
 
 PCH_ICL was defined for both AlderLake and TigerLake
 build targets which caused a part of code that was
@@ -6050,7 +6044,7 @@ Summary of chagnes:
 -All PCH_ICL flags around FIVR code have been removed since
 FIVR is POR on TGL+
 -All PCH-N specific code has been removed since there is no
-N SKU on TGL ADL and RKL
+N SKU on TGL and RKL
 -All code under #ifndef PCH_ICL has been removed since
 only CNL code was under those flags.
 -Flags around display DDI configuration have been removed
@@ -6146,21 +6140,6 @@ the compression/decompression algorithm from testing perspective.
 This commit also adds the missing scenario for
 No Compression plus SecureBoot in each DXE parent FVs.
 
-The following changes are internal only.
-- Adds Brotli compression/decompression algorithm support.
-  As the SectionExtractionPei module which is built with
-  Brotli library has size impact, this specific module is
-  compressed by LZMA so DxeIpl built by LZMA decompresses it.
-- The existing SectionExtractionPei module which runs signature
-  verification stays compressed by LZMA. The verification runs
-  reading from flash, and in that case LZMA performs faster than
-  Brotli based on experiments.
-- Keeps LZMA enabled by default and Brotli disabled.
-- Adds build option "perfval" in the build script,
-  which allows the performance build overrides default PCDs
-  with different PCD settings for testing purpose.
-  This commit adds Brotli support to the build option.
-
 Hsd-es-id: 1409826079
 Original commit date: Tue Oct 15 12:57:50 2019 -0700
 Change-Id: Ib4874f2bc9bd067929eb13466ebd61d69c1a5907
@@ -6198,7 +6177,7 @@ Commit: 671469496454b6abe40b95096af01643d8f6d259
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:37:39 2020 -0800 
 -------------------------------------------------------------------------------- 
-Description: Add restricted tags for EXS feature.
+Description: Remove EXS feature.
 
 Original commit date: Wed Nov 27 10:53:52 2019 +0800
 Change-Id: I6970c7c658f9259f5074eb66cb2489ec51ea99b4
@@ -6347,8 +6326,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Mon Feb 3 17:36:46 2020 -0800 
 -------------------------------------------------------------------------------- 
 [TGL] TGL-GCS code update about BoardId and GPIO table
-
-Work around boot mode is BOOT_WITH_FULL_CONFIGURATION when board id is TglULp4Gcs
 
 Original commit date: Fri Nov 29 16:56:48 2019 +0800
 Change-Id: Ic30c237b40599f742ae2e0f67e5fd17b9d367092
@@ -6966,21 +6943,7 @@ Commit: 8eae7e425661d694a8d0e3c42e67ff03ca68a236
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:34:04 2020 -0800 
 -------------------------------------------------------------------------------- 
-[ME] Make HECI dumps enabled by default in internal releases.
-
-Unify HeciTrace usage:
-1. Use single PCD: gMeConfigSpaceGuid.PcdHeciDumpsEnabled
-   in ClientOneSiliconPkg\SiPkg.dec
-   for all targets
-
-2. Limit PcdHeciDumpsEnabled to HeciTraceLib scope
-   This causes:
-	- Changes Get/Set pcd API
-	- Limiting possiblility of dump changing to HeciTraceLib only
-
-3. Change default trace settings to reflect request
-4. Make change to PCH setting internal only
-5. Add configuration interface
+[ME] Make HECI dumps enabled by default for Intel validation BIOS.
 
 Original commit date: Fri Nov 8 10:24:12 2019 +0100
 Change-Id: I702114b918d248ee31d9456c0572f7c4cc9b74cc
@@ -7346,7 +7309,7 @@ Date: Mon Feb 3 17:31:58 2020 -0800
 -------------------------------------------------------------------------------- 
 [TGL][IOTG] ClientOneSiliconPkg\Fusa: Workaround to change default setting of PSF Fusa Parity
 
-Change PSF Fusa parity to disable by default while conducting investigation due to system hang.
+Change PSF Fusa parity to disable by default while debuging system hang.
 
 Hsd-es-id: 1507576684
 Original commit date: Wed Nov 27 16:23:01 2019 +0800
@@ -7548,10 +7511,10 @@ Commit: f8e240660189c53b32dcecd272b66d57e18316b3
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:30:59 2020 -0800 
 -------------------------------------------------------------------------------- 
-Security Issue in Copymem Index Value
-  - Security Fix
-Hsd-es-id: 2208999992
-Impacted platform : TGL, ADL, RKL, JSL
+Update security in Copymem Index Value
+ 
+ Hsd-es-id: 2208999992
+Impacted platform : TGL, RKL, JSL
 
 Original commit date: Tue Dec 3 17:08:18 2019 +0530
 Change-Id: I8eb94d52fd87685706b8545357dc61686d61a400
@@ -8251,7 +8214,7 @@ Date: Mon Feb 3 17:29:28 2020 -0800
 - Update: tZQCSGet now returns tZQLAT timing for DDR5
 - Update: EnableMcMuticycleCs now sets MultiCycCmd bit required to enable multicycle MPC
 - Update: MPC_Setup value now accounts for NMode and Gear as required in register spec
-- Workaround: Denali expects DLL Reset as first command on 19ww36b model
+- Update: Denali expects DLL Reset as first command on 19ww36b model
 - Update: ClkGrpPi and CkeGrpPi are now initialized for DDR5 in MrcDdrIoInit
 - Update: Disabled RemapEnable since address remapping is not supported on CTE
 - Update: Generic MRC FSM Timing Programming updated to support 19WW36b register definition
@@ -8588,8 +8551,7 @@ Commit: 45d84b598734d980a61d520af37f60f046f00918
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:28:49 2020 -0800 
 -------------------------------------------------------------------------------- 
-Description: Add CPU features/configblock into RKL.
-- Update CPU STRAP and EPOC SET for CML
+Description: Add common feature for CML/TGL/RKL CPU features
 
 Original commit date: Tue Nov 26 10:52:31 2019 +0800
 Change-Id: I6d103f59fc6e6afe26cba598e24db3bd2d645edf
@@ -9070,7 +9032,7 @@ Commit: 3d6403d222d83325e60b703c9efae94682885349
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:26:26 2020 -0800 
 -------------------------------------------------------------------------------- 
-[ME][WS] Close architecture gaps for SOL exposure (WPT) 5M SKU
+[ME][WS] Finilize architecture definition for SOL exposure (WPT) 5M SKU
 
 Use PSF API exposed by PCH code
 Use Clear/SetD0I3Bit for all HECI interfaces
@@ -9089,7 +9051,7 @@ Commit: 87daaf88d48b7e49dec424f470f9f3601a38294f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:26:21 2020 -0800 
 -------------------------------------------------------------------------------- 
-Add CPU features/configblock into RKL.
+Add common CPU features/configblock for TGL/RKL.
 -Skip HWP programming.
 
 Original commit date: Mon Nov 25 14:47:42 2019 +0530
@@ -9838,7 +9800,7 @@ Commit: 0a57e9fed9931e8482f80b7b109bcd5e3a436a27
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:22:03 2020 -0800 
 -------------------------------------------------------------------------------- 
-[RKL][TGL][ADL] Fix variable assert
+[RKL][TGL] Fix variable assert
 
 Revert WA created in 0e9ac3b36a97280663b3e8e18326cd4e9d46d25e
 
@@ -10061,8 +10023,7 @@ Date: Mon Feb 3 17:21:25 2020 -0800
 -------------------------------------------------------------------------------- 
 Bluetooth: [BT-9143][Security]BluetoothConnectionManagerDxe
 
-Security Fixes which may lead to stack overflow in
-BluetoothConnecteionManger
+Improve security in BluetoothConnecteionManger
 
 Hsd-es-id: none
 Original commit date: Wed Nov 20 16:35:41 2019 +0530
@@ -10080,7 +10041,7 @@ Date: Mon Feb 3 17:21:24 2020 -0800
 -------------------------------------------------------------------------------- 
 Bluetooth: [BT-9143][Security]iLE Stack
 
-Security Fixes in Bluetooth iLE stack
+Improve security in Bluetooth iLE stack
 
 Hsd-es-id: none
 Original commit date: Wed Nov 20 16:40:33 2019 +0530
@@ -11199,7 +11160,7 @@ Commit: ccd06385fe143ad44bf74ae1523e4dff80c1ff2c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:17:04 2020 -0800 
 -------------------------------------------------------------------------------- 
-[RKL] CflRestricted MrcInterface.h (MrcInput) needs to be updated based on MemoryConfig.h (MEMORY_CONFIGURATION) in C1S package.
+MrcInterface.h (MrcInput) needs to be updated based on MemoryConfig.h (MEMORY_CONFIGURATION) in C1S package.
 
 Original commit date: Tue Nov 5 08:46:35 2019 -0800
 Change-Id: Ieaa27ec52af312892d38fc4c2aae8c6ae68063b5
@@ -11693,7 +11654,7 @@ Commit: 1b9939cd731ce6321c0b926d724d59006c4b2629
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Feb 3 17:14:55 2020 -0800 
 -------------------------------------------------------------------------------- 
-[PCH] Implement new LDO programming for ADP
+[PCH] Implement new LDO programming
 
 Original commit date: Wed Nov 6 15:53:43 2019 +0100
 Change-Id: I6ea552af5cf510fbddde9a7afb8b12a3f36e10cf
@@ -12093,7 +12054,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Mon Feb 3 17:13:18 2020 -0800 
 -------------------------------------------------------------------------------- 
 [TGL] Port the U/Y SKU Root Port specific changes to All Root Ports for H/S.
-Impacted Platforms: TGL,RKL,ADL
+Impacted Platforms: TGL,RKL
 
 Original commit date: Thu Nov 7 16:46:10 2019 +0530
 Change-Id: Ie098152b7fc329fa1f5f817841790f1f834227ec
