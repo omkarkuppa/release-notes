@@ -33,11 +33,11 @@ Commit: 60c77156630038ce153f22d9d14e6ebe4de0f30f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 4 10:47:46 2020 -0800 
 -------------------------------------------------------------------------------- 
-[TGL_UP3_A6/A7][20H1][Corp_ROC][Storage][Reg]SUT not entering to S4/Hybrid Shutdown with VMD & RTD3 enabled on Neptune Harbor
+[PCH][CPU][TGL_UP3_A6/A7][20H1][Corp_ROC][Storage][Reg]SUT not entering to S4/Hybrid Shutdown with VMD & RTD3 enabled on Neptune Harbor
 
 Fix to remove _PXP, _ON and _OFF methods of regular flow if they are mapped under VMD to avoid regular flow _OFF method of these RPs getting invoked by OS during entry to S4.
 
-Hsd-es-id: 14011013267
+
 Original commit date: Wed Feb 26 13:45:36 2020 -0800
 Change-Id: I32ba221f0628e10e847ef9d52ed613786b4abcd4
 Original commit hash: 0c0a0ef3af97937b5beb21d106ef0b9c3e8f8980
@@ -192,11 +192,10 @@ Commit: 100bf34760f84a3b2c6ddbd17790e662e9377e6e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 4 10:47:19 2020 -0800 
 -------------------------------------------------------------------------------- 
-Unhide P2SB config space for the time of verifying registers
+[PCH]Unhide P2SB config space for the time of verifying registers
 
 For HSTI driver to be able to properly read EPMASK Lock registers, P2SB needs to be unhidden
 
-Hsd-es-id: 1609229169
 Original commit date: Wed Feb 5 14:25:35 2020 +0100
 Change-Id: I2b115e5c2124e3eebe03bc2c59b35704e4926ebf
 Original commit hash: 93aaefeceab15c07ec3e8017847deef660847801
@@ -232,7 +231,7 @@ Date: Wed Mar 4 10:47:15 2020 -0800
 
 Even though both devices in TG share same power and clkreq, TG is pulling the circuit to drive clkreq asserted on both ports.
 As per current implementation in BIOS RPn of TG CLKREQ# is only masked in FIA during RTD3 entry flow due to which Gen2 PLL is still active.
-So added a WA to Mask/Unmask the clkreq on BOTH ports (RPn and RPn+2) for TG during D3Cold cycles to shutdown Gen2 PLL.
+Mask/Unmask the clkreq on BOTH ports (RPn and RPn+2) for TG during D3Cold cycles to shutdown Gen2 PLL.
 
 Hsd-es-id: 14010953615
 Original commit date: Fri Feb 21 11:12:15 2020 -0800
@@ -346,11 +345,10 @@ Commit: e864b5675d3ca7e3c1bf85f0e934783695bf9e5e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 4 10:46:54 2020 -0800 
 -------------------------------------------------------------------------------- 
-Revert "[TGL UP3][CONS][A6] System is not achieving SLP_S0 with TG device under VMD in the system"
+[PCH][CPU]Revert "[TGL UP3][CONS][A6] System is not achieving SLP_S0 with TG device under VMD in the system"
 
 This reverts commit 473ccaa0368e77dbf661151dd45f1af6cbabb545.
 
-Tere is a concern this extra delay might cause some other issues for other PCIe devices, 150ms is only required for the Optane drives.
 Separating this code review into 2 code review.
 1. code review for TG SLP_S0 WA
 2. code review for revert the default back to 100 ms but keep tunability up to 200ms
@@ -371,11 +369,10 @@ Commit: a0800966a40528861fe07408fff0414372f2e75a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 4 10:46:52 2020 -0800 
 -------------------------------------------------------------------------------- 
-Unhide P2SB config space for the time of verifying registers
+[PCH]Unhide P2SB config space for the time of verifying registers
 
 For HSTI driver to be able to properly read EPMASK related registers, P2SB needs to be unhidden
 
-Hsd-es-id: 1609229169
 Original commit date: Thu Dec 5 14:56:00 2019 +0100
 Change-Id: I9497b45a55b8506631146c378bbe09b7bcc9bbac
 Original commit hash: cecfc9743e41bf58ac65537cf3f9622de1df0591
@@ -405,15 +402,15 @@ Commit: 6e10bbad6faf5de8a096e6676ef7deafedc1a1af
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 4 10:46:46 2020 -0800 
 -------------------------------------------------------------------------------- 
-[TGL UP3][CONS][A6] System is not achieving SLP_S0 with TG device under VMD in the system
+[PCH][CPU][TGL UP3][CONS][A6] System is not achieving SLP_S0 with TG device under VMD in the system
 
 1. Even though both devices in TG share same power and clkreq, TG is pulling the circuit to drive clkreq asserted on both ports.
 As per current implementation in BIOS RPn of TG CLKREQ# is only masked in FIA during RTD3 entry flow due to which Gen2 PLL is still active.
-So added a WA to Mask/Unmask the clkreq on BOTH ports (RPn and RPn+2) for TG during D3Cold cycles to shutdown Gen2 PLL.
+Mask/Unmask the clkreq on BOTH ports (RPn and RPn+2) for TG during D3Cold cycles to shutdown Gen2 PLL.
 
 2. Increased min Delay for PERST# deassertion after power on/en to 150ms since optane drive was getting dropped.
 
-Hsd-es-id: 14010891639
+
 Original commit date: Wed Feb 19 20:58:08 2020 -0800
 Change-Id: I370ba62b63b84df77fcd3a8086a6dbec775bf4fd
 Original commit hash: 473ccaa0368e77dbf661151dd45f1af6cbabb545
@@ -445,12 +442,11 @@ Commit: f79aa85331386c09a97c1b4e4079e0bb79b05096
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 4 10:46:42 2020 -0800 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg\IpBlock\Thc\LibraryPrivate\PeiThcInitLib: [BIOS]Missing programming THC_CFG_UR_STS_CTL.FD  when THC is Function disabled.
+[PCH]ClientOneSiliconPkg\IpBlock\Thc\LibraryPrivate\PeiThcInitLib: [BIOS]Missing programming THC_CFG_UR_STS_CTL.FD  when THC is Function disabled.
 
 Once system is put into S0ix, after few minutes it stays in PC10 but stops entering s0ix. Blocking reason is that THC is not power-gated.
 To solve this problem FD bit in THC Pci Config Space offset 0x40 must be set to 1.
 
-Hsd-es-id: 14010888842
 Original commit date: Thu Feb 13 12:53:48 2020 -0800
 Change-Id: Ic137e5cd0a10942fb0b2a4a72fcd1b3348fda851
 Original commit hash: b19770b720dddf66b82ef5b4bccf7ad38825b886
@@ -556,12 +552,8 @@ Commit: e71282edfbd4bcf68c01b32d3028e8ae67b0ea7c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 4 10:46:24 2020 -0800 
 -------------------------------------------------------------------------------- 
-Revert "[TGL-UP4] SSD not detected at boot up with asserted HDA_SDO"
+[PCH]Revert "[TGL-UP4] SSD not detected at boot up with asserted HDA_SDO"
 
-With VMD enabled the following issues are seen:
-
-1. TGL-Y UP4 Blank screen during modern standby
-2. TGL-U UP3 lower rates SLP_S0
 
 This reverts commit 7b2b0314a58dd5e678308a7e6e69ffea44539f19.
 
@@ -692,14 +684,14 @@ Commit: e7bdb4df5d7e37eab15721e894563b551208201e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 4 10:46:08 2020 -0800 
 -------------------------------------------------------------------------------- 
-[TGL-Y] Fix hybrid drive power blocking on TGL Y platforms
+[PCH][CPU][TGL-Y] Fix hybrid drive power blocking on TGL Y platforms
 
 BIOS used to remove entire D3Cold description for
 root ports with hybrid drives. This caused the POFF and
 PON methods to be removed as well and as a result TG could
 not achieve D3Cold when remapped under VMD on TGL -Y platform
 
-Hsd-es-id: 22010154249
+
 Original commit date: Tue Feb 11 09:52:11 2020 -0800
 Change-Id: I47525b7e299443e6d4f66092bffbe1c4eabc756f
 Original commit hash: a199d8afe166c68d1e89bc1e6cd0b3ecc008c92f
