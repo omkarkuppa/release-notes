@@ -1,0 +1,96 @@
+*********************************************************************************
+Commit: c6ffb0e6e2c72c9063ab75fdcf270add10f16c1d 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  TBT BIOS: Disable PCIE tunneling for USB4 host routers for FW CM
+  
+  1. Add ITbtPcieTunnelingForUsb4 to ITBT ConfigBlock and deprecated ITbtSecurityLevel.
+  2. Add SETUP item to control the PCIe tunneling for USB4
+  3. Based on policy to program security level register.
+  
+  Hsd-es-id: 2209619657
+  Change-Id: Ic0bbac9e8fc64a28d9f8d813548b47858017c364
+  Original commit hash: 76c0f2e60f3baf59621e49fd749b0ba238b6855b
+  
+  ClientOneSiliconPkg/Fru/TglCpu/IncludePrivate/Register/HostDmaRegs.h
+  ClientOneSiliconPkg/Include/ConfigBlock/Tbt/PeiITbtConfig.h
+  ClientOneSiliconPkg/Include/PeiITbtGenericStructure.h
+  ClientOneSiliconPkg/Include/TbtMailBoxCmdDefinition.h
+  ClientOneSiliconPkg/IpBlock/Tbt/IncludePrivate/Library/PeiITbtInitLib.h
+  ClientOneSiliconPkg/IpBlock/Tbt/LibraryPrivate/PeiITbtInitLib/PeiITbtInitLib.c
+  TigerLakeFspPkg/Library/PeiPolicyUpdateLib/PeiTbtPolicyUpdate.c
+  TigerLakeFspPkg/Upd/FspsUpd.dsc
+  TigerLakePlatSamplePkg/Include/SetupVariable.h
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiTbtPolicyUpdate.c
+  TigerLakePlatSamplePkg/Setup/TbtSetup.hfr
+  TigerLakePlatSamplePkg/Setup/TbtSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: cf8da126f694488c5c74927229a65d79023b836a 
+*********************************************************************************
+
+[CPU]
+
+  New TGL Platform VR POR file WW4919 - Part2
+  
+  - Aligned HSD 22010280506: BIOS does not retain overridden IMON slope/offset values.
+  - In order to pass non-zero value to VR Strap Read, the response buffer must be defined.
+  Currently the VrTopology.Fields only define 32bit [Lower DWORD].
+  
+  Hsd-es-id: 14010630781
+  Change-Id: Ie3c379a248c88424f931b0b6bc46aa7a4b4b4c2f
+  Original commit hash: 0faf71e5b401ae2da3babb2e448aaa86190e4e14
+  
+  ClientOneSiliconPkg/Cpu/Library/PeiDxeSmmCpuMailboxLib/MaiboxLibrary.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: strap
+
+*********************************************************************************
+Commit: 92746adac42f0358f8efeaa22a2b4d8eb66f2f60 
+*********************************************************************************
+
+[ASL], [PCH], [PlatformPkg]
+
+  Revert "[TGL UP3][CONS][A6] System is not achieving SLP_S0 with TG device under VMD in the system"
+  
+  This reverts commit 473ccaa0368e77dbf661151dd45f1af6cbabb545.
+  
+  Tere is a concern this extra delay might cause some other issues for other PCIe devices, 150ms is only required for the Optane drives.
+  Separating this code review into 2 code review.
+  1. code review for TG SLP_S0 WA
+  2. code review for revert the default back to 100 ms but keep tunability up to 200ms
+  
+  Hsd-es-id: N/A
+  Change-Id: I57901bd2301ed83c67a751a5ca3d68774a2b7925
+  Original commit hash: 0af0b4209b121f515bc8b15ebdd0c557d46913ff
+  
+  ClientOneSiliconPkg/IpBlock/Vmd/AcpiTables/VmdRaid.asl
+  ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/Pmc.asl
+  TigerLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+################################################################################
+
+Report Summary: Backstop found 3 suspect commits for review 
+
+Warnings Found:
+  Commit: c6ffb0e    --Commit Message Contains Key Word: security
+  Commit: cf8da12    --Commit Message Contains Key Word: strap
+  Commit: 92746ad    --Commit Message Contains Key Word: revert
