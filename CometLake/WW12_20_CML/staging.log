@@ -39,12 +39,12 @@ Commit: 97ef107614c5aa3314be979b14bc8119d12ecb66
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 18 12:43:29 2020 +0530 
 -------------------------------------------------------------------------------- 
-[CML-S][CMP-V][SD][PM]: System not entering to CS/PSON with bayhub card connected(De-asserted from PSON after few sec)
+[PCH] Fix system not entering to CS/PSON with bayhub card reader connected (De-asserted from PSON after few sec)
 
 Accessing PCI configure space via ECAM in ACPI op-region in order to access the device while executing all ACPI power management methods
 Changed the access method from PCI to system memory
 
-Hsd-es-id:https://hsdes.intel.com/appstore/article/#/16010868285
+Hsd-es-id:16010868285
 Original commit date: Wed Mar 11 22:43:31 2020 +0530
 Change-Id: I5d6f157323ebb289c2e85038aedd5623dc82c643
 Original commit hash: f34fa4c1aac7fff3df9115742cd407373dce46ca
@@ -427,11 +427,10 @@ Commit: 2265f8dc7bac089cabf24b000f978ea7dff0814c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 18 12:42:54 2020 +0530 
 -------------------------------------------------------------------------------- 
-[CML] Need a new editable field in BIOS to change the Subsystem ID
+[PCH] Add new policy in BIOS to change the Subsystem ID
 in PCI header config space for HD Audio BUS controller
 
-Hsd-es-id:https://hsdes.intel.com/appstore/article/#/16010839362
-
+Hsd-es-id:16010839362
 Original commit date: Mon Dec 2 22:21:36 2019 +0530
 Change-Id: I80f0441c9c2b75ea781fcd5f8ccf9fffe1311e9d
 Original commit hash: 79bd2ba2bf23ea0cb0859aba514a859de06f0fb1
@@ -480,9 +479,9 @@ Commit: 23d875196e2f4d01a298ad1477c4828db437586f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 18 12:42:50 2020 +0530 
 -------------------------------------------------------------------------------- 
-PchSmiDispatcher: BIOS_SPI_BC changes after S3 resume
+[PCH] Restore Async SMI Enable for BIOS Write Protection bit (ASE_BWP) in S3 BootScript 
 
-Upon S3 BIOS Control register in SPI changes and doesn't reflect
+Upon S3 BIOS Control register (BIOS_SPI_BC) in SPI changes and doesn't reflect
 configuration from before S3. To fix this adding S3 BootScript restore
 for ASE_BWP bit to reenable the functionality on S3 resume.
 
@@ -500,7 +499,7 @@ Commit: d4bfc0458c6b78cc805369d66618d0ffa64fb6f6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 18 12:42:48 2020 +0530 
 -------------------------------------------------------------------------------- 
-[CML] ESPI SMI EN can't be enabled because it is locked early in s3 resume
+[PCH] Fix ESPI SMI EN can't be enabled because it is locked early in s3 resume
 
 SMI_EN is script saved order: PciBusEnumerationComplete (PchInitDxe), and EndOfDxe (PlatformInitDxe),
 ESPI SMI lock is script saved at Register SMI (PlatformSmm), which is earlier than above.
@@ -524,11 +523,9 @@ Commit: 4eee3e888212f00776f7ec9469a657222710bc86
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 18 12:42:45 2020 +0530 
 -------------------------------------------------------------------------------- 
-[CML-H] SBIOS power state GPIO default settings change request
+[PCH] SBIOS power state GPIO default settings change request
 
 Adding DgpuLow GPIO table for CML-H RVP4 and RVP5, the GPU_PWR_EN_N(GPP_K19) pin will be modified based on the setup option.
-
-Impacted: All CML-H platforms.
 
 Hsd-es-id: 16010782023
 Original commit date: Mon Feb 17 14:44:46 2020 +0800
@@ -617,16 +614,12 @@ Commit: 2026cad94b10982b14bfda68ddffcf1e51dd0abb
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Mar 18 12:42:34 2020 +0530 
 -------------------------------------------------------------------------------- 
-BIOS Workaround required to avoid PCIe PTM bug preventing S0ix
-
-Workaround needed on Pcie root ports to allow S0ix
+[PCH] Fix system can not enter S0ix when PCIE root port enable PTM (Precision Time Measurement). 
 
 Hsd-es-id: 1409192334
-
 Original commit date: Fri Feb 28 15:25:21 2020 -0800
 Change-Id: Ieb1456492c03948047c8cfaf2cedc1562e14c90c
 Original commit hash: 5fd0ac2bc4f0f052823ee0bee40cf413d3cbacee
-
 -------------------------------------------------------------------------------- 
 [Changed Files]
 CometLakeSiliconPkg/Pch/Include/Register/PchRegsPcie.h
