@@ -2551,17 +2551,9 @@ Commit: a435a0798179a630dca70cff0fb8cb381448bc16
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:53:55 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL] Remove restricted section from MeSetup.c
+[TGL] Add section from MeSetup.c
 Updating OemCapabilites1, OemCapabilites2 and OemCapabilites3 happens
-inside restriction section in MeSetup.c. Due to that these values in
-external release always have value 0. In this change following things
-are done:
-1. Removed restricted section from MeSetup.c
-2. Moved ME-SMBIOS menu from restricted section from TestMenuSetupVfr.vfr
-to MeSetup.hfr.
-3. Cosmetic changes in MeSmbios.inf driver, in C1S.
-4. The setup variables BiosReflash, BiosSetup, BiosPause, SecureBootExposureToFw
-and vProTbtDock are no more inside restricted section.
+in MeSetup.c. 
 Change-Id: Icb10886e8100b0167ef012c30ee1c3992cef694b
 
 
@@ -4067,8 +4059,8 @@ Commit: ff4e78ecd1bbbfccb095ff17c514aee09f410d16
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:51:15 2020 -0700 
 -------------------------------------------------------------------------------- 
-[JSL REV2] Revert Missing the Pcd declaration on any inf file can't be caught during build time
-- This change is causing regression for JSL
+Revert Missing the Pcd declaration on any inf file can't be caught during build time
+- This change is causing regression
 - Cnvi Present is showing still Yes even when Cnvi Mode is set to Disable Integrated and restarting the system
 Change-Id: I16ea9c2e1dd53773d28c5d5cbee7ca4278f6862f
 
@@ -4966,7 +4958,7 @@ Commit: 777639599f42aead2a222dcbd658b18232e86845
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:17:25 2020 -0700 
 -------------------------------------------------------------------------------- 
-[RKL] Restructring the Gen3/Gen4 directory.in ClientOneSiliconPkg/IpBlock/CpuPcieRp
+Restructring the Gen3/Gen4 directory.in ClientOneSiliconPkg/IpBlock/CpuPcieRp
 PCIe Gen4 C header files to IpBlock/CpuPcieRp/IncludePrivate/Library/ and PCIe Gen4
 libraries to IpBlock/CpuPcieRp/LibraryPrivate/.
 PCIe Gen3 library are moved to IpBlock/CpuPcieRp/LibraryPrivate/LegacyGen3/ and their related C header files
@@ -8768,8 +8760,8 @@ Commit: 611f0f8fc567492d41d5338012ea0222a2eb1f11
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:00:17 2020 -0700 
 -------------------------------------------------------------------------------- 
-Description: Change FID calculation for ADP root ports
-ADP-S root port's FID depends only on the root port index within
+Description: Change FID calculation for PCH root ports
+PCH-S root port's FID depends only on the root port index within
 the root port(0 - 3) and doesn't need RpDevice number on higher bits.
 Change-Id: If1647f78cc292b9c7d6a46aa98487dac6c5c7dc4
 
@@ -10816,7 +10808,7 @@ Moved Gear MrcSafeMode override to take only when Input->GearRatio is on auto.
 Created a function to get the RcvEn->RxFifoRdEn separation constant instead of using the array directly.
 In this function, if we are Gear1 in DT, we increase MC1 separation by 1.
 Remove the inclusion of a Chip private header in the MRC code except for in the Chip library.
-Moved MrcSetIoOdtMode & MrcVssHiRegulatorOffsetCorrection from the internal header to the public header.
+Moved MrcSetIoOdtMode & MrcVssHiRegulatorOffsetCorrection exteranl code header.
 Fixed bug where CkeGrpPi did not select the corrrect register for the PiGroup on ranks 2 & 3.
 Updated single rank starting RTT.
 Change-Id: I12e8a7537c7aa8f6c495dc1bdf989045c5f3ad5d
@@ -11002,7 +10994,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Tue Apr 21 08:54:41 2020 -0700 
 -------------------------------------------------------------------------------- 
 [TGL] Simplify SPD support for Stub
-Created a single SPD repo at Restricted\Spd.
 All SPD's file type is now changed to .spd for tracking in GIT.
 Set Stub support to be NIL to match the DV board.
 Change-Id: I9f7dbced2a4aaf39f7ae06d156d5350c31d94b05
