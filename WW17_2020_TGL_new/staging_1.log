@@ -2352,10 +2352,10 @@ Commit: 6142d21801314977e7bda72958c95a32b9e587c2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:54:17 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL U/H/Y]PlatSamplePkg DEC [Include] section include relative path to ClientOneSiliconPkg IncludePrivate
-To fix ClientOneSiliconPkg Includeprivate policy of CommitID(ac7a80678347034fb4bf043fc9f500cbefd3ef76).
-1. Remove connect link which is Includeprivate folder of ClientOneSiliconPkg in platformPkg.dec
-2. Add the TCSS_B_IOM_AUX_ORI_ENA_3 .
+[TCSS] PlatSamplePkg DEC [Include] section should not include relative path to ClientOneSiliconPkg IncludePrivate
+
+1. Remove related link which is Includeprivate folder of ClientOneSiliconPkg in platformPkg.dec
+2. Add the TCSS_B_IOM_AUX_ORI_ENA_3 definition.
 Change-Id: Ia3ba0892d33028815a6aebe7bed06cff21454e16
 
 
@@ -2808,7 +2808,7 @@ Commit: a42425355bd1c2803407c6d652a36ce1a89329a7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:53:29 2020 -0700 
 -------------------------------------------------------------------------------- 
-Use SystemMemory instead of PCI_IO to avoid device context lost while printing ACPI debug message
+[TCSS] Use SystemMemory instead of PCI_IO to avoid device context lost while printing ACPI debug message
 The fix only impact XPRT debug message printed, no functional impact
 Change-Id: Ie05135e4853290c2f8d8fc733349b7086d3e10f6
 
@@ -3172,12 +3172,12 @@ Commit: d570a962412419de0d1fc1965deb805c45e1f3d0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:52:51 2020 -0700 
 -------------------------------------------------------------------------------- 
-Add DP-In support for TGL Product.
+[TCSS] Add DP-In support for TGL-H platform.
 1) Enable DP-IN Support.
 2) Replace DP-IN Null library with Original.
 3) Add and Configure TGL-H Platform Data into DP-In Platform PCD.
 4) Configure TGL Platform Data into DP-IN Config Block.
-Note:- This Code review part only contain TGL Product related code.
+
 Change-Id: I7dbd7a20d41a7c8d186f985059a09969b8f23ad1
 
 
@@ -3262,8 +3262,8 @@ Commit: ded6efc687d8bef1a605a87ba39df1bf80aa01c6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:52:44 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL] implementation of USB-C Retimer Force Power method in BIOS is missing PART3
-Cherry pick SHA Id 37a0c8a2006a24f24048f2b59382ff2ec97b66dc from ICL to TGL.
+[TCSS][Retimer] Implementation of USB-C Retimer Force Power method in BIOS is missing - PART3
+
 Added get and set PD commands to EC command list.
 Added debug message to EC lib for easy trace log.
 Change-Id: I8f6d92ab86983e224b46a20c0e89aa542c11ef47
@@ -3396,7 +3396,7 @@ Commit: 81b2249fdc227c1d018d3171980060180ff03fbd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:52:30 2020 -0700 
 -------------------------------------------------------------------------------- 
-Tigerlake-Master Policy Check Failure Fix
+[TCSS] Tigerlake TCSS Policy Check Failure Fix
 1.Policy check fails because of TcStateLimit variable was introduced in the middle of the SA_SETUP data structure and C1S Config block after Beta.
 The fix is to move it to the end of the structure.
 2.If IOM replys any value greater than 8, the override the value to TC10
@@ -4319,8 +4319,8 @@ Commit: 953d9e64b0d70ce57127a3ba0a1b686df3f4fd97
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:20:26 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL] implementation of USB-C Retimer Force Power method in BIOS is missing PART2
-Follow coding guid.
+[TCSS][Retimer] Implementation of USB-C Retimer Force Power method in BIOS is missing - PART2
+
 Change-Id: I158291b493768d898d6e37146b0c35a251ee38d5
 
 
@@ -4470,7 +4470,7 @@ Commit: 1b4a79f2f5639b29a633055937bf7e0b692ed53e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:19:50 2020 -0700 
 -------------------------------------------------------------------------------- 
-TBT: remove 20s WA delay in retimer update lib
+[TCSS][Retimer] remove 20s delay in retimer update lib
 Change-Id: I3352be55b205bdc428e71337f0b0d0863406c03d
 
 
@@ -4566,7 +4566,7 @@ Commit: 7e3c376d3c8f40336be3f70a7e84a0cfc9539602
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:19:40 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL] Bios Interface to Limit TCSS TC-State
+[TCSS] Bios Interface to Limit TCSS TC-State
 There were multiple issues on TGL-A0 which required limiting TCSS TC-State. In these scenarios we always requested a IOM FW patch to limit TC-States. Since we are seeing multiple issues with TC-States request is for Architecture team is to define a Bios interface to control max TC-State limit. This will make triage of issues faster by not depending on IOM FW patch and also if there is a WA needed which requires limiting TC-State it can be easily changed in Bios.
 Change-Id: Ie208056f702ec0d177983277a4c460faa1672c41
 
@@ -6266,10 +6266,9 @@ Commit: 4238a9394425066182378614841ec4c9aa0c1ba6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:11:27 2020 -0700 
 -------------------------------------------------------------------------------- 
-TBT BIOS: Disable PCIE tunneling for USB4 host routers for FW CM.
-Description: 1)Added new UUID to _OSC method for USB4 capabilities.
-2)Added DisablePcieTunnelingOverUsb4 setup option and other related changes
-as required.
+[TCSS] Disable PCIE tunneling for USB4 host routers for FW CM.
+1. Added new UUID to _OSC method for USB4 capabilities.
+2. Added DisablePcieTunnelingOverUsb4 setup option and other related changes as required.
 Change-Id: Ic3771ce1b3d0da8f4e57b92b7e0845303031db5c
 
 
@@ -6393,8 +6392,8 @@ Commit: b7b3e209d878bfd4c0b29fa0bb64b42ffc2d56b2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:10:17 2020 -0700 
 -------------------------------------------------------------------------------- 
-[PCH]Revert BIOS change: xHCI gets to D3 with pme_en = 0
-
+[TCSS] remove BIOS solution for USB Type-C PME event cannot be generated
+PMC FW is fixed this issue for long time ago.
 Change-Id: I32b6de58eedbd6f3091bd48be00b1a50748d7d8f
 
 
@@ -6461,8 +6460,8 @@ Commit: b40e9136b2472a93ea73c15b234d64e8b1a2c3e2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:10:12 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL-U] [B0 PO][TBT] Wake From TBT is not enabled by default in BIOS
-Change System Agent (SA) Configuration-> TCSS Setup Menu -> VCCST Status of IOM" should enable.
+[TCSS] Wake From TBT is not enabled by default in BIOS
+Change System Agent (SA) Configuration-> TCSS Setup Menu -> VCCST Status of IOM" setup item to enable.
 Change-Id: I4db06e5db301776898b2471b5d7e18f41fa60345
 
 
@@ -6570,7 +6569,8 @@ Commit: 3db0b0ad856c7996bb06b481d453aa43a4da12d7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:09:38 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL]Fix build issue.
+[TCSS] Fix building error when PcdITbtEnable is disabled
+Remove PcdITbtEnable check in DxeVtdInitFruLib.c and Filter unused code in PeiTbtPolicyUpdate.c to prevent from compiling error when set PcdITbtEnable to FALSE.
 Change-Id: I1e60bc1f28af9c72bdf164c5a1da516c4de35d20
 
 
@@ -7419,7 +7419,7 @@ Commit: 5ac844f5fefb0b64c4d99046830bcec627d0aa72
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:06:12 2020 -0700 
 -------------------------------------------------------------------------------- 
-TCSS - GPIO VW Index setting is incorrect for TGL-LP and TGL-H
+[TCSS] GPIO VW Index setting is incorrect for TGL-LP and TGL-H
 1.Implementing GPIO VW Index setting for TGL-LP and TGL-H and
 2.Rename IomAuxOriSetting() to GpioIomAuxOriSetting() and move it
 to corresponding GpioPrivateLibVerX.c for each platform.
@@ -8458,7 +8458,7 @@ Commit: 4af58480815ce84e4628a7fb8cd2739182ebbb60
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 09:01:47 2020 -0700 
 -------------------------------------------------------------------------------- 
-PeiPolicyUpdateLib: Fix off by one issue in TypeC port mapping for PCH
+[TCSS] Fix USB ports failed after a few minutes in OS
 CPU port mapping provided through PCDs use 1-based port numbering but
 when iterating through the data code uses 0-base numbering hence the
 need to correct the port number provided.
@@ -9147,9 +9147,9 @@ Commit: b80f622aaa932e6664ec6e7f9f7a49eae976ceaa
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 21 08:58:19 2020 -0700 
 -------------------------------------------------------------------------------- 
-Configure PCH SBU pins for PCH Type-C ports.
-Description:1)Changes to support both TCSs supported and not supported projects.
-2)ADL PCH SBU config only for port 1.
+[TCSS] Update PCH SBU pins programming for Type-C ports
+Changes to support both TCSS supported and not supported projects.
+
 Change-Id: I82e3682aa23b067f5c60324ab40ba2a79b2e707f
 
 
