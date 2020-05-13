@@ -633,9 +633,9 @@ Date: Mon May 11 19:30:25 2020 +0530
 -------------------------------------------------------------------------------- 
 [PCH] Add warning in head of board GPIO table for native function pin
 
-many customers faced native function fail caused by redundancy and incorrect native GPIO pins definition in customres GPIO table.
-As we know now GPIO programming flow has been improved and removed all native function pins definition in boards/RVPs GPIO table, matter those pins are controlled by BIOS policies or HW/ME soft strap setting.
-But customers dont be aware this improvement and keep including native pins definition in customers board GPIO table, that impacts native function abnormal in corner case
+For those GPIO pins are designed as native function, BIOS CAN NOT configure the pins to Native function in GPIO init table!!!
+BIOS has to leave the native pins programming to Silicon Code (based on BIOS policies setting) or soft strap(set by CSME in FIT).
+Configuring pins to native function in GPIO table would cause BIOS perform multiple programming the pins and then related function might be abnormal.
 
 Hsd-es-id:1507821549
 Original commit date: Fri Mar 27 18:24:19 2020 +0530
