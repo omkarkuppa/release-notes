@@ -178,8 +178,6 @@ Date: Tue May 12 11:58:40 2020 -0700
 -------------------------------------------------------------------------------- 
 Enabling Vt-d by default for TGL H
 
-Work-around has been added as part of https://git-amr-7.devtools.intel.com/gerrit/#/c/82685/
-
 Hsd-es-id:22010503411
 Original commit date: Thu Apr 23 13:09:07 2020 -0700
 Change-Id: I68591c8be43f2c784ab1fe3479d59747fec4de9d
@@ -591,7 +589,7 @@ ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.4.59] Porting CmdVC1D  inc
 
 [HSD-ES][client_platf][bug][1408753008][ICL MRC][CmdVC1D - inconsistent pass / fail report during CAVref sweep on LP4/X]
 Issue:
- During CMDVC1D step on LP4/X we see false pass regions in the failing range, sporadically.
+ During CMDVC1D step on LP4/X there is observation of false pass regions in the failing range, sporadically.
 Root cause:
  When MRC changes CA Vref, we program FSP[1] while being at FSP[1].
 Solution:
@@ -1375,14 +1373,10 @@ VccDllSampler P0
 Also added a new data partition for ECC
 So now MRC has VCCDLL0, VCCDLL 1 (U/Y) and VCCDLL2 (H only) versions of the above registers.
 This affects
-Phyinit
 VccDll compensation steps
 SaveRestore code
 
-In Phyinit both VccDllControl and VccDllSampler are programmed using multicast registers. Confirmed with
-design that multicast will program all instances (per stepping) of both the registers. So no changes there.
-
-VccDll compensation steps
+In VccDll compensation steps
 Defined another VccDll rail VCCDLL3
 Changes in functions
 MrcOffsetCorrectionPre
@@ -1394,9 +1388,9 @@ MrcDdrioOffset
 MrcVccDllPartitionDecode
    TargetRail for CCC partition is VCCDLL2 for DtHalo
    TargetRails for data partitions are VCCDLL1 and VCCDLL3 for DtHalo
-Skip step 4 for DtHalo as its failing and debug is deprioritized by design.
+Skip step 4.
 
-Save restore changes
+In Save restore changes
 Created SaveDataCommonDtHalo function to add VCCDLLVOLTAGES P0 register
 
 SeekCacheLocation
@@ -1404,15 +1398,7 @@ SetCache32
 MrcFlushRegisterCachedData
    Added checks for NO_ADJ bit in the register offset which is required to
    prevent register offset translation for TGL-H specific registers offsets
-   which alias with U/Y register offsets.
-
-Testing passes with full BIOS for the following systems
-LP4 A0
-DDR4 U A0
-DDR4 H
-LP5 B0
-final testing after adding code to skip ECC byte DLL partition for UlxUlt
-LP4 A0 minibios passes MRC
+   which alias with UP3/UP4 register offsets.
 
 Hsd-es-id: 22010434541
 Original commit date: Mon Mar 23 14:51:37 2020 -0700
@@ -1483,7 +1469,7 @@ Commit: be60472da2ab29c8b269591d07f29205afe6c039
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 12 11:53:31 2020 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: MRC changes for robust margin stability (mainly DDR4)
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: MRC changes for robust margin stability
 
 1) Make WrDS Up/Dn training use a diagonal sweep to limit the difference between the two params (too much causes low RMT margins).
 2) Turn off Tx Slew Rate training, it randomly causes margin degradation.
@@ -1493,7 +1479,7 @@ ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: MRC changes for robust margin stabil
 6) Convert RMT to use the raw RcvEnable PI instead of the offset, as the offset suffers from random margin instability issues while the raw PI does not.
    The RcvEnable PI offset is not used anywhere else, nor do any other offsets show this issue.
 
-Change: MRC changes for robust margin stability (mainly DDR4)
+Change: MRC changes for robust margin stability
 
 Hsd-es-id: 22010409783
 Original commit date: Wed Mar 4 17:34:09 2020 -0800
@@ -1607,11 +1593,9 @@ Commit: 0b479554077c44bd78904081a8e2e5ca9a440ee6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 12 11:52:57 2020 -0700 
 -------------------------------------------------------------------------------- 
-TGL UP3/UP4 - PCIe L0s support for PRQ.
+TGL UP3/UP4 - PCIe L0s support for PV
 
-For ASPM, L0s and L0sL1 options keeping for internal testing only and L1 will be default
-
-Cherry-picked from https://git-amr-7.devtools.intel.com/gerrit/77442
+L1 is be default
 
 Hsd-es-id: 16010822148
 Impacted platforms: TGL
@@ -1733,12 +1717,6 @@ support new required features for client projects.
   reduce development efforts on complicated alignment calculation
   on every single changes, so can prevent miscalculation.
 
-Internal only below.
-- Makes build script changes at flashmap alignment check
-  on 256KB alignment. This is internal only change.
-- Leaves comment at flashmap FDF files on the minimum size requirement
-  at Microcode FV and Firmware Binaries FV.
-
 Hsd-es-id: 14010874563
 Original commit date: Thu Apr 2 20:20:17 2020 -0700
 Change-Id: If443d5bd91ecf4d390b1ef20e73c5c043239f787
@@ -1814,9 +1792,6 @@ added warm reset flow
 added gen2 fix
 Keeping Gen1 as default
 
-Cherry-picked from Reviewed-on: https://git-amr-7.devtools.intel.com/gerrit/80086
-Merged https://git-amr-7.devtools.intel.com/gerrit/#/c/80536/
-Merged https://git-amr-7.devtools.intel.com/gerrit/#/c/80178/
 
 Impact Platforms: TGL
 Hsd-es-id: 1507801701
