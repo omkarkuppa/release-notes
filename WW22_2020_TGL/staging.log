@@ -197,8 +197,7 @@ Date: Tue May 26 11:18:39 2020 -0700
 ClientOneSiliconPkg/MemoryInit:[TGLB0][MRC] Offset calculation of VccDllFFNBIAS is incorrect in MrcOffsetCorrection
 
 Issue
-TGL H VccDll changes introduced a bug where enum DllDdrData8 was inserted after DllDdrData7. Data8 enum is skipped for UlxUlt. Due to the bug shown in the hsd DLLDDRCCC0_CR_DDRCRVCCDLLFFNBIAS_REG register was skipped for UlxUlt and DLLDDRDATA8_CR_DDRCRVCCDLLFFNBIAS_P0_REG was never touched.
-Offset no adjust was also missing for DtHalo for the above mentioned register
+TGL H VccDll changes introduced a issue where enum DllDdrData8 was inserted after DllDdrData7. Data8 enum is skipped for UlxUlt. Due to the issue DLLDDRCCC0_CR_DDRCRVCCDLLFFNBIAS_REG register was skipped for UlxUlt and DLLDDRDATA8_CR_DDRCRVCCDLLFFNBIAS_P0_REG was never touched.
 
 Fix
 Make DllDdrData8 equal to 12
@@ -629,15 +628,7 @@ Commit: cf914d9cf61455674ffe65d26318238119de5e7c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 26 11:17:11 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL-H][IPU][GPIO][ACPI][platform/tigerlake-master]: Add OV13858/OV9234 camera sensor support in BIOS
-
-Sync to:
-- https://git-amr-7.devtools.intel.com/gerrit/#/c/75144/
-- https://git-amr-7.devtools.intel.com/gerrit/#/c/79684/
-- https://git-amr-7.devtools.intel.com/gerrit/#/c/80468/
-
-Cherry-pick:
-- https://git-amr-7.devtools.intel.com/gerrit/#/c/79132/
+[TGL-H][IPU][GPIO][ACPI]: Add OV13858/OV9234 camera sensor support in BIOS
 
 Hsd-es-id: 1507718476
 Original commit date: Fri May 8 10:02:04 2020 +0200
@@ -770,7 +761,7 @@ Commit: 2dc7533c368dbe3dbb1e3bea157529d2fb223f8b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 26 11:16:38 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL-H][PO] YB observed for Realtek HW Audio Codec in DM for I2S Codec
+[TGL-H][PO] Yellow Bang observed for Realtek HW Audio Codec in DM for I2S Codec
 
 Hsd-es-id: 14011431285
 Original commit date: Wed May 6 10:10:44 2020 -0700
@@ -873,16 +864,8 @@ Commit: b6f3a5f29a7e305dc83a583069537c67280475b5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 26 11:16:16 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL][PEG] Make SecureRegisterLock to restricted and
+[TGL][PEG] Remove SecureRegisterLock and
 Set L1PGAUTOPGEN, L1PGLTREN bits on RP if end point supports only L1
-
-Unit test done:
-Connected laguna card on PEG60 slot on TGL-U board and
-verified registers L1PGAUTOPGEN and L1PGLTREN in PCIE configuration space,
-L1PGAUTOPGEN Offset 0x434 bit 4 - "0x1"
-L1PGLTREN    Offset 0x5C0 bit 0 - "0x1"
-
-Cherry-picked from Reviewed-on: https://git-amr-7.devtools.intel.com/gerrit/66789
 
 Hsd-es-id: 16010145593
 Impacted Platforms: TGL,ADL,RKL,SWX
@@ -983,11 +966,10 @@ Commit: 704bdacda82d3300d466da4c2d167ab18b777eed
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 26 11:15:56 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL-U/Y B0][PCIe] PEG 60: Cannot exit from windows sleep and PCIe link stuck @LTSSM 0x48 (L2.exit) for Gen1/Gen2/Gen3 with Samsung970 EVO
+[TGL-U/Y B0][PCIe] PEG 60: Cannot exit from windows sleep and PCIe link stuck @LTSSM 0x48 (L2.exit) for Gen1/Gen2/Gen3 with some SSDs
 
 Programming scratch pad reg bit 0 instead of 7.
 
-NOTE:cherry-pick from tigarelake_staging and tgl_h_po
 
 Impacted Platform: TGL
 
@@ -1190,11 +1172,10 @@ Commit: 7927c5ba3a5fbfe200399538d47a631027178ad7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 26 11:15:20 2020 -0700 
 -------------------------------------------------------------------------------- 
-TigerLakeBoardPkg/BiosInfo: Fix NULL check bug on memory pool allocation
+TigerLakeBoardPkg/BiosInfo: Fix NULL check issue on memory pool allocation
 
-This commit fixes the issue captured by Klockwork on memory pool allocation.
-Also ASSERT is supposed to get asserted on memory pool allocation
-which was not returned by Status value. This commit fixes the bug.
+Fixes the issue captured by Klockwork on memory pool allocation.
+Also ensure ASSERT gets asserted on memory pool allocation.
 
 Hsd-es-id:22010603036
 Original commit date: Mon May 4 15:15:51 2020 -0700
@@ -1746,7 +1727,7 @@ Date: Tue May 26 11:13:35 2020 -0700
 ClientOneSiliconPkg/MemoryInit/Tgl: [TGL-B0][PO]: Incorrect MC Registers Programming even with MRC 6.6
 
 Issue:
-    MRC 6.6.0 registers are not correctly programmed according to Amir's POR register values
+    MRC 6.6.0 registers are not correctly programmed to recomanded values
 
 Root cause:
     Throttling POR table values is not up to date for TGL
@@ -1969,7 +1950,7 @@ Root cause:
     Current LPDDR4 tWRWR_dr turnaround is off by 5 units compared to Pre-Si runs
 
 Change:
-    Adding +5 to LPDDR4 tWRWR_dr for f1600 running at Gear1, short term workaround, can be changed once final Turnaround values are reviewed
+    Adding +5 to LPDDR4 tWRWR_dr for f1600 running at Gear1, these are not final values.
 
 Hsd-es-id: 14011178398
 Original commit date: Fri Apr 24 16:27:28 2020 -0700
@@ -2027,7 +2008,7 @@ Root cause:
     JEDEC LP4 spec defines the min for tRFC_ab = 280ns and tRFC_pb = 140ns for these values
 
 Change:
-    Update internal LP4 default SPD tables in full BIOS and mini BIOS builds to match JEDEC LP4 specification
+    Update LP4 default SPD tables in both full RVP BIOS and mini BIOS builds to match JEDEC LP4 specification
 
 Hsd-es-id: 22010500006
 Original commit date: Thu Apr 9 22:39:49 2020 -0700
@@ -2173,9 +2154,8 @@ Hotkey event on 2nd boot onwards as well. On the current project,
 there no FVs which may be accessed through FVB Protocol for DXE,
 only on the first boot, so no need to check on the first boot.
 This commit adds FvOptional to the FVB install list and keep
-the Default list just in case for the future use or
-future simics support.
-The current project doens't use SpiFvbServiceSmm in PlatSamplePkg
+the Default list just in case for the future use.
+Currnetly there is no use of SpiFvbServiceSmm in PlatSamplePkg
 but this commit removes BootState variable for first boot check
 to avoid any confusion for future use.
 
@@ -2487,7 +2467,6 @@ Date: Tue May 26 11:11:25 2020 -0700
 -------------------------------------------------------------------------------- 
 [All Platform]: Need a new editable field in BIOS to change the Subsystem ID in PCI header config space for HD Audio BUS controller
 
-Hsd-es-id: https://hsdes.intel.com/appstore/article/#/16010988971
 Original commit date: Tue Apr 21 18:04:18 2020 +0530
 Change-Id: Ifa00e286147014f3d562a84fde8881df198f093b
 Original commit hash: cf1f73760cd1e60b988038466a717861202cf9a1
@@ -2505,7 +2484,7 @@ Date: Tue May 26 11:11:21 2020 -0700
 -------------------------------------------------------------------------------- 
 BoardPkg:  Changes made to BIOS Knobs  are not reflecting
 
-Disabling Bios Guard as work around to enable BIOS Setup variable updates
+Disabling Bios Guard as workaround to enable BIOS Setup variable updates
 
 Hsd-es-id: 14011422708
 Original commit date: Wed Apr 29 15:05:12 2020 -0700
@@ -2671,7 +2650,7 @@ Commit: e832ed6a2838c7120c685ac0846705da76ae8531
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 26 11:10:48 2020 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: [TGL-H][MRC] TAT workaround for TGL-H memory stability issues
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: [TGL-H][MRC] Add TAT workaround for TGL-H memory stability
 
 Change:
 -Increase the Turn Around Times (TAT) by 4
@@ -2866,9 +2845,7 @@ Commit: 26f4b004fdc066223d6650a47b67080c32d35b4b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 26 11:10:13 2020 -0700 
 -------------------------------------------------------------------------------- 
-EC KW Issues identified with Tigerlake-Master branch Revision  3177.00
-
-Uninitialized variables in functions
+Update for Uninitialized variables in functions
 
 Hsd-es-id: 14011388159
 Original commit date: Tue Apr 28 12:57:28 2020 -0700
@@ -2971,8 +2948,8 @@ Date: Tue May 26 11:09:49 2020 -0700
 -------------------------------------------------------------------------------- 
 DxeTelemetryAcpiLib:Library\DxeTelemetryAcpiLib\DxeTelemetryAcpiLib.c
 
-When a new ACPI table is published, and it is the 21th entry of
-ACPI table. XSDT address will be reallocated, if we continue to
+When a new ACPI table is published, and it is the 21st entry of
+ACPI table, XSDT address will be reallocated, if we continue to
 use the previous address. Exception will happen because garbage
 data might be accessed.
 
@@ -3351,8 +3328,6 @@ Commit: 9b84698f153a064ef14d3d38615dfac90ed98a09
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue May 26 11:08:12 2020 -0700 
 -------------------------------------------------------------------------------- 
-PPV - QDF QUUZ (2C 96eu 15W cTDP down) failing for P-state transitions
-
 Updated GT DID for TGL-U GT2 (2+2)
 
 Hsd-es-id: 16011028305
