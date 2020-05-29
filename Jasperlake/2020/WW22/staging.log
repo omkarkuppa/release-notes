@@ -17,7 +17,6 @@ Date: Fri May 29 00:29:48 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2194_00
 
-Hsd-es-id: no sighting
 Original commit date: Thu May 7 02:29:20 2020 -0700
 Change-Id: I3e207722741026e705e988c1eb8159de7e8cbb44
 Original commit hash: 3bd4bc3bd44acd186ecd3fb78b9b7ae54cab7843
@@ -31,19 +30,13 @@ Commit: e2ab9dd20fddc3d6140b300cf2c741c5717d8c4a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:29:41 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSL] WWAN RTD3 is not working
+[JSL] WWAN RTD3 issue fix.
 
 1.Updating WWAN GPIOs
-2.Renaming RTD3 SSDT files
- 2a.JslLp4xRtd3.asl->JslRev1Rtd3.asl
- 2b.JslDdr4Rtd3.asl->JslRev2Rtd3.asl
-3.Creating JslRev2SsdRtd3.asl to support PCIe NVMe RTD3 over M.2 KEY-B slot
-4.Fixing few bugs in RTD3 SSDT
- 4a.Correcting CNVi BT USB port to HS08
- 4b.Correcting WWAN root port to RP03
-5.Updating WWAN Enable option to support M.2 SSD RTD3 as short-term WA.
+2.Added support for PCIe NVMe RTD3.
+3.Fixing few bugs in RTD3 SSDT
+4.Updated CNVi BT USB port to HS08 and WWAN root port to RP03
 
-Hsd-es-id: 14011445315
 Original commit date: Mon Apr 27 21:57:31 2020 +0800
 Change-Id: I3efd52cf070d83cc60792c9e7bc69bb850f43265
 Original commit hash: 27f7b20bf14d4c2dfee3964a9a1ec3c1ec52f39b
@@ -81,9 +74,6 @@ Date: Fri May 29 00:29:26 2020 +0530
 -------------------------------------------------------------------------------- 
 [JSL+MRC]Enable ReadTimingOptimization for all speed
 
-Enable MrcReadTimingCenteringOpt for all speed for better read timing margin
-
-Hsd-es-id: 1507978446
 Original commit date: Thu May 7 10:29:58 2020 +0800
 Change-Id: I31c4b2df93d48570b771e3276ac1c0e30dbba7b4
 Original commit hash: 0e4db9265516bb6dd0843218478b4e0ede84a86c
@@ -97,13 +87,9 @@ Commit: 5424243e6d6806e128980c4de85c30f15cba35b1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:29:20 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSL]SATA SSD is not detected sometimes on x1 PCIe slot when boot performance mode is configured to default option Turbo
+[JSL] Fixed issue with SATA SSD is detection on PCIe slot when boot performance 
+mode is configured to default option.
 
-1. Update BOMID based on GPIO spec v104
-2. Pull in PGIO programming for x1 slot on LP4x PPV SKU
-3. Restricted the fix for internal build
-
-Hsd-es-id: 16011077481
 Original commit date: Wed May 6 16:39:29 2020 +0800
 Change-Id: Ifeb2e68f92c825258ac6f0433ad80eebbb776369
 Original commit hash: a7f432a7c025ebd88abac7195c74f2d90e541c4b
@@ -122,7 +108,6 @@ Date: Fri May 29 00:29:17 2020 +0530
 
 Impacted platforms: ADL, RKL, TGL
 
-Hsd-es-id: 22010658284
 Original commit date: Wed May 6 10:58:14 2020 +0530
 Change-Id: I35560b9c47c2d062cb1342d5e96c4f15e1cf748c
 Original commit hash: b38e4bfa6dfa46f369a6f7b7435343d16006c9c0
@@ -138,7 +123,6 @@ Date: Fri May 29 00:29:06 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2193_00
 
-Hsd-es-id: no sighting
 Original commit date: Wed May 6 18:37:02 2020 -0700
 Change-Id: I603419003de077c4edf2d86fc11d76f8e13dcef3
 Original commit hash: 44bc60ec89993c7c24c387f6625c0f960902fd3a
@@ -152,16 +136,9 @@ Commit: ca98e5b0cfeaa20e5fad8f79c58c39e010fc2df7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:28:38 2020 +0530 
 -------------------------------------------------------------------------------- 
-C1S/PeiSataLib: Initialize SATA structures before use
+C1S/PeiSataLib: Initialize SATA structures before use to prevent potential 
+data corruption. 
 
-To prevent potential data corruption SATA data structures
-should be initialized before use.
-This change introduces following initialization:
-- Initialize all data structures to zero
-- Initialize function pointers to NULL
-- Initialize pointes for SATA_HANDLE substructures
-
-Hsd-es-id: N/A
 Original commit date: Mon May 4 14:15:17 2020 +0200
 Change-Id: Ibef0c8ae2cb614e13c2eff58b0e39c793540ad3e
 Original commit hash: f6c6b0e6121accbc97877015d04d5ee795a719d5
@@ -175,38 +152,9 @@ Commit: 6b6e82d38b410bf119d9eb10c3320762f8518851
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:28:32 2020 +0530 
 -------------------------------------------------------------------------------- 
-Part 1: Support postcodes and status codes trace to NPK in release BIOS.
+Support postcodes and status codes trace to NPK in release BIOS.
+TimerLib used for performance must read TSC frequency using CPUID leaf 0x15.
 
-Add support for sending post codes and descriptions over Trace Hub.
-Implemented four messages,
-1. Set up of HECI interfaces.
-2. Memory allocation (DID).
-3. ME To BIOS Payload (MBP).
-4. End Of Post (EOP).
-
-Part 2: TimerLib used for performance must read TSC frequency using CPUID leaf 0x15.
-
-Edk2 TimerLib in PcAtChipsetPkg\Library\AcpiTimerLib\ uses uses another timer to measure the amount of TSC ticks in 100us and uses that to calculate the frequency. The timer frequency calculation is not accurate enough for performance timing and causes fluctuations in the results and even negative timestamps.
-
-Core frequency can be read from CPU leaf 0x15 instead of using a loop to measure it every time frequency value is requested.
-TimerLib which uses the CPU leaf has been implemented by a compatible library at \UefiCpuPkg\Library\CpuTimerLib\
-PcdCpuCoreCrystalClockFrequency must also be set correctly for each platform in case in case reading from CPUID Leaf 0x15:ECX fails.
-If CPUID Leaf 0x15:ECX == 0, then use PcdCpuCoreCrystalClockFrequency = 38400000.
-Current EDK2 default is 24MHz(previous generation) and it must be overwritten as 38.4MHz for JasperLake.
-
-AcpiTimerLib: (don't use this library)
-  TimerLib|PcAtChipsetPkg/Library/AcpiTimerLib/
-	BaseAcpiTimerLib.inf
-	PeiAcpiTimerLib.inf
-	DxeAcpiTimerLib.inf
-
-CpuTimerLib: (use this library)
-  TimerLib|UefiCpuPkg/Library/CpuTimerLib/
-	BaseCpuTimerLib.inf
-	PeiCpuTimerLib.inf
-	DxeCpuTimerLib.inf
-
-Hsd-es-id: 16011030406
 Original commit date: Tue Apr 28 16:49:52 2020 -0700
 Change-Id: I0fc5dd57fc4b90f798e7bd925e0d23d7f60ae934
 Original commit hash: 177a899bff6ceb2a3c8ab4871a560c248382cb71
@@ -228,11 +176,8 @@ Commit: cad923af1fc635b6195a45a0062f48bacefb40e2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:28:29 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg\IpBlock\Thc\ThcDriver;[THC][BIOS] ThcDriver  - Lack of support for PCH gen specific Device Id.
+[THC][BIOS] ThcDriver - Added support for PCH gen specific Device Id.
 
-- Fixed Device ID for PCH-S
-
-Hsd-es-id: 14011261837
 Original commit date: Thu Apr 30 23:46:21 2020 -0700
 Change-Id: Ibb6049cdf7434748dd5dc020cfe7c77448490fe5
 Original commit hash: eca894f97f8c9d3b2c78dc308c8f702f284c2b27
@@ -246,11 +191,8 @@ Commit: 3e16666ac2096deccde837c056031bd6cca642f8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:28:27 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSL REV2] JSL A0 microcode update
+JSL A0 microcode update
 
- - Changing the JSL ucode from m1906C0_00000003 to m1906C0_00000004
-
-Hsd-es-id: N/A
 Original commit date: Mon May 4 12:21:30 2020 +0530
 Change-Id: I367093da6ba91ed5a0f5dc63d4536a88415acda2
 Original commit hash: 4da2a81f17b6b8ea45bae4ef6b7d202671733fb3
@@ -265,11 +207,8 @@ Commit: 9fa8bcb44e80a0e64b6911328cd239549a07b22d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:28:23 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSL] To resolve the KW issues for JasperLakeplatsamplPkg and JasperLakeBoardPkg
+[JSL] Fixed the KW issues for JasperLakeplatsamplPkg and JasperLakeBoardPkg
 
-Resolved the Latestd KW issues as per WW17.3 label KW report
-
-Hsd-es-id: 1609902468
 Original commit date: Mon May 4 19:07:41 2020 +0530
 Change-Id: I6a80afbee0785b6fee70e328d649d21790f4876c
 Original commit hash: cb5423b59cfe754a06d6afdd74fb7364d721f8a8
@@ -286,9 +225,6 @@ Date: Fri May 29 00:28:21 2020 +0530
 -------------------------------------------------------------------------------- 
 C1S: Hda initialization refactor
 
-Create HdaSocLib for initialization cAVS version of audio ip on ADL platforms.
-
-Hsd-es-id: N/A
 Original commit date: Wed Apr 22 09:29:52 2020 +0200
 Change-Id: I4b9c408154361ea8790a54db65c25bc05740c041
 Original commit hash: 3b8640efbba84eab84444d2ea6b61af96f7f3d9e
@@ -315,19 +251,8 @@ Commit: 83a8fc50fa84aa896c6291d7ad650f51bd20871b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:28:14 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSL] Syncing Platform code with TGL v3147 - bug fix only
+[JSL] Syncing Platform code with TGL
 
-Merging changes below from TGL to JSL.
-5a76bda54c8f3a10d63220713b7e23b7e47e8f40
-* TigerLakeBoardPkg/BiosInfo: BIOS_INFO MCU entry correction and add helpful notes
-710c165e19f827e0380fc97d8a50a3b716a8c5fb
-* ClientOneSiliconPkg/PcdCpuSmmRestrictedMemoryAccess: Build error fix when disabling PcdCpuSmmRestrictedMemoryAccess
-211e6e4a4bf7ba4a657689004d641832ff7c1441
-* TigerLakeBoardPkg/PeiReportFvLib: Fix FSP FV installation
-dd57341c663502dc27a905432eb744e6f8613e72
-* TigerLakeBoardPkg/PeiReportFvLib: Install FspT FV
-
-Hsd-es-id: 1507931310
 Original commit date: Tue May 5 12:24:01 2020 +0800
 Change-Id: I3f710389e512fdea33c70a46e8bf3be753e0fe40
 Original commit hash: 3d9d34ce0db0167e403876be5fc8b6bede28c489
@@ -346,9 +271,6 @@ Date: Fri May 29 00:28:13 2020 +0530
 -------------------------------------------------------------------------------- 
 [JSL] BIOS powermeter support - part2
 
-Gray out Powermeter option if MipiCam_ControlLogic0 is enabled.
-
-Hsd-es-id: 16010862930
 Original commit date: Thu Apr 30 17:08:09 2020 +0800
 Change-Id: I9c60b90e440c00f9145b3cb54e43cb4b23d414b4
 Original commit hash: 880549deead0f57e7fc5b98617adb5af4c9891da
@@ -364,10 +286,8 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:28:06 2020 +0530 
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: MTRR data doesn't match after S3 resume.
+To check Above4GBMmio is supported or not.
 
-Use IsAbove4GBMmioEnabled () to check Above4GBMmio is supported or not.
-
-Hsd-es-id: 1507929315
 Original commit date: Tue May 5 17:08:36 2020 +0800
 Change-Id: Id83e94971787511a46bb5a5526a0a8e8dad0458f
 Original commit hash: b812bd72308d02974609257b3e9836e1cb2d0622
@@ -383,11 +303,8 @@ Commit: 9ab0e4c6ef31d180a3952e761887c869a3018d90
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:27:57 2020 +0530 
 -------------------------------------------------------------------------------- 
-[TGP-H] [USB] [BIOS]Incorrect HCI value
+[TGP-H] [USB] [BIOS]Modified HCI value
 
-HCI value should be 0x120 for CPU and PCH on RKL-S, CML-S and TGL
-
-Hsd-es-id: 14011394103
 Original commit date: Mon May 4 16:27:38 2020 -0700
 Change-Id: Ia73086946de8a443b1d888ffdcfde620629b442c
 Original commit hash: 7e67d27b40494e8ecf868463ecbac229d0f156d1
@@ -403,7 +320,6 @@ Date: Fri May 29 00:27:54 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2192_00
 
-Hsd-es-id: no sighting
 Original commit date: Tue May 5 18:34:32 2020 -0700
 Change-Id: I4caa551ddb61e77d656d26a2871ad093fd3fb525
 Original commit hash: 1409a0eb70e988a3286d08614d6259c39a21263f
@@ -419,10 +335,6 @@ Date: Fri May 29 00:27:51 2020 +0530
 -------------------------------------------------------------------------------- 
 Extended CPU info protocol to support hybrid CPU.
 
-*Fixed the Cache Size information for Hybrid CPU platform.
-*Fixed the Core numbers count for Hybrid CPU platform.
-
-Hsd-es-id: 16011009314\1609736464
 Original commit date: Wed Apr 15 16:28:42 2020 +0800
 Change-Id: Id78d3777ab08a7baf5d4743d0e8d99253676baf6
 Original commit hash: 66cd9abbd0643297900c3564ea44b99f6178aaf2
@@ -441,12 +353,7 @@ Commit: e314466806b8d10597a4fdf5f6e7d397f04d453c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:27:37 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/TwoLm: Addition of Platform Capability structure for PMEM.
-
-Adding Platform Capability structure to NFIT to indicate that platform does not protect
-the CPU caches and OS need to manage flushing the CPU caches when they use PMEM.
-
-Hsd-es-id: 14011357380
+Addition of Platform Capability structure for PMEM.
 
 Original commit date: Fri Mar 6 10:23:19 2020 -0800
 Change-Id: Ief4eb65708330c2a22af6b386c2cf6e32f1eda3f
@@ -464,12 +371,6 @@ Date: Fri May 29 00:27:22 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Cleanup PeiDxeSmmPmcPrivateLib
 
-Remove the Verx files from the PeiDxeSmmPmcPrivateLib as there
-are no conflicting implementation between the PCH generations.
-This commit also removes the legacy method of getting the
-crashlog size which is not used by any project in C1S.
-
-Hsd-es-id: n/a
 Original commit date: Tue Apr 14 15:35:23 2020 +0200
 Change-Id: I64bca253bfc262b4d1c205a45a2db4bdd92beedb
 Original commit hash: 401d947fa98647120b14c1ddc5889d151b92c2b6
@@ -492,11 +393,8 @@ Commit: 6991e45c661108d15d18e5ca6f50783d9f340971
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:27:20 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: Add build artifacts to .gitignore
+ClientOneSiliconPkg: Added build artifacts and generated files to .gitignore
 
-Added autogenerated FSP headers into .gitignore file
-
-Hsd-es-id: n/a
 Original commit date: Tue May 5 13:38:56 2020 +0200
 Change-Id: Iad8765e911e5c3923f067434042229cc8ab3d427
 Original commit hash: 612de6cec30861fa685e8307da05f7712e168e22
@@ -510,9 +408,8 @@ Commit: b64b9567ffecdf2110ad679cb1a8f0818ea2593e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:27:18 2020 +0530 
 -------------------------------------------------------------------------------- 
-[ADL] Program the Cpu DMI Gen4 Hardware Equalization Flow as per BWG SIP17 Rev 1.1
+[ADL] Program the Cpu DMI Gen4 Hardware Equalization Flow
 
-Hsd-es-id: 16010799547
 Original commit date: Wed Mar 11 14:09:34 2020 +0530
 Change-Id: I14ba2d70fb4a9a0255032a91080038c75900838a
 Original commit hash: a34ab7762994f88a0714ca6a7239b50f8222f982
@@ -529,14 +426,6 @@ Date: Fri May 29 00:27:15 2020 +0530
 -------------------------------------------------------------------------------- 
 JasperLakePlatSamplePkg/Setup : FIVR tuning for jasperlake bios
 
- - Changing default values for below bios knob
-
-  External Vnn Voltage value :304, Retention to low current mode : 44
-
-  Retention to high current mode : 55, Low to high current mode : 13
-
-  Off to high current mode : 150
-Hsd-es-id: 16011001289
 Original commit date: Thu Apr 23 12:59:37 2020 +0530
 Change-Id: I6725e49af7ec4f36b671b0b7d5508e39ee5e38c7
 Original commit hash: 76979d28210e6081a2dd9e8a298bc30c2063d099
@@ -551,9 +440,8 @@ Commit: 8f9681809edd6bfb5a6ae11192a477d500240a78
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:27:13 2020 +0530 
 -------------------------------------------------------------------------------- 
-New ADL Platform VR POR file WW1720
+New ADL Platform VR POR 
 
-Hsd-es-id: 1307543062
 Original commit date: Wed Apr 29 23:06:32 2020 +0530
 Change-Id: I173c59171ac0267eef63ec32097f4e6ebfee29c4
 Original commit hash: 9b9c46e9ad20df74fa9db72e4648adb41ebebe8c
@@ -567,15 +455,8 @@ Commit: f798ba88ad416bd48725138f70ae9ffd7a3db313
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:27:12 2020 +0530 
 -------------------------------------------------------------------------------- 
-ServerSiliconPkg/Iio: Add knob for supporting AET direction to CPU or PCH Trace Hub
+Add knob for supporting AET direction to CPU or PCH Trace Hub
 
-  - 'AET Enable Mode' knob added to EagleStream/Whitley setup
-  - appropriate field added to setup policy
-  - Trace Hub flow changed to handle new setup knob
-  - removed Trace Hub functions from CPU modules (not correct place for TH functions)
-  - some clean up in Trace Hub lib (ex. delete unused function, better debugs, new code comments)
-
-Hsd-es-id: 18011242005
 Original commit date: Thu Apr 9 19:39:19 2020 +0200
 Change-Id: If6c6464f732ceaf858c078a09a6fc0b267c624a9
 Original commit hash: e0b69c89048f949d386930fa25f5fc8edea9b078
@@ -589,11 +470,8 @@ Commit: 658d92417f0c781775c842da3825109497c02fd2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:27:08 2020 +0530 
 -------------------------------------------------------------------------------- 
-XdciDWC.c : dwc_xdci_core_init Memory Corruption
+dwc_xdci_core_init Memory Corruption issue fixed.
 
-Merging 6d6466f5a2d6320862de0e53e8d7e36e675818cb from TGL to JSL.
-
-Hsd-es-id: 1409468670
 Original commit date: Tue May 5 15:51:26 2020 +0800
 Change-Id: I675f3d633cf719b7a239d417dceb92ab4e062711
 Original commit hash: b7115629b396d6aef31c3b0983efb4c289ed4e85
@@ -610,16 +488,9 @@ Commit: d7650b30492e6cd29fd0241f511bfddc453a01eb
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:27:00 2020 +0530 
 -------------------------------------------------------------------------------- 
-JasperlakeFspPkg: Move out PchInitDxeFspIcl.inf from Internal tags in
-JasperLakeFspPkg.fdf to make this file in allign with JasperLakeFspPkg.dsc
+JasperlakeFspPkg: configure PchInitDxeFspIcl.inf in JasperLakeFspPkg.fdf 
+to make this file in allign with JasperLakeFspPkg.dsc
 
-In core boot BIOS PSTH_CTL register BIT2 has to be set. But this bit is not
-set in Coreboot (Boot Loaders using FSP External Package) because PchInit
-Module Entry Point for FSP is not getting called. Moving PchInitDxeFspIcl.inf
-out of Internal Tag in the file JasperLakeFspPkg.fdf to make it available for
-External FSP Build will fix this issue.
-
-Hsd-es-id: 16011067516
 Original commit date: Mon May 4 15:14:22 2020 +0530
 Change-Id: Ie3d0f8e9e145f6e3bf339fecb5b9c5bd5b5c7672
 Original commit hash: 32c1e19dbc056d1d8ae0d30326f3027832e5c548
@@ -633,11 +504,9 @@ Commit: fef907240ed644fa5d50e9fc42f46feacb83e856
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:26:58 2020 +0530 
 -------------------------------------------------------------------------------- 
-[FSP] With debug ADL-P FSP build,  FSP component (FSP-M) is not logging debug messages
-
+[FSP] Issue fix for FSP component is not logging debug messages.
 Check debug interface flag propagated from UPD prior to EC/SerialIo UART initialization.
 
-Hsd-es-id: 16011005342
 Original commit date: Thu Apr 30 14:07:44 2020 +0800
 Change-Id: Ic56b51bb2dc9e9c1c59d75ef6f85b6f2b7b0eda8
 Original commit hash: fb3779bb3c2970bdd7674eef7b542acc62bf5c5e
@@ -653,7 +522,6 @@ Date: Fri May 29 00:26:49 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2191_00
 
-Hsd-es-id: no sighting
 Original commit date: Mon May 4 18:32:55 2020 -0700
 Change-Id: Idd2caf14cf512b7207dbbfe725999858af6cfeab
 Original commit hash: 0ec7cb457f8b0c4aed6d0a7d130b4175ed16f4cd
@@ -667,11 +535,8 @@ Commit: 416a8f3de274b991c2b6cd63dbb97f611960f760
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:26:43 2020 +0530 
 -------------------------------------------------------------------------------- 
-PeiUsbHostControllerInitLib: USB programming updates
+PeiUsbHostControllerInitLib: USB programming updates.
 
-Updated U2UB survivability register to address Bluetooth devices issues.
-
-Hsd-es-id: 18010993187
 Original commit date: Sun May 3 14:31:21 2020 -0700
 Change-Id: I88e5fc6af7d6c80d88bd7838f37bbac91276e5b9
 Original commit hash: 9c9570c7e1a83faccbf997256890a6f6722dbf90
@@ -685,18 +550,8 @@ Commit: 78215e2c6a4f6d0223d81aa407e9774d15e1babe
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:26:17 2020 +0530 
 -------------------------------------------------------------------------------- 
-C1S/PeiHsioLib: Move SataTestMode enable code to Hsio IP Block
+C1S/PeiHsioLib: Move SataTestMode enable code to Hsio 
 
-SATA controller has special test mode that allows to test
-the logic of the controller.
-The test mode is enabled in physical layer of the controller.
-In case of current PCH generations Modular Phy (ModPhy) is used as
-SATA Phy but ponentialy the controller can be paired with other phy.
-We need to remove this dependency from SATA code.
-The code related to this has to be moved to Hsio IP Block.
-This change moves the Hsio (ModPhy) code to right place.
-
-Hsd-es-id: N/A
 Original commit date: Thu Apr 30 14:55:33 2020 +0200
 Change-Id: Idef60ec1554b1fd4fbe9bd6d22c00700c65e0b9d
 Original commit hash: 706e27f5579e0b4e1a2a74140a9b7ef9d29c7375
@@ -713,29 +568,8 @@ Commit: bb3823193208b20b44b64e88acd6628c170da855
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:26:14 2020 +0530 
 -------------------------------------------------------------------------------- 
-[CDF/EBG] Fia should be implemented to use config blocks.
+[CDF/EBG] Fia implemented to use config blocks.
 
-ME_FIA_CONFIG now uses static initialization for the vectors again.
-  PCH_MAX_HSIO_LANES defined in PchLimits for vector sizes so ConfigBlock library can be used.
-
-Created FiaMuxConfig blocks and added to the IP block PreMem tables (CDF and EBG)
-  along with its default initialization and print functions.
-
-gFiaMuxPreMemConfigGuid created.
-
-Common file in ServerPlatform to update the FiaMux for both CDF and EBG and
-  changed the update of PCIe RPs link widths because of ASSERT.
-
-FiaMux PPI deleted along with its references.
-
-PeiFiaMuxPolicyInit and PeiFiaMuxPolicyInitLib removed.
-
-Removed unused references to FiaMux libraries from other projects (LBG, FSP modules...).
-
-PeiFiaMuxConfigInitLib could be considered to be moved to ME code
-  as it not being used directly in PCH code but in ME (SPS).
-
-Hsd-es-id: 1809944313
 Original commit date: Mon Feb 24 17:27:28 2020 +0100
 Change-Id: I69b3bf9f4030377e1155dec3e2a2ccf37cb78762
 Original commit hash: 4e8fcc36b50f81037c433bb0b8699be045b15663
@@ -760,13 +594,7 @@ Commit: 31f9c4a5cd789bff040356f18a8b23e3a0803115
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:26:03 2020 +0530 
 -------------------------------------------------------------------------------- 
-SpiAccessLib: Exposing Extended BIOS Region options through SpiAccessLib
-
-Created new functions to get SPI Extended BIOS Region configuration
-parameters like decode range base, limit and to check if lock bits are
-set.
-
-Hsd-es-id: 18010905581
+SpiAccessLib: Extended BIOS Region options through SpiAccessLib
 
 Original commit date: Fri Mar 13 13:18:18 2020 +0100
 Change-Id: If489d3717c2d2c7bcff57bd51f824fed68fb4d55
@@ -787,9 +615,6 @@ Date: Fri May 29 00:25:54 2020 +0530
 -------------------------------------------------------------------------------- 
 [ADL] [PEG] Fix bug in Sip17 related API
 
-Hsd-es-id: 16011056128
-Impacted Platforms: ADL
-
 Original commit date: Tue Apr 28 00:43:06 2020 +0530
 Change-Id: Ic60e03d2677184a9c8a27c62c3d5565338bf12f0
 Original commit hash: 3eb996545edfdcdf00f92deea9afcf86b075d814
@@ -805,18 +630,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:25:51 2020 +0530 
 -------------------------------------------------------------------------------- 
 Rename PcdMaxDpInExtPortSupported to PcdMaxSupportedDpInExtPort
-
-For current design any pcd with post-fix Enabl(ed) or Support(ed) would be treated as build control/flag pcds.
-PcdMaxDpInExtPortSupported is for maximum Dp-In External Port supported, it's not a build control/flag pcds, please prevent to use such naming to avoid the error in external release progress.
-
-1. Rename from PcdMaxDpInExtPortSupported to PcdMaxSupportedDpInExtPort
-Reason: PcdMaxDpInExtPortSupported don't belong to Build Flag (TRUE/FALSE), so rename it
-
-2. Build Flag usage #if/#endif PcdHybridStorageSupport
-Reason: PcdHybridStorageSupport belong to Build Flag (TRUE/FALSE), so use #if/#endif replace if in .c/.h code.
-
-3. Build Flag usage #if/#endif PcdRklCmlCompSupport
-Reason: PcdRklCmlCompSupport belong to Build Flag (TRUE/FALSE), so use #if/#endif replace if in .c/.h code.
 
 Original commit date: Mon Apr 13 14:08:53 2020 +0800
 Change-Id: I7cb72293cdb7113310a67662c3ec5441aa8a8b8d
@@ -836,7 +649,6 @@ Date: Fri May 29 00:25:45 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2187_00
 
-Hsd-es-id: no sighting
 Original commit date: Sun May 3 18:34:32 2020 -0700
 Change-Id: I00bbd6875e457d53cf490065e6d101aaa6b034e5
 Original commit hash: 59e3469156f9bf04d52b9a559ead9571269a2448
@@ -850,10 +662,8 @@ Commit: ae8b885527700e5d949ad168e0e8fd3d188bb55a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:25:42 2020 +0530 
 -------------------------------------------------------------------------------- 
-GraphicsInfoLib new dependency on TimerLib not added to .inf
-- TimerLib is not presenr in .inf file where it is used in the GraphicsInfoLib
+GraphicsInfoLib new dependency on TimerLib added to .inf
 
-Hsd-es-id: 14011394918
 Original commit date: Wed Apr 29 22:52:41 2020 +0530
 Change-Id: I0dd5f283396a6c757a35cf5d91ad3486b36dd768
 Original commit hash: 372dc0e2d26b3547b6e8e4e81e8e1ef870f61501
@@ -869,7 +679,6 @@ Date: Fri May 29 00:25:40 2020 +0530
 -------------------------------------------------------------------------------- 
 [RKL] Fix ClientOneSiliconPkg KW issues
 
-Hsd-es-id: N/A
 Original commit date: Fri May 1 16:29:53 2020 -0700
 Change-Id: I0fd3852248bbaf19188ad65984025e5131a49a50
 Original commit hash: 1d1826e13f25e9fb7fa478aacbbc65287d4cd8c9
@@ -886,9 +695,9 @@ Commit: 94337977eea961f523e178bdc011d3482ad20583
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:25:36 2020 +0530 
 -------------------------------------------------------------------------------- 
-Create RC6 lock, Pavp lock, RC6 range valid, WOPCM Range Valid and Doorbell range public APIs to be consumed by PSCS/HSTI code
+Create RC6 and Pavp lock, RC6 range valid, WOPCM Range Valid and Doorbell range 
+public APIs to be consumed by PSCS/HSTI code
 
-Hsd-es-id: 16011049281
 Original commit date: Fri Apr 24 16:51:31 2020 +0530
 Change-Id: I2d22352f02e34285e16b55c458c9b4d483398d87
 Original commit hash: aa0afb92f2bdabddb9a15c8967760c0516259608
@@ -905,7 +714,6 @@ Date: Fri May 29 00:25:34 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2186_00
 
-Hsd-es-id: no sighting
 Original commit date: Sat May 2 18:33:15 2020 -0700
 Change-Id: I66594324e3a21f65f9595299bf8d720cb8188278
 Original commit hash: b56115263fe7c4716fe32fe879843eaf0d7ffb31
@@ -921,7 +729,6 @@ Date: Fri May 29 00:25:26 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2185_00
 
-Hsd-es-id: no sighting
 Original commit date: Fri May 1 18:33:26 2020 -0700
 Change-Id: Ib43a0ed7250e868aa3a28609f096d19c652ac814
 Original commit hash: 2165b11f5be2d24b4d6aa695b3edd63ff7dae311
@@ -935,12 +742,8 @@ Commit: 39e585e265aa83ca52b34580f1a52c434d96220f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:25:12 2020 +0530 
 -------------------------------------------------------------------------------- 
-Intel/Many: Fix file headers
+Intel: Fix file headers
 
-Tag file with Intel Confidential
-Fix file header to match latest style.
-
-Hsd-es-id: 22010246306
 Original commit date: Wed Apr 29 16:54:57 2020 -0700
 Change-Id: I319fa64acc555ce29c72b6782a9c65c187e21f07
 Original commit hash: d258d3470dbe2113c9d0ec7221977b429c0d41a9
@@ -966,7 +769,6 @@ Date: Fri May 29 00:24:54 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit NVS CI Update auto-generated NVS structure definitions
 
-Hsd-es-id: no sighting
 Original commit date: Thu Apr 30 22:06:34 2020 -0700
 Change-Id: Ib953a970b72017441d8a54304168f274b4fee0df
 Original commit hash: 935056346ae348e494f3ca745d7762fead6b9399
@@ -983,7 +785,6 @@ Date: Fri May 29 00:24:52 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2184_01
 
-Hsd-es-id: no sighting
 Original commit date: Thu Apr 30 18:36:05 2020 -0700
 Change-Id: I61cf30fa350c9ae7283cec08491fe46db978a4bf
 Original commit hash: 062bcf5326bbd3f8a296ddd6c340e6efcb190533
@@ -998,11 +799,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:24:45 2020 +0530 
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Fix PCIe lane detection in FIA lib
-
-EBG FIA used to use 0x0 to encode PCIe Lanes.
-Add 0xC in addition to 0x0 to encode PCIe lanes.
-
-Hsd-es-id: 18011340357
 
 Original commit date: Thu Apr 23 17:23:24 2020 +0200
 Change-Id: I82a35fd53cde4b63ce25d6d9d6ec6d1b7bd32f6e
@@ -1020,20 +816,6 @@ Date: Fri May 29 00:24:34 2020 +0530
 -------------------------------------------------------------------------------- 
 PeiSatalib: SATA IP driver refactoring
 
-IP initialization driver should possibly independent from other IPs
-and SoC integration factors. Such appproach allows to resuse IP
-initialization driver code in various products without any modification.
-All necessary IP driver parameters shall be passed from upper layer- SoC
-layer.
-This change introduces above idea in SATA IP initialization driver.
-To achieve this following data structures have been introduced:
-SATA_CONTROLLER     : Identify instance of SATA IP
-SATA_CONFIG         : SATA IP config block
-SATA_PRIVATE_CONFIG : SATA IP private options
-SATA_CALLBACK       : Pointers to callback functions
-All above structures are prepared by SoC layer and passed to IP layer.
-
-Hsd-es-id: N/A
 Original commit date: Thu Mar 26 14:47:58 2020 +0100
 Change-Id: I06b58ced05a56928c11dbfb435880137f2349e61
 Original commit hash: cf33f0102fcd81d4fbd1ca162b445492c91614cb
@@ -1068,11 +850,6 @@ Date: Fri May 29 00:24:21 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Update of programming of Clock Gating for PCH DMI
 
-BWG requires PM Request Controller Power Gating
-Hysteresis to be set to 0us.
-This change adds programming for that.
-
-Hsd-es-id: 14010023732
 Original commit date: Fri Apr 17 15:13:09 2020 +0200
 Change-Id: I5b31a097af93a1cc5089826137a71ec2d1942240
 Original commit hash: d4516f386cdd04b2133c42aaa66c76006c000380
@@ -1092,7 +869,6 @@ Due to enhanced to Gen4 PCIe Equalization on ADL,
 register definitions are added, register values and flow are modified,
 to align with changes.
 
-Hsd-es-id: 14010023732
 Original commit date: Thu Feb 6 16:41:22 2020 +0100
 Change-Id: I73b2b9356e12cc1d0c5ca00abb642eb0fe07832f
 Original commit hash: ab213b13019b422e8866a3c442ab41c91d0ceddf
@@ -1135,13 +911,6 @@ Date: Fri May 29 00:24:12 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: PCH DMI Gen3 Initialization flow update.
 
-This change adds configuration of Remote Transmitter Precursor,
-and Postcursor Preset to Coefficient mapping registers, for all lanes.
-New flow requires it to be done before training the link to Gen3.
-This change also updates preset to coefficient mapping
-for ADP DMI.
-
-Hsd-es-id: 14010016829
 Original commit date: Thu Apr 2 13:36:35 2020 +0200
 Change-Id: I9d4f20c5d3c3a4da716804e1f3d95b8fdbe2d425
 Original commit hash: 5af772e7366682d2614af40f9e4c37bcea1c0865
@@ -1159,7 +928,6 @@ Date: Fri May 29 00:24:09 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2184_00
 
-Hsd-es-id: no sighting
 Original commit date: Thu Apr 30 03:26:16 2020 -0700
 Change-Id: Ieab59c814b318fdc5d1ecc4548a47ec8a8df823f
 Original commit hash: 54a2b5e26481ec752b3ee753cd104d3ed12d2f45
@@ -1175,10 +943,6 @@ Date: Fri May 29 00:24:06 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Miscellanous SIP 17 DMI registers configuration
 
-SIP 17 BWG requires additional registers to be programmed
-in order for DMI to function properly.
-
-Hsd-es-id: 14010023732
 Original commit date: Mon Mar 30 16:20:59 2020 +0200
 Change-Id: I4d8331731d632433d12e3ec3e1b4dd7b4ef08f63
 Original commit hash: ded70286a74f39591bb449c6a686f71afbd40fbf
@@ -1194,22 +958,6 @@ Date: Fri May 29 00:24:03 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/Mbp: Before DID the UEFI must use BUP_MPHY_READ_FROM_MPHY cmd
 
-Affected platforms: EGS, C1S
-Problem: ChipsetInit Sync is not triggered (in case of SPS FW onboard) because the
-         UEFI FW doesn't have HSIO version in MBP. It is caused by sending
-         ICC_READ_FROM_MPHY_CMD HECI message before DID (but this message is
-         supported only after DID).
-
-Changes:
-1. In function PrepareSpsMeBiosPayload () added condition which checks if the DID
-   message has been sent or not. If so, then the UEFI uses ICC_READ_FROM_MPHY_CMD,
-   otherwise BUP_MPHY_READ_FROM_MPHY.
-2. Removed W/A for Simics which sets DebugMode to 1. It's no longer needed.
-   Solved in commit 65f62d6497e57b1f6fd2e06a3911d0caa5ee07e7.
-3. Reworked function PeiHeciReadFromMphy from HeciMsgPeiLib.c. From now it uses
-   HeciSendWithAck from MeUtils library.
-
-Hsd-es-id: 1307539766
 Original commit date: Wed Apr 29 13:28:22 2020 +0200
 Change-Id: Ie0dd9b25c018a98355b05868f8bef49030bbee60
 Original commit hash: 2418d128c093ef56c3bf7d7a0da0c7546b98b4cd
@@ -1227,16 +975,7 @@ Date: Fri May 29 00:24:02 2020 +0530
 ClientOneSiliconPkg/MeEDebugLib: Created Null instance of MeEDebugSupport lib
 
 Affected platforms: EGS, FHF
-Problem: EGS BIOS asserts when running on locating gHeciPpiGuid protocol.
-Root-cause: EGS UEFI FW doesn't support gHeciPpiGuid protocol. For now there
-            is no requirement to support MeEDebug mode in server projects.
 
-Change:
-1. Created null instance of MeEnhancedDebugSupport library with mocked functions.
-2. Used PeiMeEnhancedDebugLibNull library for EGS and FHF, instead of
-   PeiMeEnhancedDebugLib.
-
-Hsd-es-id: 18011389072
 Original commit date: Wed Apr 29 16:07:42 2020 +0200
 Change-Id: Ic2950e90b83116d7c2fa9a174fd954ca9f7fe5a2
 Original commit hash: 62e8ea77b9f73c7003cd8b964a8d44dedbf89dc4
@@ -1251,13 +990,8 @@ Commit: 7ddd10a4865c8283e15f1c72f5281e64eb452c0c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:23:57 2020 +0530 
 -------------------------------------------------------------------------------- 
-C1S/PeiHsioLib: Move USB HSIO tuning prgramming to Hsio IP Block
+C1S/PeiHsioLib: Move USB HSIO tuning prgramming to Hsio Block
 
-All HSIO related code should be located in Hsio IP Block.
-USB phy tunning code was located in PeiPchInit library.
-This change moves the code to proper location.
-
-Hsd-es-id: N/A
 Original commit date: Mon Apr 20 12:24:48 2020 +0200
 Change-Id: Ic5e4dd83ca253bd02ba501df71c532b6290e8076
 Original commit hash: 86fa0c40ce2e4308d20e6273c027faa35ec0c398
@@ -1277,11 +1011,8 @@ Commit: 2ae2ae8f3c36164d306bd4b0ba04f94b50fe86a0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:23:52 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSL] TcssUcmDevice needs to be enabled by default for UCSI
+[JSL] Enabling TcssUcmDevice by default for UCSI.
 
-Enabling TcssUcmDevice by default for UCSI.
-
-Hsd-es-id: https
 Original commit date: Thu Apr 30 15:26:53 2020 +0800
 Change-Id: I8e83a5d02a34f6de049d515b92bbc567b2a4540a
 Original commit hash: adb983e2bf3bbfb9f41224c3b8b841a501265516
@@ -1297,12 +1028,6 @@ Date: Fri May 29 00:23:50 2020 +0530
 -------------------------------------------------------------------------------- 
 JasperlakeFspPkg: Include PchInitDxeFspIcl.inf for FSP build also.
 
-In core boot BIOS PSTH_CTL register BIT2 has to be set. But this bit is not
-set in Coreboot (Boot Loaders using FSP External Package) because PchInit
-Module Entry Point for FSP is not getting called. Moving PchInitDxeFspIcl.inf
-out of Internal Tag to make it available for External FSP Build will fix this issue.
-
-Hsd-es-id: 16011067516
 Original commit date: Thu Apr 30 11:10:14 2020 +0530
 Change-Id: I1653937a37051e205f785f34500596a5068a8160
 Original commit hash: d784861998041be5d6e67652148c98a379e21a16
@@ -1320,7 +1045,6 @@ Date: Fri May 29 00:23:45 2020 +0530
 
 Changed _HID for DPTF Participants based on the DTT requirement.
 
-Hsd-es-id: 16010947452
 Original commit date: Fri Mar 27 11:31:07 2020 +0530
 Change-Id: I761f5d46361d71df7c9b74408044f44c73eb639a
 Original commit hash: 85583786243d2d4ea6091c1f114b7b38caaf5915
@@ -1348,10 +1072,6 @@ Date: Fri May 29 00:23:41 2020 +0530
 -------------------------------------------------------------------------------- 
 Create separate hfr file for RootPort configuration and include in TestMenuSetup.vfr
 
-Created separate hfr file for Hardware Eq configuration and included in TestMenuSetup.vfr for all RPs.
-Also Implemented Coefficient list cm/cp for all RPs.
-
-Hsd-es-id: 16010948380
 Impact Platforms: ADL,RKL,TGL,SBX
 
 Original commit date: Tue Apr 7 21:41:03 2020 +0530
@@ -1371,7 +1091,6 @@ Date: Fri May 29 00:23:26 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2183_00
 
-Hsd-es-id: no sighting
 Original commit date: Wed Apr 29 18:34:15 2020 -0700
 Change-Id: I08ea2bb91f27be22fc50ec774ffb010558dafb4f
 Original commit hash: 6866b1341592dd3df23de2829b44e91cdf27170d
@@ -1385,11 +1104,8 @@ Commit: 8ba9692cbd414a2a04d65624cc9f55756ec085d8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:23:19 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg\IpBlock\PeiThcInitLib; THC stops power-gating after few S0ix cycles
+Issue fix for THC. THC stops power-gating after few S0ix cycles.
 
-- D0i2 setting happens regardless of THC disabled/enabled state.
-
-Hsd-es-id: 22010202902
 Original commit date: Mon Apr 13 09:31:09 2020 -0700
 Change-Id: I98ae9ec4e16b2debf6d5ee4d916453c4c9b92cfc
 Original commit hash: 8fbcddc13906a733cca6d409b2238088c5f370b6
@@ -1403,15 +1119,8 @@ Commit: c7b86f6748cb73f7fbfe9c7d469c62b1f62571e1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:23:18 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconePkg/IpBlock/SerialIo: ADL PCH ACPI Support for S/P/M for LPSS
+ADL PCH ACPI Support for S/P/M for LPSS
 
-- Created Pch Fru Specific version of ACPI
-- Serial IO ACPI Device declaration moved to new FRU Layer
-- Separated Serial IO common ACPI code within IpBlock:
---- cross usage within all Serial IO
---- individual uasge within each controller sub type
-
-Hsd-es-id: 14011083478
 Original commit date: Tue Apr 21 20:24:06 2020 -0700
 Change-Id: Id77d42f4850f47e859aaf0a0ca63b0276b6ec248
 Original commit hash: 8c3831d3b148357894ac397fcfbc9005364b533f
@@ -1439,12 +1148,9 @@ Commit: 007825c9d5e92d90af8c0d99b97c42f2499427b3
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:23:13 2020 +0530 
 -------------------------------------------------------------------------------- 
-FspPkg\FspSerialIoUartDebugHelper: UART debug messages not working for Coreboot/Kernel after FSP initializes Uart.
+FspPkg\FspSerialIoUartDebugHelper: UART debug messages issue fixed for 
+Coreboot/Kernel after FSP initializes Uart.
 
-FSP should utilize Skip option even for Debug UART (since it was configured previously).
-If FspmUpd for UartDebugMode is set to Skip init, SerialIoUartConfiguration should return.
-
-Hsd-es-id: 14011291487
 Original commit date: Wed Apr 29 14:09:52 2020 -0700
 Change-Id: I2c1fce7443bb14af4db6dfb1a445ecaf46fe233c
 Original commit hash: c37fdd1a74ce527256cee5115c0ed3f5b614ba40
@@ -1458,11 +1164,8 @@ Commit: 5a4f23d6683b300e4d8aa55a5d6a1d03a0627fe6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:23:11 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/Thc/PeiThcInitLib: Missing LTR enabling
+Code clean up: Removed pointless LTR configuration
 
-- Removed pointless LTR configuration
-
-Hsd-es-id: 14011204365
 Original commit date: Thu Mar 26 08:01:29 2020 -0700
 Change-Id: I6fc20d370dc370929f782ece8dddeb0312ca5241
 Original commit hash: 63aa61c15f6466fe4fa2e4c16576674f6df9c681
@@ -1481,7 +1184,6 @@ ClientOneSiliconPkg: SIP 17 DMI Multi VC Support
 SIP 17 BWG requires BIOS to configure for DMI Support for Multi VC.
 This change adds function for appropriate configuration.
 
-Hsd-es-id: 14010016829
 Original commit date: Fri Apr 3 10:17:45 2020 +0200
 Change-Id: I7d7b9fca6c4d8d9f5268951d2df501a5715c5a0e
 Original commit hash: 2840cebd3f3c0d64057b214f43539a3b9c3de0b7
@@ -1497,11 +1199,8 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:22:59 2020 +0530 
 -------------------------------------------------------------------------------- 
 C1S/PchPcieRpLibVer3: Fixed implementation of GetPchPcieRpNumber () for EBG
+to reflect the EBG PCIe Root Port BDF assignment
 
-1. Fixed implementation of the GetPchPcieRpNumber () to reflect the EBG PCIe Root Port BDF assignment
-2. Removed duplicate code in GetPchPcieRpNumber () and PciePortNum ()
-
-Hsd-es-id: 1307536434
 Original commit date: Wed Apr 29 12:17:03 2020 +0200
 Change-Id: I10f25fbf3b475ae53582efc7ca0597aa03b337de
 Original commit hash: d7bee525d841e744584beb63020de8ef9617d3dc
@@ -1516,12 +1215,8 @@ Commit: 34f306f129db9483ef34b05a7b9253dae89d5314
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:22:56 2020 +0530 
 -------------------------------------------------------------------------------- 
-AlderLakeBoardPkg/ClientOneSiliconPkg: Add NHLT and XTAL support for ADL-P
+ClientOneSiliconPkg: Add NHLT and XTAL support for ADL-P
 
-Reading current XTAL value from CPU regs and update NVS data.
-Add NHLT for XTAL 24MHz.
-
-Hsd-es-id: N/A
 Original commit date: Tue Apr 28 15:48:35 2020 +0200
 Change-Id: I7d97a4c24b6e63a2098ad064c023ad5db9b31b06
 Original commit hash: 7993595c9af4acd7533583c4c5f7742569ffe34d
@@ -1539,10 +1234,6 @@ Date: Fri May 29 00:22:49 2020 +0530
 -------------------------------------------------------------------------------- 
 [ADP-S]: Adding CSME PSF5 PID in PsfSegments() function
 
-CSME_PSF (PSF5) PID was not added in the PsfSegments structure in
-the Ver4 file of PSF Library for ADP-S.
-
-Hsd-es-id: 1409884540
 Original commit date: Tue Apr 28 18:44:36 2020 +0530
 Change-Id: Ia8d4ba6a47c0a0d7ac06a6851e0359ceb7889f2b
 Original commit hash: 57556a2af0c4c676a64a40e59307843443230c1e
@@ -1556,12 +1247,8 @@ Commit: fd671450fd836cb61790dccc4146ff800867b57d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:22:45 2020 +0530 
 -------------------------------------------------------------------------------- 
-BIOS does not retain overridden IMON slope/offset values.
+Updates to retain overridden IMON slope/offset values.
 
-  - Fixed negative IMON Slope value are not getting updated.
-  - Updated Setup to readback and display IMON Slope and Offset
-
-Hsd-es-id: 22010151712
 Original commit date: Tue Apr 28 15:07:45 2020 +0530
 Change-Id: I9ab84e6a3ea5fb2b60fb93c99bbc9a4942f1f4d1
 Original commit hash: 97501352e37f8e16de204d2b62ce0da3ce51adc4
@@ -1579,18 +1266,7 @@ Date: Fri May 29 00:22:43 2020 +0530
 ClientOneSiliconPkg/Mbp: Extended MBP_MPHY_DATA with 'Available' field
 
 Affected platforms: RKL, ADL, JSP, EGS
-Problem: EBG BIOS asserts when running on Simics black box on checking
-         OemCrc in IsChipsetInitSyncRequired().
 
-Changes:
-1. Added a field 'Available' to MBP_MPHY_DATA structure.
-2. When bios gets MPHY version (by MBP or by ICC message), then bios
-   sets 'Available' bit for MphyData in MBP Hob.
-3. Added condition in IsChipsetInitSyncRequired function which checks
-   if bit 'Available' for MphyData is set, if so, then function can
-   proceed, otherwise it returns FALSE.
-
-Hsd-es-id: 18011381390
 Original commit date: Tue Apr 28 11:30:16 2020 +0200
 Change-Id: I0fe39ff303a5e94bb47ad3683c06a8e8133979b6
 Original commit hash: 65f62d6497e57b1f6fd2e06a3911d0caa5ee07e7
@@ -1611,7 +1287,6 @@ ClientOneSiliconPkg: Added support of Dynamic clock gating.
 
 Added SIP17 support for clock gating.
 
-Hsd-es-id: 14010023732
 Original commit date: Fri Apr 3 14:29:28 2020 +0530
 Change-Id: If96423f3598178cdbb7c258b4afb17ea653fe398
 Original commit hash: 59b2b13b8b546bb1829f07ca49aeec769d7fe90f
@@ -1630,9 +1305,8 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:22:26 2020 +0530 
 -------------------------------------------------------------------------------- 
 Fix system hange issue when hot plug PCIE device.
-  Remove HOB access inside PCIE SMI handler.
+Remove HOB access inside PCIE SMI handler.
 
-Hsd-es-id: 16011042707
 Impacted Platforms: All TGL platform
 
 Original commit date: Tue Apr 28 07:07:59 2020 +0800
@@ -1648,13 +1322,10 @@ Commit: d50226b58d6a303e55cc0985b7055a89951f8b60
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:22:22 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg\Fru\JslCpu :Cleanup simics W/A from jslcpu as now simics is able to populate correct cpuid
+ClientOneSiliconPkg\Fru\JslCpu :Cleanup simics. 
 
- -Removed workaround for simics
+Updated Simics to populate correct CPUID
 
- -Simics is populating correct CPUID
-
-Hsd-es-id: N/A
 Original commit date: Tue Apr 28 18:05:12 2020 +0530
 Change-Id: Ic63eb335cf6b3f1a0a3cad2650d58cc3e3d5f736
 Original commit hash: 60dd7f03b3125572655a7e797ce1652f303e52cb
@@ -1668,14 +1339,10 @@ Commit: de088143ed374333e88831ba563ca39bb570a083
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:22:21 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientCommonPkg: Remove Logo images in ClientCommonPkg
+ClientCommonPkg: Remove Logo images in ClientCommonPkg.
 
-The Logo images in ClientCommonPkgare not used any more, so need to remove:
-ClientCommonPkg/InternalOnly/FullLogo
-ClientCommonPkg/InternalOnly/Logo
-ClientCommonPkg/Logo
+Code cleanup.
 
-Hsd-es-id: 1507850828
 Original commit date: Tue Apr 7 09:32:50 2020 +0800
 Change-Id: Ie358e921a831fff5272beee2f93fab2b390074ac
 Original commit hash: 8d1b1794e50256bf6899c128601d8b570b040536
@@ -1692,13 +1359,8 @@ Date: Fri May 29 00:22:19 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientCommonPkg: Remove ClientCommonPkg/Library/DxeLogoLib
 
-ClientCommonPkg/Library/DxeLogoLib is not used anymore, so remove
-it and related codes:
-ClientCommonPkg/Library/DxeLogoLib
-ClientCommonPkg/Include/Library/LogoLib.h
-ClientCommonPkg/Include/Protocol
+Code cleanup.
 
-Hsd-es-id: 1507850824
 Original commit date: Tue Apr 7 09:28:40 2020 +0800
 Change-Id: I7151309131440392d3c3263d0fb5f7fc0f80179d
 Original commit hash: ceabc8f98e5d28ee6ec1240978450a983d8411ff
@@ -1717,12 +1379,8 @@ Date: Fri May 29 00:22:13 2020 +0530
 -------------------------------------------------------------------------------- 
 [C1S] HandleTpmStartupFailureOnS3 in BootGuardLibraryNULL
 
-    Here is one issue feedback for JSL 2143. Intel added a function which is named HandleTpmStartupFailureOnS3
-  into BootGuardLibrary but Intel forgot to add the same function into BootGuardLibraryNULL.
+Fixed: Build errors.
 
-    This issue will cause some build error if we use NULL lib.
-
-Hsd-es-id: 1507948221
 Original commit date: Fri Apr 24 14:29:08 2020 +0800
 Change-Id: I5e54e94a87a35a8e90c0b42a1d7044200a200366
 Original commit hash: 939bdd54bb553e0897ef88e7cf0658fa03f37ec8
@@ -1738,7 +1396,6 @@ Date: Fri May 29 00:22:11 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2182_00
 
-Hsd-es-id: no sighting
 Original commit date: Tue Apr 28 18:36:13 2020 -0700
 Change-Id: I6851bf22ff5c3f2f626e2301807ffac9677eb4fc
 Original commit hash: f4869bc61e7978479b77d4731c784195e14eb72f
@@ -1754,13 +1411,6 @@ Date: Fri May 29 00:22:08 2020 +0530
 -------------------------------------------------------------------------------- 
 Use BootLogoLib instead of DxeLogoLib
 
-1. Use BootLogoLib instead of DxeLogoLib
-2. Use UserInterface/LogoFeaturePkg/LogoDxe to provide
- EDKII_PLATFORM_LOGO_PROTOCOL.
-3. Logo raw data is used by DxeLogoLib previously, remove it
- since DxeLogoLib is not used anymore.
-
-Hsd-es-id: 1507850824
 Original commit date: Fri Feb 28 09:18:13 2020 +0800
 Change-Id: I39efded676a019da9fd02c00135ec40c787defe4
 Original commit hash: 4196d93618065f5aaa9ed9ea2bdde2ca179f917d
@@ -1785,7 +1435,6 @@ Date: Fri May 29 00:21:55 2020 +0530
 [RKL-S][A0][PO][TGP-H] Missing Bios knob: Memory - under overclocking
      Added the goto MEMORY_CONFIG_FORM_ID
 
-Hsd-es-id: 16011070462
 Impacted Platforms: ADL, RKL, JSL
 
 Original commit date: Tue Apr 28 18:35:09 2020 +0530
@@ -1805,7 +1454,6 @@ Date: Fri May 29 00:21:33 2020 +0530
 
 Update ADL-LP SBU pins, add GPPC_E20, GPPC_E21, GPPC_D9, GPPC_D10, GPPC_D11 and GPPC_D12
 
-Hsd-es-id: 2209589791
 Original commit date: Thu Apr 16 22:02:16 2020 +0800
 Change-Id: I1b5e3788bd59e2ad847c0144e5edac24c21e094b
 Original commit hash: c11e6d6b789f76541add50fc1cc06920cfce1f27
@@ -1819,17 +1467,16 @@ Commit: 301d8c43960874834fae36dc446d574ac2170db4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:21:30 2020 +0530 
 -------------------------------------------------------------------------------- 
-PeiHsioLib: Move HSIO realted code to IP Block
+PeiHsioLib: Move HSIO realted code to HSIO folder
 
 There was the code related to HSIO located in PeiPchInit library.
-Correct location for the code should be in Hsio IP Block folder.
+Correct location for the code should be in Hsio folder.
 This change moves the code to right place.
 Moved code has been distributed in two places:
 1. PeiHsioLib library- code related to HSIO initialization
 2. ChipsetInitLib- new library delivering ChipsetInit table update
    procedure
 
-Hsd-es-id: N/A
 Original commit date: Wed Apr 8 10:14:37 2020 +0200
 Change-Id: Ifa500d4615b9b76724a5fc8d14994a4b52d12306
 Original commit hash: 932bf8c222333d9dbae6a6f94dc5968313ae395d
@@ -1873,11 +1520,6 @@ Date: Fri May 29 00:21:22 2020 +0530
 -------------------------------------------------------------------------------- 
 [ADL] Avoid AP calls PEI Service Pointer in SMBIOS Library
 
-Issue: AP Should not build data hob & send it to PEI service pointer
-
- Terminated the AP calls to PEI service pointer in SMBIOS Captured the AP's cache information &added it to PEI service pointer as HOB in BSP
-
-Hsd-es-id: 16011027709
 Original commit date: Mon Apr 27 12:22:36 2020 +0530
 Change-Id: I0527e175d140164bc3fc35ef506d2bca213b9d1e
 Original commit hash: f213f35ac79a043680627f0d9a2e8afd9ce97ca7
@@ -1893,13 +1535,8 @@ Date: Fri May 29 00:21:19 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Skip LPSS init if disabled in PMC
 
-SerialIo IpBlock would attempt to initialize the LPSS
-controllers even if it has been disabled in PMC and hidden
-in PSF which is causing  a lot of unmapped memory accesses
-and potentially can lead to boot problems. This patch introduces
-check if PMC enabled LPSS before staring the init process.
+Update to check if PMC enabled LPSS before staring the init process.
 
-Hsd-es-id: 16011013289
 Original commit date: Thu Apr 23 18:26:53 2020 +0200
 Change-Id: I93d852d117f57cecb264405168f7cefc1b6dffac
 Original commit hash: a46d602a6632c15a48d0e37c18eccdc0e3c8a920
@@ -1913,27 +1550,13 @@ Commit: dd5afc09367293f85a63c3b17951fd26bf3d00c1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:21:07 2020 +0530 
 -------------------------------------------------------------------------------- 
-JasperLakeBoardPkg,JasperLakePlatSamplePkg,ClientOneSiliconPkg/FirmwareBootMedia library/module: Replace Boot Media Infrastructure with Open Source Implementation
+JasperLakeBoardPkg,JasperLakePlatSamplePkg,ClientOneSiliconPkg: Replace Boot 
+Media Infrastructure with Open Source Implementation
 
-Code for determining the firmware boot media device has been added to edk2-platforms open source.
-This commit replaces the infrastructure of firmware boot media device for TigerLake with the open source implementation.
+Code for determining the firmware boot media device has been added to 
+edk2-platforms open source. This commit replaces the infrastructure of 
+firmware boot media device for TigerLake with the open source implementation.
 
-- In SiPkg DSC and BoardPkg DSC, replace the BootMediaLib instances in ClientOneSiliconPkg
-  with the FirmwareBootMediaLib in IntelSiliconPkg under Edk2Platform open source.
-- Use FirmwareBootMediaInfoPei module in BoardModulePkg Edk2Platform open source
-  instead of using BootMediaInfoPei module under TigerLakeBoardPkg.
-- Create a new instance of FirmwareBootMediaInfoLib in TigerLakeBoardPkg,
-  and move the logic from ReadBootMediaTypeFromHardware ( ) to IdentifyFirmwareBootMediaType ( ),
-  so the BootMediaInfoPei module in open source will call that function
-  where the logic is currently used for TigerLake to determine the boot media.
-- Replace BootMediaLib to FirmwareBootMediaLib in all modules for TigerLake.
-- Clean up BootMediaInfoPei module.
-  Keep BootMediaLib for PEI/DXE in ClientOneSiliconPkg for other platform projects.
-- Clean up unnecessary BootMediaLib from a couple of modules' INF.
-  Keep it for those modules which may probably reference the library for the future.
-  Also keep it for TSN.
-
-Hsd-es-id: 2209242465
 Original commit date: Fri Apr 24 03:53:53 2020 -0700
 Change-Id: I9e9beba62ea31d31e6b1224c37ec99145286e524
 Original commit hash: 555149cb80b198ebe5dc339179c057b94f2675e0
@@ -1972,7 +1595,6 @@ ClientOneSiliconPkg: Added PchInfo support for ADL P and ADL M
 
 Added DID and updated the information on the supported devices
 
-Hsd-es-id: 16010946611
 Original commit date: Thu Apr 9 20:11:43 2020 +0530
 Change-Id: Ib7795770ef158e1b18a335a1c82a69aefebf8408
 Original commit hash: 3886406d79901515f0fd035f6da56e85b42228ed
@@ -1992,7 +1614,6 @@ Date: Fri May 29 00:20:42 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2181_00
 
-Hsd-es-id: no sighting
 Original commit date: Mon Apr 27 18:35:40 2020 -0700
 Change-Id: Ia6d19b2aea033298609fec648f89a42a6b009586
 Original commit hash: fcf7dbde646e20001315650273cede375c846399
@@ -2006,14 +1627,8 @@ Commit: 62c76677eeaeb6e2fd02ffa809f32b29eecdd099
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:20:37 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/Hda: Fix potential buffer overflow issue in DxeHdaNhltLib
+Fix potential buffer overflow issue in DxeHdaNhltLib
 
-A valid index must less than array size, so the correct conditional should be:
-if (DevicesInfo == NULL || DeviceInfoIndex >= DevicesInfo->DeviceInfoCount) {
-  return NULL;
-}
-
-Hsd-es-id: 22010530627
 Original commit date: Tue Apr 14 14:59:22 2020 +0800
 Change-Id: I4cb61cbe1a3475210368a230c75dcac0fe91349c
 Original commit hash: 6e71e9b3396f48aea9b8c3463b433711acb9f068
@@ -2028,11 +1643,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:20:24 2020 +0530 
 -------------------------------------------------------------------------------- 
 PCIe controller hangs if 15 URs replies are returned during
- BIOS PCIe BDF scan
+BIOS PCIe BDF scan
 
-Updated Rx Master Cycle decode programming according to BWG
+Updated Rx Master Cycle decode programming.
 
-Hsd-es-id: 18011304054
 Original commit date: Tue Apr 21 15:25:52 2020 -0700
 Change-Id: I224b7f2a9ee5b1850c3c481fde1c9c152582ecc1
 Original commit hash: b56b614c5c8ae28279593851f907ee9a7f3e5ba0
@@ -2053,8 +1667,6 @@ Debug used to print RP number in range of 0-15 alongside with range 1-16.
 It was confused to read debug logs.
 Changed to print RP Numbers in range from number 0 everywhere
 
-Hsd-es-id: <N/A>
-
 Original commit date: Tue Apr 21 18:02:30 2020 +0200
 Change-Id: I92b31f79d8569e6dd4fc8794a396dfdb03fd1a35
 Original commit hash: 11158f41ac6ef4899b6a7349ce1134a7623d3855
@@ -2074,14 +1686,6 @@ Date: Fri May 29 00:19:59 2020 +0530
 -------------------------------------------------------------------------------- 
 C1S: Hda initialization refactor
 
-IP initialization driver should possibly independent from other IPs
-and SoC integration factors. Such appproach allows to resuse IP
-initialization driver code in various products without any modification.
-All necessary IP driver parameters shall be passed from upper layer- SoC
-layer. This change align HDA driver to this requirement. Dependency with
-other IPs was exposed and moved to highest SoC level.
-
-Hsd-es-id: N/A
 Original commit date: Mon Apr 27 10:08:27 2020 +0200
 Change-Id: I8a35963eae99c9f98b5466ac82388385626f5b99
 Original commit hash: a8d12edb08592d33e0290b0ca5b7bf2420c8fc8c
@@ -2098,11 +1702,9 @@ Commit: b484db0bb9f25dfbf7abedd3996bd592d4c9eadb
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:19:57 2020 +0530 
 -------------------------------------------------------------------------------- 
-[C1S][Debug & Trace] : Sporadically 0C18 hung observed while booting to OS after enabling processor trace memory option in bios page.
+[C1S] : Issue fix : Sporadically 0C18 hung observed while booting to OS 
+after enabling processor trace memory option in bios page.
 
-This patch contains changes related to Intel folder, edk core changes in another patch
-
-Hsd-es-id: 14011290757
 Original commit date: Mon Apr 27 12:19:47 2020 +0530
 Change-Id: I90e862fa40a70321efd5a089d10af1f13d63e74d
 Original commit hash: 4780435401934749d078ee39b21c53e2d4f6405a
@@ -2117,10 +1719,8 @@ Commit: 60e0d3f039bbabdd8d65344f506b6a53a48cb91e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:19:54 2020 +0530 
 -------------------------------------------------------------------------------- 
-ADL Device 0 DID
-Adding new POR device0 DID
+ADL Device 0 DID added.
 
-Hsd-es-id: 16011024221
 Impact Platforms: ADL
 Original commit date: Tue Apr 21 02:55:53 2020 +0530
 Change-Id: Ic86fdda9f92dc20c0a242d84cf7456e98f8cc102
@@ -2135,13 +1735,11 @@ Commit: 6ad11ca77e8780ead078b2f7c8e1e789229c47aa
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:19:42 2020 +0530 
 -------------------------------------------------------------------------------- 
-[C1S] S3 Resume hangs at PC "0A7F"  with BTG5 Profile Images
+[C1S] Issue Fix : S3 Resume hangs at PC "0A7F"  with BTG5 Profile Images
 
-Issue: HECI1 is in D0i3 when Si-EndOfPei issued, it is before last SMI/NMI sent during S3 resume.
-Resolution: For FSP, postpone setting D0i3 to MeEndOfFirmwareFsp; for EDK2, register MeEndOfPei callback function to set D0i3 state.
-Impacted: All C1S projects.
+Resolution: For FSP, postpone setting D0i3 to MeEndOfFirmwareFsp; 
+for EDK2, register MeEndOfPei callback function to set D0i3 state.
 
-Hsd-es-id: 22010356750
 Original commit date: Fri Apr 24 15:53:19 2020 +0800
 Change-Id: I1d784fe8c32dc7fb94bfd6fa3e7d8e7d941e20da
 Original commit hash: 9f3c0fd11a7ef4e9e0a0a1c3df239f740725d457
@@ -2167,12 +1765,6 @@ Date: Fri May 29 00:19:36 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Fix IO stanby state and termination programming
 
-BIOS used to incorectly map the enum values into HW values. Enum
-values are shifted left by 1 to allow software to specify 0 as a
-HW default state and before those values are written to the HW they
-should be shifted right by 1.
-
-Hsd-es-id: 22010559827
 Original commit date: Fri Apr 17 09:46:01 2020 +0200
 Change-Id: I04dd161a1bb3bf81794a733569ea07be5c88c60b
 Original commit hash: 443c5b2bfce1e9ab0871df7995699d6d72bcc474
@@ -2188,9 +1780,6 @@ Date: Fri May 29 00:19:33 2020 +0530
 -------------------------------------------------------------------------------- 
 JasperLake*Pkg/Setup: Set DmaControlGuarantee default value to 1
 
-Change default value for setup option DmacontrolGuarantee to 1.
-
-Hsd-es-id: 1507949920
 Impacted Platforms: JSL
 
 Original commit date: Thu Apr 23 16:59:33 2020 +0800
@@ -2209,7 +1798,6 @@ Date: Fri May 29 00:19:23 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2177_00
 
-Hsd-es-id: no sighting
 Original commit date: Sun Apr 26 18:33:02 2020 -0700
 Change-Id: Ic065791543abac3b16faaaf24e24ef14dbda1868
 Original commit hash: 68891042c812d7587d3caf52aac9472e942b9c65
@@ -2223,14 +1811,10 @@ Commit: 699157ec9d9cf5c1dca8882b8ce94ddd113a3622
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:19:22 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/PowerManagement MiscFunctions: Fix to initialize checksum before the calculation
+ClientOneSiliconPkg: Fix to initialize checksum before the calculation
 
 This commit fixes ACPI Checksum calculation in PowerManagementDxe driver.
-AcpiDescHeader checksum needs to initialize the checksum field in the header
-before the checksum calculation, otherwise the calculation result will be
-changed according to the initial checksum value itself.
 
-Hsd-es-id: 14010250800
 Original commit date: Thu Apr 23 22:21:07 2020 -0700
 Change-Id: I183a19121a4f858daf745f3d5b2c5c9ec4c3ea23
 Original commit hash: afa39f4e60e6d93ec44fb76b3c5d529ac2e7ef1e
@@ -2246,7 +1830,6 @@ Date: Fri May 29 00:18:55 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2176_00
 
-Hsd-es-id: no sighting
 Original commit date: Sat Apr 25 18:33:01 2020 -0700
 Change-Id: I4e5dfa498ea22c6dc71ec590e4b487ef082f5410
 Original commit hash: 74d4ba1ef089923d951a55ccdb5b2e6877745428
@@ -2262,7 +1845,6 @@ Date: Fri May 29 00:18:47 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit NVS CI Update auto-generated NVS structure definitions
 
-Hsd-es-id: no sighting
 Original commit date: Fri Apr 24 22:05:21 2020 -0700
 Change-Id: I66db3f99eb0b8cf31438e985e0151895510343ee
 Original commit hash: 2c7072e288c1fad396130464fb2b212dfe4c8aaa
@@ -2278,7 +1860,6 @@ Date: Fri May 29 00:18:46 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2175_00
 
-Hsd-es-id: no sighting
 Original commit date: Fri Apr 24 18:36:07 2020 -0700
 Change-Id: I0c7955d5efcb972a81e7ea52080b8f101534247e
 Original commit hash: 98246477aa4351253176f483040fdf3086ff32a4
@@ -2292,11 +1873,8 @@ Commit: 8417fb56e597bb4d0f6b7227898caad58311a718
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:18:33 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/TwoLm: KW fixes.
+ClientOneSiliconPkg: KW fixes.
 
-2LM C1S KW Fixes identified with Tigerlake-Master branch Revision 3163.01
-
-Hsd-es-id: 14011336980
 Original commit date: Mon Apr 20 12:39:10 2020 -0700
 Change-Id: I555340f02c1314c3e6baba4dead6a0c8c25e57bc
 Original commit hash: 71d8adbb86aeffb20d64ce9f3b413b54593faa58
@@ -2310,20 +1888,9 @@ Commit: 3d5f9eebcaf67d3ac6981798f5f190d9ca1ca03a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:18:23 2020 +0530 
 -------------------------------------------------------------------------------- 
-[HSD-ES][client_platf][bug][14011374679][CML-H / ADP-S][MRC policy is misaligned between CML MRC and SA Config block in ADL PCH PO BIOS]
+[CML / ADP]: Align MRC policy between CML MRC and SA Config block.
+Add a check in CML MRC to ASSERT in case of size mismatch between the policies.
 
-Issue:
-  MRC policy is misaligned between CML MRC and SA Config block in ADL PCH PO BIOS.
-  This leads to wrong policy values being passed into CML MRC.
-Root cause:
-  Two TGL policy items (MsHashMask and MsHashInterleaveBit) were added in commit e0bd892f0f1d8cba7f44158a3fb97eb18645e74e on Feb 9, 2020
-  They are not needed in CML/RKL MEMORY_CONFIGURATION policy, as they are not used by CML/RKL MRC
-Solution:
-  Align MRC policy between CML MRC and SA Config block - remove those two TGL items (this is only on po/adl_pch_po branch)
-  Add a check in CML MRC to ASSERT in case of size mismatch between the policies.
-  Also disable RmtPerTask by default.
-
-Hsd-es-id: 14011374679
 Original commit date: Thu Apr 23 23:51:58 2020 -0700
 Change-Id: Ic744e9aad927d8bb94ab03f1ef1736dbc0cf5645
 Original commit hash: e3013e9ecd04578b05b967ec6c865eee31ab7db2
@@ -2341,7 +1908,6 @@ ADL PCH PCIe Support
 
 Perform the Design specific configuration programming as per the BWG
 
-Hsd-es-id: 14010023732
 Original commit date: Tue Apr 21 11:46:32 2020 -0700
 Change-Id: I55b89211d86961d9ebff9b3417c37926115eb734
 Original commit hash: ab6854f5dbc1b1a69153f826debb11f662d1440a
@@ -2358,11 +1924,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:18:19 2020 +0530 
 -------------------------------------------------------------------------------- 
 Accessing PCI configure space via ECAM in ACPI op-region in
- order to access the device while executing all ACPI power management methods
+order to access the device while executing all ACPI power management methods
 
 Changed the access method from PCI to system memory
 
-Hsd-es-id: 2208877549
 Original commit date: Mon Mar 16 15:52:59 2020 -0700
 Change-Id: Ie889bf8e4b6b65fb5a4bdc6c65af3b4a3549f568
 Original commit hash: 8cf82455f74ecb8f070625f11fbf994299f821d6
@@ -2381,7 +1946,6 @@ ClientOneSiliconPkg: Updated the RTD3 flow PCIE clock as ADL BWG
 
 Updated code to verify the support of IPC PCI CLKREQ command.
 
-Hsd-es-id: 14010017066
 Original commit date: Mon Apr 20 18:25:59 2020 +0530
 Change-Id: Ia6f734209200c75a533fb9fae8f111a214f3952e
 Original commit hash: b04461846fd6055f9b08d81beaa54866cf43e853
@@ -2405,12 +1969,6 @@ Date: Fri May 29 00:18:04 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: SIP 17 DMI Elastic Buffer, and SERM Initialization
 
-SIP 17 BWG requires BIOS to configure for DMI:
-Elastic Buffer, and Server Error Reporting Mode.
-This is the first of the set of changes to update
-existing programming for use with SIP 17 BWG.
-
-Hsd-es-id: 14010016829
 Original commit date: Mon Mar 30 16:26:14 2020 +0200
 Change-Id: I4cb5413253f687df415ba1fab5f3d28b205c5f7a
 Original commit hash: 1291396a538fa2467e362373cf3a2e2e79647341
@@ -2428,13 +1986,6 @@ Date: Fri May 29 00:18:01 2020 +0530
 -------------------------------------------------------------------------------- 
 [ADP-S][GPIO]: Extend GPIO list of Source Clock Req
 
-In CSpec we can find 19 SrcClockReqs (SRCCLKREQ[0-18])
-SrcClkReq part of ADP-S source code is a copy paste of TGP-H
-
-mPchSPcieSrcClkReqbPinToGpioMap in GpioNativePrivateLibVer4.c extended
-with new SrcClkReqs and updated with proper GPIOs
-
-Hsd-es-id: 18011342291
 Original commit date: Fri Apr 24 07:22:13 2020 +0200
 Change-Id: I570738c1aa1e93b3ec304e0020f24af6695ef1e8
 Original commit hash: 4db2aa25874a4b801c5000b5901621154a326c8f
@@ -2448,15 +1999,8 @@ Commit: 69db59acc903aa775d101fbbc2d7a4c5c4a486c1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:17:33 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit: Merge Icl to Jsp
+ClientOneSiliconPkg/MemoryInit: Merge necessary changes from Icl to Jsl
 
-this patch aids to merge Icl to Jsp.
-merge 0.0.4.98 Icl to 0.0.4.69 Jsp.
-
-Changelog and Mrc Version updated.
-also update copyright year to 2020 for changed files.
-
-Hsd-es-id: 1507768468
 Original commit date: Mon Dec 23 09:45:27 2019 +0800
 Change-Id: Ide51da6cf3291d6eccea8f9c0e0072761906e66d
 Original commit hash: 51adcfdbeecde4d1e99228707b428607e262e019
@@ -2510,7 +2054,6 @@ Date: Fri May 29 00:17:24 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2174_00
 
-Hsd-es-id: no sighting
 Original commit date: Thu Apr 23 18:39:09 2020 -0700
 Change-Id: I6d669782a67c347affc0ce240a968ffcd5238ed2
 Original commit hash: 6bbb52e978553fae2ade12b4ab4d63098a2be840
@@ -2524,14 +2067,8 @@ Commit: ced313f8a563f315841b8340b32a3d66923d0d81
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:17:23 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: Bluetooth does not enumerate after WARM RESET
+ClientOneSiliconPkg: Issue fix for Bluetooth enumeration after WARM RESET
 
-Write 1 to BIT0 (SURVABILITY_REG1)
-Read Back
-125us Delay
-Write 0 to BIT0 (SURVABILITY_REG1)
-
-Hsd-es-id: 14011355578
 Original commit date: Mon Apr 20 13:22:53 2020 -0700
 Change-Id: Ibd9a8e546ed59577bb2a69069dc793d40ef37410
 Original commit hash: 46ea167360c18829c6e8db1a1f4b3a6b5e647e38
@@ -2546,11 +2083,8 @@ Commit: ace4296c4d637e1ae0c6970b818fa76fade52765
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:17:07 2020 +0530 
 -------------------------------------------------------------------------------- 
-JasperLakePlatSamplePkg: Sync BiosinfoChecker module with TGL V3147.
+JasperLakePlatSamplePkg: Sync BiosinfoChecker module with TGL.
 
-Slightly changes like Unused lines removal and comments edit...etc, no function impact.
-
-Hsd-es-id: 1507931310
 Original commit date: Thu Apr 16 10:38:50 2020 -0700
 Change-Id: I0dd44e5ab7bd08b09405c2da26e0c04aa2152f98
 Original commit hash: 58c23c9e8f4bba20510152cff593753b250aea78
@@ -2564,13 +2098,9 @@ Commit: d664e7c8f207409e9ad3250b0890455cbd5f293a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:17:03 2020 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-P/M]Remove BIOS write to the IOP register PRIMDN_MASK1_0_0_0_MCHBAR_IMPH.tcss_in_d3 bit
+[ADL-P/M]Remove BIOS write to the IOP register 
+PRIMDN_MASK1_0_0_0_MCHBAR_IMPH.tcss_in_d3 bit
 
-TGL POR is to have IOMFW program the IOP register PRIMDN_MASK1_0_0_0_MCHBAR_IMPH.tcss_in_d3 bit while entering TCCOLD.
-This register bit was programmed by BIOS in ICL during TCCOLD entry flow, which is carried forward in TGL BIOS as well.
-This causes problem as there are two agents trying to program same register bit.
-
-Hsd-es-id: 22010583685
 Original commit date: Tue Apr 21 13:54:44 2020 -0700
 Change-Id: Ibbdce50cf5b8a1997f08454b3d73f6cd86692669
 Original commit hash: bac6138247116c86f8b83aecedf9447421b2d500
@@ -2584,16 +2114,8 @@ Commit: c624189168064baa120a352281b1934438dad4ca
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:17:00 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSL][MRC]fix for MiniBIOS can't run on JSL
+[JSL][MRC]Updated to support MiniBIOS run on JSL
 
-1. Add JSL RVP support
-2. Since the PWRMBASE address is a fixed address defined in PchReservedResources.h
-   there is no need to get it from PSF3 PMC space BAR0(and in JSL we get a wrong address)
-3. fix a logic error on MrcOemLpddrBoardMapping
-4. fix for can't detect the CAPID0_C change on fastboot permitted,
-   Since the union MrcCapabilityId.Data can't cover all the CAPID0 registers, let's remove it.
-
-Hsd-es-id: 1507810587 16010709186
 Original commit date: Fri Apr 3 09:32:32 2020 +0800
 Change-Id: I8703772772874e5714219eb76fe7f867e6b91602
 Original commit hash: 80786add4410b8facecd503030c18e67472f771e
@@ -2611,14 +2133,8 @@ Commit: 058c53092c25b2121a4f2a6e7bd012a6c78f617d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:16:57 2020 +0530 
 -------------------------------------------------------------------------------- 
-Package/Module: Move THBA Operation Region outside ACPI Methods
+Move THBA Operation Region outside ACPI Methods
 
-ACPI Operation Regions should not be defined inside ACPI Methods, as doing
-so causes IASL compiler warnings, which causes downstream problems with our customers.
-
-Moved the Operating region and fields for THBA in front of the Method it was inside of.
-
-Hsd-es-id: 14011357712
 Original commit date: Tue Apr 21 15:52:04 2020 -0700
 Change-Id: Ifb5cdbcb97b522358933c6ed1766acb725ac59d6
 Original commit hash: 26a3d0224f8f5f85fe7c1b9b12c5199e3342a381
@@ -2632,13 +2148,8 @@ Commit: 5a0dc19384f55d1780355e6a1c5b001608618ae7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:16:51 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSL] Add warning in head of board GPIO table for native function pin
+[JSL] Added warning in head of board GPIO table for native function pin
 
-many customers faced native function fail caused by redundancy and incorrect native GPIO pins definition in customres GPIO table.
-As we know now GPIO programming flow has been improved and removed all native function pins definition in boards/RVPs GPIO table, matter those pins are controlled by BIOS policies or HW/ME soft strap setting.
-But customers dont be aware this improvement and keep including native pins definition in customers board GPIO table, that impacts native function abnormal in corner case
-
-Hsd-es-id: 16010986883
 Original commit date: Wed Apr 22 16:27:23 2020 +0800
 Change-Id: I282301b6691b1e456787815de68982055e7d01d0
 Original commit hash: 9cf89473d6f2bc8fcdcaaca657fefdaa4fe09e88
@@ -2654,16 +2165,8 @@ Commit: 10d9708fce362a0bbbba68f9816a34becfc1eb12
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:16:47 2020 +0530 
 -------------------------------------------------------------------------------- 
-Use AppendPackagesPath to set PACKAGES_PATH
+Use AppendPackagesPath to set PACKAGES_PATH environment variable.
 
-Use tool "Edk2Platforms\Platform\Intel\Tools\AppendPackagesPath"
-for setting PACKAGES_PATH environment variable.
-The scrips will help to collect all package paths under specified
-directories and append them to PACKAGES_PATH environment variable.
-A sub directory is a qualified package path when an EDKII Package
-can be found under it.
-
-Hsd-es-id: 1507937303
 Original commit date: Fri Apr 10 13:02:17 2020 +0800
 Change-Id: I03353de21b96821de1ecd0dbdb82a98b0569d18e
 Original commit hash: 4e8d00c52696401892b9840d0400bfc79158b52b
@@ -2679,15 +2182,10 @@ Commit: 21bd7e98e1ca78cc85620eaa510765cfe73b3122
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:16:26 2020 +0530 
 -------------------------------------------------------------------------------- 
-Title: [1507935521] [TGL] RpIndex may be shifted unintended in PeiPcieRpInitLib.c
+[TGL] RpIndex may be shifted unintended in PeiPcieRpInitLib.c
 
-Resolution: Some RpIndex in PeiPcieRpInitLib.c may impact unintended RootPort.
-            If using TG device to connect to Port8 and Port10, and other normal device connect to Port4 and Port6.
-            HybridStorageLocation will be set to BIT2.
-            But it may impact unintended RootPort when RpIndex is for port6.
-            Check and modify to avoid unintended RootPort Index.
+Check and modify to avoid unintended RootPort Index.
 
-Hsd-es-id: 1507935521
 Original commit date: Mon Apr 20 17:23:30 2020 +0800
 Change-Id: I47bc95b1de6397ee38182bcfba3852cc5a16c771
 Original commit hash: 11b95b0e14dba0eca0bb7d314bfe5b53df6d3b87
@@ -2703,9 +2201,8 @@ Date: Fri May 29 00:16:23 2020 +0530
 -------------------------------------------------------------------------------- 
 C1S: Fixed KW issue reported in PeiVrFruLib & PeiOcInitLib.
 
-The patch is to refine the patch to fix the KW reported issue.
+The patch is to fix the KW reported issue.
 
-Hsd-es-id: 14011336992
 Original commit date: Tue Apr 21 15:50:47 2020 +0800
 Change-Id: I61a91516ef8f16c1f75604daff399545bfa15e63
 Original commit hash: 6adb1330fe88c450a503fdb8f81fb60f64741922
@@ -2721,7 +2218,6 @@ Date: Fri May 29 00:16:22 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2173_01
 
-Hsd-es-id: no sighting
 Original commit date: Wed Apr 22 18:36:04 2020 -0700
 Change-Id: Ice2d78c628f000dcb4776ef55eba231b30074b58
 Original commit hash: ffe4e2d0b67583feb57e9d9d6b9e3067b78dba03
@@ -2735,17 +2231,9 @@ Commit: c67dd48ce081adf7eafda018b9bfdc8b3e0e3eda
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:16:06 2020 +0530 
 -------------------------------------------------------------------------------- 
-[HSD-ES][client_platf][bug][16010983736][RKL-S][CMLS+TGPH][Graphics] TDR observed in multiple scenarios with WW12 IFWI (while running 3DX11 Firestrike ,Unigine heaven Benchmark and  Youtube playback)
+[RKL][CML][TGL][Graphics] Align MRC policy between CML/RKL MRC and SA Config block.
+Also align PeiMemPolicyLib between CML and RKL.
 
-Issue:
-  MRC policy is misaligned between CML MRC and SA Config block in x-comp BIOS.
-  This leads to wrong policy values being passed into CML MRC.
-Solution:
-  Align MRC policy between CML/RKL MRC and SA Config block.
-  Inputs->SrefCfgIdleTmr has Auto option on CML, adding the same support to RKL MRC to align the policy.
-  Also align PeiMemPolicyLib between CML and RKL.
-
-Hsd-es-id: 16010983736
 Original commit date: Tue Apr 21 20:58:41 2020 -0700
 Change-Id: Ib373dcaae7b370a7b143284a84d2fa4f85face63
 Original commit hash: 1e76b6c48e9d173d36e46ec8655e8331b3d53bf0
@@ -2765,7 +2253,6 @@ Date: Fri May 29 00:16:02 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2173_00
 
-Hsd-es-id: no sighting
 Original commit date: Wed Apr 22 09:18:56 2020 -0700
 Change-Id: Iace7fe811b5b8d3e19a162a4f512254afc274458
 Original commit hash: 6def24502f368d956dea4763e98bdbcdb1a2ec3b
@@ -2783,7 +2270,6 @@ ClientOneSiliconPkg: Programming the Pcie Squelch Power Management in a modular 
 
 Added support for different Sip versions.
 
-Hsd-es-id: 14010023732
 Original commit date: Wed Apr 1 12:55:09 2020 +0530
 Change-Id: I89ca509e9a7c513f6fcbc128d5ccaad2dce78419
 Original commit hash: 5f4bd1c099aee64ce2a0b5832682eea8acf435de
@@ -2800,13 +2286,8 @@ Commit: 444283bc5f14837c04a092e002cdfffe1a98182b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:15:53 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSP Plus]ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PR16], AE_NOT_FOUND
+[JSL] ACPI BIOS Error Fix. 
 
-1. Add \_SB.PR16-RP23
-2. Remove WIRC, USR1 and USR2 from platform code
-3. Fix external HGMD
-
-Hsd-es-id: 1507929565
 Original commit date: Mon Apr 20 19:41:33 2020 +0800
 Change-Id: Ib100b1d8298b5f9e297094dc7f515875bc65d660
 Original commit hash: 09fb51e1882cae110be7bf511013e89d51baa6d7
@@ -2830,7 +2311,6 @@ Date: Fri May 29 00:15:51 2020 +0530
 External V1p05 IccMax changed from 100mA to 200mA
 External Vnn Voltage changed from 300mV to 420mV
 
-Hsd-es-id: 16011001289
 Original commit date: Fri Apr 3 13:22:17 2020 +0200
 Change-Id: I2fda39e6790693d6be92a3943c09b1f0a79a7b4c
 Original commit hash: 11828ea1f8524ec70a5396fc384f4aae04ed1148
@@ -2845,12 +2325,10 @@ Commit: 3cc9b6f554db1198bcf9f06e41adf6592eead7a6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:15:48 2020 +0530 
 -------------------------------------------------------------------------------- 
-JSL - Seamless crisis recovery monolithic(N-N) capsule update is failing from EFI Shell
+JSL - Issue : Seamless crisis recovery monolithic(N-N) capsule update is failing from EFI Shell
 
-Issue - BIOS region in SPI flash needs to be keep unlocked during capsule/recovery update flow if BIOS region update is required. In Monolithic recovery update if power is interrupted before BIOS region update, in the next boot SkipBiosLockForSysFwUpdateGuid HOB is not created and hence BIOS locks the SPI device. This leads to BIOS Update failure during flash update.
-Fix -  Fix logic in IsBiosUpdateRequired() to create SkipBiosLockForSysFwUpdateGuid HOB if BIOS update is required.
+Updated IsBiosUpdateRequired to create SkipBiosLockForSysFwUpdateGuid HOB if BIOS update is required.
 
-Hsd-es-id: 16011022913
 Original commit date: Tue Apr 21 16:56:00 2020 +0530
 Change-Id: Icae903ffe2b3ec01d9c0f6ea981d1095583894e7
 Original commit hash: be5942d500e8fada3372cf64f8a6752d86dfed4e
@@ -2867,10 +2345,6 @@ Date: Fri May 29 00:15:44 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Disable TC aliasing for PCH DMI
 
-BWG requires TC aliasing to be disabled.
-This change adds programming for that.
-
-Hsd-es-id: 14010023732
 Original commit date: Fri Apr 17 14:58:03 2020 +0200
 Change-Id: Iea9d6c92ee6089a535a45b364e4f6e7a91068399
 Original commit hash: d1118333af13b3061def011f959c943da4e015ae
@@ -2885,13 +2359,8 @@ Commit: 1b02e369f44ad4dbda514dc253aaa2d70f79a9db
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:15:30 2020 +0530 
 -------------------------------------------------------------------------------- 
-SLP_S0 LED does not turn off during S0ix with XDP connected
+Issue Fix: SLP_S0 LED does not turn off during S0ix with XDP connected
 
-Fix side effect caused by https://git-amr-7.devtools.intel.com/gerrit/#/c/78750/
-1. Rename Bclk w/a to more generic term, since 0xA1 carries settings more than just a w/a for future expansion/requirement.
-2. Removed obsolete functions for 0xA1.
-
-Hsd-es-id: 22010527028
 Original commit date: Mon Apr 20 11:59:03 2020 +0800
 Change-Id: Id24634d685213121f31e1281664a2815e6786333
 Original commit hash: 1dffb2d19227fd51e76222a38f38f4a01785b202
@@ -2911,7 +2380,6 @@ Date: Fri May 29 00:15:22 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2172_00
 
-Hsd-es-id: no sighting
 Original commit date: Tue Apr 21 18:39:38 2020 -0700
 Change-Id: Ib83fa59b5b5a45666af111768cfcd62bc7145e0d
 Original commit hash: cc97a21568b53db49b3dd7fcefe6e9809b12b84d
@@ -2925,17 +2393,8 @@ Commit: 3b8e510e7f807f21a32c3322600ef1e106c827a9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:15:14 2020 +0530 
 -------------------------------------------------------------------------------- 
-PlatSamplePkg, RestrictedPkg/InitializeAslUpdateLib: Remove redundant InitializeAslUpdateLib
+Code Cleanup : Remove redundant InitializeAslUpdateLib
 
-DxeAslUpdatelib callers run InitializeAslUpdateLib()
-which locates protocols  gEfiAcpiSdtProtocolGuid and
-gEfiAcpiTableProtocolGuid. But the library calls
-themselves run InitializeAslUpdatelib in themselves,
-so callers don't have to call it.
-This commit delete the redundant InitializeAslUpdateLib
-calls.
-
-Hsd-es-id: 14010250800
 Original commit date: Fri Apr 17 00:03:15 2020 -0700
 Change-Id: I9a043b5dfa8b08c19b3f1c1dda53658b83a0742e
 Original commit hash: 431ef492cf6dd6c77801a1f0f0274a78c561cad5
@@ -2949,11 +2408,7 @@ Commit: a68d72cfaf813d37b1571cb070107c11179c38af
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:14:51 2020 +0530 
 -------------------------------------------------------------------------------- 
-Need to change the CPU check logic for RPC API
-
-It is porting from RKL-S PO where Change the logic of CPU check to get the RPC API execution for all DT and HALO SKU.
-
-Hsd-es-id: NA
+Update in the CPU check logic for RPC API
 
 Original commit date: Tue Apr 21 15:04:25 2020 +0530
 Change-Id: I6c300fc824c12670403c2764618843e77912994a
@@ -2969,11 +2424,7 @@ Commit: 474b554a54e4b318e61301ec9fde130013d98e69
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:14:50 2020 +0530 
 -------------------------------------------------------------------------------- 
-[ADL][PEG] CPU PCIe registers mismatch with BWG
-
-Impacted platforms: ADL
-
-Hsd-es-id: 16011024549
+[ADL][PEG] CPU PCIe registers configurated to match with BWG
 
 Original commit date: Tue Apr 21 13:18:52 2020 +0530
 Change-Id: I494e779260cd4466d5f3d4d705784501366ba411
@@ -2995,7 +2446,6 @@ the BIOS to write to invalid offsets when programming
 registers. This change fixes that by allowing the PCH to
 tell PMC code to use changed offsets.
 
-Hsd-es-id: 14011272504
 Original commit date: Mon Apr 20 13:51:12 2020 +0200
 Change-Id: I9e4bd39ac34b345f5d251b50018a0ea26246a2e3
 Original commit hash: e02ee31886afec58bd3d067ecdd233802178b763
@@ -3020,11 +2470,6 @@ Date: Fri May 29 00:14:43 2020 +0530
 -------------------------------------------------------------------------------- 
 C1S: Hda initialization refactor
 
-Add following options to HdAduio policy:
-IoControlEnabled - options allow to enabled IO access for SNDW controllers
-AudioFpgaSocVer - Audio IP version enumerated on FPGA, if set to 0 Audio on FPGA is not detected
-
-Hsd-es-id: N/A
 Original commit date: Mon Apr 20 16:17:58 2020 +0200
 Change-Id: I2abc51f420154bd1952f09ad03be1391ce897ffb
 Original commit hash: 2c658aa3f07a8df95e983692c2e2c8ab7857f495
@@ -3046,13 +2491,6 @@ Date: Fri May 29 00:14:41 2020 +0530
 -------------------------------------------------------------------------------- 
 PeiExternalUsb2PhyLib: New USB2 PHY lib to support external PHY
 
-Created new PeiExternalUsb2PhyLib library instance fgr support of
-external PHY.
-Interface for now is the same as previously. Aligned required
-programming to provided BIOS Guide.
-
-Hsd-es-id: 14011314105
-
 Original commit date: Fri Apr 17 17:10:10 2020 +0200
 Change-Id: I18229778e8387f1fd6c5b60d68699f2fb77d4bf6
 Original commit hash: cd6922c53fa5a300c89a60f032d2f70276ef4e78
@@ -3071,16 +2509,11 @@ Date: Fri May 29 00:14:39 2020 +0530
 -------------------------------------------------------------------------------- 
 C1S: Hda initialization refactor
 
-First patch of HDA init refactor. The main goal is to make IP Block possibly independent from other IPs.
-Whole change has been split into few smaller ones.
-This change introduces few data structures which will be utilized with following changes.
-Those structures are:
-HDA_HANDLE - stores all data necessary to initialize HDA
-HDA_CONTROLLER - stores information required to access to controller registers
-HDA_CALLBACK - stores pointers to functions that can be passed to the HDA init driver
-HDA_PRIVATE_CONFIG - internal HDA policy options
+This change introduces few data structures that can:
+1. store all data necessary to initialize HDA
+2. store information required to access to controller registers
+3. store pointers to functions that can be passed to the HDA init driver
 
-Hsd-es-id: N/A
 Original commit date: Mon Apr 20 14:59:17 2020 +0200
 Change-Id: I4954d92ff8adf2794a16ef05630fd0e526726d4a
 Original commit hash: 3c7c67c022217391e5c045ea2cb98431a27bd6da
@@ -3106,7 +2539,6 @@ SIP 17 BWG requires BIOS to configure for DMI Support for 10 Bit Tag,
 and Scaled Flow.
 This change adds function for appropriate configuration.
 
-Hsd-es-id: 14010016829
 Original commit date: Fri Apr 17 15:47:33 2020 +0200
 Change-Id: Id7f3dedd29a8e38cb6bd3ac0b8be3e4e22886149
 Original commit hash: 00ac08bf3e31d4943e83b438d5e4197da8b157a7
@@ -3125,7 +2557,6 @@ TGL UP3/UP4 - PCIe L0s support for PRQ.
 
 For ASPM, L0s and L0sL1 options keeping for internal testing only and L1 will be default
 
-Hsd-es-id: 16010822148
 Impacted platforms: TGL
 
 Original commit date: Thu Mar 19 19:22:14 2020 +0530
@@ -3148,7 +2579,6 @@ into different offsets. This change adds support for those
 changed offsets by adding the CppmGcInterfaceVersion which will
 be set to 1 to use old register location or 2 to use new location.
 
-Hsd-es-id: 14011272504
 Original commit date: Thu Apr 16 16:31:04 2020 +0200
 Change-Id: I0199fc9082392ded1b4caab622679a8f3312655d
 Original commit hash: fa49a8ee53f1d45654ec44e59612cdee7a0259a5
@@ -3173,7 +2603,6 @@ Remove ClientSiliconPkg
 ClientSiliconPkg is retired.
 Remove the whole package from master.
 
-Hsd-es-id: 1507577375
 Original commit date: Mon Apr 20 14:14:20 2020 +0800
 Change-Id: I47fdd932f54ab86ae74e14d07d04be546c987be2
 Original commit hash: 328d8676f470527d419f95e66c872e4a2f6895fd
@@ -3195,7 +2624,6 @@ JasperLakeBoardPkg: [JSL] Remove invalid _HID name string for touchpad
 I2cTouchpad.asl contains invalid _HID name string in ASL code.
 Remove these invalid strings and replace with 'PNP0C50' by default.
 
-Hsd-es-id: 1507939960
 Original commit date: Mon Apr 20 18:19:19 2020 +0800
 Change-Id: I12bf3f984a16296950c8e57a20f2a1dd6b86d5c1
 Original commit hash: 035d3c592a32e05e4dc2c7925a461cb57ec6bca5
@@ -3211,10 +2639,6 @@ Date: Fri May 29 00:14:22 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientCommonPkg/Tools: Remove FCE/GuidToolDefinitionConf.ini and FMMT/FmmtConf.ini
 
-Copy %BUILD_DIR%\FV\GuidedSectionTools.txt to GuidToolDefinitionConf.ini and FmmtConf.ini.
-Add %BUILD_DIR%\FV to %PATH% when postbuild.
-
-Hsd-es-id: 1507821546
 Original commit date: Thu Feb 27 12:47:56 2020 +0800
 Change-Id: I3d720ed6f0cd4e610a1220b58509d59aade9a212
 Original commit hash: 42e3d1280cd534bba83ae0ad18bb9957ca5b3fe4
@@ -3238,8 +2662,6 @@ PeiUsbHostControllerInitLib: USB programming updates
 Updated U2UB survivability register to address Bluetooth devices issues.
 Fixing invalid soft error detection leading to false detects.
 
-Hsd-es-id: 18010993187
-
 Original commit date: Tue Mar 24 12:06:02 2020 +0100
 Change-Id: I0a102f5f6568f2aaf50f28cde8d0005fb74368fa
 Original commit hash: 0de6c45985903b1f9ffa658e640ca58f86f62cb2
@@ -3261,8 +2683,6 @@ status for proper programming of RxStandby enabling and Lane Reset in
 PS2. These are needed for platforms where PHY that's used doesn't
 support those features.
 
-Hsd-es-id: 14011314085
-
 Original commit date: Wed Apr 15 15:35:13 2020 +0200
 Change-Id: I8a6edf2c88b250d8ecfcf08e2427b0dff6a3322c
 Original commit hash: da25fd14472dc6830d8a5db535da9d311fd508be
@@ -3279,7 +2699,6 @@ Date: Fri May 29 00:14:10 2020 +0530
 -------------------------------------------------------------------------------- 
 IOMMU changes - Remove TBT segment support
 
-Hsd-es-id: 2209872753
 Impact Platforms: ADL
 
 Original commit date: Fri Apr 17 15:47:19 2020 +0800
@@ -3301,11 +2720,10 @@ Commit: 3ac168931d418fcf3861db9c7b093a0398a26ce8
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:14:05 2020 +0530 
 -------------------------------------------------------------------------------- 
-Converged ACM release v1.14.2 CBNT [JSPP]
+Converged ACM release v1.14.2 CBNT 
 
-Staging Debug and NPW for release v1.14.2 [Padded]
+Staging Debug and NPW for release v1.14.2
 
-Hsd-es-id: 14011272490
 Original commit date: Mon Apr 20 16:20:17 2020 -0700
 Change-Id: Iae01f73f261145c02f5a55025de6fb03d977ea58
 Original commit hash: 149011fc124a34a7f0d62e9d4aae018254a4fa8a
@@ -3323,19 +2741,6 @@ Date: Fri May 29 00:14:03 2020 +0530
 -------------------------------------------------------------------------------- 
 JasperLakePlatSamplePkg: Use value in StartupLocality event based on reported S-CRTM.
 
-Depending on which entity establishes the S-CRTM the TPM startup locality might
-differ. There are different scenarios in which CBnT ACM could initialize the
-TPM, but will not be the S-CRTM.
-
-BIOS will always create the StartupLocality event to describe the locality used
-at the time of the TPM Startup command. When ACM is the S-CRTM, BIOS will read
-the ACM policy status TpmStartupLocality field to reflect the locality used by
-ACM. When BIOS is the S-CRTM, the locality will remain 0.
-
-Moreover, for all cases in which ACM is the S-CRTM, BIOS needs to recreate the
-static PCR measurements into PCR[00] in behalf of ACM.
-
-Hsd-es-id: 14011248331
 Original commit date: Thu Apr 2 13:23:50 2020 -0700
 Change-Id: Ia1e0e5dde6ba343529aec2eb6246252ddb409cf4
 Original commit hash: 07b0c3e489224e7c786fcb3bcd3ee0fea87fa68b
@@ -3353,7 +2758,6 @@ BIOS:Security-Sweyntooth: BLUETOOTH invalid L2cap Fragment
 
 Sweyntooth security fix regarding Bluetooth Low energy
 
-Hsd-es-id: 16010987196
 Original commit date: Thu Apr 16 17:19:16 2020 +0800
 Change-Id: I6b973a902dce4ac0011076f36837229fcdd6d071
 Original commit hash: 3becbea8ddcc2904059a566ab9b18aa08149ae9a
@@ -3369,7 +2773,6 @@ Date: Fri May 29 00:13:58 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2171_00
 
-Hsd-es-id: no sighting
 Original commit date: Mon Apr 20 18:35:45 2020 -0700
 Change-Id: I611fb520493f1e7db1ff77d172cdc93d5755a557
 Original commit hash: c65a5cea7d64460d6d504d1db4d853f3a3a73e2c
@@ -3383,11 +2786,8 @@ Commit: f4623bda3c27729a05e519dcddd3e0b36fef1248
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:13:51 2020 +0530 
 -------------------------------------------------------------------------------- 
-[TGP][PCIe] RTD3 flows for incorrectly setting DLSULPPGE
+[TGP][PCIe] Fixed: RTD3 flows for incorrectly setting DLSULPPGE
 
-This is a SPT specific workaround which is being removed according to latest BWG in VMD RTD3 flow
-
-Hsd-es-id: 14011071495
 Original commit date: Mon Mar 23 18:37:23 2020 -0700
 Change-Id: If844119a064b0ada358acfe0f7494a40333b0789
 Original commit hash: 170a833191d1ca0f97680579f4e8b5511d36e68d
@@ -3403,7 +2803,6 @@ Date: Fri May 29 00:13:48 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: [RKL-S][CML-S+TGP-H][BIOS] '\_GPE._L72' string not present in Windows Performance analyzer tool after S3 state
 
-Hsd-es-id: 16010928506
 Original commit date: Wed Apr 8 12:56:18 2020 -0700
 Change-Id: I4fa3e9710383124fc238665dab5210cb6353fd57
 Original commit hash: d06bc87624dcce67303264b996fa79f5cc9a2939
@@ -3429,7 +2828,6 @@ This commit
 5)Configures the controller for NCC mode based on strap setting
 6)Performs Rx Margin programming
 
-Hsd-es-id: 14010023732
 Original commit date: Wed Apr 8 14:28:04 2020 -0700
 Change-Id: I0548fe2c76d300889a56d78ea68d55cf322d01ee
 Original commit hash: 433bb61ff029059705f4ae5fc219d6723e2b1c49
@@ -3450,9 +2848,6 @@ Date: Fri May 29 00:13:44 2020 +0530
 -------------------------------------------------------------------------------- 
 Program PCIe L1.2 LTR register
 
-Changed the programming of L12LTRLV for ADP A0
-
-Hsd-es-id: 14011284168
 Original commit date: Wed Apr 15 15:47:38 2020 -0700
 Change-Id: I94a916eeafd6f9bade3cd77508f703ca76a3c17d
 Original commit hash: a0897cee80a87ea9c636cf89aa5ba121017d330a
@@ -3468,9 +2863,6 @@ Date: Fri May 29 00:13:42 2020 +0530
 -------------------------------------------------------------------------------- 
 [TGL][Tigerlake-Master IOTG] Update Fusa library and function execution
 
-Update Fusa contents based on learning from PO in enabling FUSA on Fusa Sku Silicon
-
-Hsd-es-id: 1507715246
 Original commit date: Tue Mar 31 16:15:23 2020 +0800
 Change-Id: I650523a69c10dce91eb1f99ec5451b1a31e2399e
 Original commit hash: ee6d5b47df086b14520e1544ddff131fb65d3739
@@ -3489,16 +2881,6 @@ Date: Fri May 29 00:13:39 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/DxeAslUpdateLib: Remove redundant InitializeAslUpdateLib, moves PSS_PACKAGE_LAYOUT to PowerMgmtInit
 
-Every caller of DxeAslUpdateLib runs InitializeAslUpdateLib() first to
-locate protocols gEfiAcpiSdtProtocolGuid and gEfiAcpiTableProtocolGuid.
-But the library calls themselves run InitializeAslUpdatelib internally,
-so callers don't have to call it.
-This commit delete the redundant InitializeAslUpdateLib calls.
-Also, moves PSS_PACKAGE_LAYOUT from AslUpdateLib.h
-to PowerMgmtInit.h as it is consumed in PowerMgmtInit.
-AML_RESRC_TEMP_END_TAG is deleted as it is unreferenced.
-
-Hsd-es-id: 14010250800
 Original commit date: Thu Apr 16 22:29:13 2020 -0700
 Change-Id: I38c96e501a5705f2549d790a49bd269f33120da4
 Original commit hash: c3c4d248917ba254e0e58427b5a24bc2d09d4247
@@ -3524,7 +2906,6 @@ For new projects ADR_GEN_CFG address has been changed to 0x1908.
 This change allows the SoC to tell ADR lib that it should use the
 changed address.
 
-Hsd-es-id: 18011082868
 Original commit date: Wed Apr 15 18:23:34 2020 +0200
 Change-Id: I651b1c86231a40902bd6b70391e63b6b180935c2
 Original commit hash: 8bdb1ab16e2c9a4d94af707ba8c70a9879527737
@@ -3547,7 +2928,6 @@ Issue: NVMe is OPAL feature enabled, so AMT can't send erase command to it.
 Resolution: Revert OPAL feature with admin1.
 Impacted: All ADL/RKL projects.
 
-Hsd-es-id: 1507856900
 Original commit date: Thu Apr 16 14:07:11 2020 +0800
 Change-Id: I0ea1ab00381220b53e4154ef7739515a68c24645
 Original commit hash: feeee690304cadbb26ba8787182b4b5d910c4437
@@ -3564,14 +2944,10 @@ Commit: 55dc69089b20aa99abd81fc72cc1624acbca4a54
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:13:17 2020 +0530 
 -------------------------------------------------------------------------------- 
-18011232622: [ME] Return single inf implementation for MeUtilsLib
+[ME] Return single inf implementation for MeUtilsLib
 
-In change 4971689752f6b792c542161f1d2666e1897d3420 MeUtilsLib.inf has been spitted in to:
-    MeUtilsLib.inf
-    MeUtilsSmmLib.inf
-MeUtilsLib should be implemented with single inf file.
+MeUtilsLib implemented with single inf file.
 
-Hsd-es-id: 18011232622
 Original commit date: Tue Apr 14 13:14:21 2020 +0200
 Change-Id: I81aea841dea8b55d232d7c9774237c7283fdd48c
 Original commit hash: 7e6d9c9c14d1f6b410d05d14f1b2cd76332daee2
@@ -3590,8 +2966,6 @@ Date: Fri May 29 00:13:11 2020 +0530
 -------------------------------------------------------------------------------- 
 [TGL-H][PCIe] PEG11 and PEG12 are disabled during boot
 
-Cherry-picked from
-Hsd-es-id: 22010375609
 Original commit date: Wed Mar 11 13:09:28 2020 +0530
 Change-Id: Ia2f9dbfb8ce4df5216b5844a0e47b3442007680d
 Original commit hash: 8562308393dda36565c6e4120baf8b5830fa3c02
@@ -3610,7 +2984,6 @@ Date: Fri May 29 00:13:08 2020 +0530
 
 Modify string to "Memory Speed  =  4267 MT/s" instead of "Memory Frequency = 4267 MHz"
 
-Hsd-es-id: 1507935623
 Original commit date: Fri Apr 17 17:21:21 2020 +0800
 Change-Id: I9434a2df36fc7f31a07abb6d8a3b356eb0d8d9be
 Original commit hash: b82c14210bb85c84661962cf689a2127a44a4f3c
@@ -3628,12 +3001,9 @@ Date: Fri May 29 00:13:06 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/SecCpuLib, PlatformSecLib: Exclude PcdBiosSize and PcdBiosAreaBaseAddress from FSP build
 
-SecCpuLib refers to the PCDs regardless whether FSP build or EDK build,
-but FSP does not depend on those values.
 This commit excludes those PCDs for FSP build.
 PlatformSecLib INF is cleaned up as well.
 
-Hsd-es-id: 22010567971
 Original commit date: Sun Apr 5 21:41:14 2020 -0700
 Change-Id: Idbb57b343d69654970011594e3b171afed805849
 Original commit hash: c9e6baa003ad89c9f741d9ece30b3b5fea16f453
@@ -3653,7 +3023,6 @@ Date: Fri May 29 00:13:03 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2167_00
 
-Hsd-es-id: no sighting
 Original commit date: Sun Apr 19 18:36:17 2020 -0700
 Change-Id: I5a73e4ac0b51aa5a8071ad201ce81ea69789b593
 Original commit hash: ee8f1267aad0110845fb0c6be352d2657b2761a1
@@ -3667,13 +3036,12 @@ Commit: ed56f24365fa19db0f5869b2b2b844b13b07261c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:12:56 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/PowerManagement MiscFunctions: Replace AcpiChecksum calculation with open source calls
+ClientOneSiliconPkg: Replace AcpiChecksum calculation with open source calls
 
 This commit replaces AcpiChecksum call in PowerManagementDxe
 MiscFunctions with CalculateCheckSum8 from EDK2 core code.
 This helps to reduce redundant APIs in closed source.
 
-Hsd-es-id: 14010250800
 Original commit date: Thu Apr 16 23:11:20 2020 -0700
 Change-Id: Id7d0c7f73dedea84482cde5c0594d58cbeaa7b9c
 Original commit hash: 3152eee62c36b303e36d59d17eeca3ac678deb30
@@ -3688,10 +3056,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:12:48 2020 +0530 
 -------------------------------------------------------------------------------- 
 [TGL-H][PCIe] PEG11 and PEG12 are disabled during boot
-
-There was a documentation gap for STRPFUSECFG[RPC] register for 1x8-2x4(PEG12)
-
-Hsd-es-id: 22010375609
 
 Original commit date: Thu Apr 16 20:02:15 2020 +0530
 Change-Id: I4da31308b3fc34d4e1f5c611ff7bbf93fe8fcce7
@@ -3708,7 +3072,6 @@ Date: Fri May 29 00:12:39 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2166_00
 
-Hsd-es-id: no sighting
 Original commit date: Sat Apr 18 18:33:38 2020 -0700
 Change-Id: If45dc05cd1973e226eb9ec4c0130cc8da4652af8
 Original commit hash: 2492e7133fb70c7554ea8ef52663c111e4f5bcdc
@@ -3724,7 +3087,6 @@ Date: Fri May 29 00:12:34 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2165_00
 
-Hsd-es-id: no sighting
 Original commit date: Fri Apr 17 18:33:09 2020 -0700
 Change-Id: I404b93308a4c7431d1022d106cd0d6628af02abc
 Original commit hash: c2406cc8d5e73d2dc4b336f6c35992c5ee90180d
@@ -3738,11 +3100,10 @@ Commit: 1654d878589bbf7188f50193831b180af4c9ff5b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:12:32 2020 +0530 
 -------------------------------------------------------------------------------- 
-VMD not supported for RKL-S
+VMD not supported for RKL
 
 Change needed to avoid yellow bang to disable DEVEN
 
-Hsd-es-id: 16011015428
 Original commit date: Thu Apr 16 11:18:17 2020 -0700
 Change-Id: I3a0b15822914411a86b8e478c82ff3f25961c1ce
 Original commit hash: 36d4098627e0c059a821c91f3a89002234f3f89a
@@ -3758,10 +3119,6 @@ Date: Fri May 29 00:12:26 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Update PCI Express Configuration
 
-Tx Speed Toggle is not happening with latest recipe implementation.
-Since recipe change is not feasible we need to have a different implementation to unblock customer PCIe Gen 3 Tx Compliance Test
-
-Hsd-es-id: 14011217468
 Original commit date: Fri Mar 27 15:03:54 2020 -0700
 Change-Id: I8078e8ca680348758120904269d0ba71eeea4902
 Original commit hash: a6c1132cbff4e07cee18fb40e135b9cac90cde96
@@ -3778,9 +3135,8 @@ Date: Fri May 29 00:12:24 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Update modPHY lanes used for TSN
 
-Wrong lane numbers were checked in FIA for TSN
+Lane numbers were updated in FIA for TSN
 
-Hsd-es-id: 16010507164
 Original commit date: Wed Apr 15 16:20:46 2020 -0700
 Change-Id: I5976c37ed70f662c56baabf1cf0f5677b4e06ac4
 Original commit hash: 6c21976324c81cfb7d4c2c407cb4e9927de7c51a
@@ -3798,7 +3154,7 @@ Date: Fri May 29 00:11:56 2020 +0530
 BIOS should configure PSF0 max shared credits per VC
 
 Impact Platforms: ADL, RKL
-Hsd-es-id: 16010994072
+
 Original commit date: Thu Apr 16 12:40:44 2020 +0800
 Change-Id: I684ec47a62f29abc21041794ca30ac5b53d5af60
 Original commit hash: aec550ea6b6fcad7f927e8cdea08431693809225
@@ -3817,7 +3173,7 @@ Date: Fri May 29 00:11:48 2020 +0530
 Enable Gfx PEIM for x-comp
 - Install new PPI for Gen9 Gfx PEIM
 
-Hsd-es-id: 14010180213
+
 Original commit date: Thu Apr 16 23:54:01 2020 +0530
 Change-Id: I2c12c4bf1a76a9da4fafdbb015d3b4868f72a82f
 Original commit hash: c652e192aa861ddc0a8d10aa283e0821e7587812
@@ -3841,7 +3197,6 @@ In current PCH generations as HSIO "Modular PHY" is used.
 This change introduces Hsio IP block folder and moves
 PeiHsioLib library to this location.
 
-Hsd-es-id: N/A
 Original commit date: Tue Mar 31 18:08:12 2020 +0200
 Change-Id: Iaf590bfbe140a716230a719a95bd1fff9f8c1769
 Original commit hash: 37b5bed2fd77a3cf8bb095d129aa6a3867b164d8
@@ -3865,7 +3220,6 @@ EagleStream: Fix some files changed issue after build
 deleted EagleStreamFspPkg/PlatformPkgConfig.dsc and add into gitignore
 update the ClientOneSiliconPkg/Fru/EbgPch/AcpiTables/Dsdt/PchNvs.asl
 
-Hsd-es-id: NA
 Original commit date: Fri Apr 17 15:46:57 2020 +0800
 Change-Id: I905c49048ad9c9360f461e6e613aec41a8a3bf6b
 Original commit hash: 8b902b6db6ca2d18d407096504765a1621a318c9
@@ -3881,9 +3235,6 @@ Date: Fri May 29 00:11:26 2020 +0530
 -------------------------------------------------------------------------------- 
 Revert PCIe PO safe config
 
--Cherry pick from RKL-S PO:https://git-amr-7.devtools.intel.com/gerrit/#/c/80181/
-
-Hsd-es-id: NA
 Original commit date: Wed Apr 15 11:22:30 2020 +0530
 Change-Id: I9fed7b12fb5d8b5f275c1c22bbd0c0ca68256a51
 Original commit hash: 33861219c48ccdbddcd2db8f947290b730c0d293
@@ -3908,7 +3259,6 @@ If XHCI and CSME devices are not detected with pci
 configuration space access, auto-disable their PEP
 constraints.
 
-Hsd-es-id: 2208133709
 Original commit date: Thu Apr 16 22:06:51 2020 +0800
 Change-Id: Ie898ce392f4db9d8863106bc0b7e28b05705ce27
 Original commit hash: 6759a809e0d820e2fff557b05d1df45c3d3a0d46
@@ -3924,7 +3274,6 @@ Date: Fri May 29 00:11:00 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2164_00
 
-Hsd-es-id: no sighting
 Original commit date: Thu Apr 16 18:33:59 2020 -0700
 Change-Id: I6c4ca043a2e4fe8f39118810d59234a7bc229713
 Original commit hash: d90cf9c9210cfacd67bbb2a2c57e20b5c20bccd6
@@ -3940,15 +3289,10 @@ Date: Fri May 29 00:10:35 2020 +0530
 -------------------------------------------------------------------------------- 
 PeiHsioLib: Create Hsio library at SoC layer
 
-SOC specific code should be placed at FRU/SOC layer.
-Now HSIO PCH generation specific code is located in common Pch folder
-and differentiate by INF file instantion per PCH generation which
-doesn't follow the rule.
 This change introduces HsioSocLib has been created to address
 PCH generation specific HSIO configuration at FRU/SOC layer and
 fix above issue.
 
-Hsd-es-id: N/A
 Original commit date: Tue Mar 31 17:42:29 2020 +0200
 Change-Id: I0fb0f68ee23a23750e54f2e351b83341e4d86882
 Original commit hash: d799dacb157e450bea310641c3f198cb249f9436
@@ -3980,7 +3324,6 @@ ClientOneSiliconPkg/IpBlock/SerialIoPrivateLib: Adding reads after BAR1 MMIO wri
 
  - Adding readback after BAR1 writes to ensure bridge observes the BAR1 access
 
-Hsd-es-id: 14011046221
 Original commit date: Wed Mar 4 14:07:16 2020 -0800
 Change-Id: Id3efe127d40422a311953e38ddec18a9e65b8e68
 Original commit hash: 7efb4d7304b702bd998a50f47150e649dfbbe3e1
@@ -3996,7 +3339,6 @@ Date: Fri May 29 00:10:28 2020 +0530
 -------------------------------------------------------------------------------- 
 Program the DMI registers as per BWG recommendation for section 4.4 to 4.35
 
-Hsd-es-id: 16010767782
 Impact Platforms: ADL, TGL, SBX, RKL, JSL
 
 Original commit date: Wed Apr 15 03:41:24 2020 +0530
@@ -4031,7 +3373,6 @@ Remove the following:
   PlatSamplePkg/Features/PlatformStatusCodeHandler/Smm/RamStatusCodeWorker.c
 Also modify related files.
 
-Hsd-es-id: 1507851634
 Original commit date: Thu Apr 16 09:13:55 2020 +0800
 Change-Id: I496d8b8b94a6c872afed3e65fd662547e44c7110
 Original commit hash: 8aac75d1182b4d1e180c34bf12041374837b267d
@@ -4073,7 +3414,6 @@ Optimzied C1S self build
 
 add more check for iasl and nasm
 
-Hsd-es-id: N/A
 Original commit date: Mon Apr 13 15:01:56 2020 +0800
 Change-Id: I1dd093fe2f20e730e6d7447b88c8dce214bfb46a
 Original commit hash: c8e3a473266dc16bb1f86304bc08b7970fbbc0c2
@@ -4092,7 +3432,6 @@ Date: Fri May 29 00:10:07 2020 +0530
 [Resolution] GOP version is upgraded from 1025 to 1026.
 
 Impact Platform: JSL
-Hsd-es-id: 1608110955
 
 Original commit date: Wed Apr 15 20:03:26 2020 +0530
 Change-Id: Ie055a2a024259bd19cfdd707222e55c591cb67a2
@@ -4121,7 +3460,6 @@ Date: Fri May 29 00:10:05 2020 +0530
 
 Impact Platform: JSL
 
-Hsd-es-id: 16011001289
 Original commit date: Fri Apr 3 11:32:43 2020 +0530
 Change-Id: I171d247a94f3b2ce65a43b257c8e5cff9f72b7df
 Original commit hash: 052e3528f1e9688627d2ff28a13bcfe6a3bf8525
@@ -4141,7 +3479,6 @@ Cannot achieve s0i3.2 when OpenIPC software applies LVM overrides at boot prep w
 To achieve deeper sleep state with USB2 DbC needs ALL_PSF_IDLE_QUAL_EN_PSF to be 0, which is 1 by BWG default.
 OpenIpc tool clears the bit and BIOS do not touch it if USB2 DbC connection is established.
 
-Hsd-es-id: 22010555630, 1504760462
 Original commit date: Wed Apr 15 11:30:51 2020 +0800
 Change-Id: I9d7095180a2506846c183f8ac9c50197dd85425d
 Original commit hash: 7864fe1fc81a6f31d8c5bece660bf4c41d5e108b
@@ -4157,7 +3494,6 @@ Date: Fri May 29 00:09:46 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2163_00
 
-Hsd-es-id: no sighting
 Original commit date: Wed Apr 15 18:36:47 2020 -0700
 Change-Id: Ifb4d73060583bb7abbceda7881730a1183e890c1
 Original commit hash: 39ef4a3ab9cc60453398527710515ed04ed597c1
@@ -4171,11 +3507,8 @@ Commit: 9d8d5ac15da1d922194c86a708ec6122215cecfd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:09:13 2020 +0530 
 -------------------------------------------------------------------------------- 
-Workarounds for simics which has not modelled the required new FIA registers
+Fixed: ADL SIMICS model hangs when tries to program FIA registers
 
--ADL-P SIMICS model hangs when tries to program FIA registers
-
-Hsd-es-id: 16011008663
 Original commit date: Wed Apr 15 18:23:42 2020 +0530
 Change-Id: I44b1dec09a80b0f759c9d7ac9ebd0aa34ccce3c3
 Original commit hash: 98894c89dd519ea4d706552cddfac71ceca4730a
@@ -4197,8 +3530,6 @@ BIOS shall also do additional programming in PCH Sx SMI handler.
 This change adds remaining Sx SMI handler for cmd_ssv programming during
 before S4/S5 entry.
 
-Hsd-es-id: 14011097138
-
 Original commit date: Fri Apr 10 09:49:59 2020 +0200
 Change-Id: I6ff7feae331d978baca5839faf889f71f5f68e96
 Original commit hash: ca3079080680e6147992f826415f9186ae4140d0
@@ -4219,7 +3550,6 @@ ClientOneSiliconPkg: Move the PeiPmcPrivateLib to separate folder
 To declutter the PMC libraries this commit moves the PeiPmcPrivateLib
 into separate folder
 
-Hsd-es-id: n/a
 Original commit date: Tue Apr 14 14:53:09 2020 +0200
 Change-Id: I069d9039e6570d1f0ab29eab7c219f460773cbc4
 Original commit hash: cc12e44d7a946597be552b950b940372b7371e9c
@@ -4248,11 +3578,8 @@ Commit: f0159621114abbfc4998383af387c85478d10648
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:08:56 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSL]: After enabling WWAN in BIOS, default value under ACPI D3Cold is not D3/L2
+[JSL]: Change BIOS/Intel Advanced Menu/ACPI D3Cold settings/WWAN default value to D3/L2.
 
-Change BIOS/Intel Advanced Menu/ACPI D3Cold settings/WWAN default value to D3/L2.
-
-Hsd-es-id: 16010679567
 Original commit date: Wed Apr 15 15:27:51 2020 +0800
 Change-Id: I8b6eb2aa64f6be9ab83feb0bae5cd8709568fd5d
 Original commit hash: 3fe85fdff2be00bc9b3ac3574350cae73ce95b11
@@ -4266,11 +3593,8 @@ Commit: 312ea57c131115a111746344bd58e2a9c71317df
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:08:41 2020 +0530 
 -------------------------------------------------------------------------------- 
-Program Gen5 FIA controller registers
+Program FIA registers as per the FIA BWG 0.5
 
--Program FIA registers as per the FIA BWG 0.5
-
-Hsd-es-id: 16010707102
 Original commit date: Mon Mar 30 22:55:10 2020 +0530
 Change-Id: I16e9ee9b7fd9385b49348d508df0aaa1c71fc5d7
 Original commit hash: e9c90abff501d8fd374a2ff3157fb6064fce0f40
@@ -4294,7 +3618,6 @@ Date: Fri May 29 00:08:31 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2162_00
 
-Hsd-es-id: no sighting
 Original commit date: Tue Apr 14 18:33:38 2020 -0700
 Change-Id: Ib0ab596e7ff0ae34e400d7c19ff4e89f6cf864db
 Original commit hash: 400904bdcd88b0385df5a67f0d3bb620f174c740
@@ -4308,13 +3631,8 @@ Commit: 2e366b5fd6b307fd066bad4323a7cfb309e7a1e9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:08:18 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: Update restricted tags for IPClean compliance
+ClientOneSiliconPkg: Update tags 
 
- - Fixing instance of a tag not matching RestrictedContent, RestrictedBegin, or RestrictedEnd
- - Adding "//" to restricted tags that do not have "//" prefacing them
- - Updating a few restricted tags in <Project>BoardPkg files
-
-Hsd-es-id: 14011277858
 Original commit date: Fri Apr 10 11:16:01 2020 -0700
 Change-Id: I9333548508a5a515af2935cf502203cc8e155660
 Original commit hash: 072b66817d111930533991df39915ba2ac86e842
@@ -4333,7 +3651,6 @@ Dual Tau - MMIO Register Support for Desktops (S ) RKL, ADL
 
 Request to enable MMIO PL1, PL2 and Tau registers in addition to the existing MSR Registers.
 
-Hsd-es-id: 1507919020
 Original commit date: Fri Apr 10 16:07:46 2020 +0800
 Change-Id: I0a0eea3110d8d44840a6d431d82504a7360f0dec
 Original commit hash: 2b3b047375b4b56d983360ecbbacdeaa085fe270
@@ -4353,14 +3670,6 @@ Date: Fri May 29 00:07:49 2020 +0530
 -------------------------------------------------------------------------------- 
 EagleStreamRpPkg/GpioTable: Update the GPIO table according to EGS_EBG_GPIO 0.34 version
 
-1. Update the GPIO table according to Eagle_Stream_Common_Core_Architecture_PCH_GPIO_Rev_0.34_20WW14.5.xlsm.
-2. Don't set these GPIOs as PCH RC will set them as SGPIO:
-   GPIO_VER3_GPP_D12,
-   GPIO_VER3_GPP_E8/GPIO_VER3_GPP_E9/GPIO_VER3_GPP_E11/GPIO_VER3_GPP_E13,
-   GPIO_VER3_GPP_I12/GPIO_VER3_GPP_I13/GPIO_VER3_GPP_I14/GPIO_VER3_GPP_I15/GPIO_VER3_GPP_I16/GPIO_VER3_GPP_I17.
-3. Don't set GPIO_VER3_GPP_L1, default is Native Function 1.
-
-Hsd-es-id: N/A
 Original commit date: Tue Mar 10 09:04:58 2020 +0800
 Change-Id: Iee02e8d47f5030242296e18f24cb12a3f9bf6e88
 Original commit hash: 3467645b01bf678e62e0b0bee513babbe6592b29
@@ -4377,12 +3686,11 @@ Date: Fri May 29 00:07:18 2020 +0530
 [RKL-S] [CML-S+TGP-H] PO:  CEC_EN bit is not getting set. Need to set it manually
 
 Integrate below changes from CNL:
-43a1b7dcce751e5ba52a4e6d251d33cc26fca210 PS_ON implementation for SATA and RAID
-38f962a06e86702a9e4dea87fe4d45d9b8048404 Enumerate SATA PEP constraints for SATA in AHCI mode
-f39faf436720d8fec8c4dbbbd301e6b70c4d2895 [WHL-U42-RS4][PM]:HDD is not going into D3 cold.
-8e140ea10b8f8519b8b2ba61e49b6fdd90ced35c HDD is not going into D3 cold (Add SETUP option)
+1. PS_ON implementation for SATA and RAID
+2. Enumerate SATA PEP constraints for SATA in AHCI mode
+3. [WHL][PM]:HDD is not going into D3 cold.
+4. HDD is not going into D3 cold (Add SETUP option)
 
-Hsd-es-id: 14010780888
 Original commit date: Wed Mar 4 21:32:52 2020 +0800
 Change-Id: I537de4f657c3640b72e258dfa3691f4056817cb5
 Original commit hash: b7f955a96ddfc4698fe7236aa640eee07a20cd0d
@@ -4403,7 +3711,6 @@ Date: Fri May 29 00:07:12 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2161_00
 
-Hsd-es-id: no sighting
 Original commit date: Mon Apr 13 18:37:03 2020 -0700
 Change-Id: I7ba3c081e899fa6be3f5731c07f51da27df1aa74
 Original commit hash: a17896a071a2cde000eba705856eed1004678da8
@@ -4419,11 +3726,6 @@ Date: Fri May 29 00:06:54 2020 +0530
 -------------------------------------------------------------------------------- 
 [JSL] Update FMP Lowest Support Version for capsule update
 
-JSL has intercepted Fault Tolerant feature from BIOS label 2153.00
-and hence this patch updates the FMP Lowest Support Version to 2153.00
-to set new base BIOS to run Fault Tolerant capsule update.
-
-Hsd-es-id: NA
 Original commit date: Mon Apr 13 16:38:17 2020 +0530
 Change-Id: Ie772caf409e162ce6eb5508cd18eeed0cc1e40e5
 Original commit hash: b115e05f616eedc65d60bc566f6231bfbbefe46f
@@ -4446,7 +3748,6 @@ To remove duplicate code in every platform FSP package those common code
 are moved to ClientOneSiliconPkg for all platform FSP package
 to consume.
 
-Hsd-es-id: 1507906856
 Original commit date: Tue Apr 7 10:50:07 2020 +0800
 Change-Id: I4309d7c5edeb8a034d85e66e2a24233cc2636a26
 Original commit hash: 04bb85c28cb4880f203517fb07a6ed74827bc965
@@ -4548,15 +3849,6 @@ Date: Fri May 29 00:06:40 2020 +0530
 -------------------------------------------------------------------------------- 
 Update MSR headers with minor enhanced RIT
 
-Update MSR headers with minor enhanced RIT to fix the problem
-that some MSR definition is not generated correctly when CRIF includes
-MSR definitions for "product" value with "server" and "client_server",
-but not "client".
-
-Minor enhanced RIT will also handle "product" value with "client_server",
-but not just "client".
-
-Hsd-es-id: 1507889771
 Original commit date: Sun Apr 12 14:05:40 2020 +0800
 Change-Id: I244b682a339fd28b1d01f7284a8b63599717f904
 Original commit hash: 186b3cc7cea2a4b36f83cb527413e5eb0b376eac
@@ -4586,9 +3878,8 @@ In this commit we move following use cases:
 - Checking the fuse/soft strap disabled status
 - Performing static disable of the IP
 - Performing non-static disable of the IP
-We also fix those functions for ADP-S and EBG.
+We also fix those functions for ADP and EBG.
 
-Hsd-es-id: 1608843582
 Original commit date: Mon Mar 23 16:31:13 2020 +0100
 Change-Id: Ica897225f1d096d1bedc7564397a9ac685d25a4d
 Original commit hash: f18d792d337ea0e30451450374caadbbadb744f4
@@ -4669,10 +3960,6 @@ Date: Fri May 29 00:05:55 2020 +0530
 -------------------------------------------------------------------------------- 
 [ADL] Update to Turbo ratio limits MSR configuration and control
 
-OC part code change needs more consideration.
-For now, the logic is kept as is.
-
-Hsd-es-id: 1608132415
 Original commit date: Tue Feb 18 00:11:25 2020 +0800
 Change-Id: I20f153701723439c0b8fae040587d7dc7f70d4f4
 Original commit hash: 57c8647245e0c299d48eaacfd5046a6c547e802a
@@ -4700,7 +3987,6 @@ Date: Fri May 29 00:05:46 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2157_00
 
-Hsd-es-id: no sighting
 Original commit date: Sun Apr 12 18:40:16 2020 -0700
 Change-Id: I53c320017a5b9962c12e3c119123900f776361df
 Original commit hash: 65490813536c7330a2a63f7e853df80fede64e99
@@ -4714,12 +4000,8 @@ Commit: 675fd490f00d7d452d6d0ad1e7cf4101d8690422
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:05:40 2020 +0530 
 -------------------------------------------------------------------------------- 
-[HSD-ES][client_platf][bug][22010546911][ADL][ICL][RKL][MRC][Fix the Ipclean related issues]
+[ADL][ICL][RKL][MRC]Fix the tags
 
-Fix typos in RestrictedContent comment keywords.
-Move Restricted comments out of block comments.
-
-Hsd-es-id: 22010546911
 Original commit date: Sat Apr 11 00:46:00 2020 -0700
 Change-Id: I2f2ee0e8354829d04645532c5020deb2cd6dcbf9
 Original commit hash: 8fa20c06cb31e64ee4135b327ac3cd42b8bfa0b2
@@ -4737,7 +4019,6 @@ Date: Fri May 29 00:05:28 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2156_00
 
-Hsd-es-id: no sighting
 Original commit date: Sat Apr 11 18:32:35 2020 -0700
 Change-Id: I680d1811ba306d2da217a81b89d6df421320b95b
 Original commit hash: a3259f1feed0d7cdac5a4021357a5dd7c5c7a844
@@ -4755,7 +4036,6 @@ Revert "ClientOneSiliconPkg: Correction of programming for command and data pari
 
 This reverts commit bb716b9165ead79bd07409a9f32f57ac41086fd1.
 
-Hsd-es-id: 1507920794
 Original commit date: Fri Apr 10 05:18:36 2020 -0800
 Change-Id: I9a7dabb4fa2e6e743191727b1996a2e49344094d
 Original commit hash: efc08fcaeeaff15a796bb4f9e3f0797111d9d9ef
@@ -4771,7 +4051,6 @@ Date: Fri May 29 00:05:00 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2155_00
 
-Hsd-es-id: no sighting
 Original commit date: Fri Apr 10 18:38:32 2020 -0700
 Change-Id: Id6192a8e6ce5e6e23f455cf7ca7e16924a545fa7
 Original commit hash: 2cf0b4b56cae0a8a0e73c7f0b54b13001069920a
@@ -4785,9 +4064,7 @@ Commit: 4d4413efa8b54400e01fb01bd69aa7a192b152ac
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:04:44 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/TwoLm: Correction for assert while setting system time for 2LM device.
-
-Hsd-es-id: 22010523339
+ClientOneSiliconPkg: Correction for assert while setting system time for 2LM device.
 
 Original commit date: Wed Apr 8 14:53:03 2020 -0700
 Change-Id: I4d65541cedff98a575fe7f6e10adee60def37b60
@@ -4807,7 +4084,6 @@ Remove ClientOneSiliconPkg's dependency on ClientSiliconPkg - Step 3
 1. Remove ClientSiliconPkg/Include path in DoxygenSiApi.cfg.
 2. Correct GenNvs tool path in ReadMe.md.
 
-Hsd-es-id: 1507577375
 Original commit date: Fri Apr 10 13:51:30 2020 +0800
 Change-Id: Ieabbd604aa32381b3929b4b3ffc05f097842c46c
 Original commit hash: 27f2368073a871bc36a7ff95c74eccb55e4cb5b8
@@ -4829,7 +4105,6 @@ Root cause: The PCie VPPCSR register was overwritten in server PchSmiDispatcher 
 
 Fix: Added separete server Hot Plug template tables to with correct PCIe register definitons
 
-Hsd-es-id: 18011119624
 Original commit date: Thu Apr 9 09:26:51 2020 +0200
 Change-Id: I725994e05f0aa99e1de2c14b01eb18fe8ddef109
 Original commit hash: 77a153b910c1c222fdb72fc614e08305b5f07984
@@ -4848,8 +4123,6 @@ PeiUsbHostControllerInitLib: USB programming update
 Updated Latency Tolerance parameters for controller with ID 0x98ED.
 Updated U2UB survivability register to solve Bluetooth devices issues.
 
-Hsd-es-id: 18010983384
-
 Original commit date: Mon Mar 23 16:53:35 2020 +0100
 Change-Id: I0a354f87989aac5404187e7758b36430d63aef2a
 Original commit hash: 3879c8e6dd8afa62c576ee3633a93af649dd0208
@@ -4865,11 +4138,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:04:08 2020 +0530 
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: fix debug print in DisablePcieRootPort() function
-
-Debug print used to print "__FUNCTION__" instead of DisablePcieRootPort() function name.
-Now Debug print prints function name correctly.
-
-Hsd-es-id: N/A
 
 Original commit date: Fri Apr 3 15:39:00 2020 +0200
 Change-Id: I88bd6ebc19f1962fb9c372474370a32ec915c5c5
@@ -4890,7 +4158,6 @@ This Change covers Hs Phy firmware loading mechanism.CSME acts as verifier copyi
 Changes includes 1)GET_IMR_SIZE for Dekel and HsPhy is added as part as already existing function-MeImrConfig.
 2)New Peim module is added to PlatformPkg/Features which gets notified on gEfiPeiMemoryDiscoveredPpiGuid. This Peim loads firmware to Hs Phy controller.
 
-Hsd-es-id: 14010815952
 Original commit date: Mon Apr 6 13:25:06 2020 +0530
 Change-Id: I1a2c0c2e991c77324edb688a3261a6967dc80e5d
 Original commit hash: 87dba6e8348047cb69c121791251057955908a29
@@ -4917,13 +4184,7 @@ Date: Fri May 29 00:03:55 2020 +0530
 PeiSataLib: Clear Automatic Partial to Slumber Transitions (APST)
 
 This reverts commit 9f55424cda11616e397c926a18130a6c9069fdbf.
-This change reverts previous implementation of APST configuration.
-The bit should be cleared for all PCH generations supported in current
-C1S tree so there is no need to create new instances of SATA library.
-Asccording the request:
-BIOS to set SATA CAP2.APST=0 for ICL onward. (ICL/TGL/ADP)
 
-Hsd-es-id: 14010938799
 Original commit date: Thu Apr 9 10:39:54 2020 +0200
 Change-Id: I2a0ae9b50bef386a37c1983e98a5e63140dc2d6e
 Original commit hash: ae4fbbe6f8e3454b43348830b2f399a85b6bd2b8
@@ -4950,9 +4211,6 @@ Date: Fri May 29 00:03:37 2020 +0530
 -------------------------------------------------------------------------------- 
 Remove CPU_TGL flags in TraceHubLib
 
-clean up CPU_TGL flag in trace hub IP code.
-
-Hsd-es-id: 14011012401
 Original commit date: Wed Apr 8 19:40:14 2020 +0800
 Change-Id: If525381ca9bfff8fdca5f2b08c60440735132876
 Original commit hash: d29a90a99fda13e25e4b885ec14ddd873b4ec4ba
@@ -4972,7 +4230,6 @@ Date: Fri May 29 00:03:32 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2154_00
 
-Hsd-es-id: no sighting
 Original commit date: Thu Apr 9 18:37:43 2020 -0700
 Change-Id: If41cf2ab9b6fa961fb78c7be641976ec9f3ac7ee
 Original commit hash: 13490db9fdacc1babe542c986b47267d4cfa70cb
@@ -4986,11 +4243,8 @@ Commit: 86b80c7e95f2bc1e315e2b384c6d900fa5d0a6b0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:03:06 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg\IpBlock\Thc\ThcDriver;[THC][BIOS] ThcDriver  - Lack of support for PCH gen specific Device Id.
+ClientOneSiliconPkg:[THC][BIOS] ThcDriver : Added device id to THC driver
 
-- Added missing device id to THC driver
-
-Hsd-es-id: 14011261837
 Original commit date: Mon Apr 6 04:04:39 2020 -0700
 Change-Id: I888406d36857a4d93cf5ec0d17e3687dad5eed22
 Original commit hash: 939c180615ec63be203feb63793147dd421cc624
@@ -5008,14 +4262,6 @@ Date: Fri May 29 00:02:54 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Remove valid value check from FIA
 
-Removed the check which made the BIOS assert if the value
-read from LOS register returns as all 0xFF. Since for some
-projects it is a valid LOS value this code doesn't apply
-universally. For projects where 0xFF is invalid values
-the lane decoder will return invalid owner which should still
-provide safe operation.
-
-Hsd-es-id: 14011076192
 Original commit date: Tue Apr 7 16:29:31 2020 +0200
 Change-Id: I4f027b396566b55d887bb128ff9fd5739e625dd6
 Original commit hash: 95c41ef43592f8e50d64614c79633d1c8e1afb39
@@ -5030,9 +4276,8 @@ Commit: f3e4f3b7f216581d7b7f068fca3bc8fcd239cc01
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:02:42 2020 +0530 
 -------------------------------------------------------------------------------- 
-Fix Restricted code leakage from System Agent IPs
+Fix tags In System Agent 
 
-Hsd-es-id: 16010987015
 Original commit date: Wed Apr 8 02:38:02 2020 +0530
 Change-Id: I933d44c09af2b8d5b95b12930df14777ee000e59
 Original commit hash: fec67cc09563f130ca26dbb6607a45d07788f34b
@@ -5050,12 +4295,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri May 29 00:02:36 2020 +0530 
 -------------------------------------------------------------------------------- 
 ClientOneSilicon: Provide PCH xHCI port count through NVS
-
-Created 2 new fields in PCH NVS area that shall hold number of PCH USB2
-and USB3 ports. Thanks to that it'd be possible to more easily control
-how many ports is defined in PchXhci.asl.
-
-Hsd-es-id: 14011083391
 
 Original commit date: Wed Mar 18 08:25:30 2020 +0100
 Change-Id: I8073822f9e4ddff4f5696e4d8d6e81b238e86b47
@@ -5076,14 +4315,6 @@ Date: Fri May 29 00:02:30 2020 +0530
 -------------------------------------------------------------------------------- 
 EGS: Fix duplicate definition issue reported by CLNAGPDB
 
-CLANGPDB tool chain has stricter rule check and many duplicate definitions are
-treated as error.
-Also, UEFI doesn't support usage Sources.DXE_SMM_DRIVER and Sources.DXE_DRIVER,
-it will be treated as duplicate definitions too, because source files in both
-DXE_SMM_DRIVER and Sources.DXE_DRIVER section will be compiled at the same time
-with many same name functions in the two section.
-
-Hsd-es-id: 1507789727
 Original commit date: Thu Apr 2 10:16:27 2020 +0800
 Change-Id: I8b02de0efde026132822c532bef2737f2ebfd4c5
 Original commit hash: 4971689752f6b792c542161f1d2666e1897d3420
@@ -5105,7 +4336,6 @@ Phase-2:PCIe Gen5 support - Link should be trained to Gen1 only after HSPHY FW+R
 
 1)Refactoring the Pre-Mem and post-Mem Libraries as Ver1 and Ver2 for modularity
 
-Hsd-es-id: 16010714220
 Original commit date: Wed Apr 1 16:44:22 2020 +0530
 Change-Id: I0178a54e455d9d72f31efd42332daa2af34095bf
 Original commit hash: bb1f91ebdbd3997cc5fed00c6b044113a781763d
@@ -5136,7 +4366,6 @@ Date: Fri May 29 00:02:07 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2153_01
 
-Hsd-es-id: no sighting
 Original commit date: Wed Apr 8 18:40:05 2020 -0700
 Change-Id: I2a90e7e9353e549445e9337a10f0fc8edf99a3e8
 Original commit hash: fd9f4472b77404488aa09db0113d9fc39ec85f01
@@ -5152,14 +4381,12 @@ Date: Fri May 29 00:02:04 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientCommonPkg/Include/WdtAppVariable.h: Move to PlatSamplePkg/Include/
 
-Prepare for retire ClientCommonPkg.
-And also move the following guid and pcds:
+Move the following guid and pcds:
   gWdtPersistentDataGuid
   PcdWdtTimeoutValue
   PcdWdtReloadTimer
   PcdWdtTimeoutBetweenPeiDxe
 
-Hsd-es-id: 1507852490
 Original commit date: Tue Apr 7 13:17:18 2020 +0800
 Change-Id: Ib71fc89e639e2dd4e0dbea06b7a3410480dc4e70
 Original commit hash: 54fbc77f969ab736dc87a5dc090b31f31bf76a90
@@ -5177,11 +4404,8 @@ Commit: b9c5f0c37f7a9af54aa9df49b2fb69fee0023630
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:01:58 2020 +0530 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Cfl and Cml: [NO_HSD] Fix Restricted tags within MRC
+C1S/MemoryInit/Cfl and Cml: Fix tags within MRC
 
-Fix typo for Restricted tags
-
-Hsd-es-id: NO_HSD
 Original commit date: Tue Apr 7 15:32:17 2020 -0700
 Change-Id: I1a8d65acaa8ed35f40dea05d5a84da0e3ae7bbbe
 Original commit hash: 8d3d4fab585052f309441b2a6234099734b6a7f9
@@ -5203,7 +4427,6 @@ ClientOneSiliconPkg/PeiSataLib: Set version specific bit configuration for R_SAT
  - Extract R_SATA_MEM_AHCI_CAP2 configuration from ConfigureSataAhci function
  - Set SATA CAP2.APST=0 for TGL, ADL
 
-Hsd-es-id: 14010938799
 Original commit date: Tue Mar 31 11:00:00 2020 -0700
 Change-Id: I15da79c10e78a8766b98d79b2cc97240b11fea00
 Original commit hash: 9f55424cda11616e397c926a18130a6c9069fdbf
@@ -5232,7 +4455,6 @@ Revert "Provide Lid Status information to Gfx PEIM   - New PPI protocol to get t
 
 This reverts commit e32587c8d8b827da19d875eeff3f9cddd99ca56c and keeping new implementation for ADL-P/M
 
-Hsd-es-id: 16010863008
 Original commit date: Tue Apr 7 01:31:18 2020 +0530
 Change-Id: I9ad0249855bcc9e1cc3583b147dddc1ced912182
 Original commit hash: bb846f2dd8cac638eb857ee4acb16143244ef622
@@ -5253,7 +4475,6 @@ Remove ClientOneSiliconPkg's dependency on ClientSiliconPkg - Step 3
 
 Remove all reference of ClientSiliconPkg for JSL.
 
-Hsd-es-id: 1507577375
 Original commit date: Wed Apr 8 16:16:36 2020 +0800
 Change-Id: Id1ececb03d4d8acef184a27d9cd98cd17a402db5
 Original commit hash: 83538326339599a184b1906f494320b5261b14d8
@@ -5342,7 +4563,6 @@ Remove ClientOneSiliconPkg's dependency on ClientSiliconPkg - Step 3
 
 Move BuildFsp.cmd and BuildFsp.sh to C1S/Fsp.
 
-Hsd-es-id: 1507577375
 Original commit date: Wed Apr 8 17:00:57 2020 +0800
 Change-Id: I95a8675b104f28fe0ebb0e224a05d260922b1a85
 Original commit hash: 131f26ed30defe7029c84c5e8fab299aada1bf69
@@ -5360,7 +4580,6 @@ Date: Fri May 29 00:01:17 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2153_00
 
-Hsd-es-id: no sighting
 Original commit date: Wed Apr 8 05:02:47 2020 -0700
 Change-Id: Ic0df191febc0b6271e6dd89aedd4c82beb2d7410
 Original commit hash: 40dd4077dd0ada4c2b6406e8be2f06f664eef0cc
@@ -5374,11 +4593,8 @@ Commit: 97c17aa4b7818bb43564f5da656b18e1fe23f402
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri May 29 00:01:15 2020 +0530 
 -------------------------------------------------------------------------------- 
-[JSLP][IMAGING] Set G3 Configuration as default
-
-Setup G3 configuration as default setting in BIOS for all camera control logic and sensor setting.
-
-Hsd-es-id: 16010946006
+[JSLP][IMAGING] Set G3 Configuration as default setting in BIOS for all camera 
+control logic and sensor setting.
 
 Original commit date: Thu Mar 12 05:55:27 2020 +0530
 Change-Id: I942f8e5872ef71016617c9d02422892bd87c875a
@@ -5398,24 +4614,6 @@ Date: Fri May 29 00:01:04 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientCommonPkg/Sio: Retire them.
 
-Use the Edk2Platforms/Platform/Intel/BoardModulePkg/LegacySioDxe:
-1. Set the PCI-ISA bridge device is 00:00:1F:00.
-2. Enable PS2 keyboard and mouse.
-3. Enable UAR1 and set IO port to 0x3F8.
-
-Move the following to ADL, RKL, JSL, TGL platforms:
-1. Nct6776fHwMonDxe
-2. NuvotonNct6776fDxe
-
-Remove the following:
-1. HitachiH8s2113Dxe
-2. NationalPC8374LDxe
-3. SmscLpc100xDxe
-4. WinbondWpcn381uDxe
-
-Also remove some trailing spaces.
-
-Hsd-es-id: 1507848638
 Original commit date: Wed Feb 26 09:42:53 2020 +0800
 Change-Id: Ie8bc060c2b95b32345d7187a041108512f91ebc0
 Original commit hash: b4d0f707d8f7ea75f9e89b90040e76e7d849cefe
@@ -5489,9 +4687,6 @@ Date: Fri May 29 00:01:00 2020 +0530
 -------------------------------------------------------------------------------- 
 [JSL] - Fault Tolerant BIOS Update Support for MinPlatform.
 
-This change adds Fault Tolerant BIOS Update Support for JSL+ MinPlatform BIOS build.
-
-Hsd-es-id: 1608809178
 Original commit date: Fri Dec 27 12:40:26 2019 +0530
 Change-Id: I517caeb03ed7906a87303548c4ab6770f2f9ba59
 Original commit hash: d64fce9800eae69b612f65a188b1b5747b1306c5
@@ -5550,7 +4745,6 @@ Date: Fri May 29 00:00:36 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2152_00
 
-Hsd-es-id: no sighting
 Original commit date: Tue Apr 7 18:38:02 2020 -0700
 Change-Id: Iec96da1db46780c82505c5a4f63171b646f4e3ce
 Original commit hash: 177732eac86ae685415ba42504274688524cce9d
@@ -5572,7 +4766,6 @@ This setting is only used by platform source code, so even disable it,
 some log still output.
 And logs before read the setting also not affected by this setting.
 
-Hsd-es-id: 14011000737
 Original commit date: Tue Apr 7 09:54:22 2020 +0800
 Change-Id: I8274c749169c24e54e2527fd99052112ac6a3162
 Original commit hash: fe267a25831efda3b3c34d34ba5cd729918fa077
@@ -5591,11 +4784,10 @@ ClientOneSiliconPkg: Add single phase ADR support
 This change adds PMC_ADR_SOC_CONFIG structure which
 will be used to pass SOC configuration such as
 whether ADR supports dual phase or which GPIO to use
-for ADR. We also fix a bug related to reset sources
+for ADR. We also fix an issue related to reset sources
 programming which made BIOS ignore AdrSrcOverride setting
 and program invalid value to reset source selection.
 
-Hsd-es-id: 18011082868
 Original commit date: Mon Mar 30 22:19:44 2020 +0200
 Change-Id: I9e9fd93ef0ba08a35f5c7e42f75c33ef1e0a5724
 Original commit hash: bb36bb918c3d5729d3598adc7706c620463c7ab9
@@ -5626,10 +4818,6 @@ This change introduces following new BIOS setup options:
 - Bifurcation 2x2 1x4
 - Bifurcation 4x2
 
-The options are passed to PCH RC code via Pre-Memory Debug policy
-that has been enabled in this change.
-
-Hsd-es-id: 14011077421
 Original commit date: Thu Mar 19 17:05:47 2020 +0100
 Change-Id: I962cad5f1fd6e80e4520564f401cbe7d06b8ceb1
 Original commit hash: a92a8e4ffde86ee6045ed3b698642b1b1ec3f6de
@@ -5643,11 +4831,9 @@ Commit: e22ddc0b556b6b16b64109b36a4e2f5b36c520a7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:59:47 2020 +0530 
 -------------------------------------------------------------------------------- 
-[HSLE] GetVbtData fails on HSLE
-- Skip GetVbtData function if IGD is not present
+[HSLE] Skip GetVbtData function if IGD is not present
 Impacted Platforms : ADL, RKL, TGL, JSL
 
-Hsd-es-id: 1307475131
 Original commit date: Mon Apr 6 22:11:27 2020 +0530
 Change-Id: I1f7183a362412834660603b689bc402381370fdf
 Original commit hash: 76709d010d88cc8b51331769585188c9824e4952
@@ -5662,14 +4848,8 @@ Commit: 848ff1b4034290f6eb5cbe5bc42a42a42cd0f68a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:59:45 2020 +0530 
 -------------------------------------------------------------------------------- 
-18011145568: [ME] HECI-2 not initialized in SPS with NM enabled
+[ME] HECI-2 not initialized in SPS with NM enabled
 
-Function MeBiosGetMeStatus () returns an abstract of HFS.
-This is not always suiteable for server side,
-so for such cases MeBiosGetMeStatusRaw () has been added
-to MeUtilsLib
-
-Hsd-es-id: 18011145568
 Original commit date: Mon Apr 6 13:35:01 2020 +0200
 Change-Id: I60073baef97c4a6873c4733792059408524e088e
 Original commit hash: 7de4b2086686aaeb0cd6e84456ccbf9123405b8b
@@ -5685,11 +4865,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu May 28 23:59:39 2020 +0530 
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg: Klocwork scan fixes
-
-Fixing typo in ChipsetInitLib print.
 Fixing potential out of bounds issue in GpioNativePrivateLibVer3.
-
-Hsd-es-id: 1507877369
 
 Original commit date: Wed Mar 25 12:03:41 2020 +0100
 Change-Id: Ic128f56ceb0c112cdce59b625635e882b4f41ec2
@@ -5705,11 +4881,12 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu May 28 23:59:25 2020 +0530 
 -------------------------------------------------------------------------------- 
 Fix WWAN isn't enumearated in device manager
-  Enable only first 4 IMGCLKOUT to avoid impact WWAN.
 
-  Root Cause: The 5 IMGCLKOUT enabled by default to configure GPP_H23 to natvice function and WWAN_PWR_EN is the same pin.
+Solution: Enable only first 4 IMGCLKOUT to avoid impact WWAN.
 
-Hsd-es-id: 16010925860
+Root Cause: The 5 IMGCLKOUT enabled by default to configure GPP_H23 to natvice 
+function and WWAN_PWR_EN is the same pin.
+
 Impact Platforms: TGL,RKL,ADL
 
 Original commit date: Wed Mar 25 14:55:00 2020 +0800
@@ -5727,7 +4904,6 @@ Date: Thu May 28 23:59:11 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2151_00
 
-Hsd-es-id: no sighting
 Original commit date: Mon Apr 6 18:40:16 2020 -0700
 Change-Id: Ie71bfed7a67f4e9ba9769689ef8d4d28714b1c77
 Original commit hash: 2717fa339090f9f7d4d7bcdcd168897ec611000a
@@ -5746,7 +4922,7 @@ Date: Thu May 28 23:59:09 2020 +0530
 Enable option Configure Upstream Port Tx Preset setting.
 
 Impact Platforms: ADL, TGL, RKX
-Hsd-es-id: 1507801701
+
 Original commit date: Wed Mar 4 19:10:41 2020 +0800
 Change-Id: Ia73cdece3106b65c81d2b180f51086a27d8d225e
 Original commit hash: 0f851db8049ad03d96474c8f3c3b5e3d7078a02b
@@ -5761,11 +4937,8 @@ Commit: 16b779cd1169f4e89209a13486b233e923f5d064
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:58:55 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: Bluetooth does not enumerate after WARM RESET
+ClientOneSiliconPkg: Fix: Bluetooth does not enumerate after WARM RESET
 
-Toggle survivability bit u2ub_survivability_reg1 [0] = 1'b0 --> 1'b1 --> 1'b0 to request rosc_aon_clock after warm reset in BIOS
-
-Hsd-es-id: 14011253542
 Original commit date: Tue Mar 24 16:42:29 2020 -0700
 Change-Id: I1decbbcc3417c94c8a9fe6d9d39f5510056aae4c
 Original commit hash: 23ede959e2f4030847a8ca339d230a794d936754
@@ -5784,7 +4957,6 @@ Pre-BIOS NPK tracing for customer platform
 
 CSME early trace is enabled pre BIOS since TGL-LP B0 and TGP-H and derivatives, BIOS needs to disable it for S0ix regardless TH is enabled or not.
 
-Hsd-es-id: 1507847837, 14011226393
 Original commit date: Wed Apr 1 13:36:29 2020 +0800
 Change-Id: Ifcc8683ee56c6cdb415613e33070cd4670136795
 Original commit hash: 233d98df6d81c6b7c5a6bec2f68dcc66d5741ca0
@@ -5800,8 +4972,9 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu May 28 23:58:39 2020 +0530 
 -------------------------------------------------------------------------------- 
 BIOS will use RegBAR for PEG10/11 PID instaed of MMIO for sideband access
-  --IOP did not add shadow registers for the MMIO space.Hence, RegBaR is used for sideband access.
-Hsd-es-id: 16010926008
+IOP did not add shadow registers for the MMIO space. Hence, RegBaR is used for 
+sideband access.
+
 Impacted Platforms: ADL
 
 Original commit date: Wed Mar 25 23:56:08 2020 +0530
@@ -5822,11 +4995,8 @@ Commit: 62f7a07b8da250ba4cdae3ff393af8f27260d31a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:58:29 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg:Added DID support for ADL P and ADL M
+ClientOneSiliconPkg: Added support for xhci and Xdci Device IDs in ADL P and M.
 
-Added support for xhci and Xdci Device IDs in ADL P and M.
-
-Hsd-es-id: 1307444169
 Original commit date: Mon Mar 30 17:43:48 2020 +0530
 Change-Id: I82d07e99e3258dd41fb114a245a082bd8f96717b
 Original commit hash: d53d450e129cbd2dff28f20b13f16b5602897124
@@ -5846,7 +5016,6 @@ ClientOneSiliconPkg: Revert Bios to add DIDs for ADP-P and ADP-M PCH
 This reverts commit dfbd3b6dad0e98a1906914c69384681968d51188.
 Causing simics boot issue. Will add change later
 
-Hsd-es-id: 16010946611
 Original commit date: Fri Apr 3 08:00:33 2020 -0800
 Change-Id: Ia768ee8b532486256aa3b2e6a5a1dfadee19841c
 Original commit hash: 035ffb771570498a8c06b122e43606d927b84fa4
@@ -5863,13 +5032,8 @@ Commit: a8464c8c94749a3acfca7779686e5d51c7db15c6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:58:24 2020 +0530 
 -------------------------------------------------------------------------------- 
-[C1S] [Corp][PM]After configure to Me disable DID message disable  the platform can't boot to full responsive OS
+[C1S][PM]move SendDidMsg setup option to TestMenu to prevent misused.
 
-Issue: IOM FW is not loaded if Dram Init Done command is not sent, and it causes system hang at IomReadyCheck.
-Resolution: Discuss with CSME team, we agree to move SendDidMsg setup option to TestMenu to prevent misused.
-Impacted: All C1S projects.
-
-Hsd-es-id: 1307191235
 Original commit date: Wed Apr 1 20:13:41 2020 +0800
 Change-Id: Idb66b491db889a1022fffdb1e7d91879d0f7179e
 Original commit hash: a3e32d5a58a493fd066fa5156ad5ba05ad91ce72
@@ -5898,7 +5062,6 @@ Date: Thu May 28 23:58:16 2020 +0530
 -------------------------------------------------------------------------------- 
 [iTBT] Set security level before program UUID
 
-Hsd-es-id: 22010503389
 Impact Platforms: ADL
 
 Original commit date: Mon Apr 6 11:44:36 2020 +0800
@@ -5916,7 +5079,6 @@ Date: Thu May 28 23:58:14 2020 +0530
 -------------------------------------------------------------------------------- 
 [TCSS] Remove TCSS DEVEN save/restore mechanism
 
-Hsd-es-id: 2209589892
 Impact Platforms: ADL
 
 Original commit date: Tue Mar 31 10:51:47 2020 +0800
@@ -5940,7 +5102,6 @@ Date: Thu May 28 23:57:58 2020 +0530
 4. Correct PMC crash log collection size.
 5. Remove clear command from default flow and add a setup option to perform clear command.
 
-Hsd-es-id: 1507837587, 1507837616, 1507837760, 1507837372
 Original commit date: Wed Mar 25 17:13:30 2020 +0800
 Change-Id: Ibdadde4538336fac2f56ba23ceaaec5c70d1cfac
 Original commit hash: f3069b6ce62c20e066090af7b66ca8e1a252905c
@@ -5962,7 +5123,6 @@ Date: Thu May 28 23:57:56 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2147_00
 
-Hsd-es-id: no sighting
 Original commit date: Sun Apr 5 18:33:37 2020 -0700
 Change-Id: Ia13270ae3c701a21482ba85265d1ea063e56b5d3
 Original commit hash: 85d744a0417dc873eb866b922aafca29f6021d55
@@ -5978,7 +5138,6 @@ Date: Thu May 28 23:57:44 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2146_00
 
-Hsd-es-id: no sighting
 Original commit date: Sat Apr 4 18:32:31 2020 -0700
 Change-Id: Ic4ccb9b9a01eb97dc359656dc3ad24e7fb0e5b89
 Original commit hash: f9f4348b79996fdd2554908e21ae3ba6598ed72c
@@ -5994,7 +5153,6 @@ Date: Thu May 28 23:57:32 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2145_00
 
-Hsd-es-id: no sighting
 Original commit date: Fri Apr 3 18:32:49 2020 -0700
 Change-Id: Iefb7d201bd55077d56865df6e815cba076e5e683
 Original commit hash: 58a221c99cbf9c32739a261840085bf0040a6ec1
@@ -6012,7 +5170,6 @@ ClientOneSiliconPkg: PM_CFG4 value should be different for CML/RKL and TGL CPU
 
 Program PM_CFG4 (0x18E8h[8:0]) = 0 for VCCIO VR on CPU, 0x18 for VCCIO VR on board
 
-Hsd-es-id: 14010756703
 Original commit date: Thu Mar 26 19:13:29 2020 -0700
 Change-Id: If53999e479a20d9b1e86b8009557214b18c805d2
 Original commit hash: b202845995fb96477ed00a5a018acd6f9e54c63d
@@ -6032,16 +5189,12 @@ Commit: bc49d2054e8d2866a56312eff76c82b1ee1f7594
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:56:51 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: BIOS should program pipectl registers.
+ClientOneSiliconPkg: Added programming of  pipectl registers to avoid hang on 
+BIOS when VGA is in EBG PCIE slot. 
 
-Added programming of  pipectl registers to avoid hang on BIOS when VGA is
-in EBG PCIE slot [Gen1/Gen2 speed change & L1 exit]
+Limit the power states to p1,p2 to mitigate broken communication between 
+controller and mphy when mphy goes to deeper power states.
 
-Added missing WA from CDF. The WA in CDF was to limit the power states to p1,p2
-to mitigate broken communication between controller and mphy when mphy goes to deeper
-power states.
-
-Hsd-es-id: 18011063093
 Original commit date: Sun Mar 29 20:31:52 2020 +0200
 Change-Id: I09f3328dc1ec626c6117a6a9cbe31d01b8522e37
 Original commit hash: 5103800fcc1c151639c8d56e8a0dd1040501d533
@@ -6058,12 +5211,6 @@ Date: Thu May 28 23:56:42 2020 +0530
 -------------------------------------------------------------------------------- 
 Original fix was overwritten in latest ADL header. Pulled in the fix back.
 
-BIOS fails on write to MSR 0x65C (powerLimit).
- - PLATFORM POWER LIMIT MSR 0x65C has wrong bitfield define in ADL RDL 0.8
-   This caused an Cpu Exception in HSLE boot.
-   Updated the bitfields to the match from other generations.
-
-Hsd-es-id: N/A
 Original commit date: Fri Apr 3 16:03:49 2020 +0530
 Change-Id: I3c2b58b434ffd1e74a1cffbb273fb8514ad43618
 Original commit hash: 8aa0273be2e92391bf518622cc796bdea039954f
@@ -6077,12 +5224,9 @@ Commit: 420b455597824befeb7732c1b46806f4741b2cd6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:56:28 2020 +0530 
 -------------------------------------------------------------------------------- 
-[C1S] After disabling CNVi mode-"Disabled Integrated" CNVi preset still showing "Yes" - take#2
-
-Resolution: Remove un-used PcdFspBinaryEnable.
+[C1S] Remove un-used PcdFspBinaryEnable.
 Impacted: All C1S projects.
 
-Hsd-es-id: 16010925426
 Original commit date: Wed Apr 1 23:29:28 2020 +0800
 Change-Id: Iedf8d32813b2a0aff92af218736350a032f1b72f
 Original commit hash: 555589745f876f6137cf5a0c13395cba8a8ba8e3
@@ -6104,7 +5248,6 @@ Supervisor and allows only IO_MISC and RAX via Ring3 buffer.
 Additionally increased FvAdvanced FV size and reduced FvOptional FV size
 to fix EDK build error due to exceeding FvAdvanced FV size.
 
-Hsd-es-id: 16010927609
 Original commit date: Sun Mar 22 19:46:19 2020 +0530
 Change-Id: Iae444213d2e396c5861cede7ecf69e76f3e9df0f
 Original commit hash: 0ebe20cb39018599eeb3b56157d6272bedd980bc
@@ -6129,7 +5272,6 @@ V_PCIE_L1SCAP_PCMRT
 V_PCIE_PCIEPMECTL3_PMREQCPGEXH
 B_PCIE_ADVMCTRL_PMREQBLKPGRSPT_OFFSET
 
-Hsd-es-id: 16010966572
 Impact Platforms: ADl,RKL,TGL,SBX
 Original commit date: Tue Mar 31 16:27:27 2020 +0530
 Change-Id: I988d7c99c56960ea07deb4c6776922d950ca1457
@@ -6146,7 +5288,6 @@ Date: Thu May 28 23:55:59 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2144_00
 
-Hsd-es-id: no sighting
 Original commit date: Thu Apr 2 18:33:47 2020 -0700
 Change-Id: I8e7f944128e446d86ee3e71895b217153ffcf9ac
 Original commit hash: 32a98391e7165797ece1667b5d885a8a56ff1b8e
@@ -6162,7 +5303,6 @@ Date: Thu May 28 23:55:56 2020 +0530
 -------------------------------------------------------------------------------- 
 Bios to add DIDs for ADP-P and ADP-M PCH
 
-Hsd-es-id: 16010946611
 Original commit date: Fri Mar 27 16:42:13 2020 -0700
 Change-Id: I89ac334785201a01e284f875ac6d5ba1a8f0e51f
 Original commit hash: dfbd3b6dad0e98a1906914c69384681968d51188
@@ -6181,7 +5321,6 @@ Date: Thu May 28 23:55:37 2020 +0530
 -------------------------------------------------------------------------------- 
 Removing unnecessary library CpuFruInfoLib
 
-Hsd-es-id: 22010448229
 Original commit date: Thu Mar 19 13:03:21 2020 -0700
 Change-Id: I0509fa4cd643c5cf20c9b39ec16150c64bc1dc74
 Original commit hash: 67b7d61f2b4eb5161eab3faf0ed3043549a378e5
@@ -6202,8 +5341,6 @@ ClientOneSiliconPkg: Fix Fia Lane DMI detection
 PchFiaIsDmi () used to check if FiaLaneNum is lower than 8.
 Now FiaLaneNum is compared to PCH DMI Negotiated link width
 
-Hsd-es-id: 18011107686
-
 Original commit date: Thu Mar 12 17:35:57 2020 +0100
 Change-Id: I86ccda14d25dd95d855a9294c143b3ac7fae3493
 Original commit hash: e69b74e7080915c79e5c948e74ee7f0d30049b99
@@ -6223,7 +5360,6 @@ Clean up for ADL-P Code base
 
 Setting MK-TME disabled for ADL-P and adding missing PCH-H check for ADL PCH Sku
 
-Hsd-es-id: 16010926168
 Original commit date: Wed Apr 1 19:17:16 2020 +0530
 Change-Id: I3ff163715b030d69dfcffe1465302f5ebb49435e
 Original commit hash: fd6461fe1ee6e9a8140b4a51e782f3f445a03200
@@ -6239,16 +5375,6 @@ Date: Thu May 28 23:55:17 2020 +0530
 -------------------------------------------------------------------------------- 
 SataSocLib: Correct SataSocLib code and remove SbxFRU
 
-Previous code change introducing Sata SOC layes library:
-46eefaa89582ca5af50900a548ea0ef9a67479d0
-SataLib: Split SATA library for IP and SoC
-
-introduced unwanted SbxPch FRU. This must be removed.
-This change removes the FRU code.
-Also the change corrects year in copyright headers in new files
-and comment in MaxSataPortNum() function.
-
-Hsd-es-id: N/A
 Original commit date: Wed Apr 1 13:49:30 2020 +0200
 Change-Id: I9bee692ae7781868bb14c4d5120f4bcc4fe5f2b6
 Original commit hash: 6116cebe791261a48b6aecdf87ad4262a7f71063
@@ -6262,12 +5388,11 @@ Commit: 1408e53e6b9c58456c929ffb9c15d773e8ccc94b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:55:14 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: Move PchAdrLib into Pmc IpBlock
+ClientOneSiliconPkg: Move PchAdrLib into Pmc 
 
 ADR is implemented entierly in PMC so IpBlock is a better
 fit for this library.
 
-Hsd-es-id: 18011082868
 Original commit date: Mon Mar 30 16:25:06 2020 +0200
 Change-Id: Ief7150e8d3f9a0eb02ab31ebbf3fe628224552ab
 Original commit hash: e7c7e40eca44b84ed15d091162200366e0af4e20
@@ -6287,13 +5412,6 @@ Date: Thu May 28 23:55:06 2020 +0530
 -------------------------------------------------------------------------------- 
 PeiHsioLib: Remove redundant EBG PEI HSIO library files
 
-There were two identical instances of EBG PEI HSIO library:
-ClientOneSiliconPkg/Fru/EbgPch/LibraryPrivate/PeiHsioLib/PeiHsioLibEbg.inf
-ClientOneSiliconPkg/Pch/LibraryPrivate/PeiHsioLib/PeiHsioLibEbg.inf
-"ClientOneSiliconPkg/Pch" one is not used and redundant.
-This change removed the files.
-
-Hsd-es-id: N/A
 Original commit date: Tue Mar 31 17:24:15 2020 +0200
 Change-Id: Ib1958e572d34ef6e702300a90204c8370135dafb
 Original commit hash: 5337eaf3d8bc95ddc7296bd96160e63ba247e11a
@@ -6308,11 +5426,8 @@ Commit: b96e7f4a2b8c5921d771a02d799a10a2e06e117e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:55:02 2020 +0530 
 -------------------------------------------------------------------------------- 
-[TGL-H] [GPIO]: Wrong offset of VGPIO_0_PADCFGLOCK
+[TGL-H] [GPIO]:VGPIO_0_PADCFGLOCK PadLock register offset changed from 0x9C to 0xAC
 
-PadLock register offset changed from 0x9C to 0xAC
-
-Hsd-es-id: 18011093950
 Original commit date: Wed Apr 1 13:37:50 2020 +0200
 Change-Id: Ie12bfd0985c96eeafb0fb78b6c20e6dc7dd978bc
 Original commit hash: e57be81aced31046574621ceaa16f0dd039013dd
@@ -6328,7 +5443,6 @@ Date: Thu May 28 23:54:49 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2143_01
 
-Hsd-es-id: no sighting
 Original commit date: Wed Apr 1 18:38:54 2020 -0700
 Change-Id: Ie557ea99889636ae6c56911c998446eeea1b182b
 Original commit hash: bdfb9edb9cc5f970468d5079f42a0c06976fbbd2
@@ -6342,11 +5456,8 @@ Commit: 1dcbee33528ce05ed9ae63ce544bb21b6cd9813b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:54:30 2020 +0530 
 -------------------------------------------------------------------------------- 
-TGL: bug in Hybridstroage mode handling code
+TGL: Updates in Hybridstroage mode handling code
 
-Fixed a typo in code.
-
-Hsd-es-id: 14011095070
 Original commit date: Fri Mar 20 10:53:29 2020 -0700
 Change-Id: Id185cb2867f05c8c431e27ce261b9905e4e88fb4
 Original commit hash: 7395e788d037661e75cc15ecf42430d8d0a4e4e9
@@ -6362,7 +5473,6 @@ Date: Thu May 28 23:54:18 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2143_00
 
-Hsd-es-id: no sighting
 Original commit date: Wed Apr 1 06:00:44 2020 -0700
 Change-Id: I3e1007fbc414ab992a73cf22101a9122783e8726
 Original commit hash: cdf226ff0f17ac80c6fc3c6bb360cdf3f6866140
@@ -6377,14 +5487,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu May 28 23:54:15 2020 +0530 
 -------------------------------------------------------------------------------- 
 Missing the Pcd declaration on any inf file can't be caught during build time
- - For Current design, we encourage people to use #if FixedPcdGet statement
-   for PcdsFixedAtBuild type pcd on all the source code files, however if the
-   pcd is not declared on any inf file, for now the compiler will just assume
-   the pcd value is False or 0 even people set it to True or 1 on dsc file,
-   the behaviour is defferent than what we expect and it has been bring many
-   issues to client.
 
-Hsd-es-id: 1507753088
 Original commit date: Fri Mar 27 15:08:03 2020 +0530
 Change-Id: I91abe474a14f06ad904d520ac67a55d64db7b273
 Original commit hash: 02cfbff9da1ac656dbfac9aa2cc3e375a1cf104e
@@ -6424,11 +5527,9 @@ Date: Thu May 28 23:54:12 2020 +0530
 -------------------------------------------------------------------------------- 
 [C1S] After disabling CNVi mode-"Disabled Integrated" CNVi preset still showing "Yes"
 
-Issue: Global reset not triggered when CNVi function enable/disable
-Resolution: Move platform reset to platform/wrapper code.
+Move platform reset to platform/wrapper code.
 Impacted: All C1S projects.
 
-Hsd-es-id: 16010925426
 Original commit date: Fri Mar 27 11:18:22 2020 +0800
 Change-Id: I009907ccd9fce7b2a8fb9a9f20999ca45e57b455
 Original commit hash: f831ee0911d440a618cd33baf8af4a439d80b9e6
@@ -6449,7 +5550,6 @@ When using BootGuard profiles in which the Tpm2Startup is handled by the BtG ACM
 module, BIOS should catch the TPM_SU_STATE startup failure and handle the
 condition by issuing a cold reset.
 
-Hsd-es-id: 14011108055
 Original commit date: Thu Feb 27 12:57:33 2020 -0800
 Change-Id: I4fb5b8832bb266207d7f7beb90440f164d56a4af
 Original commit hash: 68b3a4b00c4afa52b943fae936a9868642785e44
@@ -6471,7 +5571,6 @@ The main reason was removing CDF_SC_FLAG from the platform code.
 - The defines was moved to PchLimits,
 - Cleaning CDF_SC_FLAG.
 
-Hsd-es-id: 18010474861
 Original commit date: Wed Mar 18 15:40:43 2020 +0100
 Change-Id: I365f40f8cc59134ba4aeda06e8fed38a147e0650
 Original commit hash: ec7ecd7c0fd3ce9a41746aaed7f1a63b9d08eed5
@@ -6494,7 +5593,6 @@ Config Block should not be used in BaseLib. Besides, CpuPeciMailboxCommands
 is actually one of the PEI CPU initialization API, so, we move it from
 CpuInfoFruLib to PeiCpuInitFruLib.
 
-Hsd-es-id: 16010825511
 Original commit date: Wed Mar 18 15:41:58 2020 +0800
 Change-Id: I17aa8100455f65090c804b4d48ec856c0421e5f7
 Original commit hash: 0cb3ec4028343c63789fa8570ce6e3cbbf5c8da8
@@ -6516,10 +5614,6 @@ Date: Thu May 28 23:53:49 2020 +0530
 -------------------------------------------------------------------------------- 
 [EGS][JVL] Sending ICC_READ_FROM_MPHY_CMD must be moved after DRAM_INIT_DONE
 
-The problem is that ICC_READ_FROM_MPHY_CMD HECI message is sent
-before DRAM_INIT_DONE even though it isn't allowed by desing.
-
-Within this change the following things are done:
 In EGS:
 1. DRAM_INIT_DONE message be sent after MePostMemInit ().
 In JVL/IVL:
@@ -6531,7 +5625,6 @@ Common:
 1. Changed name gPchPostMemoryConfigurationDonePpiGuid to
    gMeReadyForSendingDidPpiGuid.
 
-Hsd-es-id: 18011020483
 Original commit date: Mon Mar 30 12:39:14 2020 +0200
 Change-Id: Iaa63b73496a7ba7df4c23ee490ed50e8d8aeb067
 Original commit hash: b160e57103508835c40fe3d36d531966a9db02b5
@@ -6549,7 +5642,6 @@ Converged ACM release v1.14.0 CBNT [JSL]
 
 Staging Debug and NPW for release v1.14.0 [Padded]
 
-Hsd-es-id: 14011107617
 Original commit date: Tue Mar 31 10:58:17 2020 -0700
 Change-Id: Iabb0555c4d2e13dc2bc5ba26ca247cd4d0a5fe11
 Original commit hash: 7822a34cdc570255eca244956f4c9bd18f7daffc
@@ -6567,7 +5659,6 @@ Date: Thu May 28 23:53:35 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2142_00
 
-Hsd-es-id: no sighting
 Original commit date: Tue Mar 31 18:33:00 2020 -0700
 Change-Id: Id5b04b9b0fd9e842c2a50186efb656df62c3300f
 Original commit hash: 1cebc602198654ba75135cf6bbdb38562ad96625
@@ -6591,8 +5682,6 @@ This commit
  and
 3)SRL moved on ADL to LPCR register added changes for it.
 
-Hsd-es-id: 14010023732
-
 Original commit date: Fri Mar 27 10:22:26 2020 -0700
 Change-Id: I33b2e243c11245e8589a6c1447c58d97a19fe114
 Original commit hash: 2ae136337a3fd4da1ecd3968d685d983e982e4da
@@ -6610,11 +5699,6 @@ C1S/PmcPrivateLib: [EBG A0 CLX VV] Boot hangs after programming R_PMC_PWRM_PM_SY
 
 Added a WA to not enable PM_SYNC_MODE_C0 ADR event (bit 13) if the ADR is not enabled in BIOS setup.
 This WA has been added due to a bug in EVB board FPGA. Enabling PM_SYNC C0 ADR event caused BIOS boot to hang.
-
-Revert this change as soon as the EVB FPGA bug is fixed.
-
-Tag: EBG_AO_EVB_WA
-Hsd-es-id: 14011045668
 
 Original commit date: Mon Mar 30 13:11:05 2020 +0200
 Change-Id: Ia737bfef5df7b168283f77237b8872f8f455d18c
@@ -6636,7 +5720,6 @@ Date: Thu May 28 23:53:07 2020 +0530
 -------------------------------------------------------------------------------- 
 Update ADL headers based on WW09 ADLS TI CRIFF
 
-Hsd-es-id: 1507889771
 Original commit date: Mon Mar 30 10:20:02 2020 +0800
 Change-Id: Ifff29f6501c9fc152e3fdf764fcf12d04578028e
 Original commit hash: f79719fcc3ca63e2a8ab679465df5d539ad76d32
@@ -6662,20 +5745,8 @@ Commit: 93ffbadfc6c857bd719c890a824467ca1b1d3f77
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:52:53 2020 +0530 
 -------------------------------------------------------------------------------- 
-[C1S] Remove restricted section from MeSetup.c
+[C1S] Updating OemCapabilites1, OemCapabilites2 and OemCapabilites3 
 
-Updating OemCapabilites1, OemCapabilites2 and OemCapabilites3 happens
-inside restriction section in MeSetup.c. Due to that these values in
-external release always have value 0. In this change following things
-are done:
-1. Removed restricted section from MeSetup.c
-2. Moved ME-SMBIOS menu from restricted section from TestMenuSetupVfr.vfr
-   to MeSetup.hfr.
-3. Cosmetic changes in MeSmbios.inf driver, in C1S.
-4. The setup variables BiosReflash, BiosSetup, BiosPause, SecureBootExposureToFw
-   and vProTbtDock are no more inside restricted section.
-
-Hsd-es-id: 1507874980
 Original commit date: Wed Mar 25 08:08:27 2020 +0100
 Change-Id: I0fe163e709229547f91c6036e94c6ed66e810353
 Original commit hash: b15c760a6e3fb353cb97ff4aea36187624b1625e
@@ -6695,7 +5766,6 @@ Date: Thu May 28 23:52:10 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2141_00
 
-Hsd-es-id: no sighting
 Original commit date: Mon Mar 30 18:36:27 2020 -0700
 Change-Id: I0c2b961254e9613c2f04f000414ed7d14253e253
 Original commit hash: 378bef98b5520f247878bcbd5f38943ff6ee086a
@@ -6714,7 +5784,6 @@ Fix Gfx Gen12 GT PM gaps in BIOS
 - RC1p frequency option is missing in RKL
 - UPD default is wrong for RC1p freq
 
-Hsd-es-id: 16010948194
 Original commit date: Fri Mar 27 14:49:54 2020 +0530
 Change-Id: I55ec3b74bb6f26e9d004e7a4070d8e9a183922af
 Original commit hash: 124b0170f3610dd40d1c49c3f0b40e3ca423ef13
@@ -6730,7 +5799,6 @@ Date: Thu May 28 23:51:42 2020 +0530
 -------------------------------------------------------------------------------- 
 CMLS+TGP : SMRAM Control Register bit 4 is unlocked when SINIT tries to execute
 
-Hsd-es-id: 14011185184
 Original commit date: Mon Mar 30 11:55:53 2020 +0530
 Change-Id: I7bd50a1bceebd9af69281d07ebf0b36ef854dffb
 Original commit hash: 35e1a0c959d4bfbc1eea06a438603e6a95044482
@@ -6752,8 +5820,6 @@ PCIe Gen5 support - Link should be trained to Gen1 only after HSPHY FW+Recipe do
 2)Create API for gen1 Link training which can be use for both PHYs
 3)Create FRU folder for HSPHY Information
 4)Speed limit register needs to program per rootport and one at a time
-
-Hsd-es-id: 16010714220
 
 Original commit date: Wed Feb 26 18:42:00 2020 +0530
 Change-Id: Iac1810016737b24a42a676f74ae52254c7f1b861
@@ -6786,7 +5852,6 @@ Date: Thu May 28 23:51:13 2020 +0530
 4. Correct PMC crash log collection size.
 5. Remove clear command from default flow and add a setup option to perform clear command.
 
-Hsd-es-id: 16010796946, 16010796947, 16010796948, 16010796949
 Original commit date: Fri Mar 27 09:49:08 2020 +0800
 Change-Id: I089c1048fa62e9f5af1a8fc3ac710445f6c8c496
 Original commit hash: 64e9efd952e4455bd562cb7bd1553cb0a79f664f
@@ -6804,7 +5869,6 @@ Date: Thu May 28 23:51:05 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2137_00
 
-Hsd-es-id: no sighting
 Original commit date: Sun Mar 29 18:32:57 2020 -0700
 Change-Id: Iaa614314147bb2155306dae1e273f71226c27cfe
 Original commit hash: 78bc8f157b706db619f46542dc69085580be99ff
@@ -6820,7 +5884,6 @@ Date: Thu May 28 23:50:52 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2136_00
 
-Hsd-es-id: no sighting
 Original commit date: Sat Mar 28 18:32:43 2020 -0700
 Change-Id: Ie73d8af80cea3bdf428fd1940357c1067fd82e4b
 Original commit hash: a66aaf92ef1d51e61da0a8823fb865a601bc14fb
@@ -6839,7 +5902,6 @@ ClientOneSiliconPkg/IpBlock/PeiItssLib: Re-enabling D17F0, D19F0 interrupts
  - Adding _PRT entries for D17
  - Fixing D17 omission in PeiPolicyLib for PCH-LP
 
-Hsd-es-id: 16010920378
 Original commit date: Thu Mar 19 15:41:43 2020 -0700
 Change-Id: I312470f29da48a627f1de4dd4205ae585845272c
 Original commit hash: 85486aa278fa7f54f3f377d5c1efa1a8fb346b0a
@@ -6858,8 +5920,6 @@ ClientOneSiliconPkg/IpBlock/TwoLm: Correction to FMHC intializations.
 
 For [TGL-H][PO][2LM]: FMSS settings mismatch the BWG
 
-Hsd-es-id: 22010458615
-
 Impacted Platform: TGL, ADL
 
 Original commit date: Fri Mar 27 11:26:06 2020 -0700
@@ -6877,7 +5937,6 @@ Date: Thu May 28 23:50:26 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2135_00
 
-Hsd-es-id: no sighting
 Original commit date: Fri Mar 27 18:34:33 2020 -0700
 Change-Id: If1d86671a726ed5ea6df8d65feffdc316ba368c6
 Original commit hash: 614da6a30bcbda29c0be8afe932a60377c4b7460
@@ -6896,7 +5955,6 @@ ClientOneSiliconPkg: Add PTM configuration to PcieSipInitLib
 PcieSipInitLib now supports PTM registers configuration based
 on the project settings.
 
-Hsd-es-id: 1607351014
 Original commit date: Tue Feb 11 17:39:36 2020 +0100
 Change-Id: I299ba197244d3f6c2ba6433081f961b6fb943c23
 Original commit hash: 91268c92bd66eb996625281b6def357f571b84a0
@@ -6921,7 +5979,6 @@ Date: Thu May 28 23:49:40 2020 +0530
 
 Use "LShiftU64()" instead of "<<".
 
-Hsd-es-id: 1507880627
 Original commit date: Thu Mar 26 14:50:43 2020 +0800
 Change-Id: Icf52d642ce77a796fe984f6cb82ff8ea79a93af0
 Original commit hash: 1e3aa93f17d556b115a3e98b6efd8841d2d935ce
@@ -6938,7 +5995,6 @@ Date: Thu May 28 23:49:39 2020 +0530
 Program Unix format System Time to 2LM device.
 - Added new BaseSystemTimeLib under ClientOnseSilicon\Library to get System Time
 
-Hsd-es-id: 2209617459
 Original commit date: Wed Mar 18 20:59:48 2020 +0530
 Change-Id: I23d89727c87656e684b0fcc2853b029bf10fc912
 Original commit hash: e2659562ea609968dbbcafd8eec85b3586c5cc83
@@ -6960,7 +6016,6 @@ Remove ClientOneSiliconPkg's dependency on ClientSiliconPkg - Step 3
 
 Remove DxeSmbiosFirmwareVersionInfoLib and related usage.
 
-Hsd-es-id: 1507577375
 Original commit date: Thu Mar 26 16:22:57 2020 +0800
 Change-Id: I7b0ad7b8155f960343e7ff0430f066923dd0c8a4
 Original commit hash: 7192c9f55a11400cca8b57b6140c171d790b4c4d
@@ -6985,7 +6040,6 @@ Date: Thu May 28 23:49:09 2020 +0530
 
 To w/a TGL A0 bug, PCH BCLK needs to be enabled.
 
-Hsd-es-id: 1507394940, 22010460046
 Original commit date: Tue Mar 24 15:55:44 2020 +0800
 Change-Id: Icda07fa5da0acb8417666c1020afc9a3675000ed
 Original commit hash: a147dd4b5ae63e9b2082cabc58f4e0e9a8db905f
@@ -7007,7 +6061,6 @@ Issue: CSME can't reflect the jumper in HECI Fwsts in early phase.
 Resolution: Check flash Descriptor Override Pin-Strap Status instead of HECI Fwsts.
 Impacted: All C1S projects.
 
-Hsd-es-id: 22010315105
 Original commit date: Wed Mar 25 13:17:48 2020 +0800
 Change-Id: I71128947519d8f47e243b7191aca9d58adb7fbb0
 Original commit hash: af7a33c4208b54591fd36779ea79e21e3da84e70
@@ -7024,7 +6077,6 @@ Date: Thu May 28 23:49:04 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2134_01
 
-Hsd-es-id: no sighting
 Original commit date: Thu Mar 26 18:37:14 2020 -0700
 Change-Id: I9c6c9a738b85148337b96c8826589d141c78b003
 Original commit hash: 9e8c826f599b764ae51a617b27513374a8942987
@@ -7043,7 +6095,6 @@ ClientOneSiliconPkg: USB Device Yellow bang
 Observing Unknown USB Device Yellow bang in device manager and keyboard functionality is broken after Restart.
 Use Usb2PhyRefFreq based on CPU
 
-Hsd-es-id: 16010903499
 Original commit date: Wed Mar 25 16:59:00 2020 -0700
 Change-Id: Iae22741dfb4980191eb6ad3005e98583f2d4b33f
 Original commit hash: fbe4b8f7b9befd1ddbc5f40e14ccf007b1c7e39c
@@ -7064,7 +6115,6 @@ AlderLakePlatSamplePkg\Library\PeiPolicyUpdateLib: Both I2C4 and I2C5 are enable
 Part 3 - AlderLake
 Removed Policy override.
 
-Hsd-es-id: 14010684928
 Original commit date: Tue Mar 24 00:43:46 2020 -0700
 Change-Id: Idee35f01b002e820a822316bc06d3ec40e240af4
 Original commit hash: 98ae8fd13dd959a928c7eac24d3d0a87a1c398ef
@@ -7080,11 +6130,6 @@ Date: Thu May 28 23:48:32 2020 +0530
 -------------------------------------------------------------------------------- 
 WhitleyFspPkg/Build: Remove generated files
 
-Add WhitleyFspPkg/PlatformPkgConfig.dsc
-This is generated during the build.
-Also added to .gitignore
-
-Hsd-es-id: 22010246306
 Original commit date: Wed Mar 25 14:10:58 2020 -0700
 Change-Id: I16592ca3dfb3117a13afbc0b9385f2ca8f201606
 Original commit hash: 10f516f6dcefecf8924bcee5ed9bd470cff6b780
@@ -7098,15 +6143,10 @@ Commit: 2032642dbba87558747778d0b7ffe3a4e73e7888
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:48:19 2020 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib: [EBG A0 CLX VV] platform doesn't initialize after enabling SATA Hotplug in BIOS
-
-When enabling Hot Plug in BIOS on an ArcherCity+EVB board on the SATA ports, after doing a reset to save the changes the platform doesn't come back.
-GPIO ERROR: Cannot enable SATAGP0, GPIO_GPP_E10 already used for SATAXPCIE_0
-PEI_ASSERT!: [SiInit] c:\oracle\ebgpo\v001\intel\ClientOneSiliconPkg\IpBlock\Gpio\LibraryPrivate\PeiDxeSmmGpioPrivateLib\GpioNativePrivateLib.c (320): ((BOOLEAN)(0==1))
+ClientOneSiliconPkg: [EBG] platform doesn't initialize after enabling SATA Hotplug in BIOS
 
 Fix: Removed redundant assert
 
-Hsd-es-id: 18011021381
 Original commit date: Tue Mar 24 12:04:26 2020 +0100
 Change-Id: I2e08d711c270e7e8d8f1940484b431765d219f21
 Original commit hash: bec3e5df4639d138d325a4449bfb4835e177d637
@@ -7120,11 +6160,10 @@ Commit: 19a3a7a8933791e404abc0669ffeaffa9afa532b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:48:09 2020 +0530 
 -------------------------------------------------------------------------------- 
-18011009884: [ME][CPX] EndOfPostAfterS4 - unwanted trace
+[ME][CPX] EndOfPostAfterS4 - unwanted trace
 
 Add SPS MeMode (0xF) decoding
 
-Hsd-es-id: 18011009884
 Original commit date: Wed Mar 25 11:26:20 2020 +0100
 Change-Id: I62f66d67cc3a073ebfe7b64aac1257f4a453fd89
 Original commit hash: 6b3db6786788ec4a8e4acf6d16fc68207c38a3a3
@@ -7150,7 +6189,6 @@ As result we have two SATA public libraries:
 1. SataLib- IP library
 2. SataSocLib- Soc library
 
-Hsd-es-id: N/A
 Original commit date: Thu Mar 5 16:29:12 2020 +0100
 Change-Id: Iccfa56fe26395e72cac5e57747dfdcb0cc4d6b8e
 Original commit hash: e0355d028d0ec2f9d79642304f7e19d6a2a354b3
@@ -7239,12 +6277,6 @@ Date: Thu May 28 23:47:58 2020 +0530
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/SystemAgent: Add MrcChannelStatus macro in FSP MemInfoHob.h
 
-Solution: This patch ensures Bootloader don't need to add duplicate
-MrcChannelStatus macros.
-
-TEST=No brokenness with GCC version.
-
-Hsd-es-id: 16010942717
 Original commit date: Thu Mar 26 09:57:43 2020 +0530
 Change-Id: I90e3c25f60769cce050a1516e96c47ea573ee947
 Original commit hash: 6e79b4941e82a038df3b049c11c3f7f3e5045952
@@ -7258,15 +6290,7 @@ Commit: 0703af58e27f51734ef360f916d4bec02f7400d4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu May 28 23:47:57 2020 +0530 
 -------------------------------------------------------------------------------- 
-PeiPchInitLib: USB HSIO RX params not programmed if no TX params set
-
-There was an invalid condition check in PchUsb.c for HSIO TX params
-that if no TX tuning was enabled then RX parameters wouldn't be
-programmed as well. This change fixes that condition and now if any of
-RX or TX parameters programming is enabled then execution won't exit
-function and proceed with the programming.
-
-Hsd-es-id: 18010896327
+PeiPchInitLib: Fixes for USB HSIO RX params if no TX params set
 
 Original commit date: Fri Mar 13 09:35:07 2020 +0100
 Change-Id: I375b722a36f29bb502bb3a09eb208cf4428e0fae
@@ -7287,7 +6311,6 @@ Do not support EPCS now.
 
 Impacted Platforms: ADL, RKL, JSL, TGL
 
-Hsd-es-id: 1507852472
 Original commit date: Wed Mar 18 13:29:52 2020 +0800
 Change-Id: I97fe15cb6cf3f41da45e4abb0f75cca0b430f5b6
 Original commit hash: 5912ab2b1f349c53391e4fb2b50804fa030023ff
@@ -7310,7 +6333,6 @@ Date: Thu May 28 23:47:47 2020 +0530
 GPIO_B10 is used to control SATA HDD power down during code reset.
 To make Hddpassword functional, board rework is also requried.
 
-Hsd-es-id: 1507872273
 Original commit date: Tue Mar 24 00:31:45 2020 +0800
 Change-Id: I433f1ef09dbf20e8ada46eeb95604d753eb0b9f7
 Original commit hash: 3dbcbccffe9d6753e03685bba20d36ef1e54a27c
@@ -7326,7 +6348,6 @@ Date: Thu May 28 23:47:45 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2134_00
 
-Hsd-es-id: no sighting
 Original commit date: Thu Mar 26 00:39:47 2020 -0700
 Change-Id: I1ea99849420f5d7403e8f97c163f0d85f875eef8
 Original commit hash: e3a98a5b6e1d5d8d20ececc2520c3d844cc1c163
@@ -7348,7 +6369,6 @@ Mmio64Length = 2^(PhysicalAddressBits) - Mmio64Base
 PhysicalAddressBits coming as '39' on TGL-U,
 So Mmio64Length will be 256 GB (0x8000000000-0x4000000000)
 
-Hsd-es-id: 14010269348
 Original commit date: Thu Mar 19 22:10:11 2020 +0530
 Change-Id: I1d01b6ac3f88623f015a8c123d27161118d73758
 Original commit hash: e5529322b79664f52ba8f310bdf04645246aa0bb
@@ -7364,7 +6384,6 @@ Date: Thu May 28 23:47:21 2020 +0530
 -------------------------------------------------------------------------------- 
 [TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 2133_00
 
-Hsd-es-id: no sighting
 Original commit date: Wed Mar 25 18:36:11 2020 -0700
 Change-Id: Iab84a110850fd478733c942f853338a7b34127c5
 Original commit hash: 4941e67da1e4828c60d53555aed90ca9efc340ea
@@ -7383,7 +6402,6 @@ ClientCommonPkg/Include/BootState.h: Move to PlatSamplePkg.
 Prepaer for retire ClientCommonPkg.
 Also move gBootStateGuid from ClientCommonPkg to PlatSamplePkg.
 
-Hsd-es-id: 1507852349
 Original commit date: Tue Mar 24 17:31:14 2020 +0800
 Change-Id: Ifc65d48255715e3cde803e9da088efd0cd4fd5e5
 Original commit hash: 1c2762f21a0c872dea84870c38c49c43e757415f
