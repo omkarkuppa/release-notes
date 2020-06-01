@@ -68,6 +68,8 @@ Date: Wed May 27 15:43:32 2020 +0530
 -------------------------------------------------------------------------------- 
 LakeFieldPlatSamplePkg: Enable scrambling before changing UFS power mode
 
+Enabling scrambling improves signal integrity making link more stable.
+
 Original commit date: Mon Apr 27 11:33:28 2020 +0530
 Change-Id: I63baea919ebf256d56392e5aea910230b0d2ba71
 Original commit hash: aea3bae677848950592c3f3b85f202cc709a8909
@@ -107,9 +109,8 @@ CLB used for PCIe Electrical validation doesnt emulate PCIe end point so
 clocks are disabled.
 And hence Compliance Test mode BIOS set up is added, if it is enabled
 clocks will not be disabled even if the pcie end point is not preset.
-Most of the customers rely on internal PCIe electrical validation but there
-are few customers prefer to do the electrical validation themselves and hence
-this BIOS set up option is helpful.
+For customers preferring to do the electrical validation themselves this BIOS 
+set up option is helpful.
 
 Original commit date: Fri Apr 17 11:13:46 2020 +0530
 Change-Id: I3df0213f38eec3e76926f3c33991f7bb20078cb9
@@ -131,7 +132,11 @@ Commit: e770088dafb6cdb168a068740e0f91079950504f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed May 27 15:43:27 2020 +0530 
 -------------------------------------------------------------------------------- 
-Add 500us delay to gurantee HW_FW reaches a stable state between UFS EN and HCE EN
+Add 500us delay to guarantee HW_FW reaches a stable state between UFS EN and HCE EN
+
+Dekel FW/PHY HW taking more time to complete handshake with UFS Host
+controller on power fsm and hence this delay is required between UFS EN=1
+and HCE =1 to reach the states stable.
 
 Original commit date: Thu Apr 23 17:19:37 2020 +0530
 Change-Id: I1764772898c3d668af907ac483e870395e3282b9
@@ -333,8 +338,9 @@ Commit: f6605a41881ac0ededf6cde37338f40037b45bed
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed May 27 15:43:13 2020 +0530 
 -------------------------------------------------------------------------------- 
-Add manifest key number check &
-follow new commit request structure for Anti-Rollback SVN commit request
+Security updates:
+Add manifest key number check for BIOS to only display MFT_KEY_USAGE_INDEX_CSE_RBE_MANIFEST&
+Follow new commit request structure for Anti-Rollback SVN commit request
 
 Original commit date: Thu Mar 26 14:50:25 2020 +0800
 Change-Id: If70e4c7b3bf360d42bbf136edfd9c2d0694cde19
