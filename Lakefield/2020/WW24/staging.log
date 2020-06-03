@@ -3,9 +3,8 @@ Commit: 073458f99c44dd38ece7bde21ddcece38e394654
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Jun 2 06:42:58 2020 +0530 
 -------------------------------------------------------------------------------- 
-Changing BIOS ID to 4205.00 for WW20.5'2020 BIOS label
+Changing BIOS ID to 4205.00
 
-Hsd-es-id: NA
 Original commit date: Fri May 15 10:53:13 2020 +0530
 Change-Id: I3e7cefd4960cc64bd0f42088a3386601abccfa74
 Original commit hash: 34385bf9944f79d96aeb1e527378c9a84322fa61
@@ -19,21 +18,21 @@ Commit: c511ae22f09be01a0afe83bbb8a151cf8fba036b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Jun 2 06:42:57 2020 +0530 
 -------------------------------------------------------------------------------- 
-LKF BIOS needs check for Dekel FW state and perform a reset flow if in hang state.
+In UFS boot, BIOS needs check for Dekel FW state and perform a reset flow if it 
+is in hang state.
 
-Internal and External platforms seen boot hang cases where the FW in Dekel
-PHY is stuck. With no visibility into the signals/postcode, leading hypothesis
-was race conditions leading to FW getting stuck very early during BIOS execution,
-specifically between 2 BIOS writes -> UFS_EN (enable UFS Subsystem) & HCE_EN
-(Enable UFS Host controller). Since BIOS uses upto HS G3 where Dkl FW support
-is not needed, BIOS uses case are working fine and issues areseen only in
-UFS OS driver when it tries to use HS-G4. Earlier 500 us delay added in BIOS
-between UFS_EN ad HCE_EN through Change-Id: I1764772898c3d668af907ac483e870395e3282b9
-and Hsd-es-id: 16011039033. To make reboust fix, Dkl FW team requested reset
-when BIOS sees dkl phy in stuck state and send DKL reset PMC IPC command.
+Boot hang issues observed have indicated that the FW in Dekel PHY is stuck. 
+Hypothesis is that, race conditions are leading to FW getting stuck, very early during 
+BIOS execution specifically between two BIOS writes -> UFS_EN (enable UFS Subsystem) 
+& HCE_EN (Enable UFS Host controller). Since BIOS uses upto HS G3 where Dkl FW support
+is not needed, BIOS use cases are working fine. However, issues are seen only in
+UFS OS driver when it tries to use HS-G4. 
 
-Hsd-es-id: 16011132383
-Attestation-link: LakefieldPlatSamplePkg/InternalOnly/IpPlan/Client BIOS IP Plan.xlsx
+Earlier, a 500 us delay was added in BIOS between UFS_EN ad HCE_EN through 
+Change-Id: I1764772898c3d668af907ac483e870395e3282b9. To make reboust fix, when BIOS 
+sees that Dekel phy in in stuck state, a DKL reset PMC IPC command will be sent to 
+perform a reset flow.
+
 Original commit date: Wed May 13 11:21:09 2020 +0530
 Change-Id: Id47cc50da7a3bed212c9fda48c91818dcd8e9f49
 Original commit hash: f1710e4c2f45f4017143eedddf077227cb00505f
@@ -48,9 +47,8 @@ Commit: ce1faae78b599ded4a1b3d3a4eefd4ddb6fb8eec
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Jun 2 06:42:55 2020 +0530 
 -------------------------------------------------------------------------------- 
-Adding microcode version m_10_806a1_00000026
+Adding microcode
 
-Hsd-es-id: https://hsdes.intel.com/appstore/article/#/1707209439
 Original commit date: Thu May 14 08:39:35 2020 +0530
 Change-Id: If4630a99969e510c728c86fa3db7a8c9ac5f180a
 Original commit hash: 8a54121c428c0b69cd1166b6083be6a5139ecbfa
@@ -90,16 +88,10 @@ Commit: e4d45584dff475c2a693205202772e7bf78c21ce
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Jun 2 06:42:53 2020 +0530 
 -------------------------------------------------------------------------------- 
-[LKF]-LKF Platform behavior upon thermtrip and 10s power button shutdown
+Platform behaviour improvement in case of thermtrip and 10s power button shutdown.
 
-Issue:
-When power button is pressed more than 10 seconds by user, pmic
-intiates platform reset which does RTC reset as well.
-
-Changes
 GPIO 188 and GPIO 222 changes to support power button changes in RVP1.
 
-Hsd-es-id: N/A
 Original commit date: Thu May 7 09:38:22 2020 +0530
 Change-Id: I921f3e8d747db5c41bdbb74cc16ba5a8bee67bf9
 Original commit hash: 34ae5f6edf8daecbdc63d62eb1c6707e6cf1d2ac
