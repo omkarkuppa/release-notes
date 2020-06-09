@@ -1,0 +1,3541 @@
+================================================================================ 
+Commit: 91ddecb4979a7217ab664a1b9b9c27bddf8a9cca 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:34:15 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update SiPkg.dec for 3224.02
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: f137bfac7b35a485ac40670bf98967b459d772f9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:24:11 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update BIOS ID to 3224.02
+
+Hsd-es-id: N/A
+Original commit date: Thu May 28 15:10:13 2020 -0700
+Change-Id: I6c88112526b4dba52bcc09c9cedcc3e185310a4c
+Original commit hash: b99843ac95cfe3e521b6d2fd551bc9fa536ce345
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 62217e9814c345efde376b5fda653e41b0a4b4a5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:24:08 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu May 28 22:03:00 2020 +0000
+Original commit date: Thu May 28 22:03:00 2020 +0000
+Original commit hash: 27b92025cfa4aac444a63a2185fc8adafc50fbaa
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 7dca80ac0d1779ca4b4e6553f81fd8109b5b4d9a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:24:05 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update BIOS ID to 3224.01
+
+Hsd-es-id: N/A
+Original commit date: Thu May 28 11:20:28 2020 -0700
+Change-Id: I71ea7ded4a433517ac61ff26d324776aed00d19e
+Original commit hash: 48e822d98551248376676594c6552bc6531a06c0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 30ce927b807077aefb802adc080b6c925fb48946 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:57 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Thu May 28 10:05:21 2020 -0700
+Change-Id: I39c4c057a405d9aadbc094b9dc3529be1c430ceb
+Original commit hash: f8a0885760df7f812e8bf9507c9ffdeaaac69efd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 06824d60432e711d83313587455845e660560383 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:54 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3224_00
+
+Hsd-es-id: no sighting
+Original commit date: Thu May 28 09:19:45 2020 -0700
+Change-Id: I8e2defd0f541c192b4d31e2a17c1f7d94c136ec0
+Original commit hash: 18098b246a3ea848dc3ff7f25e5f6c410f138bda
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 545859010c76558de3269e443f1e88ab5766eb63 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:51 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update Tiger Lake FSP Integration Guide to document FSP 2.2 changes.
+
+Added:
+  Section 5.1.5 for MultiPhaseSiInit API.
+  Section 5.1.7 for FSP Events API.
+
+Renamed:
+  Section 5.1.6 now is NotifyPhase API.
+
+Hsd-es-id: 14011497654
+Original commit date: Mon May 25 22:08:41 2020 +0800
+Change-Id: Ib4a379ea34e9be35450fcf3e1c997168c143699b
+Original commit hash: 3a416b50e9dafce79f012bd99abdf17d429986ef
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/Upd/FspsUpd.dsc
+
+================================================================================ 
+Commit: daa2a0cff077b123389a930c86caf9b6b2117730 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:49 2020 -0700 
+-------------------------------------------------------------------------------- 
+Implement FspMultiPhaseSiInit() API defined by FSP 2.2.
+
+Chrome OS has requirement that Type-c display works during boot up of the system. Currently this is not working on Tigerlake due to changes to the Type-C infrastructure with the addition of TCSS.
+
+FSP Silicon init takes care of TCSS initialization and GOP Graphics initialization and since in Chrome TCSS Mux control is done by Coreboot(Bios) there is no chance for Coreboot to set the muxes appropriately so display never enumerates.
+
+Recommendation is for FSP to add a callback after TCSS Initialization is complete where Coreboot can then set the mux states and return to FSPS
+
+Hsd-es-id: 14011496623
+Original commit date: Mon May 25 17:52:27 2020 +0800
+Change-Id: I2a00978b88005fbb6c98c20e77083f9283cfdede
+Original commit hash: d9101f085d0bcbf86221c1158aad614c2ca2292f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssInitLib/PeiTcssInitLib.inf
+ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssInitLib/TcssInit.c
+TigerLakeFspPkg/BuildFv.cmd
+TigerLakeFspPkg/BuildFv.sh
+TigerLakeFspPkg/FspHeader/FspHeader.aslc
+TigerLakeFspPkg/FspInit/Pei/FspInit.c
+TigerLakeFspPkg/FspInit/Pei/FspInit.inf
+TigerLakeFspPkg/Library/SecFspSiliconLib/SecFspSiliconLib.c
+TigerLakeFspPkg/Library/SecFspSiliconLib/SecFspSiliconLib.inf
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+TigerLakeFspPkg/TigerLakeFspPkg.dsc
+TigerLakeFspPkg/TigerLakeFspPkg.fdf
+TigerLakeFspPkg/Upd/FspsUpd.dsc
+TigerLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/FspWrapperHobProcessLib.c
+TigerLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/PeiFspWrapperHobProcessLib.inf
+
+================================================================================ 
+Commit: dd209a630252eb0fcc56ffdd8f356a032541320d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:46 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL H]: Added TGL H Bep+ Board Support
+
+Hsd-es-id: 16011168319
+
+Original commit date: Thu Apr 23 09:27:34 2020 +0530
+Change-Id: If516c9ab370a5c683bac2e9df97cf5db40b06c18
+Original commit hash: 903eb884ea96b025be114b8948a54d12d9e81663
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/Include/PlatformBoardId.h
+TigerLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/GpioTableTglHPostMem.h
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/GpioTableTglHPreMem.h
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/PchUsbOcMappingTable.c
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/PchUsbOcMappingTable.h
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/PeiDetect.c
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+
+================================================================================ 
+Commit: 456d1e4d7050909014208ff6cce19a31b41037b4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:43 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update BIOS ID to 3223.01
+
+Hsd-es-id: N/A
+Original commit date: Wed May 27 12:28:40 2020 -0700
+Change-Id: Id55d2936a5b876aaa741c42d6f457ecf78df9c5e
+Original commit hash: 2680a642fc10c1c6bc03c646af0a71926390ac7a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: dce995451980abb2be4342f55c89ee13972f8ea1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:41 2020 -0700 
+-------------------------------------------------------------------------------- 
+Revert "PmcPrivateLib: Update MAX_CPUMSG_LTR to 13ms for PCH-LP"
+
+This reverts commit 8f564bfaac130505d311ab01e78dc33399e279df due to low S0i3.2 residency.
+
+Hsd-es-id: 16011174439
+Original commit date: Wed May 27 11:24:33 2020 -0800
+Change-Id: I137e52da3f085d6cc8632f1fd67bb84bf4bab8ca
+Original commit hash: aa6a38db6bafa1c39ebc1a34a9961ee30b0325f5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLibVer2.c
+
+================================================================================ 
+Commit: 90d5b72a3c679106494391bd757e0c9331a89aa6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:38 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLake B0 Unified (uCode+Punit) Production Patch 0x30
+
+Hsd-es-id: 14011570717
+
+Original commit date: Tue May 26 11:03:42 2020 -0700
+Change-Id: I33aa93ab623b896a03b7105e0b42ae4414c5248c
+Original commit hash: da461c402b04b312c153a42aefe1b746ee354b97
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 8ce52c1a8f13e315c6d45951a620dc3387b4f739 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:36 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update the TGL B0 ucode to 0x2E
+
+Hsd-es-id: 22010767398
+
+Original commit date: Tue May 26 16:27:32 2020 -0700
+Change-Id: I5164126bc109ad3227fb1886a840ee7289616292
+Original commit hash: 0706c0c99462ad40da679c950ecec517ca377d4e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 15cf0682630d352ce9b0c341baf65548fdcad08c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:33 2020 -0700 
+-------------------------------------------------------------------------------- 
+C1S/MemoryInit/Tgl: [TGL][MRC] Update MrcVersion.h and ReleaseNotes to master 0.8.2.0
+
+Updating MrcVersion.h and ReleaseNotes
+
+Hsd-es-id: N/A
+
+Fri May 22 13:39:28 2020 -0700
+Original commit date: Fri May 22 13:39:28 2020 -0700
+Change-Id: I07f255e292f0418724ed694c5eccff756d4794ae
+Original commit hash: 7e2e7b0bb5c346eaa8a1febcf40dbf95bda87305
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: f890a0cb3a74753cda87d3086994567e3a3ef5a2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:31 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Fri May 22 21:40:20 2020 +0000
+Original commit date: Fri May 22 21:40:20 2020 +0000
+Original commit hash: fc66f23ca94aba0294720bc1d84ed8cffd0e5c5a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: f2c3a287e84ddcbec3608dc6525a410d061bd805 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:28 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: TGL U/Y Expose SV VVDQ TX input knob so customers can change the knob as needed.
+
+Issue:
+    Customer unable to boot with dynamic VF curve voltage calculated value
+
+Root cause:
+    For customers need the ability to change VDDQ TX so we need the input parameter to exposed to customers
+
+Change:
+    Exposing VddqVoltageOverride input to external customers
+
+Hsd-es-id: 14011545116
+Original commit date: Wed May 20 16:28:57 2020 -0700
+Change-Id: I214201aad5cdeaa9802a2037fd763dbaf472c18a
+Original commit hash: 6b162551b710b79aa9ba7b8150c7790af528d665
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver2/MemoryConfig.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/MEMORY/MrcSetup.c
+TigerLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+TigerLakeFspPkg/Upd/FspmUpd.dsc
+TigerLakePlatSamplePkg/Include/SetupVariable.h
+TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+TigerLakePlatSamplePkg/Setup/SaSetup.hfr
+
+================================================================================ 
+Commit: 30382723e78737ee2402285b02fd5e708465e067 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:25 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu May 21 18:00:10 2020 +0000
+Original commit date: Thu May 21 18:00:10 2020 +0000
+Original commit hash: 2afda65d4a9f18e50babca5fa971f1249191cf5c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: c5f589523784e4d1bf2b17b3ede8636ffdcea8e0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:22 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: [TGL-B0][PO]: LP4x - Incorrect Turnaround Times Programming
+
+Issue:
+    tWRWRdr, tRDWR[sg,dg,dr] and tWRRD in TGL MC timing values misaligned
+    tODTLoff LUT missing JEDEC note call out adding 8tCK if BL32 to table values
+
+Root cause:
+    tWRWRdr MRC was coded with NT-ODT timings
+    tRDWR[sg,dg,dr] in MRC tDQSCKMax and tODTLon(min) are in converted to tCK independently
+    tWRRD MRC misaligned values
+
+Change:
+    tWRWRdr MRC aligned formula to TGL MC design
+    tRDWR[sg,dg,dr] properly converted timing units for precision
+    tWRRD MRC aligned formula to TGL MC design
+    Updated tODTLoff return value to conditionally adds +8 if BL==32
+
+Hsd-es-id: 22010595415
+Original commit date: Tue Apr 7 19:38:16 2020 -0700
+Change-Id: Ib29693bf980290c76402203e05f67abe0b6b932e
+Original commit hash: 803b7afb65c812e1489da3b6765c652adcbb01f3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcTypes.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+
+================================================================================ 
+Commit: 4b6c12a7b8a5d788ccf323902d9e7c9b72bc9be3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:20 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu May 21 01:19:12 2020 +0000
+Original commit date: Thu May 21 01:19:12 2020 +0000
+Original commit hash: 7ad3ffc3831fa6f6c7bc31c0854d9167dfc212f9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 2af8ca0d376447238686006f5800f8a7888d52c0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:17 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: [TGL][FuSa] MRC support for IBECC CTC & CMI/CMF E2E Parity CTC
+
+1. When "Diagnostic Mode" boot is detected (i.e. FUSA_DIAGTEST_EN==1 && FUSA_DIAGTEST_PCHMODE==0), execute Check-The-Checker for:
+   - CMI
+   - IBECC
+2. Create setup option to enable/disable CMI/MC parity
+3. Increase GCC Size
+
+Hsd-es-id: 14010085451, 1507715246
+Original commit date: Thu Apr 9 11:43:10 2020 +0800
+Change-Id: I72f157a2ebe9c27de1adc1e1e8d16cab72143ad5
+Original commit hash: ddd7e6ebd0a352be0ff7cf03180d471a04baa810
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver2/MemoryConfig.h
+ClientOneSiliconPkg/IpBlock/Fusa/IncludePrivate/Library/PeiFusaE2eCtcLib.h
+ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaE2eCtcLib.c
+ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaResultReportingLib.c
+ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLibNull/PeiFusaE2eCtcLibNull.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcDebugHook.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFsp.inf
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcApi.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/MEMORY/MrcSetup.c
+TigerLakeBoardPkg/Include/PlatformNvsAreaDef.h
+TigerLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+TigerLakeFspPkg/TigerLakeFspPkg.fdf
+TigerLakeFspPkg/Upd/FspmUpd.dsc
+TigerLakePlatSamplePkg/Include/SetupVariable.h
+TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+TigerLakePlatSamplePkg/Setup/CpuSetup.hfr
+TigerLakePlatSamplePkg/Setup/FusaSetup.hfr
+TigerLakePlatSamplePkg/Setup/FusaSetup.uni
+TigerLakePlatSamplePkg/Setup/SaSetup.hfr
+TigerLakePlatSamplePkg/Setup/SaSetup.uni
+
+================================================================================ 
+Commit: 1b4cf6587b81d5e9e99ddb58fad65e1eb26339f8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:12 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed May 20 22:38:07 2020 +0000
+Original commit date: Wed May 20 22:38:07 2020 +0000
+Original commit hash: a6fc90aad3680811d48096991b4bc93b83cbcc66
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: f29787b6cb71884d01be6aad1dd10fbc30b0118b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:10 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit: [TGLU/Y-B0][MRC] DqTimeCentering overrides the status for previous rank
+
+Issue
+In DQTimeCentering1D, if Rank 0 has a failure (e.g. on LP5 there is a case where Rank 0 has low margin, see attached log), but Rank 1 is ok, the error status is cleared and the algorithm will false pass, resulting in subsequent training step failures.
+This is true for all tech but we detected it on LP5
+
+Fix
+ChangeMargin should never fail unless parameter is invalid, getset hash is undefines
+or MRH engine times out. Therefore its good to check status for ChangeMargin function as well but the way this should be handled is that MRC checks CPGC error status and updates the Status variable and ChangeMargin updates another status variable. The function returns an OR of both these status variables.
+
+Testing
+Tested using MRC regression. Log attached to the HSD
+
+Hsd-es-id: 14011538271
+Original commit date: Tue May 19 15:14:33 2020 -0700
+Change-Id: I3ad3d4a1c8e903bdaac2f43264fcaf012ee26262
+Original commit hash: b4ccd7e1cdcf2b4b8f42750e40311bf6c8609132
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: 1a2c45ae0c63d4d7cc3164e3ec502f5c7a3d23c6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:06 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed May 20 08:48:17 2020 +0000
+Original commit date: Wed May 20 08:48:17 2020 +0000
+Original commit hash: 0233356bb26b13fc9091a6644f9b80a65017bdea
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 18d3f15fd655005d8392a9bb7937347b7a7f7045 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:03 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: Update row_msb field for higher density configurations
+
+row_msb: These bits select the most signicative bits of the Row, according to the DRAM density.
+Row bit MSB selector : 2'b00: 14, 2'b01: 15, 2'b10: 16, 2'b11: 17
+If there is any device density that supports Row bit[17] then we need to program this register to 2'b11.
+MC0_CH0_CR_SC_GS_CFG.row_msb
+MC0_CH0_CR_LPDDR_PASR.row_msb
+
+change: fix the prior MRC Version: 0.8.1.6          Git commit: 62b01b20a9
+        use Row MSB instead of size
+
+Hsd-es-id: 2208945218
+Original commit date: Mon May 18 15:30:30 2020 -0700
+Change-Id: I8b2a3c1d973e27d10bf54ba88a277379e8041d70
+Original commit hash: d25757fc6e91ae64f76ad7624f08a8e4d034a06a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcApi.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.h
+
+================================================================================ 
+Commit: 11b5a8a3f88dede59228b18dd07e6f664d111f03 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:23:00 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed May 20 08:19:13 2020 +0000
+Original commit date: Wed May 20 08:19:13 2020 +0000
+Original commit hash: b07dbf555cd65febf8444fd0838ff1f8c4fa1803
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: b88a3fb8bffe5ebfe21b74b3bbd0dadea156ec0d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:58 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.4.78] Memory Training Fails in 32GB SKU (low RdT/RdV margins)
+
+  [ICL][MRC][2208073021] Memory Training Fails in 32GB SKU (low RdT/RdV margins)
+
+    Issue:
+      Customer board fails on Ch1 Byte5 in Early Read Timing Centering 2D due to low RdT / RdV margins.
+    Solution:
+      Set the MinRequired Eye width to 1 in GetMinRequiredEyeWidth for EarlyCentering.
+
+Hsd-es-id: 16010779885
+Original commit date: Fri Feb 14 11:44:03 2020 +0800
+Change-Id: I023d782f5f9a82babe2fd0ecc045c8258ec3bac1
+Original commit hash: dffbfba069297a59523de343780add0d7dd945a4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: 26ed90d35c47aaa5257f829ca0c61b4c3fb67cb0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:54 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Tue May 19 04:57:15 2020 +0000
+Original commit date: Tue May 19 04:57:15 2020 +0000
+Original commit hash: 73c25b8378d4e7e042918432b55ec27c677adac9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: ef2f9e15ed7c30e5128d1f3315a714e9fa83e0d5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:51 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.0.3.161] WrT/WrV Margin degradation by RdT training steps (Rd Timing Centering 2D, Rd ODT training)
+
+  [ICL MRC][Merge CNL MRC 0.5.0.16] WrT/WrV Margin degradation by RdT training steps (Rd Timing Centering 2D, Rd ODT training)
+
+    Change: Modified UpdateHost to 1 in ShiftPIforCmdTraining function in RMT and TAT to clear the local valid flag.
+    else it uses the older local previous dq/dqs/recv_en delays since the valid flag is true.
+
+Hsd-es-id: 1507866733
+Original commit date: Wed Mar 18 11:23:21 2020 +0800
+Change-Id: Ia646a4910ea7d0cdf00716e38f9f7b88e669dbd6
+Original commit hash: 303a1698372562288108f906869719e8a7fea142
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: 59b7b63a699b6b0c6f0b140e3b3300332a0b51fa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:48 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Tue May 19 04:08:36 2020 +0000
+Original commit date: Tue May 19 04:08:36 2020 +0000
+Original commit hash: fdb44059b87baf4747b91cfb9f2d28675b12e5dc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 4f2fe99971d2d5ea7ea6a5307bcb8cd5c5e5f806 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:45 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.0.4.37] Downshifted clock frequency should be the ratio of 266 in Gear2
+
+  [HSD-ES][1408925791][ICL-MRC] Downshifted clock frequency should be the ratio of 266 in Gear2
+
+    Issue:
+      Downshifted clock frequency was not the ratio of 266 in Gear2
+    Change:
+      Add conditonal check for Gear2 frequency, to make sure FreqTable[] Index is match the multiple of (2*RefClk)
+      RefClk 133: multiples of 266, which has FreqTable index = 3, 7, 11, 15, 19 etc.
+      RefClk 100: multiples of 200, which has FreqTable index = 2, 5, 8, 11, 14, 17 etc.
+
+Hsd-es-id: 1507798919
+Original commit date: Thu Feb 20 15:35:55 2020 +0800
+Change-Id: I0338d92be037a34c66c9cf52ba155c1a76496695
+Original commit hash: ebce612aeb32407296cdf2c5f941fc063ee6b343
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+
+================================================================================ 
+Commit: aeed1624ba89919b162fbe534c8dafe3aef70c13 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:42 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Tue May 19 02:46:42 2020 +0000
+Original commit date: Tue May 19 02:46:42 2020 +0000
+Original commit hash: d03f35b6361ff234f6d5f81bdc8fb8aa83fd71fe
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: b8839ea7477d4a9639d9a0b91284d50d64f9e069 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:39 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.0.4.63] CI Build- SUT is not booting with release BIOS hang @ PC-0080
+
+  Added "_BIOSVER_" signature right before MRC Version so that it can be easily located in BIOS ROM file.
+
+Hsd-es-id: 16010797057
+Original commit date: Mon Feb 17 17:29:42 2020 +0800
+Change-Id: Id65145086f06c4a049468f53f05e3252a42d499d
+Original commit hash: 0baeaa4c9c7b2c221f8c1b98566eab4238076bc9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+
+================================================================================ 
+Commit: a3a72893e99b5c5da2e93a41cecc1791e93354c5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:36 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerlakeFsp/TigerlakeFspPkg: Adjusting GCC Flash sizes
+
+For (TARGET) == "RELEASE"
+Increased FLASH_SIZE and BLOCKS to 0x000E2000 (from 0x000DE000) and 0xE2 (from 0xDE)
+Increased FspmSize to 0x00095000 (from 0x00091000)
+
+For (TARGET) == "DEBUG"
+Increased FLASH_SIZE and BLOCKS to 0x001AB000 (from 0x001A7000) and 0x1AB (from 0x1A7)
+Increased FspmSize to 0x00110000 (from 0x0010C000)
+
+Hsd-es-id: N/A
+Original commit date: Mon May 18 11:07:48 2020 -0700
+Change-Id: I85a1a00d3ad8381bd10d4689f6113ed8d2655c5b
+Original commit hash: 4bc5d7df097ba9e70008b64b33aae7254956f027
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.fdf
+
+================================================================================ 
+Commit: 0d2fcf2136a4745c3f8e6000da9e2948064cd5cc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:33 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Sun May 17 19:51:28 2020 +0000
+Original commit date: Sun May 17 19:51:28 2020 +0000
+Original commit hash: 99523dc95888d7270400dd59aa8afc5ffa9e7ee2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 573c5a5193e4eef93bfbb274b186cf2edac60a74 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:30 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Fri May 15 23:31:58 2020 +0000
+Original commit date: Fri May 15 23:31:58 2020 +0000
+Original commit hash: 78cd6642c4366134b131644287b9f465bdc005f5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: f63d4dc86a3cbf5cb1c73da8a87c52bd20c1d691 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:28 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Fri May 15 18:38:24 2020 +0000
+Original commit date: Fri May 15 18:38:24 2020 +0000
+Original commit hash: 84d1c8bef1da1640b3d3b02ef0346a0b0de8c8e5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 1c8caaf1ec1914a26a99abc4dc1ffe4a4ad6d6b4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:25 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: Update row_msb field for higher density configurations
+
+row_msb: These bits select the most signicative bits of the Row, according to the DRAM density.
+Row bit MSB selector : 2'b00: 14, 2'b01: 15, 2'b10: 16, 2'b11: 17
+If there is any device density that supports Row bit[17] then we need to program this register to 2'b11.
+MC0_CH0_CR_SC_GS_CFG.row_msb
+MC0_CH0_CR_LPDDR_PASR.row_msb
+
+Hsd-es-id: 2208945218
+Original commit date: Tue Apr 28 21:33:39 2020 +0800
+Change-Id: I11d5db7eda659b6299d5b48fa3c30ebdca4e9b77
+Original commit hash: 98329780e7a9fa5c1438bdcb61ca4dd6b04355a0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcCommonTypes.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+
+================================================================================ 
+Commit: 427f1ec25cccd8ae0e7bf7f05c37461cbfb8471d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:22 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Fri May 15 02:20:46 2020 +0000
+Original commit date: Fri May 15 02:20:46 2020 +0000
+Original commit hash: d45404e2b76e04fd00e954d52a71e85b66491ec6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 3e125446d23db2ede9898470ade7e879c3977f13 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:20 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/IpBlock/MemoryInit:[TGL][MRC][LP5] Register Programming Problems for LPDDR5
+
+This is a part of the changing correct register settings for LPDDR5 memory
+
+Hsd-es-id: 22010512382
+Original commit date: Wed Apr 15 14:37:35 2020 -0700
+Change-Id: I80f6b497d6bd20ef88f381fa0ec0a2188d910df4
+Original commit hash: 0ca8b0def488589df3a46b1d263dcbdb26aa81e3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+
+================================================================================ 
+Commit: 18aa58d55fb8af320ca081d828390427ef0c5cee 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:17 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu May 14 23:32:02 2020 +0000
+Original commit date: Thu May 14 23:32:02 2020 +0000
+Original commit hash: 678b57e5cdbd2b12b34318a4ac34b793cf63a4b1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: f7f1765d05770b445ee758c136cdfbc5f9886a7e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:15 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit:[TGL][MRC][LP5] Fixing override of trained reliable Cmd/Ctl Pi values for JedecReset for Lpddr
+
+Issue
+Values for first run of 2D Cmd Ctl sweep in ECT low frequency are overriden in SaveData structure
+
+Solution
+Added the check if LowFreqCsCmd2DSweepDone is FALSE (tere was no first run 2D Cmd Ctl sweep in ECT) and set initial values only then.
+
+Hsd-es-id: 22010494274
+Original commit date: Thu May 14 13:54:54 2020 -0700
+Change-Id: I2df29083353cb1cd9632fb4d2faaad8326578473
+Original commit hash: d2f4c63a6701ae9fb1e7641c6e670f5d85888fba
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: d882b68319e1dcb3d0d1691ddc5315d2b1406120 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:12 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed May 13 18:50:18 2020 +0000
+Original commit date: Wed May 13 18:50:18 2020 +0000
+Original commit hash: 52c01c46b8b6cbdeecad576785e323191dbd9a1b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 0357474d3679e7cc312d0c4b735d650fcfa4cbc1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:10 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit:[TGL][MRC][LP5] Reliable Cmd/Ctl Pi values for JedecReset for Lpddr
+
+Issue
+The dram reset flow for Lpddr technology is done at lower frequency. 1067 for Lp4 and 2200 G2 for Lp5. However ECT trains at
+POR frequency therefore the trained Cmd and Ctl Pi values used for Jedec reset may not be reliable.
+
+Solution
+There are two ways to solve this problem. Either rely on static values set in phyinit which are supposed to work for low frequency or run the 2D Cmd Ctl sweep in ECT, twice. First run is at low frequency per Lp tech and the values are saved in
+SaveData structure. This training is only run once for the first sagv point and for cold boot only. The value is saved and resued in jedec reset flow for subsequent sagv points and other boots.
+Second run is at POR frequency which is currently being executed.
+
+This implementation isnt enabled for TGL Lp4 because its very close to PRQ.
+
+Testing, logs attached to the HSD
+Initial testing on LP5 at 4400 with SAGV disabled, shows that the solution works at intended.
+Lp4 A0
+DDR4 U/Y B0
+These changes shouldn't affect DDR4 because DDR4 doesnt run ECT as well doesnt support a frequency change during jedec reset.
+Final testing after code review updates with full BIOS on
+LP4
+LP5
+
+Hsd-es-id: <22010516994, 22010494274>
+Original commit date: Fri Apr 17 15:49:31 2020 -0700
+Change-Id: Ib6a059297f00c4e2d2c77b94d222fc07bb5758e4
+Original commit hash: 0d4eb822222a6cfa576a13822e7900ff15bf669d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+
+================================================================================ 
+Commit: ca9baf4d6f0517cf01a512b5860d705cee92d0a8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:06 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Wed May 13 17:56:00 2020 +0000
+Original commit date: Wed May 13 17:56:00 2020 +0000
+Original commit hash: acd1e83deb5e30eff0ce226e6eb157cf27c831a2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 19335e23e1e2b91d1c9d63a3b986ad3b8130a656 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:03 2020 -0700 
+-------------------------------------------------------------------------------- 
+C1S/MemoryInit/Tgl: [TGL][MRC} Update MiniBIOS ucodes for B0 (0x26) and P0 (0x22)
+
+Update ucode patch for MiniBIOS
+
+Hsd-es-id: N/A
+Original commit date: Mon May 11 15:50:28 2020 -0700
+Change-Id: I98cc01304ac5d06b5d0095250e7f006d7cf03e72
+Original commit hash: 41995ef16513b32a0c06e78f727c8032c241c155
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/CPU/UCODE/m_80_806c1_00000018.inc
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/CPU/UCODE/m_80_806c1_00000026.inc
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/CPU/UCODE/m_c2_806d0_00000022.inc
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/CPU/UCODE/m_c2_806d0_80000016.inc
+
+================================================================================ 
+Commit: 345969bd31212fe09a0504097d16239ad670dd19 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:22:00 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Tue May 12 23:15:49 2020 +0000
+Original commit date: Tue May 12 23:15:49 2020 +0000
+Original commit hash: a8c40fc11dca1886d7b87e3f941d901e0640980d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 3afbec4b3e6dd3d66ddbc4fa08255e910002588d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:57 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: Fix the building issue introduced in "[Merge from ICL 0.4.81]"
+
+Hsd-es-id: 16010778803
+Original commit date: Tue May 12 13:43:21 2020 +0800
+Change-Id: Id2eb899776265551ed83150f5fee02e5998bc28f
+Original commit hash: cde8bb93f9801d6f0b9cefc80818307f6bc321f4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+
+================================================================================ 
+Commit: 675bf5871bc5133ed8518cb52ede2dfb1b7e29d2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:55 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.4.81] Porting add call to Read/Write Voltage & Timing 2D after Late Command training from ICL to TGL
+
+* Just keep the debug print work in the original patch
+
+[ICL MRC][1408981236][Update mrcCallTable - add call to Read/Write Voltage & Timing 2D after Late Command training]
+
+changes:
+1. Add print flag parameters to ReadVoltageCentering2D() and DataTimeCentering2D()
+2. Reduce printing in specific calls for CmdVoltageCentering()
+
+Hsd-es-id: 16010778803
+Original commit date: Tue Mar 3 15:34:33 2020 +0800
+Change-Id: Ib238d2506812539f42d8aab9fbbdbf6bc8123559
+Original commit hash: 69b8cf929cbbf7a355afc0befecafec6a8f1d3c3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+
+================================================================================ 
+Commit: 72a89bba49f4d47b58fde30b4ae233e065718e53 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:51 2020 -0700 
+-------------------------------------------------------------------------------- 
+C1S/MemoryInit/Tgl: update Rank Margin Tool Loop Count from Setup Option
+
+Change:
+    Connect the RMT loop count to setup option.
+
+Hsd-es-id: 1507889293
+Original commit date: Thu Mar 26 15:26:04 2020 +0800
+Change-Id: Ib48812004852475194248b9c537e72d36fe9ce8e
+Original commit hash: 42713d4e8b5566b8bd40ffdbebb9f144a4ea6448
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+
+================================================================================ 
+Commit: ecb7080780ab8ee170165782a294d154be215bc8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:49 2020 -0700 
+-------------------------------------------------------------------------------- 
+C1S/MemoryInit/Tgl: [TGL][MRC] Update MrcVersion.h and ReleaseNotes to master 0.8.1.0
+
+Updating MrcVersion.h and ReleaseNotes
+
+Hsd-es-id: N/A
+
+Mon May 11 10:46:03 2020 +0800
+Original commit date: Mon May 11 10:46:03 2020 +0800
+Change-Id: I45c39cc69185ae8bf4c448f19a7d49709421ac48
+Original commit hash: ee1d6414a2b7e37278bb8f6cbd73bfd5d75dd35f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: afd32c052f835deb06234f16e669a5708f40a796 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:44 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Wed May 27 10:04:50 2020 -0700
+Change-Id: Iaccd012736ce3cea6f963a6e0e77151306f8b2a5
+Original commit hash: 45f830c62ed0706629021d6770e1ff0555fd9b54
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: ab96d779aa718a6c11d9ca8b10cd9db42a9557f3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:41 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3223_00
+
+Hsd-es-id: no sighting
+Original commit date: Wed May 27 09:30:05 2020 -0700
+Change-Id: Ia330628e0695d65f60b490f6dd7a56e4867105dd
+Original commit hash: 67e42ebf8cd273ba118ad06596de7053a447bb14
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 512c703d347a9b7070e31e3ce19d529063810d27 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:38 2020 -0700 
+-------------------------------------------------------------------------------- 
+PCPS and EPP grouping settings do not seem to be taking into effect in the IFWI
+
+Fix BIOS coding error to apply the policies EnablePerCorePState/EnableHwpAutoPerCorePstate/EnableHwpAutoEppGrouping correctly.
+
+Hsd-es-id: 22010767664
+Original commit date: Wed May 27 13:55:23 2020 +0800
+Change-Id: Iaae0d6187b60eec1380db632cb8e7fad774096c7
+Original commit hash: b5c12a1c8487e6c9ae86701bc50bbf604c9cb074
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PerformanceStates.c
+
+================================================================================ 
+Commit: 7b31e3c83372a176320e2f81c011bc5bb7bfdcba 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:36 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg: [TGP LP][B0/B1] Audio Function Disable flow needs to Set HAE bit to 1 before putting controller to D3
+
+If HAE bit is set, then the IP may request a PG whenever it is idle[br] NOTE: If this bit is set, then bits[2:0] must be 000.
+
+Hsd-es-id: 14011577203
+Original commit date: Tue May 19 15:10:52 2020 -0700
+Change-Id: Ia1703409657e14699eef134fed1fdc454a617605
+Original commit hash: 5243a2e8fb052d43353d5fb25b548cfb50532e67
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Hda/IncludePrivate/Register/HdaRegs.h
+ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaInitLib/PeiHdaInitLib.c
+
+================================================================================ 
+Commit: d364004fa1a978a08ffd848a9a5c0eeac4fd27d5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:33 2020 -0700 
+-------------------------------------------------------------------------------- 
+Revert "[PATCH] [TGL H] BIOS from Tigerlake-master branch failes to boot, BSOD observed while boot to OS."
+
+This is a TBT driver installation issue. This W/A can be removed.
+This reverts commit 2496ce6753229d412e14a75b1bd93850af9f6831.
+
+Hsd-es-id: 2208198914, 14011269764
+Original commit date: Tue May 26 09:17:58 2020 -0700
+Change-Id: I363bb03b5f9f8e4de429f867fb874cc3a36a54ab
+Original commit hash: 3ce626612376212dcc2baca59af74ed98c21028c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/TglCpu/Vtd/LibraryPrivate/DxeVtdInitLib/DxeVtdInitFruLib.c
+
+================================================================================ 
+Commit: bad075b07d1edb31f041178d86c1215736dc8eaf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:31 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-H] Program GPIO values based on controller's bifurcation configuration
+
+Added GPIO Programming from  https://git-amr-7.devtools.intel.com/gerrit/#/c/80585/3/TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+
+UNIT test done,
+GPIOs programmed for CPU_PCIE_1x16 and booted to OS on tgl-h.
+
+Hsd-es-id: 16010908184
+Impacted Platforms: TGL-H
+
+Original commit date: Wed Mar 18 15:46:50 2020 +0530
+Change-Id: I1db797049b267c576238cbcaca265fff36e1c53a
+Original commit hash: 08dd50971159f8386662bfac9d6fc971c9f9dc95
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+
+================================================================================ 
+Commit: 336d3de0c2a1e9c4f4f5e49d279533cb6ca78a78 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:28 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakeBoardPkg: ACPI Debug setup option should be disabled by default
+
+Hsd-es-id: 14011547928
+Original commit date: Wed May 20 15:36:20 2020 -0700
+Change-Id: I474c0d5d5742a48f40e86b0d7df736f26cb39c0f
+Original commit hash: 4222d65991e469c3dd18b3f2067aaa4db78a1a50
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/TigerLakeHBoards/Include/TigerLakeHBoardConfigPatchTable.h
+
+================================================================================ 
+Commit: ae8902dc026951b87c513c7a492bdd67df4cf4e0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:25 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Tue May 26 10:04:16 2020 -0700
+Change-Id: I01250f56c036aa0ff038c87e683581b3b7f07ee0
+Original commit hash: f6ea048824b9a3891d19dcaebe0afc65b5b36aa2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 5cca9cac1a0e97a8dbeadccba198ac7eac8a39be 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:22 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3222_00
+
+Hsd-es-id: no sighting
+Original commit date: Tue May 26 09:09:36 2020 -0700
+Change-Id: I5681afe3f53741469e48f9317662af8cd28c14d4
+Original commit hash: e4781a68ec1f1d6451bb65f1448e6c4da8ec1a13
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: f9e073881fdeef74662d78a910401eb63bd02e53 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:19 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-H][P0] Subsystem Vendor ID(0x2C) and Subsystem ID(0x2E) register in BDF-0:0:0 is not configured by BIOS
+
+Device BDF - 0:0:0 should be Host Bridge, SubClass=00h and HeaderType=Type0.
+In order to configure it, DMRBar: Offset 0xD8 MPC[2] = 1
+
+Unit test done:
+Booted to shell and verified that Subsytem ID and Subsystem ID configured
+SVID: 8086
+SSID: 7270
+
+Hsd-es-id: 16011143604
+Impact Platforms: TGL-H
+
+Original commit date: Thu May 14 19:18:31 2020 +0530
+Change-Id: Ie1ac98f78aa1b1eda97b790907e9df438a7ed84a
+Original commit hash: 00e67dc8a2e439ca3e21c4f431398c89645b15e5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/TglCpu/IncludePrivate/Register/CpuDmi16Regs.h
+ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibVer2/PeiCpuDmi16.c
+
+================================================================================ 
+Commit: 0a5debaae6bd66dd56d8c8b40db731b910ad5a54 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:16 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg: [TGL] RpIndex may be shifted unintended in PeiPcieRpInitLib.c
+
+Resolution: Some RpIndex in PeiPcieRpInitLib.c may update incorrect RpClkreqMask value
+
+Hsd-es-id: 1507935521
+Original commit date: Mon May 18 17:20:22 2020 +0800
+Change-Id: I5e63a718a4430585c34035c2d1c508496d8dcf98
+Original commit hash: 27bd4fed0496a9a131d08283e310bb23e6b59aa3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpInitLib/PeiPcieRpInitLib.c
+
+================================================================================ 
+Commit: 6c358aea113074b57b223087c0d3569b5ff1f33f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:13 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL][ChasmFalls] Refine BtGACM update code
+
+1. Correct FmpDeviceGetVersion() and FmpDeviceGetVersionString(). Not to support FmpDeviceGetSize() and FmpDeviceGetImage() for now.
+2. SetUpdateProgress is used in an unwanted way in PerformBtGAcmUpdateByConfigData(). Clean up unnecessary calls of SetUpdateProgress.
+3. SeamlessRecovery support with BtGAM modular update on non-Resiliency BIOS is not POR. Simplified the update flow.
+4. Removed unused code in BtGACM capsule scripts include: SeamlessRecovery support on non-resiliency BIOS, Hash binary which is not used, etc.
+5. Enabled BtGAcm Capsulebuild when PcdResiliencyEnable is TRUE.
+6. Enable BiosGuard support in BtGAcm FMP.
+
+Hsd-es-id: 1507966467
+Original commit date: Tue May 19 10:05:44 2020 +0800
+Change-Id: I95fc61efe3ba604b4693b26ee53b41cf433db575
+Original commit hash: e4ba95f142f1e76259c6a9f48c01f82b8d1f5751
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/BtGAcmCapsulePkg.fdf
+TigerLakePlatSamplePkg/BtgAcmCapsulePkg.fdf
+TigerLakePlatSamplePkg/CapsuleUpdateConfig/CapsuleOutput/TglTbtRetimer_2501.cap
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/BiosUpdateConfig/BtGAcmUpdateConfig.ini
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/BiosUpdateConfig/BtgAcmUpdateConfig.ini
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/FmpPlatformBtGAcm.dsc
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/BtGAcmUpdateHelpersLib/BtGAcmUpdateHelpersLib.c
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/BtGAcmUpdateHelpersLib/BtGAcmUpdateHelpersLib.inf
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibBtGAcm/FmpDeviceLib.c
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibBtGAcm/FmpDeviceLibBtGAcm.inf
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Tools/GenBiosUpdateImages/CapsuleRecoveryGen/SplitFv.py
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Tools/GenBiosUpdateImages/GenBtGAcmUpdateImages.bat
+TigerLakePlatSamplePkg/capsulebuild.bat
+
+================================================================================ 
+Commit: a36ea92754881cadc3e582431701907685950388 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:08 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Mon May 25 09:57:04 2020 -0700
+Change-Id: I0c7b90a22dc8756d5da171995fe11d711ecae47d
+Original commit hash: e971a1648ea887bb7683867c61ffa5a495e6d6ab
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 4fb005df065d61bfd0a1cb54816c6da68735eb90 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:06 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3221_00
+
+Hsd-es-id: no sighting
+Original commit date: Mon May 25 09:07:55 2020 -0700
+Change-Id: I787454a9654ae3e476baa6d0f3c1fe3c0da44a58
+Original commit hash: db753df77caf89872e928b18c8f87877b564dacc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: d7fe9e3f72f43c264903f4e94f3c675846b5479d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:03 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Sun May 24 10:05:37 2020 -0700
+Change-Id: I0902b08a8c73327648c17c1aaa40863cd07b8385
+Original commit hash: 5d15940fb0fa4d63fbb8c5a4bf6915c5f7e833db
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 197b0311bf10f677c37a6ad1d5ded6f523d22313 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:21:01 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit WeeklyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Sun May 24 09:49:58 2020 -0700
+Change-Id: Id29d1335aaf25dcd3ca03caa7beb9824fc3fd856
+Original commit hash: 5e17801f9b7ea992997b352960b71a278aec3541
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: ee5c1147a58c773c0482024d2ad74e38a540c06c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:58 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Clear WhiteSpace-Git Auto-Commit [Part 2] TGLMaster Replace tab characters with two spaces and trim trailing white space
+
+Hsd-es-id: no sighting
+Original commit date: Sun May 24 09:36:04 2020 -0700
+Change-Id: I92f9a19a3397e7a5469d8daadc89dcfb842a4eef
+Original commit hash: 86e5abe6e76af2511af8aa95bb4cd09961d2c181
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspBinPkg/SampleCode/Vbt/Vbt.json
+
+================================================================================ 
+Commit: b47b38bb9616a5919551f7abf5157d6b4155bc8e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:56 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3217_00
+
+Hsd-es-id: no sighting
+Original commit date: Sun May 24 09:07:27 2020 -0700
+Change-Id: I03a27804ea973fed97ad8f9c5ecce09f95f2e3ad
+Original commit hash: 9323918f1839321f389b9a4c3acdb78152ee37c1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: cfb4fc03c85d65c529dd9eabf2584a76d423daba 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:53 2020 -0700 
+-------------------------------------------------------------------------------- 
+Integrate latest TGL GOP V1038
+
+Hsd-es-id: NA
+Original commit date: Fri May 22 14:22:13 2020 +0530
+Change-Id: If0cb4411695919eb94576a2eb369196d6b211b7d
+Original commit hash: 58e1ce36dc08f2040714c8e393cef4f5c4dc2938
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/TglCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+ClientOneSiliconPkg/Fru/TglCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+TigerLakeFspBinPkg/SampleCode/Vbt/Vbt.bin
+TigerLakeFspBinPkg/SampleCode/Vbt/Vbt.bsf
+TigerLakeFspBinPkg/SampleCode/Vbt/Vbt.json
+
+================================================================================ 
+Commit: da2e324ad22b75a4485a1455c8482970e9ebe2d1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:48 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Sat May 23 09:57:29 2020 -0700
+Change-Id: Ie1580afc94c8774921601bc305c74c769c739abb
+Original commit hash: c0864670a155bb6bc7c4a543b8cb3711cd51c376
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: d2be603893916d93313341080cea554eb00011dd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:45 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3216_00
+
+Hsd-es-id: no sighting
+Original commit date: Sat May 23 09:07:17 2020 -0700
+Change-Id: Ief8cfeb4a1949896413c36c29c14d6bfbafefcc5
+Original commit hash: a9affe1606633422656894813b2e0821c437937e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: c018370687d39f091279d43050566335fa51d2bb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:43 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg\IpBlock\Thc\ThcDriver: virtual keyboard functionality not working in BIOS
+
+Issue 1: Thc driver did not map properply to THC0 due wrong device id.
+Issue 2: VTD engine blocking THC DMA due to wrong mapping of DMA buffers.
+
+Hsd-es-id: 22010328392
+Original commit date: Fri May 8 15:52:29 2020 -0700
+Change-Id: Ia8462573871a04f45067f0d920d1cbb7732a9cda
+Original commit hash: f190f76055a391edaf7bb30228f90ae42abffc56
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Thc/ThcDriver/ThcDriver.c
+ClientOneSiliconPkg/IpBlock/Thc/ThcDriver/ThcPrivate.h
+
+================================================================================ 
+Commit: 8c67f40134fe0dc1207cea5fef6b9075e2e94286 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:40 2020 -0700 
+-------------------------------------------------------------------------------- 
+No Acoustic Noise DPA setting in TGL Platform BIOS
+ - Add Dynamic Periodicity Alteration (DPA) tuning feature
+
+Hsd-es-id: 1508011956
+Original commit date: Wed May 20 15:42:40 2020 +0530
+Change-Id: I8bf707715a2285c1e2fbfe18016d9a23b67e7679
+Original commit hash: b4c5fdd4a6ce22618899436899c9b8befabb88e8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/ConfigBlock/VoltageRegulator/CpuPowerMgmtVrConfig.h
+ClientOneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrLib/PeiVrLib.c
+ClientOneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrPolicyLib/PeiVrPolicyLib.c
+TigerLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+TigerLakeFspPkg/Upd/FspsUpd.dsc
+TigerLakePlatSamplePkg/Include/SetupVariable.h
+TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+TigerLakePlatSamplePkg/Setup/CpuSetup.hfr
+TigerLakePlatSamplePkg/Setup/CpuSetup.uni
+
+================================================================================ 
+Commit: c7a5ece2d1e06d52bc2ed80fae200737d7f6db38 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:36 2020 -0700 
+-------------------------------------------------------------------------------- 
+TGL: Enable UCSI by default
+
+Hsd-es-id: 22010577015
+Original commit date: Thu May 21 13:50:02 2020 -0700
+Change-Id: I56d2f3bbca0871639b57f42b2f95305dd87db236
+Original commit hash: f5eec6731bd0a93d07e656f5cc4f83cf92bc5bea
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/EC/Asl/EC.ASL
+TigerLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeC.asl
+TigerLakePlatSamplePkg/Setup/PlatformSetup.hfr
+
+================================================================================ 
+Commit: d87188584b9d977f021cace1447ef9e677814f77 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:34 2020 -0700 
+-------------------------------------------------------------------------------- 
+MTRR programming cache issue with TopBlock caching support in SEC Phase
+
+BIOS hardcodes the TopMemory cache base address by mistake.
+Update the TopMemory cache base address accordingly.
+
+Hsd-es-id: 14011547638
+Original commit date: Thu May 21 09:52:46 2020 +0800
+Change-Id: I9f2c06416a03063230cb3d5903dcb46fbbfa83b7
+Original commit hash: d6dbe05abf9bdd2051a0a79018e56a7f82f33c47
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Library/SecCpuLib/Ia32/SecCpuLib.nasm
+
+================================================================================ 
+Commit: f591c8162632cf4b7dbe12cfc79a022601357109 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:31 2020 -0700 
+-------------------------------------------------------------------------------- 
+Chasm falls: Remove ucode update support for non-resiliency case
+
+ucode update need ucode seamless recovery support, it need topswap
+region support then, after bios guard enabled, only resiliency bios
+can meet this requirement, so remove support from 12M bios.
+
+Hsd-es-id: 16011143747
+Original commit date: Wed May 20 16:23:23 2020 +0800
+Change-Id: I750a66725f2454a59ab91128509e7d11ffe554d5
+Original commit hash: ca57b53a6b41e13e1a96478b0c932ccb0ec06597
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: ca3ea10aa82b23680809318e097c20e94ecbb739 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:24 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Fri May 22 09:56:45 2020 -0700
+Change-Id: I963d604d27775f30c527738ccce06aa59e9835aa
+Original commit hash: cdc20acb00b167caadcb2a91a35b3343e60c6535
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 93ed93b4d40522bc492299635fead8a465dadf58 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:21 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3215_00
+
+Hsd-es-id: no sighting
+Original commit date: Fri May 22 09:15:16 2020 -0700
+Change-Id: I71505ea374fbab900ce12f43587d4cf279a1459f
+Original commit hash: b24e4c6d59dd0fbf0fc4c252416e28dabc69b414
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 35261a64068d57434ff67e446178a0c8f2d7d160 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:18 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg\Pch\AcpiTables\Dsdt->Gpio: Fixed wrong GPIOs definitions for TGL-LP and H.
+
+- Restored previous LP version and updated GPIOs for PCH H
+
+Hsd-es-id: 22010743689
+Original commit date: Wed May 20 09:29:05 2020 -0700
+Change-Id: I439f8a5c8dfcc91562c89ba69368f9da80f57bf3
+Original commit hash: ffc52f987b1c5dbe7f966973658a805fa4d89c83
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/GpioAcpiDefinesVer2.h
+
+================================================================================ 
+Commit: add522e65e539ee28d53b00b7495f73baeec962c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:16 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Thu May 21 10:01:33 2020 -0700
+Change-Id: Id58718c7bd8cdb9eda86f8baf14ac523f6c4adac
+Original commit hash: f0017f6f039e1bb274a9016ebce79e6ed210574a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: ceb8da08fcbae4ae9674295739a19b6271375f49 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:13 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3214_00
+
+Hsd-es-id: no sighting
+Original commit date: Thu May 21 09:16:17 2020 -0700
+Change-Id: Ifbad1f8b288921c35afdc880f7d812c88bf31a2c
+Original commit hash: ee19d1b003d11949ffae2810da941b1b7112a09b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: a58c248bcfd7489d54332443b8e4a3658d67e295 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:11 2020 -0700 
+-------------------------------------------------------------------------------- 
+TGL-U/Y RVP RTD3: Enable _DSD method for PCIE M.2 RPs
+
+_DSD() is not by default added for PXSX (PchPcie.asl). To add this method,
+Board RTD3 asl need set SD3E to 1 for wanted RootPorts
+
+Without _DSD(), linux cannot enter deeper than s0i2.0 with NVMe connected
+on PCH M.2 slots
+
+Hsd-es-id: 1507968310
+Original commit date: Thu May 14 18:06:58 2020 +0800
+Change-Id: I11ee6f7d37184f1866b785bb94474261b8f9faf5
+Original commit hash: faf2080787febaf5b519ef4b55e79ecb33a7f13f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/TglURvpRtd3.asl
+TigerLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/TglYRvpRtd3.asl
+
+================================================================================ 
+Commit: e893c6593f252aaa808e2ceb50342f33c59566e3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:06 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL][DGR] State Save PCD flag to TRUE and added Test menu option
+
+Updated DGR State Save Protection PCD Flag to TRUE.
+Added Test Menu option to State save support with default disabled.
+
+Hsd-es-id: 16011159685
+Original commit date: Tue May 19 22:48:33 2020 +0530
+Change-Id: Icc8ebbc1672f75fc0591c7e6338713a6fc3709b8
+Original commit hash: fb22543bf6097073dfc438bce2925d3259399aa8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Include/Protocol/CpuPolicyProtocol.h
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.c
+ClientOneSiliconPkg/Product/TigerLake/TigerLakeSiliconPkg.dsc
+TigerLakeBoardPkg/BoardPkgConfig.dsc
+TigerLakeBoardPkg/BoardPkgConfigDefault.dsc
+TigerLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeCpuPolicyUpdate.c
+TigerLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxePolicyUpdateLib.inf
+
+================================================================================ 
+Commit: 47b4fdc8324527c43726412a755ff18875a5f584 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:03 2020 -0700 
+-------------------------------------------------------------------------------- 
+TGL: Enable "Wake From Thunderbolt(TM) Devices" by default
+
+Hsd-es-id: 22010735796
+Original commit date: Mon May 18 09:11:19 2020 -0700
+Change-Id: I1d51e0cc47d37c258ea07fc2640e634ad7eb87dd
+Original commit hash: 6ba0d812c8e3298f863b177f1b009a8147a4746d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Setup/TbtSetup.hfr
+
+================================================================================ 
+Commit: a53aac712b7e061c9745369c32128caacad9698b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:20:00 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update BIOS ID to 3213.01
+
+Hsd-es-id: NA
+Original commit date: Wed May 20 14:14:49 2020 -0700
+Change-Id: I7e0463a5e5e1261a4df02578612726f75e23788d
+Original commit hash: 8aa655cd6f2a44194e85cd86243df9c77361c094
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 7624326926c638e28e65cd194a64ea3a2248e432 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:58 2020 -0700 
+-------------------------------------------------------------------------------- 
+Three-strike (CLOCK_WATCHDOG_TIMEOUT) with ME_GBLRST pointing to NPK address during S4 cycles
+
+FW_BAR used to be condition check if ADBG to ITH is enabled, and it becomes out-of-date and troublesome since TGP.
+1. There is scratch pad bit defined for BIOS trace enablement, which should be the right condition check for ADBG.
+2. Since silicon change, reading FW_BAR in ACPI makes system hang.
+With that, move to check SCRPD2[0] as condition check.
+
+Hsd-es-id: 14011547716
+Original commit date: Fri May 15 14:20:47 2020 +0800
+Change-Id: Ic501d83827f118d22c0c310fd6033d222abf192e
+Original commit hash: 17c195269a8a1acc304dbce71ff3e72fa6ad9a28
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/Pch.asl
+ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/PchTraceHub.asl
+ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/TraceHubDebug.asl
+
+================================================================================ 
+Commit: 2c86ed3bef3398f8e503cde131ae11a15f3b7d08 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:55 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL]TigerLakePlatSamplePkg/VTd Fix WINRESUME.EFI fails S4 resume with STATUS_HIBERNATION_FAILURE phase 1
+
+Add Restricted Tags
+
+Hsd-es-id: 22010645539
+Original commit date: Wed May 20 13:35:31 2020 -0700
+Change-Id: I20efaa730daac678d6ad698c7d74ffab1b86ce40
+Original commit hash: a326284d30edbe556b9529145b07c7b62c2217d3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Features/VTd/PlatformVTdSampleDxe/PlatformVTdSampleDxe.c
+TigerLakePlatSamplePkg/Features/VTd/PlatformVTdSampleDxe/PlatformVTdSampleDxe.inf
+
+================================================================================ 
+Commit: 3af2100b9277016250a0a89ad7eceeb18fa0930c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:53 2020 -0700 
+-------------------------------------------------------------------------------- 
+BIOS to send IPC message when DCI OOB is enabled in BIOS
+
+When PDC DCI OOB 4-wire is enabled or DCI OOB 4-wire is connected, BIOS sends DCI OOB LVM override
+to enable debug for s0ix.
+Noted: LVM override can also be applied by Python command manually.
+
+Hsd-es-id: 14011547296
+Original commit date: Tue May 5 16:49:29 2020 +0800
+Change-Id: I3e946554350de692a9dea56cd4bf19950bcd3d30
+Original commit hash: 73c61af0865d955c887df84fb3a2049e6ceb6417
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
+
+================================================================================ 
+Commit: 784a9ea82ac51bda34cddd45f7b9e1dc80f95bf1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:50 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TCSS][TGL] SBU GPIO naming correct
+
+The original setting is apply ICL code. Due to Client one silicon code update the TGL GPIO setting should update to VER2_LP_ from VER1_LP_.
+
+Hsd-es-id: 1507868700
+Original commit date: Thu Mar 19 15:06:38 2020 +0800
+Change-Id: I79badd6e1cf07f4aa244d0eea7f019a14f46309e
+Original commit hash: 8ac6493c9d2fdfb38b89df27b071fe54235a3423
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Library/PeiPolicyBoardConfigLib/PeiSaPolicyBoardConfig.c
+
+================================================================================ 
+Commit: edd75c3ed640cf09cab5f47ccce373d230235785 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:48 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL][DGR] TSEG Size is increased to 16 MB
+
+TSEG Size is increased to 16 MB for Release build.
+Now TSEG size is 16 MB for both Debug and Release Build.
+
+Hsd-es-id: 16011159474
+Original commit date: Tue May 19 12:57:49 2020 +0530
+Change-Id: Ie2668de1a6d425c054e4d9960be17df00755b1f0
+Original commit hash: 30eac83fa2793ea077b823a0813277e56ca3a2b9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BoardPkgPcd.dsc
+
+================================================================================ 
+Commit: cbc8a5a155251b7d51ded727fb254ec341640920 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:46 2020 -0700 
+-------------------------------------------------------------------------------- 
+PmcPrivateLib: Update MAX_CPUMSG_LTR to 13ms for PCH-LP
+
+Hsd-es-id: 14011500437
+Original commit date: Wed May 13 11:54:13 2020 -0700
+Change-Id: Id7b1cd1149cc4402de687b4fa367f83b5335b889
+Original commit hash: 8f564bfaac130505d311ab01e78dc33399e279df
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLibVer2.c
+
+================================================================================ 
+Commit: 69e5c4e5f0c2171d4cbf642500ab355b87a6757a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:42 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Wed May 20 10:08:07 2020 -0700
+Change-Id: I3176f6de54402e39fb061e5fab4cf2f4ca015582
+Original commit hash: 761a23223d3b2802c341ed8cb13f9db5b4a4ae7d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: c439a2ab6747cfea66d41e38b6d4711edd2e7685 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:39 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL] IAFW should have the ability to disable GPRs in Crash Log data from CPU
+
+  Created Setup item "Crashlog GPRs" for controlling the function.
+  1. EN_GPRS supported by all TGL step including TGL U/Y/H
+  2. EN_GPS_IN_SMM supported by TGL U/Y/H on Bstep and newer
+
+Carried forward from old code review - https://git-amr-7.devtools.intel.com/gerrit/#/c/65105/
+
+Hsd-es-id: 1507886693
+Original commit date: Thu Dec 5 13:17:07 2019 +0800
+Change-Id: Ibd514bf60126813e8f66035c5d1412e688d08b84
+Original commit hash: d82beeced06a9d6d35df6098583bb63527d9fde5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Include/ConfigBlock/CpuConfigLibPreMemConfig.h
+ClientOneSiliconPkg/Cpu/IncludePrivate/Library/MsrFruLib.h
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Features.c
+ClientOneSiliconPkg/Fru/TglCpu/LibraryPrivate/BaseMsrFruLib/BaseMsrFruLib.c
+TigerLakeFspPkg/Upd/FspmUpd.dsc
+TigerLakePlatSamplePkg/Include/SetupVariable.h
+TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+TigerLakePlatSamplePkg/Setup/DebugSetup.hfr
+TigerLakePlatSamplePkg/Setup/DebugSetup.uni
+
+================================================================================ 
+Commit: 53e4389bf1af6302c69aa880e79ae3311086a338 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:37 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3213_00
+
+Hsd-es-id: no sighting
+Original commit date: Wed May 20 09:12:04 2020 -0700
+Change-Id: I0bf16c7ee92c20098dff19047a3a20e0f6a02fa9
+Original commit hash: f48d4f50a6af2b0220516f65eeb2e42e17253648
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: c2b6ff5f21c793f08629f2dbc1a10547b9ffc6f4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:34 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-U] VC1 should be 0x810000c0 when enabled MultiVc Support
+
+Issue: VC0 and VC1 not getting programmed
+
+we need to use logical AND operator to find LinkVcCount.
+MultiVC should be enabled when both Root port and Endpoint supports it.
+Bitwise AND operator gives LinkVcCount As Zero when End Point has 2 Extended Virtual Channels.
+
+chery-picked from https://git-amr-7.devtools.intel.com/gerrit/83812
+
+Hsd-es-id: 1507815940
+Impacted Platforms: TGL
+
+Original commit date: Thu Apr 30 12:31:00 2020 +0530
+Change-Id: Ifa3fe6b3cdebb6aa446db4c2ff4b694f0418c8e8
+Original commit hash: 52eec06196d7dc6db52adfab09267dbcee6fd477
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PciExpressHelpersLibrary/PciExpressHelpersLibrary.c
+
+================================================================================ 
+Commit: 1d16720e30c8da56fdfa8ac5f5b031328146b58f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:32 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL]TigerLakePlatSamplePkg/VTd Fix WINRESUME.EFI fails S4 resume with STATUS_HIBERNATION_FAILURE
+
+Alloc memory in PlatformVTdSampleDxe.
+Free the memory on End of DXE.
+Keep enough free memory after End of DXE.
+
+Hsd-es-id: 22010645539
+Original commit date: Fri May 15 09:27:16 2020 +0800
+Change-Id: Ibe05fd5065874fd83c063e163edb4e863b7339fe
+Original commit hash: 520b5b2ade851d33214f0d47b5f6ced827b66a6a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Features/VTd/PlatformVTdSampleDxe/PlatformVTdSampleDxe.c
+TigerLakePlatSamplePkg/Features/VTd/PlatformVTdSampleDxe/PlatformVTdSampleDxe.inf
+
+================================================================================ 
+Commit: 5ee082798fc251bacc420a54a80e31cc8c1a3971 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:29 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL/Me] System hang to wait for ME_UNCONFIG_TIMEOUT on consumer platform.
+
+Issue: HeciGetUnconfigureStatus is not supported on consumer platform, but the command returns success.
+Resolution: Check if the MKHI return status is 8x, if yes, return unsupported.
+Impacted: All TGL projects.
+
+Hsd-es-id: 1508004651
+Original commit date: Tue May 19 11:07:47 2020 +0800
+Change-Id: Id7df136379f0b710b44545ffef1d1ffa094406e1
+Original commit hash: fe7975491a50576acbb9d1a24c728f857e944afd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/MeBiosPayloadData.h
+ClientOneSiliconPkg/IpBlock/Me/HeciInit/Dxe/FwStsSmbios.c
+ClientOneSiliconPkg/IpBlock/Me/HeciInit/Dxe/MeHeciReset.c
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiMeLib/MeHeciReset.c
+
+================================================================================ 
+Commit: 8ee178337f58b5d3cf975999bae16b0df746c31f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:27 2020 -0700 
+-------------------------------------------------------------------------------- 
+BoardPkg: Power is not provided to PCIe x4 slot 2 (RP1)
+
+Power is not provided to PCIe x4 slot 2 (RP1)
+- PWREN GPIO is active low for PCIe x4 slot 2 (RP1) as there is an inverter logic on the platform before being fed to the slot.
+
+Hsd-es-id: 14011504023
+Original commit date: Wed May 13 16:05:46 2020 -0700
+Change-Id: I9175a266f1cca26b7d8402fbafd4c0eb28c0e0ce
+Original commit hash: 9b355b36b4688e492d8ad993c663be5bbf8cbab0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/GpioTableTglHPostMem.h
+
+================================================================================ 
+Commit: 3b85e57aec00be5a5ab52d0d2dd8656f70b3fead 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:23 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Tue May 19 18:07:41 2020 +0000
+Original commit date: Tue May 19 18:07:41 2020 +0000
+Original commit hash: b8a70b055f8c72d5826752fdd26a914a78b8da79
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 70bf0c9c2f8f3ffa5a540df00b6bd758c7ba4070 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:21 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakePlatSamplePkg:  SMBIOS System SKU to show RVP info
+
+Updated SMBIOS Type 1 SKU Number with information from board, silicon, and firmware.
+
+Hsd-es-id: 1507989025
+Original commit date: Wed May 13 17:42:26 2020 +0800
+Change-Id: I2e867f80e76e2196ec2a0f2e1176bca122ce3949
+Original commit hash: 5c62c8c4e2500a68da823083d62e83690130e4c1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Features/Smbios/SmbiosMiscDxe/SmbiosMiscDxe.inf
+TigerLakePlatSamplePkg/Features/Smbios/SmbiosMiscDxe/SmbiosMiscEntryPoint.c
+
+================================================================================ 
+Commit: f97d9f074800413b3b7ac813424efa98ad40cb65 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:18 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-UP3] DDR4 noise can't improve even enabled BCLK SSC in CSME with 2667Mhz DDR installed
+
+Hsd-es-id: 22010674938
+Original commit date: Thu May 14 11:51:27 2020 +0800
+Change-Id: I9e7b3a1584f008d28753bac4afdba696c3d6d23d
+Original commit hash: daa77b0bf2c3c1d712a6fd5431f7685b32310b83
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver2/MemoryConfig.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+TigerLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+TigerLakeFspPkg/Upd/FspmUpd.dsc
+TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+
+================================================================================ 
+Commit: 23967f1a13c56120eb511f9017890006bb400b8b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:11 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Tue May 19 10:05:23 2020 -0700
+Change-Id: I4728e2f3ee2bac14880855b2e6e5c9936d39bac4
+Original commit hash: 8239f5c1148176ea80b04a40a86285d97cbc1359
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 15dbfa3b09e887f55ff04527a90b899f4e70b5ef 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:08 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3212_00
+
+Hsd-es-id: no sighting
+Original commit date: Tue May 19 09:18:38 2020 -0700
+Change-Id: Ied711ad69a816880dde4cf8684d340be90841a24
+Original commit hash: f151b6d8a88955754a3290fc6f1436c6ba1eb6fd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 56509f318608b3f0fa3b1dc69280a107e57136fa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:04 2020 -0700 
+-------------------------------------------------------------------------------- 
+MeExtMeasurement: [TGL] Fixed Extend CSME Measurement option grayed out issue
+
+Fixed Extend CSME Measurement option grayed out issue by removing check for
+ME_SETUP_STORAGE.MeasureBoot. Instead TPM enabled check is added.
+
+Hsd-es-id: 16011082602
+Original commit date: Sun May 17 16:52:36 2020 +0530
+Change-Id: Idc6fd80c44d173ca099fd90eb81a677176bcfe18
+Original commit hash: 56b55b885eb242750d6d289f69fdf8ff8288c0c0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Setup/MeSetup.hfr
+
+================================================================================ 
+Commit: 1e0ab9e5423c110591efaed3c94ad2fcd77ab1b5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:19:00 2020 -0700 
+-------------------------------------------------------------------------------- 
+Modify IPU LTR value from 0x64 to 0x70 to allow PKGC8 with camera on
+
+Hsd-es-id: 14011532140
+Impact Platforms: TGL
+
+Original commit date: Tue May 19 13:29:07 2020 +0800
+Change-Id: I0fb3dd7169f961353b1b2058ce8856d6f8572c7a
+Original commit hash: 6325fea5a23b4a22351a49293c29525443de9767
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Ipu/AcpiTables/Ipu.asl
+
+================================================================================ 
+Commit: e3ce1999c770b024cbe21ad08ea700571d0ebee9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:57 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL][DGR] BIOS changes for IHS SPA Tool
+
+Added BIOS changes for supporting IHS SPA Tool.
+
+Hsd-es-id: 16010784437
+Original commit date: Tue May 5 23:31:15 2020 +0530
+Change-Id: Id35bf04ae88ff0778ae38e3d7ea5401867c4f0ff
+Original commit hash: 765d30d945952c8bd76494ebde241696eaa48100
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Include/Protocol/CpuPolicyProtocol.h
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/PpamApi.h
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeatures.h
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.c
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmSps.c
+ClientOneSiliconPkg/Product/TigerLake/TigerLakeSiliconPkg.dsc
+TigerLakeBoardPkg/BoardPkg.fdf
+TigerLakeBoardPkg/BoardPkgConfigDefault.dsc
+TigerLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeCpuPolicyUpdate.c
+TigerLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxePolicyUpdateLib.inf
+TigerLakePlatSamplePkg/Setup/Setup.inf
+
+================================================================================ 
+Commit: 42caca9c433019dab217c1318feb5c0a7d620392 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:53 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL A0/B0/P0]: Request setting to optionally enable CDR Relock feature for TGL PCIe ports
+
+Impacted Platform: TGL
+
+Hsd-es-id: 16011135298
+
+Original commit date: Wed May 13 13:21:58 2020 +0530
+Change-Id: I63444b8206389ea1379463cff550644dac5a3267
+Original commit hash: 24c12ba7f91e1f1a848432485760123c03494909
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/TglCpu/IncludePrivate/Register/CpuPcieRegs.h
+ClientOneSiliconPkg/Include/ConfigBlock/CpuPcieRp/Gen4/CpuPcieConfig.h
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPciePolicyLib/PeiCpuPciePolicyLib.c
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPciePreMemRpInitLib.c
+TigerLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+TigerLakeFspPkg/Upd/FspmUpd.dsc
+TigerLakePlatSamplePkg/Include/SetupVariable.h
+TigerLakePlatSamplePkg/Setup/SaPcieSetupSinglePort.hfr
+TigerLakePlatSamplePkg/Setup/SaPcieStringPool.hfr
+TigerLakePlatSamplePkg/Setup/SaSetup.uni
+
+================================================================================ 
+Commit: d7ffd71f5eb3c46e098c91ef46cfa9a3fe7c76f2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:48 2020 -0700 
+-------------------------------------------------------------------------------- 
+Chasm Falls: Resiliency bios handle no ESP partition case
+
+In resiliency bios, if there no ESP, system will hang after 2 times
+bios/ucode/ACM update, this is due to after first update,progress
+will be set to: UpdatingResiliency, and at second, if no ESP, read/write
+backup will hang.
+This patch add the error handling into two parts:
+1.resiliency callback, it no esp partition, will return.
+2.bios/ucode/ACM update, if no esp partion, will return.
+3.Find 550 lines code reuse between seamless recovery libary and resiliency
+callback, reuse it for resiiency module and reduce code for more easy to understanding.
+
+Hsd-es-id: 1507960370
+Original commit date: Mon May 11 09:01:13 2020 +0800
+Change-Id: Ide7d40f4615b140b1bfb9df68a3d981224bc3445
+Original commit hash: 04a8d109eb8d67da9612f87828767be2f2cf45d1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BoardPkg.dsc
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Include/Library/SeamlessRecoverySupportLib.h
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibBios/FmpDeviceLib.c
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibBtGAcm/FmpDeviceLib.c
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibuCode/FmpDeviceLibuCode.c
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/Dxe/ResiliencyDxe.c
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/Dxe/ResiliencyDxe.inf
+TigerLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.c
+
+================================================================================ 
+Commit: a3bbb382882400834476fc52d064a36451ad19c5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:44 2020 -0700 
+-------------------------------------------------------------------------------- 
+TGL PM and iVE teams added VCCIN Shutdown Demotion algorithm to TGL B0 to avoid
+excessive cap inrush power. Current default value is 30ms, which means VCCIN rail
+will stay up with any C6-C8 duration less than 30ms.
+E.g, VPB has less than 16ms C8 period, and VCCIN rail will be always on.
+
+Since customer platforms have different capacitance and VR consumption than RVP,
+30ms value will not work for every customer. Request to expose this setting to
+BIOS so customer can tune it to optimize their design.
+
+Hsd-es-id: 14011468453
+Original commit date: Wed May 6 17:30:00 2020 +0800
+Change-Id: I241623247558f34974a6afd264344deca7c4395c
+Original commit hash: abc4f7afc58a254e57bde6abda4f41b4147458ee
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Include/ConfigBlock/CpuPowerMgmtBasicConfig.h
+ClientOneSiliconPkg/Cpu/Include/Library/CpuMailboxLib.h
+ClientOneSiliconPkg/Cpu/Library/PeiCpuPolicyLib/CpuPrintPolicy.c
+ClientOneSiliconPkg/Cpu/Library/PeiCpuPolicyLib/PeiCpuPolicyLib.c
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/CpuInitPreResetCpl.c
+TigerLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+TigerLakeFspPkg/Upd/FspsUpd.dsc
+TigerLakePlatSamplePkg/Include/SetupVariable.h
+TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+TigerLakePlatSamplePkg/Setup/CpuSetup.hfr
+TigerLakePlatSamplePkg/Setup/CpuSetup.uni
+
+================================================================================ 
+Commit: 30d5dfc6b175101d8437af0e059faffcf3f12f74 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:39 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update the default value for CPPM_CG_POL1B.TNTE_FORCE_ON (0x1b28) to 2 RTC clocks
+
+Updating the default value of the register as per latest BWG update
+
+Hsd-es-id: 14011531407
+Original commit date: Mon May 18 16:38:47 2020 -0700
+Change-Id: I079653cf8c36b841221cffd3925fad51a1618d54
+Original commit hash: 525a42d87db55bba15a6e0eee46dc7282cff88a0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/Register/PmcRegs.h
+ClientOneSiliconPkg/IncludePrivate/Register/PmcRegsFivr.h
+ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLibVer2.c
+
+================================================================================ 
+Commit: 0b78629836f4e5d3e416755d594d6b65db627828 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:34 2020 -0700 
+-------------------------------------------------------------------------------- 
+PeiUsbHostControllerInitLib: xHCI programming update
+
+Updated xHCI programming to update 0x8140 FPSAW to 0x18h (24us) for xHCI IP V18
+
+Hsd-es-id: 14011531225
+Original commit date: Mon May 18 15:27:43 2020 -0700
+Change-Id: I2efc303c83ac384cd3d4100a7b69d19e5797c868
+Original commit hash: f22dfed4eb4edf4ab13737bcd5fe0ac9e83fe0c8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/XhciInit.c
+
+================================================================================ 
+Commit: 551fe9561f43150c4832117cafc43f4f727fdc92 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:31 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-GCS] Change default fan control parameters to reduce acoustic noise issue
+
+Modified  GCS config patch table to override the following:
+1. Active Trip Point 0          : 71 C -> 87 C
+2. Active Trip Point 0 Fan Speed: 100 -> 90
+3. Active Trip Point 1 Fan Speed: 75 -> 50
+
+Hsd-es-id: 22010732544
+Original commit date: Fri May 15 23:36:15 2020 -0700
+Change-Id: Ia96d9eed28c4aee665be11084d521740185db170
+Original commit hash: 7b19fa82847cf95bb79e257e21f872798b516311
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/TigerLakeUBoards/Include/TigerLakeUBoardConfigPatchTable.h
+
+================================================================================ 
+Commit: 2b106938a2b256d43b21b7e4bdc47549aa83dce3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:26 2020 -0700 
+-------------------------------------------------------------------------------- 
+BoardPkg: FIVR retention to low and high current mode needs to be 0 for S0ix
+
+BIOS knobs needed to be set to 0 for FIVR low current and high current retention to achieve S0ix
+
+Hsd-es-id: 14011516313
+Original commit date: Thu May 14 18:06:45 2020 -0700
+Change-Id: Ib0c12ebd552f6f16087292210d96834f0241f31d
+Original commit hash: 5636e6d975943a6793b45401246dd2b4ed0d9a59
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLib.c
+TigerLakeBoardPkg/TigerLakeHBoards/Include/TigerLakeHBoardConfigPatchTable.h
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+
+================================================================================ 
+Commit: 79d33bafb5640028f81d9c65af350e26ec856a36 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:23 2020 -0700 
+-------------------------------------------------------------------------------- 
+HstiIhvDxe: KW issues for HSTI code
+
+* Fixed incorrect usage of sizeof (using const value instead of type),
+  allocate a buffer on the stack instead of dynamic memory allocation
+* Fixed AuthSize variable initialization
+* Fixed few misaligments
+
+Hsd-es-id: 14011493079, 22010733821
+Original commit date: Tue May 12 19:31:38 2020 -0700
+Change-Id: I7da65b04835f919e8bd9fb3241397f75ff358343
+Original commit hash: 16454c3bc1eaeb4575401144c587c9ffe300c2d2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.c
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/MeasuredBootEnforcement.c
+
+================================================================================ 
+Commit: 3b2728c7a8099fcb17e662bc71f4f882a91dfb8d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:20 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update BIOS ID to 3211.01
+
+Hsd-es-id: N/A
+Original commit date: Mon May 18 10:36:46 2020 -0700
+Change-Id: I61baa876c850b467ed896405390731bf5bf270f5
+Original commit hash: da55c92f040d1cef5fc47a6c8e0a8653484161ab
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 5c41f92cde5beed08af3ecf87fb559fb677d6be5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:17 2020 -0700 
+-------------------------------------------------------------------------------- 
+Tigerlake B0 Unified (uCode+Punit) Production Patch 0x2C
+
+Hsd-es-id: 22010736279
+Original commit date: Mon May 18 11:45:15 2020 -0700
+Change-Id: I9f4bc2588190302d276edf4a19da3a8e7c1b9cb2
+Original commit hash: 25ab55598eef926f8c3c2425ec7f08dbe14c1270
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: c38b9883b0dbeda0bd76651808f57a5e916c8919 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:14 2020 -0700 
+-------------------------------------------------------------------------------- 
+Implementing Coefficient list cm/cp for all RPs.
+
+Cm/Cp default value for all lanes as mentioned in this RCR: https://hsdes.intel.com/appstore/article/#/16011028191
+
+Hsd-es-id: 16010948380
+Impact Platforms: TGL
+
+Original commit date: Mon May 4 16:36:10 2020 +0530
+Change-Id: Ia029f4c2b8986d54cbd4166772ff88c6f02af913
+Original commit hash: dceaca35dd5ea978808937b5bab7c2d1ec8640ab
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/ConfigBlock/PcieRp/PcieConfig.h
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+
+================================================================================ 
+Commit: 1f14f0b60199b66394a4f5c110907e38eed09fb5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:11 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL PCIe] Common Semaphore for PCIe controllers for tracking power
+
+BIOS uses a sticky bit in the pcie controller to track if/when _ON/_OFF methods have been called.OS isn't 100% sure when it calls DSM, so BIOS needs to track to ensure it doesn't reapply a method.
+There is no architecturally defined location for this, so BIOS uses unused sticky bits to track this state.
+In this fix same sticky bit offset bit 0 in the scratch pad register is used for both PEG and PCH.
+
+Hsd-es-id: 14011457968
+Original commit date: Wed May 6 19:37:25 2020 -0700
+Change-Id: I714bec244b9cf6819e8d556e8f64a21ff199f258
+Original commit hash: cde7a021c04ec0784b5602520474648c20364d85
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpInitLib/PeiPcieRpInitLib.c
+ClientOneSiliconPkg/IpBlock/Vmd/AcpiTables/VmdPcieRp.asl
+ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/PchPcie.asl
+TigerLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3VmdPciePort.asl
+TigerLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3VmdSataPort.asl
+
+================================================================================ 
+Commit: a71ac401766a45dd486f135e193f0c7ddf1f573e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:07 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-U][UP3][VMD][B0/B1] Power on PCH slots is not turned off during Modern Standby when discrete Optane is enabled
+
+Fixed VMD logical volume 2 _OFF method to use correct packet size
+
+Hsd-es-id: 18011520987
+Original commit date: Thu May 14 16:44:17 2020 -0700
+Change-Id: Ia00ff111dee229bd38707c332d524ae34c1a9508
+Original commit hash: 82300f3dd25a85994f19c7c7ed0c02c55e961c8b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Vmd/AcpiTables/VmdRaid.asl
+
+================================================================================ 
+Commit: 4c5175454fbb41d7a00bcf5405ef0efe70ba178d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:18:03 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-U] BIOS and SINIT prevent TBT PMR utilization
+
+Hsd-es-id: 22010648364
+Original commit date: Sun May 3 20:43:21 2020 -0700
+Change-Id: I4e8d508e17340d4f965833799a4ca5cc3bdcfc54
+Original commit hash: 19a2ef458f80b8dcb8363cdf791abe275e942f7f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Features/VTd/PlatformVTdInfoSamplePei/PlatformVTdInfoSamplePei.c
+
+================================================================================ 
+Commit: 2c3904e6c8f029ea828c1bd5942cc3e249f5236a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:59 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Mon May 18 10:03:23 2020 -0700
+Change-Id: I1f0a72aac60d30a3ca13b183782f2c931bf13b2b
+Original commit hash: 906c01b199812df993541ced6d2aca371f73d23f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 62a65b4372b837a73adf8be11f215e9ee0003f93 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:56 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3211_00
+
+Hsd-es-id: no sighting
+Original commit date: Mon May 18 09:11:22 2020 -0700
+Change-Id: I41c5b25b812fcfba361685ef6264247dcec9232e
+Original commit hash: 96040b33ae829fbd1211be5620babfec4f3e79c8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 4bc03c35f518549ca54583668f766bca3d6b1eec 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:52 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakeFspPkg: Update partial header file
+
+Update TigerLake partial header file to include the below UPDs.
+FSP-M:
+TcssDma0En
+TcssDma1En
+
+Hsd-es-id: 14011458855
+
+Original commit date: Fri May 8 15:22:06 2020 -0700
+Change-Id: Ie7eca557e865b0c95ed5168e4f13ce775a947e00
+Original commit hash: 85373b75c472a20cd274e637892027e228d0d1f2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/Tools/GenPartialHeader/UpdList/FSPM.txt
+
+================================================================================ 
+Commit: 8f71f1b045826389566a9699d1c72d504bb35af4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:49 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakePlatSamplePkg: Fix uCode update with BiosGuard
+
+1) Remove duplicated PCD related IBBR region.
+2) Enable BiosGuard feature for uCode FMP instance.
+3) Change BGUP script, the Microcode region in .bsgl script must
+   match the value from FlashMapIncludeRes.fdf file.
+4) Fix SVN number issue when generation capsule.
+5) Unmark code logic for generation windows capsule.
+6) Remove MicrocodeSample folder, no longer use.
+
+Hsd-es-id: 1507941176
+Original commit date: Fri Apr 24 09:38:49 2020 +0800
+Change-Id: I72625c6b372004082a903294af0ae7c8c0d598eb
+Original commit hash: a30e2cf47ae89af5f9155899a62ddbdac7117082
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BoardPkg.dec
+TigerLakeBoardPkg/Include/Fdf/FlashMapIncludeRes.fdf
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/MicroCodeUpdateHelpersLib/MicroCodeUpdateHelpersLib.c
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Tools/NewGenCap/MicrocodeSample/mC0806C0_F0000000.pdb
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Tools/NewGenCap/MicrocodeSample/mC0806EB_0000009A.pdb
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Tools/NewGenCap/MicrocodeSample/m_80_806c0_00000058.pdb
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Tools/NewGenCap/MicrocodeSample/m_c2_806d0_80000008.pdb
+TigerLakePlatSamplePkg/Features/CapsuleUpdate/Tools/NewGenCap/NewGenCap.py
+TigerLakePlatSamplePkg/capsulebuild.bat
+
+================================================================================ 
+Commit: a713a00136ca2091683de286f1966fd78deb574d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:45 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL] Return the right _CPC table when ITBM is enabled.
+
+- TGL HWP MSR supports PerCore Scope, no need CPTB from IO trap.
+
+Hsd-es-id: 16011082791
+Original commit date: Sat May 2 15:04:00 2020 +0800
+Change-Id: I2355a98081c857f719d99e56e3b498721084eb48
+Original commit hash: d2cc03a17975968adb5704ee41fd0f29cde53593
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/Cpu0Hwp.asl
+ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/CpuSsdt.asl
+ClientOneSiliconPkg/Cpu/PowerManagement/Dxe/PowerMgmtInit.c
+TigerLakePlatSamplePkg/Setup/CpuSetup.c
+
+================================================================================ 
+Commit: 0d680697b6026419f5165197dfc00850a4572c0f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:40 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL]AMT_086 fail
+
+Issue: NVMe is OPAL feature enabled, so AMT can't send erase command to it.
+Resolution: Revert OPAL feature with admin1.
+Impacted: All TGL projects.
+
+Hsd-es-id: 1507856900
+Original commit date: Fri Apr 17 14:49:38 2020 +0800
+Change-Id: Iabfe0fd4641233d67428788487740b382e255052
+Original commit hash: 8ea53f70e0cbded95644d32e60decf8efbd3b6a9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/AsfMsgs.h
+ClientOneSiliconPkg/Include/Library/DxeAmtHeciLib.h
+ClientOneSiliconPkg/IpBlock/Amt/Library/DxeAmtHeciLib/DxeAmtHeciLib.c
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MbpDebugPrint.c
+TigerLakeBoardPkg/BoardPkgPcd.dsc
+TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/AtaSecureErase.c
+TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/AtaSecureErase.h
+TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/NvmeSecureErase.c
+TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/NvmeSecureErase.h
+TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/SecureErase.c
+TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/SecureEraseDxe.inf
+TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/Ui.c
+TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/Ui.h
+
+================================================================================ 
+Commit: 46841fe7099c85e1ad38f9b9eb9e94acab7f3123 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:34 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Sun May 17 20:35:41 2020 +0000
+Original commit date: Sun May 17 20:35:41 2020 +0000
+Original commit hash: 70d73256f690a3817c188ecc61a0623d7724ca65
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 2babce12426211b4c556164e55c88019796ba6b5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:30 2020 -0700 
+-------------------------------------------------------------------------------- 
+C1S/MemoryInit/Tgl: [TGL][UYH] Optimize Trefi based on PNP feedback and HW fixes
+
+Removed old formula that is no longer needed
+
+Hsd-es-id: 14011519147
+Original commit date: Thu May 14 13:15:58 2020 -0700
+Change-Id: I676e74a1f14e4ece071e8c2131090b1cb24dcabb
+Original commit hash: a48a4a74bf037a7cdd8cd99101576432bfa1938a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+
+================================================================================ 
+Commit: 4eff388e78285b96cf29a01674c4b856e8b62c1f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:24 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Sun May 17 20:13:16 2020 +0000
+Original commit date: Sun May 17 20:13:16 2020 +0000
+Original commit hash: d538a4b3b49d5e80cf57bd78abd30540fc0fe350
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: e101566fd179cacd56a657dea5e19212c9da9ea4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:20 2020 -0700 
+-------------------------------------------------------------------------------- 
+C1S/MemoryInit/Tgl: [TGL-Y][MRC] TGL Y disable PPD and Change SaGv points to 2133 gear 2 2133 gear 2 3200 gear 2 4267 gear 2 for Y stability Work around
+
+Updated SAGV/Gear settings based on TGL Y
+Disabled PPD on TGL Y
+
+Hsd-es-id: 14011519166
+Original commit date: Tue May 5 10:21:41 2020 -0700
+Change-Id: I8a387212e2ca2892a618201b5ce80dabbe52930a
+Original commit hash: 1a9f602f10c399417306272c25c18b7103ebd1e8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/MEMORY/MrcOemPlatform.h
+
+================================================================================ 
+Commit: b3696168e3d53c356b528c22abb69e34e592a78a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:14 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Sun May 17 09:57:46 2020 -0700
+Change-Id: Ic939e5281c7185536121a866c56b70f5617e7672
+Original commit hash: b88558cfe26488da88ddb4ba5bf905260e4d720d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: b7ee0f8277eceb8d1f7f2cc6b4fac7ec1e12d658 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:10 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit WeeklyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Sun May 17 09:49:56 2020 -0700
+Change-Id: I9bab6ead194c478099200c7a3a044c59bbfce999
+Original commit hash: ec7239bd0a544b9f38ae9299fc7f5f1ac346b841
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 4ea26bffddd42f0d173fde8f44c7832ff41e1bf8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:06 2020 -0700 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Sun May 17 16:32:13 2020 +0000
+Original commit date: Sun May 17 16:32:13 2020 +0000
+Original commit hash: 6912b40f0bd5acd0cda34dcee4fb2c54299db228
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 590e585c16d35e395f30dde55736bcbaa88c954b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:17:02 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3207_00
+
+Hsd-es-id: no sighting
+Original commit date: Sun May 17 09:07:06 2020 -0700
+Change-Id: I8847d540b8b53708fa8d3104d652543c1a4db83a
+Original commit hash: f3e462cbd471add799ee56d12cf0c8da4156eb72
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 6889a40a4045ec3a84b86e8b5ee73789ffc0996a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:16:57 2020 -0700 
+-------------------------------------------------------------------------------- 
+Change BIOS defaults to enable SAGV and set maxFreq to 4400
+
+enabled SAGV for LP5 boards
+
+Hsd-es-id: 14011520125
+Original commit date: Fri May 15 12:20:12 2020 -0700
+Change-Id: Iea3c684eb05f8d183790c0917d46735a81099be0
+Original commit hash: b0c6558e9238f521d31e0ddb3c1a596b2217b762
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+TigerLakeBoardPkg/TigerLakeUBoards/Include/TigerLakeUBoardConfigPatchTable.h
+TigerLakeBoardPkg/TigerLakeYBoards/Include/TigerLakeYBoardConfigPatchTable.h
+
+================================================================================ 
+Commit: 04a3ede855beb5d6441c28e2860addaffe2abae9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:16:52 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Sat May 16 09:57:10 2020 -0700
+Change-Id: I31c4cc3f2ab25aa08d35bd65c78805369987a919
+Original commit hash: 37dd1c4daf07b1399225ca6ac4c0959e95d211bb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: dadf1bfd0ab03d8b8a18b5905648b73a60bccf79 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:16:44 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3206_00
+
+Hsd-es-id: no sighting
+Original commit date: Sat May 16 09:07:05 2020 -0700
+Change-Id: If009b7d69395e5164ae339aa84a5df8796349e09
+Original commit hash: 0785384950dd02a43ceb67c1151cd70e88166112
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: df59bda6e235a69cd681860f499b2086ab27f9e9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:16:37 2020 -0700 
+-------------------------------------------------------------------------------- 
+FV Size update
+
+Hsd-es-id: NA
+Original commit date: Fri May 15 14:07:06 2020 -0700
+Change-Id: I9ae7b679627706c54c582fb66da933197890969a
+Original commit hash: 5c42cfa8c51e4f2aeb8658b96e04d76b6392f674
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/Include/Fdf/FlashMapInclude.fdf
+TigerLakeFspPkg/TigerLakeFspPkg.fdf
+
+================================================================================ 
+Commit: c12e492721f3e6e0c1c5218a07561fc97ac123e6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:16:33 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL][DGR] Fix for DGR always disabled in External BIOS
+
+Fix for DGR always disabled in External BIOS as
+CpuPolicyData->DgrEnable is always 0.
+
+Hsd-es-id: 1507974232
+Original commit date: Tue May 5 20:02:54 2020 +0530
+Change-Id: If71d9db5b11de570ea7f4ea7608abc3f45ef6f01
+Original commit hash: 3a565ceb20eb880a51acc2394aa60a8678d399fa
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeCpuPolicyUpdate.c
+TigerLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxePolicyUpdateLib.inf
+
+================================================================================ 
+Commit: a894c3ab487906b3c4e654447926086270c2431f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:16:27 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL][DGR] Write Protect TXT MMIO and System Memory
+
+DGR denies write access to TXT MMIO FED2000 to FED3FFFF,
+TXT System Memory DPR Region and MSR IA32_RTIT_CTL
+is black listed for access.
+
+Hsd-es-id: 16011091438
+Original commit date: Mon May 4 21:22:02 2020 +0530
+Change-Id: If17dd3303d3b2553d9b7846db1a32c430626cf74
+Original commit hash: 9beadab4801ff77e6b4ff8b35735dd9232292acf
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.c
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmSps.c
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmSps.h
+TigerLakePlatSamplePkg/Features/NiftyRock/PpamPlatformSmm/SmmIoMsrAccess.h
+
+================================================================================ 
+Commit: a26b8282d8f7db4bdd731b37d5541535b8a73764 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:16:22 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL][DGR] Fixed BSOD issue when State Save protection enabled in DGR.
+
+Incorrect values are copied for RAX in State Save.
+Updated to copy buffer offset correctly.
+
+Hsd-es-id: 16011042517
+Original commit date: Fri Apr 24 15:33:38 2020 +0530
+Change-Id: Ieaf90be04d5440bed56ae2ed6e4f5a53d75ba494
+Original commit hash: f83d1b40a48f8a6155b6a6553fc06a3d6e7601b4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmramSaveState.c
+
+================================================================================ 
+Commit: 44a5c9639a08dc5fadff14ce5b89f560ac266eef 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:16:08 2020 -0700 
+-------------------------------------------------------------------------------- 
+3x Strike on CPU TraceHub when accessing PMTCS at Post Code 0x0A22 while resuming from S3/Warm reset.
+
+Reproduced with DAM dis DCI dis IFWI, PDC enabled, S0 idle disabled, connected with DCI running S3 cycles.
+Remove PMTCS w/a since it is confirmed done by Pcode, additional access from BIOS causes issue instead.
+
+Hsd-es-id: 22010710570, 14011441293, 1305451639
+Original commit date: Tue May 12 10:58:13 2020 +0800
+Change-Id: I25476b340275cb1ba20d200b2484bf4d64a00b8d
+Original commit hash: 28048794018a1f319bdd99704b16470cc32c55a3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/TglCpu/TraceHub/LibraryPrivate/BaseTraceHubInfoFruLib/BaseTraceHubInfoFruLib.c
+ClientOneSiliconPkg/IncludePrivate/Library/BaseTraceHubInfoFruLib.h
+ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiCpuTraceHubLib/PeiCpuTraceHubLib.c
+
+================================================================================ 
+Commit: 7541b96986fe833101cc35af08d7b1b6f089bee2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:16:02 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Fri May 15 10:02:16 2020 -0700
+Change-Id: Ic246c1456dc134f43b0a0a3b102cd2f89108c43c
+Original commit hash: 05b05d67d1a70a2ba67c7911c3f31a3b6c569572
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 162de4fd696badacef402bfe5f9b7a8a74771df6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:56 2020 -0700 
+-------------------------------------------------------------------------------- 
+Changing DMI speed default to GEN3
+
+Hsd-es-id: 14011516666
+Impact Platforms: TGL
+
+Original commit date: Fri May 15 14:22:10 2020 +0530
+Change-Id: If214ea4efe90bfdc5ab4389323d436c4d125739f
+Original commit hash: af00be596b570a53529d632d6af17d01ff863335
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.fdf
+TigerLakeFspPkg/Upd/FspmUpd.dsc
+TigerLakePlatSamplePkg/Setup/SaSetup.hfr
+
+================================================================================ 
+Commit: b3b52830177409854e0b41ddc45113e8b1b5792e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:52 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3205_00
+
+Hsd-es-id: no sighting
+Original commit date: Fri May 15 09:10:32 2020 -0700
+Change-Id: Ic741695803a54907996b39cff20f1215a003c236
+Original commit hash: 1f3a5eee252a3d75d7cad7039452fc33bcada309
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 6b91e4f3da12546e39aa3ce9ed19e1d1b16ee94e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:49 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-H][PCIe] PEG11 and PEG12 are disabled during boot [BIOS disabled PEG11/PEG12 based on PEG10 RPC]
+
+program mailbox command and intergrate pcode patch to program IOP register to enable PEG11 and PEG12 when PEG10 is not populated
+
+Impacted Platform: TGL
+
+Hsd-es-id: 16011109840
+
+Original commit date: Wed May 6 15:18:53 2020 +0530
+Change-Id: I3fb0dd7eafbe37ff5876f9245a7598b91e071898
+Original commit hash: ebdd89588ac5f8803b7caaf9f255b46eda0e7654
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Include/Library/CpuMailboxLib.h
+ClientOneSiliconPkg/Fru/TglCpu/Include/Register/SaRegsHostBridge.h
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.inf
+
+================================================================================ 
+Commit: 58913c022ad3b982e95a4ac640c310952d920599 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:46 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-H] Need OV13858 and OV9234 default settings for TGL-H
+
+Set the default settings of OV13858 and OV9234 for TGL-H.
+
+Correct the code change of the "SHA-ID a7d0b2d1a7251a284fa480708f70a426289ea027" as below,
+1. Disable Camera Link 3.
+2. Modify the GPIO 0 Group Number from "B"(0x02) to "A"(0x00) for TGL-H.
+
+Hsd-es-id: 22010674342
+Original commit date: Wed May 13 10:51:34 2020 +0800
+Change-Id: Iaa03986bb32856ae4b877614326e6b0948bd2a38
+Original commit hash: 4a012089b4a6e4eda20c80c5e258538a48b6a4f8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/TigerLakeHBoards/Include/TigerLakeHBoardConfigPatchTable.h
+
+================================================================================ 
+Commit: 121b7edf72f936e4189870e6bf9acd750123c83c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:39 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-H][PO] YB observed for Realtek HW Audio Codec in DM for I2S Codec
+
+Disable I2C device when non I2S audio is selected.
+
+Hsd-es-id: 14011431285
+Original commit date: Tue May 12 09:25:21 2020 -0700
+Change-Id: I10bedb9955052aee4790ab36fb7695d85aec9200
+Original commit hash: 04747857a87f991140c200e56038bb0f7461ce9f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/Acpi/AcpiTables/Dsdt/HdaSlaveDevices.asl
+
+================================================================================ 
+Commit: 47430fb924423c3173b21c77029dff36574c07b0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:32 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakeBoardPkg: Prep.bat prints "BIOS Prep succeeded" even when files needed for successful build are missing
+
+1. If SiPkg.dec encounter unexpected case cause it not auto generate success, prep should show "prep failure" instead of "prep successly"
+2. If run microcode_padding.py failure, need to enter to failure case.  prep should show "prep failure" instead of "prep successly"
+3. If BiosId.env is missing, prep should show "prep failure" instead of "prep successly"
+4. If %PYTHON_COMMAND% --version failure, prep should show "prep failure" instead of "prep successly"
+5. If run edksetup.bat failure, prep should show "prep failure" instead of "prep successly"
+6. If run nmake on Edk2Platforms\Silicon\Intel failure, prep should show "prep failure" instead of "prep successly"
+
+Hsd-es-id: 14011453759
+Original commit date: Thu May 14 09:18:50 2020 +0800
+Change-Id: I333fe069c16940e3cf92d8e7907263f7416c308d
+Original commit hash: c859bb3c2a98189bc0cf56809b6697f487ed4330
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/postbuild.bat
+TigerLakeBoardPkg/prebuild.bat
+TigerLakeBoardPkg/prep.bat
+
+================================================================================ 
+Commit: 7a7949221ef80e5138f1779586f74770ae81fd5c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:28 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLake: Fix uCode searching fail issue for PeiCpuPolicyUpdateLib
+
+With new layout for Microcode FV, some padding data between each
+uCode patches, enhance RetrieveMicrocode function for scan uCode patch.
+This patch is for fix with FSP API Mode, FSP Dispatch Mode already
+fix by 7a1bf72.
+
+Hsd-es-id: 22010589081, 16010971930
+Original commit date: Thu May 7 15:24:35 2020 +0800
+Change-Id: I077dc2afbd72c85f650e374cb876343e75923781
+Original commit hash: 97d0c3982163a08cc8cfd3b990b85f40bc06037f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+
+================================================================================ 
+Commit: 31c45d8e9c76c743ea7d12d8e0c2dc469a03e651 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:24 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakeFspPkg: Update partial header file
+
+Update TigerLake partial header file to include the below UPDs.
+FSP-S:
+VmdEnable
+
+Hsd-es-id: 22010667185
+
+Original commit date: Fri May 8 15:08:56 2020 -0700
+Change-Id: I3c19a5434d9ff852cfe76b22aaf74d36df58ba65
+Original commit hash: 22d5ac3657a030d6140fac8e4869854180e9b8df
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/Tools/GenPartialHeader/UpdList/FSPS.txt
+
+================================================================================ 
+Commit: c1c889e9e2a1fba1ec5caf0ba78112382c1d09b7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:21 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Thu May 14 09:56:53 2020 -0700
+Change-Id: I7622498336367617684757b7e634939f2f5876c4
+Original commit hash: 032291f837f1b4196b1b7391fdd7c741fedc88c7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 11fe2e948b1f5f7fdda4751461991eb279fd1799 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:14 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3204_00
+
+Hsd-es-id: no sighting
+Original commit date: Thu May 14 09:09:25 2020 -0700
+Change-Id: I73be35de43512d18b27caf3ed774a86890f24823
+Original commit hash: 182b2cc1a5ec674b6847c57a104209022f7010df
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 78f8af356b3fbb686f15bdd5181ba92a37e25c64 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:10 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakePlatSamplePkg: EFI Shell GUID correction
+
+Remove the usage of PcdShellFile and replace with gUefIShellfileGuid.
+
+Hsd-es-id: 22010699191
+Original commit date: Tue May 12 16:49:34 2020 +0800
+Change-Id: I3a0cbb6f805624b1f0449367abd48cabee13395c
+Original commit hash: 24867ee6b822357179fd4371ade4f29bcf996bc5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.inf
+TigerLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AsfSupport.c
+TigerLakePlatSamplePkg/Features/UiApp/BootMaint/FileExplorer.c
+TigerLakePlatSamplePkg/Features/UiApp/UiApp.inf
+TigerLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+TigerLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerHiiFreeLib.inf
+TigerLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerLib.inf
+TigerLakePlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: f97960df9a43fe5d2d1e9baddedf205b511db87e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:15:01 2020 -0700 
+-------------------------------------------------------------------------------- 
+HstiIhvDxe: Implementation of new requirements for several tests areas for PSCS and HSTI
+
+* HW Rooted Boot Integrity tests only need to be run on BSP, not all cores.
+* PCR7 more granurality on Active Algorithms report
+* PRMRR enabling test improvement
+* ASPEN Internal Graphics New Tests
+* Extended BIOS Decode Range New Tests
+* Added new TME lock bit tests
+* Added GTTMMADR, TMBAR, REGBAR, EDRAMBAR, GMADRBAR and VTDBAR Masks for 64b in SA host bridge register file
+* Clean up HSTI files to adjust with new variables and some aligments fixes.
+
+Hsd-es-id: 14010457141
+Original commit date: Mon Mar 23 11:34:35 2020 -0700
+Change-Id: If9739f48be8652ba14fd3f22d21cec7e6ca7b902
+Original commit hash: 40ad7c1b10463547e875fd4edf7982b1e3996c03
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/TglCpu/Include/Register/SaRegsHostBridge.h
+ClientSiliconPkg/Include/HstiFeatureBit_1_1a.h
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/BootFirmwareMediaProtection.c
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HardwareRootedBootIntegrity.c
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.h
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/IntegratedDeviceDmaProtection.c
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/MeasuredBootEnforcement.c
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureCpuConfiguration.c
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureIntegratedGraphicsConfiguration.c
+TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureMemoryMapConfiguration.c
+
+================================================================================ 
+Commit: 7e3a068b5d8284a8064944b96024616e7633e2d4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:51 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL]TrusteddeviceSetup:TDS Opt-Out is not functional in PBA with OptOutHotKey
+
+Trusted console check has been moved before Trusted device setup
+Code redtructured to call remove keyboard function from SupressUserInput
+and just do the ConIn variable update when call from PBA app.
+Fix ported from CML
+
+Hsd-es-id: 22010620754
+Original commit date: Wed Apr 29 15:26:39 2020 +0530
+Change-Id: Ibda1211a27956df3ca2cf7aa0d9ed8283f7c1c67
+Original commit hash: eb3b1129c92868e480efe1fc1d98fa22c97c2be2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Features/TrustedDeviceSetup/OemTrustedDeviceSetup.c
+TigerLakePlatSamplePkg/Features/TrustedDeviceSetup/TrustedDeviceSetup.c
+TigerLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+
+================================================================================ 
+Commit: f21fb335ddf94af3a194fd353ae7696cdded3f4a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:45 2020 -0700 
+-------------------------------------------------------------------------------- 
+TrustedDeviceSetup:[TGL] Skip Opal Password Console When TDS is Enabled
+
+Once Trusted Device Setup is enabled, skip the Opal Password
+console prompt since the system disk is locked during manafacturing
+and end-users has no idea of what the password is to unlock the
+system disk. Fix ported from CML.
+
+Hsd-es-id: 16010724394
+Original commit date: Thu Mar 12 15:44:10 2020 +0530
+Change-Id: I4e80b44ad858d8fb89785de7413f79dde81b38a7
+Original commit hash: 42704762941e22fe6ffe19b837f04b59da721d46
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BoardPkgPcd.dsc
+TigerLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+TigerLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerHiiFreeLib.inf
+TigerLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerLib.inf
+
+================================================================================ 
+Commit: df9312ed4e251186ebfd4eb666a3380e937e6da3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:40 2020 -0700 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg\Pch\Library\PeiDxeSmmPchInfoLib: PchInfoLib using static local variables not permitted in pre-memory phase of PEI
+
+Removed static variables from PchInfoLib
+
+Hsd-es-id: 22010613267
+Original commit date: Wed May 13 06:46:56 2020 -0700
+Change-Id: Ifd40b93b70622f68811acc6e6384a6c7c568bef8
+Original commit hash: 858c21cac29eacf6b93a8203adf9ecf7e9659aab
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Pch/Library/PeiDxeSmmPchInfoLib/PchInfoLib.c
+
+================================================================================ 
+Commit: a494570784d62377d188a45d8691782401c892f4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:37 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakeFspPkg: Update partial header file
+
+Add PchPmWoWlanEnable,PchPmWoWlanDeepSxEnable and PchPmLanWakeFromDeepSx
+Upds to partial header.
+
+Hsd-es-id: 14011285182
+
+Original commit date: Fri May 1 20:16:50 2020 +0530
+Change-Id: I957cbd94a6da1b078cb173ce87911cf4f2a1483c
+Original commit hash: 810e72d5997a5700d38652ee45f8e7a1d056452f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/Tools/GenPartialHeader/UpdList/FSPS.txt
+
+================================================================================ 
+Commit: 37dae882b28bee43f1dedac6fe36db1676bf7efe 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:34 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Wed May 13 09:59:05 2020 -0700
+Change-Id: Ic18c7a1e9e996c9f0c05bf65af3367976e332f4b
+Original commit hash: 3e6530fb5dbc231f51ad82023540580de2375f8e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 3110ae2f0061b31e2a715d4e8a0f72f105f1d108 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:30 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3203_00
+
+Hsd-es-id: no sighting
+Original commit date: Wed May 13 09:11:14 2020 -0700
+Change-Id: I8b93e35ba11b61199021c2ac40c3516acbc52702
+Original commit hash: f72819df60a21c108b87cd6a502d0b8ad375a037
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 5831dc14ce6130423c8d56f5eae20c15133b85b0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:26 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakeFspPkg: Update partial header file
+
+Update TigerLake partial header file to include the below UPDs.
+FSP-M:
+BootFrequency ->  Already opened in cannonlake.
+SerialIoUartDebugMode
+
+FSP-S:
+SataPortsEnableDitoConfig -> Already opened in Geminilake and Cannonlake.
+
+Hsd-es-id: 14011370759
+
+Original commit date: Wed Apr 29 17:05:03 2020 -0700
+Change-Id: Id20f2db6b6969c0c82c752cef1c6b8f7732401bc
+Original commit hash: 1f524562bed55deb9085aa993e97eab3c966fb96
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/Tools/GenPartialHeader/UpdList/FSPM.txt
+TigerLakeFspPkg/Tools/GenPartialHeader/UpdList/FSPS.txt
+
+================================================================================ 
+Commit: 36eccab29a0279b8bc79031c23d601948e437337 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:23 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL][Tigerlake-master IOTG] Enable PSF Fusa parity by default and fix CpuRegBarOr16 function
+
+Hsd-es-id: 1507576684
+Original commit date: Tue May 12 19:45:12 2020 +0800
+Change-Id: Ib2e276b79b3787490221a167ccfa338beb22c000
+Original commit hash: adc8e7121aa7bd4e924e5388e13e34057c1af69b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/P2sb/Library/PeiDxeSmmCpuRegbarAccessLib/CpuRegbarAccessLib.c
+TigerLakeFspPkg/Upd/FspsUpd.dsc
+TigerLakePlatSamplePkg/Setup/FusaSetup.hfr
+
+================================================================================ 
+Commit: 6211072d6c5e88d01cfcea9a697f3a6e034fb531 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:20 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL] FSP MP_SERVICES callbacks from FSP API mode do not restore bootloader context
+
+1. Create MpService wrapper PPI so internally FSP will call to this MpService wrapper Ppi.
+2. MpService wrapper PPI will switch stack and PeiService pointer in IDT, then calling real MpService PPI from bootloader side (pointer from UPD)
+3. Once real MpService PPI completed, switch stack and PeiService pointer in IDT back, then return to caller.
+
+Hsd-es-id: 22010361841
+Original commit date: Tue Mar 24 22:42:59 2020 +0800
+Change-Id: I4ca924e484a4a399fb6762d14108b46c78065d9c
+Original commit hash: 21f4048bac5945a84385c1f74a6b2b93751a8cfd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/FspInit/Pei/FspInit.c
+TigerLakeFspPkg/FspInit/Pei/FspInit.h
+TigerLakeFspPkg/FspInit/Pei/FspInit.inf
+TigerLakeFspPkg/FspInit/Pei/FspMpServiceWrapper.c
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 18e6869102a7ef454c83068d0c0d18a4949e92c7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:13 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL H] [C1S] PowerMgmtSmm is not dispatched caused by PowerMgmtInitDone protocol dependency
+
+ - Removed powerMgmtInitDone protocol from PowerMgmtSmm.inf
+
+Hsd-es-id: 22010596955
+Original commit date: Thu Apr 23 15:06:56 2020 +0800
+Change-Id: I042ffdea9350ffe6522bc044b37ff8c98b3c2d59
+Original commit hash: 525a11e1fcfd40d65d7c1565f2ab3e92c0c07212
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/IncludePrivate/Protocol/PowerMgmtInitDone.h
+ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtSmm.inf
+TigerLakePlatSamplePkg/Setup/CpuSetup.hfr
+
+================================================================================ 
+Commit: 426303cfc4389e200d8cdf26467ef267d37c8ef7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:07 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerlakeBoardPkg: Fix Embedded Build Error cause by 256KB Startup ACM changes
+
+Fix Embedded Build Error cause by 256KB Startup ACM changes.
+
+Hsd-es-id: 1507990987
+Original commit date: Mon May 11 17:19:21 2020 +0800
+Change-Id: Ic6a3ae2ff4426697f242ebc02bf5725ffc7bd986
+Original commit hash: e2d17bc28a05771bebd78d8694931121ce5abd36
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/Include/Fdf/FlashMapEmbeddedInclude.fdf
+TigerLakeFspPkg/TigerLakeFspPkg.fdf
+
+================================================================================ 
+Commit: 3eb858a38687749a74fe04c96b52224e77e683e6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:14:01 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Tue May 12 10:03:38 2020 -0700
+Change-Id: I68ce0c28a7176f45a766711030079974aa180be4
+Original commit hash: 38f28792aa75546e948d84b03d787cc404a4626f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: e209d7a772c7a6aa127d8baacf5c9a7ef05ce335 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:55 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3202_00
+
+Hsd-es-id: no sighting
+Original commit date: Tue May 12 09:11:08 2020 -0700
+Change-Id: Ia2ad13a295e5337f3a886b53017da2353615920e
+Original commit hash: a494dff07beee5629ae71e5974b294579947dfcc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 8050bb22d85d4d5e563895549e3c58eb24207f14 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:44 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-H] Need OV13858 and OV9234 default settings for TGL-H
+
+Set the default settings of OV13858 and OV9234 for TGL-H.
+
+Hsd-es-id: 22010674342
+Original commit date: Fri May 8 10:33:22 2020 +0800
+Change-Id: Icadceb252f909012ec92fdc3b8b51967c91b4064
+Original commit hash: a7d0b2d1a7251a284fa480708f70a426289ea027
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/TigerLakeHBoards/Include/TigerLakeHBoardConfigPatchTable.h
+
+================================================================================ 
+Commit: ae1c8c39af426058a0413700060e092974ae9944 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:40 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL][FIVR]: VNN and V1P05 bypass current default value in BIOS option is showing different
+
+Default current limits for VNN, V1P05 and VNN_Sx changed from 250mA to 500mA.
+
+Hsd-es-id: 16010941768
+Original commit date: Tue May 5 10:26:33 2020 +0200
+Change-Id: I77e2465b080b62137011a8a77eeef2e1c902cc86
+Original commit hash: d378761fdd32b7daf78afb5d8aeca6ae7a730b3b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/Upd/FspsUpd.dsc
+TigerLakePlatSamplePkg/Setup/PchSetup.hfr
+TigerLakePlatSamplePkg/Setup/PchSetup.uni
+
+================================================================================ 
+Commit: 25007c737c483bab10ef9593547a2d604ea3e9b6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:33 2020 -0700 
+-------------------------------------------------------------------------------- 
+TigerLakePlatSamplePkg: [TGL] BIOS naming correction for Fused Favored Core Ratio and Turbo Ratio Limit (TRL)
+
+'Fused Max Core Ratio' should be 'Favored Core Ratio Read' - 0x1C read
+'Core Turbo Ratio Limit' should be 'Turbo Ratio Limit Ratio (TRLR) Read' - 0x1AD read
+'Core Ratio Limit Override' should be 'Turbo Ratio Limit Ratio (TRLR) Write' - 0x1AD Write
+
+Hsd-es-id: 14011444564
+Original commit date: Fri May 8 15:23:20 2020 +0800
+Change-Id: Ida774403d563c1a052e4651f6b8c00ae9f4318ff
+Original commit hash: 85949b8994bd9e2fe7cb46fb41b1d909141e62a9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakePlatSamplePkg/Setup/CpuSetup.c
+TigerLakePlatSamplePkg/Setup/CpuSetup.hfr
+TigerLakePlatSamplePkg/Setup/CpuSetup.uni
+
+================================================================================ 
+Commit: 99efbf891b7ae8c6bdf3f50dcba846f0de43a6e2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:29 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-GCS]: System  gives corrupted display and hangs after making the bios default by pressing F3 and reset
+
+Create a table to distinguish TGL-Ax from TGL-B0
+
+Hsd-es-id: 22010631974
+Original commit date: Mon May 11 22:25:34 2020 +0800
+Change-Id: Ia5c7000ae17fcac081d99629502ce75a1354fdc7
+Original commit hash: 81a8a07b0e1fd9dde209072ae5d3425e6725b04b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/TigerLakeUBoards/Include/TigerLakeUBoardConfigPatchTable.h
+TigerLakeBoardPkg/TigerLakeUBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+
+================================================================================ 
+Commit: 7020e2620f208bd233a691423c02f64d735f6c24 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:26 2020 -0700 
+-------------------------------------------------------------------------------- 
+Create RC6 lock, Pavp lock, RC6 range valid, WOPCM Range Valid and Doorbell range public APIs to be consumed by PSCS/HSTI code
+
+Hsd-es-id: 16011049281
+Original commit date: Fri Apr 24 16:51:31 2020 +0530
+Change-Id: I2d22352f02e34285e16b55c458c9b4d483398d87
+Original commit hash: 48b6f738137af0cad80c4b7f0ef03fa2fbb28e7e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/Library/GraphicsInfoLib.h
+ClientOneSiliconPkg/IpBlock/Graphics/Library/PeiDxeSmmGraphicsInfoLib/GraphicsInfoLib.c
+
+================================================================================ 
+Commit: 385055031eba35683f17847ae275b2ef519f1cc2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:23 2020 -0700 
+-------------------------------------------------------------------------------- 
+SpiAccessLib: Exposing Extended BIOS Region options through SpiAccessLib
+
+Created new functions to get SPI Extended BIOS Region configuration
+parameters like decode range base, limit and to check if lock bits are
+set.
+
+Hsd-es-id: 18010905581
+
+Original commit date: Fri Mar 13 13:18:18 2020 +0100
+Change-Id: If489d3717c2d2c7bcff57bd51f824fed68fb4d55
+Original commit hash: e740c6f82d7300df9021754c618c499de746a6fc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/Library/SpiAccessLib.h
+ClientOneSiliconPkg/Include/Register/PchDmiRegs.h
+ClientOneSiliconPkg/IpBlock/PchDmi/LibraryPrivate/PeiDxeSmmPchDmiLib/PeiPchDmiLib.c
+ClientOneSiliconPkg/IpBlock/Spi/Library/PeiDxeSmmSpiAccessLib/PeiDxeSmmSpiAccessLib.inf
+ClientOneSiliconPkg/IpBlock/Spi/Library/PeiDxeSmmSpiAccessLib/SpiAccessLib.c
+
+================================================================================ 
+Commit: 24904d3bf0f73dff9fb99d2fdb02af1c9194d6e2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:18 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TGL] TBT: fix format for TI PD FW version
+
+TI PD FW version does not have same format compared with Cypress PD FW.
+Example of TI PD version is: F309.02.8D, so change the explain part to
+decode TI PD fw version correctly.
+
+Hsd-es-id: 22010302586
+Original commit date: Mon Apr 20 14:19:25 2020 +0800
+Change-Id: I9babcc4954a950dab3a52608ee46d0005311ad9e
+Original commit hash: 94aa601ed754fd6d295f2736fa23ad76a3836ec1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BoardPkg.dec
+TigerLakeBoardPkg/Include/PlatformBoardId.h
+TigerLakeBoardPkg/Library/DxeUpdatePlatformInfoLib/DxeUpdatePlatformInfoLib.c
+TigerLakeBoardPkg/Library/DxeUpdatePlatformInfoLib/DxeUpdatePlatformInfoLib.inf
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+TigerLakeBoardPkg/TigerLakeUBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+TigerLakeBoardPkg/TigerLakeUBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+TigerLakeBoardPkg/TigerLakeYBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+TigerLakeBoardPkg/TigerLakeYBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+TigerLakePlatSamplePkg/Include/OemSetup.h
+TigerLakePlatSamplePkg/Setup/PlatformSetup.c
+TigerLakePlatSamplePkg/Setup/PlatformSetup.hfr
+TigerLakePlatSamplePkg/Setup/Setup.inf
+
+================================================================================ 
+Commit: 3d88ddb6532158c1dc42eb1d29ab9c958c81483c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:13 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit DailyUpdate_FSP/RC TGLMaster
+
+Hsd-es-id: no sighting
+Original commit date: Mon May 11 09:58:46 2020 -0700
+Change-Id: I9cabb440a9e4d36e236492755becce19d7b12128
+Original commit hash: cf92a20511a166f790e15014f2057a536f18c8ba
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeFspPkg/TigerLakeFspPkg.dec
+
+================================================================================ 
+Commit: 990ac37d3aa1e93b17b4b85490663ee49045e3f4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jun 9 12:13:07 2020 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update TGLMaster BIOS Version to 3201_00
+
+Hsd-es-id: no sighting
+Original commit date: Mon May 11 09:06:52 2020 -0700
+Change-Id: Ib3093de9695191149e7fd7e1c482e8d64ea9380f
+Original commit hash: 69ab1af41e18a29377458f46ef4d8f757669465e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env

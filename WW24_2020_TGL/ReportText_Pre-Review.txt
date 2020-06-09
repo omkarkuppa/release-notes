@@ -1,0 +1,572 @@
+*********************************************************************************
+Commit: dce995451980abb2be4342f55c89ee13972f8ea1 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "PmcPrivateLib: Update MAX_CPUMSG_LTR to 13ms for PCH-LP"
+  
+  This reverts commit 8f564bfaac130505d311ab01e78dc33399e279df due to low S0i3.2 residency.
+  
+  Hsd-es-id: 16011174439
+  Change-Id: I137e52da3f085d6cc8632f1fd67bb84bf4bab8ca
+  Original commit hash: aa6a38db6bafa1c39ebc1a34a9961ee30b0325f5
+  
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiPmcPrivateLibVer2.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: f29787b6cb71884d01be6aad1dd10fbc30b0118b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/MemoryInit: [TGLU/Y-B0][MRC] DqTimeCentering overrides the status for previous rank
+  
+  Issue
+  In DQTimeCentering1D, if Rank 0 has a failure (e.g. on LP5 there is a case where Rank 0 has low margin, see attached log), but Rank 1 is ok, the error status is cleared and the algorithm will false pass, resulting in subsequent training step failures.
+  This is true for all tech but we detected it on LP5
+  
+  Fix
+  ChangeMargin should never fail unless parameter is invalid, getset hash is undefines
+  or MRH engine times out. Therefore its good to check status for ChangeMargin function as well but the way this should be handled is that MRC checks CPGC error status and updates the Status variable and ChangeMargin updates another status variable. The function returns an OR of both these status variables.
+  
+  Testing
+  Tested using MRC regression. Log attached to the HSD
+  
+  Hsd-es-id: 14011538271
+  Change-Id: I3ad3d4a1c8e903bdaac2f43264fcaf012ee26262
+  Original commit hash: b4ccd7e1cdcf2b4b8f42750e40311bf6c8609132
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: b88a3fb8bffe5ebfe21b74b3bbd0dadea156ec0d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.4.78] Memory Training Fails in 32GB SKU (low RdT/RdV margins)
+  
+  [ICL][MRC][2208073021] Memory Training Fails in 32GB SKU (low RdT/RdV margins)
+  
+  Issue:
+  Customer board fails on Ch1 Byte5 in Early Read Timing Centering 2D due to low RdT / RdV margins.
+  Solution:
+  Set the MinRequired Eye width to 1 in GetMinRequiredEyeWidth for EarlyCentering.
+  
+  Hsd-es-id: 16010779885
+  Change-Id: I023d782f5f9a82babe2fd0ecc045c8258ec3bac1
+  Original commit hash: dffbfba069297a59523de343780add0d7dd945a4
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: ef2f9e15ed7c30e5128d1f3315a714e9fa83e0d5 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.0.3.161] WrT/WrV Margin degradation by RdT training steps (Rd Timing Centering 2D, Rd ODT training)
+  
+  [ICL MRC][Merge CNL MRC 0.5.0.16] WrT/WrV Margin degradation by RdT training steps (Rd Timing Centering 2D, Rd ODT training)
+  
+  Change: Modified UpdateHost to 1 in ShiftPIforCmdTraining function in RMT and TAT to clear the local valid flag.
+  else it uses the older local previous dq/dqs/recv_en delays since the valid flag is true.
+  
+  Hsd-es-id: 1507866733
+  Change-Id: Ia646a4910ea7d0cdf00716e38f9f7b88e669dbd6
+  Original commit hash: 303a1698372562288108f906869719e8a7fea142
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: d364004fa1a978a08ffd848a9a5c0eeac4fd27d5 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "[PATCH] [TGL H] BIOS from Tigerlake-master branch failes to boot, BSOD observed while boot to OS."
+  
+  This is a TBT driver installation issue. This W/A can be removed.
+  This reverts commit 2496ce6753229d412e14a75b1bd93850af9f6831.
+  
+  Hsd-es-id: 2208198914, 14011269764
+  Change-Id: I363bb03b5f9f8e4de429f867fb874cc3a36a54ab
+  Original commit hash: 3ce626612376212dcc2baca59af74ed98c21028c
+  
+  ClientOneSiliconPkg/Fru/TglCpu/Vtd/LibraryPrivate/DxeVtdInitLib/DxeVtdInitFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: bad075b07d1edb31f041178d86c1215736dc8eaf 
+*********************************************************************************
+
+[BoardPkg]
+
+  [TGL-H] Program GPIO values based on controller's bifurcation configuration
+  
+  Added GPIO Programming from  https://git-amr-7.devtools.intel.com/gerrit/#/c/80585/3/TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+  
+  UNIT test done,
+  GPIOs programmed for CPU_PCIE_1x16 and booted to OS on tgl-h.
+  
+  Hsd-es-id: 16010908184
+  Impacted Platforms: TGL-H
+  
+  Change-Id: I1db797049b267c576238cbcaca265fff36e1c53a
+  Original commit hash: 08dd50971159f8386662bfac9d6fc971c9f9dc95
+  
+  TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 2c86ed3bef3398f8e503cde131ae11a15f3b7d08 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [TGL]TigerLakePlatSamplePkg/VTd Fix WINRESUME.EFI fails S4 resume with STATUS_HIBERNATION_FAILURE phase 1
+  
+  Add Restricted Tags
+  
+  Hsd-es-id: 22010645539
+  Change-Id: I20efaa730daac678d6ad698c7d74ffab1b86ce40
+  Original commit hash: a326284d30edbe556b9529145b07c7b62c2217d3
+  
+  TigerLakePlatSamplePkg/Features/VTd/PlatformVTdSampleDxe/PlatformVTdSampleDxe.c
+  TigerLakePlatSamplePkg/Features/VTd/PlatformVTdSampleDxe/PlatformVTdSampleDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: c439a2ab6747cfea66d41e38b6d4711edd2e7685 
+*********************************************************************************
+
+[CPU], [PlatformPkg]
+
+  [TGL] IAFW should have the ability to disable GPRs in Crash Log data from CPU
+  
+  Created Setup item "Crashlog GPRs" for controlling the function.
+  1. EN_GPRS supported by all TGL step including TGL U/Y/H
+  2. EN_GPS_IN_SMM supported by TGL U/Y/H on Bstep and newer
+  
+  Carried forward from old code review - https://git-amr-7.devtools.intel.com/gerrit/#/c/65105/
+  
+  Hsd-es-id: 1507886693
+  Change-Id: Ibd514bf60126813e8f66035c5d1412e688d08b84
+  Original commit hash: d82beeced06a9d6d35df6098583bb63527d9fde5
+  
+  ClientOneSiliconPkg/Cpu/Include/ConfigBlock/CpuConfigLibPreMemConfig.h
+  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/MsrFruLib.h
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Features.c
+  ClientOneSiliconPkg/Fru/TglCpu/LibraryPrivate/BaseMsrFruLib/BaseMsrFruLib.c
+  TigerLakeFspPkg/Upd/FspmUpd.dsc
+  TigerLakePlatSamplePkg/Include/SetupVariable.h
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  TigerLakePlatSamplePkg/Setup/DebugSetup.hfr
+  TigerLakePlatSamplePkg/Setup/DebugSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: c2b6ff5f21c793f08629f2dbc1a10547b9ffc6f4 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [TGL-U] VC1 should be 0x810000c0 when enabled MultiVc Support
+  
+  Issue: VC0 and VC1 not getting programmed
+  
+  we need to use logical AND operator to find LinkVcCount.
+  MultiVC should be enabled when both Root port and Endpoint supports it.
+  Bitwise AND operator gives LinkVcCount As Zero when End Point has 2 Extended Virtual Channels.
+  
+  chery-picked from https://git-amr-7.devtools.intel.com/gerrit/83812
+  
+  Hsd-es-id: 1507815940
+  Impacted Platforms: TGL
+  
+  Change-Id: Ifa3fe6b3cdebb6aa446db4c2ff4b694f0418c8e8
+  Original commit hash: 52eec06196d7dc6db52adfab09267dbcee6fd477
+  
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PciExpressHelpersLibrary/PciExpressHelpersLibrary.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 70bf0c9c2f8f3ffa5a540df00b6bd758c7ba4070 
+*********************************************************************************
+
+[PlatformPkg]
+
+  TigerLakePlatSamplePkg:  SMBIOS System SKU to show RVP info
+  
+  Updated SMBIOS Type 1 SKU Number with information from board, silicon, and firmware.
+  
+  Hsd-es-id: 1507989025
+  Change-Id: I2e867f80e76e2196ec2a0f2e1176bca122ce3949
+  Original commit hash: 5c62c8c4e2500a68da823083d62e83690130e4c1
+  
+  TigerLakePlatSamplePkg/Features/Smbios/SmbiosMiscDxe/SmbiosMiscDxe.inf
+  TigerLakePlatSamplePkg/Features/Smbios/SmbiosMiscDxe/SmbiosMiscEntryPoint.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: c38b9883b0dbeda0bd76651808f57a5e916c8919 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Implementing Coefficient list cm/cp for all RPs.
+  
+  Cm/Cp default value for all lanes as mentioned in this RCR: https://hsdes.intel.com/appstore/article/#/16011028191
+  
+  Hsd-es-id: 16010948380
+  Impact Platforms: TGL
+  
+  Change-Id: Ia029f4c2b8986d54cbd4166772ff88c6f02af913
+  Original commit hash: dceaca35dd5ea978808937b5bab7c2d1ec8640ab
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/PcieRp/PcieConfig.h
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: a713a00136ca2091683de286f1966fd78deb574d 
+*********************************************************************************
+
+[CPU], [ASL], [PlatformPkg]
+
+  [TGL] Return the right _CPC table when ITBM is enabled.
+  
+  - TGL HWP MSR supports PerCore Scope, no need CPTB from IO trap.
+  
+  Hsd-es-id: 16011082791
+  Change-Id: I2355a98081c857f719d99e56e3b498721084eb48
+  Original commit hash: d2cc03a17975968adb5704ee41fd0f29cde53593
+  
+  ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/Cpu0Hwp.asl
+  ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/CpuSsdt.asl
+  ClientOneSiliconPkg/Cpu/PowerManagement/Dxe/PowerMgmtInit.c
+  TigerLakePlatSamplePkg/Setup/CpuSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 0d680697b6026419f5165197dfc00850a4572c0f 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg], [PlatformPkg]
+
+  [TGL]AMT_086 fail
+  
+  Issue: NVMe is OPAL feature enabled, so AMT can't send erase command to it.
+  Resolution: Revert OPAL feature with admin1.
+  Impacted: All TGL projects.
+  
+  Hsd-es-id: 1507856900
+  Change-Id: Iabfe0fd4641233d67428788487740b382e255052
+  Original commit hash: 8ea53f70e0cbded95644d32e60decf8efbd3b6a9
+  
+  ClientOneSiliconPkg/Include/AsfMsgs.h
+  ClientOneSiliconPkg/Include/Library/DxeAmtHeciLib.h
+  ClientOneSiliconPkg/IpBlock/Amt/Library/DxeAmtHeciLib/DxeAmtHeciLib.c
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MbpDebugPrint.c
+  TigerLakeBoardPkg/BoardPkgPcd.dsc
+  TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/AtaSecureErase.c
+  TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/AtaSecureErase.h
+  TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/NvmeSecureErase.c
+  TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/NvmeSecureErase.h
+  TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/SecureErase.c
+  TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/SecureEraseDxe.inf
+  TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/Ui.c
+  TigerLakePlatSamplePkg/Features/Amt/SecureEraseDxe/Ui.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 2babce12426211b4c556164e55c88019796ba6b5 
+*********************************************************************************
+
+[SiliconPkg]
+
+  C1S/MemoryInit/Tgl: [TGL][UYH] Optimize Trefi based on PNP feedback and HW fixes
+  
+  Removed old formula that is no longer needed
+  
+  Hsd-es-id: 14011519147
+  Change-Id: I676e74a1f14e4ece071e8c2131090b1cb24dcabb
+  Original commit hash: a48a4a74bf037a7cdd8cd99101576432bfa1938a
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: e101566fd179cacd56a657dea5e19212c9da9ea4 
+*********************************************************************************
+
+[SiliconPkg]
+
+  C1S/MemoryInit/Tgl: [TGL-Y][MRC] TGL Y disable PPD and Change SaGv points to 2133 gear 2 2133 gear 2 3200 gear 2 4267 gear 2 for Y stability Work around
+  
+  Updated SAGV/Gear settings based on TGL Y
+  Disabled PPD on TGL Y
+  
+  Hsd-es-id: 14011519166
+  Change-Id: I8a387212e2ca2892a618201b5ce80dabbe52930a
+  Original commit hash: 1a9f602f10c399417306272c25c18b7103ebd1e8
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/MiniBios/MEMORY/MrcOemPlatform.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: work around
+
+*********************************************************************************
+Commit: 121b7edf72f936e4189870e6bf9acd750123c83c 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [TGL-H][PO] YB observed for Realtek HW Audio Codec in DM for I2S Codec
+  
+  Disable I2C device when non I2S audio is selected.
+  
+  Hsd-es-id: 14011431285
+  Change-Id: I10bedb9955052aee4790ab36fb7695d85aec9200
+  Original commit hash: 04747857a87f991140c200e56038bb0f7461ce9f
+  
+  TigerLakeBoardPkg/Acpi/AcpiTables/Dsdt/HdaSlaveDevices.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: f97960df9a43fe5d2d1e9baddedf205b511db87e 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  HstiIhvDxe: Implementation of new requirements for several tests areas for PSCS and HSTI
+  
+  * HW Rooted Boot Integrity tests only need to be run on BSP, not all cores.
+  * PCR7 more granurality on Active Algorithms report
+  * PRMRR enabling test improvement
+  * ASPEN Internal Graphics New Tests
+  * Extended BIOS Decode Range New Tests
+  * Added new TME lock bit tests
+  * Added GTTMMADR, TMBAR, REGBAR, EDRAMBAR, GMADRBAR and VTDBAR Masks for 64b in SA host bridge register file
+  * Clean up HSTI files to adjust with new variables and some aligments fixes.
+  
+  Hsd-es-id: 14010457141
+  Change-Id: If9739f48be8652ba14fd3f22d21cec7e6ca7b902
+  Original commit hash: 40ad7c1b10463547e875fd4edf7982b1e3996c03
+  
+  ClientOneSiliconPkg/Fru/TglCpu/Include/Register/SaRegsHostBridge.h
+  ClientSiliconPkg/Include/HstiFeatureBit_1_1a.h
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/BootFirmwareMediaProtection.c
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HardwareRootedBootIntegrity.c
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.h
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/IntegratedDeviceDmaProtection.c
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/MeasuredBootEnforcement.c
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureCpuConfiguration.c
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureIntegratedGraphicsConfiguration.c
+  TigerLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureMemoryMapConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: 6211072d6c5e88d01cfcea9a697f3a6e034fb531 
+*********************************************************************************
+
+
+  [TGL] FSP MP_SERVICES callbacks from FSP API mode do not restore bootloader context
+  
+  1. Create MpService wrapper PPI so internally FSP will call to this MpService wrapper Ppi.
+  2. MpService wrapper PPI will switch stack and PeiService pointer in IDT, then calling real MpService PPI from bootloader side (pointer from UPD)
+  3. Once real MpService PPI completed, switch stack and PeiService pointer in IDT back, then return to caller.
+  
+  Hsd-es-id: 22010361841
+  Change-Id: I4ca924e484a4a399fb6762d14108b46c78065d9c
+  Original commit hash: 21f4048bac5945a84385c1f74a6b2b93751a8cfd
+  
+  TigerLakeFspPkg/FspInit/Pei/FspInit.c
+  TigerLakeFspPkg/FspInit/Pei/FspInit.h
+  TigerLakeFspPkg/FspInit/Pei/FspInit.inf
+  TigerLakeFspPkg/FspInit/Pei/FspMpServiceWrapper.c
+  TigerLakeFspPkg/TigerLakeFspPkg.dec
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: ae1c8c39af426058a0413700060e092974ae9944 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [TGL][FIVR]: VNN and V1P05 bypass current default value in BIOS option is showing different
+  
+  Default current limits for VNN, V1P05 and VNN_Sx changed from 250mA to 500mA.
+  
+  Hsd-es-id: 16010941768
+  Change-Id: I77e2465b080b62137011a8a77eeef2e1c902cc86
+  Original commit hash: d378761fdd32b7daf78afb5d8aeca6ae7a730b3b
+  
+  TigerLakeFspPkg/Upd/FspsUpd.dsc
+  TigerLakePlatSamplePkg/Setup/PchSetup.hfr
+  TigerLakePlatSamplePkg/Setup/PchSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: 25007c737c483bab10ef9593547a2d604ea3e9b6 
+*********************************************************************************
+
+[PlatformPkg]
+
+  TigerLakePlatSamplePkg: [TGL] BIOS naming correction for Fused Favored Core Ratio and Turbo Ratio Limit (TRL)
+  
+  'Fused Max Core Ratio' should be 'Favored Core Ratio Read' - 0x1C read
+  'Core Turbo Ratio Limit' should be 'Turbo Ratio Limit Ratio (TRLR) Read' - 0x1AD read
+  'Core Ratio Limit Override' should be 'Turbo Ratio Limit Ratio (TRLR) Write' - 0x1AD Write
+  
+  Hsd-es-id: 14011444564
+  Change-Id: Ida774403d563c1a052e4651f6b8c00ae9f4318ff
+  Original commit hash: 85949b8994bd9e2fe7cb46fb41b1d909141e62a9
+  
+  TigerLakePlatSamplePkg/Setup/CpuSetup.c
+  TigerLakePlatSamplePkg/Setup/CpuSetup.hfr
+  TigerLakePlatSamplePkg/Setup/CpuSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+
+################################################################################
+
+Report Summary: Backstop found 20 suspect commits for review 
+
+Warnings Found:
+  Commit: dce9954    --Commit Message Contains Key Word: revert
+  Commit: f29787b    --Commit Message Contains Key Word: step
+  Commit: b88a3fb    --Commit Message Contains Key Word: sku
+  Commit: ef2f9e1    --Commit Message Contains Key Word: step
+  Commit: d364004    --Commit Message Contains Key Word: revert
+  Commit: bad075b    --Commit Message Contains Key Word: http
+  Commit: 2c86ed3    --Commit Message Contains Key Word: restricted
+  Commit: c439a2a    --Commit Message Contains Key Word: step
+  Commit: c439a2a    --Commit Message Contains Key Word: http
+  Commit: c2b6ff5    --Commit Message Contains Key Word: http
+  Commit: 70bf0c9    --Commit Message Contains Key Word: sku
+  Commit: c38b988    --Commit Message Contains Key Word: http
+  Commit: a713a00    --Commit Message Contains Key Word: HW
+  Commit: 0d68069    --Commit Message Contains Key Word: revert
+  Commit: 2babce1    --Commit Message Contains Key Word: HW
+  Commit: e101566    --Commit Message Contains Key Word: work around
+  Commit: 121b7ed    --Commit Message Contains Key Word: HW
+  Commit: f97960d    --Commit Message Contains Key Word: HW
+  Commit: f97960d    --Commit Message Contains Key Word: internal
+  Commit: f97960d    --Commit Message Contains Key Word: hardware
+  Commit: 6211072    --Commit Message Contains Key Word: internal
+  Commit: ae1c8c3    --Commit Message Contains Key Word: bypass
+  Commit: 25007c7    --Commit Message Contains Key Word: fuse
