@@ -451,11 +451,7 @@ In DQTimeCentering1D, if Rank 0 has a failure (e.g. on LP5 there is a case where
 This is true for all tech but we detected it on LP5
 
 Fix
-ChangeMargin should never fail unless parameter is invalid, getset hash is undefines
-or MRH engine times out. Therefore its good to check status for ChangeMargin function as well but the way this should be handled is that MRC checks CPGC error status and updates the Status variable and ChangeMargin updates another status variable. The function returns an OR of both these status variables.
-
-Testing
-Tested using MRC regression. Log attached to the HSD
+Check status for ChangeMargin function and checks CPGC error status and updates the Status variable and ChangeMargin updates another status variable. The function returns an OR of both these status variables.
 
 Hsd-es-id: 14011538271
 Original commit date: Tue May 19 15:14:33 2020 -0700
@@ -529,12 +525,12 @@ Commit: b88a3fb8bffe5ebfe21b74b3bbd0dadea156ec0d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Jun 9 12:22:58 2020 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.4.78] Memory Training Fails in 32GB SKU (low RdT/RdV margins)
+ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL] Memory Training Fails in 32GB SKU (low RdT/RdV margins)
 
   [ICL][MRC][2208073021] Memory Training Fails in 32GB SKU (low RdT/RdV margins)
 
     Issue:
-      Customer board fails on Ch1 Byte5 in Early Read Timing Centering 2D due to low RdT / RdV margins.
+      Some boards fail on Ch1 Byte5 in Early Read Timing Centering 2D due to low RdT / RdV margins.
     Solution:
       Set the MinRequired Eye width to 1 in GetMinRequiredEyeWidth for EarlyCentering.
 
@@ -567,9 +563,9 @@ Commit: ef2f9e15ed7c30e5128d1f3315a714e9fa83e0d5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Jun 9 12:22:51 2020 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/MemoryInit/Tgl: [Merge from ICL 0.0.3.161] WrT/WrV Margin degradation by RdT training steps (Rd Timing Centering 2D, Rd ODT training)
+ClientOneSiliconPkg/MemoryInit/Tgl: WrT/WrV Margin degradation by RdT training steps (Rd Timing Centering 2D, Rd ODT training)
 
-  [ICL MRC][Merge CNL MRC 0.5.0.16] WrT/WrV Margin degradation by RdT training steps (Rd Timing Centering 2D, Rd ODT training)
+  [Merge ICL MRC] WrT/WrV Margin degradation by RdT training steps (Rd Timing Centering 2D, Rd ODT training)
 
     Change: Modified UpdateHost to 1 in ShiftPIforCmdTraining function in RMT and TAT to clear the local valid flag.
     else it uses the older local previous dq/dqs/recv_en delays since the valid flag is true.
@@ -1114,10 +1110,7 @@ Date: Tue Jun 9 12:21:31 2020 -0700
 -------------------------------------------------------------------------------- 
 [TGL-H] Program GPIO values based on controller's bifurcation configuration
 
-Added GPIO Programming from  https://git-amr-7.devtools.intel.com/gerrit/#/c/80585/3/TigerLakeBoardPkg/TigerLakeHBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
-
-UNIT test done,
-GPIOs programmed for CPU_PCIE_1x16 and booted to OS on tgl-h.
+Added GPIO Programming 
 
 Hsd-es-id: 16010908184
 Impacted Platforms: TGL-H
@@ -1813,8 +1806,6 @@ Date: Tue Jun 9 12:19:39 2020 -0700
   1. EN_GPRS supported by all TGL step including TGL U/Y/H
   2. EN_GPS_IN_SMM supported by TGL U/Y/H on Bstep and newer
 
-Carried forward from old code review - https://git-amr-7.devtools.intel.com/gerrit/#/c/65105/
-
 Hsd-es-id: 1507886693
 Original commit date: Thu Dec 5 13:17:07 2019 +0800
 Change-Id: Ibd514bf60126813e8f66035c5d1412e688d08b84
@@ -1857,11 +1848,9 @@ Date: Tue Jun 9 12:19:34 2020 -0700
 
 Issue: VC0 and VC1 not getting programmed
 
-we need to use logical AND operator to find LinkVcCount.
+Add logical AND operator to find LinkVcCount.
 MultiVC should be enabled when both Root port and Endpoint supports it.
 Bitwise AND operator gives LinkVcCount As Zero when End Point has 2 Extended Virtual Channels.
-
-chery-picked from https://git-amr-7.devtools.intel.com/gerrit/83812
 
 Hsd-es-id: 1507815940
 Impacted Platforms: TGL
@@ -2326,7 +2315,7 @@ Date: Tue Jun 9 12:18:14 2020 -0700
 -------------------------------------------------------------------------------- 
 Implementing Coefficient list cm/cp for all RPs.
 
-Cm/Cp default value for all lanes as mentioned in this RCR: https://hsdes.intel.com/appstore/article/#/16011028191
+Cm/Cp default value for all lanes
 
 Hsd-es-id: 16010948380
 Impact Platforms: TGL
@@ -2589,7 +2578,7 @@ Commit: e101566fd179cacd56a657dea5e19212c9da9ea4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Jun 9 12:17:20 2020 -0700 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL-Y][MRC] TGL Y disable PPD and Change SaGv points to 2133 gear 2 2133 gear 2 3200 gear 2 4267 gear 2 for Y stability Work around
+C1S/MemoryInit/Tgl: [TGL-Y][MRC] TGL Y disable PPD and Change SaGv points to 2133 gear 2 2133 gear 2 3200 gear 2 4267 gear 2
 
 Updated SAGV/Gear settings based on TGL Y
 Disabled PPD on TGL Y
