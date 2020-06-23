@@ -1,0 +1,424 @@
+*********************************************************************************
+Commit: 7fcf06d15695da319ad8eb1ea7f6ee3de453f382 
+*********************************************************************************
+
+[ASL], [SA]
+
+  Revert "[TGL] Discrete GPU control for PEG port[Customer_Must_Fix]"
+  
+  This reverts commit f175a65ecd2b75b8fd589a4be98909e163327a87.
+  
+  Hsd-es-id: 16011236517
+  
+  Impacted platforms: TGL
+  
+  Change-Id: Ia4b27129ccb64bc908f1815fb40b349373ec43e9
+  Original commit hash: ba8d60674116c91842f4b5cbea2c8f0ff68131b8
+  
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AcpiTables/Pch/HgDgpuPch.asl
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.c
+  ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/PegCommon.asl
+  ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/PegRtd3.asl
+  ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/Sa.asl
+  ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/SaNvs.asl
+  ClientOneSiliconPkg/SystemAgent/IncludePrivate/SaNvsAreaDef.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 10365100fdf974ca75f04c38f07743e4bae29e85 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  Revert "PeiPchInitLib: BIOS WA for BT loss issue with WR cycling"
+  
+  This reverts commit a351dc3ccf38a10a4fbafebf1e3c21b70d14d399.
+  
+  Hsd-es-id: 22010807124
+  Change-Id: Ic1132a690d9c4db7d6d958098904bea42c3273f4
+  Original commit hash: 83696b0e6a7660cbf4065327510cd2462ed27813
+  
+  ClientOneSiliconPkg/IpBlock/Cnvi/IncludePrivate/Library/PeiCnviLib.h
+  ClientOneSiliconPkg/IpBlock/Cnvi/LibraryPrivate/PeiCnviLib/PeiCnviLib.c
+  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: c90be2dd7ef2fb224dfd26b0aaad77e2eb2d21b1 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [TGP][cAVS] BIOS W/A for cAVS ADSP subsystem disable
+  
+  Implementing https://git-amr-7.devtools.intel.com/gerrit/#/c/85225/ from master branch to platform/tigerlake_master branch
+  Hsd-es-id: 14010817500
+  Change-Id: Iaadc143952cb5614ea57142e3f1045031a9a9a4d
+  Original commit hash: b51673088d76385f0ef8052f4874417493555563
+  
+  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaInitLib/PeiHdaInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 4f9dce7a1ad1fe6e6b0a4ed2b6be5ae3c66e0276 
+*********************************************************************************
+
+[SiliconPkg]
+
+  C1S/MemoryInit/Tgl: [TGL][MRC] DDRIO Vdd2 power debug
+  
+  Vccdll LVR contention power (more than 200mW ) at peak bandwidth
+  Increased VccDll Target to 870mV for B0 and P0
+  VccDll is in bypass for P0
+  Removed PanicEn = 0 at the end of MRC
+  Skip all VccDll Training except Feedback Offset Correction
+  This function now uses ADC to determine the best point to use
+  Repeated same call at the end of MRC
+  
+  Hsd-es-id: 22010775413
+  Change-Id: I4e09660d0f5fd941dbb4e8263b093c860bd6dde4
+  Original commit hash: 974f7c3de8aa7fc565ff3763441ee69a7cce7b11
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl2xxx.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: d4b3e7467e16f8b75eeac5dd382c8a7ee0fe4a27 
+*********************************************************************************
+
+[SiliconPkg]
+
+  MemoryInit/Tgl: Workarounds for Tx non-linearity on TGL
+  
+  1. Disable CMD Normalization. It assumes linearity, and will not work without it.
+  2. Disable TxDqs/TxDq TCO Comp training for DDR4, it is not working well and causing margin shortfalls.
+  3. Create a new training step that sweeps TxDqs to find the best TxDq eye to compensate for the non-linear behavior.
+  Run at the end of LCT to ensure all TxDqs and CLK changes have occured (the CLK changes due to CMD Normalization and the CLK re-centering afterwards aren't there any longer).
+  
+  Hsd-es-id: 14011594140
+  Change-Id: I08183b47df81448332bca8f365038b85bb8844c2
+  Original commit hash: 88c135131e1b25c6dff0968eb8ac78e826b33e80
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGlobal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: dafbe032beb45f903416832870f2fe9fe926d9a1 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  Revert "[TGL-H] Added Storage RTD3 support for CPU ports PEG10, PEG11 and PEG12"
+  
+  This reverts commit 8c86cc3c9f6f1a8fac762276c787296a7b18d877.
+  
+  Hsd-es-id: 22010754333,14011646895
+  Change-Id: I317580cc03a959f3973539728b215b489b79d164
+  Original commit hash: f716247071e9434fa2987cfcfe0612c63b55344a
+  
+  TigerLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  TigerLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/TglHRvpRtd3.asl
+  TigerLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  TigerLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  TigerLakeBoardPkg/TigerLakeHBoards/Include/TigerLakeHBoardConfigPatchTable.h
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+*********************************************************************************
+Commit: 363f664679247c3401facf043590fbaa37a30b53 
+*********************************************************************************
+
+[PlatformPkg]
+
+  TGL Security[Harmonized Capsule]: CSME Fw Fails to upgrade on FDO Jumper assertion via full region CSME Capsule
+  
+  To skip Heci function when ME BIOS Boot Path is MeSecoverJmprBiosPath.
+  Port the patch from ICL:
+  https://git-amr-7.devtools.intel.com/gerrit/#/c/43823/
+  
+  Hsd-es-id: 16010859246
+  Change-Id: I5f89e90780a132ab5e52330b0ad0a2bfca7b1c44
+  Original commit hash: 10e4dae27642ab8ff54c9e2e3f6cef022a62b6a1
+  
+  TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/PlatformFlashAccessLib/PlatformFlashAccessLib.c
+  TigerLakePlatSamplePkg/Features/CapsuleUpdate/Library/PlatformFlashAccessLib/PlatformFlashAccessLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 0d74a07bf2be1d812ff3c258c906877b016d4e18 
+*********************************************************************************
+
+[CPU], [BoardPkg], [PlatformPkg]
+
+  BIOS support for MRC training for 12-15W thermals:  Boot-Only Flex Ratio
+  
+  Allow configurable value for early boot frequency with new default values for TGL B-stepping.
+  Add support for Flex Ratio for Boot and Early Boot Flex Ratio.
+  
+  Hsd-es-id: 16011207009
+  Change-Id: Idd8d577f5f0936da4345122bd6d30af671eb0d6b
+  Original commit hash: a6d2cd3d107e5ab3b078331b6078a01f131c6da6
+  
+  ClientOneSiliconPkg/Cpu/Include/ConfigBlock/CpuConfigLibPreMemConfig.h
+  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/CpuInfoFruLib.h
+  ClientOneSiliconPkg/Cpu/Library/PeiCpuPolicyLib/CpuPrintPolicyPreMem.c
+  ClientOneSiliconPkg/Cpu/Library/PeiCpuPolicyLib/PeiCpuPolicyLibPreMem.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerOnConfigLib/PeiCpuPowerOnConfigLib.c
+  ClientOneSiliconPkg/Fru/TglCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  TigerLakeBoardPkg/TigerLakeYBoards/Include/TigerLakeYBoardConfigPatchTable.h
+  TigerLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiCpuPolicyUpdatePreMem.c
+  TigerLakeFspPkg/Upd/FspmUpd.dsc
+  TigerLakePlatSamplePkg/Include/OemSetup.h
+  TigerLakePlatSamplePkg/Include/SetupVariable.h
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  TigerLakePlatSamplePkg/Platform/PlatformSetup/Dxe/PlatformSetup.c
+  TigerLakePlatSamplePkg/Setup/CpuSetup.hfr
+  TigerLakePlatSamplePkg/Setup/CpuSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: bae96179e8c7bb4ffd9101c79c578225b901033c 
+*********************************************************************************
+
+[SiliconPkg], [SA]
+
+  [TGL U][B0]: L1SCAP not set for HotPlug enabled port (in NDA case), and SMI handler not setting TLS = max supported speed
+  
+  HotPlug fixes
+  L1SCAP + HWEQ + TLS to be programmed to Gen3/Gen4 + CMRT to 0x6E
+  
+  Hsd-es-id: 22010760595
+  Change-Id: I2a3c0e5e50095daeec20c22d7396613d8359f86f
+  Original commit hash: f8a1f5ff870b300a3313d41c7050abb389746af3
+  
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PciExpressHelpersLibrary/PciExpressHelpersLibrary.c
+  ClientOneSiliconPkg/SystemAgent/SaInit/Smm/CpuPcieSmm.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 4a6131d2612368096c00d5901fc38caddf52bf44 
+*********************************************************************************
+
+[SiliconPkg]
+
+  New TGL Platform VR POR file WW2220
+  - Update for TGL H 45W 4+1, 6+1 SKU.
+  
+  Hsd-es-id: 1307618389
+  Change-Id: I11a233d475f4f3a8ef5a7a1f19b944b382640da9
+  Original commit hash: 62e5d38ae80a6ae4ed960766dee2ac30cc7b14f5
+  
+  ClientOneSiliconPkg/Fru/TglCpu/IncludePrivate/CpuGenInfoFruLib.h
+  ClientOneSiliconPkg/Fru/TglCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/Fru/TglCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 2275f5cff29c6f76fddc64ccf3cb09528b73e036 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  [Xcomp PO] VID read should be 16 bit in order to compare it to 0xFFFF
+  
+  cherry-picked from https://git-amr-7.devtools.intel.com/gerrit/#/c/84491/
+  
+  Hsd-es-id: 22010658284
+  Change-Id: I42da92c15f90fdd6992e12c65aa2bcbebe3286e9
+  Original commit hash: f364e94a1f0999d58ceca51c8692f78b99d7a3dc
+  
+  ClientOneSiliconPkg/Fru/TglCpu/CpuPcieRp/Library/PeiDxeSmmCpuPcieInfoFruLib/CpuPcieInfoFruLib.c
+  ClientOneSiliconPkg/Pch/PchInit/Dxe/PchInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 032d9e1be6be4042e4cdae8e6502cb6f369a1e9c 
+*********************************************************************************
+
+[BoardPkg]
+
+  TGL - Setup default patchtable update for multiple SKU
+  
+  Improve UpdatePatchTable() to fix duplicated AltCfgString and fix non expected setup value after load default.
+  
+  Hsd-es-id: 1508031168
+  Change-Id: Ie7fc79eafd3ca5ec865a4560eef491ee01e34d3a
+  Original commit hash: 8444ab994195007489619ba5529a82a29fa14233
+  
+  TigerLakeBoardPkg/Library/DxeBoardConfigLib/DxeBoardConfigLib.c
+  TigerLakeBoardPkg/TigerLakeUBoards/Include/TigerLakeUBoardConfigPatchTable.h
+  TigerLakeBoardPkg/TigerLakeUBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 3d05c5c1d942dddc370b618444747a457fbf486d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  C1S/MemoryInit/Tgl: [TGL-B0][LP4x]Seeing Training Failures (~1 in 30 boots) with Samsung 8DP Memory at Low Temp/Voltage Corner
+  
+  Problem:
+  Incorrect ECT detections on some corner cases caused either failure in ECT or skewed ECT results that results in later training failure
+  
+  Culprit:
+  1. Some speckling of ECT result was not fully covered
+  2. Failure in last PI of sweep range caused false failure
+  
+  Fix:
+  1. Add code to do largest passing range thus any amount of speckling should be accounted for
+  2. Add code to keep track of last pass instead only updating when current PI is passing
+  
+  Hsd-es-id: 14011555263
+  Change-Id: Ib29c67bbf694e12c4e2962ed939acfc127d235ec
+  Original commit hash: 935d1b59697c241e2a83c4f1a7897221f8025760
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: Samsung
+
+*********************************************************************************
+Commit: 8d605d3620eaab33b5853b61c041a15eee6070af 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Correct Shell name string.
+  
+  1.Remove INTERNAL_EDK_SHELL_NAME usage
+  2.Correct Shell name string to "Internal UEFI Shell"
+  3.Remove duplicated "gUefiShellFileGuid" define in PlatformPkg.dec
+  
+  Hsd-es-id: 22010699191
+  Change-Id: Ic8a19a31f6600edb3b7ff5b8f228e3daa31851e8
+  Original commit hash: 8af861b2619e01706b24a7aec5856a9181044bde
+  
+  TigerLakeBoardPkg/BoardPkg.fdf
+  TigerLakePlatSamplePkg/Features/FastBoot/FastBootHandlerDxe/FastBootHandlerDxe.c
+  TigerLakePlatSamplePkg/Features/UiApp/BootMaint/FileExplorer.c
+  TigerLakePlatSamplePkg/Features/UiApp/UiApp.inf
+  TigerLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerLib.inf
+  TigerLakePlatSamplePkg/Library/DxePlatformBootManagerLib/PlatformBootOption.c
+  TigerLakePlatSamplePkg/PlatformPkg.dec
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 1385ec649b5e786609e651a2582169de29ef789d 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [VTD][IOMMU][TGL] The exception list should be dependency on SKU and BoardID
+  
+  Hsd-es-id: 1507981780
+  Change-Id: I579ba4c9fc378a125a25ae4866f455a47c334f01
+  Original commit hash: 54ac988c226ca6334d6e08539dbc2039f69680b0
+  
+  TigerLakePlatSamplePkg/Features/VTd/PlatformVTdSampleDxe/PlatformVTdSampleDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 15 suspect commits for review 
+
+Warnings Found:
+  Commit: 7fcf06d    --Commit Message Contains Key Word: revert
+  Commit: 1036510    --Commit Message Contains Key Word: revert
+  Commit: c90be2d    --Commit Message Contains Key Word: http
+  Commit: 4f9dce7    --Commit Message Contains Key Word: bypass
+  Commit: d4b3e74    --Commit Message Contains Key Word: Workaround
+  Commit: d4b3e74    --Commit Message Contains Key Word: step
+  Commit: dafbe03    --Commit Message Contains Key Word: revert
+  Commit: 363f664    --Commit Message Contains Key Word: security
+  Commit: 0d74a07    --Commit Message Contains Key Word: step
+  Commit: 0d74a07    --Commit Message Contains Key Word: stepping
+  Commit: bae9617    --Commit Message Contains Key Word: HW
+  Commit: 4a6131d    --Commit Message Contains Key Word: sku
+  Commit: 2275f5c    --Commit Message Contains Key Word: http
+  Commit: 032d9e1    --Commit Message Contains Key Word: sku
+  Commit: 3d05c5c    --Commit Message Contains Oem: Samsung
+  Commit: 8d605d3    --Commit Message Contains Key Word: internal
+  Commit: 1385ec6    --Commit Message Contains Key Word: sku
