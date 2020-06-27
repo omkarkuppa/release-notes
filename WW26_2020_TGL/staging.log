@@ -55,13 +55,6 @@ Date: Wed Jun 24 20:25:24 2020 -0700
 -------------------------------------------------------------------------------- 
 TigerLakePlatSamplePkg/SpiFvbServiceDxe: Fix wrong memory size allocation for FvHeader
 
-This commit fixes the wrong memory size allocation.
-The size of the last entry of EFI_FIRMWARE_VOLUME_HEADER,
-BlockMap[], can depend.
-HeaderLength is the size of completes firmware volume header
-including the size of BlockMap[], so the allocated buffer
-for FvHeader to get copied to has to take into account
-the size of BlockMap[].
 
 Hsd-es-id: 22010622543
 Original commit date: Fri Jun 5 23:23:39 2020 -0700
@@ -314,7 +307,7 @@ Commit: 79465023d46a8eeff2b0afd3cf8787162b246df0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 24 20:24:27 2020 -0700 
 -------------------------------------------------------------------------------- 
-Revert "[TGL] Discrete GPU control for PEG port[Customer_Must_Fix]"
+Revert "[TGL] Discrete GPU control for PEG port"
 
 This reverts commit f175a65ecd2b75b8fd589a4be98909e163327a87.
 
@@ -466,9 +459,8 @@ Commit: 4d05c450b806e528e72e4f83708ed9a35a6972cc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 24 20:23:52 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGP][cAVS] BIOS W/A for cAVS ADSP subsystem disable
+[TGP][cAVS] BIOS update for cAVS ADSP subsystem disable
 
-Implementing https://git-amr-7.devtools.intel.com/gerrit/#/c/85225/ from master branch to platform/tigerlake_master branch
 Hsd-es-id: 14010817500
 Original commit date: Fri Jun 5 15:04:34 2020 -0700
 Change-Id: Iaadc143952cb5614ea57142e3f1045031a9a9a4d
@@ -784,15 +776,7 @@ Commit: ba2c7dd371bf4297a59e96c75f546d73061daf3b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 24 20:22:28 2020 -0700 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL][MRC] DDRIO Vdd2 power debug
-
-Vccdll LVR contention power (more than 200mW ) at peak bandwidth
-Increased VccDll Target to 870mV for B0 and P0
-VccDll is in bypass for P0
-Removed PanicEn = 0 at the end of MRC
-Skip all VccDll Training except Feedback Offset Correction
-    This function now uses ADC to determine the best point to use
-    Repeated same call at the end of MRC
+C1S/MemoryInit/Tgl: [TGL][MRC] DDRIO Vdd2 power update
 
 Hsd-es-id: 22010775413
 Original commit date: Mon May 4 13:27:33 2020 -0700
@@ -1060,12 +1044,12 @@ Commit: 5167b099223050283027c4ba69c2e0d63a02eb9c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 24 20:21:24 2020 -0700 
 -------------------------------------------------------------------------------- 
-MemoryInit/Tgl: Workarounds for Tx non-linearity on TGL
+MemoryInit/Tgl: Update for Tx non-linearity on TGL
 
-1. Disable CMD Normalization. It assumes linearity, and will not work without it.
-2. Disable TxDqs/TxDq TCO Comp training for DDR4, it is not working well and causing margin shortfalls.
-3. Create a new training step that sweeps TxDqs to find the best TxDq eye to compensate for the non-linear behavior.
-   Run at the end of LCT to ensure all TxDqs and CLK changes have occured (the CLK changes due to CMD Normalization and the CLK re-centering afterwards aren't there any longer).
+1. Disable CMD Normalization. 
+2. Disable TxDqs/TxDq TCO Comp training for DDR4.
+3. Create a new training step that find the best TxDq eye.
+   
 
 Hsd-es-id: 14011594140
 Original commit date: Tue May 26 17:08:01 2020 -0700
@@ -1413,11 +1397,9 @@ Commit: c5e98791541a9bd1a63ba44aa61dad95794aef26
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 24 20:19:55 2020 -0700 
 -------------------------------------------------------------------------------- 
-TGL Security[Harmonized Capsule]: CSME Fw Fails to upgrade on FDO Jumper assertion via full region CSME Capsule
+[Harmonized Capsule]: CSME Fw Fails to upgrade on FDO Jumper assertion via full region CSME Capsule
 
 To skip Heci function when ME BIOS Boot Path is MeSecoverJmprBiosPath.
-Port the patch from ICL:
-https://git-amr-7.devtools.intel.com/gerrit/#/c/43823/
 
 Hsd-es-id: 16010859246
 Original commit date: Wed May 20 09:29:25 2020 +0800
@@ -1815,7 +1797,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Wed Jun 24 20:18:15 2020 -0700 
 -------------------------------------------------------------------------------- 
 New TGL Platform VR POR file WW2220
- - Update for TGL H 45W 4+1, 6+1 SKU.
+ - Update for TGL H 45W SKU.
 
 Hsd-es-id: 1307618389
 Original commit date: Tue May 26 16:48:08 2020 +0530
@@ -1833,9 +1815,8 @@ Commit: 56d89398e9f70147cbcf37e4207b73547906d364
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 24 20:18:11 2020 -0700 
 -------------------------------------------------------------------------------- 
-[Xcomp PO] VID read should be 16 bit in order to compare it to 0xFFFF
+Fix issue where VID read should be 16 bit in order to compare it to 0xFFFF
 
-cherry-picked from https://git-amr-7.devtools.intel.com/gerrit/#/c/84491/
 
 Hsd-es-id: 22010658284
 Original commit date: Wed May 13 14:58:35 2020 +0530
@@ -2250,18 +2231,7 @@ Commit: 6a9078826feb8675a62e9f37744394c8bbf91d9a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 24 20:16:41 2020 -0700 
 -------------------------------------------------------------------------------- 
-C1S/MemoryInit/Tgl: [TGL-B0][LP4x]Seeing Training Failures (~1 in 30 boots) with Samsung 8DP Memory at Low Temp/Voltage Corner
-
-Problem:
-  Incorrect ECT detections on some corner cases caused either failure in ECT or skewed ECT results that results in later training failure
-
-Culprit:
-  1. Some speckling of ECT result was not fully covered
-  2. Failure in last PI of sweep range caused false failure
-
-Fix:
-  1. Add code to do largest passing range thus any amount of speckling should be accounted for
-  2. Add code to keep track of last pass instead only updating when current PI is passing
+C1S/MemoryInit/Tgl: [TGL-B0][LP4x]Seeing Training Failures (~1 in 30 boots) with some 8DP Memory at Low Temp/Voltage Corner
 
 Hsd-es-id: 14011555263
 Original commit date: Wed May 20 19:35:21 2020 -0700
@@ -2455,9 +2425,7 @@ Commit: f6129de1a551cc31633fb7ee9bd8ccb64f67f9dc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 24 20:15:59 2020 -0700 
 -------------------------------------------------------------------------------- 
-PeiUsbHostControllerInitLib: USB programming updates
-
-Updated SSCTGE due to FIA staggering of RxStandby when PMC_PC2 asserted
+PeiUsbHostControllerInitLib: USB programming updates for SSCTGE
 
 Hsd-es-id: 18011709550
 
@@ -2527,9 +2495,7 @@ Commit: c3586b319f4cbc2887c060af6f967726c16ce5d0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Jun 24 20:15:42 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL][B2]  CPU is stuck in SA_IS_DOWN without any wake from PCH on PMSYNC with WIFI connected to AP during s0ix
-
-W/A Hysteresis values is 0x11 (68us)
+[PCH][TGL] CPU is stuck without any wake from PCH on PMSYNC with WIFI connected to AP during s0ix
 
 Hsd-es-id: 14011589250
 Original commit date: Thu May 28 17:18:36 2020 -0700
