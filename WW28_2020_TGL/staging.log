@@ -66,32 +66,8 @@ Commit: 858aa9ccf8d77a0f036232acf92373a1692907ee
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jul 6 23:39:36 2020 -0700 
 -------------------------------------------------------------------------------- 
-PlatSamplePkg/Features/I2c/I2cTouchPanelDxe; No Virtual Keyboard in Bios Menu(I2C Touch)
+[PCH]PlatSamplePkg/Features/I2c/I2cTouchPanelDxe; No Virtual Keyboard in Bios Menu(I2C Touch)
 
-Issue 1: Hid parser Pointer is only shifted by 3 when data size is equal to 4 bytes
-         Fixed by changing data size to 4.
-Issue 2: I2cTouchPanel driver does not support multiple collections
-         Added collection support
-Issue 3: Touch Panel Interrupt IRQ is not set
-         Fixed by assigning PcdTouchpanelIrqGpio instead of PcdHidI2cIntPad
-Issue 4: X/Y Min and Max are hardcoded - used from first HID Report
-         Fixed by adding TOUCH_MIN_MAX structure and changing AbsolutePointer protocol on each HID event
-Issue 5: FEATURE Token was treated as COLLECTION token
-         Replaced FEATURE by COLLECTION, dropped FEATURE for now
-Issue 6: Interrupt polling did not have it's Timer configured
-         Added SetTimer that will start polling by 1 MS
-Issue 7: Driver did not check for the result of the HID Event parsing and assumed it was completed successfully
-         Added checks for ParseInput Status
-Issue 8: Hid parser did not parse Report correctly - having wrong BIT offsets for X/Y/B start/stop bits
-         Completely redesigned HID Report parsing flow
-Issue 9: Data loss on I2C read operation greater than 65 bytes
-         Added SW control over Rx Fifo
-Issue 10:HidI2cGetHidRegisterAddress returnes wrong Hid Addres for Touch Id 6
-         Increased Switch to 7 == custom
-Issue 11:Operational Frequency for I2C panel was set to 100kHz
-         Changed to 400kHz
-
-Hsd-es-id: 2209236384
 Original commit date: Fri May 8 15:51:27 2020 -0700
 Change-Id: I6bdf8190cfa059ad30905337ba422c693a2c6543
 Original commit hash: 24636941f2e998a9bf7f5b1c7541fa352356376b
@@ -173,7 +149,6 @@ Date: Mon Jul 6 23:39:17 2020 -0700
 When TDS is active but the TDS BIOS Configuration Lock option is NOT set (the user has aborted the lock or seal is BROKEN for other reason), the BIOS SHOULD follow its normal  boot sequence i.e. The system should revert to allow the user to enter the BIOS menu according to system design as if TDS is not enabled.  , TDS Extension launch should happen based on the "TDS Boot option" variable
 
 Hsd-es-id: 16011317653
-[internal-only]:
 
 Original commit date: Fri Jun 26 23:15:17 2020 +0530
 Change-Id: I3aa11618dea1dfc5e34f292543bafa279a5fa6e7
@@ -1594,12 +1569,10 @@ Commit: f4e0d52f2ec1dd3c802f115cf9cc7899acdd0762
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jul 6 23:29:42 2020 -0700 
 -------------------------------------------------------------------------------- 
-System hang with MCA on SOCKET0 CORE0  / 00E1 hang on resuming from S3 with NPK connected over DCI
+[PCH]System hang with MCA on SOCKET0 CORE0  / 00E1 hang on resuming from S3 with NPK connected over DCI
 
-Need to clear TCO_STS and TIMEOUT bit to avoid TCO Timeout callback during S3 cycling.
-For other boot flows, the TCO_STS bit is cleared in the SMM handler
 
-Hsd-es-id: 16011235236
+
 Original commit date: Tue Jun 9 15:13:37 2020 -0700
 Change-Id: Iba9c9f37661aa0222f9b296714f8cc378bc27f27
 Original commit hash: 9154b55213710a73f3034463f76861635ad1d45f
@@ -1942,13 +1915,7 @@ Commit: 9c535e6b859d811bb7435776fa9b5af818c170b7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jul 6 12:52:59 2020 -0700 
 -------------------------------------------------------------------------------- 
-iDisp audio loss after S3 event
-- CD Clock Init in BIOS during S3 resume was going through.
-- Disabled SkipCdClockInit to enable CD clock flow in BIOS.
-- Correct iDisp code Device ID value
-
-Hsd-es-id: 16011335934
-[internal-only]:
+[PCH]iDisp audio loss after S3 event
 
 Original commit date: Thu Jun 25 13:02:47 2020 +0530
 Change-Id: Ibf16470d4e15c6a96f605e196f1604da38723dfc
@@ -2124,13 +2091,8 @@ Commit: ae1cb166795408bfe52201330dc055e5b26cb1f6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jul 6 12:52:15 2020 -0700 
 -------------------------------------------------------------------------------- 
-Add warning in head of board GPIO table for native function pin
+[PCH]Add warning in head of board GPIO table for native function pin
 
-many customers faced native function fail caused by redundancy and incorrect native GPIO pins definition in customres GPIO table.
-As we know now GPIO programming flow has been improved and removed all native function pins definition in boards/RVPs GPIO table, matter those pins are controlled by BIOS policies or HW/ME soft strap setting.
-But customers dont be aware this improvement and keep including native pins definition in customers board GPIO table, that impacts native function abnormal in corner case
-
-Hsd-es-id:https://hsdes.intel.com/appstore/article/#/16010975684
 Original commit date: Wed Apr 22 14:02:33 2020 +0530
 Change-Id: Ia40898c5c7f9287f9213d943dc2ad51d356b951f
 Original commit hash: a0dcb2aa5206788c38a90913bbcde22894b6168f
@@ -2601,13 +2563,9 @@ Commit: 82155265acd0ee3a143716933fcc33bdd562f8f2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jul 6 12:50:00 2020 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/PMC: Update CPPM_FIVR_POL1B to 0xFA based on post-si tuning results
+[PCH]ClientOneSiliconPkg/PMC: Update CPPM_FIVR_POL1B to 0xFA based on post-si tuning results
 
-- Incresed offset for CPPM_FIVR_POL1B register value calculations from 800us to 1300us
-- Register CPPM_FIVR_POL1B expects values in 10us units so calculations (done in 1us units)
-  must be divided by 10
 
-Hsd-es-id: 14011747113
 Original commit date: Tue Jun 16 09:49:52 2020 +0200
 Change-Id: I57c65a29423e806bf7a9d198d9a0a46565b3a9d6
 Original commit hash: 7b63fd95cf938cbc9b2368db7e504762d1b7d407
@@ -3632,13 +3590,11 @@ Commit: bf871a7fb60cfe62bb508941fbfc46cc86eb75d3
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jul 6 12:33:09 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGP*/ADPP/ADPS] BIOS WA for BT loss issue with WR cycling
+[PCH][TGP*/ADPP/ADPS] BIOS fix for BT loss issue with WR cycling
 
 Issue: CNVi BT is not enumerating after warm reset in EFI shell.
 Resolution: Move BT_EN assertion from CnviInit() to after PmcInit() where utmiclk is readily available to detect connection.
-Impacted: All TGL projects.
 
-Hsd-es-id: 22010807124
 Original commit date: Thu Jun 11 17:14:01 2020 +0800
 Change-Id: I1d10ec6332fd09c5824a87ad0614b931316adfc4
 Original commit hash: 65b0a13ff4e319d863ef3a34193bf21ea3dc4677
@@ -3724,13 +3680,8 @@ Commit: ad59ac96762c1a69bace78f42fea07dc02376ba9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jul 6 12:32:41 2020 -0700 
 -------------------------------------------------------------------------------- 
-Suspend time value is '0' after performing S3 in Performance BIOS
+[PCH]Suspend time value is '0' after performing S3 in Performance BIOS
 
-Updated smram with suspend time record does not write back to memory. Add write back and flush cache after saving LockBox.
-wbinvd before going to sleep is removed by https://hsdes.intel.com/appstore/article/#/1407946952, issue exposed since TGL and onwards.
-Move record suspend start in PchSmmCore, which is used to be in PlatformSmm.c S3SleepEntryCallback.
-
-Hsd-es-id: 16010660833, 16010818549
 Original commit date: Wed Jun 10 18:07:22 2020 +0800
 Change-Id: Idd87ca30eaecb6ac83a3698391d0dc5bcd2d4e8f
 Original commit hash: 707aede5661df7e947a7c98ea043f1fd428709c5
@@ -3749,7 +3700,7 @@ Commit: 4abb31862b455f5fb500b0abca7dc19fe9605989
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jul 6 12:32:36 2020 -0700 
 -------------------------------------------------------------------------------- 
-PeiPchInitLib: BIOS WA for BT loss issue with WR cycling
+[PCH]PeiPchInitLib: BIOS fix for BT loss issue with WR cycling
 
 BT_EN assertion in BIOS from cnvi_init function to after PMC_init function where utmiclk is readily available to detect connection
 
@@ -3769,11 +3720,11 @@ Commit: 7801d28d6cc0c94c1beb288aefe38996c7d8afff
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Jul 6 12:32:31 2020 -0700 
 -------------------------------------------------------------------------------- 
-[TGL-H] Enabling WWAN
+[PCH][TGL-H] Enabling WWAN
 
 Enable WWAN 7560 on TGL-H CFG3 RVP
 
-Hsd-es-id: 16010943365
+
 Original commit date: Tue Apr 14 19:17:16 2020 +0530
 Change-Id: Iebb15556640aa65e49d2be50152797700cd0c60f
 Original commit hash: 9ce097318af35d8cb66aef82a37719ca5737b553
