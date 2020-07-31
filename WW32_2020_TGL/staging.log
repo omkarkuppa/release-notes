@@ -90,7 +90,7 @@ Commit: 2a306fbe39d9af4a0dc12c783b35db97a23cad6f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Fri Jul 31 13:48:11 2020 -0700 
 -------------------------------------------------------------------------------- 
-TigerLakePlatSamplePkg: Platform hangs when we connect to secured network and go to http boot for file downloading.
+TigerLakePlatSamplePkg: Platform hangs when we connect to secured network and goes to http boot for file downloading.
 
 Check UndiTelemetryVersionData before FreePool.
 
@@ -127,7 +127,7 @@ Date: Fri Jul 31 13:48:05 2020 -0700
 -------------------------------------------------------------------------------- 
 Unexpected Shutdown during Idle Display-on testing
 
-Retention mode will not be supported on TGP silicon until C0 stepping
+Retention mode is not currnetly supported.
 Updating the programming of VCCIN_AUX_CFG1 register based on design recommendation
 
 Hsd-es-id: 22011150697
@@ -214,7 +214,7 @@ PECI GPIO (pad_cfg_dw1_peci.iosstate) io_standby state is programmed incorrectly
 Board strap is readable by EC only determines PECI vs eSPI. EC has to send
 messages for temperature and in ModernStandby the PECI GPIO pin is off in
 current implementation. This change will ensure the GPIO is always on by
-programming the correct IOStandBy state. Power-impact is negligible.
+programming the correct IOStandBy state. 
 
 Change: Program pch.gpio.com3.sb.pad_cfg_dw1_peci.iosstate = 0xf
 
@@ -515,8 +515,6 @@ Perform RecEn re-centering at the end of training for DDR4 similar to the one ex
 [Impacted Platform]
 All TGL
 
-[internal-only]:
-
 Hsd-es-id: 22011133598
 Original commit date: Wed Jul 8 15:48:32 2020 -0700
 Change-Id: I41b2e693c928925a8fc69edba69dc3d033ac57d9
@@ -713,7 +711,8 @@ Date: Fri Jul 31 13:45:59 2020 -0700
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl:[TGL][MRC][LP5] Maximum Frequency is set to 4200 as W/A for TGL Y board only
 
-there's a fuse called MAX_DATA_RATE_AT_GEAR_1 which limits your PLL frequency (even for g2).  Because of complications with Lp4 this fuse was rashly set to 8 which corresponds to max G2 data rate of 4267MT/s.   The default boot frequency for Lp5 is currently set at 4400 which is fine from a Si perspective but fails on UP4
+Fuse called MAX_DATA_RATE_AT_GEAR_1 limits  PLL frequency (even for g2).  This fuse was set to 8 which corresponds to max G2 data rate of 4267MT/s.
+The default boot frequency for Lp5 is currently set at 4400 which is fine from a Silicon perspective but fails on UP4
 
 Hsd-es-id: 22010984326
 Original commit date: Wed Jul 15 16:21:27 2020 -0700
@@ -829,13 +828,10 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Fri Jul 31 13:45:30 2020 -0700 
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: [TGL][MRC] Remove setting Center to the starting point of the sweep loof in case of failure in DQTimingCenterin1D
+
 Issue:
-  When we get a failure in DQTimeCentering1D and see zero margins (Left and Right) Center value is still set ot the start of sweep range
-Root cause:
-  Ther was a change
-  SHA-1: fec5f0c9f1256a70d5f175d6b098c24a2d77d3de
-  * ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl: MRC - TGL H Support, ICL merges, bug fixes, and code cleanup.
-  Which is not present in ICL.
+  When we get a failure in DQTimeCentering1D and see zero margins (Left and Right) Center value is still set to the start of sweep range
+
 Change:
   Make Center value zero if left and right values are zeros
 
