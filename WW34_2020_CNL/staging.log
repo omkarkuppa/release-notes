@@ -75,10 +75,8 @@ Commit: 54fd49802e4f22763e42fbd6571d0763d5ab1461
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:49:11 2020 -0700 
 -------------------------------------------------------------------------------- 
-Revert "Integrate latest CFL GOP V1108"
-
-Windows will get BSOD if integrate GOP V1108 without updated graphic driver.
-This reverts commit 49b64775a6a7032289117cd147990f91b0742ab7.
+[CNL][SA] Revert "Integrate latest CFL GOP V1108"
+- Windows will get BSOD if integrate GOP V1108 without updated graphic driver.
 
 Hsd-es-id: 16011016006
 Original commit date: Tue Jul 21 16:24:48 2020 +0800
@@ -140,14 +138,10 @@ Commit: c07c1d6db4b7222649b647def984f6ba249011a0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:49:02 2020 -0700 
 -------------------------------------------------------------------------------- 
-CannonLakeSiliconPkg: [CFL][MRC] Port CML MRC v0.0.0.11 to CFL MRC
-
-Port CometLake MRC v0.0.0.11 to CoffeeLake MRC.
+[CFL][MRC] Port CML MRC v0.0.0.11 to CFL MRC
 
 Original CML MRC v0.0.0.11 commit message:
-
-  CometLakeSiliconPkg: [1409496129][CML1][MRC] Update SenseAmp and ODT Delay
-  Duration Timings to Account for Flyby
+  [CML1][MRC] Update SenseAmp and ODT Delay Duration Timings to Account for Flyby
 
   Issue:
   Certain board designs with long flyby ranges across bytes can fail in Early
@@ -788,19 +782,7 @@ Commit: 1ca7769809e306a4c4ef473024653a386fbea31d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:47:30 2020 -0700 
 -------------------------------------------------------------------------------- 
-[CannonLakePlatSamplePkg/RTD3][CannonLakeSiliconPkg]: CNL/CFL/WHL: System hangs on 4th S3 resume using AMD Graphics card.
-
-Cherry pick solution from CML
-1.[CML-U62][3-Star-NH][20H1]:During S3 cycle Observing BSOD - KERNEL DATA INPAGE ERROR after restarting NVMe(NH) de-enumerated
-https://git-amr-7.devtools.intel.com/gerrit/#/c/73438/
-There's only _PR0 object which involves D3cold power control methods under PCIE root port.
-So once the device leaves D0, it will be pushed to D3Cold unexpectedly.
-Adding _PR3 with the same power resource and change _S0W as 4 to indicate D3Cold support properly.
-
-2.[CML-S][CMP-V][SD][PM]: System not entering to CS/PSON with bayhub card connected(De-asserted from PSON after few sec)
-https://git-amr-7.devtools.intel.com/gerrit/#/c/76276/
-Accessing PCI configure space via ECAM in ACPI op-region in order to access the device while executing all ACPI power management methods
-Changed the access method from PCI to system memory
+[CNL/CFL/WHL]: System hangs on S3 resume using thirdparty Graphics card.
 
 Hsd-es-id: 2204611001
 Original commit date: Tue May 19 17:49:36 2020 +0800
@@ -916,7 +898,7 @@ Commit: 77a64e96b2de682de2a4e4eafa9895f23d014da1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:47:13 2020 -0700 
 -------------------------------------------------------------------------------- 
-[CFL & WHL] Integrate latest microcode
+[CFL & WHL][MCU] Integrate microcode patch to version 0xD6.
 
 - Updated microcode patch to 0xD6.
   CFL D-Step
@@ -962,7 +944,7 @@ Commit: 84dcf6fd7f33c5830b3cdbd81a47fcfa5d40b34a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:47:07 2020 -0700 
 -------------------------------------------------------------------------------- 
-[CFL] FSP-M hang if FspmConfig.InternalGfx=0 and FspmTestConfig.PanelPowerEnable=1
+[CFL][SA] Fix FSP-M hang if FspmConfig.InternalGfx=0 and FspmTestConfig.PanelPowerEnable=1
 
 If the user sets GtPreMemConfig->InternalGraphics == 0 and
 GtPreMemConfig->PanelPowerEnable == 1 (via
@@ -1211,7 +1193,7 @@ Commit: 1f02755f84f2d0423b003b4d7b5dc2900a380418
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:46:33 2020 -0700 
 -------------------------------------------------------------------------------- 
-WHL-U RC6 Setup setting should depend on GT PM
+[WHL-U][SA] RC6 Setup setting should depend on GT PM.
 
 If GT PM is enabled, RC6 can be enabled; if GT PM is disabled, RC6
 cannot be enabled. BIOS provides two separate setup options for RC6 and
@@ -1520,9 +1502,7 @@ Commit: a3ca060cce79852363e673370a78c0e71e65c4cf
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:45:42 2020 -0700 
 -------------------------------------------------------------------------------- 
-Revert "Add System Agent support for CML-H CPU - Added GT DID and ported bug fixes from CML"
-
-This reverts commit 297925944efcc72324c7e39fbfd61b531d82a0be.
+[CML-H][SA]Revert "Add System Agent support for CML-H CPU - Added GT DID and ported bug fixes from CML"
 
 Hsd-es-id: 16010900735
 Original commit date: Wed May 6 03:30:03 2020 -0800
@@ -1554,9 +1534,7 @@ Commit: fcff34f108b005e526e37cb72f50d78416521bb0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:45:37 2020 -0700 
 -------------------------------------------------------------------------------- 
-Revert "[CFL]: Add CML-H CPUID Support in CFL BIOS"
-
-This reverts commit 6fd4fbdfcfb0da84d57fec11fd828c3aec303cc5.
+[CML-H][CPU]Revert "[CFL]: Add CML-H CPUID Support in CFL BIOS"
 
 Hsd-es-id: 16010867509,16010885849
 Original commit date: Wed May 6 03:30:30 2020 -0800
@@ -1598,9 +1576,7 @@ Commit: 3b404d161e36d0ef5252b856d28f76d22c87e47a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:45:31 2020 -0700 
 -------------------------------------------------------------------------------- 
-Revert "CannonLakePlatSamplePkg: Add CML-H Ucode Support in CFL BIOS"
-
-This reverts commit ffdcfb83bdc479df8e6db2c17a15b9cb8de4a28b.
+[CML-H][MCU]Revert "CannonLakePlatSamplePkg: Add CML-H Ucode Support in CFL BIOS"
 
 Hsd-es-id: 16010945948
 Original commit date: Mon May 4 07:40:47 2020 -0800
@@ -1702,9 +1678,7 @@ Commit: e86f792cdcb1aa1e4c054c30f43daff270312e6b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:45:15 2020 -0700 
 -------------------------------------------------------------------------------- 
-Revert "[CFL][MRC] Port CML-H MRC support to CFL MRC"
-
-This reverts commit 40e10bc41c0f1a8cbafef1baff1a04220c1c2f29.
+[CML-H][MRC] Revert "[CFL][MRC] Port CML-H MRC support to CFL MRC"
 
 Hsd-es-id: 14010944760, 22010349084, 14010945006, 14010951754, 22010488133, 14010951825, 14010952027, 14010952097, 14010952204, 14010952563, 14010952686
 Original commit date: Mon May 4 02:53:29 2020 -0800
@@ -1947,7 +1921,7 @@ Commit: 8224d8d303b61ce01ce970cb96b763ae6fc59024
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:44:31 2020 -0700 
 -------------------------------------------------------------------------------- 
-[CNL/CFL] Remove ifdef CPU_CFL around WM BIOS options
+[CNL/CFL][MRC] Remove ifdef CPU_CFL around WM BIOS options
 
 Issue: When adding in the CNL support for the new watermark (WM)
 BIOS menu options the CFL ifdef CPU_CFL was blocking use.
@@ -2099,7 +2073,7 @@ Commit: 07c6a22b9043037736f0044b6062c1c27fee78bf
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:44:03 2020 -0700 
 -------------------------------------------------------------------------------- 
-[CNL] Adding configurable RefreshPanicWm/RefreshHpWm options
+[CNL][MRC] Adding configurable RefreshPanicWm/RefreshHpWm options
 
 Issue: Lack of configurable value for Refresh Panic Watermark
 and Refresh High Profile Watermark which can be useful in
@@ -2177,7 +2151,7 @@ Commit: 7d8b5b76fe82c226f07f9dc1710f95c6e29e1007
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:43:52 2020 -0700 
 -------------------------------------------------------------------------------- 
-Integrate latest CFL GOP V1108
+[CFL][SA]Integrate latest CFL GOP V1108
 
 Hsd-es-id: 16010900735
 Original commit date: Thu Apr 16 00:13:40 2020 +0530
@@ -2276,7 +2250,7 @@ Commit: 13a5ae22c71e12a488b915eaaa7f1f42d13a7fab
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:43:31 2020 -0700 
 -------------------------------------------------------------------------------- 
-[CFL/WHL] Adding DDR4 RHprevention and configurable RefreshPanicWm/RefreshHpWm options
+[CFL/WHL][MRC] Adding DDR4 RHprevention and configurable RefreshPanicWm/RefreshHpWm options
 
 Issue: Lack of DDR4 Rowhammer (RH) support and configurable value for Refresh Panic Watermark
 and Refresh High Profile Watermark.
@@ -2327,7 +2301,7 @@ Commit: c9d26ec77fa10753bdadd9c29fd6de181ddba1af
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:43:21 2020 -0700 
 -------------------------------------------------------------------------------- 
-CannonLakeSiliconPkg: [NO_HSD] Fix Restricted tags within MRC
+[CFL][MRC] Fix Restricted tags within MRC
 
 Fixing typos for Restricted comment tags
 
@@ -2721,7 +2695,7 @@ Commit: 1c3526736c815112e335c76030088d8c6c6054b3
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:42:08 2020 -0700 
 -------------------------------------------------------------------------------- 
-CannonLakePlatSamplePkg: Add CML-H Ucode Support in CFL BIOS
+[CML-H][MCU] Add CML-H Ucode Support in CFL BIOS
 
 Change : Add CML-H ucode and adjust the flashmap and PcdFaultToleranceOffset accordingly
 
@@ -2972,7 +2946,7 @@ Commit: 4b4740bdefff9fc8fe435bfc15bf1b536d1c101f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:41:29 2020 -0700 
 -------------------------------------------------------------------------------- 
-Add System Agent support for CML-H CPU
+[CML-H][SA] Add System Agent support for CML-H CPU
 - Added GT DID and ported bug fixes from CML
 
 Hsd-es-id: 16010900735
@@ -3085,7 +3059,7 @@ Commit: 268ca953dff1fd76b5ef8b748a3374499dc7c1dd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:41:12 2020 -0700 
 -------------------------------------------------------------------------------- 
-[CFL]: Add CML-H CPUID Support in CFL BIOS
+[CFL][CPU]: Add CML-H CPUID Support in CFL BIOS
 
 Add CML-H CPUID Support in CFL BIOS.
 Add PLx and VR updates for CML H SKU RH86 (CML H 45W).
@@ -3321,7 +3295,7 @@ Commit: 4bbe70008b08efe79c9b6f52cc675d83670ace5d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:40:37 2020 -0700 
 -------------------------------------------------------------------------------- 
-[CFL & WHL] Integrate latest microcode
+[CFL & WHL][MCU] Integrate latest microcode patch to version 0xD2.
 
 - Updated microcode patch to 0xD2.
   CFL D-Step
@@ -3689,7 +3663,7 @@ Commit: d99b0254edaa74186e81dcc788758f33546db123
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:39:45 2020 -0700 
 -------------------------------------------------------------------------------- 
-Added WHL-U 4+1 for Corporate and Consumer.
+[WHL-U][CPU] Added WHL-U 4+1 support for Corporate and Consumer.
 
 Hsd-es-id: 16010801999
 Original commit date: Tue Feb 18 17:25:56 2020 +0530
@@ -3935,9 +3909,9 @@ Commit: 20323f36f4436244034d243f3436f747b5eded4b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 18 22:39:07 2020 -0700 
 -------------------------------------------------------------------------------- 
-[CFL-S] Hard hang when resuming from hibernate/S4 after Modern Standby with NVIDIA D3Cold (BIOS change)
+[CFL-S][SA] Hard hang when resuming from hibernate/S4 after Modern Standby with third party DGPU D3Cold 
 
-modify the PG00 PowerResource so that parameter 2 (SystemLevel) = 4.   Currently, it is 0
+- modify the PG00 PowerResource so that parameter 2 (SystemLevel) = 4.   Currently, it is 0
 
 Hsd-es-id: 2209682968
 Original commit date: Tue Jan 7 14:46:49 2020 +0530
