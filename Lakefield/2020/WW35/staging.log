@@ -1,0 +1,145 @@
+================================================================================ 
+Commit: f6bcf80b434e72ae0a28bed30be64b9bb5fff388 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Aug 27 10:03:18 2020 +0530 
+-------------------------------------------------------------------------------- 
+Changing BIOS ID to 4344.00 for WW34.4 BIOS label
+
+Hsd-es-id: NA
+Original commit date: Wed Aug 19 21:43:08 2020 +0530
+Change-Id: I8c6cd1c8457b8e230802cf8758fbddcf24df918e
+Original commit hash: 567cfa76c4ad62932887f109fe4faf6a6f529ca1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: 266020a19200106ebbf088290c3d47ab2e1329bd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Aug 27 10:03:17 2020 +0530 
+-------------------------------------------------------------------------------- 
+Revert "[Title] [VT-d] SA RC should only clear PMR in post-mem and only when pre-boot DMA protection is not enabled"
+
+This reverts commit cd3f520e507a5bdaefe4256306f776d4ac7cb2e2.
+
+Hsd-es-id: N/A
+Original commit date: Wed Aug 19 18:04:23 2020 +0530
+Change-Id: I52d2aee8b42c59c088d4c521a454e1ec1c690983
+Original commit hash: bcf219fb430297111b2f22449d96dec0d4447237
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/SystemAgent/Library/Private/PeiVtdInitLib/PeiVtdInitLib.c
+
+================================================================================ 
+Commit: 6d9f19719844d7c7247b3b17b929137506f81f02 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Aug 27 10:03:15 2020 +0530 
+-------------------------------------------------------------------------------- 
+[LKF]-LKF Platform behavior upon
+1.detecting charger once more if it was not detected first time
+2.If Powerbutton override has occured SUT  to boot with
+full configuration.
+3.Constant blinking of display icon when Rtcbits are set.
+4.Booting to OS if its less than critical battery.
+
+Issue:
+1.If charger is connected.And system was unable to detect the charger, check once more before making System
+to shutdown.(1607169668)
+
+2.If long power button is pressed the SUT is booting with
+minimal configuration(16011492269).
+
+3.In Charging OEMx display goes off and on when Rtcbits
+are set when battery capacity is less than critical battery.
+
+4.If charger is connected, if powerbuttonpress/reset/S4orS5
+and if battery capacity is less than critical battery
+it boots to OS(16011440711).
+
+Changes
+1.Rechecking for the charger presence before shutting down the system.
+1.If charger was not detected and if battery is below critical battery capacity then in normal scenerio
+System will shutdown.So to avoid shutdown recheck for charger presence again.
+2.If only charger is connected.If charger is not detected
+before shutting the System recheck for charger once more.
+
+2.Detecting whether the powerbutton override event has
+occured in previous boot by checking respective pcd.
+
+3.Check if powerbutton is pressed then display icon else
+dont display icon.
+
+4.If charger is connectedy,if  powerbuttonpress/reset/S4orS5
+and if  battery capacity is less than critical battery it
+boots to Chargingapplet.
+
+Hsd-es-id: 1607169668
+Hsd-es-id: 16011492269
+Hsd-es-id: 16011440711
+
+Original commit date: Mon Jun 29 13:43:44 2020 +0530
+Change-Id: I7e24155dd4a7cfad1b288e2e7328d05b13cb046b
+Original commit hash: 3236bb4cf9a6ef4c46629925b23a23663b597d3b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Features/ChargingApplet/DxeChargingApplet/DxeChargingApplet.c
+LakeFieldPlatSamplePkg/Features/ChargingApplet/DxeChargingApplet/DxeChargingApplet.inf
+LakeFieldPlatSamplePkg/Features/ChargingApplet/DxeChargingApplet/HardwareInterface.c
+LakeFieldPlatSamplePkg/Features/ChargingApplet/DxeChargingApplet/StateMachine.c
+LakeFieldPlatSamplePkg/Features/ChargingApplet/PeiChargingApplet/PeiChargingApplet.c
+LakeFieldPlatSamplePkg/Library/PlatformMiscLib/PlatformMiscLib.c
+LakeFieldPlatSamplePkg/Library/PlatformMiscLib/PlatformMiscLib.inf
+LakeFieldPlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: e4ca07b8585da3e3925bb4f65caa689bceadea71 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Aug 27 10:03:13 2020 +0530 
+-------------------------------------------------------------------------------- 
+LakeFieldPlatSamplePkg: Need a new editable field in BIOS to change SSID in PCI header cfg space for HDA bus ctrl.
+
+Added new BIOS setup option (AudioSubsystemIds) to choose Subsystem ID for HDA bus ctrl
+This new option is required only for SoundWire validation.
+
+Hsd-es-id: 16011473641
+[internal-only]:
+
+Original commit date: Mon Jul 27 14:24:34 2020 +0200
+Change-Id: I2de35d3b159eafcc4a43e46a72391c31a7912b63
+Original commit hash: 5b5aaf02ee7ce783414f181f82b399019a97dc84
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldPlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSiPolicyUpdate.c
+LakeFieldPlatSamplePkg/Setup/PchSetup.hfr
+LakeFieldPlatSamplePkg/Setup/PchSetup.uni
+
+================================================================================ 
+Commit: 39076c52679594644fb6bdfe0b2e79e1326fe703 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Aug 27 10:03:11 2020 +0530 
+-------------------------------------------------------------------------------- 
+[Title]
+[VT-d] SA RC should only clear PMR in post-mem and only when pre-boot DMA protection is not enabled
+
+[Resolution]
+Added check before programming VTdBar whether its already enabled
+Moevd ClearDmaProtectionSetByBootGuard to postmem
+SA RC checks if DmaControlGuarantee is enabled, before clearing PMR
+
+[Impacted Platform]
+LKF
+
+Hsd-es-id: 22011077055
+[internal-only]:
+
+Original commit date: Mon Jul 27 16:30:15 2020 +0530
+Change-Id: Id7272b66e3a8d189ce807864f8366b55c7ad930f
+Original commit hash: cd3f520e507a5bdaefe4256306f776d4ac7cb2e2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LakeFieldSiliconPkg/SystemAgent/Library/Private/PeiVtdInitLib/PeiVtdInitLib.c
