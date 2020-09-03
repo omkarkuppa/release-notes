@@ -34,8 +34,6 @@ Date: Tue Sep 1 13:36:22 2020 -0700
 Revert "DG1 performance be drop after upgrade HW device will lost in Device Manager - Power Resource conflicts for HG and DG which should be avoided. - created platform hook to return DG device presence and added as a check in RC for HG methods. - Fixed PEG3 scope with CondRefOf check"
 
 This reverts commit 58f06b3e6d19e6256e0f5a6942a4c3510f7a95b6 which fixed issues listed below
-https://hsdes.intel.com/appstore/article/#/1508257471
-https://hsdes.intel.com/appstore/article/#/22011246063
 
 Hsd-es-id: 16011682175
 Original commit date: Sun Aug 30 19:39:21 2020 -0700
@@ -56,9 +54,8 @@ Commit: 9203fa3aa3eb0b1093541b0dd0025cb03e9d0522
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 1 13:36:15 2020 -0700 
 -------------------------------------------------------------------------------- 
-Revert "BIOS not locking down PCIe RWO fields"
+Revert "BIOS not locking down PCIe RWO fields" for PR2 and move to future releases
 This reverts commit c4493aece909837fb44bdffeb0da64d958b2d240.
-Change deemed too risky for PR2.
 
 Hsd-es-id: 16011682175
 Original commit date: Sun Aug 30 17:28:08 2020 -0700
@@ -76,7 +73,6 @@ Date: Tue Sep 1 13:36:08 2020 -0700
 -------------------------------------------------------------------------------- 
 Revert "Program the Cpu PCIe registers as per BWG Rev 1.2"
 This reverts commit 6c98965d65d2582f486a586426d29614630cc622.
-Change deemed too risky for PR2.
 
 Hsd-es-id: 16011682175
 Original commit date: Sun Aug 30 17:28:04 2020 -0700
@@ -388,7 +384,7 @@ Commit: dfbe6209cae0fd24ed74f766bcf0056de91a8fff
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 1 13:34:10 2020 -0700 
 -------------------------------------------------------------------------------- 
-Revert "Package/Module: [TGL-H] Tobii sensor YB observed with IFWI version later than WW18."
+Revert "Package/Module: [TGL-H] Tobii sensor YB observed with IFWI"
 
 This reverts commit ff726971050a5c44d4e45abcf0e8d46b631ec23d.
 
@@ -517,7 +513,7 @@ ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl:[TGL][LP5][MRC] WA to disable  retrai
 Issue:
   Fullbios is hanging when retraining is enabled on lp5
 Fix:
-  Disable retaining temporary
+  Disable retaining till issue debuged
 
 Hsd-es-id: 14011911046
 Original commit date: Wed Aug 26 21:36:41 2020 -0700
@@ -1078,9 +1074,8 @@ Date: Tue Sep 1 13:31:11 2020 -0700
 -------------------------------------------------------------------------------- 
 C1S/MemoryInit/Tgl: [TGL][MRC] Update MiniBIOS ucode patches
 
-Updated TGL A-step to 0x6A.  Updated TGL B-step to 0x56.  Updated TGL P-step to 0x32.
 
-Affected Platforms:
+Affected MiniBIOS only for Platforms:
 TGL-U, TGL-Y, TGL-H
 
 Hsd-es-id: N/A
@@ -1253,8 +1248,6 @@ Currently, BIOS does not have a knob for enabling Dynamic Memory changes option
 [Impacted Platform]
 TGL-H
 
-[Internal-only]
-
 Hsd-es-id: 22010939207
 Original commit date: Wed Jul 1 16:29:30 2020 +0800
 Change-Id: I8b1fe040a7329ea37d7fcffc43d6e8350aefbf77
@@ -1298,11 +1291,8 @@ ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl:[TGL][MRC][LP4][LP5] Enabling retrain
 Issue:
   Memory corruption immediately after MRC is caused by bad DqDqs reads if retraining is enabled.
 RootCause:
-  Appears to be a problem with the timer setup for the retraining oscillatorllator.
-  Because the MC-side programming is in units of WCK and the DRAM is is in units of tCK the MC-side timer must be programmed to 4x the JEDEC side.
-  The current values in MRC appear to be held over from Lp4 and are too large for Lp5 due to the special encoding of bit 6 and 7 in MR37.
-  To account for this the equation for the POR programming was updated from (2^12-1)*2*tWCK2DQ/(tWCK*16) to (2^11-1)*2*tWCK2DQ/(tWCK*16) but this change never propagated to MRC.
-  Additionally, because of a bug with tOSCPD (here and here) we need to add an additional 40ns of padding to the MC side.
+  Problem with the timer setup for the retraining oscillatorllator.
+  
 Change:
   1) Create a separate function which calculates DqioDuration based on frequency and technology.
   2) Remove MrcLpddr4SetMr23 function call because it adds more confusion than clarity (we are setting different MRs in LP4 and LP5)
@@ -1457,9 +1447,9 @@ Commit: 0ae41fef6860f0253c5c058fc789a4bd5a53c9cd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 1 13:29:46 2020 -0700 
 -------------------------------------------------------------------------------- 
-Added new PM Halo override support ww3320
+Added new PM Halo override support
 
-New Halo 65W 6and 4 core overrides added
+New Halo 6and 4 core overrides added
 New UR skus 4 core overrides added
 
 Hsd-es-id: 14012278536
@@ -1793,7 +1783,7 @@ Commit: cd3925f357d2d25ed85096b7b36a1d940572555d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Sep 1 13:28:22 2020 -0700 
 -------------------------------------------------------------------------------- 
-Package/Module: [TGL-H] Tobii sensor YB observed with IFWI version later than WW18.
+Package/Module: [TGL-H] Tobii sensor YB observed with IFWI.
 
 Change the value of "R_GPIO_VER2_PCH_H_GPIO_PCR_GPP_A_PADCFG_OFFSET" from 0x600 to 0x680.
 This reverts the commit "bec6113700ead9260dd8698e54ce265a4130126d".
