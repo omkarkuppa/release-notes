@@ -1,0 +1,209 @@
+================================================================================ 
+Commit: 0865a43e0f404f03a2deac334a63f15855d9c441 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:18:25 2020 +0530 
+-------------------------------------------------------------------------------- 
+[JSL+] JSL A0 Microcode Update
+
+Updating the uCode from m_01_906c0_00000013 to m_01_906c0_00000014
+
+Hsd-es-id: N/A
+Original commit date: Thu Oct 15 10:26:00 2020 +0530
+Change-Id: I65a5d6756d0975972a74152b67587c4a6729f9bf
+Original commit hash: 76c78561b506ef49512d494c4c16db77805b5a7c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+JasperLakeBoardPkg/Binaries/Microcode/m_01_906c0_00000014.pdb
+JasperLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: aaabf96ddddc70a6c7a7689955e5d1a0ed459d1f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:18:22 2020 +0530 
+-------------------------------------------------------------------------------- 
+[JSL+] BIOS Minor Version Update.
+
+Updating Bios minor version from 2385_01 to 2385_02
+
+Hsd-es-id: N/A
+Original commit date: Wed Oct 14 13:04:35 2020 +0530
+Change-Id: I5366c733e0c68fe3dbc25bd0b917fd1b228d0bf3
+Original commit hash: a9302295e789cf75d3f5739f8624567f2a1bf754
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+JasperLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: f521b55dc24a469f00f6e942ed6c8f060086fc91 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:18:18 2020 +0530 
+-------------------------------------------------------------------------------- 
+[JSL+] Enable CNVi VnnAONREQ as an S0ix Wake Source
+
+CNVi work-around for power-saving.
+
+Hsd-es-id: 16011859658
+
+Original commit date: Thu Oct 1 11:18:52 2020 +0530
+Change-Id: I12a79aa6c690d727decf5c97bb9c2f6687eb7a21
+Original commit hash: c6bd0cb2f9f40bdda4211e053b5c847c1eda482f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiPmcPrivateLib/PeiPmcPrivateLibVer1.c
+
+================================================================================ 
+Commit: 697ed5f48e0acda2d929a1e9dd4d2113db35d680 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:18:15 2020 +0530 
+-------------------------------------------------------------------------------- 
+[JSL+] ClientOneSiliconPkg/IpBlock/Usb: xHCI programming update
+
+Added Rx Termination Control override for V17.1 programs in DAP
+
+Hsd-es-id: 16011853634
+Original commit date: Wed Sep 30 14:31:23 2020 +0530
+Change-Id: Id35223237076e9363b14d953133f44481b1bf920
+Original commit hash: 7d91570c3bd7952b3ba3358f244014a51f58f342
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/Register/UsbRegs.h
+ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/XhciInit.c
+
+================================================================================ 
+Commit: 785aa134b288c03a9490652d7573fc91334bf12b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:18:11 2020 +0530 
+-------------------------------------------------------------------------------- 
+[JSL+] ClientOneSiliconPkg/IpBlock/Usb: xHCI programming update
+
+Programming "SSTCGE" value in BIOS as a part of the latest RCR update
+
+Hsd-es-id: 16011853634
+
+Original commit date: Thu Oct 8 16:33:15 2020 +0530
+Change-Id: I1991e3e033fbde6c4c2677bed46e250140c0945b
+Original commit hash: 84bec99c728edc0e34efe4e5a9796f39ce72a9a9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/XhciInit.c
+
+================================================================================ 
+Commit: c4f6f132c27491d66cecffa7a484e0a488f802d6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:18:07 2020 +0530 
+-------------------------------------------------------------------------------- 
+JasperPlatSamplePkg: Move platform debug state checks into a callback
+
+The platform is said to be in a debug state if any of the following is true:
+    - Using a sample part
+    - Feature Control MSR lock is not set
+    - Debug interface is enabled
+    - SOC Configuration lock is not set (manufacturing mode)
+
+If the platform is in a debug state, PcdFirmwareDebuggerInitialized is
+set to TRUE and the Tcg2Dxe module will call
+MeasureLaunchOfFirmwareDebugger ().
+
+Prior to this change, the checks were executing before finalizing the
+register configuration, thus incorrectly flagging the platform debug
+state and breaking attestation of PCR 07.
+
+To ensure that the registers being read have been properly configured at
+the time the check is executed, the function has been moved from the
+PlatformInitAdvancedPostMemEntryPoint () into a callback tied to the end
+of the silicon initialization:
+  - gFspSiliconInitDonePpiGuid for FSP builds
+  - gEfiEndOfPeiSignalPpiGuid for EDK builds
+
+Hsd-es-id: 14012041630
+[internal-only]:
+
+Original commit date: Thu Oct 8 22:01:52 2020 -0700
+Change-Id: Iea2a47c61e6853a2210e93d1fa25cd2ad2b76ef4
+Original commit hash: 48e8163fa246a3ee67ebbb3282383c8d081fdb93
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+JasperLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
+JasperLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMemFsp.inf
+
+================================================================================ 
+Commit: d06fbe0350b3596b56b23874c5d3b6cf4b80006b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:18:03 2020 +0530 
+-------------------------------------------------------------------------------- 
+[HstiIhvDxe] Removed Signed Firmware update from byte 0 structures
+
+Removed Signed Firmware update from byte 0 structures (BIOS Guard is not POR for JSL)
+
+Hsd-es-id: 16011882903
+Original commit date: Thu Oct 8 14:56:50 2020 -0700
+Change-Id: Iae9fd50935295fb9a671f93cf8b61ba5640e93aa
+Original commit hash: daf6c37abb5b815aa0095323e81a037352d988fc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+JasperLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.c
+
+================================================================================ 
+Commit: 778b51712a2073ffa52aea76c24ddea7b7a7ff5c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:18:00 2020 +0530 
+-------------------------------------------------------------------------------- 
+Revert "JSL-N: Update/Modify "External VNN voltage" from 304 to 420 per PnP tuning and VR design team recommendation"
+
+This reverts commit c5b00dbccd78bdc3d734d755983f01e2270d9457.
+
+Hsd-es-id:N/A
+Original commit date: Tue Oct 13 18:12:08 2020 +0530
+Change-Id: I66a967955816f95abeeb22ed3931d33a5129e6ff
+Original commit hash: f0b600d5fdd9733b753de23e2f5d3b3e787ce1b5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+JasperLakePlatSamplePkg/Setup/PchSetup.hfr
+
+================================================================================ 
+Commit: 89bff30751d0c100d8b50a4bc988f5dbdbaeb661 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:17:56 2020 +0530 
+-------------------------------------------------------------------------------- 
+Revert "JSL-N: Update/Modify FSP-UPD for "External VNN voltage" from 304 to 420 per PnP tuning and VR design team recommendation"
+
+This reverts commit 8f54103527a69e36516d9612fdef593bf29cee83.
+
+Hsd-es-id: N/A
+
+Original commit date: Tue Oct 13 18:26:25 2020 +0530
+Change-Id: I6fc581edf581fae93514d5c2a5494696d7e844bd
+Original commit hash: 3930918d70d5aa02c9d905594b89ab0687e895e5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+JasperLakeFspPkg/Upd/FspsUpd.dsc
+
+================================================================================ 
+Commit: 682e6f56a06a290df9c9740071ac170d5e025c2c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Oct 21 21:17:51 2020 +0530 
+-------------------------------------------------------------------------------- 
+Dirty shutdown SUT by power button press from OS will auto wake the system due to floating C10 PIN in package
+
+Solution:
+Should not enable CPU_WAKE_EN by bot exposing _l73 in GPE scope
+BIOS to enable internal 20K PD for CPU_WAKE pin after each G3 exit, already implemented previously
+
+Hsd-es-id: 1507316829
+
+Original commit date: Wed Oct 14 10:25:30 2020 +0530
+Change-Id: I225899b0b2608773422e221a63ded15664a99fee
+Original commit hash: 1f00731c78af473be35a20a49e324234fc02b181
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+JasperLakeBoardPkg/Acpi/AcpiTables/Dsdt/Gpe.asl
