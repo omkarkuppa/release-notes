@@ -1,0 +1,517 @@
+================================================================================ 
+Commit: a926280232c5359d605243eddc6889b730e08d29 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 18 23:25:46 2020 -0800 
+
+Update MRC Release Notes and increment MRC build revision
+
+Thu Nov 19 05:21:49 2020 +0000
+Original commit date: Thu Nov 19 05:21:49 2020 +0000
+Original commit hash: 7fe8bee9f84193cb8844bd11bf1be60ac7e8c122
+
+
+================================================================================ 
+Commit: 927ea7d8d6817137021a79c3014b0b01341c31ba 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 18 23:25:43 2020 -0800 
+
+CpRcPkg/BaseDdr5CoreLib: MRC Serial Logging Converged Requirements - DRAM
+
+Add following DRAM signals into DisplayTrainResultsDdr5():
+START_DATA_DRAM_ODTLON_WR
+START_DATA_DRAM_ODTLOFF_WR
+START_DATA_DRAM_ODTLON_NT_WR
+START_DATA_DRAM_ODTLON_NT_RD
+START_DATA_DRAM_ODTLOFF_NT_WR
+START_DATA_DRAM_ODTLOFF_NT_RD
+START_DATA_DRAM_CA_ODT
+START_DATA_DRAM_CS_ODT
+START_DATA_DRAM_CK_ODT
+START_DATA_DRAM_DUTY_CYCLE_ADJ_QCLK_PER_BIT
+START_DATA_DRAM_DUTY_CYCLE_ADJ_IBCLK_PER_BIT
+START_DATA_DRAM_DUTY_CYCLE_ADJ_QBCLK_PER_BIT
+START_DATA_DRAM_INTERNAL_WL_CYCLE
+START_DATA_DRAM_VREFDQ_PER_BIT
+START_DATA_DRAM_ODT_RTT_PARK
+START_DATA_DRAM_ODT_DQS_PARK
+START_DATA_DRAM_RTT_WR
+START_DATA_DRAM_RTT_NOM_WR
+START_DATA_DRAM_RTT_NOM_RD
+
+Hsd-es-id: 1508532791
+Original commit date: Fri Nov 13 16:36:17 2020 +0800
+Change-Id: Ia4c0407d9ac404fc4515dd86aafc7e9e47848dd8
+Original commit hash: df899c0fc6a3182ef04ef1bcbd538bc70ed48c35
+
+
+================================================================================ 
+Commit: b77ce1e3a845c32e6dfafa06b93cf864d4429d32 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 18 23:25:36 2020 -0800 
+
+[ADL-P][LP5][LP4][integration_step_event] Enabling Lpddr Early Command Training on CTE Part-2
+
+ADL specific changes for ECT
+
+1) Update ADL specific safe values for CmdPi and CtlPi
+2) Following settings are required to be done before sweep and needs to be restored to original value after sweep.
+    -> DATAxCHy_CR_SDLCTL0_REG.rxsdl_cmn_rxmatchedpathen      = 0 (For Lp4 only)
+    -> DATAxCHy_CR_AFEMISC_REG.rxall_cmn_rxlpddrmode          = MrcRxModeUnmatchedP; (For Lp4 only)
+    -> DATAxCHy_CR_DATATRAINFEEDBACK_REG.ddrdqrxsdlbypassen   = 0x1; (For both Lp4 and Lp5)
+    -> DATAxCHy_CR_DDRCRCMDBUSTRAIN_REG.ddrdqovrddata         = DqMapCpu2Dram[Byte][7]; (For Lp5 only)
+    -> DATAxCHy_CR_DDRCRCMDBUSTRAIN_REG.ddrdqovrdmodeen       = DqMapCpu2Dram[Byte][7] | BIT0;   (For Lp5 only)
+    -> MCMISCS_DDRWCKCONTROL_REG.WCkDiffLowInIdle             = 1; (For Lp5 only)
+    -> MCMISCS_DDRWCKCONTROL1_REG.TrainWCkEn                  = 1; (For Lp5 only))
+3) MC0_CH0_CR_SC_ADAPTIVE_PCIT_REG.ADAPTIVE_PCIT_WINDOW       = 0; (adaptive_pcit_window to 0 to prevent Precharge command being sent during ECT)
+4) GetSets for rxsdl_cmn_rxmatchedpathen, rxall_cmn_rxlpddrmode.
+5) Update DQ siwzzle table for LP5 RVP.
+
+Hsd-es-id: 14011189747, 14011189748
+Original commit date: Mon Oct 26 19:26:58 2020 +0530
+Change-Id: I94b3303ea2fc913d948ed4eac62b9056314b24ba
+Original commit hash: 45fa860ae79f421fd12ddf13b0a6dca5e92aa9b7
+
+
+================================================================================ 
+Commit: a9bc8d286db204bdf72f4c735bf42a84c34cedc3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 18 23:25:30 2020 -0800 
+
+Move RFI register defines to VR IP Block include
+
+[
+Hsd-es-id: 16012145411
+Original commit date: Tue Nov 17 17:30:24 2020 +0530
+Change-Id: Ia3166d63d1bdd5fe1a3259c3a1119acf15e6ff3f
+Original commit hash: 6fc66a706e0f5db5b74e4dea78e42fa5b5ee4a2e
+
+
+================================================================================ 
+Commit: da2019916a77ec7cb5bbf239daa798259dcacfd9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 18 23:25:15 2020 -0800 
+
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1473_00
+
+Hsd-es-id: N/A
+Original commit date: Wed Nov 18 17:50:49 2020 -0800
+Change-Id: Iaff646e317a4217a169b1e02afc67dcad7932f82
+Original commit hash: 4694ed3a67251150411ef8ab61c00e21ea172dd3
+
+
+================================================================================ 
+Commit: 93af1d237e7365572468d8ade7128d53c1f7209e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 18 23:25:10 2020 -0800 
+
+[ADL]: Pep Constaint for HDA support both D0F1 and D3
+
+User selection depends on audio driver present in system:
+Intel SST Audio driver expects D0F1 and OEMx Inbox
+Audio expects D3 as pep constraints
+
+Hsd-es-id: 14012735898
+Original commit date: Thu Nov 12 10:53:43 2020 +0800
+Change-Id: I575993ed3476760355cd3e9e514c39b3ba8935f0
+Original commit hash: 1b3c6433c550b2ad0344b3f1a305380e4d5f0e0b
+
+
+================================================================================ 
+Commit: 3b8669b0f4649ad7174aac9f5b7ebf9cc203f8b1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 18 23:25:03 2020 -0800 
+
+Update MRC Release Notes and increment MRC build revision
+
+Thu Nov 19 00:30:51 2020 +0000
+Original commit date: Thu Nov 19 00:30:51 2020 +0000
+Original commit hash: dfcccfef659aaf3ce4fbc4245922e9f2d700b75c
+
+
+================================================================================ 
+Commit: e2149d264edd8e80cb3041bdf651c042d75da3a9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 18 23:24:58 2020 -0800 
+
+[HSD-ES][client_platf][bug][14012983807][ADL-S][B0] MRC stuck at Read Leveling during CPGC test on Rank2, with asymmetrical memory population
+
+Issue:
+  CPGC stuck on asymmetric rank population when CPGC Global start is enabled
+
+Root cause:
+  CPGC can send RD traffic to non-existent ranks if default L2P Rank mapping is used.
+  Then CPGC TEST_DONE never happens because MC is not sending read completions back.
+
+Solution:
+  Initialize L2P Rank mapping for all CPGC request generators in PreTraining.
+  This will ensure that CPGC traffic will go to existing physical ranks.
+
+[
+Hsd-es-id: 14012983807
+Original commit date: Wed Nov 18 14:38:41 2020 +0200
+Change-Id: I4b6452a33965701378e10880ed207728ae38de06
+Original commit hash: 743f7a1711b0a6805007292ab5fd8ec0291b295b
+
+
+================================================================================ 
+Commit: 8f9bcf238f59a6cc2bca09e88a280012048fc336 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 18 23:24:40 2020 -0800 
+
+PlatSamplePkg/Features/Dptf: Legacy TM Trip points enabled when DTT trip points are enabled
+
+Added Notify call for Thermal Zone 0, notify OSPM that trip-points have changed for Legacy TM.
+The OSPM might trigger Legacy TM trip-points for Active/Passive/Critical Policies even
+if DTT is enabled and its trip-points are active.
+
+Hsd-es-id: 14012504231
+Original commit date: Fri Sep 25 16:40:30 2020 -0700
+Change-Id: Ie338e35d5ab6f1e5e49970a8332d719b819f0a84
+Original commit hash: 238d7cfca16f490baf3f3fb4560deca83d4d60db
+
+
+================================================================================ 
+Commit: 65391b13f02d4cc3b6124d6bc1a83aeaf887e58b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 4 11:28:27 2020 -0800 
+
+Update files for 1401_59
+
+
+================================================================================ 
+Commit: 55b49726ee39d595c4bdce7e9ae1fbc5317b3fc8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Nov 4 11:09:01 2020 -0800 
+
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1401_59
+
+Hsd-es-id: no sighting
+Original commit date: Thu Oct 29 20:20:06 2020 -0700
+Change-Id: Ibe24f7de819bab8631767e1dd53bea963465a6d1
+Original commit hash: da172744be315d7ce7bf18765f703062887b1c47
+
+
+================================================================================ 
+Commit: 7a1e40bcd49abb3ead91e206e8fd8db532660292 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 20 13:11:35 2020 -0700 
+
+Update files for 1401.52
+
+
+================================================================================ 
+Commit: 75ed867b13011860b07b12d35f3886b696a34c4b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 20 12:45:47 2020 -0700 
+
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1401_52
+
+Hsd-es-id: no sighting
+Original commit date: Tue Oct 6 00:02:47 2020 -0700
+Change-Id: I8465601408de4d51aab2bcdc99e2be3928b698e0
+Original commit hash: cfb6149cbe9d2fed1bd29a3eb31be881cee00621
+
+
+================================================================================ 
+Commit: 91e406f311e1236564582eec2f24873a2936c08a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Oct 8 14:18:37 2020 -0700 
+
+Update files for 1384.51
+
+
+================================================================================ 
+Commit: 8b903a37635ae966f47113357439873bd6a83f1c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 6 12:21:21 2020 -0700 
+
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1384_51
+
+Hsd-es-id: no sighting
+Original commit date: Tue Sep 29 01:37:06 2020 -0700
+Change-Id: I5fad38ffade35b263840250cadfd2a2b168c2025
+Original commit hash: 1c1a4ee1d4ce29a2e329579de1222a3263422f6e
+
+
+================================================================================ 
+Commit: 1bc8841ac9bb8737b109302104158ad3ef17567d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Oct 6 12:09:59 2020 -0700 
+
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1384_51
+
+Hsd-es-id: no sighting
+Original commit date: Tue Sep 29 01:37:06 2020 -0700
+Change-Id: I5fad38ffade35b263840250cadfd2a2b168c2025
+Original commit hash: 1c1a4ee1d4ce29a2e329579de1222a3263422f6e
+
+
+================================================================================ 
+Commit: 4003a89a37f372804d849be856b8117241d039d5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Oct 2 16:06:59 2020 -0700 
+
+Update LICENSE.txt
+
+
+================================================================================ 
+Commit: aa2fe9295f959f2a461f3c143555c14b2bfc848e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Oct 2 15:08:13 2020 -0700 
+
+Update files to 1362.52
+
+
+================================================================================ 
+Commit: 7fd138c5c58e7ae23a937d21be223a0757eaf973 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Sep 30 15:55:07 2020 -0700 
+
+[ADL-S] [A0] - System not entering PKGC6 on S-06 platform with PEG10 in L1.1
+
+BIOS need to program change in flow proposed for clock gating and backbone clock gating
+
+Hsd-es-id: 22011388299
+[internal-only]:
+
+Original commit date: Wed Sep 9 01:21:03 2020 +0530
+Change-Id: I19a40b9884bc18389c074aaf79a04191401bcca7
+Original commit hash: be85db03146a8a16490c3cca9191ff9340b0bed8
+
+
+================================================================================ 
+Commit: 8a1f2a4faafaf9edc98fa6ebb837d6886eb4bbe6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Sep 14 18:11:50 2020 -0700 
+
+Update files for 1341_51
+
+
+================================================================================ 
+Commit: cf262181e6ab0d7cfc43b1edc261244d8958f8cf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Sep 14 11:31:22 2020 -0700 
+
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1341_51
+
+Hsd-es-id: no sighting
+Original commit date: Mon Aug 31 02:23:21 2020 -0700
+Change-Id: Ib151c9502f2c47bc720bc0d401962bf1fe291465
+Original commit hash: 1262820d6555454521a5de654a0d5c0fb9753578
+
+
+================================================================================ 
+Commit: 75b12a47e84d0af9d066aa60eadbcd0530a0dbf3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Sep 14 11:31:16 2020 -0700 
+
+Revert "ADL_S: Include Rtd3VMD.asl for ADL_S RVPs"
+
+This reverts commit 3d52f45455337ce3e310e5f95c3c58449a75c686.
+
+Hsd-es-id: 16011673992
+Original commit date: Mon Aug 31 14:02:16 2020 +0800
+Change-Id: I29e38fe7f8a1acb860414221f05ee41bccc80968
+Original commit hash: 2aed79db74839d07f67b355f46aaf9e6d20838f1
+
+
+================================================================================ 
+Commit: bd5115896605e9b24c774ed0b42c197f32015db9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Sep 14 11:29:35 2020 -0700 
+
+ServerSiliconPkg/Mem/Library/MemFmcIpLib: check timeout only if SMBUS transaction fails
+
+Other agents (e.g. BMC) may hold SMBUS access semaphore
+during boot.
+Make sure not to interpret delayed successful transaction as failure.
+
+Hsd-es-id: 18012594852
+Original commit date: Sat Aug 8 13:26:15 2020 +0200
+Change-Id: Ic13f2fd6dc7722e6bb911469e8529de053c4387b
+Original commit hash: 72c6f4f25a5212df8166b2be3ad5040424ca2799
+
+
+================================================================================ 
+Commit: 69b062a346454f0d3ba6c681193b81443d8b33ea 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Aug 25 18:35:14 2020 -0700 
+
+Update files for BIOS 1341
+
+
+================================================================================ 
+Commit: 7b9e6fc5ca533e5145812f164543a89b05b4a48a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Aug 25 16:56:36 2020 -0700 
+
+ServerSiliconPkg/Mem/Library/MemFmcIpLib: check timeout only if SMBUS transaction fails
+
+Other agents (e.g. BMC) may hold SMBUS access semaphore
+during boot.
+Make sure not to interpret delayed successful transaction as failure.
+
+Hsd-es-id: 18012594852
+Original commit date: Sat Aug 8 13:26:15 2020 +0200
+Change-Id: Ic13f2fd6dc7722e6bb911469e8529de053c4387b
+Original commit hash: 72c6f4f25a5212df8166b2be3ad5040424ca2799
+
+
+================================================================================ 
+Commit: 9145c8b5cc633b0352ce9bda111aac640640bd8d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Sat Aug 8 15:33:55 2020 -0700 
+
+Update SiPkg.dec for 1322
+
+
+================================================================================ 
+Commit: 032c89e828be7f3ac8ec72919a8105c8aac9bdee 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Aug 6 10:37:09 2020 -0700 
+
+AlderLakeBoardPkg/Binaries/: Update production microcode to version 0xd
+
+Update production microcode to version 0xd
+
+Hsd-es-id: N/A
+[internal-only]:
+
+Original commit date: Tue Aug 4 15:23:49 2020 +0800
+Change-Id: If0cbc32620856cd446e4a2f6de11303f03d6ab84
+Original commit hash: 465eee56a1210ecdfe8355854de5194df73311f0
+
+
+================================================================================ 
+Commit: 416a78f8aea72c079001166b5d9245c1b44652f7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Sat Aug 1 21:46:13 2020 -0700 
+
+Update git files for 1314
+
+
+================================================================================ 
+Commit: 5f9cc2a11cc5e15dc6edad5ee3c7193ca6e7241c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Sat Aug 1 10:00:08 2020 -0700 
+
+Update to ADL 1314
+
+
+================================================================================ 
+Commit: 5d54cf073623045dd619b8e31a054a599aa09ebe 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Jul 31 17:18:54 2020 -0700 
+
+EagleStreamRpPkg: Pre-Mem FV size optimization on EGS -remove PeiInterposerToSvidMap.inf
+
+Pre-Mem FV size optimization on EGS -remove PeiInterposerToSvidMap.inf
+
+Hsd-es-id: 1508225067
+[internal-only]:
+
+Original commit date: Thu Jul 30 10:03:52 2020 +0800
+Change-Id: I97f7f760cc48c0f91318fff453c290745e72d354
+Original commit hash: 4bb41b8e67d2d9f4ca9be96d5abad832bfb0fd4e
+
+
+================================================================================ 
+Commit: 350a18a648bd6f6875a1dfa99c80ca36dfe99838 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri Jul 24 10:49:31 2020 -0700 
+
+Update files for ADL 1302
+
+
+================================================================================ 
+Commit: 442a1f8a6284cfdc4e5b44727b6783d5d66897b3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jul 23 16:15:15 2020 -0700 
+
+AlderLakeBoardPkg : Adjust memory allocaiton to avoid extra reset
+
+Adjust memory allocaiton to avoid extra reset
+
+Hsd-es-id: N/A
+[internal-only]:
+
+Original commit date: Tue Jul 21 18:13:54 2020 +0800
+Change-Id: I9c36526b20db0de218825761dc44459b4c3de936
+Original commit hash: a879667b97b2206179e7f269a86e8a30752610ea
+
+
+================================================================================ 
+Commit: 11f05b71519ecd367cbdc845475ae343147213a7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jul 9 14:04:58 2020 -0700 
+
+Update files for ADL 1261_01
+
+
+================================================================================ 
+Commit: e9318d6ea35fd65db15247d20485b27ea18eac22 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jul 7 16:24:49 2020 -0700 
+
+Update files for ADL 1261_01
+
+
+================================================================================ 
+Commit: f3832e7a64f53cb4e14a6144e885de26e33a6e6d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jul 7 15:06:53 2020 -0700 
+
+CpPcPlatPkg/CppcBiosIdLib: The display of BIOS ID new extension
+
+Remove BiosIdL.env in WhitleyPcPkg/Tool/GenBiosId
+
+Hsd-es-id: 1508038670
+Original commit date: Mon Jun 22 17:44:36 2020 +0800
+Change-Id: Ic7ae81da12879a40d4894553eee166a4e4f179b8
+Original commit hash: b75ee01f7f0e598acebd4f3f8130d249d66e8024
+
+
+================================================================================ 
+Commit: bc258449f7670ae8ca804430338f7ef4717014f7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jun 11 16:52:44 2020 -0700 
+
+Update SiPkg.dec to 1221
+
+
+================================================================================ 
+Commit: 8e91e5beb72dfe565cda8fb5a00003b417c0bf45 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jun 11 16:51:29 2020 -0700 
+
+Update to ADL BIOS 1221.00
+
+- fixed GPIO Native Functionality for SPI1
+- fixed GPIO Native Functionality for I2S1
+
+Hsd-es-id: 14011537002
+Original commit date: Thu May 21 12:10:35 2020 +0200
+Change-Id: Ia182cd0059dd2897f960fe1ad32191154427ab08
+Original commit hash: ca233951d33dfb558697419430c7132a7faa9de3
+
+
+================================================================================ 
+Commit: e0be0d458cd0c6dd745ae19612239ae35e605300 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri May 1 16:55:06 2020 -0700 
+
+First commit ADL version 1151
+
+
+================================================================================ 
+Commit: c45267d774ce008bed1f2484a5c28fbdb468c784 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Fri May 1 16:47:55 2020 -0700 
+
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1151_00
+
+Hsd-es-id: no sighting
+Original commit date: Mon Apr 6 00:02:44 2020 -0700
+Change-Id: I35c185f99cba2ca0251bd19a7a68942c94404d90
+Original commit hash: 50041d6e1ddb8432cf7c302dc55cac2abc6926c0
+
