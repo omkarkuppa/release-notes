@@ -1,0 +1,213 @@
+================================================================================ 
+Commit: d1456224a10a85bcb0aaf6287755a958f8aedaed 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Nov 23 13:08:38 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Nov 19 05:21:49 2020 +0000
+Original commit date: Thu Nov 19 05:21:49 2020 +0000
+Original commit hash: 7fe8bee9f84193cb8844bd11bf1be60ac7e8c122
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 8e280e465c79576c7229612def68a8cf77fa1f6d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Nov 23 13:08:35 2020 -0800 
+-------------------------------------------------------------------------------- 
+CpRcPkg/BaseDdr5CoreLib: MRC Serial Logging Converged Requirements - DRAM
+
+Add following DRAM signals into DisplayTrainResultsDdr5():
+START_DATA_DRAM_ODTLON_WR
+START_DATA_DRAM_ODTLOFF_WR
+START_DATA_DRAM_ODTLON_NT_WR
+START_DATA_DRAM_ODTLON_NT_RD
+START_DATA_DRAM_ODTLOFF_NT_WR
+START_DATA_DRAM_ODTLOFF_NT_RD
+START_DATA_DRAM_CA_ODT
+START_DATA_DRAM_CS_ODT
+START_DATA_DRAM_CK_ODT
+START_DATA_DRAM_DUTY_CYCLE_ADJ_QCLK_PER_BIT
+START_DATA_DRAM_DUTY_CYCLE_ADJ_IBCLK_PER_BIT
+START_DATA_DRAM_DUTY_CYCLE_ADJ_QBCLK_PER_BIT
+START_DATA_DRAM_INTERNAL_WL_CYCLE
+START_DATA_DRAM_VREFDQ_PER_BIT
+START_DATA_DRAM_ODT_RTT_PARK
+START_DATA_DRAM_ODT_DQS_PARK
+START_DATA_DRAM_RTT_WR
+START_DATA_DRAM_RTT_NOM_WR
+START_DATA_DRAM_RTT_NOM_RD
+
+Hsd-es-id: 1508532791
+Original commit date: Fri Nov 13 16:36:17 2020 +0800
+Change-Id: Ia4c0407d9ac404fc4515dd86aafc7e9e47848dd8
+Original commit hash: df899c0fc6a3182ef04ef1bcbd538bc70ed48c35
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.c
+
+================================================================================ 
+Commit: 7a8a8a9601f5d384097da4538c8ea11de1b2d465 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Nov 23 13:08:28 2020 -0800 
+-------------------------------------------------------------------------------- 
+[ADL-P][LP5][LP4][integration_step_event] Enabling Lpddr Early Command Training on CTE Part-2
+
+ADL specific changes for ECT
+
+1) Update ADL specific safe values for CmdPi and CtlPi
+2) Following settings are required to be done before sweep and needs to be restored to original value after sweep.
+    -> DATAxCHy_CR_SDLCTL0_REG.rxsdl_cmn_rxmatchedpathen      = 0 (For Lp4 only)
+    -> DATAxCHy_CR_AFEMISC_REG.rxall_cmn_rxlpddrmode          = MrcRxModeUnmatchedP; (For Lp4 only)
+    -> DATAxCHy_CR_DATATRAINFEEDBACK_REG.ddrdqrxsdlbypassen   = 0x1; (For both Lp4 and Lp5)
+    -> DATAxCHy_CR_DDRCRCMDBUSTRAIN_REG.ddrdqovrddata         = DqMapCpu2Dram[Byte][7]; (For Lp5 only)
+    -> DATAxCHy_CR_DDRCRCMDBUSTRAIN_REG.ddrdqovrdmodeen       = DqMapCpu2Dram[Byte][7] | BIT0;   (For Lp5 only)
+    -> MCMISCS_DDRWCKCONTROL_REG.WCkDiffLowInIdle             = 1; (For Lp5 only)
+    -> MCMISCS_DDRWCKCONTROL1_REG.TrainWCkEn                  = 1; (For Lp5 only))
+3) MC0_CH0_CR_SC_ADAPTIVE_PCIT_REG.ADAPTIVE_PCIT_WINDOW       = 0; (adaptive_pcit_window to 0 to prevent Precharge command being sent during ECT)
+4) GetSets for rxsdl_cmn_rxmatchedpathen, rxall_cmn_rxlpddrmode.
+5) Update DQ siwzzle table for LP5 RVP.
+
+Hsd-es-id: 14011189747, 14011189748
+Original commit date: Mon Oct 26 19:26:58 2020 +0530
+Change-Id: I94b3303ea2fc913d948ed4eac62b9056314b24ba
+Original commit hash: 45fa860ae79f421fd12ddf13b0a6dca5e92aa9b7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/AdlPDqMap.dsc
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcCommonTypes.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMcConfiguration.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+
+================================================================================ 
+Commit: 6885ecf722bead7ea6b9955f4be537b2fcd725d3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Nov 23 13:08:21 2020 -0800 
+-------------------------------------------------------------------------------- 
+Move RFI register defines to VR IP Block include
+
+[
+Hsd-es-id: 16012145411
+Original commit date: Tue Nov 17 17:30:24 2020 +0530
+Change-Id: Ia3166d63d1bdd5fe1a3259c3a1119acf15e6ff3f
+Original commit hash: 6fc66a706e0f5db5b74e4dea78e42fa5b5ee4a2e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Include/CpuPowerMgmt.h
+ClientOneSiliconPkg/Include/Library/VoltageRegulatorCommands.h
+ClientOneSiliconPkg/IpBlock/VoltageRegulator/IncludePrivate/Library/PeiVrLib.h
+
+================================================================================ 
+Commit: 9f1254d05a21a340281168776fb848f709cb38af 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Nov 23 13:08:05 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1473_00
+
+Hsd-es-id: N/A
+Original commit date: Wed Nov 18 17:50:49 2020 -0800
+Change-Id: Iaff646e317a4217a169b1e02afc67dcad7932f82
+Original commit hash: 4694ed3a67251150411ef8ab61c00e21ea172dd3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 06317cfd50447e7fae230da73dfc1dc654cc6f14 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Nov 23 13:08:00 2020 -0800 
+-------------------------------------------------------------------------------- 
+[ADL]: Pep Constaint for HDA support both D0F1 and D3
+
+User selection depends on audio driver present in system:
+Intel SST Audio driver expects D0F1 and OEMx Inbox
+Audio expects D3 as pep constraints
+
+Hsd-es-id: 14012735898
+Original commit date: Thu Nov 12 10:53:43 2020 +0800
+Change-Id: I575993ed3476760355cd3e9e514c39b3ba8935f0
+Original commit hash: 1b3c6433c550b2ad0344b3f1a305380e4d5f0e0b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+AlderLakeBoardPkg/Include/PlatformNvsAreaDef.h
+AlderLakePlatSamplePkg/Features/Pep/AcpiTables/Pep.asl
+AlderLakePlatSamplePkg/Setup/AcpiSetup.hfr
+
+================================================================================ 
+Commit: 72c6d523673001d8376232fa8ca0da004fde48ee 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Nov 23 13:07:53 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Nov 19 00:30:51 2020 +0000
+Original commit date: Thu Nov 19 00:30:51 2020 +0000
+Original commit hash: dfcccfef659aaf3ce4fbc4245922e9f2d700b75c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: e5f6e2ead4b55114564f0831959a8150fbcc44b2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Nov 23 13:07:48 2020 -0800 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][14012983807][ADL-S][B0] MRC stuck at Read Leveling during CPGC test on Rank2, with asymmetrical memory population
+
+Issue:
+  CPGC stuck on asymmetric rank population when CPGC Global start is enabled
+
+Root cause:
+  CPGC can send RD traffic to non-existent ranks if default L2P Rank mapping is used.
+  Then CPGC TEST_DONE never happens because MC is not sending read completions back.
+
+Solution:
+  Initialize L2P Rank mapping for all CPGC request generators in PreTraining.
+  This will ensure that CPGC traffic will go to existing physical ranks.
+
+[
+Hsd-es-id: 14012983807
+Original commit date: Wed Nov 18 14:38:41 2020 +0200
+Change-Id: I4b6452a33965701378e10880ed207728ae38de06
+Original commit hash: 743f7a1711b0a6805007292ab5fd8ec0291b295b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 4b319fa5839be62ea0414eec21ae6d0e24bf8dd9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Nov 23 13:07:29 2020 -0800 
+-------------------------------------------------------------------------------- 
+PlatSamplePkg/Features/Dptf: Legacy TM Trip points enabled when DTT trip points are enabled
+
+Added Notify call for Thermal Zone 0, notify OSPM that trip-points have changed for Legacy TM.
+The OSPM might trigger Legacy TM trip-points for Active/Passive/Critical Policies even
+if DTT is enabled and its trip-points are active.
+
+Hsd-es-id: 14012504231
+Original commit date: Fri Sep 25 16:40:30 2020 -0700
+Change-Id: Ie338e35d5ab6f1e5e49970a8332d719b819f0a84
+Original commit hash: 238d7cfca16f490baf3f3fb4560deca83d4d60db
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Dptf/AcpiTables/Dptf.asl
