@@ -1,43 +1,91 @@
 *********************************************************************************
-Commit: 26893a9cfd3026e926eba81a9e7d101200767f97 
+Commit: ea8c76b7a7d47f0e4b857bb49fc2a24fccccd66c 
 *********************************************************************************
 
-[PlatformPkg]
+[SiliconPkg]
 
-  [ADLCPU+ADP BiG][Security] BIOS Guard Module Update 0x1307 (2.0.4871)
+  [HSD-ES][client_platf][bug][14013045247][ADL-S][DDR5][RDVC1D fails in 2DPC 2R-2R]
   
-  * Integrate BIOS Guard module 0x1307 (2.0.4871) - NPW Signed
-  * Increased BIOS SVN to 1401
-  * Module 0x1307 supports ADL-S/P/M CPU
+  Issue:
+  RDVC1D step fails with zero margin in DDR5 2DPC 2R-2R config
   
-  Hsd-es-id: 16011853303
-  Change-Id: I859f11bdd819ad9e4de75775bd2a9c13dff24490
-  Original commit hash: 3fad99a55a848ad48b159ed3c39d8e0dba2103a2
+  Root cause:
+  CPGC ADDRESS_SIZE register is configured to 7 column bits for both DDR4 and DDR5.
+  In DDR5 it should be 6 bits because of BL16.
   
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Tools/NewGenCap/NewGenCap.py
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
-  AlderLakePlatSamplePkg/capsulebuild.bat
+  Solution:
+  Fix SetupIOTestBasicVA to use correct number of column bits for DDR5.
+  
+  [
+  Hsd-es-id: 14013045247
+  Change-Id: Iade8d45123d88be431fb139bfef4faeff620b3b1
+  Original commit hash: 4d8e8344a3fcf3e4adaea62af00b2a334915d0ae
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
   
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Potential Errors Below:
 
-  --Commit Message Contains Key Word: security
+  --Commit Message Contains Key Word: step
 
 *********************************************************************************
-Commit: cdd23ef2757662b10ecd366f60b80b507dcf640b 
+Commit: af3cf39c526ee31b0688d1cf3452c8f57699d4f1 
 *********************************************************************************
 
 [BoardPkg]
 
-  Add ADL S A0 Production Patch 0x18
+  ADL-S: Support S11 Single Rail RVP
+  
+  The power input change is from multi rail ATX power supply to single 12V rail input.
+  All HSIO/GPIO remains same as S06 Fab-2.
+  Refer to ADL_S11_UDIMM_4L_RVP_Platform_Mapping_document_Rev0p1_ww47p2.xlsx.
+  
+  internal-only:
+  
+  Hsd-es-id: 1508569373
+  Change-Id: Id9ad613acac3f30fe2475f201a1ee18025759dbc
+  Original commit hash: 1c8e367e16a320ba928a392cf8619caefa2ccbbe
+  
+  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiDetect.c
+  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  AlderLakeBoardPkg/BoardPkg.dsc
+  AlderLakeBoardPkg/Include/PlatformBoardId.h
+  AlderLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+  AlderLakeBoardPkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+  AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiTbtPolicyBoardConfig.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 7f9f4e852ab2e6c4b6e0855efbe7b8b8367e6be7 
+*********************************************************************************
+
+[SiliconPkg]
+
+  C1S/IBL/PSF: Create NULL PSF library for IBL
+  
+  There is no Primary Scalable Fabric (PSF)
+  in Integrated Boot Logic (IBL) but there are some
+  PSF library dependencies in BIOS code that prevents
+  from removing all PSF related code from IBL.
+  This change intoduces Null library for PSF that
+  is used by IBL code.
   
   internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
-  Hsd-es-id: NA
-  Change-Id: I4f9791ab8c987fc6fad0f3f34db722d841cecfe4
-  Original commit hash: 0251509a2756cfb6c6cfa2511aa342c4421f2a06
   
-  AlderLakeBoardPkg/BoardPkg.fdf
+  Hsd-es-id: N/A
+  Change-Id: If54b67acca6515b44693cf488318479c89a74f0a
+  Original commit hash: 892dbfbb4289a619cf4b4667b51d6dcac4962f83
+  
+  ClientOneSiliconPkg/IpBlock/Psf/LibraryPrivate/PsfLib/PeiDxeSmmPsfLibNull.inf
+  ClientOneSiliconPkg/IpBlock/Psf/LibraryPrivate/PsfLib/PsfLibNull.c
   
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -46,11 +94,1315 @@ Potential Errors Below:
   --Commit Message Contains Key Word: restricted
   --Commit Message Contains Key Word: internal
 
+*********************************************************************************
+Commit: 9df0c2b37736f1772dd079e5dc1555bbbb7bfb69 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Allow BIOS to create a HOB for ME perf data
+  
+  Added Extended Performance data structure.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 18013880422
+  Change-Id: Idd09172ebcea0b41ec9edcbcf440e689696c0671
+  Original commit hash: 92b90071abf9571fcca8d5530ad7c6e3bae11e33
+  
+  ClientOneSiliconPkg/Include/MeBiosPayloadData.h
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MbpDataCommon.c
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MbpDebugPrint.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 3a64a3d9368cf58ad0a0ba76634010dcc70b25de 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][sighting_central][sighting][1308185986][ADL-P][LP5] [ADL-P][J0][LPDDR5] Jedec WCK training failing spordically
+  
+  Program PM_CONTROL.Dclk_en_reset_bgf_run = 0 when de-asserting EnableDclk
+  Issue:
+  Lp5 Wck Training was failing randomly at MC0 or MC1
+  
+  Root Cause:
+  MC resets BGF and SPID when Dclk_Enable is de-asserted from MRC. This breaks PHY's 4x boundary condition for CA commands.
+  As a result of this CA commands gets clipped and DRAM doesnt understand the operation from MC.
+  
+  WorkAround/Fix:
+  BGF design is different between TGL to ADL MC.
+  In TGL asserting/deasserting Dclk_en does not force the SPID to reset and the 4x boundary in PHY is maintained.
+  MC Design suggested to program cbit : pm_control_0_0_0_mchbar.dclk_en_reset_bgf_run = 0 when stopping the CK through MRC.
+  If PM_CONTROL_Dclk_en_reset_bgf_run bit is set to 0, BGF will continue to run even if dclk_enable is cleared.
+  
+  Hsd-es-id: 1308185986
+  Change-Id: I28212a8c915feb27052a90b2b0d2f0e31ac35022
+  Original commit hash: 8cc090822ca5d31229c5b382a522b5b34c2a7fdd
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: d1947998022560bfa0af4ccf237a39b137d8718f 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [TCSS] Add Platform control option to hide Discrete Thunderbolt related BIOS setup option.
+  
+  All of the Alderlake platform doesn't support Discrete Thunderbolt.
+  So we should add Platform control option to hide Discrete Thunderbolt
+  related BIOS setup option.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 16012195258
+  Change-Id: I35d2e83d04e1792b2c48d9e488e1be3d45cb912e
+  Original commit hash: b741dc8abc2a34b3907b5aab1f4c8af524cb044a
+  
+  AlderLakeBoardPkg/AlderLakeMBoards/Include/AlderLakeMRvpBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakePBoards/Include/AlderLakePRvpBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakeSBoards/Include/AlderLakeSBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakeUSimicsBoards/Include/AlderLakePBoardConfigPatchTable.h
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  AlderLakePlatSamplePkg/Setup/TbtSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 1b392e6fbc5446dbb08da13da91bd45002d218e7 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][client_platf][integration_step_event][14013029663][ADL-S | DDR5][2DPC support]
+  
+  Implement initial 2DPC support for DDR5, focusing on 1R-1R and 2R-2R.
+  
+  - Added CCC ODT table for 2DPC
+  1R-1R: {{ 480, 0, 0 },{  80, 40, 40 }}
+  2R-2R: {{ 480, 0, 0 },{ 240, 40, 40 }}
+  - Updated DQ ODT tables:
+  1R-1R: {  48,48,48,240,240 }
+  2R-2R: { 120,60,60,240,240 }
+  - CccOdtEncode_DDR5: bug fix, missing "break" for 480
+  - MrcSetOdtMatrix: add DDR5 support: Assert NomRd / NomWr on both ranks of the non-target DIMM
+  - DDR5 CATM: EarlyCsTrainSweep1D: per-channel composite results were stored in the current rank instead of FirstRank
+  - DDR5 CATM: EarlyCsTrainSweep1D: per-channel composite results were incorrectly calculated when eyes don't overlap
+  - DDR5 CATM: Sweep2D: final best VrefCA was only programmed on the first rank, it has to be programmed on each rank.
+  - DDR5 CATM: MrcDdr5EarlyCaTraining: zero out Samples array before each phase
+  - DDR5 CATM: Increased VrefCA sweep range from [65..75] to [65..80], change step size from 3 to 4
+  - DDR5 CSTM: Change VrefCS sweep range from [70..80.5] to [60..70]
+  - MrcSetDefaultRxVref: set initial RxVref to 0.902mV for 2DPC case
+  - DDR5 JWL: RankOut->Ddr5PdaMr3 value was not stored correctly for ranks 2 and 3.
+  
+  [
+  Hsd-es-id: 14013029663
+  Change-Id: I2c4c38f30a5f02f09d32b7c8f5d90fe83ad737b4
+  Original commit hash: 7f5dcbfb9863af51f8ce33698d6abc0f2be9472c
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: d922bbe85c40ed8a160c2ccb5ce44306625980e6 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ADL] Remote Platform Erase - CSME Unconfigure
+  
+  Added code to support CSME Unconfigure flow.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 16012123186
+  Change-Id: I9babd4d0b7af6085bdbccfec0ca7995ad7cff8cd
+  Original commit hash: 6f2a871d36dd24db802f23b7be619ce362f8a589
+  
+  AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.c
+  AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.inf
+  AlderLakePlatSamplePkg/Features/Rpe/RpeAmtSupport.c
+  AlderLakePlatSamplePkg/Features/Rpe/RpeEraseActions.c
+  AlderLakePlatSamplePkg/Features/Rpe/RpeEraseActions.h
+  ClientOneSiliconPkg/Include/IntelAsfExtensions.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: f06aa778504b807ca5132bcfbc68cc010a2bd559 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Boot with eDebug mode enabled takes 30 seconds for OS to boot and no boot at all with debug
+  
+  Added missing code, which installs EDebugHob
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 18013625167
+  Change-Id: I7592c9f3748401bb385cfe8072d816c7fd2e299f
+  Original commit hash: d1bf99afd2eb1a330b10eaa83bdab4a19a16719e
+  
+  ClientOneSiliconPkg/IpBlock/Me/IncludePrivate/Library/PeiMeEnhancedDebugLib.h
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeUmaLib/PchMeUma.c
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeUmaLib/PeiMeUmaLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 860b6ed2e7fc0fbbfa0b9e2acfbd357e5c3d1382 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [ADL-P][AEP] - DG02 384 board support - Rtd3 support
+  
+  - Rtd3 support for DG02 384 board
+  - Added for SD card controller
+  - Removed WWAN , CPU SSD1, Touch panel 2 and GLAN.
+  - Board Id changed to BoardIdAdlPDdr5Dg384Aep and Sku Id to SkuIdAdlPDdr5Dg384Aep
+  - PCIe clock assignment change
+  - Changes to Type C pcd configuration
+  - CPU USB bit map update (TCP2,TCP3 - 0x0C)
+  - Port map changes
+  
+  Hsd-es-id: 16012111505
+  Change-Id: Ia921337d5424976e4945a9cfeb146dbe5e38b443
+  Original commit hash: 94a0211b1a1d24c48e8af31e981674dda7e4d526
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeterAdlP.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlPAepDgRtd3.asl
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiDetect.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  AlderLakeBoardPkg/BoardPkg.dsc
+  AlderLakeBoardPkg/Include/PlatformBoardId.h
+  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlPPostMem.dsc
+  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlPPreMem.dsc
+  AlderLakeBoardPkg/SBCVpdStructurePcd/PcieClocks/AdlPPcieClocks.dsc
+  AlderLakeBoardPkg/SBCVpdStructurePcd/UsbOc/AdlPUsbOC.dsc
+  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: d619a8846305ae15029ef74a3055dc5cd5543133 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/Pmc: Increasing the timeout for CRID update
+  
+  Bios is asserting due to timeout while updating the CRID.
+  
+  internal-only: Not required for master
+  
+  Hsd-es-id: N/A
+  Change-Id: I7fa11d8154380219080cfc781ef0e1b3c226292b
+  Original commit hash: d7046da803d00da487c7c8f79f30a54e0279d740
+  
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLibWithS3.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: a75ef9eb3b66bec762265fc34df3ffda139bd1c7 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [C1S] Close source code change to use MpService2 PPI - PART2.
+  
+  PeiServices has been removed by previous patch
+  So need to remove it in FspMpServiceWrapper.nasm
+  
+  And also add MpWrapperStartupAllCPUs function to both C and NASM.
+  
+  internal-only:
+  
+  Hsd-es-id: 16012155266
+  Change-Id: I02669cc233aba4b98be86ae9f6134f7d58d55b30
+  Original commit hash: 94fea8578c61feb1ec38e7742662ed07e935e240
+  
+  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInit.h
+  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspMpServiceWrapper.c
+  ClientOneSiliconPkg/Fsp/FspInit/Pei/Ia32/FspMpServiceWrapper.nasm
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: a76d62350a3eb67fe03efe031d3522dec1f4fea7 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL-S] Policy default mismatch with Setup Default - CpuPowerMgmtVrConfig
+  
+  Fix policy default mismatch with Setup Default in CpuPowerMgmtVrConfig
+  
+  internal-only:
+  
+  Hsd-es-id: 1508576294
+  Change-Id: I4a0f0be7f68db92e34a1f4e6b4ef26c0ec681997
+  Original commit hash: 69d2145038530523380729f94209f9e0d8829c3d
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/PeiCpuInitFruLib/PeiCpuInitFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 9f722c17647670e3ec8a7510ec1f6e8e4cdd8a0b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Peg10&11 BWG settings mismatch in BIOS 1413
+  
+  internal-only:
+  Issue:
+  Register "G3L0SCTL" [0x478] values are overriden by CpuPcieSetGen3TxOverride()
+  Fix:
+  Changed LTCO offset as below,
+  R_PCIE_LTCO1  0x470 ///< Local Transmitter Coefficient Override 1
+  R_PCIE_LTCO2  0x474 ///< Local Transmitter Coefficient Override 2
+  R_PCIE_LTCO3  0x598 ///< Local Transmitter Coefficient Override 3
+  R_PCIE_LTCO4  0x59C ///< Local Transmitter Coefficient Override 4
+  R_PCIE_LTCO5  0x5A0 ///< Local Transmitter Coefficient Override 5
+  R_PCIE_LTCO6  0x5A4 ///< Local Transmitter Coefficient Override 6
+  R_PCIE_LTCO7  0x5A8 ///< Local Transmitter Coefficient Override 7
+  R_PCIE_LTCO8  0x5AC ///< Local Transmitter Coefficient Override 8
+  
+  Hsd-es-id: 16011966247
+  Change-Id: Iab757ed4a8096843e8811cd4a7434addf2ad4a61
+  Original commit hash: 20324b72bb4abd4018c4ba05a129bce2f7eb5fc6
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Register/CpuPcieRegs.h
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer2.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: d1e658f6b5e76e4f15d8bcd0f5f75625893242a5 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Adding Extra TCSS Debug Messages.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: NA
+  Change-Id: I3882abf91282042fd0f2b95ec39db0e803f7b148
+  Original commit hash: b01e0abe78645f52c408af371c509c501218d7be
+  
+  AlderLakePlatSamplePkg/Setup/SaSetup.c
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiItbtPcieRpInitLib/ItbtPcieRpInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: e5148275b3d7a15c35857f1bb61948a3238c0416 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [TCSS][PCIE]-Incorrect PCIE segment default value.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 16012161946
+  Change-Id: If6373a9301b208b26da7ef0c0f1c04e481d6be97
+  Original commit hash: 35a4bea8a074b5ed980d5890b6b5fffdf7ca0ac1
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/Include/Register/SaRegsHostBridge.h
+  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssInitLib/TcssInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 7ce48c1ac48438537165cd7595e2e7f4aa9b5231 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Enable _CPC nominal  performance and _CPC nominal frequency in performance scale
+  - Updating the Scaling factor for Atom and Big Core
+  
+  internal-only:
+  
+  Hsd-es-id: 16012200335
+  Change-Id: Ieae81b635dc29aac4aeb22088771b9e6a1f38078
+  Original commit hash: 7a4a400028d241e9209091c2de5923c0013f5ca9
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: c1c9023515fc1ca36c135ae0a0a30af1bc4f40a4 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ADL-P]:Removing gpio pins E22 and E23 from gpio table
+  1) Remove the pins from gpio table
+  2) Remove the occurance of E22 and E23 pin for AuxOverride.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 16012098982
+  Change-Id: I0584044167dcb66c26e95bf109eefaef882318ae
+  Original commit hash: c3a016388e242793d7196059400553963d217c08
+  
+  AlderLakeBoardPkg/AlderLakePBoards/Include/AlderLakePRvpBoardConfigPatchTable.h
+  AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiSaPolicyBoardConfig.c
+  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlPPostMem.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 30f64e2d7346bf359a765fb15cfd43eb8f5c971c 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Fixing VT-D option is getting as grayed out by default in BIOS page.
+  
+  1. Removing dependency of "DisableTbtPcieTreeBme" BIOS setup option on VT-D.
+  2. Linking few of the VT-D realted policy with EnableVtd BIOS Setup option.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 16012157227
+  Change-Id: I7e2298ccbe59db64c607606a08413fad3f93ed31
+  Original commit hash: b513ba9020b783deb96b9fb7dad8fe21c63f8917
+  
+  AlderLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeTbtPolicyUpdate.c
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  AlderLakePlatSamplePkg/Setup/TbtSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 8a94b6647958e6a7c0db857803664c2e3c81a175 
+*********************************************************************************
+
+[CPU]
+
+  [C1S] Remove CpuPolicyCommon.h from Public Include
+  
+  SiPolicy.h is the only consumer of this Public header.
+  
+  CpuPolicyCommon.h has just only the Config Block includes.
+  Remove the header and include the necessary includes
+  
+  internal-only:
+  
+  Hsd-es-id: 1508558213
+  Change-Id: Ic501369abe0d68cfa12798261829edeb8d5dfeda
+  Original commit hash: a3e31197ac50c1a8c29a2c000375c294a4600640
+  
+  ClientOneSiliconPkg/Cpu/Include/CpuPolicyCommon.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: b41055be61b28fcebdfc53eb9fccb84edb7745cc 
+*********************************************************************************
+
+[CPU]
+
+  KW issues in ClientOneSilliconPkg\Cpu\..\PowerMgnt
+  - Updated the type cast for BIT1.
+  
+  internal-only:
+  
+  Hsd-es-id: 16012200448
+  Change-Id: Idb4787d152d814090eede4aab21c19139ede75fb
+  Original commit hash: 1269f1920ee1003aff5b9881ba7f14a6e362741d
+  
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PerformanceStates.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 955e73257102b743f6eeff5d6468e4c3e478444d 
+*********************************************************************************
+
+[PlatformPkg]
+
+  ACE/VP: ALC701/ALC711 endpoints are not enumerated for HD-A interface with MTL BIOS
+  
+  Fix access to unmapped memory.
+  Change HWID for ALC701.
+  Waiting for IRV bit after sending command to codec insted of
+  instant return.
+  Assume codec revision id when unreadable from codec.
+  
+  Hsd-es-id: 18013713144
+  Change-Id: Ied9a49d129515b1a7218116d6b9b5646c7b5697f
+  Original commit hash: f607e77806ab9d071238dbcb0e7d4d09fa97032b
+  
+  AlderLakePlatSamplePkg/Setup/PchSetup.hfr
+  ClientOneSiliconPkg/IpBlock/Hda/IncludePrivate/Library/PeiHdaLib.h
+  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiCavsInitLib/PeiCavsInitLib.c
+  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaLib/PeiHdaLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 5fa0bd7d1a67c85d438c32f361ca9c83ad6caba1 
+*********************************************************************************
+
+[CPU]
+
+  Update the Socket information in SMBIOS Type4 Table
+  - Added the Socket type for ADL processors
+  
+  internal-only:
+  
+  Hsd-es-id: 16012189645
+  Change-Id: If06c4af9cb7c99af67066626682b963c76469418
+  Original commit hash: 70cfd2ed3d55a3f0060bfb5db23cf78fe6d20b27
+  
+  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/CpuInfoFruLib.h
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: c067a7a872c1c8c5f61f230e826f5966172896ba 
+*********************************************************************************
+
+[SiliconPkg]
+
+  C1S/IBL/GPIO: Create GPIO libaries instances for IBL
+  
+  Initially GPIO definition for IBL has been copied from EBG PCH.
+  The definition shall be updated for IBL.
+  To complete this new instance of GPIO Private Library
+  (PeiDxeSmmGpioPrivateLibIbl) has been created.
+  The definition has been updated for 5 native/hardwired
+  GPIO pins.
+  GPIO ACPI code has been updated as well.
+  Dependent GPIO Platform BIOS code has been updated.
+  Notes:
+  1. Virtual GPIOs (vGPIO) support shall be implemented in separate change.
+  2. GPIO definition update has been based on version V.28 of GPIO HAS
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  Link to HAS: https://wiki.ith.intel.com/display/PCHLESS/viewpage.action?pageId=1377310966
+  
+  Hsd-es-id: 18013844596
+  Change-Id: I9c5e2d0cff697e693ba3bd7ea32ccf2701c30a69
+  Original commit hash: e1bd119170c27a8713ed1e25a27ac1981d01d4f6
+  
+  ClientOneSiliconPkg/Include/Pins/GpioPinsIbl.h
+  ClientOneSiliconPkg/Include/Register/GpioRegsIbl.h
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNamesIbl.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibIbl.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibIbl.c
+  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/PeiDxeSmmGpioPrivateLibIbl.inf
+  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/Register/PmcRegsIbl.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 30367b046cca5cd38b4c604ee1de5379f1e00fb4 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ClientOneSiliconPkg\PcieRp]  Updating the  Pcie  initilization  as per  BWG
+  
+  FCTL  is invalid register for  ADP P
+  ADP P  supports max payload size of 256.
+  
+  internal-only:  Changes need to be ported to master
+  Testing: Boot to OS in simics
+  
+  Hsd-es-id: 16012133611
+  Change-Id: If5ce1044802d12523af5e3898d414e2c2710957e
+  Original commit hash: fbdffcb285b059166a7f128b6e2ceeac748010dd
+  
+  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/PcieSipRegs.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpInitLib/PeiPcieRpInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: d66800c896377de6ed7e5d5d0afe1d7130405bdf 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][client_platf][bug][1308151981][ADL-S][B0][DDR5] WrT margin drop after RTL
+  
+  Issue:
+  Observed WrT margin drop (shift) after RTL step in MRC, however next RMT that comes after RTL fixes the margins. The issue exposed more on high speeds.
+  
+  Root cause:
+  Issue is related to Generic MRS FSM in MC.
+  In the last section of JEDEC Init we use Generic MRS FSM to issue PDA MRs.
+  MRS FSM expects at least one MR in non-PDA mode, and then PDA MRs.
+  We have only MR10 and MR3 in this group, both are PDA once WRVC1D is done.
+  This caused JEDEC Reset to not program WrV per-device properly, hurting WrT margins.
+  
+  Solution:
+  Merge NonPDA & PDA Registers into a single sequence for Generic MRS FSM.
+  PerformGenericMrsFsmSequence: configure the NonPDA MR's first, followed by PDA MR's, in a single FSM invocation
+  
+  [
+  Hsd-es-id: 1308151981
+  Change-Id: I498b0980647dd277537fd8a7267b5ac0bc7c19bc
+  Original commit hash: 445cb26ea75870c795e73ac05fd533f7a1c384a9
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 71f2cd690d5ddca9fc14afbf6d32ade0bd7654b0 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Peg10&11 BWG settings mismatch in BIOS 1413
+  
+  +-----------------------------+-------------+-----------------+
+  |      Register               | Offset      | BWG Recommended |
+  |                             | [BitField]  | value           |
+  +-----------------------------+-------------+-----------------+
+  |PTMECFG.PGTSCFF              |03B0h[11:9]  | 0x2             |
+  |PCIEPMECTL.DLSULPPGE         |0420h[30]    | 0               |
+  |LPHYCP4.DPMDNDBFE            |1434h[12]    | 1               |
+  |LPHYCP4.OSUSSP               |1434h[9:8]   | 0x2             |
+  |LPHYCP4.LGUSSP               |1434h[7:6]   | 1               |
+  |LPHYCP4.OSCCLKSQEXITDBTIMERS |1434h[5:3]   | 0x2             |
+  |LPHYCP4.LGCLKSQEXITDBTIMERS  |1434h[2:0]   | 0x2             |
+  +-----------------------------+-------------+-----------------+
+  
+  Added ADVMCTRL [0x5BC] programming for PEG11 also.
+  
+  internal-only:
+  
+  Hsd-es-id: 16011966247
+  Change-Id: I9109e15b3f617cd814f67adfb54a02b65e3beeb6
+  Original commit hash: 63e06a3dca412a22c58d7a4816d44930709a5f3b
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Register/CpuPcieRegs.h
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer2.c
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieSip17InitLib/PeiCpuPcieSip17InitLib.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PciExpressHelpersLibrary/PciExpressHelpersLibrary.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: LG
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: fc3cdc6ba9d0968aeff1492d15a1f1b7ea19336c 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg: xHCI init code cleanup
+  
+  Removed unused IP V17_0 definition from IP_VERSION enum. Properly marked
+  CPX programming for ADP-S.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: n/a
+  Change-Id: I80e882da740d46dbb3ed310a39d132ad3a4a087d
+  Original commit hash: 64aa8c8447d733d54e45300a82f0b6bbecc153da
+  
+  ClientOneSiliconPkg/IpBlock/Usb/IncludePrivate/UsbHandle.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 28a49d4da9e43623ba86477ffeaaf8ed6e670c92 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/Fru/MtlSoc: MTL UFS support
+  
+  Added UFS initialization code to MTL SoC FRU. Additionaly, created routine
+  to support UFS Inline Encryption feature, and setup option to control
+  this - it is enabled on MTL by default.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 18013772817
+  Change-Id: Ie8c2f61619553160fa481d8c8d6e05831328c60e
+  Original commit hash: 5749c25c7de40ba78f0152e4e9d86cae93f7adcd
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/Scs/ScsConfig.h
+  ClientOneSiliconPkg/IpBlock/Scs/IncludePrivate/Register/ScsIosf2OcpBridgeRegs.h
+  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsLib/PeiIosf2Ocp.c
+  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsLib/PeiIosf2Ocp.h
+  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsLib/PeiScsUfs.c
+  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsPolicyLib/PeiScsPolicyLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 4145d59d945789c45d772361516528775f18a026 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOnePkg/Gpio: Max Pax number for VGPIO gpio group is inreased to 29
+  
+  For THC  two more VGPIO pads are added
+  
+  internal-only: The changes are for ADP P and should go in master
+  
+  Hsd-es-id: 16012187552
+  Change-Id: I657aca41f8c5c26fa4377812213897da8e3aaa4a
+  Original commit hash: 07879e4f0f2d4f4dd08fff8de87b21fdd6511cae
+  
+  ClientOneSiliconPkg/Include/Register/GpioRegsVer2.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: f654c73fc06c05a5e6d65977ffb23b753b73c1a7 
+*********************************************************************************
+
+[CPU]
+
+  [TXT] Disable TXT in case SACM reports TXT failure
+  
+  The change will allow to unlock memory in SCLEAN flow, then
+  later it will disable TXT mode.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 22011170745
+  Change-Id: Ie4507b8e75539ba3e5e41affcff7a3762620cfa3
+  Original commit hash: a875f266e151e66e9d938970183cec8d0991671b
+  
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiTxtLib/TxtPei.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 8470d0fecbfaf3df9a16c9f7102ac9c19f7f879a 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  AlderLakeBoardPkg: [ADL-S] Power Meter support for CRB
+  
+  Add ADL-S power meter support for below CRB SKUs.
+  Three power meter tables are required for the corresponding SKUs.
+  
+  Table #1 (DDR4 ERB/CRB)
+  03_ADL_S_ADL_PCH_DDR4_UDIMM_2DPC_RVP(ERB/FAB1/FAB2)
+  04_ADL_S_ADL_PCH_DDR4_UDIMM_2DPC_EVCRB
+  05_ADL_S_ADL_PCH_DDR4_UDIMM_2DPC_CPV_RVP(FAB1)
+  
+  Table #2 (DDR5 ERB/CRB)
+  06_ADL_S_ADP_S_DDR5_UDIMM_1DPC_CRB_FAB1/FAB2
+  08_ADL_S_ADL_PCH_DDR5_SODIMM_2DPC_RVP FAB1
+  09_ADL-S-ADP-S-UD5-1DPC-PPV FAB1/FAB2
+  
+  Table #3 (DDR4 S12 Board)
+  12_ADL_S_ADL_PCH_DDR4_SODIMM_1DPC_RVP
+  
+  Hsd-es-id: 1508506399
+  Change-Id: I7450dffc3dcbdea97ce895cbf0d99043a68f8c8b
+  Original commit hash: 3e3025bd7a94d4d1b7767e2c00ea81ce1aba435d
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeter.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeterAdlP.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeterAdlS.asl
+  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  AlderLakeBoardPkg/Include/PlatformBoardId.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 122dd017fae35b6c5574fb742e95d277edeeb27a 
+*********************************************************************************
+
+[PlatformPkg], [CPU]
+
+  [C1S] Close source code change to use MpService2 PPI
+  
+  Issue:
+  [ADL] UefiCpuPkg/CpuFeaturePei caused hang in FSP API mode bootloader
+  when FspsUpd->CpuMpPpi set to MpServices V1 produced by bootloader.
+  The reason is that Cpu RC started to use UefiCpuPkg/CpuFeaturePei module which depends on MpServices V2 PPI.
+  
+  Solution:
+  Discussed with bootloader team and aligned that only MpServices V2 will be provided by bootloader.
+  It requires RC code to change all existing dependency to MpServices V1 to V2. Otherwise RC code cannot work with bootloader.
+  
+  internal-only:
+  
+  Hsd-es-id: 16012155266
+  Change-Id: Ie423dda9b933b57971ad7dedf10e8db97c789387
+  Original commit hash: 61570b8eb0100787b269291b023a073bdf15104b
+  
+  AlderLakePlatSamplePkg/FspWrapper/FspWrapperPeim/FspWrapperPeim.c
+  AlderLakePlatSamplePkg/FspWrapper/FspWrapperPeim/FspWrapperPeim.inf
+  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/CpuInitLib.h
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/CpuInitPreResetCpl.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Features.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Features.h
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/PeiCpuInitLib.inf
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/IdleStates.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/MiscFunctions.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PeiCpuPowerMgmtLib.inf
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PerformanceStates.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtCommon.h
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.h
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/Thermal.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiSmbiosCpuLib/PeiSmbiosCpuLib.inf
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiSmbiosCpuLib/SmbiosType7.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiTxtLib/PeiTxtLib.inf
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiTxtLib/TxtPeiLib.c
+  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInit.c
+  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInit.h
+  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInit.inf
+  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspMpServiceWrapper.c
+  ClientOneSiliconPkg/IpBlock/Overclocking/IncludePrivate/Library/PeiOcLib.h
+  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcInitLib/PeiOcInitLib.c
+  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcInitLib/PeiOcInitLib.inf
+  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcInitLibNull/PeiOcInitLibNull.c
+  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcInitLibNull/PeiOcInitLibNull.inf
+  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcLib/PeiOcLib.inf
+  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcLibNull/PeiOcLibNull.inf
+  ClientOneSiliconPkg/IpBlock/Tme/LibraryPrivate/MkTmeLib/MkTmeLib.c
+  ClientOneSiliconPkg/IpBlock/Tme/LibraryPrivate/MkTmeLib/MkTmeLib.inf
+  ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 14b8bb3dad1a20dca7c32883b46ff5f38c1c6962 
+*********************************************************************************
+
+[CPU]
+
+  ClientOneSiliconPkg/Cpu: MTRR Init Table and GDT needs to be 64 byte aligned for eSPI
+  
+  Sync the modification of OEMx.
+  
+  internal-only:
+  
+  Hsd-es-id: 1508553179
+  Change-Id: I46d534e55c2cab0b129e213263d9af68dd85ef5e
+  Original commit hash: ca31dd96d74248f37862863429266ecaa2ef87ec
+  
+  ClientOneSiliconPkg/Cpu/Library/SecCpuLib/Ia32/SecCpuLib.nasm
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 6b00d53f45d527c5ab0be548c2cfca386c188dbe 
+*********************************************************************************
+
+[BoardPkg]
+
+  ADL-S: Update WA of pad termination
+  
+  Apply 20K PU on ISH GP Pins to all Sku.
+  Apply 20K PU on GPP_F4 to S03 Fab1/Fab2.
+  
+  internal-only:
+  
+  Hsd-es-id: 22011296196 1508250611
+  Change-Id: I0d478c940197f41c95ff6aba531d9983435a8226
+  Original commit hash: bb5ad0fa7a077d00e56958a62dd08484abe40d7c
+  
+  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  AlderLakeBoardPkg/Include/Library/SiliconInitLib.h
+  AlderLakeBoardPkg/Library/SiliconInitLib/SiliconInitPreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 84b6201a34513742b365d6287a16b26c6bea937b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/Scs: Bios need to program IOSF-OCP programming for UFS
+  
+  If the UFS is not the boot medion bios need to program the power and clock management fields.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: 1508566474
+  Change-Id: I999fe7fee1af3dc33f1243366bcba31faf415256
+  Original commit hash: c14c08e9fa2f542cb60c484bc92002330fc10a30
+  
+  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsLib/PeiScsUfs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: f9f8a124e973fa094865ddc95d9b1b346f924d74 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/PmcPrivateLib: PMC Pwrmbase programming on IBL
+  
+  Added correct PwrmBase enabling via ACPI Control register. PCI_COMMAND
+  writes are w/a for Simics and should be removed when proper enabling
+  will be supported.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  
+  Hsd-es-id: N/A
+  Change-Id: I765fbdedf3a523eb7ac7a7aaa1cd405c53fe5ccd
+  Original commit hash: b82ce8daff330542885e7f902a195bcd59884eea
+  
+  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/Library/PmcPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: d2a72674f439a1cf5a22ffd3588c2c9b99239e3a 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ADL Platform VR POR file WW4720
+  - Updates to ADL S ICCMAX, TDC, PL2, PL4 values
+  
+  internal-only:
+  
+  Hsd-es-id: 16012161788
+  Change-Id: Ie780a8eedda581aff9f518a7d76cc3f3b43101bb
+  Original commit hash: 2df6af27ab31c07f5879d276f64b701d8fa21b23
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/Fru/AdlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 97cfe9f28f4208682f3e41fc625239e4395bd35b 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [HSD-ES][client_platf][integration_step_event][1308179058][ADL-S | DDR5][Enable Write0 Feature]
+  
+  Enable Write0 Feature for DDR5
+  New GetSet items:
+  GsmIocWrite0En       DDRSCRAM_CR_DDRMISCCONTROL0.write0_enable
+  GsmIocScramWrite0En  DDRSCRAM_CR_DDRMISCCONTROL0.wrp_d5_wr_0
+  GsmMccWrite0En       SC_GS_CFG.write0_enable
+  
+  Additional changes:
+  - Re-enable DDR4 SAGV on B-step
+  - Add S-10 DDR5 OC RVP support to MiniBios
+  
+  [
+  Hsd-es-id: 1308179058
+  Change-Id: Ib36bee98f57cde3f93ede76b17fc82450b8c4add
+  Original commit hash: 03998999d9f4bc7866aed9a2968fee4b2e164115
+  
+  AlderLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  AlderLakeFspPkg/Upd/FspmUpd.dsc
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  AlderLakePlatSamplePkg/Setup/SaSetup.uni
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver2/MemoryConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcDebugHook.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: af8ffcea939a42083584799a67c7161429f6a25b 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ADL] Add Vsys_crit support in BIOS menu
+  
+  Add BIOS menu entry to enable Vsys_crit and change settings by using BIOS mailbox.
+  
+  internal-only:
+  
+  Hsd-es-id: 16011783441
+  Change-Id: Ie8a8d8269bcfdf39039841f96d5c9f5c16d52861
+  Original commit hash: 9f1795790741f5eb20cdb195d5c3d10360d6bf22
+  
+  AlderLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  AlderLakeFspPkg/Upd/FspsUpd.dsc
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  AlderLakePlatSamplePkg/Setup/CpuSetup.hfr
+  AlderLakePlatSamplePkg/Setup/CpuSetup.uni
+  ClientOneSiliconPkg/Include/ConfigBlock/VoltageRegulator/CpuPowerMgmtVrConfig.h
+  ClientOneSiliconPkg/Include/Library/VoltageRegulatorCommands.h
+  ClientOneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrLib/PeiVrLib.c
+  ClientOneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrPolicyLib/PeiVrPolicyLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 7ec03a9ebdf6da8b930f99d9caa379cd381edb92 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Removed checking Max value of IccMax.
+  - Already added the MAX ICC value to BIOS Setup Knob
+  
+  internal-only:
+  
+  Hsd-es-id: 1308089822
+  Change-Id: Iffb00fe476c9aa9bd145f4dad56ebccac0e63408
+  Original commit hash: c0795224bd41cee175022a91bcff64b553822e12
+  
+  ClientOneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrLib/PeiVrLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 3c5b498bb025fda860c576dff861b19aab8920d8 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg], [CPU], [SA]
+
+  Eliminate the direct usage of EFI_CPUID_REGISTER from Client BIOS.
+  
+  As for as an CPUID register is defined in Cpuid.h. Should leverage the define from there.
+  
+  internal-only:
+  
+  Hsd-es-id: 16012145433
+  Change-Id: I5f61a22bbedf62a280dbec26b4e09f6db35e1c73
+  Original commit hash: f2eb363954f34339be5d7fd88d8a38995e8b8319
+  
+  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  AlderLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSecurityPolicyUpdatePreMem.c
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  AlderLakePlatSamplePkg/Platform/PlatformSetup/Dxe/PlatformSetup.c
+  ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuInitDxe.c
+  ClientOneSiliconPkg/Cpu/Include/CpuDataStruct.h
+  ClientOneSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/CpuInitPeim.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Features.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Microcode.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiDxeSmmCpuCommonLib/CpuCommonLib.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiSmbiosCpuLib/SmbiosType4.c
+  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtDts.c
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/PeiCpuInitFruLib/PeiCpuInitFruLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/SystemAgent/SaInit/Dxe/SaAcpi.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: ff559b67374dc311c9d1b1a821682a33f7287242 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ADL][OC]Correction in programing of Atom OC L2 Voltage and Offset.
+  
+  Also added setup correction to rename Atom to Atom L2 domain.
+  
+  internal-only:
+  
+  Hsd-es-id: 14013005758
+  Change-Id: Ia0c130e4ff0eea1a2eecb1de9338227f3f943290
+  Original commit hash: d64d59c0ba14016ce5b91916ca30e11796c07c0b
+  
+  AlderLakePlatSamplePkg/Setup/OverClockSetup.uni
+  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcInitLib/PeiOcInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
 ################################################################################
 
-Report Summary: Backstop found 2 suspect commits for review 
+Report Summary: Backstop found 43 suspect commits for review 
 
 Warnings Found:
-  Commit: 26893a9    --Commit Message Contains Key Word: security
-  Commit: cdd23ef    --Commit Message Contains Key Word: restricted
-  Commit: cdd23ef    --Commit Message Contains Key Word: internal
+  Commit: ea8c76b    --Commit Message Contains Key Word: step
+  Commit: af3cf39    --Commit Message Contains Key Word: internal
+  Commit: 7f9f4e8    --Commit Message Contains Key Word: restricted
+  Commit: 7f9f4e8    --Commit Message Contains Key Word: internal
+  Commit: 9df0c2b    --Commit Message Contains Key Word: restricted
+  Commit: 9df0c2b    --Commit Message Contains Key Word: internal
+  Commit: 3a64a3d    --Commit Message Contains Key Word: Workaround
+  Commit: d194799    --Commit Message Contains Key Word: restricted
+  Commit: d194799    --Commit Message Contains Key Word: internal
+  Commit: 1b392e6    --Commit Message Contains Key Word: step
+  Commit: d922bbe    --Commit Message Contains Key Word: restricted
+  Commit: d922bbe    --Commit Message Contains Key Word: internal
+  Commit: f06aa77    --Commit Message Contains Key Word: restricted
+  Commit: f06aa77    --Commit Message Contains Key Word: internal
+  Commit: 860b6ed    --Commit Message Contains Key Word: sku
+  Commit: d619a88    --Commit Message Contains Key Word: internal
+  Commit: a75ef9e    --Commit Message Contains Key Word: internal
+  Commit: a76d623    --Commit Message Contains Key Word: internal
+  Commit: 9f722c1    --Commit Message Contains Key Word: internal
+  Commit: d1e658f    --Commit Message Contains Key Word: restricted
+  Commit: d1e658f    --Commit Message Contains Key Word: internal
+  Commit: e514827    --Commit Message Contains Key Word: restricted
+  Commit: e514827    --Commit Message Contains Key Word: internal
+  Commit: 7ce48c1    --Commit Message Contains Key Word: internal
+  Commit: c1c9023    --Commit Message Contains Key Word: restricted
+  Commit: c1c9023    --Commit Message Contains Key Word: internal
+  Commit: 30f64e2    --Commit Message Contains Key Word: restricted
+  Commit: 30f64e2    --Commit Message Contains Key Word: internal
+  Commit: 8a94b66    --Commit Message Contains Oem: NEC
+  Commit: 8a94b66    --Commit Message Contains Key Word: internal
+  Commit: b41055b    --Commit Message Contains Key Word: internal
+  Commit: 955e732    --Commit Message Contains Key Word: HW
+  Commit: 5fa0bd7    --Commit Message Contains Key Word: internal
+  Commit: c067a7a    --Commit Message Contains Key Word: restricted
+  Commit: c067a7a    --Commit Message Contains Key Word: internal
+  Commit: c067a7a    --Commit Message Contains Key Word: http
+  Commit: 30367b0    --Commit Message Contains Key Word: internal
+  Commit: d66800c    --Commit Message Contains Key Word: step
+  Commit: 71f2cd6    --Commit Message Contains Oem: LG
+  Commit: 71f2cd6    --Commit Message Contains Key Word: internal
+  Commit: fc3cdc6    --Commit Message Contains Key Word: restricted
+  Commit: fc3cdc6    --Commit Message Contains Key Word: internal
+  Commit: 28a49d4    --Commit Message Contains Key Word: restricted
+  Commit: 28a49d4    --Commit Message Contains Key Word: internal
+  Commit: 4145d59    --Commit Message Contains Key Word: internal
+  Commit: f654c73    --Commit Message Contains Key Word: restricted
+  Commit: f654c73    --Commit Message Contains Key Word: internal
+  Commit: 8470d0f    --Commit Message Contains Key Word: sku
+  Commit: 122dd01    --Commit Message Contains Key Word: internal
+  Commit: 14b8bb3    --Commit Message Contains Key Word: internal
+  Commit: 6b00d53    --Commit Message Contains Key Word: sku
+  Commit: 6b00d53    --Commit Message Contains Key Word: internal
+  Commit: 84b6201    --Commit Message Contains Key Word: restricted
+  Commit: 84b6201    --Commit Message Contains Key Word: internal
+  Commit: f9f8a12    --Commit Message Contains Key Word: restricted
+  Commit: f9f8a12    --Commit Message Contains Key Word: internal
+  Commit: d2a7267    --Commit Message Contains Key Word: internal
+  Commit: 97cfe9f    --Commit Message Contains Key Word: step
+  Commit: af8ffce    --Commit Message Contains Key Word: internal
+  Commit: 7ec03a9    --Commit Message Contains Key Word: internal
+  Commit: 3c5b498    --Commit Message Contains Key Word: internal
+  Commit: ff559b6    --Commit Message Contains Key Word: internal
