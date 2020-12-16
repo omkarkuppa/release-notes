@@ -1,0 +1,792 @@
+*********************************************************************************
+Commit: d3995f9025ef14b1fa0df0217453afed3f9dc5cc 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Fix CML MRC KW failures
+  
+  Port KW fixes from RKL/CMP
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  Hsd-es-id: 22011729950
+  Change-Id: I745c41acd2d168895d820fd11bb5b57742898c52
+  Original commit hash: a8b4c89a34bf809d3f6f73a8c3648593102c9f3b
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Cml/Library/Private/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 3af968579857bcede1c4a2e19f3eac7bdd865312 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MRC][RKL] Set MRS_FSM_CONTROL.do_PDA_for_ECC = 1 when in ECC mode
+  
+  description:
+  Set MRS_FSM_CONTROL.do_PDA_for_ECC = 1 when in ECC mode
+  Set this when ECC is enabled:
+  MrsFsmCtl.Bits.do_PDA_for_ECC = Outputs->EccSupport;
+  Otherwise MRS FSM wont send MR6 in PDA mode to the ECC device.
+  
+  internal-only: NA
+  Hsd-es-id: NA
+  Change-Id: I168839db51d6f1ddfe35db84f81254fb3d86a93d
+  Original commit hash: 4d949c25b46329c83293c4bcc2636503c3aed99a
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 547f1da34d0d3edd4adecc38dc9e465b195cb47b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MRC][RKL][OC] Memory not able to train to XMP Profile
+  
+  Issue:
+  Certain XMP DIMMs are not able to complete MRC training with their SPD timings.
+  Failures seen within MRC are varied, but most occur during early training steps, such as Early ReadMPR 2D step.
+  Root Cause:
+  tCCD_L was being calculated based on tCK frequency, which led to large values of tCCD_L for high frequency.
+  DDR4 JEDEC Spec for tCCD_L only lists [4...8] as possible encoded values, so any value above 8 was being silently truncated by MRC when programming MR6.
+  Solution:
+  Limit maximum value of tCCD_L within SPD Processing. tCCD_L should not exceed 8, which is the maximum possible value in DDR4 Mode Register 6
+  
+  internal-only: NA
+  Hsd-es-id: NA
+  Change-Id: I224236ee310c51ba1e4bb756f503b28df1920ea4
+  Original commit hash: 899ae34a87f256002121b3f44a42202e2d07a908
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: silent
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 1e51085ecc79734f37237cb6523351b2d29f781d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MRC][RKL] Revert Back EarlyReadMPR to orginal order
+  
+  - Revert Back EarlyReadMPR to orginal order after MrcSenseAmpOffsetTraining.
+  - Add additional OemEarlyReadMprDqDqs2DOC for OverClocking to run after MrcReadLevelingTraining.
+  
+  internal-only: NA
+  Hsd-es-id: NA
+  Change-Id: I83ee6aa759192468703e00e6a44bee67ce013da3
+  Original commit hash: dfb87a1ad4c57b34b420f8cec50a7fab20268a36
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MEMORY/MrcSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 29db357e530b7aa272b5b11f61ad57697ab200fd 
+*********************************************************************************
+
+
+  Update FV Map to fix FSP GCC build failure
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  Hsd-es-id: N/A
+  Change-Id: I90fd0d7039868f0b327e713752dac84d207a0246
+  Original commit hash: 80355762283e0443ad6e152aca427a9dd3088600
+  
+  RocketLakeFspPkg/RocketLakeFspPkg.fdf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 0fd0364f84b0217efabe33583c985b8f8a34d744 
+*********************************************************************************
+
+[SiliconPkg]
+
+  set MinWidth to 1 for OverCLock
+  
+  [Title]
+  set MinWidth to 1 for OverCLock
+  
+  [Issue/Feature Description]
+  
+  [Resolution]
+  
+  [Impacted Platform]
+  RKL.
+  
+  internal-only:
+  Hsd-es-id: https://hsdes.intel.com/appstore/article/#/14012258562
+  
+  Change-Id: I93c5a2612122ebbeaa4016867d3261f58c928983
+  Original commit hash: 97365453f4f09f4995b167e10bd675a7ba366578
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 6f95ec7473e3ebd1a9eed8c9a0a0fd43c88364d3 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Relax tRDRDsg/dg with offset 6
+  
+  [Title]
+  Relax tRDRDsg/dg with offset 6
+  
+  [Issue/Feature Description]
+  2D need more relax.
+  
+  [Resolution]
+  
+  [Impacted Platform]
+  RKL.
+  
+  internal-only:
+  Hsd-es-id: https://hsdes.intel.com/appstore/article/#/14012258562
+  
+  Change-Id: I7b190a4ffa0a96964abaeca57b39c22cf8a70f50
+  Original commit hash: c9336fbfc7c6b33c7731e1b51644ee590c3504d8
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 70e24f6f3892c177ebc8c8b010c7a21a3e12ed36 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Fix MRC KW issues in MrcCrosser.c
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  Hsd-es-id: N/A
+  Change-Id: I4d9cb5c1c2f8d264134d7a2d30f57417f172939d
+  Original commit hash: aaf0fb33eaf63a7d88bfe2cfda9bb1b855e9b173
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: dfb63a5df33e95d45d3709d2397f41b2aa4ba871 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MRC] TAT initial fixes for Bandwidth performance results
+  
+  - change TAT initial values and made fixes on TAT.
+  
+  internal-only: NA
+  Hsd-es-id: NA
+  Change-Id: Ic025f1a1b402748f7cdc2a238e43c316a3c66ac5
+  Original commit hash: 486eec6c952a3a41f39464dbf4278db2d2c4a711
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: b3fd944c9b5499a4dd09c6f0c7b2e06e17922d0c 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Fix the issue that Selecting XMP profile 1 results in unexpected Memory Reference Clock and Memory Ratio when compared to XMP1 tCK value
+  
+  [Title]
+  Selecting XMP profile 1 results in unexpected Memory Reference Clock and Memory Ratio when compared to XMP1 tCK value
+  
+  [Issue/Feature Description]
+  Selecting XMP profile 1 results in unexpected Memory Reference Clock and Memory Ratio when compared to XMP1 tCK value
+  
+  [Resolution]
+  Fix it in OverClockSetup codes.
+  
+  [Impacted Platform]
+  RKL.
+  
+  internal-only:
+  Hsd-es-id: 22011278586
+  Change-Id: I1b7e6eb576daebba81a29abb592c0438a9e9c96a
+  Original commit hash: 287ece0d1b8496a9c31ca1d9bbffc1fab9d33d25
+  
+  RocketLakePlatSamplePkg/Setup/OverClockSetup.c
+  RocketLakePlatSamplePkg/Setup/OverClockSetup.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 55c7ef55ad1e716bea32f56138b9b558f23068b6 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  MRC: Runtime Memory Overclocking Frequency support with SAGV
+  
+  [Title]
+  Enable Realtime Memory OverClock: V0.08
+  
+  [Issue/Feature Description]
+  BIOS to have a Setup option for "Real-Time Memory OC" Enable/Disable
+  help text "This will automatically train the XMP1 Profile and allow toggling between module default frequency and XMP1 frequency in real-time"
+  
+  MRC's role is to train both default and XMP1 and store in SAGV space, when this feature is enabled.
+  
+  [Resolution]
+  
+  V0.06:
+  Port to the latest codes of Nov. 6th
+  
+  V0.05:
+  1) Add SaveData->MemoryProfile in case BIOS default enables XMP_PRFOILE1
+  and RealtimeMemoryOC.
+  2) Change SaGvHighGear2 to TRUE when RealtimeMemoryOC is ok.
+  
+  V0.03:
+  1) Disable SAGV when MemoryProfile is XMP and RealtimeMemoryOCEnabled is FALSE;
+  2) More logs.
+  
+  [Impacted Platform]
+  
+  internal-only:
+  Hsd-es-id: 1408945257
+  
+  Change-Id: I61bb704660e42af2e33bb8d54483bc08d00a8494
+  Original commit hash: f7f0c2ce8a1aa7f44fc3cc1e7d5363d4262ba2b2
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver3/MemoryConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  RocketLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  RocketLakeFspPkg/Upd/FspmUpd.dsc
+  RocketLakePlatSamplePkg/Include/SetupVariable.h
+  RocketLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  RocketLakePlatSamplePkg/Setup/SaSetup.hfr
+  RocketLakePlatSamplePkg/Setup/SaSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 064245cb7511698f93190d4a0da281009ae2a406 
+*********************************************************************************
+
+[SiliconPkg]
+
+  MRC: OverClock tuning around ReadLeveling for XMP memory
+  
+  [Title]
+  OverClock tuning around ReadLeveling for XMP memory
+  
+  [Issue/Feature Description]
+  Need check for memory profile on RKL-S OC RVP.
+  
+  [Resolution]
+  If using an OC profile (User/XMP1/XMP2):
+  - Start step 1 of Read Leveling at 32 instead of 256
+  - Change initial CMD/CTL PI from 64 to 96
+  
+  [Impacted Platform]
+  RKL all.
+  
+  internal-only:
+  Hsd-es-id: https://hsdes.intel.com/appstore/article/#/14012258562
+  
+  Change-Id: I8c08135873395cb45a64ebbc1381725d13226a19
+  Original commit hash: 904aaa6bac3457fb4d7c37e00be98226da5df548
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 80cbcb962bb76e72349737cb45ef794c3857e4bf 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Tuning tCCD_L
+  
+  [Title]
+  Tuning tCCD_L
+  
+  [Issue/Feature Description]
+  1) JEDEC spec defines tCCD_L maximum value 8.
+  2) Per experiments, we can use 6 for high-freq XMP memory
+  
+  [Resolution]
+  
+  [Impacted Platform]
+  RKL.
+  
+  internal-only:
+  Hsd-es-id: N/A
+  
+  Change-Id: I50814d332fc89e1729f46a0b1fc438e3522f9929
+  Original commit hash: 6f09ce77fd2bdf4d7ec1d467172674c33a84675e
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcDdr4Registers.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: ed8613ff5b878fea8e6bc766cb40c8882ea9e98c 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MRC][EV] DIMM ODT fix for 2R2R
+  
+  - DIMM ODT fix for 2R2R by limit rttw 240 only an RttPark for less equal 120.
+  
+  internal-only: NA
+  Hsd-es-id: NA
+  Change-Id: I6681acd7b2fb09cfe120dd9c3aa7e5ccfc8e7d42
+  Original commit hash: 076d8000c296f4290c6e8de842eccfc06b104e03
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MEMORY/MrcSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 19b8fd3985e58895264f0410b42b4c0ad6a3eead 
+*********************************************************************************
+
+[SiliconPkg]
+
+  MRC: force to use Gear2 for high point at OverClock
+  
+  [Title]
+  Force to use Gear2 for high point at OverClock
+  
+  [Issue/Feature Description]
+  MC can't run at very high freq. We have to use Gear2 for freq > 2933.
+  
+  [Resolution]
+  
+  [Impacted Platform]
+  RKL.
+  
+  internal-only:
+  Hsd-es-id: N/A
+  
+  Change-Id: I4c512a52440c9f09fce9e4b6df1ce401cc25f5b5
+  Original commit hash: 3ae2a60b978c3a98a6fe7944a18bfaa90a089e18
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: d196d4f2f6562c171916fd313a35cb5729de2f44 
+*********************************************************************************
+
+[SiliconPkg]
+
+  OverClock: force to use RefClk133 at OverClock highfreq
+  
+  [Title]
+  Force to use RefClk133 at OverClock highfreq
+  
+  [Issue/Feature Description]
+  RefClk100 seems not stable on RKL-S OverCLock RVP.
+  
+  [Resolution]
+  
+  [Impacted Platform]
+  RKL-S OC.
+  
+  internal-only:
+  Hsd-es-id: N/A
+  
+  Change-Id: I019d349f6b5b72ee64fe5e4d4f89e92415e9b1ac
+  Original commit hash: ddb6e24c0baae9e5e4196bfbd007d5decb6c629c
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: b2a329aae483239a2a5024df20d4c323aeb0ba0d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  OverClock: decrease default RcompTargetHDdr4 values for OverClock
+  
+  [Title]
+  Decrease default RcompTargetHDdr4 values for OverClock
+  
+  [Issue/Feature Description]
+  WriteLevelingFlyBy often fails on OC board.
+  Add a new array RcompTargetHDdr4_OC to configfure default RCOMP values.
+  
+  [Resolution]
+  Add const UINT16 RcompTargetHDdr4_OC[MAX_RCOMP_TARGETS]  = {  30, 20, 20, 20, 20 };
+  Use it when Freq >= f3200 at OverClock.
+  
+  [Impacted Platform]
+  RKL-S OC.
+  
+  internal-only:
+  Hsd-es-id: N/A
+  
+  Change-Id: I0d76eb6ae650038f00a94bc230bf42039b381213
+  Original commit hash: d4153869f723193565aefe24ce50bfdbd0cf5467
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: eb7f0686f8d438102aaf9b12d983d1bba8185b43 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [RKL Native] fix that MCFG MMIO config space is not reserved
+  
+  Description]
+  the error log is:
+  FAILED [LOW] MCFGMMIONotReserved: Test 1, MCFG MMIO config space at 0xe0000000
+  is not reserved in the memory map table
+  
+  [Resolution]
+  Add memory space attributes EFI_MEMORY_RUNTIME for memory range
+  0xe0000000 - 0xefffffff, reserved it in memory map table.
+  
+  [Impacted Platform]
+  RKL/CML
+  internal-only: N/A
+  Hsd-es-id: 16011576509
+  Change-Id: Ia9e51be05b1c1d3fabce79ae0dc4d0d90b5771a6
+  Original commit hash: ec040917522de4cd7516736f87a1b18a7064be43
+  
+  RocketLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.c
+  RocketLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: b7abd6b15f99bf526eb4f001642fd77370f9b985 
+*********************************************************************************
+
+[SiliconPkg]
+
+  MRC: Move MrcEarlyReadMprTimingCentering2D after MrcReadLevelingTraining
+  
+  [Title]
+  Move MrcEarlyReadMprTimingCentering2D after MrcReadLevelingTraining
+  
+  [Issue/Feature Description]
+  On OverCLock board, MrcEarlyReadMprTimingCentering2D often fails. Move
+  it after MrcReadLevelingTraining and MrcEarlyReadMprTimingCentering2D
+  can finish successfully.
+  
+  [Resolution]
+  
+  [Impacted Platform]
+  RKL all.
+  
+  internal-only:
+  Hsd-es-id: N/A
+  
+  Change-Id: If44929ba00702ec9650aff979e88f1cc3c2f8446
+  Original commit hash: 7f78db5fa9332136652cc086c84b3c061013976b
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 8d3f2cfb8509babeff52dd2196fcc60c7028e9f7 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [RKL Native] fix the multiple associated methods issue
+  
+  Description]
+  the error log is:
+  FAILED [LOW] WMIMultipleMethod: Test 1, GUID
+  2BC49DEF-7B15-4F05-8BB7-EE37B9547C0B has multiple associated methods WMDE
+  defined, this is a firmware bug that leads to ambiguous behaviour.
+  
+  FAILED [LOW] WMIMultipleMethod: Test 1, GUID
+  1F13AB7F-6220-4210-8F8E-8BB5E71EE969 has multiple associated methods WMDE
+  defined, this is a firmware bug that leads to ambiguous behaviour.
+  
+  FAILED [LOW] WMIMultipleMethod: Test 1, GUID
+  86CCFD48-205E-4A77-9C48-2021CBEDE341 has multiple associated methods WMTF
+  defined, this is a firmware bug that leads to ambiguous behaviour.
+  
+  [Resolution]
+  Change the method names to avoid duplication of name.
+  
+  [Impacted Platform]
+  RKL/CML
+  
+  internal-only: N/A
+  Hsd-es-id: 16011576509
+  Change-Id: I46869ad28357cbc4b157b90facdfab3cd56405ff
+  Original commit hash: b3aff5c7d3672ad130f5799a336382310d922af6
+  
+  RocketLakeBoardPkg/Acpi/AcpiTables/Dsdt/WifiDynamicSar.asl
+  RocketLakePlatSamplePkg/Features/Tbt/TbtInit/Dxe/AcpiTables/DTbt.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 9decd49845d3712f6903f504c6090ecfb4a1bbf8 
+*********************************************************************************
+
+[BoardPkg]
+
+  [RKL Native] fix the FADTPm1aEvtBlkNotSet and SleepControlRegNotAllowed
+  
+  [Description]
+  the error log is:
+  FAILED [MEDIUM] FADTPm1aEvtBlkNotSet: Test 4, FADT PM1A_EVT_BLK is a
+  required field and must have either a 32-bit or 64-bit address set.
+  FAILED [MEDIUM] SleepControlRegNotAllowed: Test 4, FADT
+  SLEEP_CONTROL_REG is defined but will be ignored...
+  
+  [Resolution]
+  PlatformUpdateTables() will clear Pm1aEvtBlk and Pm1aCntBlk, remove it
+  to keep valide Pm1aEvtBlk and Pm1aCntBlk.
+  SLEEP_CONTROL_REG and SLEEP_STATUS_REG are optional, Only implement in
+  HW-Reduced ACPI system, in non-HW-Reduced system will remain all 0 as default
+  
+  internal-only:
+  Hsd-es-id: 16011576509
+  Change-Id: Ic397b0aacef29d81262d9561afe007b7efc78cfc
+  Original commit hash: cfe8794ec6adab73bd5aeb74ac147c4684198f5e
+  
+  RocketLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 08e2f907ba17b8e68b1aa58f1d9fdf0d7e20cddb 
+*********************************************************************************
+
+[PCH], [ASL], [BoardPkg]
+
+  [RKL Native] fix the uninitialized local variable in AEAMLUninitLocal
+  
+  [Description]
+  the error log is:
+  FAILED [HIGH] AEAMLUninitLocal: Test 18, Detected error 'Uninitialized
+  local variable' when evaluating '\_SB_.PC00.SPI1.FPNT._CRS'.
+  FAILED [HIGH] AEAMLUninitLocal: Test 46, Detected error 'Uninitialized
+  local variable' when evaluating '\_SB_.PC00.HDAS.SNDW._INI'.
+  
+  [Resolution]
+  for the else branch, the local variable is not initilized, here init
+  all the local variable to 0.
+  
+  internal-only:
+  Hsd-es-id: 16011576509
+  Change-Id: I35ad9882dc829accaff38b92ee17ea352439830c
+  Original commit hash: 472f9c1b72c7998b4449fa3ade98c7aaa0f16c70
+  
+  ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/PchHdaSoundWireCtrl.asl
+  RocketLakeBoardPkg/Acpi/AcpiTables/Dsdt/SpiFingerprint.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 86b62a7073849f4fbac8ba1196e6894a302c2db2 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [RKL] Fix CPU KW Bugs
+  
+  - Resolved KW issue:
+  #13595: Array 'IccMaxDefault' of size 4 may use index value(s) 4
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  Hsd-es-id: 14013012555
+  Change-Id: Id81cdbba4ace742434797ae8b1fa744f2111c7fd
+  Original commit hash: 5b0c60dc5db1b3d829e47e0b7c50a3fd95968322
+  
+  RocketLakePlatSamplePkg/Features/OverClocking/OverClockInit/DxeOverClock.c
+  RocketLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverclockInterface.c
+  RocketLakePlatSamplePkg/Include/SetupVariable.h
+  RocketLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  RocketLakePlatSamplePkg/Setup/CpuSetup.c
+  RocketLakePlatSamplePkg/Setup/CpuSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+################################################################################
+
+Report Summary: Backstop found 23 suspect commits for review 
+
+Warnings Found:
+  Commit: d3995f9    --Commit Message Contains Key Word: restricted
+  Commit: d3995f9    --Commit Message Contains Key Word: internal
+  Commit: 3af9685    --Commit Message Contains Key Word: internal
+  Commit: 547f1da    --Commit Message Contains Key Word: step
+  Commit: 547f1da    --Commit Message Contains Key Word: silent
+  Commit: 547f1da    --Commit Message Contains Key Word: internal
+  Commit: 1e51085    --Commit Message Contains Key Word: revert
+  Commit: 1e51085    --Commit Message Contains Key Word: internal
+  Commit: 29db357    --Commit Message Contains Key Word: restricted
+  Commit: 29db357    --Commit Message Contains Key Word: internal
+  Commit: 0fd0364    --Commit Message Contains Key Word: internal
+  Commit: 0fd0364    --Commit Message Contains Key Word: http
+  Commit: 6f95ec7    --Commit Message Contains Key Word: internal
+  Commit: 6f95ec7    --Commit Message Contains Key Word: http
+  Commit: 70e24f6    --Commit Message Contains Key Word: restricted
+  Commit: 70e24f6    --Commit Message Contains Key Word: internal
+  Commit: dfb63a5    --Commit Message Contains Key Word: internal
+  Commit: b3fd944    --Commit Message Contains Key Word: internal
+  Commit: 55c7ef5    --Commit Message Contains Key Word: internal
+  Commit: 064245c    --Commit Message Contains Key Word: step
+  Commit: 064245c    --Commit Message Contains Key Word: internal
+  Commit: 064245c    --Commit Message Contains Key Word: http
+  Commit: 80cbcb9    --Commit Message Contains Key Word: internal
+  Commit: ed8613f    --Commit Message Contains Key Word: internal
+  Commit: 19b8fd3    --Commit Message Contains Key Word: internal
+  Commit: d196d4f    --Commit Message Contains Key Word: internal
+  Commit: b2a329a    --Commit Message Contains Key Word: internal
+  Commit: eb7f068    --Commit Message Contains Key Word: internal
+  Commit: b7abd6b    --Commit Message Contains Key Word: internal
+  Commit: 8d3f2cf    --Commit Message Contains Key Word: internal
+  Commit: 9decd49    --Commit Message Contains Key Word: HW
+  Commit: 9decd49    --Commit Message Contains Key Word: internal
+  Commit: 08e2f90    --Commit Message Contains Key Word: internal
+  Commit: 86b62a7    --Commit Message Contains Key Word: restricted
+  Commit: 86b62a7    --Commit Message Contains Key Word: internal

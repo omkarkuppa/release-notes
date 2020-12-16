@@ -1,0 +1,1306 @@
+================================================================================ 
+Commit: 03180419871d626ea921638a27b1cfa6b02ef0a5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 13:42:43 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update files for RKL.1501.00
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/SiPkg.dec
+RocketLakeFspBinPkg/RocketLakeFspPcds.dsc
+
+================================================================================ 
+Commit: d3995f9025ef14b1fa0df0217453afed3f9dc5cc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:26:23 2020 -0800 
+-------------------------------------------------------------------------------- 
+Fix CML MRC KW failures
+
+Port KW fixes from RKL/CMP
+
+internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+Hsd-es-id: 22011729950
+Original commit date: Mon Dec 7 13:44:06 2020 -0800
+Change-Id: I745c41acd2d168895d820fd11bb5b57742898c52
+Original commit hash: a8b4c89a34bf809d3f6f73a8c3648593102c9f3b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Cml/Library/Private/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: ea44bb2967f4c8142c0295df86bc5771926ffa0c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:26:19 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update RKLS_B0 Production patchID to 0x0000001b
+
+Hsd-es-id: NA
+Original commit date: Mon Dec 7 12:08:36 2020 -0800
+Change-Id: I8155e1985ec9e32bf916fbe444e93f626607f5e2
+Original commit hash: 585f101607e127d3170acba770c612200f13c61e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 730f9450603c76049cb078d49c8bbf0241b8cea0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:26:15 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Mon Dec 7 20:48:53 2020 +0000
+Original commit date: Mon Dec 7 20:48:53 2020 +0000
+Original commit hash: dafc33a45dcc6678dd46e6b02532f6342ba0774f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 3af968579857bcede1c4a2e19f3eac7bdd865312 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:26:11 2020 -0800 
+-------------------------------------------------------------------------------- 
+[MRC][RKL] Set MRS_FSM_CONTROL.do_PDA_for_ECC = 1 when in ECC mode
+
+description:
+  Set MRS_FSM_CONTROL.do_PDA_for_ECC = 1 when in ECC mode
+  Set this when ECC is enabled:
+  MrsFsmCtl.Bits.do_PDA_for_ECC = Outputs->EccSupport;
+  Otherwise MRS FSM wont send MR6 in PDA mode to the ECC device.
+
+internal-only: NA
+Hsd-es-id: NA
+Original commit date: Mon Dec 7 02:32:18 2020 +0200
+Change-Id: I168839db51d6f1ddfe35db84f81254fb3d86a93d
+Original commit hash: 4d949c25b46329c83293c4bcc2636503c3aed99a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+
+================================================================================ 
+Commit: 7a1fecd4ab2c9f247cdf53cf5d45a9d46a6dda47 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:26:07 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Mon Dec 7 20:29:12 2020 +0000
+Original commit date: Mon Dec 7 20:29:12 2020 +0000
+Original commit hash: fca83398b49f7058c0c8e002fcffa844fec8015f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 547f1da34d0d3edd4adecc38dc9e465b195cb47b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:26:03 2020 -0800 
+-------------------------------------------------------------------------------- 
+[MRC][RKL][OC] Memory not able to train to XMP Profile
+
+Issue:
+Certain XMP DIMMs are not able to complete MRC training with their SPD timings.
+Failures seen within MRC are varied, but most occur during early training steps, such as Early ReadMPR 2D step.
+Root Cause:
+tCCD_L was being calculated based on tCK frequency, which led to large values of tCCD_L for high frequency.
+DDR4 JEDEC Spec for tCCD_L only lists [4...8] as possible encoded values, so any value above 8 was being silently truncated by MRC when programming MR6.
+Solution:
+Limit maximum value of tCCD_L within SPD Processing. tCCD_L should not exceed 8, which is the maximum possible value in DDR4 Mode Register 6
+
+internal-only: NA
+Hsd-es-id: NA
+Original commit date: Mon Dec 7 02:07:38 2020 +0200
+Change-Id: I224236ee310c51ba1e4bb756f503b28df1920ea4
+Original commit hash: 899ae34a87f256002121b3f44a42202e2d07a908
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcApi.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+
+================================================================================ 
+Commit: 45bfe76a3349bf33735395edd10234a16fc8b88f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:59 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Mon Dec 7 17:40:20 2020 +0000
+Original commit date: Mon Dec 7 17:40:20 2020 +0000
+Original commit hash: 8db489c571e74d38cb4bde399d7e9d3ec56c6dd0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 1e51085ecc79734f37237cb6523351b2d29f781d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:55 2020 -0800 
+-------------------------------------------------------------------------------- 
+[MRC][RKL] Revert Back EarlyReadMPR to orginal order
+
+- Revert Back EarlyReadMPR to orginal order after MrcSenseAmpOffsetTraining.
+- Add additional OemEarlyReadMprDqDqs2DOC for OverClocking to run after MrcReadLevelingTraining.
+
+internal-only: NA
+Hsd-es-id: NA
+Original commit date: Sun Dec 6 16:57:41 2020 +0200
+Change-Id: I83ee6aa759192468703e00e6a44bee67ce013da3
+Original commit hash: dfb87a1ad4c57b34b420f8cec50a7fab20268a36
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MEMORY/MrcSetup.c
+
+================================================================================ 
+Commit: 73aeb31a3db3b037397ac23ee288027d7d620141 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:50 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit WeeklyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Mon Dec 7 06:05:02 2020 -0800
+Change-Id: I0845876da2690a5675538278685dd1e2191dbc1c
+Original commit hash: 0e0e5449433a41964ce00394d2d9ec41072d5f27
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: 0729e37559dca0ec14d18c855251a796de70187c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:46 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Mon Dec 7 01:25:32 2020 -0800
+Change-Id: Ia3cce254f94aaa8215f22dd992f7246316726429
+Original commit hash: aae656d6841ded6282030aa7ced84cc20e33716c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: e70ed073bec864ae92b6eebe05facdd55480269b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:42 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Mon Dec 7 01:09:11 2020 -0800
+Change-Id: I88053856fbcff22e5409642dcd2f82fd9049fca8
+Original commit hash: bb7ff836baf1748d18c802e336a7742d425e285c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: a55108cc38b25248a362e2db3745efe80f6c7897 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:37 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Sun Dec 6 01:23:08 2020 -0800
+Change-Id: I50f997d1dbdc2d48b1e958bfa7f2bbde4cb0f203
+Original commit hash: aa91129d29eb89b7444ecae6fb0469fca7c19ee7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: 4fb7d9d0c1238b30a1ede0c32df3f4989d3ec811 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:33 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Sun Dec 6 01:10:10 2020 -0800
+Change-Id: I41bdbc43da34dcfbe1f47dee1891c94a1b225e4e
+Original commit hash: 0e79bd3301b8e99487b4b0d1fbff5ddba5597d2d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: ce679b2e85ddfbeb0d440efbdd549b0f0ce526b8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:29 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Sat Dec 5 01:23:07 2020 -0800
+Change-Id: I396bdf9611c44946137b86044cc11f3ea84baf1d
+Original commit hash: 04217cf858c45aaa62253e65532a67186dff50f3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: c41483f9bf00b599ef4a1ee4cc5819ed1cdac394 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:24 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Sat Dec 5 01:09:45 2020 -0800
+Change-Id: Ifba3d09bce11f2c4d2953868962507369257ffd1
+Original commit hash: 40fac99d1f1169cf458632d9f019f23782e7c752
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 99e70f568c2e78b8f8e241c25e4d63825ddf430e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:14 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Fri Dec 4 01:27:52 2020 -0800
+Change-Id: I65b0f78e8f4cfdb014986723881d09410cd07b67
+Original commit hash: b6c21bfdca5cfa6058757ad7b65fa69cd32ba1aa
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: af378764de8e544b66a6a827a0df9b9e4b635779 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:10 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Fri Dec 4 01:17:24 2020 -0800
+Change-Id: I113ccbcb4aa8acaa9e5a72fc4ddf1f6e276599a8
+Original commit hash: 5738f12bf35b9fa4f4ca5710588064551f5c2423
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 29db357e530b7aa272b5b11f61ad57697ab200fd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:05 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update FV Map to fix FSP GCC build failure
+
+internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+Hsd-es-id: N/A
+Original commit date: Thu Dec 3 16:18:02 2020 -0800
+Change-Id: I90fd0d7039868f0b327e713752dac84d207a0246
+Original commit hash: 80355762283e0443ad6e152aca427a9dd3088600
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeFspPkg/RocketLakeFspPkg.fdf
+
+================================================================================ 
+Commit: d38e5f3c64cf294142a16862d2b29c8bebc0d101 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:25:01 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 22:39:46 2020 +0000
+Original commit date: Thu Dec 3 22:39:46 2020 +0000
+Original commit hash: d0cae6ebdec4be9ddb01eb66d954d8f81792b02d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 0fd0364f84b0217efabe33583c985b8f8a34d744 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:57 2020 -0800 
+-------------------------------------------------------------------------------- 
+set MinWidth to 1 for OverCLock
+
+[Title]
+set MinWidth to 1 for OverCLock
+
+[Issue/Feature Description]
+
+[Resolution]
+
+[Impacted Platform]
+RKL.
+
+internal-only:
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/14012258562
+
+Original commit date: Mon Nov 23 23:29:12 2020 +0800
+Change-Id: I93c5a2612122ebbeaa4016867d3261f58c928983
+Original commit hash: 97365453f4f09f4995b167e10bd675a7ba366578
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: 499b642f59ba083ad580cf7b9058ad0194713ca5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:52 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 21:55:09 2020 +0000
+Original commit date: Thu Dec 3 21:55:09 2020 +0000
+Original commit hash: 2a704791fdb849454bdede5ad3b9264beea9f25c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 6f95ec7473e3ebd1a9eed8c9a0a0fd43c88364d3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:47 2020 -0800 
+-------------------------------------------------------------------------------- 
+Relax tRDRDsg/dg with offset 6
+
+[Title]
+Relax tRDRDsg/dg with offset 6
+
+[Issue/Feature Description]
+2D need more relax.
+
+[Resolution]
+
+[Impacted Platform]
+RKL.
+
+internal-only:
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/14012258562
+
+Original commit date: Mon Nov 23 23:43:02 2020 +0800
+Change-Id: I7b190a4ffa0a96964abaeca57b39c22cf8a70f50
+Original commit hash: c9336fbfc7c6b33c7731e1b51644ee590c3504d8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+
+================================================================================ 
+Commit: e68bb0542883a82d402b7d45245c6cbb6480384a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:42 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 21:33:58 2020 +0000
+Original commit date: Thu Dec 3 21:33:58 2020 +0000
+Original commit hash: 90eefb3686b198c622755fc13bd7c3b3ac86bf97
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 74b63e2c3b623f222e4bbce7374571dcf202cb87 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:34 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 20:55:27 2020 +0000
+Original commit date: Thu Dec 3 20:55:27 2020 +0000
+Original commit hash: ae9915b4c16c72dd7a32a8a1506c40e858ea2632
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 70e24f6f3892c177ebc8c8b010c7a21a3e12ed36 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:29 2020 -0800 
+-------------------------------------------------------------------------------- 
+Fix MRC KW issues in MrcCrosser.c
+
+internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+Hsd-es-id: N/A
+Original commit date: Mon Nov 30 10:40:19 2020 -0800
+Change-Id: I4d9cb5c1c2f8d264134d7a2d30f57417f172939d
+Original commit hash: aaf0fb33eaf63a7d88bfe2cfda9bb1b855e9b173
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: 3157c5a55f361103c86f50a711b3cfea6b3a4632 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:24 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 20:41:59 2020 +0000
+Original commit date: Thu Dec 3 20:41:59 2020 +0000
+Original commit hash: 9638744e303913bc19e0353b499ef980a4650758
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: dfb63a5df33e95d45d3709d2397f41b2aa4ba871 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:19 2020 -0800 
+-------------------------------------------------------------------------------- 
+[MRC] TAT initial fixes for Bandwidth performance results
+
+- change TAT initial values and made fixes on TAT.
+
+internal-only: NA
+Hsd-es-id: NA
+Original commit date: Mon Nov 30 22:20:40 2020 +0200
+Change-Id: Ic025f1a1b402748f7cdc2a238e43c316a3c66ac5
+Original commit hash: 486eec6c952a3a41f39464dbf4278db2d2c4a711
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: b3fd944c9b5499a4dd09c6f0c7b2e06e17922d0c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:12 2020 -0800 
+-------------------------------------------------------------------------------- 
+Fix the issue that Selecting XMP profile 1 results in unexpected Memory Reference Clock and Memory Ratio when compared to XMP1 tCK value
+
+[Title]
+Selecting XMP profile 1 results in unexpected Memory Reference Clock and Memory Ratio when compared to XMP1 tCK value
+
+[Issue/Feature Description]
+Selecting XMP profile 1 results in unexpected Memory Reference Clock and Memory Ratio when compared to XMP1 tCK value
+
+[Resolution]
+Fix it in OverClockSetup codes.
+
+[Impacted Platform]
+RKL.
+
+internal-only:
+Hsd-es-id: 22011278586
+Original commit date: Fri Nov 20 00:10:46 2020 +0800
+Change-Id: I1b7e6eb576daebba81a29abb592c0438a9e9c96a
+Original commit hash: 287ece0d1b8496a9c31ca1d9bbffc1fab9d33d25
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakePlatSamplePkg/Setup/OverClockSetup.c
+RocketLakePlatSamplePkg/Setup/OverClockSetup.h
+
+================================================================================ 
+Commit: 9e8560c92aef01f1421ce4407b739ae479bb705c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:06 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 20:29:14 2020 +0000
+Original commit date: Thu Dec 3 20:29:14 2020 +0000
+Original commit hash: 509d1331919567911264b1b8b3cabfbec3970405
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 55c7ef55ad1e716bea32f56138b9b558f23068b6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:24:01 2020 -0800 
+-------------------------------------------------------------------------------- 
+MRC: Runtime Memory Overclocking Frequency support with SAGV
+
+[Title]
+Enable Realtime Memory OverClock: V0.08
+
+[Issue/Feature Description]
+BIOS to have a Setup option for "Real-Time Memory OC" Enable/Disable
+help text "This will automatically train the XMP1 Profile and allow toggling between module default frequency and XMP1 frequency in real-time"
+
+MRC's role is to train both default and XMP1 and store in SAGV space, when this feature is enabled.
+
+[Resolution]
+
+V0.06:
+Port to the latest codes of Nov. 6th
+
+V0.05:
+1) Add SaveData->MemoryProfile in case BIOS default enables XMP_PRFOILE1
+and RealtimeMemoryOC.
+2) Change SaGvHighGear2 to TRUE when RealtimeMemoryOC is ok.
+
+V0.03:
+1) Disable SAGV when MemoryProfile is XMP and RealtimeMemoryOCEnabled is FALSE;
+2) More logs.
+
+[Impacted Platform]
+
+internal-only:
+Hsd-es-id: 1408945257
+
+Original commit date: Fri Nov 6 18:49:36 2020 +0800
+Change-Id: I61bb704660e42af2e33bb8d54483bc08d00a8494
+Original commit hash: f7f0c2ce8a1aa7f44fc3cc1e7d5363d4262ba2b2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver3/MemoryConfig.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+RocketLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+RocketLakeFspPkg/Upd/FspmUpd.dsc
+RocketLakePlatSamplePkg/Include/SetupVariable.h
+RocketLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+RocketLakePlatSamplePkg/Setup/SaSetup.hfr
+RocketLakePlatSamplePkg/Setup/SaSetup.uni
+
+================================================================================ 
+Commit: bdac666d3e94fc66463120ff22f6f5ce92d2f1e7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:54 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 20:17:58 2020 +0000
+Original commit date: Thu Dec 3 20:17:58 2020 +0000
+Original commit hash: fdef008075b4b2021d97aad0dae90dad08bf6a18
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 064245cb7511698f93190d4a0da281009ae2a406 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:48 2020 -0800 
+-------------------------------------------------------------------------------- 
+MRC: OverClock tuning around ReadLeveling for XMP memory
+
+[Title]
+OverClock tuning around ReadLeveling for XMP memory
+
+[Issue/Feature Description]
+Need check for memory profile on RKL-S OC RVP.
+
+[Resolution]
+If using an OC profile (User/XMP1/XMP2):
+ - Start step 1 of Read Leveling at 32 instead of 256
+ - Change initial CMD/CTL PI from 64 to 96
+
+[Impacted Platform]
+RKL all.
+
+internal-only:
+Hsd-es-id: https://hsdes.intel.com/appstore/article/#/14012258562
+
+Original commit date: Fri Nov 6 18:36:37 2020 +0800
+Change-Id: I8c08135873395cb45a64ebbc1381725d13226a19
+Original commit hash: 904aaa6bac3457fb4d7c37e00be98226da5df548
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: fc6c243600c13444b17e01beb0b26dc636e0c411 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:41 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 19:59:18 2020 +0000
+Original commit date: Thu Dec 3 19:59:18 2020 +0000
+Original commit hash: cd28a2e8135aaa6a5c18769a9368d5ae32f649e0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 80cbcb962bb76e72349737cb45ef794c3857e4bf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:36 2020 -0800 
+-------------------------------------------------------------------------------- 
+Tuning tCCD_L
+
+[Title]
+Tuning tCCD_L
+
+[Issue/Feature Description]
+1) JEDEC spec defines tCCD_L maximum value 8.
+2) Per experiments, we can use 6 for high-freq XMP memory
+
+[Resolution]
+
+[Impacted Platform]
+RKL.
+
+internal-only:
+Hsd-es-id: N/A
+
+Original commit date: Mon Nov 23 23:35:46 2020 +0800
+Change-Id: I50814d332fc89e1729f46a0b1fc438e3522f9929
+Original commit hash: 6f09ce77fd2bdf4d7ec1d467172674c33a84675e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcDdr4Registers.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+
+================================================================================ 
+Commit: b11e901b7252451600237810e1a05d2c2e7e76e5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:30 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 19:50:27 2020 +0000
+Original commit date: Thu Dec 3 19:50:27 2020 +0000
+Original commit hash: ccd414dba1017d1de2f2d4e73f62176a44da4f5c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: ed8613ff5b878fea8e6bc766cb40c8882ea9e98c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:26 2020 -0800 
+-------------------------------------------------------------------------------- 
+[MRC][EV] DIMM ODT fix for 2R2R
+
+- DIMM ODT fix for 2R2R by limit rttw 240 only an RttPark for less equal 120.
+
+internal-only: NA
+Hsd-es-id: NA
+Original commit date: Tue Nov 17 21:48:11 2020 +0200
+Change-Id: I6681acd7b2fb09cfe120dd9c3aa7e5ccfc8e7d42
+Original commit hash: 076d8000c296f4290c6e8de842eccfc06b104e03
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/MiniBios/MEMORY/MrcSetup.c
+
+================================================================================ 
+Commit: f59d91b66c7bbe5050d8a30be4a6babaf983d5cb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:20 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 19:37:39 2020 +0000
+Original commit date: Thu Dec 3 19:37:39 2020 +0000
+Original commit hash: 3bdc3ba028fda5768ae91a5a4d20318f1efd6220
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 19b8fd3985e58895264f0410b42b4c0ad6a3eead 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:16 2020 -0800 
+-------------------------------------------------------------------------------- 
+MRC: force to use Gear2 for high point at OverClock
+
+[Title]
+Force to use Gear2 for high point at OverClock
+
+[Issue/Feature Description]
+MC can't run at very high freq. We have to use Gear2 for freq > 2933.
+
+[Resolution]
+
+[Impacted Platform]
+RKL.
+
+internal-only:
+Hsd-es-id: N/A
+
+Original commit date: Tue Nov 17 16:24:17 2020 +0800
+Change-Id: I4c512a52440c9f09fce9e4b6df1ce401cc25f5b5
+Original commit hash: 3ae2a60b978c3a98a6fe7944a18bfaa90a089e18
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+
+================================================================================ 
+Commit: 43bc55a478df9ac9b1cfb9fdaffce26069e55245 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:12 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 19:25:07 2020 +0000
+Original commit date: Thu Dec 3 19:25:07 2020 +0000
+Original commit hash: 7da6369f7f5d6eb10f08d2a0245f6da603ad73fe
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: d196d4f2f6562c171916fd313a35cb5729de2f44 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:07 2020 -0800 
+-------------------------------------------------------------------------------- 
+OverClock: force to use RefClk133 at OverClock highfreq
+
+[Title]
+Force to use RefClk133 at OverClock highfreq
+
+[Issue/Feature Description]
+RefClk100 seems not stable on RKL-S OverCLock RVP.
+
+[Resolution]
+
+[Impacted Platform]
+RKL-S OC.
+
+internal-only:
+Hsd-es-id: N/A
+
+Original commit date: Sat Nov 14 00:21:32 2020 +0800
+Change-Id: I019d349f6b5b72ee64fe5e4d4f89e92415e9b1ac
+Original commit hash: ddb6e24c0baae9e5e4196bfbd007d5decb6c629c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+
+================================================================================ 
+Commit: 4956adf34df119a6313172148f4435d3d37b5801 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:23:01 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 19:04:11 2020 +0000
+Original commit date: Thu Dec 3 19:04:11 2020 +0000
+Original commit hash: 502a0163e9857861dacde6110ead46dd5382efe1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 38cce61505ddf70bd7f3f3e52421e7f4efd928ac 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:22:56 2020 -0800 
+-------------------------------------------------------------------------------- 
+[RKL Native] fix the aborting method PD02._CRS
+
+[Description]
+the error log is:
+ACPI Error: Aborting method \_SB.PC00.I2C0.PD02._CRS due to previous
+error (AE_AML_INVALID_RESOURCE_TYPE)
+
+[Resolution]
+the \_SB.PC00.I2C0.PD02._CRS will return 0, only the I2C1.PD02._CRS
+will return the valid resource, the fix is return one fake resource.
+
+[
+Hsd-es-id: 16011576509
+Original commit date: Sat Nov 21 17:50:40 2020 +0800
+Change-Id: I11d18c370914c1f2f8139ad05305f8a227a0bc5a
+Original commit hash: 018f7b82da92cce6d1e5e3e378ee0b83b99c11fa
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/Acpi/AcpiTables/Dsdt/I2cUcmx.asl
+
+================================================================================ 
+Commit: b2a329aae483239a2a5024df20d4c323aeb0ba0d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:22:50 2020 -0800 
+-------------------------------------------------------------------------------- 
+OverClock: decrease default RcompTargetHDdr4 values for OverClock
+
+[Title]
+Decrease default RcompTargetHDdr4 values for OverClock
+
+[Issue/Feature Description]
+WriteLevelingFlyBy often fails on OC board.
+Add a new array RcompTargetHDdr4_OC to configfure default RCOMP values.
+
+[Resolution]
+Add const UINT16 RcompTargetHDdr4_OC[MAX_RCOMP_TARGETS]  = {  30, 20, 20, 20, 20 };
+Use it when Freq >= f3200 at OverClock.
+
+[Impacted Platform]
+RKL-S OC.
+
+internal-only:
+Hsd-es-id: N/A
+
+Original commit date: Sat Nov 14 00:13:43 2020 +0800
+Change-Id: I0d76eb6ae650038f00a94bc230bf42039b381213
+Original commit hash: d4153869f723193565aefe24ce50bfdbd0cf5467
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+
+================================================================================ 
+Commit: eb7f0686f8d438102aaf9b12d983d1bba8185b43 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:22:44 2020 -0800 
+-------------------------------------------------------------------------------- 
+[RKL Native] fix that MCFG MMIO config space is not reserved
+
+Description]
+the error log is:
+FAILED [LOW] MCFGMMIONotReserved: Test 1, MCFG MMIO config space at 0xe0000000
+is not reserved in the memory map table
+
+[Resolution]
+Add memory space attributes EFI_MEMORY_RUNTIME for memory range
+0xe0000000 - 0xefffffff, reserved it in memory map table.
+
+[Impacted Platform]
+RKL/CML
+internal-only: N/A
+Hsd-es-id: 16011576509
+Original commit date: Wed Nov 25 16:49:37 2020 +0800
+Change-Id: Ia9e51be05b1c1d3fabce79ae0dc4d0d90b5771a6
+Original commit hash: ec040917522de4cd7516736f87a1b18a7064be43
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.c
+RocketLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.inf
+
+================================================================================ 
+Commit: 1689e021eb24766694ce7570aa1984c13ad96a69 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:22:37 2020 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+Thu Dec 3 18:10:47 2020 +0000
+Original commit date: Thu Dec 3 18:10:47 2020 +0000
+Original commit hash: 41fcfeb49b8b741933fb2c4d500cabaf3326babe
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: b7abd6b15f99bf526eb4f001642fd77370f9b985 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:22:28 2020 -0800 
+-------------------------------------------------------------------------------- 
+MRC: Move MrcEarlyReadMprTimingCentering2D after MrcReadLevelingTraining
+
+[Title]
+Move MrcEarlyReadMprTimingCentering2D after MrcReadLevelingTraining
+
+[Issue/Feature Description]
+On OverCLock board, MrcEarlyReadMprTimingCentering2D often fails. Move
+it after MrcReadLevelingTraining and MrcEarlyReadMprTimingCentering2D
+can finish successfully.
+
+[Resolution]
+
+[Impacted Platform]
+RKL all.
+
+internal-only:
+Hsd-es-id: N/A
+
+Original commit date: Mon Nov 2 17:12:22 2020 +0800
+Change-Id: If44929ba00702ec9650aff979e88f1cc3c2f8446
+Original commit hash: 7f78db5fa9332136652cc086c84b3c061013976b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+
+================================================================================ 
+Commit: 8d3f2cfb8509babeff52dd2196fcc60c7028e9f7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:22:16 2020 -0800 
+-------------------------------------------------------------------------------- 
+[RKL Native] fix the multiple associated methods issue
+
+Description]
+the error log is:
+FAILED [LOW] WMIMultipleMethod: Test 1, GUID
+2BC49DEF-7B15-4F05-8BB7-EE37B9547C0B has multiple associated methods WMDE
+defined, this is a firmware bug that leads to ambiguous behaviour.
+
+FAILED [LOW] WMIMultipleMethod: Test 1, GUID
+1F13AB7F-6220-4210-8F8E-8BB5E71EE969 has multiple associated methods WMDE
+defined, this is a firmware bug that leads to ambiguous behaviour.
+
+FAILED [LOW] WMIMultipleMethod: Test 1, GUID
+86CCFD48-205E-4A77-9C48-2021CBEDE341 has multiple associated methods WMTF
+defined, this is a firmware bug that leads to ambiguous behaviour.
+
+[Resolution]
+Change the method names to avoid duplication of name.
+
+[Impacted Platform]
+RKL/CML
+
+internal-only: N/A
+Hsd-es-id: 16011576509
+Original commit date: Thu Nov 26 13:06:29 2020 +0800
+Change-Id: I46869ad28357cbc4b157b90facdfab3cd56405ff
+Original commit hash: b3aff5c7d3672ad130f5799a336382310d922af6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/Acpi/AcpiTables/Dsdt/WifiDynamicSar.asl
+RocketLakePlatSamplePkg/Features/Tbt/TbtInit/Dxe/AcpiTables/DTbt.asl
+
+================================================================================ 
+Commit: 9decd49845d3712f6903f504c6090ecfb4a1bbf8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:22:12 2020 -0800 
+-------------------------------------------------------------------------------- 
+[RKL Native] fix the FADTPm1aEvtBlkNotSet and SleepControlRegNotAllowed
+
+[Description]
+the error log is:
+FAILED [MEDIUM] FADTPm1aEvtBlkNotSet: Test 4, FADT PM1A_EVT_BLK is a
+required field and must have either a 32-bit or 64-bit address set.
+FAILED [MEDIUM] SleepControlRegNotAllowed: Test 4, FADT
+SLEEP_CONTROL_REG is defined but will be ignored...
+
+[Resolution]
+PlatformUpdateTables() will clear Pm1aEvtBlk and Pm1aCntBlk, remove it
+to keep valide Pm1aEvtBlk and Pm1aCntBlk.
+SLEEP_CONTROL_REG and SLEEP_STATUS_REG are optional, Only implement in
+HW-Reduced ACPI system, in non-HW-Reduced system will remain all 0 as default
+
+internal-only:
+Hsd-es-id: 16011576509
+Original commit date: Mon Nov 23 10:54:33 2020 +0800
+Change-Id: Ic397b0aacef29d81262d9561afe007b7efc78cfc
+Original commit hash: cfe8794ec6adab73bd5aeb74ac147c4684198f5e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+
+================================================================================ 
+Commit: 08e2f907ba17b8e68b1aa58f1d9fdf0d7e20cddb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:22:02 2020 -0800 
+-------------------------------------------------------------------------------- 
+[RKL Native] fix the uninitialized local variable in AEAMLUninitLocal
+
+[Description]
+the error log is:
+FAILED [HIGH] AEAMLUninitLocal: Test 18, Detected error 'Uninitialized
+local variable' when evaluating '\_SB_.PC00.SPI1.FPNT._CRS'.
+FAILED [HIGH] AEAMLUninitLocal: Test 46, Detected error 'Uninitialized
+local variable' when evaluating '\_SB_.PC00.HDAS.SNDW._INI'.
+
+[Resolution]
+for the else branch, the local variable is not initilized, here init
+all the local variable to 0.
+
+internal-only:
+Hsd-es-id: 16011576509
+Original commit date: Mon Nov 23 21:57:56 2020 +0800
+Change-Id: I35ad9882dc829accaff38b92ee17ea352439830c
+Original commit hash: 472f9c1b72c7998b4449fa3ade98c7aaa0f16c70
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/PchHdaSoundWireCtrl.asl
+RocketLakeBoardPkg/Acpi/AcpiTables/Dsdt/SpiFingerprint.asl
+
+================================================================================ 
+Commit: 86b62a7073849f4fbac8ba1196e6894a302c2db2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:21:53 2020 -0800 
+-------------------------------------------------------------------------------- 
+[RKL] Fix CPU KW Bugs
+
+- Resolved KW issue:
+  #13595: Array 'IccMaxDefault' of size 4 may use index value(s) 4
+
+internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+Hsd-es-id: 14013012555
+Original commit date: Mon Nov 23 01:26:32 2020 -0800
+Change-Id: Id81cdbba4ace742434797ae8b1fa744f2111c7fd
+Original commit hash: 5b0c60dc5db1b3d829e47e0b7c50a3fd95968322
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakePlatSamplePkg/Features/OverClocking/OverClockInit/DxeOverClock.c
+RocketLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverclockInterface.c
+RocketLakePlatSamplePkg/Include/SetupVariable.h
+RocketLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+RocketLakePlatSamplePkg/Setup/CpuSetup.c
+RocketLakePlatSamplePkg/Setup/CpuSetup.hfr
+
+================================================================================ 
+Commit: ef1223fb5d84bce9cda91be98b8703cf661fb36c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:21:48 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Thu Dec 3 01:25:14 2020 -0800
+Change-Id: I88ae72b571b4383b1087e97c76fd39be4f125c38
+Original commit hash: f83f7d5bf3420a2750532a88217e888d85502491
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: 1079290b296bba78e5885cf9bafce83767bb3b33 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:21:43 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Thu Dec 3 01:10:57 2020 -0800
+Change-Id: I364678421edfcb42b824b8eb47e0fa731c6ae04d
+Original commit hash: 36f8c4b9e171c16f14c7470fd80a6a311964a9eb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 4d1e4ecf2539e47c095eba72fee9a8c682994771 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:21:38 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Wed Dec 2 01:24:05 2020 -0800
+Change-Id: I0a8a9a8f333b87844865a5a44916d46b7a23a851
+Original commit hash: 79bbadfcd9399994ccaf72325a8cfb0e9bd63bdc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: f0c4566287778c5844df22fa2dc664722381710e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:21:32 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Wed Dec 2 01:10:53 2020 -0800
+Change-Id: Ibaee41cc9de9a6ad483515b12dd02b4b286eb8f8
+Original commit hash: 5e23226ea5f312a62e031df804741e2af4dad85e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: af8110c7a57e231c1dc5335ea4e98dfc23186c98 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:21:23 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Tue Dec 1 01:56:31 2020 -0800
+Change-Id: I530a6ffdf8e881e5b3437fc90f3d16b3545c21e6
+Original commit hash: 656b9c3cb86bad94d9a986154f45ee7c0fd16eb2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 7b727208c5ca960d4f5ede972022dc5d351a96aa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:21:17 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Tue Dec 1 01:46:30 2020 -0800
+Change-Id: I833fe0574c688876e9ed95341c7ab8596f2b28cd
+Original commit hash: 71beb45118c778f35a38b2c00fb0c6bd0f06ab13
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: 635d3b1dd04438ce794687d91d9cf8bfca3ce564 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:21:12 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit WeeklyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Mon Nov 30 06:03:00 2020 -0800
+Change-Id: I5e59ea998b700822bba353fd249c71134bd6e8f8
+Original commit hash: 72575a69640ca25c781c6a34d3546549d615b2db
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: 991cfe6e2346882e88737c9fc09938c3fcb77b47 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:21:05 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Mon Nov 30 01:54:18 2020 -0800
+Change-Id: I5d694ec000b4285c65fd77fa86cb3dffc2efaf19
+Original commit hash: e37accd3622576277a187b1f52f534541a173d32
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: baa7ab92a0b05b93637d0a242c67bab03d5ce7ca 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:20:58 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Mon Nov 30 01:36:54 2020 -0800
+Change-Id: Ib92349247bf71f240404e3f857b44e1802fe49eb
+Original commit hash: aaaa1332797fa917239212e713735ef621f79911
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 9e66e4871baaa94fd2f1dd1d3a176138cbc28aca 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:20:52 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Sun Nov 29 01:24:22 2020 -0800
+Change-Id: I9e3c639960135deafc8d268efa1d09e7cc15e0ca
+Original commit hash: f94652582106df1a1f9f854e6447dc52cdc7dc5a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: 47f1e1acc578efc2114d16563036aeb6ff2270ae 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:20:47 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Sun Nov 29 01:09:36 2020 -0800
+Change-Id: I5cbc158bb350cf571624db53bb944c4f593e191b
+Original commit hash: 830f7db7d4777d228cb2b57b08f0b999cf89a359
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 219de617e61227aeabc5a77a5951bdfa2d0b32c3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:20:41 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit DailyUpdate_FSP/RC CI
+
+Hsd-es-id: N/A
+Original commit date: Sat Nov 28 01:24:21 2020 -0800
+Change-Id: I6eac5acc685d7136ad30b631740f040ad5340fac
+Original commit hash: a2a4acdb27059ca706196b03d4a658015f4d6648
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/RocketLake/SiPkgPcd.dsc
+RocketLakeFspPkg/RocketLakeFspPkg.dsc
+
+================================================================================ 
+Commit: fd0e623dfb219ab784390adb9df63e724457afc2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Dec 16 12:20:32 2020 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] RKL Auto-Commit BIOS ID update CI Increment BIOS Major Version () and reset Minor Version to 0
+
+Hsd-es-id: N/A
+Original commit date: Sat Nov 28 01:09:48 2020 -0800
+Change-Id: I0c49856a05bd204c8b60f630e598a1287bbf58f9
+Original commit hash: 4b8a761bbeaf31bb3f8187096782e63bc1130a39
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+RocketLakeBoardPkg/BiosId.env
