@@ -1,1752 +1,300 @@
 *********************************************************************************
-Commit: ed9c15d554069d6de9140e4b1ba482ca6b390148 
+Commit: 86b0dea6528c19a29e9ad67b2a32ad6f27bc3935 
 *********************************************************************************
 
-[BoardPkg], [ASL], [PlatformPkg], [CPU], [PCH], [SA]
+[SiliconPkg]
 
-  [TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1442_00
+  [ADL-S] Responsiveness cold boot delay due to PreMemSaOnPolicy Module
   
-  Hsd-es-id: no sighting
-  Change-Id: Ia88105594d2a841e9529ab414c1b637432e9bf28
-  Original commit hash: 7ddd9231e1649895f03d6eb1a9834960a51bdaae
+  Moved the CpuPcieCheckforLinkActive() call to post-mem for all Root ports.
   
-  AlderLakeBoardPkg/.gitignore
-  AlderLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Connectivity.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Cvf.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/DiscreteConnectivity.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/DiscreteConnectivityReset.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Dsdt.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Gpe.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/HdaSlaveDevices.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/HidDynamicSarDsm.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/I2cUcmx.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/MipiCamSensors.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/MofSampleDev.h
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeter.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeterAdlS.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/SerialIoDevices.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/WifiDynamicSar.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/WifiFeatureDsm.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/Fadt/Fadt6.1.act
-  AlderLakeBoardPkg/Acpi/AcpiTables/Fadt/Fadt6.1.h
-  AlderLakeBoardPkg/Acpi/AcpiTables/Madt/MadtX2Apic.act
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlPAepDgRtd3.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlPRvpRtd3.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSAepRtd3.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSAepTbtRtd3.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSRvpTbtRtd3.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieTbt.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3VmdPciePort.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3VmdSataPort.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRvp/Thermal.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciAdlS03Rvp.asl
-  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciAdlS10Rvp.asl
-  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
-  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.h
-  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
-  AlderLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/CPU.asl
-  AlderLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/DSDT.ASL
-  AlderLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/Gpe.asl
-  AlderLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/Platform.asl
-  AlderLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/PlatformNvs.asl
-  AlderLakeBoardPkg/AlderLakeMBoards/Include/AlderLakeMRvpBoardConfigPatchTable.h
-  AlderLakeBoardPkg/AlderLakePBoards/Include/AlderLakePRvpBoardConfigPatchTable.h
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Dxe/DxeMultiBoardInitlib.inf
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/GpioTableAdlPPreMem.h
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiDetect.c
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
-  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
-  AlderLakeBoardPkg/AlderLakeSBoards/Include/AlderLakeSBoardConfigPatchTable.h
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Dxe/DxeMultiBoardInitlib.inf
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/BoardSaConfigPreMem.h
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/GpioTableAdlSDdr4CrbPreMem.h
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/GpioTableAdlSDdr5CrbPreMem.h
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiDetect.c
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
-  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
-  AlderLakeBoardPkg/AlderLakeUSimicsBoards/Include/AlderLakePBoardConfigPatchTable.h
-  AlderLakeBoardPkg/AlderLakeUSimicsBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
-  AlderLakeBoardPkg/AlderLakeUSimicsBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
-  AlderLakeBoardPkg/AlderLakeUSimicsBoards/Library/BoardInitLib/Pei/PeiDetect.c
-  AlderLakeBoardPkg/AlderLakeUSimicsBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
-  AlderLakeBoardPkg/AlderLakeUSimicsBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
-  AlderLakeBoardPkg/BiosId.env
-  AlderLakeBoardPkg/BoardPkg.dec
-  AlderLakeBoardPkg/BoardPkg.dsc
-  AlderLakeBoardPkg/BoardPkg.fdf
-  AlderLakeBoardPkg/BoardPkgBuildOption.dsc
-  AlderLakeBoardPkg/BoardPkgPcdInit.dsc
-  AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
-  AlderLakeBoardPkg/BuildIafw.sh
-  AlderLakeBoardPkg/BuildPlatTools.sh
-  AlderLakeBoardPkg/Include/Dsc/CoreDxeInclude.dsc
-  AlderLakeBoardPkg/Include/Fdf/FlashMapInclude.fdf
-  AlderLakeBoardPkg/Include/Fdf/FlashMapIncludeRes.fdf
-  AlderLakeBoardPkg/Include/Library/BoardConfigLib.h
-  AlderLakeBoardPkg/Include/Library/SiliconInitLib.h
-  AlderLakeBoardPkg/Include/PlatformBoardConfig.h
-  AlderLakeBoardPkg/Include/PlatformBoardId.h
-  AlderLakeBoardPkg/Include/PlatformNvsAreaDef.h
-  AlderLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
-  AlderLakeBoardPkg/Library/PeiBoardConfigLib/PeiHdaVerbTables.c
-  AlderLakeBoardPkg/Library/PeiBoardConfigLib/PeiSpdTables.c
-  AlderLakeBoardPkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
-  AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiPolicyBoardConfigLib.inf
-  AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiPolicyBoardConfigLibFsp.inf
-  AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiSaPolicyBoardConfig.c
-  AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiSaPolicyBoardConfigPreMem.c
-  AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiTbtPolicyBoardConfig.c
-  AlderLakeBoardPkg/Library/SiliconInitLib/SiliconInitPreMem.c
-  AlderLakeBoardPkg/PostBuild.sh
-  AlderLakeBoardPkg/PreBuild.sh
-  AlderLakeBoardPkg/PriBuild.sh
-  AlderLakeBoardPkg/SBCVpdStructurePcd/AllStructPCD.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlPPostMem.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlPPreMem.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlSPostMem.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlSimicsPostMem.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlSimicsPreMem.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/AdlPDqMap.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/AdlPDqsMap.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/AdlPSpdMap.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/PcieClocks/AdlMPcieClocks.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/PcieClocks/AdlPPcieClocks.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/PcieClocks/AdlSPcieClocks.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/PcieClocks/AdlSimicsPcieClocks.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/UsbOc/AdlPUsbOC.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/UsbOc/AdlSUsbOC.dsc
-  AlderLakeBoardPkg/SBCVpdStructurePcd/UsbOc/AdlSimicsUsbOC.dsc
-  AlderLakeBoardPkg/SetEdk2Env.bat
-  AlderLakeBoardPkg/Tools/StripFlashmap.py
-  AlderLakeBoardPkg/ValidationFv.fdf
-  AlderLakeBoardPkg/ValidationFvDef.fdf
-  AlderLakeBoardPkg/bld.bat
-  AlderLakeBoardPkg/microcode_padding.py
-  AlderLakeBoardPkg/parser.out
-  AlderLakeBoardPkg/parsetab.py
-  AlderLakeBoardPkg/prep.bat
-  AlderLakeFspBinPkg/.gitignore
-  AlderLakeFspBinPkg/Include/FirmwareVersionInfo.h
-  AlderLakeFspBinPkg/Include/FirmwareVersionInfoHob.h
-  AlderLakeFspBinPkg/SampleCode/Vbt/Vbt.bin
-  AlderLakeFspBinPkg/SampleCode/Vbt/Vbt.json
-  AlderLakeFspPkg/.gitignore
-  AlderLakeFspPkg/AlderLakeFspPkg.dsc
-  AlderLakeFspPkg/AlderLakeFspPkg.fdf
-  AlderLakeFspPkg/BuildFv.cmd
-  AlderLakeFspPkg/BuildFv.sh
-  AlderLakeFspPkg/FspPkgPcdInit.dsc
-  AlderLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
-  AlderLakeFspPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
-  AlderLakeFspPkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
-  AlderLakeFspPkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdate.c
-  AlderLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiCpuPolicyUpdatePreMem.c
-  AlderLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
-  AlderLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSecurityPolicyUpdatePreMem.c
-  AlderLakeFspPkg/Upd/FspmUpd.dsc
-  AlderLakeFspPkg/Upd/FspsUpd.dsc
-  AlderLakeFspPkg/Upd/UpdList/FSPM.txt
-  AlderLakeOpenBoardPkg/.gitignore
-  AlderLakePlatSamplePkg/.gitignore
-  AlderLakePlatSamplePkg/EC/Asl/EC.ASL
-  AlderLakePlatSamplePkg/EC/EC.c
-  AlderLakePlatSamplePkg/Features/Acpi/AcpiTables/SsdtPtid/Ptid.asl
-  AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.c
-  AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.inf
-  AlderLakePlatSamplePkg/Features/Amt/OneClickRecovery/OneClickRecovery.c
-  AlderLakePlatSamplePkg/Features/Amt/OneClickRecovery/OneClickRecoveryFileSupport.c
-  AlderLakePlatSamplePkg/Features/Amt/OneClickRecovery/OneClickRecoveryHttpsSupport.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/FaultTolerance.fdf
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Include/Library/ComponentUpdateLib.h
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/BiosUpdateHelpersLib/BiosUpdateHelpersLib.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/BiosUpdateHelpersLib/BiosUpdateHelpersLib.inf
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/ComponentUpdateLib/ComponentUpdateLib.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDependencySupportLib/FmpDependencySupportLib.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibBios/FmpDeviceLibBios.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibBtGAcm/FmpDeviceLibBtGAcm.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibEc/FmpDeviceLibEc.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibIshPdt/FmpDeviceLibIshPdt.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibMe/FmpDeviceLibMe.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibMonolithic/FmpDeviceLibMonolithic.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibTbtRetimer/FmpDeviceLib.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibuCode/FmpDeviceLibuCode.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibuCode/MicrocodeUpdate.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibuCode/MicrocodeUpdate.h
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FwUpdateLib/FwUpdateLibNull.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/PlatformDisplayUpdateProgressLib/PlatformDisplayUpdateProgressLib.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/PlatformDisplayUpdateProgressLib/PlatformDisplayUpdateProgressLib.uni
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/PlatformFlashAccessLib/PlatformFlashAccessLib.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/SeamlessRecoverySupportLib/SeamlessRecoverySupportLib.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvDma.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvHr.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/TbtRetimerNvmUpdateLib/TbtRetimerNvmUpdateLib.c
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Tools/GenBiosUpdateImages/GenBiosUpdateImages.bat
-  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Tools/NewGenCap/NewGenCap.py
-  AlderLakePlatSamplePkg/Features/Dnx/DnxDxe/DnxDxe.c
-  AlderLakePlatSamplePkg/Features/Dptf/AcpiTables/B0d4Participant.asl
-  AlderLakePlatSamplePkg/Features/Dptf/AcpiTables/Dptf.asl
-  AlderLakePlatSamplePkg/Features/Dptf/AcpiTables/TFN1Participant.asl
-  AlderLakePlatSamplePkg/Features/Dptf/AcpiTables/TFN2Participant.asl
-  AlderLakePlatSamplePkg/Features/Dptf/AcpiTables/TFN3Participant.asl
-  AlderLakePlatSamplePkg/Features/FastBoot/FastBootHandlerDxe/FastBootHandlerDxe.c
-  AlderLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureIntegratedGraphicsConfiguration.c
-  AlderLakePlatSamplePkg/Features/Icc/IccOverClocking/IccOverClocking.depex
-  AlderLakePlatSamplePkg/Features/Icc/IccOverClocking/IccOverClocking.efi
-  AlderLakePlatSamplePkg/Features/MultiPdt/MultiPdtDxe.c
-  AlderLakePlatSamplePkg/Features/MultiPdt/MultiPdtDxe.inf
-  AlderLakePlatSamplePkg/Features/Nvme/PowerLossNotifyDxe/PowerLossNotify.c
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/DxeOverClock.c
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/DxeOverClock.h
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/DxeOverClock.inf
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/DxeOverClockLib.c
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/DxeOverClockLib.h
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/DxeOverClockLib.inf
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/PeiOverClock.c
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/PeiOverClock.h
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/PeiOverClock.inf
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/PeiOverClockLib.c
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/PeiOverClockLib.h
-  AlderLakePlatSamplePkg/Features/OverClocking/OverClockInit/PeiOverClockLib.inf
-  AlderLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverClockSmiHandler.c
-  AlderLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverClockSmiHandler.h
-  AlderLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverClockSmiHandler.inf
-  AlderLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverclockInterface.c
-  AlderLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverclockInterface.h
-  AlderLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverclockInterface.inf
-  AlderLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverclockInterfaceACPI.asl
-  AlderLakePlatSamplePkg/Features/OverClocking/OverclockInterface/OverclockInterfaceACPI.inf
-  AlderLakePlatSamplePkg/Features/PciePhyFwLoading/Library/PeiCpuPcieHsPhyInitLib/PeiCpuPcieHsPhyInitLib.c
-  AlderLakePlatSamplePkg/Features/Pep/AcpiTables/Pep.asl
-  AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.c
-  AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.inf
-  AlderLakePlatSamplePkg/Features/Rpe/RpeAmtSupport.c
-  AlderLakePlatSamplePkg/Features/Rpe/RpeEraseActions.c
-  AlderLakePlatSamplePkg/Features/Rpe/RpeEraseActions.h
-  AlderLakePlatSamplePkg/Features/Tbt/Include/DTbtDefinition.h
-  AlderLakePlatSamplePkg/Features/Tbt/Include/DTbtNvsAreaDef.h
-  AlderLakePlatSamplePkg/Features/Tbt/Include/Library/DTbtCommonLib.h
-  AlderLakePlatSamplePkg/Features/Tbt/Include/PeiDTbtGenericStructure.h
-  AlderLakePlatSamplePkg/Features/Tbt/Include/Protocol/DxeDTbtPolicy.h
-  AlderLakePlatSamplePkg/Features/Tbt/Library/DTbtCommonLib/DTbtCommonLib.c
-  AlderLakePlatSamplePkg/Features/Tbt/Library/DTbtCommonLibNull/DTbtCommonLibNull.c
-  AlderLakePlatSamplePkg/Features/Tbt/Library/DxeDTbtPolicyLib/DxeDTbtPolicyLib.c
-  AlderLakePlatSamplePkg/Features/Tbt/Library/DxeDTbtPolicyLibNull/DxeDTbtPolicyLibNull.c
-  AlderLakePlatSamplePkg/Features/Tbt/Library/DxeDTbtPolicyLibNull/DxeDTbtPolicyLibNull.inf
-  AlderLakePlatSamplePkg/Features/Tbt/Library/DxeDTbtPolicyLibNull/DxeDTbtPolicyLibrary.h
-  AlderLakePlatSamplePkg/Features/Tbt/Library/DxeTbtSecurityLib/DxeTbtSecurityLib.c
-  AlderLakePlatSamplePkg/Features/Tbt/Library/DxeTbtSecurityLibNull/DxeTbtSecurityLibNull.c
-  AlderLakePlatSamplePkg/Features/Tbt/Library/PeiDTbtPolicyLib/PeiDTbtPolicyLib.c
-  AlderLakePlatSamplePkg/Features/Tbt/Library/PeiDTbtPolicyLibNull/PeiDTbtPolicyLibNull.c
-  AlderLakePlatSamplePkg/Features/Tbt/Library/PeiDTbtPolicyLibNull/PeiDTbtPolicyLibNull.inf
-  AlderLakePlatSamplePkg/Features/Tbt/Library/PeiDTbtPolicyLibNull/PeiDTbtPolicyLibrary.h
-  AlderLakePlatSamplePkg/Features/Tbt/Library/Private/PeiDTbtInitLib/PeiDTbtInitLib.c
-  AlderLakePlatSamplePkg/Features/Tbt/TbtInit/Dxe/AcpiTables/DTbt.asl
-  AlderLakePlatSamplePkg/Features/Tbt/TbtInit/Dxe/AcpiTables/DTbtNvs.asl
-  AlderLakePlatSamplePkg/Features/Tbt/TbtInit/Dxe/DTbtDxe.c
-  AlderLakePlatSamplePkg/Features/TcssRetimerCapsuleUpdate/RetimerCapsuleSupportDriver/RetimerCapsuleUpdate.c
-  AlderLakePlatSamplePkg/Features/TrustedDeviceSetup/TrustedDeviceSetup.c
-  AlderLakePlatSamplePkg/Features/TrustedDeviceSetup/TrustedDeviceSetup.inf
-  AlderLakePlatSamplePkg/Features/UiApp/BootMaint/BmLib.c
-  AlderLakePlatSamplePkg/Features/UiApp/BootMaint/BootOption.c
-  AlderLakePlatSamplePkg/Features/UiApp/BootMaint/FileExplorer.c
-  AlderLakePlatSamplePkg/Features/UiApp/BootMaint/UpdatePage.c
-  AlderLakePlatSamplePkg/Features/Usb/UsbDeviceDxe/UsbDeviceDxe.c
-  AlderLakePlatSamplePkg/Features/Usb/UsbDeviceDxe/UsbFuncIo.c
-  AlderLakePlatSamplePkg/Features/Usb/UsbDeviceDxe/XdciDWC.c
-  AlderLakePlatSamplePkg/Features/Usb/UsbDeviceDxe/XdciInterface.h
-  AlderLakePlatSamplePkg/Features/Usb/UsbDeviceDxe/XdciTable.c
-  AlderLakePlatSamplePkg/Features/Usb/UsbDeviceDxe/XdciUtility.c
-  AlderLakePlatSamplePkg/Features/VTd/PlatformVTdInfoSamplePei/PlatformVTdInfoSamplePei.c
-  AlderLakePlatSamplePkg/Features/VTd/PlatformVTdInfoSamplePei/PlatformVTdInfoSamplePei.inf
-  AlderLakePlatSamplePkg/FspWrapper/FspWrapperPeim/FspWrapperPeim.c
-  AlderLakePlatSamplePkg/FspWrapper/FspWrapperPeim/FspWrapperPeim.inf
-  AlderLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/FspWrapperHobProcessLib.c
-  AlderLakePlatSamplePkg/FspWrapper/Library/SecFspWrapperPlatformSecLib/SecRamInitData.c
-  AlderLakePlatSamplePkg/Include/Library/PdtUpdateLib.h
-  AlderLakePlatSamplePkg/Include/OcSetupVariable.h
-  AlderLakePlatSamplePkg/Include/PlatformBoardId.h
-  AlderLakePlatSamplePkg/Include/Ppi/RstConfigPpi.h
-  AlderLakePlatSamplePkg/Include/Protocol/IccOverClocking.h
-  AlderLakePlatSamplePkg/Include/SetupVariable.h
-  AlderLakePlatSamplePkg/Include/TrustedDeviceSetup.h
-  AlderLakePlatSamplePkg/Library/DxeAcpiGnvsInitLib/DxeAcpiGnvsInitLib.c
-  AlderLakePlatSamplePkg/Library/DxeFirmwareVersionInfoLib/DxeFirmwareVersionInfoLib.c
-  AlderLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
-  AlderLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerHiiFreeLib.inf
-  AlderLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerLib.inf
-  AlderLakePlatSamplePkg/Library/DxePlatformBootManagerLib/FastBootSupport.c
-  AlderLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeAmtPolicyUpdate.c
-  AlderLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeCpuPolicyUpdate.c
-  AlderLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxePolicyUpdateLib.inf
-  AlderLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeTbtPolicyUpdate.c
-  AlderLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeTbtPolicyUpdate.h
-  AlderLakePlatSamplePkg/Library/PdtUpdateLib/PdtUpdateLib.c
-  AlderLakePlatSamplePkg/Library/PdtUpdateLib/PdtUpdateLib.inf
-  AlderLakePlatSamplePkg/Library/PeiBootGuardEventLogLib/PeiBootGuardEventLogLib.c
-  AlderLakePlatSamplePkg/Library/PeiBootGuardEventLogLib/PeiBootGuardEventLogLib.inf
-  AlderLakePlatSamplePkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
-  AlderLakePlatSamplePkg/Library/PeiPlatformHookLib/PeiPlatformHooklib.c
-  AlderLakePlatSamplePkg/Library/PeiPlatformHookLib/PeiPlatformHooklib.inf
-  AlderLakePlatSamplePkg/Library/PeiPolicyDebugLib/PeiPchPolicyDebugLib.c
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiAmtPolicyUpdate.c
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.h
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdate.c
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
-  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiTbtPolicyUpdate.c
-  AlderLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlug.c
-  AlderLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlug.h
-  AlderLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlug.inf
-  AlderLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlugItbt.inf
-  AlderLakePlatSamplePkg/Platform/PlatformSetup/Dxe/PlatformSetup.c
-  AlderLakePlatSamplePkg/Platform/SmbiosPlatformInfo/SmbiosPlatformInfo.h
-  AlderLakePlatSamplePkg/Platform/SmbiosPlatformInfo/SmbiosPlatformInfo.inf
-  AlderLakePlatSamplePkg/PlatformCommonLib.dsc
-  AlderLakePlatSamplePkg/PlatformDxeLib.dsc
-  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.c
-  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.h
-  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.inf
-  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
-  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.inf
-  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMemFsp.inf
-  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.c
-  AlderLakePlatSamplePkg/PlatformInitAdvanced/PolicyInitAdvancedDxe/TbtPolicyInitDxe.h
-  AlderLakePlatSamplePkg/PlatformPeiLib.dsc
-  AlderLakePlatSamplePkg/PlatformPkg.dec
-  AlderLakePlatSamplePkg/PlatformPkg.dsc
-  AlderLakePlatSamplePkg/PlatformPkgConfig.dsc
-  AlderLakePlatSamplePkg/Setup/AcpiSetup.c
-  AlderLakePlatSamplePkg/Setup/AcpiSetup.hfr
-  AlderLakePlatSamplePkg/Setup/AmtSetup.hfr
-  AlderLakePlatSamplePkg/Setup/ConnectivitySetup.hfr
-  AlderLakePlatSamplePkg/Setup/ConnectivitySetup.uni
-  AlderLakePlatSamplePkg/Setup/CpuSetup.c
-  AlderLakePlatSamplePkg/Setup/CpuSetup.hfr
-  AlderLakePlatSamplePkg/Setup/CpuSetup.uni
-  AlderLakePlatSamplePkg/Setup/DebugSetup.hfr
-  AlderLakePlatSamplePkg/Setup/DebugSetup.uni
-  AlderLakePlatSamplePkg/Setup/DiscreteTbtOptions.hfr
-  AlderLakePlatSamplePkg/Setup/MeSetup.c
-  AlderLakePlatSamplePkg/Setup/OverClockSetup.hfr
-  AlderLakePlatSamplePkg/Setup/OverClockSetup.uni
-  AlderLakePlatSamplePkg/Setup/PchPcieSetupSinglePort.hfr
-  AlderLakePlatSamplePkg/Setup/PchPcieStringPool.hfr
-  AlderLakePlatSamplePkg/Setup/PchSetup.hfr
-  AlderLakePlatSamplePkg/Setup/PchSetup.uni
-  AlderLakePlatSamplePkg/Setup/PlatformSetup.c
-  AlderLakePlatSamplePkg/Setup/PlatformSetup.hfr
-  AlderLakePlatSamplePkg/Setup/PlatformSetup.uni
-  AlderLakePlatSamplePkg/Setup/PmcFivrSetup.hfr
-  AlderLakePlatSamplePkg/Setup/SaPcieSetupSinglePort.hfr
-  AlderLakePlatSamplePkg/Setup/SaPcieStringPool.hfr
-  AlderLakePlatSamplePkg/Setup/SaSetup.c
-  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
-  AlderLakePlatSamplePkg/Setup/SaSetup.uni
-  AlderLakePlatSamplePkg/Setup/SecuritySetup.c
-  AlderLakePlatSamplePkg/Setup/Setup.inf
-  AlderLakePlatSamplePkg/Setup/Setup.uni
-  AlderLakePlatSamplePkg/Setup/SetupId.h
-  AlderLakePlatSamplePkg/Setup/TbtSetup.c
-  AlderLakePlatSamplePkg/Setup/TbtSetup.hfr
-  AlderLakePlatSamplePkg/Setup/TbtSetup.uni
-  AlderLakePlatSamplePkg/Setup/TccCpuPcieSetup.hfr
-  AlderLakePlatSamplePkg/Setup/TccSetup.hfr
-  AlderLakePlatSamplePkg/Telemetry/FspFirmwareVersionPeim/FspFirmwareVersionPeim.c
-  AlderLakePlatSamplePkg/Telemetry/MrcHealthDxe/MrcHealthDataInit.inf
-  AlderLakePlatSamplePkg/Telemetry/PlatformFirmwareVersionDxe/PlatformFirmwareVersionDxe.c
-  AlderLakePlatSamplePkg/Tools/KeyEnroll/KeyEnroll.c
-  AlderLakePlatSamplePkg/Tools/ToolScripts/SignFv/Rsa2048Sha256SignPlatform
-  AlderLakePlatSamplePkg/Vtio/Dxe/VtioDxe.c
-  AlderLakePlatSamplePkg/capsulebuild.bat
-  ClientOneSiliconPkg/ClientOneSiliconBuild.py
-  ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/CpuNvs.asl
-  ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/CpuSsdt.asl
-  ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/Itbm.asl
-  ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuAcpi.c
-  ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuInitDxe.c
-  ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuInitDxe.h
-  ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuInitDxe.inf
-  ClientOneSiliconPkg/Cpu/Include/CpuDataStruct.h
-  ClientOneSiliconPkg/Cpu/Include/CpuPolicyCommon.h
-  ClientOneSiliconPkg/Cpu/Include/CpuPowerMgmt.h
-  ClientOneSiliconPkg/Cpu/Include/Library/CpuPlatformLib.h
-  ClientOneSiliconPkg/Cpu/Include/Protocol/CpuPolicyProtocol.h
-  ClientOneSiliconPkg/Cpu/Include/Txt.inc
-  ClientOneSiliconPkg/Cpu/IncludePrivate/CpuNvsAreaDef.h
-  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/BaseOcFruLib.h
-  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/CpuCommonLib.h
-  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/CpuInfoFruLib.h
-  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/CpuInitLib.h
-  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/PeiCpuInitFruLib.h
-  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/TxtPeiLib.h
-  ClientOneSiliconPkg/Cpu/Library/PeiCpuPolicyLib/PeiCpuPolicyLibPreMem.inf
-  ClientOneSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
-  ClientOneSiliconPkg/Cpu/Library/PeiDxeTxtLibNull/PeiDxeTxtLibNull.inf
-  ClientOneSiliconPkg/Cpu/Library/PeiDxeTxtLibNull/TxtLibNull.c
-  ClientOneSiliconPkg/Cpu/Library/SecCpuLib/Ia32/SecCpuLib.i
-  ClientOneSiliconPkg/Cpu/Library/SecCpuLib/Ia32/SecCpuLib.inc
-  ClientOneSiliconPkg/Cpu/Library/SecCpuLib/Ia32/SecCpuLib.nasm
-  ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmSpa.c
-  ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmSpa.h
-  ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmSps.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/CpuInitPeim.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/CpuInitPreResetCpl.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Features.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Features.h
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Microcode.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/PeiCpuInitLib.inf
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/PeiCpuInitLibFsp.inf
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/IdleStates.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/MiscFunctions.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PeiCpuPowerMgmtLib.inf
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PerformanceStates.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtCommon.h
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.h
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/Thermal.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiDxeSmmCpuCommonLib/CpuCommonLib.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiDxeSmmCpuCommonLib/PeiDxeSmmCpuCommonLib.inf
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiSmbiosCpuLib/PeiSmbiosCpuLib.inf
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiSmbiosCpuLib/SmbiosType4.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiSmbiosCpuLib/SmbiosType7.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiTxtLib/PeiTxtLib.inf
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiTxtLib/TxtPei.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiTxtLib/TxtPeiLib.c
-  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiTxtLibNull/TxtPeiNull.c
-  ClientOneSiliconPkg/Cpu/PowerManagement/Dxe/MiscFunctions.c
-  ClientOneSiliconPkg/Cpu/PowerManagement/Dxe/PerformanceStates.c
-  ClientOneSiliconPkg/Cpu/PowerManagement/Dxe/PowerLimits.c
-  ClientOneSiliconPkg/Cpu/PowerManagement/Dxe/PowerMgmtDxe.inf
-  ClientOneSiliconPkg/Cpu/PowerManagement/Dxe/PowerMgmtInit.c
-  ClientOneSiliconPkg/Cpu/PowerManagement/Dxe/PowerMgmtInit.h
-  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtDts.c
-  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtDts.h
-  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtSmm.c
-  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtSmm.h
-  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtSmm.inf
-  ClientOneSiliconPkg/Cpu/TxtInit/Dxe/TxtDxe.c
-  ClientOneSiliconPkg/Cpu/TxtInit/Dxe/x64/Mmx64.inc
-  ClientOneSiliconPkg/Fru/AdlCpu/CommonLib.dsc
-  ClientOneSiliconPkg/Fru/AdlCpu/CpuDmi/Library/PeiDxeSmmCpuDmiInfoFruLib/CpuDmiInfoFruLib.c
-  ClientOneSiliconPkg/Fru/AdlCpu/CpuDmi/LibraryPrivate/PeiCpuDmiDekelInitLib/PeiCpuDmiDekelInitLib.c
-  ClientOneSiliconPkg/Fru/AdlCpu/CpuDmi/LibraryPrivate/PeiCpuDmiDekelInitLib/PeiCpuDmiDekelInitLib.inf
-  ClientOneSiliconPkg/Fru/AdlCpu/CpuPcieRp/Library/PeiDxeSmmCpuPcieInfoFruLib/CpuPcieInfoFruLib.c
-  ClientOneSiliconPkg/Fru/AdlCpu/CpuPcieRp/LibraryPrivate/PeiCpuPcieDekelInitLib/PeiCpuPcieDekelInitLib.c
-  ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
-  ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimAdlP.efi
-  ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimAdlPDebug.efi
-  ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
-  ClientOneSiliconPkg/Fru/AdlCpu/HostBridge/AcpiTables/HostBus.asl
-  ClientOneSiliconPkg/Fru/AdlCpu/HybridGraphics/Library/PeiDxeSmmHybridGraphicsInfoFruLib/HybridGraphicsInfoFruLib.c
-  ClientOneSiliconPkg/Fru/AdlCpu/HybridGraphics/Library/PeiDxeSmmHybridGraphicsInfoFruLib/PeiDxeSmmHybridGraphicsInfoFruLib.inf
-  ClientOneSiliconPkg/Fru/AdlCpu/Include/Library/CpuPcieInfoFruLib.h
-  ClientOneSiliconPkg/Fru/AdlCpu/Include/Register/SaRegsHostBridge.h
-  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/CpuGenInfoFruLib.h
-  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Library/PeiCpuDmiDekelInitLib.h
-  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Library/VoltageRegulatorDomains.h
-  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Register/CpuDmi16Regs.h
-  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Register/CpuPcieRegs.h
-  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
-  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/PeiCpuInitFruLib/PeiCpuInitFruLib.c
-  ClientOneSiliconPkg/Fru/AdlCpu/Overclocking/LibraryPrivate/BaseOcFruLib/BaseOcFruLib.c
-  ClientOneSiliconPkg/Fru/AdlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
-  ClientOneSiliconPkg/Fru/AdlPch/CommonLib.dsc
-  ClientOneSiliconPkg/Fru/AdlPch/Dxe.dsc
-  ClientOneSiliconPkg/Fru/AdlPch/DxeLib.dsc
-  ClientOneSiliconPkg/Fru/AdlPch/IncludePrivate/Library/HsioSocLib.h
-  ClientOneSiliconPkg/Fru/AdlPch/IncludePrivate/Library/PeiUsbTypeCMapSupportLib.h
-  ClientOneSiliconPkg/Fru/AdlPch/IncludePrivate/Library/PmcSocLib.h
-  ClientOneSiliconPkg/Fru/AdlPch/IncludePrivate/Library/PsfSocLib.h
-  ClientOneSiliconPkg/Fru/AdlPch/Library/PeiDxeSmmPchInfoLib/PchInfoLib.c
-  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/HsioSocLib/HsioSocLibAdl.c
-  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/HsioSocLib/HsioSocLibAdl.inf
-  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/PeiDxeSmmPmcSocLib/PeiDxeSmmPmcSocLibAdlP.c
-  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/PeiDxeSmmPmcSocLib/PeiDxeSmmPmcSocLibAdlS.c
-  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/PeiPchInitLib/PchEspi.c
-  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/PeiPchInitLib/PchHsio.c
-  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/PeiPchInitLib/PchRpInit.c
-  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/PeiPmcPolicyLib/PeiPmcPolicyLib.c
-  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/PeiPmcPolicyLib/PeiPmcPolicyLibAdl.inf
-  ClientOneSiliconPkg/Fru/AdlPch/PeiLib.dsc
-  ClientOneSiliconPkg/Fsp/BuildFsp.sh
-  ClientOneSiliconPkg/Fsp/FspGlobalDataInit/Pei/FspGlobalDataInitPei.inf
-  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInit.c
-  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInit.h
-  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInit.inf
-  ClientOneSiliconPkg/Fsp/FspInit/Pei/FspMpServiceWrapper.c
-  ClientOneSiliconPkg/Fsp/FspInit/Pei/Ia32/FspMpServiceWrapper.nasm
-  ClientOneSiliconPkg/Fsp/Library/BaseDebugLibFspTraceHubCatalog/BaseDebugLibFspTraceHubCatalog.c
-  ClientOneSiliconPkg/Fsp/Library/BaseDebugLibFspTraceHubCatalog/BaseDebugLibFspTraceHubCatalog.uni
-  ClientOneSiliconPkg/Fsp/Library/FspEmptyLib/FspEmptyLib.inf
-  ClientOneSiliconPkg/Fsp/Library/SerialPortLib/SioRegs.h
-  ClientOneSiliconPkg/Fsp/Library/TscAcpiTimerLib/DxeTscTimerLib.c
-  ClientOneSiliconPkg/Fsp/Library/TscAcpiTimerLib/DxeTscTimerLib.inf
-  ClientOneSiliconPkg/Fsp/Library/TscAcpiTimerLib/PeiTscTimerLib.c
-  ClientOneSiliconPkg/Fsp/Library/TscAcpiTimerLib/PeiTscTimerLib.inf
-  ClientOneSiliconPkg/Fsp/Library/TscAcpiTimerLib/SecTscTimerLib.c
-  ClientOneSiliconPkg/Fsp/Library/TscAcpiTimerLib/SecTscTimerLib.inf
-  ClientOneSiliconPkg/Fsp/Library/TscAcpiTimerLib/TscTimerLibInternal.h
-  ClientOneSiliconPkg/Fsp/Library/TscAcpiTimerLib/TscTimerLibShare.c
-  ClientOneSiliconPkg/Include/ConfigBlock/CpuDmi/CpuDmiPreMemConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/CpuPcieRp/Gen3/CpuPcieConfigGen3.h
-  ClientOneSiliconPkg/Include/ConfigBlock/CpuPcieRp/Gen3/PciePeiConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/CpuPcieRp/Gen4/CpuPcieConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Dci/DciConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Espi/EspiConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Espi/LpcConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Fia/FiaMuxConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Fivr/FivrConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Graphics/Gen11/GraphicsConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Graphics/Gen13/GraphicsConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Hda/HdAudioConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/HostBridge/Ver2/HostBridgeConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Hsio/HsioConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Hsio/HsioPcieConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Hsio/HsioSataConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/HybridGraphics/HybridGraphicsConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Ipu/IpuPreMemConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Itss/InterruptConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Itss/IoApicConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver2/MemoryConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver4/MemoryConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Overclocking/OverclockingConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/P2sb/P2sbConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/PcieRp/PchPcieRp/EnterprisePcieConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/PcieRp/PchPcieRp/PchPcieRpConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/PcieRp/PcieConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Pmc/PmConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Scs/ScsConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Smbus/SmbusConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Spi/FlashProtectionConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Sps/SpsCommonConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Sps/SpsDxeConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Sps/SpsPeiConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/TraceHub/TraceHubConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/VoltageRegulator/CpuPowerMgmtVrConfig.h
-  ClientOneSiliconPkg/Include/ConfigBlock/Wdt/WatchDogConfig.h
-  ClientOneSiliconPkg/Include/DxeHdaNhlt.h
-  ClientOneSiliconPkg/Include/FusaInfoHob.h
-  ClientOneSiliconPkg/Include/Hda.h
-  ClientOneSiliconPkg/Include/HgInfoHob.h
-  ClientOneSiliconPkg/Include/IntelAsfExtensions.h
-  ClientOneSiliconPkg/Include/IpStatusHob.h
-  ClientOneSiliconPkg/Include/Library/BootGuardLibVer1.h
-  ClientOneSiliconPkg/Include/Library/CpuSbiAccessLib.h
-  ClientOneSiliconPkg/Include/Library/DxeHdaNhltLib.h
-  ClientOneSiliconPkg/Include/Library/DxeMeLib.h
-  ClientOneSiliconPkg/Include/Library/DxeMebxDisplayWrapperLib.h
-  ClientOneSiliconPkg/Include/Library/FiaOverrideStatusHob.h
-  ClientOneSiliconPkg/Include/Library/GpioConfig.h
-  ClientOneSiliconPkg/Include/Library/GpioGsxLib.h
-  ClientOneSiliconPkg/Include/Library/GpioLib.h
-  ClientOneSiliconPkg/Include/Library/HdaLib.h
-  ClientOneSiliconPkg/Include/Library/HeciCommonLib.h
-  ClientOneSiliconPkg/Include/Library/HeciConfigureLib.h
-  ClientOneSiliconPkg/Include/Library/HeciTraceLib.h
-  ClientOneSiliconPkg/Include/Library/HeciTransportCoreLib.h
-  ClientOneSiliconPkg/Include/Library/HybridGraphicsInfoFruLib.h
-  ClientOneSiliconPkg/Include/Library/IioDmiApi.h
-  ClientOneSiliconPkg/Include/Library/IocAccessLib.h
-  ClientOneSiliconPkg/Include/Library/MeFiaMuxLib.h
-  ClientOneSiliconPkg/Include/Library/MeGetConfigBlock.h
-  ClientOneSiliconPkg/Include/Library/MeTypeLib.h
-  ClientOneSiliconPkg/Include/Library/MeUefiFwHealthStatusLib.h
-  ClientOneSiliconPkg/Include/Library/OcPlatformLib.h
-  ClientOneSiliconPkg/Include/Library/P2sbLib.h
-  ClientOneSiliconPkg/Include/Library/PeiDxeSmmReserveMmio64SizeLib.h
-  ClientOneSiliconPkg/Include/Library/PeiFiaMuxConfigInitLib.h
-  ClientOneSiliconPkg/Include/Library/PttPtpLib.h
-  ClientOneSiliconPkg/Include/Library/SiAssertErrorHandlerLib.h
-  ClientOneSiliconPkg/Include/Library/SpsDxeLib.h
-  ClientOneSiliconPkg/Include/Library/SpsGetDxeConfigBlock.h
-  ClientOneSiliconPkg/Include/Library/TelemetryLib.h
-  ClientOneSiliconPkg/Include/Library/TraceHubDebugLib.h
-  ClientOneSiliconPkg/Include/Library/VoltageRegulatorCommands.h
-  ClientOneSiliconPkg/Include/Library/VpuInfoLib.h
-  ClientOneSiliconPkg/Include/MeBiosPayloadData.h
-  ClientOneSiliconPkg/Include/MeTypeDefs.h
-  ClientOneSiliconPkg/Include/MeiBusMsg.h
-  ClientOneSiliconPkg/Include/PcieRegs.h
-  ClientOneSiliconPkg/Include/Pins/GpioPinsIbl.h
-  ClientOneSiliconPkg/Include/Pins/GpioPinsVer1N.h
-  ClientOneSiliconPkg/Include/Pins/GpioPinsVer3.h
-  ClientOneSiliconPkg/Include/Ppi/HeciTransportPpi.h
-  ClientOneSiliconPkg/Include/Ppi/NvmOwnershipAcquiredPpi.h
-  ClientOneSiliconPkg/Include/Ppi/ReadOnlyVariablePreMemoryDescriptorPpi.h
-  ClientOneSiliconPkg/Include/Ppi/SmmControl.h
-  ClientOneSiliconPkg/Include/Ppi/Spi.h
-  ClientOneSiliconPkg/Include/Ppi/VariableStoragePpi.h
-  ClientOneSiliconPkg/Include/Ppi/VariableStorageSelectorPpi.h
-  ClientOneSiliconPkg/Include/Protocol/EdkiiSmmVariable.h
-  ClientOneSiliconPkg/Include/Protocol/HeciTransportProtocol.h
-  ClientOneSiliconPkg/Include/Protocol/ScsEmmcSoftwareTuning.h
-  ClientOneSiliconPkg/Include/Protocol/Spi.h
-  ClientOneSiliconPkg/Include/Protocol/Thc.h
-  ClientOneSiliconPkg/Include/Protocol/VariableStorageIoCompletionProtocol.h
-  ClientOneSiliconPkg/Include/Protocol/VariableStorageProtocol.h
-  ClientOneSiliconPkg/Include/Protocol/VariableStorageSelectorProtocol.h
-  ClientOneSiliconPkg/Include/Protocol/VariableStorageSupportProtocol.h
-  ClientOneSiliconPkg/Include/Register/FlashRegsVer1.h
-  ClientOneSiliconPkg/Include/Register/GpioRegsIbl.h
-  ClientOneSiliconPkg/Include/Register/GpioRegsVer1.h
-  ClientOneSiliconPkg/Include/Register/GpioRegsVer2.h
-  ClientOneSiliconPkg/Include/Register/GpioRegsVer3.h
-  ClientOneSiliconPkg/Include/Register/HeciRegs.h
-  ClientOneSiliconPkg/Include/Register/PmcRegs.h
-  ClientOneSiliconPkg/Include/Register/SataRegs.h
-  ClientOneSiliconPkg/Include/Register/TelemetryRegs.h
-  ClientOneSiliconPkg/IpBlock/Amt/BiosExtensionLoader/Dxe/BiosExtensionLoader.c
-  ClientOneSiliconPkg/IpBlock/Amt/BiosExtensionLoader/Dxe/BiosExtensionLoader.h
-  ClientOneSiliconPkg/IpBlock/Amt/BiosExtensionLoader/Dxe/BiosExtensionLoader.inf
-  ClientOneSiliconPkg/IpBlock/Amt/BiosExtensionLoader/Dxe/MebxBiosParamsDebugDumpDxe.c
-  ClientOneSiliconPkg/IpBlock/Amt/BiosExtensionLoader/Dxe/ProvisionFile.h
-  ClientOneSiliconPkg/IpBlock/Amt/BiosExtensionLoader/Dxe/UsbProvision.c
-  ClientOneSiliconPkg/IpBlock/Amt/BiosExtensionLoader/Dxe/UsbProvision.h
-  ClientOneSiliconPkg/IpBlock/Amt/Library/DxeAmtPolicyLib/DxeAmtPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Amt/Library/DxeAmtPolicyLib/DxeAmtPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Amt/Library/DxeMebxDisplayWrapperLib/MebxDisplayWrapperLib.c
-  ClientOneSiliconPkg/IpBlock/Amt/Library/PeiAmtPolicyLib/PeiAmtPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Amt/Library/PeiAmtPolicyLib/PeiAmtPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Amt/Library/PeiAmtPolicyLibNull/PeiAmtPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Amt/LibraryPrivate/DxeAmthiMsgsLib/AmthiMsgsLib.c
-  ClientOneSiliconPkg/IpBlock/Amt/LibraryPrivate/PeiActiveManagementLib/PeiActiveManagementLib.inf
-  ClientOneSiliconPkg/IpBlock/Amt/LibraryPrivate/PeiDxeAsfMsgLib/AsfMsgLib.c
-  ClientOneSiliconPkg/IpBlock/Amt/Mebx/Dxe/MebxCore.c
-  ClientOneSiliconPkg/IpBlock/Amt/Mebx/Dxe/MebxRemoteAssistance.c
-  ClientOneSiliconPkg/IpBlock/Amt/Mebx/Dxe/MebxUsbProvision.c
-  ClientOneSiliconPkg/IpBlock/BiosGuard/LibraryPrivate/PeiBiosGuardLib/PeiBiosGuardLib.inf
-  ClientOneSiliconPkg/IpBlock/BootGuard/LibraryPrivate/PeiDxeSmmBootGuardLib/BootGuardLibrary.c
-  ClientOneSiliconPkg/IpBlock/BootGuard/LibraryPrivate/PeiDxeSmmBootGuardLib/PeiDxeSmmBootGuardLib.inf
-  ClientOneSiliconPkg/IpBlock/BootGuard/LibraryPrivate/PeiDxeSmmBootGuardLibNull/BootGuardLibraryNull.c
-  ClientOneSiliconPkg/IpBlock/BootGuard/LibraryPrivate/PeiDxeSmmBootGuardLibNull/PeiDxeSmmBootGuardLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Cnvi/LibraryPrivate/PeiCnviLib/PeiCnviLibHelperVer2.c
-  ClientOneSiliconPkg/IpBlock/Cnvi/LibraryPrivate/PeiCnviLib/PeiCnviLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Cnvi/LibraryPrivate/PeiCnviLibNull/PeiCnviLibNull.c
-  ClientOneSiliconPkg/IpBlock/Cnvi/LibraryPrivate/PeiCnviLibNull/PeiCnviLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Cnvi/LibraryPrivate/PeiCnviPolicyLibNull/PeiCnviPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Cnvi/LibraryPrivate/PeiCnviPolicyLibNull/PeiCnviPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/CpuDmi/Library/CpuDmiInfoLib/CpuDmiInfoLib.inf
-  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibNull/PeiCpuDmi16.c
-  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibNull/PeiCpuDmiInitLibNull.c
-  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibNull/PeiCpuDmiInitLibNull.inf
-  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibVer1/PeiCpuDmiInitLib.c
-  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibVer1/PeiCpuDmiInitLib.inf
-  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibVer2/PeiCpuDmi16.c
-  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiPolicyLib/PeiCpuDmiPreMemPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/IncludePrivate/Library/PeiCpuPcieDekelInitLib.h
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/IncludePrivate/Library/PeiCpuPcieHsPhyInfoLib.h
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/IncludePrivate/Library/PeiCpuPcieVgaInitLib.h
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/Library/PeiDxeSmmCpuPcieInitCommonLib/PeiDxeSmmCpuPcieInitCommonLib.inf
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/DxeCpuPcieRpLib/DxeCpuPcieRpLib.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/DxeCpuPcieRpLib/DxeCpuPcieRpLib.inf
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/DxeCpuPcieRpLibNull/DxeCpuPcieRpLibNull.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/DxeCpuPcieRpLibNull/DxeCpuPcieRpLibNull.inf
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieDekelInitLibNull/PeiCpuPcieDekelInitLibNull.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieHsPhyInfoLibNull/PeiCpuPcieHsPhyInfoLibNull.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieHsPhyInfoLibNull/PeiCpuPcieHsPhyInfoLibNull.inf
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPciePolicyLib/PeiCpuPciePolicyLib.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPciePolicyLib/PeiCpuPciePolicyLib.inf
+  Hsd-es-id: 22011571914
+  Change-Id: I3a0248da103bb984538eaf7ea55cc527db312ca9
+  Original commit hash: d82e0fa67e2c7e3807d1a8d3277fb344abaf40d4
+  
   ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/CpuPcieRpInitLibInternal.h
   ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieLinkTrain.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPciePreMemRpInitLibVer1.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPciePreMemRpInitLibVer1.inf
   ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPciePreMemRpInitLibVer2.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPciePreMemRpInitLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer1.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer1.inf
   ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer2.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieSip16InitLib/PeiCpuPcieSip16InitLib.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieSip17InitLib/PeiCpuPcieSip17InitLib.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieSip17InitLibNull/PeiCpuPcieSip17InitLibNull.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieSip17InitLibNull/PeiCpuPcieSip17InitLibNull.inf
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieVgaInitLib/PeiCpuPcieVgaInit.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieVgaInitLibNull/PeiCpuPcieVgaInitNull.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiItbtPcieRpInitLib/ItbtPcieRpInitLib.c
-  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiItbtPcieRpInitLibNull/ItbtPcieRpInitLibNull.c
-  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDciPolicyLib/PeiDciPreMemPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDxeSmmDciPrivateLib/DciPrivateLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDxeSmmDciPrivateLib/PeiDxeSmmDciPrivateLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Espi/IncludePrivate/Library/PeiEspiInitLib.h
-  ClientOneSiliconPkg/IpBlock/Espi/LibraryPrivate/PeiEspiInitLib/PeiEspiInitLib.c
-  ClientOneSiliconPkg/IpBlock/Espi/LibraryPrivate/PeiEspiInitLib/PeiEspiInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Espi/LibraryPrivate/PeiEspiPolicyLib/PeiEspiPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Espi/LibraryPrivate/PeiEspiPolicyLib/PeiEspiPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Espi/LibraryPrivate/PeiLpcLib/PeiLpcLib.c
-  ClientOneSiliconPkg/IpBlock/Espi/LibraryPrivate/PeiLpcLib/PeiLpcLib.inf
-  ClientOneSiliconPkg/IpBlock/Fia/LibraryPrivate/PeiPchFiaLib/PchFia19.h
-  ClientOneSiliconPkg/IpBlock/Fia/LibraryPrivate/PeiPchFiaLib/PchFiaLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Fia/LibraryPrivate/PeiPchFiaLib/PchFiaLibVer3.c
-  ClientOneSiliconPkg/IpBlock/Fia/LibraryPrivate/PeiPchFiaLib/PchFiaLibVer4.c
-  ClientOneSiliconPkg/IpBlock/Fia/LibraryPrivate/PeiPchFiaLib/PchFiaLibVer6.c
-  ClientOneSiliconPkg/IpBlock/Fia/LibraryPrivate/PeiPchFiaLib/PeiPchFiaLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Fia/LibraryPrivate/PeiPchFiaLib/PeiPchFiaLibVer6.inf
-  ClientOneSiliconPkg/IpBlock/Fia/LibraryPrivate/PeiPchFiaPolicyLib/PeiFiaPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Fia/LibraryPrivate/PeiPchFiaPolicyLib/PeiFiaPreMemPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Fusa/IncludePrivate/Library/PeiFusaE2eCtcLib.h
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaE2eCtcCoreIdi.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaE2eCtcDisplayIsochPort.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaE2eCtcIoPort.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaE2eCtcLib.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaE2eCtcLib.inf
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaE2eCtcLibInternal.h
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaE2eCtcLlcEcc.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaE2eCtcOpiLink.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaPrivateLibInternal.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaPrivateLibInternal.h
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaResultReportingLib.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLib/PeiFusaResultReportingLib.h
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLibNull/PeiFusaE2eCtcLibNull.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaE2eCtcLibNull/PeiFusaE2eCtcLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaLib/PeiFusaLib.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaLib/PeiFusaLib.inf
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaLibNull/PeiFusaLibNull.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaLibNull/PeiFusaLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaPolicyLib/PeiFusaPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaPolicyLibNull/PeiFusaPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Fusa/LibraryPrivate/PeiFusaPolicyLibNull/PeiFusaPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Gbe/LibraryPrivate/PeiGbePolicyLib/PeiGbePolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Gna/Library/PeiDxeSmmGnaInfoLib/PeiDxeSmmGnaInfoLib.inf
-  ClientOneSiliconPkg/IpBlock/Gna/LibraryPrivate/PeiGnaInitLibNull/PeiGnaInitLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Gna/LibraryPrivate/PeiGnaPolicyLib/PeiGnaPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Gna/LibraryPrivate/PeiGnaPolicyLib/PeiGnaPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Gna/LibraryPrivate/PeiGnaPolicyLibNull/PeiGnaPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Gna/LibraryPrivate/PeiGnaPolicyLibNull/PeiGnaPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Gpio/AcpiTables/GpioAcpiDefines.h
-  ClientOneSiliconPkg/IpBlock/Gpio/AcpiTables/GpioCommon.asl
-  ClientOneSiliconPkg/IpBlock/Gpio/AcpiTables/GpioLibCommon.asl
-  ClientOneSiliconPkg/IpBlock/Gpio/Library/BaseGpioCheckConflictLib/BaseGpioCheckConflictLib.inf
-  ClientOneSiliconPkg/IpBlock/Gpio/Library/PeiDxeSmmGpioLib/GpioLib.c
-  ClientOneSiliconPkg/IpBlock/Gpio/Library/PeiDxeSmmGpioLib/GpioNames.c
-  ClientOneSiliconPkg/IpBlock/Gpio/Library/PeiDxeSmmGsxLib/GpioGsxDataIbl.c
-  ClientOneSiliconPkg/IpBlock/Gpio/Library/PeiDxeSmmGsxLib/GpioGsxDataVer3.c
-  ClientOneSiliconPkg/IpBlock/Gpio/Library/PeiDxeSmmGsxLib/GpioGsxLib.c
-  ClientOneSiliconPkg/IpBlock/Gpio/Library/PeiDxeSmmGsxLib/GpioGsxLibrary.h
-  ClientOneSiliconPkg/IpBlock/Gpio/Library/PeiDxeSmmGsxLib/PeiDxeSmmGsxLibIbl.inf
-  ClientOneSiliconPkg/IpBlock/Gpio/Library/PeiDxeSmmGsxLib/PeiDxeSmmGsxLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/BaseGpioHelpersLibNull/BaseGpioHelpersLibNull.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/DxeGpioPolicyLib/DxeGpioPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNamesIbl.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNamesVer3.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNamesVer6.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibIbl.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer3.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer6.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibIbl.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibVer3.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioPrivateLibVer6.c
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/PeiDxeSmmGpioPrivateLibIbl.inf
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/PeiDxeSmmGpioPrivateLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/PeiDxeSmmGpioPrivateLibVer6.inf
-  ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiGpioHelpersLib/PeiGpioHelpersLib.c
-  ClientOneSiliconPkg/IpBlock/Graphics/Library/PeiDxeSmmGraphicsInfoLib/GraphicsInfoLibVer1.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/Library/PeiDxeSmmGraphicsInfoLib/GraphicsInfoLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Graphics/Library/PeiDxeSmmGraphicsInfoLib/GraphicsInfoLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/DxeGraphicsInitLib/DxeGraphicsInitLib.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/DxeGraphicsPolicyLibNull/DxeGraphicsPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/DxeGraphicsPolicyLibNull/DxeGraphicsPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/DxeIgdOpRegionInitLib/DxeIgdOpRegionInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayInitLibGen11/PeiDisplayInitLib.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayInitLibGen11/PeiDisplayInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayInitLibGen14/PeiDisplayInitLib.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayInitLibGen14/PeiDisplayInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayLibNull/PeiDisplayLibNull.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen11/AdditionalDisableSteps.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen11/PeiGraphicsInitLib.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen11/PeiGraphicsInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen11/PeiGraphicsPmInit.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen13/AdditionalDisableSteps.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen13/PeiGraphicsInitLib.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen13/PeiGraphicsInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen13/PeiGraphicsPmInit.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsPolicyLibGen11/PeiGraphicsPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsPolicyLibGen11/PeiGraphicsPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsPolicyLibGen12/PeiGraphicsPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsPolicyLibGen13/PeiGraphicsPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsPolicyLibGen13/PeiGraphicsPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsPolicyLibNull/PeiGraphicsPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsPolicyLibNull/PeiGraphicsPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Hda/IncludePrivate/Library/PeiAceInitLib.h
-  ClientOneSiliconPkg/IpBlock/Hda/IncludePrivate/Library/PeiHdaLib.h
-  ClientOneSiliconPkg/IpBlock/Hda/IncludePrivate/Register/AceRegs.h
-  ClientOneSiliconPkg/IpBlock/Hda/Library/DxeHdaNhltLib/DxeHdaNhltLib.c
-  ClientOneSiliconPkg/IpBlock/Hda/Library/DxeHdaNhltLib/DxeHdaNhltLib.inf
-  ClientOneSiliconPkg/IpBlock/Hda/Library/HdaLib/HdaLib.c
-  ClientOneSiliconPkg/IpBlock/Hda/Library/HdaLib/HdaLib.inf
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/DxeHdaPolicyLib/DxeHdaPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiAceInitLib/PeiAceInitLib.c
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiAceInitLib/PeiAceInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiCavsInitLib/PeiCavsInitLib.c
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiCavsInitLib/PeiCavsInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaInitLib/PeiHdaInitLib.c
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaInitLib/PeiHdaInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaLib/PeiHdaLib.c
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaPolicyLib/PeiHdaPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaPolicyLib/PeiHdaPreMemPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/HostBridge/IncludePrivate/Library/PeiHostBridgeInitLib.h
-  ClientOneSiliconPkg/IpBlock/HostBridge/Library/HostBridgeDataLib/HostBridgeDataLib.c
-  ClientOneSiliconPkg/IpBlock/HostBridge/Library/HostBridgeDataLib/HostBridgeDataLib.inf
-  ClientOneSiliconPkg/IpBlock/HostBridge/Library/SecHostBridgeLib/Ia32/SecHostBridgeLib.asm
-  ClientOneSiliconPkg/IpBlock/HostBridge/Library/SecHostBridgeLib/Ia32/SecHostBridgeLib.inc
-  ClientOneSiliconPkg/IpBlock/HostBridge/LibraryPrivate/PeiHostBridgeInitLib/PeiHostBridgeInitLib.c
-  ClientOneSiliconPkg/IpBlock/HostBridge/LibraryPrivate/PeiHostBridgePolicyLib/PeiHostBridgePolicyLibVer1.c
-  ClientOneSiliconPkg/IpBlock/HostBridge/LibraryPrivate/PeiHostBridgePolicyLib/PeiHostBridgePolicyLibVer2.c
-  ClientOneSiliconPkg/IpBlock/HostBridge/LibraryPrivate/PeiHostBridgePolicyLib/PeiHostBridgePolicyLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/HostBridge/LibraryPrivate/PeiMemoryMapPrintLib/PeiMemoryMapPrintLib.c
-  ClientOneSiliconPkg/IpBlock/HostBridge/LibraryPrivate/PeiMemoryMapPrintLib/PeiMemoryMapPrintLib.inf
-  ClientOneSiliconPkg/IpBlock/Hsio/IncludePrivate/HsioHandle.h
-  ClientOneSiliconPkg/IpBlock/Hsio/IncludePrivate/HsioLane.h
-  ClientOneSiliconPkg/IpBlock/Hsio/IncludePrivate/Library/PeiHsioLib.h
-  ClientOneSiliconPkg/IpBlock/Hsio/LibraryPrivate/PeiHsioLib/HsioLane.c
-  ClientOneSiliconPkg/IpBlock/Hsio/LibraryPrivate/PeiHsioLib/HsioPreMem.c
-  ClientOneSiliconPkg/IpBlock/Hsio/LibraryPrivate/PeiHsioLib/PeiHsioLib.c
-  ClientOneSiliconPkg/IpBlock/Hsio/LibraryPrivate/PeiHsioLib/PeiHsioLib.inf
-  ClientOneSiliconPkg/IpBlock/HybridGraphics/IncludePrivate/Library/DxeHybridGraphicsInitLib.h
-  ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.c
-  ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.inf
-  ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/PeiHybridGraphicsInitLib/PeiHybridGraphicsInit.c
-  ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/PeiHybridGraphicsPolicyLib/PeiHybridGraphicsPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/PeiHybridGraphicsPolicyLib/PeiHybridGraphicsPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/PeiHybridGraphicsPolicyLibNull/PeiHybridGraphicsPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Ieh/LibraryPrivate/PeiIehInitLib/PeiIehInitLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Ieh/LibraryPrivate/PeiIehInitLib/PeiIehInitLibVer3.c
-  ClientOneSiliconPkg/IpBlock/Ieh/LibraryPrivate/PeiIehInitLib/PeiIehInitLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Ieh/LibraryPrivate/PeiIehPolicyLib/PeiIehPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Ieh/LibraryPrivate/PeiIehPolicyLibNull/PeiIehPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Ieh/LibraryPrivate/PeiIehPolicyLibNull/PeiIehPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Ipu/AcpiTables/Ipu.asl
-  ClientOneSiliconPkg/IpBlock/Ipu/AcpiTables/IpuSsdt.inf
-  ClientOneSiliconPkg/IpBlock/Ipu/LibraryPrivate/DxeIpuInitLib/DxeIpuInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Ish/IncludePrivate/Register/IshRegsVer5.h
-  ClientOneSiliconPkg/IpBlock/Ish/LibraryPrivate/PeiIshLib/PeiIshLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Ish/LibraryPrivate/PeiIshPolicyLib/PeiIshPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiIoApicLib/PeiIoApicLib.c
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssLib/ItssLib.c
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssLib/ItssLibVer3.c
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssLib/ItssLibVer6.c
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssLib/PchDevIntInfoVer3.c
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssLib/PchDevIntInfoVer6MP.c
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssLib/PeiItssLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssLib/PeiItssLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssLib/PeiItssLibVer4.inf
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssLib/PeiItssLibVer6.inf
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssPolicyLib/PeiItssPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssPolicyLib/PeiItssPolicyLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssPolicyLib/PeiItssPolicyLibVer3.c
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssPolicyLib/PeiItssPolicyLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssPolicyLib/PeiItssPolicyLibVer6.c
-  ClientOneSiliconPkg/IpBlock/Itss/LibraryPrivate/PeiItssPolicyLib/PeiItssPolicyLibVer6.inf
-  ClientOneSiliconPkg/IpBlock/McSmb/Include/McSmbCtrl.h
-  ClientOneSiliconPkg/IpBlock/McSmb/IncludePrivate/Library/PeiMcSmbLib.h
-  ClientOneSiliconPkg/IpBlock/McSmb/IncludePrivate/Register/McSmbRegs.h
-  ClientOneSiliconPkg/IpBlock/McSmb/LibraryPrivate/PeiMcSmbLib/PeiMcSmbLib.c
-  ClientOneSiliconPkg/IpBlock/McSmb/LibraryPrivate/PeiMcSmbLib/PeiMcSmbLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciInit/Dxe/HeciInitDxeFsp.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/DxeSmm/HeciTransportDxe.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/DxeSmm/HeciTransportDxeSmm.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/DxeSmm/HeciTransportSmm.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciCommonLib/HeciCommonDxeSmmLib.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciCommonLib/HeciCommonLib.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciCommonLib/HeciCommonLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciCommonLib/HeciCommonPeiLib.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTrace.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceCore.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceCore.h
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceMini.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceMiniLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceNull.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTraceLib/HeciTraceNullLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTransportCoreLib/HeciTransportCore.h
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTransportCoreLib/HeciTransportCoreDxeSmm.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTransportCoreLib/HeciTransportCoreLib.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTransportCoreLib/HeciTransportCoreLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/HeciTransportCoreLib/HeciTransportCorePei.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/Pei/HeciTransportPei.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/Pei/HeciTransportPei.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/Pei/HeciTransportPeiPreMem.c
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/Pei/HeciTransportPeiPreMem.inf
-  ClientOneSiliconPkg/IpBlock/Me/HeciTransport/Pei/HeciTransportPeiPrePostMem.c
-  ClientOneSiliconPkg/IpBlock/Me/IncludePrivate/Library/DxeTouchHeciMsgsLib.h
-  ClientOneSiliconPkg/IpBlock/Me/IncludePrivate/Library/PeiMeEnhancedDebugLib.h
-  ClientOneSiliconPkg/IpBlock/Me/Jhi/DxeJhiSupportLib/File.h
-  ClientOneSiliconPkg/IpBlock/Me/Library/DxeAsfHeciLib/DxeAsfHeciLib.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/DxeAsfHeciLib/DxeAsfHeciLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/Library/DxeMeLib/HeciMsgDxeLib.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/DxeMePolicyLibNull/DxeMePolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/DxeMePolicyLibNull/DxeMePolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Me/Library/DxeTouchHeciMsgsLib/DxeTouchHeciMsgsLib.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/DxeTouchHeciMsgsLib/DxeTouchHeciMsgsLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeMeChipsetLib/PeiDxeMeChipsetLib.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeMeChipsetLib/PeiDxeMeChipsetLibVer3.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeMeChipsetLib/PeiDxeMeChipsetLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeMeShowBufferLib/PeiDxeMeShowBufferLib.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeMeTypeLib/MeTypeLib.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsDxeSmmLib.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsPeiLib.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiMeLib/HeciLegacyCore.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiMeLib/HeciLegacyCore.h
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiMeLib/HeciPpiInitVer3.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiMeLib/PeiMeLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiMePolicyLib/PeiMePolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiMePolicyLib/PeiMePolicyLibVer3.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiMePolicyLib/PeiMePolicyLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiMePolicyLibNull/PeiMePolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Me/Library/PeiMePolicyLibNull/PeiMePolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiDxeHeciInitLib/HeciCoreVer3.c
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiDxeHeciInitLib/PeiDxeHeciInitLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeEnhancedDebugLibNull/MeEnhancedDebugSupportNull.c
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeEnhancedDebugLibNull/PeiMeEnhancedDebugLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MbpDataCommon.c
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MbpDataVer3.c
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MbpDebugPrint.c
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MeInitPostMem.c
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MeInitPostMemCommon.c
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MeInitPostMemVer3.c
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/PeiMeInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/PeiMeInitLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeUmaLib/PchMeUma.c
-  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeUmaLib/PeiMeUmaLib.inf
-  ClientOneSiliconPkg/IpBlock/Me/MeSmbiosDxe/MeSmbiosType130.c
-  ClientOneSiliconPkg/IpBlock/Me/MeSmbiosDxe/MeSmbiosType131.c
-  ClientOneSiliconPkg/IpBlock/Me/ResetHandler/Dxe/ResetHandler.c
-  ClientOneSiliconPkg/IpBlock/Me/ResetHandler/Dxe/ResetHandler.inf
-  ClientOneSiliconPkg/IpBlock/MemoryInit/.gitignore
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MemoryInit.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcCommonTypes.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcDebugHook.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiDxeSmmMemAddrEncodeLib/MemAddrEncodeLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.asm
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLib.inf
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/PeiMemoryInitLibFsp.inf
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcInterpreter.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcInterpreter.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMcConfiguration.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl0xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl11xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl14xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl15xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Cxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Dxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Exxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1Fxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl1xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl2xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl3xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl4xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl5xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl8xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTgl9xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglCxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglDxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglExxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterStructTglFxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl0xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl11xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl14xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl15xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Cxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Dxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Exxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1Fxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl1xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl2xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl3xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl4xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl5xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl8xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTgl9xxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglCxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglDxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglExxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/MrcMcRegisterTglFxxx.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcRegisters/Tigerlake/Pci000Tgl.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcMaintenance.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcMaintenance.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr4Registers.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcIoControl.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMemoryMap.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/Ddr4.S
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/Ddr4.asm
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McDone.S
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McDone.asm
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McInit.S
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McInit.asm
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McMemoryMap.S
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/StaticConfig/McMemoryMap.asm
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/Build.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/Cln.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/MinBuild.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/MiniBios.mak
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/TOOLS/Bin/FindEntryPoint.exe
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/TOOLS/Bin/Fwpad.exe
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/TOOLS/Bin/PLACEPE.exe
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/TOOLS/Bin/Split.exe
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/BUILD/TOOLS/Bin2Obj32/Bin2Obj32.pl
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC16/CpuRc16.mak
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC16/crcpm32.asm
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC16/near_jump.bin
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/CpuRc32.mak
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crc.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcinit.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcmacros.inc
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcoem.inc
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcoemhook.asm
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcsetup.asm
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/SRC32/crcstart.asm
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/LICENSE.TXT
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/m_02_90670_80000013.inc
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/m_82_90671_80000006.inc
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/ConfigBlock.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/CpuGenInfo.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/CpuRegs.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/EcCommands.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioConfig.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioLibrary.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativeLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativeLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativePrivateLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativePrivateLibIcl.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioNativePrivateLibInternal.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPinsIclLp.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPinsIclN.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPrivateLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPrivateLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/GpioPrivateLibIcl.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Io.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Io.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/MemoryUtils.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/MemoryUtils.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchAccess.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchInfoLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchLimits.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPcrLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPcrLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPsfPrivateLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPsfPrivateLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPsfPrivateLibIcl.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchPsfPrivateLibInternal.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchReservedResources.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoLibIcl.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoLibInternal.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PchSerialIoUartLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PciLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PciSegmentLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PciSegmentLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PeiDxeSmmPchSerialIoUartLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PeiKscLib.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/PeiKscLib.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsDmi.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsGpio.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsGpioIcl.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsIsh.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsLpc.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsLpcIcl.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPcr.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPmc.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPmcCnl.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPsf.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsPsfIcl.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsSerialIo.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsSerialIoIcl.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Register/PchRegsSmbus.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Smb.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/Smb.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/uart16550.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Common/uart16550.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MiniMrc.mak
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcMiniBiosEfiDefs.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcOemPlatform.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcOemPlatform.h
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcSetup.c
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2008_Win7.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2010.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2010_Win7.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2012_Win7.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2013_Win7.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2015_Win7.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBIOS_VS2017_Win7.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MiniBios_VS2008.bat
-  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/Prep.bat
-  ClientOneSiliconPkg/IpBlock/Overclocking/IncludePrivate/Library/PeiOcLib.h
-  ClientOneSiliconPkg/IpBlock/Overclocking/IncludePrivate/OcMailbox.h
-  ClientOneSiliconPkg/IpBlock/Overclocking/Library/DxeOcPlatformLib/DxeOcPlatformLib.c
-  ClientOneSiliconPkg/IpBlock/Overclocking/Library/DxeOcPlatformLib/DxeOcPlatformLib.inf
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcInitLib/PeiOcInitLib.c
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcInitLib/PeiOcInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcInitLibNull/PeiOcInitLibNull.c
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcInitLibNull/PeiOcInitLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcLib/OcLibrary.h
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcLib/PeiOcLib.inf
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcLibNull/PeiOcLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcPolicyLib/PeiOcPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcPolicyLibNull/PeiOcPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcPolicyLibNull/PeiOcPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/P2sb/IncludePrivate/Library/P2SbSidebandAccessLib.h
-  ClientOneSiliconPkg/IpBlock/P2sb/IncludePrivate/Library/PeiP2sbPrivateLib.h
-  ClientOneSiliconPkg/IpBlock/P2sb/IncludePrivate/P2SbHandle.h
-  ClientOneSiliconPkg/IpBlock/P2sb/IncludePrivate/Register/P2sbRegs.h
-  ClientOneSiliconPkg/IpBlock/P2sb/Library/PeiDxeSmmCpuSbiAccessLib/CpuSbiAccessLib.c
-  ClientOneSiliconPkg/IpBlock/P2sb/Library/PeiDxeSmmCpuSbiAccessLib/CpuSbiAccessLibNull.c
-  ClientOneSiliconPkg/IpBlock/P2sb/Library/PeiDxeSmmCpuSbiAccessLib/PeiDxeSmmCpuSbiAccessLibNull.inf
-  ClientOneSiliconPkg/IpBlock/P2sb/LibraryPrivate/PeiDxeSmmP2SbSidebandAccessLib/PeiDxeSmmP2SbSidebandAccessLib.c
-  ClientOneSiliconPkg/IpBlock/P2sb/LibraryPrivate/PeiP2sbPolicyLib/PeiP2sbPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/P2sb/LibraryPrivate/PeiP2sbPolicyLib/PeiP2sbPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/P2sb/LibraryPrivate/PeiP2sbPrivateLib/PeiP2sbPrivateLib.c
-  ClientOneSiliconPkg/IpBlock/PchDmi/LibraryPrivate/PeiDxeSmmPchDmiLib/PchDmiWithS3Lib.c
-  ClientOneSiliconPkg/IpBlock/PchDmi/LibraryPrivate/PeiDxeSmmPchDmiLib/PeiPchDmi15.c
-  ClientOneSiliconPkg/IpBlock/PchDmi/LibraryPrivate/PeiPchDmiPolicyLib/PeiPchDmiPreMemPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/PchRlink/IncludePrivate/Library/PeiPchRlinkLib.h
-  ClientOneSiliconPkg/IpBlock/PchRlink/IncludePrivate/Register/PchRlinkRegs.h
-  ClientOneSiliconPkg/IpBlock/PchRlink/LibraryPrivate/PeiPchRlinkLib/PeiPchRlinkLib.c
-  ClientOneSiliconPkg/IpBlock/PchRlink/LibraryPrivate/PeiPchRlinkLib/PeiPchRlinkLib.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Library/PcieRpHandleLib.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Library/PeiEnterprisePcieRpInitLib.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Library/PeiPcieRpInitLib.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/PchPcieRpDev.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/EnterprisePcieRpRegs.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/Generated/EnterprisePcieCfgRegs.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/Generated/EnterprisePcieMmioExpptmbarRegs.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/Generated/EnterprisePcieMmioExpptmbarSbRegs.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/Generated/EnterprisePcieMsgRegs.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/PcieSipRegs.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLib.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLibVer1.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLibVer3.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLibVer6.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PeiDxeSmmPchPcieRpLibVer1.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PeiDxeSmmPchPcieRpLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PeiDxeSmmPchPcieRpLibVer6.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/DxePchPcieRpPolicyLib/DxePchPcieRpPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/DxePchPcieRpPolicyLib/DxePchPcieRpPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PciExpressHelpersLibrary/PciExpressHelpersLibrary.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PcieEnterpriseRpLib/PcieEnterpriseRpLib.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PcieEnterpriseRpLib/PcieEnterpriseRpLib.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieBifurcation.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieCapsInit.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieEqualization.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieRpInitInternal.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieRpInitLib.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiEnterprisePcieRpInitLib/PeiEnterprisePcieRpInitLib.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPciSegmentRegAccessLib/PeiPciSegmentRegAccessLib.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPciSegmentRegAccessLib/PeiPciSegmentRegAccessLib.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpInitLib/PcieRpInitInternal.h
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpInitLib/PeiPciePreMemRpInitLib.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpInitLib/PeiPcieRpInitLib.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpInitLib/PeiPcieRpInitLibVer6.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpInitLib/PeiPcieRpInitVer2.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpInitLib/PeiPcieRpInitVer6.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpPolicyLib/PeiPcieRpPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieRpPolicyLib/PeiPcieRpPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
-  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/Library/PeiPmcPolicyCommonLib.h
-  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/Library/PeiPmcPolicyLib.h
-  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/Library/PeiPmcPrivateLib2.h
-  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/Library/PmcPrivateLib.h
-  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/PmcHandle.h
-  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/PmcSocConfig.h
-  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/Register/PmcRegsIbl.h
-  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiDxeSmmPmcPrivateLib.inf
-  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
-  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLibWithS3.c
-  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiPmcPolicyLib/PeiPmcPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiPmcPolicyLib/PeiPmcPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiPmcPrivateLib/PeiPmcPrivateLibVer4.c
-  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiPmcPrivateLib2/PeiPmcPrivateLib.c
-  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiPmcPrivateLib2/PeiPmcPrivateLibFivr.c
-  ClientOneSiliconPkg/IpBlock/Psf/IncludePrivate/Library/PsfLib.h
-  ClientOneSiliconPkg/IpBlock/Psf/LibraryPrivate/PeiPsfLib/PeiPsfLib.inf
-  ClientOneSiliconPkg/IpBlock/Psf/LibraryPrivate/PeiPsfPolicyLib/PeiPsfPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Psf/LibraryPrivate/PsfLib/PeiDxeSmmPsfLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Psf/LibraryPrivate/PsfLib/PsfLib.c
-  ClientOneSiliconPkg/IpBlock/Psf/LibraryPrivate/PsfLib/PsfLibNull.c
-  ClientOneSiliconPkg/IpBlock/Psmi/IncludePrivate/Library/PeiPsmiPolicyLib.h
-  ClientOneSiliconPkg/IpBlock/Psmi/IncludePrivate/Library/PsmiInitLib.h
-  ClientOneSiliconPkg/IpBlock/Psmi/IncludePrivate/PsmiDataHob.h
-  ClientOneSiliconPkg/IpBlock/Psmi/LibraryPrivate/PeiPsmiInitLib/PeiPsmiInitLibVer1.c
-  ClientOneSiliconPkg/IpBlock/Psmi/LibraryPrivate/PeiPsmiInitLib/PeiPsmiInitLibVer1.inf
-  ClientOneSiliconPkg/IpBlock/Psmi/LibraryPrivate/PeiPsmiInitLib/PeiPsmiInitLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Psmi/LibraryPrivate/PeiPsmiInitLibNull/PeiPsmiInitLib.c
-  ClientOneSiliconPkg/IpBlock/Rst/AcpiTables/PchRstPcieStorage.asl
-  ClientOneSiliconPkg/IpBlock/Rst/AcpiTables/RstRaid.asl
-  ClientOneSiliconPkg/IpBlock/Rst/AcpiTables/RstRemapping.asl
-  ClientOneSiliconPkg/IpBlock/Rst/Library/PeiDxeSmmRstCrLib/PeiDxeSmmRstCrLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/Rst/Library/PeiDxeSmmRstCrLib/RstCrLibVer3.c
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiHybridStorageLibNull/PeiHybridStorageLibNull.c
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiHybridStorageLibNull/PeiHybridStorageLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiHybridStoragePolicyLib/PeiHybridStoragePolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiHybridStoragePolicyLib/PeiHybridStoragePolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiRstPolicyLib/PeiRstPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiRstPolicyLib/PeiRstPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiRstPolicyLib/PeiRstPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiRstPolicyLib/PeiRstPolicyLibVer1.c
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiRstPolicyLib/PeiRstPolicyLibVer1.inf
-  ClientOneSiliconPkg/IpBlock/Rst/LibraryPrivate/PeiRstPrivateLib/PeiRstRemappingNull.c
-  ClientOneSiliconPkg/IpBlock/Sata/IncludePrivate/Library/PeiSataLib.h
-  ClientOneSiliconPkg/IpBlock/Sata/LibraryPrivate/PeiSataLib/PeiSataLib.c
-  ClientOneSiliconPkg/IpBlock/Sata/LibraryPrivate/PeiSataPolicyLib/PeiSataPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Scs/AcpiTables/ScsEmmc.asl
-  ClientOneSiliconPkg/IpBlock/Scs/AcpiTables/ScsSdCard.asl
-  ClientOneSiliconPkg/IpBlock/Scs/EmmcSoftwareTuning/EmmcCardCommunication.c
-  ClientOneSiliconPkg/IpBlock/Scs/EmmcSoftwareTuning/EmmcSoftwareTuning.c
-  ClientOneSiliconPkg/IpBlock/Scs/EmmcSoftwareTuning/EmmcSoftwareTuning.h
-  ClientOneSiliconPkg/IpBlock/Scs/IncludePrivate/Register/ScsIosf2OcpBridgeRegs.h
-  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsLib/PeiIosf2Ocp.c
-  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsLib/PeiIosf2Ocp.h
-  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsLib/PeiScsUfs.c
-  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsPolicyLib/PeiScsPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Scs/LibraryPrivate/PeiScsPolicyLib/PeiScsPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/SerialIo/AcpiTables/SerialIoCommon.asl
-  ClientOneSiliconPkg/IpBlock/SerialIo/AcpiTables/SerialIoI2cCommon.asl
-  ClientOneSiliconPkg/IpBlock/SerialIo/AcpiTables/SerialIoSpiController.asl
-  ClientOneSiliconPkg/IpBlock/SerialIo/I2c/Library/PeiSerialIoI2cMasterLib/PeiSerialIoI2cMasterLib.inf
-  ClientOneSiliconPkg/IpBlock/SerialIo/I2c/LibraryPrivate/PeiDxeSerialIoI2cMasterCommonLib/PeiDxeSerialIoI2cMasterCommonLib.inf
-  ClientOneSiliconPkg/IpBlock/SerialIo/IncludePrivate/Register/SerialIoRegsVer3.h
-  ClientOneSiliconPkg/IpBlock/SerialIo/IncludePrivate/Register/SerialIoRegsVer6.h
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/PeiDxeSmmSerialIoPrivateLibVer3.inf
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/PeiDxeSmmSerialIoPrivateLibVer6.inf
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLibI2cNull.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLibI2cVer6.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLibI3c.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLibI3cNull.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLibI3cVer6.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLibSpiNull.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLibSpiVer6.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLibUartVer3.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiDxeSmmSerialIoPrivateLib/SerialIoPrivateLibUartVer6.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiSerialIoInitLib/PeiSerialIoI3cLibVer6.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiSerialIoInitLib/PeiSerialIoInitLib.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiSerialIoInitLib/PeiSerialIoInitLibVer6.inf
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiSerialIoInitLib/PeiSerialIoUartLib.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiSerialIoPolicyLib/PeiSerialIoPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/SerialIo/Uart/Library/PeiDxeSmmSerialIoUartLib/DxeRuntimeSerialIoUartLib.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/Uart/Library/PeiDxeSmmSerialIoUartLib/PeiDxeSmmSerialIoUartLib.inf
-  ClientOneSiliconPkg/IpBlock/SerialIo/Uart/Library/PeiDxeSmmSerialIoUartLib/SerialIoUartLib.c
-  ClientOneSiliconPkg/IpBlock/SerialIo/Uart/Library/PeiDxeSmmSerialIoUartLib/SerialIoUartPrivateLib.h
-  ClientOneSiliconPkg/IpBlock/Smbus/Dxe/SmbusDxe.inf
-  ClientOneSiliconPkg/IpBlock/Smbus/IncludePrivate/Library/PeiSmbusLib.h
-  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/PeiDxeSmmSmbusCommonLib/SmbusExec.c
-  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/PeiSmbusLib/PeiSmbusLib.c
-  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/PeiSmbusLib/PeiSmbusLib.inf
-  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/PeiSmbusPolicyLib/PeiSmbusPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/PeiSmbusPolicyLib/PeiSmbusPreMemPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/SmbusDma/IncludePrivate/Library/PeiSmbusDmaLib.h
-  ClientOneSiliconPkg/IpBlock/SmbusDma/IncludePrivate/Register/SmbusDmaRegs.h
-  ClientOneSiliconPkg/IpBlock/SmbusDma/LibraryPrivate/SmbusDmaInitLib.c
-  ClientOneSiliconPkg/IpBlock/SmbusDma/LibraryPrivate/SmbusDmaInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Spi/Library/PeiDxeSmmSpiAccessLib/PeiDxeSmmSpiAccessLib.inf
-  ClientOneSiliconPkg/IpBlock/Spi/Library/PeiDxeSmmSpiAccessLib/SpiAccessLib.c
-  ClientOneSiliconPkg/IpBlock/Spi/LibraryPrivate/PeiDxeSmmSpiAccessPrivateLib/SpiAccessPrivateLib.c
-  ClientOneSiliconPkg/IpBlock/Spi/LibraryPrivate/PeiSpiExtendedDecodeLib/PeiSpiExtendedDecodeLib.c
-  ClientOneSiliconPkg/IpBlock/Spi/LibraryPrivate/PeiSpiExtendedDecodeLib/PeiSpiExtendedDecodeLib.inf
-  ClientOneSiliconPkg/IpBlock/Spi/LibraryPrivate/PeiSpiPolicyLib/PeiSpiPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/DxeSmm/HeciAccessDxe.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/DxeSmm/HeciAccessDxeSmm.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/DxeSmm/HeciAccessSmm.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/HeciAccessCoreLib/HeciAccessCoreLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/HeciAccessCoreLib/HeciAccessCoreLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/HeciAccessDeviceConfigLib/HeciAccessDeviceConfig.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/HeciAccessDeviceConfigLib/HeciAccessDeviceConfig.h
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/HeciAccessDeviceConfigLib/HeciAccessDeviceConfig.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/HeciAccessDeviceConfigLib/HeciAccessDeviceConfigEbg.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/HeciAccessDeviceConfigLib/HeciAccessDeviceConfigEbg.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/Pei/HeciAccessPei.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/Pei/HeciAccessPei.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/Pei/HeciAccessPeiPreMem.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/Pei/HeciAccessPeiPreMem.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciAccess/Pei/HeciAccessPeiPrePostMem.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/DxeSmm/HeciControlDxe.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/DxeSmm/HeciControlDxeSmm.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/DxeSmm/HeciControlSmm.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlCoreLib/HeciControlCoreLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlCoreLib/HeciControlCoreLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilter.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilter.h
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterDfxDxe.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterDfxPei.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterDfxSmm.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterDxeLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterPeiLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterSmmEbgLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterSpsDxe.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterSpsPei.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterSpsSmm.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterSpsSmmEbg.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterWsDxe.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterWsPei.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlFilterWsSmm.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/HeciControlFilterLib/HeciControlInitializationFilter.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/Pei/HeciControlPei.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/Pei/HeciControlPei.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/Pei/HeciControlPeiPreMem.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/Pei/HeciControlPeiPreMem.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciControl/Pei/HeciControlPeiPrePostMem.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciLegacyDxe/HeciLegacyCore.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciLegacyDxe/HeciLegacyCore.h
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciLegacyDxe/HeciLegacyDxe.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/HeciLegacyDxe/HeciLegacyDxe.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/Library/HeciConfigureLib/HeciConfigureDxeSmm.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/Library/HeciConfigureLib/HeciConfigureLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/Library/HeciConfigureLib/HeciConfigureNull.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/Library/HeciConfigureLib/HeciConfigureNullLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/Library/HeciConfigureLib/HeciConfigurePei.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/MePmInitPei/MePmInitPei.c
-  ClientOneSiliconPkg/IpBlock/Sps/Heci/MePmInitPei/MePmInitPei.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Include/CpuAndRevisionDefines.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/DualBiosMsgs.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Guid/MeFiaMuxVariable.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Guid/MeRcVariable.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Guid/SpsAcpiTableLocatorGuid.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Guid/SpsInfoHobGuid.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/CpuAndRevisionLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/DxeSpsPolicyLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/HeciAccessCoreLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/HeciAccessDeviceConfigLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/HeciControlCoreLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/HeciControlFilterLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/MeConfigLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/MeCosignLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/MeMeasurementsLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/MeSmmLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/MeStorageLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/MeTypeGetLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/MeWatchdogControlLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/PchMultiPchBase.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/ServerDxeMeLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/SpsPeiLib.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/MeAccess.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/MeDefines.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/MeRcConfiguration.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Ppi/MeUmaPpi.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Ppi/SpsHwChangePpi.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Private/MeStorageLibInternal.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Protocol/SpsPolicyProtocol.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Protocol/SpsRasNotifyProtocol.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Protocol/SpsSmmBiosUpdateProtocol.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Protocol/SpsSmmHmrfpoExtProtocol.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Protocol/SpsSmmHmrfpoProtocol.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Protocol/SpsSmmMeStorageProtocol.h
-  ClientOneSiliconPkg/IpBlock/Sps/Include/Sps.h
-  ClientOneSiliconPkg/IpBlock/Sps/Library/DxeMeLib/HeciMsgDxeLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/DxeMeLib/ServerDxeMeLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/DxePttHeciLib/DxePttHeciLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/DxePttHeciLib/DxePttHeciLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/DxeSpsPolicyLib/DxeSpsPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/DxeSpsPolicyLib/DxeSpsPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/DxeSpsPolicyLib/DxeSpsPolicyLibrary.h
-  ClientOneSiliconPkg/IpBlock/Sps/Library/DxeSpsPolicyLibNull/DxeSpsPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/DxeSpsPolicyLibNull/DxeSpsPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeConfigLib/MeConfigDxe.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeConfigLib/MeConfigLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeConfigLib/MeConfigLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeConfigLib/MeConfigPei.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeConfigLib/MeConfigPeiDxe.h
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeCosignLib/MeCosignLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeCosignLib/MeCosignLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeCosignLib/MeCosignLibInternal.h
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeDummyLib/MeDummy.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeDummyLib/MeDummyLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeEwlNullLib/MeEwlNullLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeEwlNullLib/MeEwlNullLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeFiaMuxLib/MeFiaMuxDxeLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeFiaMuxLib/MeFiaMuxLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeFiaMuxLib/MeFiaMuxLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeFiaMuxLib/MeFiaMuxPeiLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeFiaMuxStrapsNullLib/MeFiaMuxStrapsNullLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeFiaMuxStrapsNullLib/MeFiaMuxStrapsPeiNullLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeGetPeiConfigBlock/MeGetPeiConfigBlock.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeGetPeiConfigBlock/MeGetPeiConfigBlock.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeGetPeiConfigBlockNull/MeGetPeiConfigBlockNull.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeGetPeiConfigBlockNull/MeGetPeiConfigBlockNull.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeMeasurementsLib/MeMeasurements.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeMeasurementsLib/MeMeasurements.h
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeMeasurementsLib/MeMeasurementsLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeMeasurementsLib/MeMeasurementsLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeMeasurementsLib/MeMeasurementsVer2.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeSmmLib/MeSmmLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeSmmLib/MeSmmLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeStorageLib/DxeMeStorageLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeStorageLib/DxeMeStorageLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeStorageLib/PeiMeStorageLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeStorageLib/PeiMeStorageLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeTypeGetLib/MeTypeGetHeciPeiLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeTypeGetLib/MeTypePeiHeciLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeTypeLib/MeTypeDxeLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeTypeLib/MeTypeDxeLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeTypeLib/MeTypeHob.h
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeTypeLib/MeTypeLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeTypeLib/MeTypePeiLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeTypeLib/MeTypePeiLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeUefiFwHealthStatusLib/MeUefiFwHealthStatus.h
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeUefiFwHealthStatusLib/MeUefiFwHealthStatusDxeLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeUefiFwHealthStatusLib/MeUefiFwHealthStatusLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeUefiFwHealthStatusLib/MeUefiFwHealthStatusLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeUefiFwHealthStatusLib/MeUefiFwHealthStatusPeiLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeWatchdogControlLib/MeWatchdogControl.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeWatchdogControlLib/MeWatchdogControlLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/MeWatchdogControlLib/MeWatchdogControlSmmCom.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/PeiFiaMuxConfigInitLib/PeiFiaMuxConfigInitLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/PeiFiaMuxConfigInitLib/PeiFiaMuxConfigInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/PeiFiaMuxConfigInitLib/PeiFiaMuxConfigInitLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/PeiSpsPreMemPolicyLib/PeiSpsPreMemPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/PeiSpsPreMemPolicyLib/PeiSpsPreMemPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/PeiSpsPreMemPolicyLib/PeiSpsPreMemPolicyNullLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsDxeLib/SpsDxeDependencyCheck.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsDxeLib/SpsDxeDependencyCheck.h
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsDxeLib/SpsDxeLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsDxeLib/SpsDxeLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsGetDxeConfigBlock/SpsGetDxeConfigBlock.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsGetDxeConfigBlock/SpsGetDxeConfigBlock.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsPeiLib/SpsPeiLib.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsPeiLib/SpsPeiLib.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsPeiLibNull/SpsPeiLibNull.c
-  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsPeiLibNull/SpsPeiLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnition.h
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnitionDxe.c
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnitionDxe.inf
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnitionFsp.c
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnitionFsp.inf
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnitionIndicate.c
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnitionPostMem.c
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnitionPostMem.inf
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnitionPreMem.c
-  ClientOneSiliconPkg/IpBlock/Sps/MeIgnition/MeIgnitionPreMem.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Dxe/Callbacks.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Dxe/CpuInfoData.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Dxe/DualBiosWatchdog.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Dxe/DualBiosWatchdog.h
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Dxe/SpsDxe.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Dxe/SpsDxe.h
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Dxe/SpsDxe.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Dxe/X64/fn.nasm
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/IA32/fn.nasm
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPei.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPei.h
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPei.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPeiCommon.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPeiCommon.h
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPeiFsp.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPeiPostMem.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPeiPostMem.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPeiPreMem.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Pei/SpsPeiPreMem.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/MeStorageSmm.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/MeWatchdogControlSmm.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/MeWatchdogControlSmm.h
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/SpsRasNotify.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/SpsRasNotify.h
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/SpsSmm.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/SpsSmm.h
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/SpsSmm.inf
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/SpsSmmHmrfpoExt.c
-  ClientOneSiliconPkg/IpBlock/Sps/Sps/Smm/SpsSmmHmrfpoExt.h
-  ClientOneSiliconPkg/IpBlock/Tbt/AcpiTables/ITbt.asl
-  ClientOneSiliconPkg/IpBlock/Tbt/AcpiTables/ITbtMailBox.asl
-  ClientOneSiliconPkg/IpBlock/Tbt/AcpiTables/ITbtNvs.asl
-  ClientOneSiliconPkg/IpBlock/Tbt/ITbtInit/Dxe/ITbtDxe.c
-  ClientOneSiliconPkg/IpBlock/Tbt/IncludePrivate/Library/PeiTbtCommonInitLib.h
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/DxeTbtDisBmeLib/DxeTbtDisBmeLib.c
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/DxeTbtDisBmeLib/DxeTbtDisBmeLib.inf
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/PeiDxeSmmTbtCommonLib/TbtCommonLib.c
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/PeiITbtPolicyLib/ITbtPrintPolicy.c
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/PeiITbtPolicyLibNull/ITbtPrintPolicyNull.c
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/PeiITbtPolicyLibNull/PeiITbtPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/PeiITbtPolicyLibNull/PeiITbtPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/PeiITbtPolicyLibNull/PeiITbtPolicyLibrary.h
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/PeiTbtTaskDispatchLib/PeiTbtTaskDispatchLib.c
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/PeiTbtTaskDispatchLibNull/PeiTbtTaskDispatchLibNull.c
-  ClientOneSiliconPkg/IpBlock/Tbt/Library/PeiTbtTaskDispatchLibNull/PeiTbtTaskDispatchLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Tbt/LibraryPrivate/PeiITbtInitLib/PeiITbtInitLib.c
-  ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/SegSsdt/ExtraHostBus.asl
-  ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/SegSsdt/SegSsdt.asl
-  ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/SegSsdt/SegSsdt.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssXhci.asl
-  ClientOneSiliconPkg/IpBlock/Tcss/IncludePrivate/Library/PeiDpInInitLib.h
-  ClientOneSiliconPkg/IpBlock/Tcss/Library/PeiDxeSmmTcssInfoLib/TcssInfoLib.c
-  ClientOneSiliconPkg/IpBlock/Tcss/Library/PeiDxeSmmTcssInfoLib/TcssInfoLib.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/Library/PeiDxeSmmTcssInfoLibNull/TcssInfoLibNull.c
-  ClientOneSiliconPkg/IpBlock/Tcss/Library/PeiDxeSmmTcssInfoLibNull/TcssInfoLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/DxeTcssInitLib/DxeTcssInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/DxeTcssInitLibNull/DxeTcssInitLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDpInInitLib/PeiDpInInitLib.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDpInInitLib/PeiDpInInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDpInInitLibNull/PeiDpInInitLibNull.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDpInPolicyLib/PeiDpInPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDpInPolicyLib/PeiDpInPolicyPreMemLib.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDpInPolicyLibNull/PeiDpInPolicyPreMemLibNull.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDxeSmmTcssPmcLib/PeiDxeSmmTcssPmcLib.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDxeSmmTcssPmcLib/TcssPmcLib.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDxeSmmTcssPmcLibNull/PeiDxeSmmTcssPmcLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiDxeSmmTcssPmcLibNull/TcssPmcLibNull.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssInitLib/TcssInit.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssPmcLib/PeiTcssPmcLib.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssPmcLib/TcssPmcLib.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssPmcLibNull/PeiTcssPmcLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssPmcLibNull/TcssPmcLibNull.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssPolicyLib/PeiTcssPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssPolicyLib/PeiTcssPolicyPreMemLib.c
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssPolicyLibNull/PeiTcssPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssPolicyLibNull/PeiTcssPolicyPreMemLibNull.c
-  ClientOneSiliconPkg/IpBlock/Telemetry/Library/PeiDxeTelemetryLib/PeiDxeTelemetryLib.c
-  ClientOneSiliconPkg/IpBlock/Telemetry/Library/PeiDxeTelemetryLibNull/PeiDxeTelemetryLibNull.c
-  ClientOneSiliconPkg/IpBlock/Telemetry/Library/PeiDxeTelemetryLibNull/PeiDxeTelemetryLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Telemetry/LibraryPrivate/PeiDxeTelemetryPrivateLib/PeiDxeTelemetryPrivateLib.c
-  ClientOneSiliconPkg/IpBlock/Telemetry/LibraryPrivate/PeiDxeTelemetryPrivateLib/PeiDxeTelemetryPrivateLib.inf
-  ClientOneSiliconPkg/IpBlock/Telemetry/LibraryPrivate/PeiDxeTelemetryPrivateLibNull/PeiDxeTelemetryPrivateLibNull.c
-  ClientOneSiliconPkg/IpBlock/Telemetry/LibraryPrivate/PeiDxeTelemetryPrivateLibNull/PeiDxeTelemetryPrivateLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Telemetry/LibraryPrivate/PeiTelemetryPolicyLib/PeiTelemetryPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Telemetry/LibraryPrivate/PeiTelemetryPolicyLib/PeiTelemetryPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Telemetry/LibraryPrivate/PeiTelemetryPolicyLibNull/PeiTelemetryPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Telemetry/LibraryPrivate/PeiTelemetryPolicyLibNull/PeiTelemetryPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Thc/IncludePrivate/Library/PeiThcInitLib.h
-  ClientOneSiliconPkg/IpBlock/Thc/LibraryPrivate/PeiThcPolicyLib/PeiThcPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Thc/LibraryPrivate/PeiThcPolicyLibNull/PeiThcPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Thc/LibraryPrivate/PeiThcPolicyLibNull/PeiThcPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Thc/ThcDriver/ThcComponentName.h
-  ClientOneSiliconPkg/IpBlock/Tme/Dxe/TmeInitDxe.c
-  ClientOneSiliconPkg/IpBlock/Tme/Dxe/TmeInitDxe.inf
-  ClientOneSiliconPkg/IpBlock/Tme/IncludePrivate/Library/TmeLib.h
-  ClientOneSiliconPkg/IpBlock/Tme/Library/TmeInfoLib.inf
-  ClientOneSiliconPkg/IpBlock/Tme/LibraryPrivate/MkTmeLib/MkTmeLib.c
-  ClientOneSiliconPkg/IpBlock/Tme/LibraryPrivate/MkTmeLib/MkTmeLib.inf
-  ClientOneSiliconPkg/IpBlock/Tme/LibraryPrivate/TmeLib/TmeLib.c
-  ClientOneSiliconPkg/IpBlock/Tme/LibraryPrivate/TmeLib/TmeLib.inf
-  ClientOneSiliconPkg/IpBlock/TraceHub/AcpiTables/CpuTraceHub/CpuTraceHubSsdt.inf
-  ClientOneSiliconPkg/IpBlock/TraceHub/AcpiTables/CpuTraceHub/TraceHub.asl
-  ClientOneSiliconPkg/IpBlock/TraceHub/IncludePrivate/Library/PeiCpuAndPchTraceHubLib.h
-  ClientOneSiliconPkg/IpBlock/TraceHub/IncludePrivate/Library/PeiCpuTraceHubLib.h
-  ClientOneSiliconPkg/IpBlock/TraceHub/Library/PeiDxeSmmTraceHubHookLib/PeiDxeSmmTraceHubHookLib.c
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/BasePchTraceHubLibNull/BasePchTraceHubLibNull.c
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/BasePchTraceHubLibNull/BasePchTraceHubLibNull.inf
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/DxeTraceHubInitLibNull/DxeTraceHubInitLibNull.inf
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/DxeTraceHubInitLibNull/DxeTraceHubInitNull.c
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiCpuTraceHubLibNull/PeiCpuTraceHubLibNull.c
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiCpuTraceHubLibNull/PeiCpuTraceHubLibNull.inf
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiCpuTraceHubPolicyLib/PeiCpuTraceHubPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiCpuTraceHubPolicyLibNull/PeiCpuTraceHubPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiCpuTraceHubPolicyLibNull/PeiCpuTraceHubPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiDxeSmmPchTraceHubLib/PeiDxeSmmPchTraceHubLib.c
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiPchTraceHubPolicyLib/PeiPchTraceHubPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiPchTraceHubPolicyLibNull/PeiPchTraceHubPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiPchTraceHubPolicyLibNull/PeiPchTraceHubPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiTraceHubLib/PeiTraceHubLib.c
-  ClientOneSiliconPkg/IpBlock/Tsn/LibraryPrivate/PeiTsnInitLib/PeiTsnInitLib.c
-  ClientOneSiliconPkg/IpBlock/Tsn/LibraryPrivate/PeiTsnInitLib/PeiTsnInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Tsn/LibraryPrivate/PeiTsnInitLibNull/PeiTsnInitLibNull.c
-  ClientOneSiliconPkg/IpBlock/Tsn/LibraryPrivate/PeiTsnPolicyLib/PeiTsnPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Tsn/LibraryPrivate/PeiTsnPolicyLibNull/PeiTsnPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Usb/IncludePrivate/Library/Usb2PhyLib.h
-  ClientOneSiliconPkg/IpBlock/Usb/IncludePrivate/UsbHandle.h
-  ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiExternalUsb2PhyLib/ExternalUsb2PhyLib.c
-  ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiExternalUsb2PhyLib/PeiExternalUsb2PhyLib.inf
-  ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsb2PhyLib/PeiUsb2PhyLib.inf
-  ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsb2PhyLib/Usb2PhyLib.c
-  ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/UsbHostControllerInit.c
-  ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbPolicyLib/PeiUsbPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Vmd/AcpiTables/Vmd.asl
-  ClientOneSiliconPkg/IpBlock/Vmd/LibraryPrivate/PeiVmdInitLib/PeiVmdInitLib.inf
-  ClientOneSiliconPkg/IpBlock/Vmd/LibraryPrivate/PeiVmdInitLibNull/PeiVmdInitLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Vmd/LibraryPrivate/PeiVmdPolicyLib/PeiVmdPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/VoltageRegulator/IncludePrivate/Library/PeiVrLib.h
-  ClientOneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrLib/PeiVrLib.c
-  ClientOneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrPolicyLib/PeiVrPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Vtd/AcpiTables/DmarAcpiTablesVer1.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/AcpiTables/DmarAcpiTablesVer2.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/AcpiTables/DmarVer2.aslc
-  ClientOneSiliconPkg/IpBlock/Vtd/Library/PeiDxeSmmVtdInfoLib/PeiDxeSmmVtdInfoLibVer1.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/Library/PeiDxeSmmVtdInfoLib/PeiDxeSmmVtdInfoLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/Library/PeiDxeSmmVtdInfoLib/VtdInfoLibVer1.c
-  ClientOneSiliconPkg/IpBlock/Vtd/Library/PeiDxeSmmVtdInfoLib/VtdInfoLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/DxeVtdInitLib/DxeVtdInitLibVer1.c
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/DxeVtdInitLib/DxeVtdInitLibVer1.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/DxeVtdInitLib/DxeVtdInitLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/DxeVtdInitLib/DxeVtdInitLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/DxeVtdPolicyLib/DxeVtdPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/DxeVtdPolicyLib/DxeVtdPolicyLib.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/DxeVtdPolicyLibNull/DxeVtdPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/PeiVtdInitLib/PeiVtdInitLibVer1.c
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/PeiVtdInitLib/PeiVtdInitLibVer1.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/PeiVtdInitLib/PeiVtdInitLibVer2.c
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/PeiVtdInitLib/PeiVtdInitLibVer2.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/PeiVtdInitLibNull/PeiVtdInitLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/PeiVtdPolicyLib/PeiVtdPolicyLib.c
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/PeiVtdPolicyLibNull/PeiVtdPolicyLibNull.c
-  ClientOneSiliconPkg/IpBlock/Vtd/LibraryPrivate/PeiVtdPolicyLibNull/PeiVtdPolicyLibNull.inf
-  ClientOneSiliconPkg/IpBlock/Wdt/LibraryPrivate/PeiWdtPolicyLib/PeiWdtPreMemPolicyLib.c
-  ClientOneSiliconPkg/Library/BasePostCodeToScratchPadLib/BasePostCodeToScratchPadLib.c
-  ClientOneSiliconPkg/Library/BasePostCodeToScratchPadLib/BasePostCodeToScratchPadLib.inf
-  ClientOneSiliconPkg/Library/PeiDxeSmmBootMediaLib/BootMediaLib.c
-  ClientOneSiliconPkg/Library/PeiDxeSmmBootMediaLib/DxeSmmBootMediaLib.c
-  ClientOneSiliconPkg/Library/PeiDxeSmmBootMediaLib/DxeSmmBootMediaLib.inf
-  ClientOneSiliconPkg/Library/PeiDxeSmmBootMediaLib/PeiBootMediaLib.c
-  ClientOneSiliconPkg/Library/PeiDxeSmmBootMediaLib/PeiBootMediaLib.inf
-  ClientOneSiliconPkg/Library/PlatformSecLib/Ia32/Chipset.i
-  ClientOneSiliconPkg/Library/PlatformSecLib/Ia32/Chipset.inc
-  ClientOneSiliconPkg/Library/PlatformSecLib/Ia32/Platform.i
-  ClientOneSiliconPkg/Library/PlatformSecLib/Ia32/Platform.inc
-  ClientOneSiliconPkg/Library/PlatformSecLib/Ia32/SecCore.i
-  ClientOneSiliconPkg/Library/PlatformSecLib/Ia32/SecCore.inc
-  ClientOneSiliconPkg/Library/SiAssertErrorHandlerLib/PeiSiAssertErrorHandler.c
-  ClientOneSiliconPkg/Library/SiAssertErrorHandlerLib/PeiSiAssertErrorHandlerLib.inf
-  ClientOneSiliconPkg/Library/SiAssertErrorHandlerLib/PeiSiAssertErrorHandlerLibFsp.inf
-  ClientOneSiliconPkg/Library/TraceHubDebugLibNull/TraceHubDebugLibNull.c
-  ClientOneSiliconPkg/Library/TraceHubDebugLibNull/TraceHubDebugLibNull.inf
-  ClientOneSiliconPkg/Library/TraceHubDebugLibSvenTx/PatchHowTo.txt
-  ClientOneSiliconPkg/Library/TraceHubHookLibNull/TraceHubHookLibNull.c
-  ClientOneSiliconPkg/Library/TraceHubHookLibNull/TraceHubHookLibNull.inf
-  ClientOneSiliconPkg/LibraryPrivate/DxeSiFviInitLib/DxeSiFvi.c
-  ClientOneSiliconPkg/LibraryPrivate/DxeSiFviInitLib/DxeSiFviInitLib.inf
-  ClientOneSiliconPkg/LibraryPrivate/PeiSiSsidLib/PeiSiSsidLib.c
-  ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/PchIsh.asl
-  ClientOneSiliconPkg/Pch/Include/Library/PchCycleDecodingLib.h
-  ClientOneSiliconPkg/Pch/Include/Library/PchRasLib.h
-  ClientOneSiliconPkg/Pch/Include/Library/PchRtcLib.h
-  ClientOneSiliconPkg/Pch/Include/Library/SecPchLib.h
-  ClientOneSiliconPkg/Pch/Include/Register/PchRegsLpcAdl.h
-  ClientOneSiliconPkg/Pch/Include/Register/PchRegsLpcCnl.h
-  ClientOneSiliconPkg/Pch/Include/Register/PchRegsLpcTgl.h
-  ClientOneSiliconPkg/Pch/IncludePrivate/PchConfigHob.h
-  ClientOneSiliconPkg/Pch/Library/DxePchPolicyLib/DxePchPolicyLib.inf
-  ClientOneSiliconPkg/Pch/Library/DxeSmmPchRasLib/DxeSmmPchRasLib.inf
-  ClientOneSiliconPkg/Pch/Library/DxeSmmPchRasLib/PchRasLib.c
-  ClientOneSiliconPkg/Pch/Library/PeiDxeSmmPchCycleDecodingLib/PchCycleDecodingLib.c
-  ClientOneSiliconPkg/Pch/Library/PeiDxeSmmPchInfoLib/PchInfoLibAdl.c
-  ClientOneSiliconPkg/Pch/Library/PeiDxeSmmPchInfoLib/PchInfoLibPrivate.h
-  ClientOneSiliconPkg/Pch/Library/PeiDxeSmmPchInfoLib/PeiDxeSmmPchInfoLibAdl.inf
-  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PchPreMemPrintPolicyVer3.c
-  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PchPrintPolicy.c
-  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLib.c
-  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLibVer3.inf
-  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPreMemPolicyLib.c
-  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPreMemPolicyLibVer3.c
-  ClientOneSiliconPkg/Pch/Library/PeiPchSmmControlLib/PeiPchSmmControlLib.c
-  ClientOneSiliconPkg/Pch/Library/PeiPchSmmControlLib/PeiPchSmmControlLib.inf
-  ClientOneSiliconPkg/Pch/Library/SecPchLib/Ia32/SecPchLib.inc
-  ClientOneSiliconPkg/Pch/Library/SecPchLib/SecPchLib.c
-  ClientOneSiliconPkg/Pch/Library/SecPchLib/SecPchLibEbg.c
-  ClientOneSiliconPkg/Pch/Library/SecPchLib/SecPchLibEbg.inf
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiDxeSmmPchRtcLib/PchRtcLib.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiDxeSmmPchRtcLib/PeiDxeSmmPchRtcLib.inf
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchClk.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchEndOfPei.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchGbe.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchHobs.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchInit.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchInitPei.h
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchInitPreMem.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchP2Sb.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchPsth.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchSataInit.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchSmbus.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchUsb.c
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchUsb.h
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PeiPchInitLibAdl.inf
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PeiPchInitLibFspAdl.inf
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PeiPchInitLibFspTgl.inf
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PeiPchInitLibTgl.inf
-  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/TglPchScs.c
-  ClientOneSiliconPkg/Pch/PchInit/Dxe/PchAcpiEbg.c
-  ClientOneSiliconPkg/Pch/PchInit/Dxe/PchHdaAcpi.c
-  ClientOneSiliconPkg/Pch/PchInit/Dxe/PchInitDxe.c
-  ClientOneSiliconPkg/Pch/PchInit/Dxe/PchInitDxeEbg.c
-  ClientOneSiliconPkg/Pch/PchInit/Dxe/PchInitDxeEbg.inf
-  ClientOneSiliconPkg/Pch/PchInit/Dxe/PchInitDxeTgl.inf
-  ClientOneSiliconPkg/Pch/PchInit/Dxe/PchUsb.c
-  ClientOneSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmiDispatcherServer.inf
-  ClientOneSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmiHelperServer.c
-  ClientOneSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmmEspi.c
-  ClientOneSiliconPkg/Product/AlderLake/Include/Ppi/SiPolicy.h
-  ClientOneSiliconPkg/Product/AlderLake/Library/PeiSiPolicyLib/PeiSiPolicyLib.inf
-  ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInit.c
-  ClientOneSiliconPkg/Product/AlderLake/SiPkgCommonLib.dsc
-  ClientOneSiliconPkg/Product/AlderLake/SiPkgDxe.dsc
-  ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
-  ClientOneSiliconPkg/Product/AlderLake/SiPkgPeiLib.dsc
-  ClientOneSiliconPkg/SiPkg.dec
-  ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/CpuPcieRp.asl
-  ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/CpuPcieRpCommon.asl
-  ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/SaNvs.asl
-  ClientOneSiliconPkg/SystemAgent/IncludePrivate/SaNvsAreaDef.h
-  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaInitLib/SaInit.c
-  ClientOneSiliconPkg/SystemAgent/SaInit/Dxe/SaAcpi.c
-  ClientOneSiliconPkg/SystemAgent/SaInit/Dxe/SaInitDxe.c
-  ClientOneSiliconPkg/SystemAgent/SaInit/Smm/SaLateInitSmm.c
-  Features/Audio/SndwFeaturePkg/LibraryPrivate/PeiDxeSndwCommonLib/PeiDxeSndwCommonLib.c
-  Features/Manageability/MebxFeaturePkg/MebxDisplay/MebxDisplay.c
-  Features/Manageability/MebxFeaturePkg/MebxSetup/MebxSettings.c
-  Features/Manageability/MebxFeaturePkg/MebxSetup/MebxSetup.c
-  Features/Manageability/MebxFeaturePkg/MebxSetup/MebxSetup.h
-  Features/Readme.md
-  LICENSE.txt
+  
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Potential Errors Below:
 
-  --Commit Message Contains Key Word: security
   --Commit Message Contains Key Word: internal
-  --Commit Message Contains Oem: Acer
+
+*********************************************************************************
+Commit: e00fcb1bf3d2e7e63ed1b8d838e634e1c217698a 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][client_platf][integration_step_event][14012871621][ADL-S | DDR5] ECT updates from ADL-P CTE
+  
+  1. MrcIssueMpc: no need to go to 1N mode
+  2. Roundtrip Match should be called after DDR5 ECT, because we only do partial JEDEC Reset before ECT.
+  Move MrcRoundTripMatch to a separate task in the MRC call table, invoked right after ReadLeveling.
+  This way it will be called at the right spot in silicon and CTE as well, in gate and training steps cases.
+  3. Added more Device ID values for ADL-P
+  4. Add MrcChannelExist check in ProgramDeswizzleRegisters where we dump DESWIZZLE registers.
+  5. DDR5 ECT: FindCsTrainingLimits: shift CS PI to 0 after the sweep, and before CADB stop.
+  This is to avoid DRAM latching a wrong command because CS PI is shifted to the right and CA pins will change value during CADB stop.
+  
+  Hsd-es-id: 14012871621
+  Change-Id: Ic45e1b8aaa86043a32bbfe9245220b3d425d3dbb
+  Original commit hash: 3f5c288c09d088b37bad708d7fefc3a35c424113
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcDebugHook.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcMaintenance.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: e1c4dade9bd5cba7bd9b3ac7f6fdb31bed022abe 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ADL] When we click on Httpv4 boot option for downloading , it returns back to BIOS page.
+  
+  Merging 44f85cfcf63b2af6d004c7151aee0da73453fcbf from TGL to ADL.
+  
+  Hsd-es-id: 16011934468
+  Change-Id: I3229e9c7536acaf7fe35ef7866f2e6f26e167032
+  Original commit hash: 1200492a8093c5822175099b18f45cf23da35f3e
+  
+  AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 24e0328a1fec751a1af1695413d400e19ef91d1a 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][client_platf][integration_step_event][16011991617] [ADL-P | DDR4 DDR5 LP4 LP5] PhyInit delta updates from B0 to J0.
+  
+  Changes:
+  J0: DATA_CR_DDRCRDATACONTROL0.internalclockson = !Lpddr
+  CCC_CR_MDLLCTL1.mdll_cmn_picapsel = 3 (for all steppings)
+  J0: DDRVCCDLL_CR_AFE_CTRL1_NEW.iolvrtop_cmn_lvroffsetcal = 0x10
+  CCC_CR_DDRCRPINSUSED.CCCMuxSelect = 0 for LP5 Descending
+  CCC_CR_DDRCRPINSUSED.AltMuxLp5DEn = 1 for LP5 Descending
+  
+  Other Changes:
+  - CtlGrpPi Hash update for LP5 per CCC ascending/descending config.
+  - Use CccIndexToFub[] on ADL-S only
+  
+  Hsd-es-id: 16011991617
+  Change-Id: I170ba92c29b1547d3d464e6a7975284faf656a1e
+  Original commit hash: 77f6f8c44e49d43b5312db95bae33d91d70489c5
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: 552576dbedde343d704473f7d97ccd38700a5ea8 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][client_platf][integration_step_event][1308107060][ADL-S][A0][DDR5] Windows hang w SAGV on 2R dimms
+  
+  Issue:
+  Windows hangs w\ SAGV enabled on 2R dimms
+  
+  Root cause:
+  Generic MRS FSM sends ACT instead of NOP on non refreshing ranks
+  
+  Solution:
+  Clear TC_RFP.HPRefOnMRS as a permanent WA, on LP5/DDR5 which use Generic MRS FSM
+  
+  Hsd-es-id: 1308107060
+  Change-Id: Iad7797e82e6dfc62505eab4937057f3edda4e8c5
+  Original commit hash: 2e86efc2fd45f173f3c5eee46ae583c9eac83eba
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcMcOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+*********************************************************************************
+Commit: 2df41c475879fa2bda06215fc3ba8539297ac97e 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  Revert "ClientOneSiliconPkg: PsfLib refactor: remove wrappers for SOC functions"
+  
+  This reverts commit 516246eab4496372a47f39be74925c71d1d545e3.
+  
+  Hsd-es-id: 18011980290
+  Change-Id: I42094ca6020a4bd254fb237dd5feff74da3c6f13
+  Original commit hash: d9e45232dc6317405847e88443ee4c319e99955e
+  
+  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeMeChipsetLib/PeiDxeMeChipsetLib.c
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MeInitPostMem.c
+  ClientOneSiliconPkg/IpBlock/Psf/IncludePrivate/Library/PsfLib.h
+  ClientOneSiliconPkg/IpBlock/Psf/LibraryPrivate/PsfLib/PsfLib.c
+  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiDxeSmmPchTraceHubLib/PeiDxeSmmPchTraceHubLib.c
+  ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiTraceHubLib/PeiTraceHubLib.c
+  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: c56d1561dd186d3d8ac1a9574a54037efc107330 
+*********************************************************************************
+
+[BoardPkg]
+
+  AlderLakeBoardPkg: Revert override when building process finish
+  
+  This issue was introduced in 888c5aed3c66f38b88acb73bbd22b051ba1f97e5.
+  The microcode_padding.py script will re-generation MicrocodeVersion.data
+  binary file when doing building process. If this file is changed, will
+  affects code submission with CR process. So we should revert this file
+  when building process finish.
+  
+  For the new payload in MicrocodeFv, we should not need MicrocodeArray.data
+  any more, remove it.
+  
+  Hsd-es-id: N/A
+  Change-Id: I1814e2a7b50789c625ce4f00612fc7257634a297
+  Original commit hash: 8f2250b3fe475967d5a3d8dc407c8bb3a5c7738f
+  
+  AlderLakeBoardPkg/microcode_padding.py
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 15c220bb8fbc0d56123cd314f42f3c21140f0d40 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg], [CPU]
+
+  Revert "[C1S][ADL][MTL]Lean SMM POC:Remove DigitalThermalSensor SMI handlers or refactor not to use SMI"
+  
+  This reverts commit ef20e905371b9efcbb245d86ea0ec36a670aeb12.
+  
+  Hsd-es-id: 22010434906
+  Change-Id: I277cf0bec008e81eda98092cd674d8a3b0954295
+  Original commit hash: 071b9e370cd78f23159f4923405a808269ba0a06
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Gpe.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRvp/Thermal.asl
+  AlderLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/Gpe.asl
+  AlderLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/Platform.asl
+  AlderLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/PlatformNvs.asl
+  AlderLakeBoardPkg/BoardPkg.fdf
+  AlderLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  AlderLakePlatSamplePkg/Features/Acpi/AcpiTables/SsdtPtid/Ptid.asl
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeCpuPolicyUpdate.c
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.uni
+  ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/CpuNvs.asl
+  ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/CpuSsdt.asl
+  ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuAcpi.c
+  ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuInitDxe.h
+  ClientOneSiliconPkg/Cpu/Include/Protocol/CpuPolicyProtocol.h
+  ClientOneSiliconPkg/Cpu/IncludePrivate/CpuNvsAreaDef.h
+  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtDts.c
+  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtDts.h
+  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtDtsLib.h
+  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtSmm.c
+  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtSmm.h
+  ClientOneSiliconPkg/Cpu/PowerManagement/Smm/PowerMgmtSmm.inf
+  ClientOneSiliconPkg/Product/AlderLake/SiPkgDxe.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 3183e0e2f45acc44e82cb805a71cfae5d472f745 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][client_platf][integration_step_event][14012832751][ADL-S | DDR4 DDR5] [Add special flow for unpopulated MC]
+  
+  MRC needs to program the following registers on the empty MC when going to Normal mode, from B-step and on:
+  mc_init_state.rank_occupancy = 0
+  mcdecs_second_cbit.mock_insr = 1
+  mcdecs_second_cbit.mock_insr_for_mc = 1
+  pm_control.override_ddrpldraindone_cbit = 1
+  normalmode_cfg = 1
+  
+  Hsd-es-id: 14012832751
+  Change-Id: I3067b1b291b6665c36f3e3acea7e11b52f31791a
+  Original commit hash: 76cc5e7660b3528881b5429ff4014115e24ba9da
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
 ################################################################################
 
-Report Summary: Backstop found 1 suspect commits for review 
+Report Summary: Backstop found 9 suspect commits for review 
 
 Warnings Found:
-  Commit: ed9c15d    --Commit Message Contains Key Word: security
-  Commit: ed9c15d    --Commit Message Contains Key Word: internal
-  Commit: ed9c15d    --Commit Message Contains Oem: Acer
+  Commit: 86b0dea    --Commit Message Contains Key Word: internal
+  Commit: e00fcb1    --Commit Message Contains Key Word: step
+  Commit: e1c4dad    --Commit Message Contains Key Word: http
+  Commit: 24e0328    --Commit Message Contains Key Word: internal
+  Commit: 24e0328    --Commit Message Contains Key Word: step
+  Commit: 24e0328    --Commit Message Contains Key Word: stepping
+  Commit: 552576d    --Commit Message Contains Oem: HP
+  Commit: 2df41c4    --Commit Message Contains Key Word: revert
+  Commit: c56d156    --Commit Message Contains Key Word: revert
+  Commit: 15c220b    --Commit Message Contains Key Word: revert
+  Commit: 3183e0e    --Commit Message Contains Key Word: step
