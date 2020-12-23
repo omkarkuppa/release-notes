@@ -117,8 +117,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Wed Dec 23 12:43:29 2020 -0800 
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/IpBlock/Itss; ProjBoardPkg/Acpi/Dsdt; ProjPlatSamplePkg/Setup: Setting D21F3 and F4 to IRQ35 and forcing either/or but not both enable req for D21F3,4
-
- - Adding workaround to itsslib.c for specific IRQ
  - Adding grey out for I3C if I2C#3 is enabled
 
 Hsd-es-id: 22011634494
@@ -390,7 +388,6 @@ Date: Wed Dec 23 12:41:27 2020 -0800
 C1S/IBL/GPIO: Handle virtual GPIO Pad Config registers- resubmit
 
 Originally the change has ben reverted because of post-merge test fail:
-EagleStreamRp_SPR_EBG_FSP_Glue_Debug
 Now the change is resubmited.
 
 For virtual GPIO we have different configuration registers layout.
@@ -450,7 +447,6 @@ Date: Wed Dec 23 12:41:23 2020 -0800
 
 Due to frequent GBE assert seen in J0 power on, skipping the assert.
 
-[
 Hsd-es-id: 16012295780
 Original commit date: Wed Dec 16 17:07:17 2020 +0530
 Change-Id: I469abeba6e574f099b3a318b1fe936a21a024d17
@@ -677,9 +673,7 @@ Commit: e880bed9ba7190435018ae12bdd4d9344c4409d0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Dec 23 12:40:00 2020 -0800 
 -------------------------------------------------------------------------------- 
-Set pch.pmc.mmr.cppm_cg_pol2a.cppm_g2_qual
-
-Reverting previous workaround, setting cppm_g2_qual = 1
+Set pch.pmc.mmr.cppm_cg_pol2a.cppm_g2_qual = 1
 
 Hsd-es-id: 22011835824
 Original commit date: Tue Dec 15 13:27:08 2020 -0800
@@ -737,11 +731,9 @@ Commit: 38035d69eb23357b4eef634eb5a59d949a838355
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Dec 23 12:38:30 2020 -0800 
 -------------------------------------------------------------------------------- 
-[TCSS] [TCSS/iTBT Si WA Request] [ADL-P J0] Skip D3Cold when TBT is in disconnected state.
+[ADL-P J0] Skip D3Cold when TBT is in disconnected state.
 
-The ADL-P J0 HW logic change made the HW is not able to manage PCIe reset properly.
-Therefore, TCSS team would request a Si WA and test build to prove the WA. The
-main idea is to only enable TBT RTD3 cold transition when TBT FW is ready (that
+Enable TBT RTD3 cold transition when TBT FW is ready (that
 means DS has device connected).
 
 Hsd-es-id: 16012327496
@@ -1434,8 +1426,6 @@ Remove invalid PCR programmings via SBREG
 2. RTC: Remove writing to RTC UIPSMI because UIP_SMI_LOGIC_EN is 0 thus UIPSMI register does not exist.
 3. Correct SBI Read/Write shift offset multiplies 8.
 
-[internal-only]
-
 Hsd-es-id: 16012308474, 14013063298
 Original commit date: Tue Dec 15 15:01:24 2020 +0800
 Change-Id: I6eb325aba35079c926998ac5b2635d84e0ad953e
@@ -1490,7 +1480,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Wed Dec 23 12:32:10 2020 -0800 
 -------------------------------------------------------------------------------- 
 Revert "ClientOneSiliconPkg/Pmc: Increasing the timeout for CRID update"
-It was Intended for PO branch. Accidently pushed to master
+Experimental change. Accidentally pushed to master
 
 This reverts commit d7046da803d00da487c7c8f79f30a54e0279d740.
 
@@ -1509,8 +1499,6 @@ Commit: c332ae2b4eb02b6583371106d36685c4b6f69888
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Dec 23 12:32:06 2020 -0800 
 -------------------------------------------------------------------------------- 
-C1S/PchAcpiEbg: C1S integration workarounds removal
-
 MmCfgAddress and DynamicS0i3Support are no longer present in Nvs area,
 so their initialization (which for now is disabled) should be removed.
 
@@ -2849,7 +2837,6 @@ Solution:
  Fix SetDimmParamValue() to keep the correct MR value in the host struct
  Also disable DIMMRONT step by default, per EV recommendation.
 
-[
 Hsd-es-id: 14013108803
 Original commit date: Thu Dec 10 00:11:51 2020 -0800
 Change-Id: Ic3e5466fd4290add42fbe65d75398c59a3462a15
@@ -2932,7 +2919,7 @@ Commit: 3fa1baa7c73c427955afb025b87445b09429d11d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Wed Dec 23 12:20:24 2020 -0800 
 -------------------------------------------------------------------------------- 
-[WiFi][CNVi][OEMx] [Cayucos] BT Standalone. Disappear The Wifi from Device Manager  and enumerates in Device Manager when Wifi is disabled
+[WiFi][CNVi] BT Standalone. Disappear The Wifi from Device Manager  and enumerates in Device Manager when Wifi is disabled
 
 Issue: Wi-Fi core can't be disabled alone.
 Resolution: 1. Add WifiCore option to disable Wi-Fi core alone without affecting bluetooth core.
