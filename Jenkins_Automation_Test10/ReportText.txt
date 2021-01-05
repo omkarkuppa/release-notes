@@ -1,0 +1,155 @@
+*********************************************************************************
+Commit: d7077cc0dd2bfe9e2eb0f15e1ccad5fab35477ba 
+*********************************************************************************
+
+[CPU]
+
+  ClientOneSiliconPkg: Disable SMX at end of boot when TXT is enabled.
+  
+  The OS Virtualization Based Security (VBS) will not enable when SMX bit is set before OS.
+  The EDK2 change introduced static enabling of SMX that kept SMX enabled rest of BIOS boot.
+  Install BIOS ReadyToBoot Callback to disable SMX before OS hand-off.
+  
+  Hsd-es-id: 16012105518
+  Change-Id: Ia1c0d9c3a0d44785402c3eb354ef33e27fa5b168
+  Original commit hash: aa9c6a9b2c0722ac99c105404a7da525195692a9
+  
+  ClientOneSiliconPkg/Cpu/TxtInit/Dxe/TxtDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 49e84be177e45f6f5660fe967602ccfc0a989f51 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "C1S/HDA: Abstract PCR registers access"
+  
+  This reverts commit 106effe536e3889e9e7e1c399f2a7ae86ce1f471.
+  
+  Hsd-es-id: 16012154172
+  Change-Id: I99e61bdfcb636ad0a49bb8d031eac7bc56d452ef
+  Original commit hash: 8142f0ade6539fe74e7e6d2e0c60b7afcffefbdd
+  
+  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/HdaSocLib/HdaSocLib.c
+  ClientOneSiliconPkg/IpBlock/Hda/IncludePrivate/Library/PeiHdaLib.h
+  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiCavsInitLib/PeiCavsInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 954954fe806f2fa64855a63562d41ea46d56c564 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][client_platf][integration_step_event][1308146990][ADL-S | DDR5] [Toggle preamble changes]
+  
+  Use 4tCK Read Preamble in DDR5 Unmatched path at 3600 and above.
+  Use 2tCK preamble below 3600 (2000 and 3200)
+  
+  Additional changes, per DE recommendations:
+  - RxDFE disabled below 5200
+  - Change initial DDR5 VrefCA to 68% of VDDQ, and change VrefCA sweep range in ECT to 65..75%
+  - Set DataSrzCtl.Bits.cktop_cmn_bonus[7] to bit [0] of UiLock (Block SDL With Rcven)
+  - DataDqRxCtl1.dqrx_cmn_rxvrefvdd2gmfc = 7 for DDR4/5
+  - DataDqRxCtl1.dqrx_cmn_rxvrefvssmfc   = 7 for LP4/5
+  - AfeMiscCtrl1.dqrx_cmn_dlydfenumuin = 1
+  - Removed ForceRcomp from MrcFrequencySwitch, it's not needed and we should not issue COMP cycle before PHY init.
+  - Added ForceRcomp at the end of PhyInitSeq3.
+  - Set FwdClkOffsetPs = 0 in LockUi calibration for B-step, to see the right side of the RdT eye.
+  - Decrement UiLock if FwdP/N codes are above 60, to avoid case of saturated RdT margin on the right.
+  
+  [
+  Hsd-es-id: 1308146990
+  Change-Id: I16162ed00acdb3a5490b42f1329276d603209d17
+  Original commit hash: 6cabc5476150c1c0185912bbf2572feb2d395128
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: ebc89a20ee89656bc461ed830a83dfc803ca5fa7 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/Usb2PhyLib Revert to old P2SB SBI access
+  
+  - Revert to old P2SB SBI access due regression related with new access to P2SB
+  
+  Hsd-es-id: 18013813005
+  Change-Id: I732ea913b95cffb80cf4ebb5776111884fb5032f
+  Original commit hash: e060c2e383cc57a8d2e934234e2a748e7d9d01d7
+  
+  ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsb2PhyLib/Usb2PhyLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: de2a7ef470aca68b5a4d69ef0bf6198f851cfa57 
+*********************************************************************************
+
+[PlatformPkg], [CPU]
+
+  ADL Platform VR POR file WW4520
+  - Updated VR Overrides for IA domain TDC with/without iRMS and TDC time.
+  - SA parameters added for ADL M Specific.
+  - Updated ADL M SKU's Pmic, Discrete and Hybrid.
+  
+  Hsd-es-id: 16012071790
+  Change-Id: I80422ba0e77a9699993ab1c359eed75ffe7b57fd
+  Original commit hash: 3fef54776c6fbb3eb38352e79218538b77354827
+  
+  AlderLakePlatSamplePkg/Setup/CpuSetup.c
+  ClientOneSiliconPkg/Cpu/Include/Library/CpuPlatformLib.h
+  ClientOneSiliconPkg/Cpu/IncludePrivate/Library/CpuInfoFruLib.h
+  ClientOneSiliconPkg/Cpu/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/CpuGenInfoFruLib.h
+  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Library/VoltageRegulatorDomains.h
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/Fru/AdlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 5 suspect commits for review 
+
+Warnings Found:
+  Commit: d7077cc    --Commit Message Contains Key Word: security
+  Commit: 49e84be    --Commit Message Contains Key Word: revert
+  Commit: 954954f    --Commit Message Contains Key Word: step
+  Commit: ebc89a2    --Commit Message Contains Key Word: revert
+  Commit: de2a7ef    --Commit Message Contains Key Word: sku
