@@ -1,0 +1,177 @@
+*********************************************************************************
+Commit: 5cd573d474280654e0dedbfe0c673961fcd6476d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][client_platf][bug][1308151981][ADL-S][B0][DDR5] WrT margin drop after RTL
+  
+  Issue:
+  Observed WrT margin drop (shift) after RTL step in MRC, however next RMT that comes after RTL fixes the margins. The issue exposed more on high speeds.
+  
+  Root cause:
+  Issue is related to Generic MRS FSM in MC.
+  In the last section of JEDEC Init we use Generic MRS FSM to issue PDA MRs.
+  MRS FSM expects at least one MR in non-PDA mode, and then PDA MRs.
+  We have only MR10 and MR3 in this group, both are PDA once WRVC1D is done.
+  This caused JEDEC Reset to not program WrV per-device properly, hurting WrT margins.
+  
+  Solution:
+  Merge NonPDA & PDA Registers into a single sequence for Generic MRS FSM.
+  PerformGenericMrsFsmSequence: configure the NonPDA MR's first, followed by PDA MR's, in a single FSM invocation
+  
+  [
+  Hsd-es-id: 1308151981
+  Change-Id: I498b0980647dd277537fd8a7267b5ac0bc7c19bc
+  Original commit hash: 2a87c8eb4ad43e17f1a93529df5f5bd62728b7af
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 7220d4efcf47125c54af921f4cbb3c4ab0bcb807 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Peg10&11 BWG settings mismatch in BIOS 1413
+  
+  +-----------------------------+-------------+-----------------+
+  |      Register               | Offset      | BWG Recommended |
+  |                             | [BitField]  | value           |
+  +-----------------------------+-------------+-----------------+
+  |PTMECFG.PGTSCFF              |03B0h[11:9]  | 0x2             |
+  |PCIEPMECTL.DLSULPPGE         |0420h[30]    | 0               |
+  |LPHYCP4.DPMDNDBFE            |1434h[12]    | 1               |
+  |LPHYCP4.OSUSSP               |1434h[9:8]   | 0x2             |
+  |LPHYCP4.LGUSSP               |1434h[7:6]   | 1               |
+  |LPHYCP4.OSCCLKSQEXITDBTIMERS |1434h[5:3]   | 0x2             |
+  |LPHYCP4.LGCLKSQEXITDBTIMERS  |1434h[2:0]   | 0x2             |
+  +-----------------------------+-------------+-----------------+
+  
+  Added ADVMCTRL [0x5BC] programming for PEG11 also.
+  
+  Hsd-es-id: 16011966247
+  Change-Id: I9109e15b3f617cd814f67adfb54a02b65e3beeb6
+  Original commit hash: 1215bb10e7ee6ad9156caf67c25ef8124d67ee26
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Register/CpuPcieRegs.h
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer2.c
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieSip17InitLib/PeiCpuPcieSip17InitLib.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PciExpressHelpersLibrary/PciExpressHelpersLibrary.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: LG
+
+*********************************************************************************
+Commit: 0cc0d6c32565cca0f561722e87410c8338b34de1 
+*********************************************************************************
+
+[SiliconPkg]
+
+  18013880552: [ME][SPS] Modify Delayed Authentication Mode (DAM) HECI Interface (Revert changes)
+  
+  This reverts commit e99feecd95a35beba0d0ccfa67f358a7615333c4.
+  SPS decided not to change DAM API, so BIOS changes for DAM has to be reverted
+  DAM changes has to be applied before CoreBiosDone.
+  
+  Hsd-es-id: 18013880552
+  Change-Id: I75f17c57654159ade93ebdad7c35af77e87988b1
+  Original commit hash: 35f0ae3c829ac6f4ef7241d4e9a9e4730463dd47
+  
+  ClientOneSiliconPkg/IpBlock/Sps/Include/Library/SpsDamLib.h
+  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsDamLib/SpsDamLib.c
+  ClientOneSiliconPkg/IpBlock/Sps/Library/SpsDamLib/SpsDamLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 69eb7a270bb863dab5c2ba3dbb8a484a45c8fb1a 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  AlderLakeBoardPkg: [ADL-S] Power Meter support for CRB
+  
+  Add ADL-S power meter support for below CRB SKUs.
+  Three power meter tables are required for the corresponding SKUs.
+  
+  Table #1 (DDR4 ERB/CRB)
+  03_ADL_S_ADL_PCH_DDR4_UDIMM_2DPC_RVP(ERB/FAB1/FAB2)
+  04_ADL_S_ADL_PCH_DDR4_UDIMM_2DPC_EVCRB
+  05_ADL_S_ADL_PCH_DDR4_UDIMM_2DPC_CPV_RVP(FAB1)
+  
+  Table #2 (DDR5 ERB/CRB)
+  06_ADL_S_ADP_S_DDR5_UDIMM_1DPC_CRB_FAB1/FAB2
+  08_ADL_S_ADL_PCH_DDR5_SODIMM_2DPC_RVP FAB1
+  09_ADL-S-ADP-S-UD5-1DPC-PPV FAB1/FAB2
+  
+  Table #3 (DDR4 S12 Board)
+  12_ADL_S_ADL_PCH_DDR4_SODIMM_1DPC_RVP
+  
+  Hsd-es-id: 1508506399
+  Change-Id: I7450dffc3dcbdea97ce895cbf0d99043a68f8c8b
+  Original commit hash: 6e1c496b8b105acd01826e7f519796094283abb6
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeterAdlP.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeterAdlS.asl
+  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  AlderLakeBoardPkg/Include/PlatformBoardId.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 680b4448a0b48a95082759809d10fc8e5b1479cf 
+*********************************************************************************
+
+[BoardPkg]
+
+  ADL-S: Update WA of pad termination
+  
+  Apply 20K PU on ISH GP Pins to all Sku.
+  Apply 20K PU on GPP_F4 to S03 Fab1/Fab2.
+  
+  Hsd-es-id: 22011296196 1508250611
+  Change-Id: I0d478c940197f41c95ff6aba531d9983435a8226
+  Original commit hash: ed1989723d30d794eb95557443a07a59fd7a2fad
+  
+  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  AlderLakeBoardPkg/Include/Library/SiliconInitLib.h
+  AlderLakeBoardPkg/Library/SiliconInitLib/SiliconInitPreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 5 suspect commits for review 
+
+Warnings Found:
+  Commit: 5cd573d    --Commit Message Contains Key Word: step
+  Commit: 7220d4e    --Commit Message Contains Oem: LG
+  Commit: 0cc0d6c    --Commit Message Contains Key Word: revert
+  Commit: 69eb7a2    --Commit Message Contains Key Word: sku
+  Commit: 680b444    --Commit Message Contains Key Word: sku
