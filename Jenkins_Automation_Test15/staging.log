@@ -1,0 +1,300 @@
+================================================================================ 
+Commit: cd1240e0df85bc3f9398414f4c1f1c10b4970270 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:14:59 2021 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 1494_00
+Edited
+Hsd-es-id: N/A
+Original commit date: Thu Dec 3 17:51:42 2020 -0800
+Change-Id: Id8ced4973624f0b087d536927c836c9230ed687a
+Original commit hash: 3ce83291a9e6b6b51cd11bd5dfdc15a369e334a5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: c3d29c8b8412d00a665f44b34af7f353ad7ce37d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:14:48 2021 -0800 
+-------------------------------------------------------------------------------- 
+[ClientOneSiliconPkg/PchDmi]Bios Interface Lock Down (BILD) bit is notset post cold boot
+Edited
+Moved the code to set Bios Interface Lock Down bit earlier in the boot flow
+
+Hsd-es-id: 16012025841
+Original commit date: Mon Nov 16 11:27:35 2020 -0800
+Change-Id: I068d56740f14b570fbb41ca4305d6301b3250437
+Original commit hash: c6587954f6a7646b2a151d6cf0bedb12f7d2c3dd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/PchDmi/LibraryPrivate/PeiDxeSmmPchDmiLib/PeiPchDmi15.c
+
+================================================================================ 
+Commit: 48c1b544248c4927feada4d17c1de6ed3b275138 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:14:43 2021 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+Edited
+(cherry picked from commit cc00a2ba38c49cc3c013e6e8fb033932c0c50b36)
+
+Thu Dec 3 19:53:43 2020 +0000
+Original commit date: Thu Dec 3 19:53:43 2020 +0000
+Original commit hash: 44e83688e184e5fb78c6bea2ad22933af1d23efb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 12ddcf18b201a3444268924fba841c16c98e9529 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:14:38 2021 -0800 
+-------------------------------------------------------------------------------- 
+[HSD-ES][client_platf][bug][14013058363][ADL-S][DDR5][Early Command Training fails with DDR5 ECC modules]
+Edited
+Issue:
+  Early Command Training fails with DDR5 ECC modules
+
+Root cause:
+  ECC byte has only 4 bits in DDR5, but DataTrainFeedback mask is 0xFF for all bytes in CSTM/CATM
+
+Solution:
+  Use 4-bit mask for ECC byte in CSTM/CATM
+
+Additional fixes:
+ - ProgramDeswizzleRegisters: skip ECC byte in MC DESWIZZLE programming
+ - DQ mapping: Use 4-bit mask for ECC byte feedback and only map bits [0..3]
+ - Various training steps: MRC_DDR5_ECC_BYTE should be 4 instead of 5
+ - JWL: use proper 4 bits in ReadAfeMiscControl0Reg() to get correct feedback on the ECC byte
+ - DQTimeCentering1D: use 32 + 4 = 36 bits in DQ results print (instead of 40)
+
+[
+Hsd-es-id: 14013058363
+Original commit date: Thu Dec 3 00:09:15 2020 -0800
+Change-Id: I1c4afa22978db2879101878734a2f34ac9b13f34
+Original commit hash: 0ed5eb0674ae281b5bc26702de19c0c3b98d1d07
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcSetup.c
+
+================================================================================ 
+Commit: dcf7dad1557d6426fc4bee3eb5ac9107da48b547 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:14:33 2021 -0800 
+-------------------------------------------------------------------------------- 
+UsbHostControllerInit: HSCFG1 programming change
+
+BIOS incorrectly programmed HSCFG1 register for USB IP version v19.
+After this change HS Async Active will not be propagated to PMC.
+
+Hsd-es-id: 14013053464
+Original commit date: Thu Dec 3 11:07:21 2020 +0100
+Change-Id: I597aeb6452e8a53d9c1135c425e445f2d610de01
+Original commit hash: 56246bdab0a0c987b05e03618b2903d70b00479c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/UsbHostControllerInit.c
+
+================================================================================ 
+Commit: a0b9aaf4b3807e8fe66ecbfe7fa8cc70f063869c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:14:28 2021 -0800 
+-------------------------------------------------------------------------------- 
+MeExtMeasurement: [ADL] Fixed Sporadic SUT auto restart issue due to assert
+
+Fixed Sporadic SUT auto restart observed while entering to boot menu
+through F7 key press due to MeExtConfig Assert.
+
+Hsd-es-id: 16012234252
+Original commit date: Thu Dec 3 10:02:13 2020 +0530
+Change-Id: Ie49f36904593727a74fb3e18ff1d533117c186bf
+Original commit hash: e6ca69e56960c247aa2b77b6b30958a9e6ed3802
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Me/MeExtMeasurement/Dxe/MeExtMeasurement.inf
+
+================================================================================ 
+Commit: ac55eec55a8b1c8ab11b44aa78d778f47a0f2068 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:14:13 2021 -0800 
+-------------------------------------------------------------------------------- 
+[ADL-S][881][DDR4/DDR5][B0-P0][AUDIO][BIOS] SNDW#2 is greyed out in BIOS hence blocking ALC-1308 (Speaker) enumeration in Device Manager
+
+Update config patch table for ADL-S.
+Use Enable/Disable option instead of checkbox for Hda link enablement.
+
+Hsd-es-id: 16012193333
+Original commit date: Fri Nov 27 09:43:22 2020 +0100
+Change-Id: I16ba1ce052092725ff3b2a39279a878220b57d7a
+Original commit hash: 140501824dd0a8005bcf1b3d1f226488b97ef1d4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakeSBoards/Include/AlderLakeSBoardConfigPatchTable.h
+AlderLakePlatSamplePkg/Setup/PchSetup.hfr
+ClientOneSiliconPkg/Pch/PchInit/Dxe/PchHdaAcpi.c
+
+================================================================================ 
+Commit: 7372d02a3b72d0abbebd5722b5c26cdbc44953a3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:14:08 2021 -0800 
+-------------------------------------------------------------------------------- 
+SUT not booting to OS with corporate Debug
+
+Fixed logical error
+
+Hsd-es-id: 16012234589
+Original commit date: Wed Dec 2 12:41:11 2020 +0100
+Change-Id: Ia1c340bd0ada12578c5df7999ebc5244e39286fb
+Original commit hash: 7c8dbcd1f80a7ea24655f5c070b86a725fd74f57
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Amt/Mebx/Dxe/MebxCore.c
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MeInitPostMemCommon.c
+
+================================================================================ 
+Commit: fb4f9dd986bd8a11e8070e212a0ad93b18190231 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:14:00 2021 -0800 
+-------------------------------------------------------------------------------- 
+[C1S/AMT] AMT Configuration Menu in BIOS Setup is accessible when AMT KVM session opened while SUT in BIOS
+Merge from TGL.
+
+Issue: Remote KVM session is opened after BIOS sends Get ASF Boot Option command, therefore the KVM in Boot Option is 0
+Resolution: Use USB-R port to check if KVM is enabled in runtime, and modify the flow as:
+            1. If remote KVM is opened before entering or exiting "PCH-FW Configuration", BIOS can detect the KVM and update the accessibility accordingly.
+            2. If remote KVM is opened in "PCH-FW Configuration", because BIOS can't update the accessibility, BIOS will pop out a dialog box and reset system.
+Impacted: All C1S projects.
+
+Hsd-es-id: 22011445235
+Original commit date: Thu Dec 3 10:54:28 2020 +0800
+Change-Id: Ie18e5bff497f0460c394a17aeb368a83c67df779
+Original commit hash: c35142973578c8d9be35461731a7f31713bae1c9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.c
+AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.h
+AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.inf
+AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AsfSupport.c
+AlderLakePlatSamplePkg/Features/Amt/Include/Protocol/AmtWrapperProtocol.h
+AlderLakePlatSamplePkg/Features/Me/MeExtMeasurement/Dxe/MeExtConfig.c
+AlderLakePlatSamplePkg/Setup/AmtSetup.hfr
+AlderLakePlatSamplePkg/Setup/MeSetup.c
+AlderLakePlatSamplePkg/Setup/MeSetup.hfr
+AlderLakePlatSamplePkg/Setup/Setup.inf
+AlderLakePlatSamplePkg/Setup/SetupCallbackExList.h
+AlderLakePlatSamplePkg/Setup/SetupId.h
+ClientOneSiliconPkg/Fru/AdlPch/Library/PeiDxeSmmPchInfoLib/PchInfoLibAdl.c
+ClientOneSiliconPkg/Include/Library/DxeMeLib.h
+ClientOneSiliconPkg/Include/Register/MeRegs.h
+ClientOneSiliconPkg/IpBlock/Me/HwAsset/Dxe/Inventory.c
+ClientOneSiliconPkg/IpBlock/Me/Library/DxeMeLib/HeciMsgDxeLib.c
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MeInitPostMem.c
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/PeiMeInitLib.inf
+ClientOneSiliconPkg/Pch/Include/Library/PchInfoLib.h
+
+================================================================================ 
+Commit: 8ffd322782e1b7c418830acbdaa718fc43e4adb5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:13:56 2021 -0800 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC CI
+
+Hsd-es-id: N/A
+Original commit date: Thu Dec 3 01:27:25 2020 -0800
+Change-Id: Ieaee8a9714e29f22f0e0381bcd28eaea2d6accb8
+Original commit hash: 5d53721357ffc2db923ec91e74314f43ba395338
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: f63b0756326dfeb626783cc2ae493d756a4dd860 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:13:53 2021 -0800 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg: MMIO disabled case support in SPI driver.
+
+In certain scenarios existing SPI BAR0 matches mSpiResvMmioAddr
+with memory space bit cleared from command register which can
+cause SetVariable() failure.
+
+Since SetVariable() can be called everywhere, it is better to
+handle this inside SMM SPI driver, and save/restore original
+command register value after finished SPI command.
+
+Hsd-es-id: 14012823259
+Original commit date: Tue Dec 1 17:41:14 2020 +0800
+Change-Id: I72c526096c5c211bdfe91d904effc0ec96436e41
+Original commit hash: 70628bdb3706e11cb74821c67fa7bcce900e3fec
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Spi/Smm/Spi.c
+
+================================================================================ 
+Commit: e74c91ed083414e8ab0117d22b74829fa1881402 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:13:34 2021 -0800 
+-------------------------------------------------------------------------------- 
+[ADL] [J0 PO] [FSP]: EnableFastMsrHwpReq UPD is default enable in dsc but disable in setup variable
+
+Hsd-es-id: 16012229625
+Original commit date: Thu Dec 3 13:24:35 2020 +0800
+Change-Id: I1635bab902cfa91469450e7466113c8b1303a154
+Original commit hash: 0bc01abdd58e1a095f9c4734588af85ebd78e5d3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/Upd/FspsUpd.dsc
+
+================================================================================ 
+Commit: 89024247a328acc3664545b9a8e534153e89e5d9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:13:21 2021 -0800 
+-------------------------------------------------------------------------------- 
+AlderLakeBoarFspPkg/FspPkgPcdInit.dsc: SUT getting hang at 9A5F PC with EXT_FspGccWrapperApi_Debug of AlderLake_Label1467_00_24 BIOS BUILD
+
+Increase PcdFspReservedMemoryLength size to prevent out of resource
+
+Hsd-es-id: 16012160637
+Original commit date: Wed Dec 2 10:09:20 2020 +0800
+Change-Id: Idc259c576d1497b367a4d985c4b2e0b4e44741c4
+Original commit hash: ea2b23ff9290d1b59b01c7d1769d4631bc7852ad
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 2a0792f5163e7e2cc748884a1aabbe3b493fa2f7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 28 13:13:14 2021 -0800 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision
+
+(cherry picked from commit 12354acd018015eb3f25eb8f1b3446f71d3205cb)
+
+Thu Dec 3 02:32:17 2020 +0000
+Original commit date: Thu Dec 3 02:32:17 2020 +0000
+Original commit hash: 8fb4bd7b04beb57d499a425cef6cebede638338f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h

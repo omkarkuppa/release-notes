@@ -1,0 +1,160 @@
+*********************************************************************************
+Commit: 691a3bd3ff19e8ee3dcd6f847101cd88b0fb6bc2 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "ClientOneSiliconPkg/MemoryInit/Tgl:[TGL] Scomp corner case fix"
+  
+  This reverts commit 45ed9aa52a61fba4f77c5db48c437f9035ed49fd.
+  
+  [Issue/Feature Description]
+  One corner case occurs, in case of harmonic lock did not caught. The algorithm will set the cell to 15 (Max).
+  However, there is a possible small drift can hit harmonic lock
+  
+  [Resolution]
+  Fix #1: Limits of Max number of scomp cell is equal to 12 or smaller. min(RoundDn(# of cell found in HL algo x 80%) , 12)
+  Fix #2: Fix potential issue of scomp normalization step to honor above limits during trainings
+  
+  [Impacted Platform]
+  All TGL
+  
+  Hsd-es-id: 22012125727
+  Change-Id: Ic293c4fb52ede225fcab6d5d455b8ff16506ddc0
+  Original commit hash: 8a6f648cddbbec07b81441fda741474783bfc801
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 957bfb895f01e72e092f8ca02a48e842a61fedf0 
+*********************************************************************************
+
+[SA], [ASL]
+
+  Revert "TGL-H [P0/R0]: PEG11 dGFX audio not working due to INTx mapping"
+  
+  This reverts commit 8bc63b31a3a74faeef96d1ede6b8a624753d3d07.
+  
+  Hsd-es-id: 22012018337
+  Change-Id: I3d997b1c6ee2dbf260f1089a6a0a04ca78ee58f5
+  Original commit hash: 3c288d6628a65e1df8ff4021ffe4cfddf900aba2
+  
+  ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/CpuPcieRp.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 8342bc4f178ec881b45ac36625b2cd1a79a3cbab 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/MemoryInit/Tgl:[TGL] Scomp corner case fix
+  
+  [Issue/Feature Description]
+  One corner case occurs, in case of harmonic lock did not caught. The algorithm will set the cell to 15 (Max).
+  However, there is a possible small drift can hit harmonic lock
+  
+  [Resolution]
+  Fix #1: Limits of Max number of scomp cell is equal to 12 or smaller. min(RoundDn(# of cell found in HL algo x 80%) , 12)
+  Fix #2: Fix potential issue of scomp normalization step to honor above limits during trainings
+  
+  [Impacted Platform]
+  All TGL
+  
+  Hsd-es-id: 22012125727
+  Change-Id: Id0a5a5b874f7195a644a98a19444a1b351a9b2f2
+  Original commit hash: 45ed9aa52a61fba4f77c5db48c437f9035ed49fd
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 59b284123c130791270656783b777771ffc09a4b 
+*********************************************************************************
+
+[PlatformPkg]
+
+  TGLH: Remove RFI Mitigation Option for ION DCM/CCM Switching
+  
+  - Suppressed the RFI Mitigation BIOS setup for desktop SKU's.
+  - Internal changes to skip the programming is already taken care.
+  
+  Hsd-es-id: 22012123999
+  Change-Id: Ia7e0f23f5ddc86e1ff367e7f22276dfa13a3913c
+  Original commit hash: de64b63788c7e960a2dc4c277589a64d93023547
+  
+  TigerLakePlatSamplePkg/Setup/CpuSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 87d0096af84e7da72239678311b8821fc1a7ca3d 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  ClientOneSiliconPkg\IpBlock\SerialIo\I2c: I2C SCL HCNT LCNT timings update to meet the correct frequencies.
+  
+  Issue: When applied either BIOS ACPI override through example Method(SSCN){Return(PKG3(SSH0,SSL0,SSD0))}
+  or through Serial Io I2C driver I2C clock was not programmed correctly.
+  Thus ending up with different freq vs expected.
+  - Standart Speed Result Frequency 74.6[kHz] instead of 100kHz
+  - Fast Speed Result Frequency 312.5[kHz] instead of 400kHz
+  - Fast Speed Plus Result Frequency - I2C produced error unknown freq instead 1MHz
+  
+  Fix:
+  - Replaced outdated SCL programming with best calibrated values in both sample package and C1S
+  
+  
+  Hsd-es-id: 22012230763
+  Change-Id: I23f624eef69889c0d5cde77e90b07e059d5cda7f
+  Original commit hash: c0937e1e27a1cac689b537d399e8ef5b423b684a
+  
+  ClientOneSiliconPkg/Include/Register/SerialIoI2cRegs.h
+  ClientOneSiliconPkg/IpBlock/SerialIo/I2c/LibraryPrivate/PeiDxeSerialIoI2cMasterCommonLib/SerialIoI2cMasterCommonLib.c
+  ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiSerialIoInitLib/PeiSerialIoI2cLib.c
+  TigerLakePlatSamplePkg/Library/PeiI2cAccessLib/PeiI2cAccessLib.c
+  TigerLakePlatSamplePkg/Setup/PchSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+################################################################################
+
+Report Summary: Backstop found 5 suspect commits for review 
+
+Warnings Found:
+  Commit: 691a3bd    --Commit Message Contains Key Word: revert
+  Commit: 691a3bd    --Commit Message Contains Key Word: step
+  Commit: 957bfb8    --Commit Message Contains Key Word: revert
+  Commit: 8342bc4    --Commit Message Contains Key Word: step
+  Commit: 59b2841    --Commit Message Contains Key Word: sku
+  Commit: 59b2841    --Commit Message Contains Key Word: internal
+  Commit: 87d0096    --Commit Message Contains Key Word: internal

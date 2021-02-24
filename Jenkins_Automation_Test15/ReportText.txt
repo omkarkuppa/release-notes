@@ -1,0 +1,95 @@
+*********************************************************************************
+Commit: 12ddcf18b201a3444268924fba841c16c98e9529 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [HSD-ES][client_platf][bug][14013058363][ADL-S][DDR5][Early Command Training fails with DDR5 ECC modules]
+  
+  Issue:
+  Early Command Training fails with DDR5 ECC modules
+  
+  Root cause:
+  ECC byte has only 4 bits in DDR5, but DataTrainFeedback mask is 0xFF for all bytes in CSTM/CATM
+  
+  Solution:
+  Use 4-bit mask for ECC byte in CSTM/CATM
+  
+  Additional fixes:
+  - ProgramDeswizzleRegisters: skip ECC byte in MC DESWIZZLE programming
+  - DQ mapping: Use 4-bit mask for ECC byte feedback and only map bits [0..3]
+  - Various training steps: MRC_DDR5_ECC_BYTE should be 4 instead of 5
+  - JWL: use proper 4 bits in ReadAfeMiscControl0Reg() to get correct feedback on the ECC byte
+  - DQTimeCentering1D: use 32 + 4 = 36 bits in DQ results print (instead of 40)
+  
+  [
+  Hsd-es-id: 14013058363
+  Change-Id: I1c4afa22978db2879101878734a2f34ac9b13f34
+  Original commit hash: 0ed5eb0674ae281b5bc26702de19c0c3b98d1d07
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/MEMORY/MrcSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: fb4f9dd986bd8a11e8070e212a0ad93b18190231 
+*********************************************************************************
+
+[PlatformPkg], [PCH]
+
+  [C1S/AMT] AMT Configuration Menu in BIOS Setup is accessible when AMT KVM session opened while SUT in BIOS
+  Merge from TGL.
+  
+  Issue: Remote KVM session is opened after BIOS sends Get ASF Boot Option command, therefore the KVM in Boot Option is 0
+  Resolution: Use USB-R port to check if KVM is enabled in runtime, and modify the flow as:
+  1. If remote KVM is opened before entering or exiting "PCH-FW Configuration", BIOS can detect the KVM and update the accessibility accordingly.
+  2. If remote KVM is opened in "PCH-FW Configuration", because BIOS can't update the accessibility, BIOS will pop out a dialog box and reset system.
+  Impacted: All C1S projects.
+  
+  Hsd-es-id: 22011445235
+  Change-Id: Ie18e5bff497f0460c394a17aeb368a83c67df779
+  Original commit hash: c35142973578c8d9be35461731a7f31713bae1c9
+  
+  AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.c
+  AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.h
+  AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AmtWrapperDxe.inf
+  AlderLakePlatSamplePkg/Features/Amt/AmtWrapperDxe/AsfSupport.c
+  AlderLakePlatSamplePkg/Features/Amt/Include/Protocol/AmtWrapperProtocol.h
+  AlderLakePlatSamplePkg/Features/Me/MeExtMeasurement/Dxe/MeExtConfig.c
+  AlderLakePlatSamplePkg/Setup/AmtSetup.hfr
+  AlderLakePlatSamplePkg/Setup/MeSetup.c
+  AlderLakePlatSamplePkg/Setup/MeSetup.hfr
+  AlderLakePlatSamplePkg/Setup/Setup.inf
+  AlderLakePlatSamplePkg/Setup/SetupCallbackExList.h
+  AlderLakePlatSamplePkg/Setup/SetupId.h
+  ClientOneSiliconPkg/Fru/AdlPch/Library/PeiDxeSmmPchInfoLib/PchInfoLibAdl.c
+  ClientOneSiliconPkg/Include/Library/DxeMeLib.h
+  ClientOneSiliconPkg/Include/Register/MeRegs.h
+  ClientOneSiliconPkg/IpBlock/Me/HwAsset/Dxe/Inventory.c
+  ClientOneSiliconPkg/IpBlock/Me/Library/DxeMeLib/HeciMsgDxeLib.c
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MeInitPostMem.c
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/PeiMeInitLib.inf
+  ClientOneSiliconPkg/Pch/Include/Library/PchInfoLib.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+################################################################################
+
+Report Summary: Backstop found 2 suspect commits for review 
+
+Warnings Found:
+  Commit: 12ddcf1    --Commit Message Contains Key Word: step
+  Commit: fb4f9dd    --Commit Message Contains Key Word: HW
