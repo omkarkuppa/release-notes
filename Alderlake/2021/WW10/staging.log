@@ -262,15 +262,7 @@ Commit: cead32eba7336f4b08cae161cbeda8d3ca1b8ac4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:27:16 2021 +0530 
 -------------------------------------------------------------------------------- 
-Revert "ClientOnesiliconPkg/Sata: SATA LTR value programing on D0/D3 flow to allow S0i3.2 entry"
-
-This reverts commit ee9f234d85e47391406a60c76f5d9be0613527e
-
-S0i3.2 entry need BIOS programe Sata LTR_IGN on D0/D3 flow. Original
-patch doesn't handle LTR IGN programming in VMD case. Thus, ADL-S golden
-configure (VMD enable) fail to enter PS_ON(S0i2.1) with this patch. Need
-figure out SATA LTR IGN solution in VMD flow before bring this change back
-again
+[PCH] Revert "[PCH] SATA LTR value programing on D0/D3 flow to allow S0i3.2 entry"
 
 Hsd-es-id: 16012692769
 Original commit date: Fri Feb 19 13:25:49 2021 +0800
@@ -600,9 +592,9 @@ Commit: 45c480f1944a81e9f0c4e450b3c712e11d809eac
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:26:28 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-M][CVF]PO] Yellow Bang seen on IVSC driver upon system boot
+[PCH][ADL-M][CVF] Yellow Bang seen on IVSC driver upon system boot
 
-GPP_E9 is used for ISH GP 4 functionality on ADL M RVPs. Bios was still programming GPP_B3 (ADLP setting).
+GPP_E9 is used for ISH GP 4 functionality on ADL M RVPs. BIOS was still programming GPP_B3 (ADLP setting).
 
 Hsd-es-id: 16012670465
 Original commit date: Tue Feb 16 10:42:57 2021 +0530
@@ -698,12 +690,8 @@ Commit: 09ac999bd359f9791080843d7f8a0f2811df1501
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:26:09 2021 +0530 
 -------------------------------------------------------------------------------- 
-C1S/P2SB/IBL: Introduce Firmware Emulated P2SB option
+[PCH] Introduce Firmware Emulated P2SB option
 
-When P2SB device is emulated in firmware like it is done
-in Integrated Boor Logic (IBL) (the device is emulated
-by S3M firmware) some programming is not required.
-In emulated P2SB some configuration options are not present.
 This change introduces FirmwareEmulatedP2sb private option
 that allow to skip a programing that is not required for
 emulated P2SB.
@@ -757,7 +745,7 @@ Commit: 65687c1396ce3e659ac6f68928bc72ab2ea43050
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:26:01 2021 +0530 
 -------------------------------------------------------------------------------- 
-C1S/Gpio: Add suport for DMIC functionality on ADP-P [REVERT]
+[PCH] Add suport for DMIC functionality on ADP-P [REVERT]
 
 Revert support for DMIC in GpioGetNativePadByFunction function
 
@@ -1082,7 +1070,7 @@ Commit: 180e86801171fb36982d7615d1995c532d00eb75
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:24:53 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ClientOneSiliconPkg:PcieRp] Program TLS based on EndPoint Capability
+[PCH] Program TLS based on EndPoint Capability
 
 Update TLS on the root port based on end point capability
 
@@ -1100,10 +1088,9 @@ Commit: ebe640dec65a623443601d99219873324154a61c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:24:50 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-S + ADP-S DDR5][PS_ON] PS ON REQ signal always pulled HIGH in S0 on DDR5 boards
+[PCH][ADL-S + ADP-S DDR5][PS_ON] PS ON REQ signal always pulled HIGH in S0 on DDR5 boards
 
 Change PD PSON GPIO pins definition based on the TCSS BIOS spec.
-The GPIO sheets have the wrong information.
 
 Hsd-es-id: 16012413119
 Original commit date: Tue Feb 9 18:45:03 2021 -0800
@@ -1292,7 +1279,7 @@ Commit: 051433998988db06cde11e0a77d7e568b7b29258
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:23:48 2021 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg\Fru\AdlPch\PchInfoLibAdl; Removal of not supported PCH generation.
+[PCH] Removal of not supported PCH generation.
 
 - This commit removes JSL PCH related handling in IPs: I2C, Sata, Pmc
 
@@ -1315,7 +1302,7 @@ Commit: 508bbac767367735f206faa5d27e55617defef94
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:23:37 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADLM][PO]:Changing reset pin polarity OF X1 pcie slot from high->low.
+[PCH][ADLM][PO]:Changing reset pin polarity OF X1 pcie slot from high->low.
 
 Hsd-es-id: 16012655631
 Original commit date: Thu Feb 11 16:33:20 2021 +0530
@@ -1397,7 +1384,7 @@ Commit: 11dbc6bf606ed667bee5b9de47dd08f3399ac054
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:23:08 2021 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/GPIO: SerialIo SPI Pinmux updates for Ver6
+[PCH] SerialIo SPI Pinmux updates for Ver6
 
 Updated Ver6 Pinmux for SPI, also added possibility to set it via UPD.
 
@@ -1418,8 +1405,9 @@ Commit: 3f5bfd140ccb6736d1e6b3b3c47f1cfb7206ec72
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:23:01 2021 +0530 
 -------------------------------------------------------------------------------- 
-Console Redirection Support.
-Uart ConnectController invoked only once on warm/cold reset.
+[PCH] Console Redirection Support
+
+UART ConnectController invoked only once on warm/cold reset.
 F2 key press on putty displays the BIOS setup page and able to navigate the knobs.
 Fixed Keyboard issue on BootManagerMenu.
 
@@ -1553,7 +1541,7 @@ Commit: 2d316396ab5ceb71d88acb622cfd86cb4ba17c29
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:22:09 2021 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg:DMI: Update programming in accordance with BWG
+[PCH] Update programming in accordance with BWG
 
 This change updates programming for PCH DMI IP as per r1p6 BWG.
 
@@ -1617,7 +1605,7 @@ Commit: ac5ef00a25f882b493b4961f1eadb1ded1885cf2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:21:55 2021 +0530 
 -------------------------------------------------------------------------------- 
-C1S/Gpio: Add suport for DMIC functionality on ADP-P
+[PCH] Add suport for DMIC functionality on ADP-P
 
 GpioGetNativePadByFunction supports DMIC functionality on ADP-P
 
@@ -1789,7 +1777,7 @@ Commit: 43252afe5e3fdce2e6e4ae2dd7eb129918e929c5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:20:42 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-M][CVF] Fix for MIPI and CVF GPIO Init.
+[PCH][ADL-M][CVF] Fix for MIPI and CVF GPIO Init.
 
 MIPI and CVF GPIO in not getting initialized, because
 PcdMipiCamGpioEnable is set After Silicon Init, this pcd should be set
@@ -1809,13 +1797,13 @@ Commit: 09aed5e25571d71ae8f7477f03b01f3aa19e9e32
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:20:41 2021 +0530 
 -------------------------------------------------------------------------------- 
-C1S/PchInit: XhciMse related function moved to PchOnPciEnumCompleteCommon
+[PCH] XhciMse related function moved to PchOnPciEnumCompleteCommon
 
 Direct accesses to PCH devices registers should be removed from common
-code in ServerPlatformPkg.
+code.
 
-AttemptToSetXhciMse (WA required for Windows kernel debugger)
-has been moved to PchOnPciEnumCompleteCommon callback.
+AttemptToSetXhciMse has been moved to PchOnPciEnumCompleteCommon
+callback.
 
 Hsd-es-id: 18014595439
 Original commit date: Thu Feb 4 15:06:21 2021 +0100
@@ -1837,7 +1825,7 @@ Commit: 6439cc2f9952f43aa186252a4bc26851b2ed759c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:20:39 2021 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: xHCI programming update
+[PCH] xHCI programming update
 
 Update of xHCI programming for v19.1 programs. This change includes:
   * disable of Per Port RF power gating for USB2
@@ -1845,9 +1833,6 @@ Update of xHCI programming for v19.1 programs. This change includes:
   * setting of minimum time for link to stay active from U3 to 256us
   * before locking xHCI BIOS will now indicate to HW that USB3 Link
     related programming is complete
-
-For testing, boot was performed and comparision of register values dump
-before and after the implementation.
 
 Hsd-es-id: 18014890660
 Original commit date: Wed Feb 3 18:09:23 2021 +0100
@@ -1981,7 +1966,7 @@ Commit: 7197d1c362d38f5f5578cf0ee674ad0a5109bccc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:20:02 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-P] : BIOS support for ADL-P GCS
+[PCH][ADL-P] : BIOS support for ADL-P GCS
 
 Several lines of description for the change.
 
@@ -2267,7 +2252,7 @@ Commit: 657ee22e8220bb573fc5b20b530029bd7cc8ba11
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:18:54 2021 +0530 
 -------------------------------------------------------------------------------- 
-C1S/GPIO: Simple clean up for ADL code
+[PCH] Clean up for ADL code
 
 GpioPinsVer2H removed from preprocesor include for ADL
 
@@ -2716,7 +2701,7 @@ Commit: 76a69ca0f761ba720b7bd3f810e405c144234e65
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:16:48 2021 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg:PMC: Enable pre-wake on DMI CPPM comparator
+[PCH] Enable pre-wake on DMI CPPM comparator
 
 This change enables pre-wake comparator for DMI CPPM.
 
@@ -2764,9 +2749,9 @@ Commit: 0537d665599bd0eedbffab1c3dbbd3a33fbd5506
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:16:41 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ClientoneSiliconPkg/PcieRp]BIOS to implement PCH PCIe register based on latest BWG 1.6
+[PCH] BIOS to implement PCH PCIe register based on latest BWG 1.6
 
-Updated pch pcie root port programming according to bios writers guide version 1.6
+Updated PCH PCIe root port programming according to bios writers guide version 1.6
 
 Hsd-es-id: 16012539032
 Original commit date: Fri Dec 11 16:00:42 2020 -0800
@@ -2899,7 +2884,7 @@ Commit: 2307e387f8af8021e5937f7f7c17c580a318fc60
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:16:22 2021 +0530 
 -------------------------------------------------------------------------------- 
-ClientOnesiliconPkg/Sata: SATA LTR value programing on D0/D3 flow to allow S0i3.2 entry
+[PCH] SATA LTR value programing on D0/D3 flow to allow S0i3.2 entry
 
 Sata D0 slumber LTR values needs to be programmed as 15 ms regardless of PSON support at boot time.
 
@@ -3052,7 +3037,7 @@ Commit: fdd5a41706443117b4ae409f6c7141bb078747cf
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:15:42 2021 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: xHCI programming update
+[PCH] xHCI programming update
 
 Programming update of xHCI programming for programs using IP v19.0.
 This change contains:
@@ -3128,7 +3113,7 @@ Commit: a351a8ccc148dea0830e627c0fce3f06ef13120b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:15:34 2021 +0530 
 -------------------------------------------------------------------------------- 
-EV recommendation to official IFWI
+[PCH] EV recommendation to official IFWI
 
 Moving DMI to HWEQ in all boot.
 
@@ -3227,7 +3212,7 @@ Commit: 652e5818ac1a7cc32b3f6c5b1ec674ae67b096f0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:15:12 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADLM][PO]:Enabling pep constraint for THC0 and THC1 by default.
+[PCH][ADLM][PO] Enabling pep constraint for THC0 and THC1 by default.
 
 Hsd-es-id: 16012590584
 Original commit date: Wed Feb 3 20:38:48 2021 +0530
@@ -3435,11 +3420,11 @@ Commit: 0d3b7ec59b415c01c29d8150892fe3549a52eccd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:14:20 2021 +0530 
 -------------------------------------------------------------------------------- 
-C1S/SmmDispatcher: Create SMI Dispatcher instance for IBL
+[PCH] Create SMI Dispatcher instance for IBL
 
 There are no PCIe RP and USB in IBL so related code shall
 be removed from SMI Dispatcher.
-This change introduces IBL's instance of SMI Dispatcher.
+
 PCIe RP SMI handling is different for Client, Server and IBL
 so PCIe portion of SMI Dispatcher code has been moved
 to separate files.
@@ -3490,7 +3475,7 @@ Commit: 39811d343e15270112ef7e397bf125740d27b7ed
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:14:16 2021 +0530 
 -------------------------------------------------------------------------------- 
-C1S/CycleDecodingLib: Add IO Enable Decoding "AND then OR" API
+[PCH] Add IO Enable Decoding "AND then OR" API
 
 There is a need to clear IO Enable Decoding in LPC/eSPI.
 This change introduces new function to allow this:
@@ -3530,7 +3515,7 @@ Commit: 72fd8bbb502e55f820ff8702c66f25a5b8fe1655
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:14:09 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-M PO] [Platform Enabling] Configure IPs/Controller
+[PCH][ADL-M PO] [Platform Enabling] Configure IPs/Controller
 
 Enabling/Disabling IPs/Controller's based on LP4 RVP design
 
@@ -3603,7 +3588,7 @@ Commit: b632a363b3f2dfc6f3d7f3670340359cb0e6e001
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:13:53 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-P][TCSS][2nd Part]: BIOS Support to add GPIO to control Aux override for Non Retimer Port.
+[PCH][ADL-P][TCSS][2nd Part]: BIOS Support to add GPIO to control Aux override for Non Retimer Port.
 
 Type-C Aux Override feature need Additional GPIO. Same GPIO is used for other purpose.
 So based on AuxOverride BIOS setup option GPIO will be configure as Aux Override GPIO.
@@ -3787,7 +3772,7 @@ Commit: b308cf551f54d901c160288026a0b77dbd2875c9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:13:33 2021 +0530 
 -------------------------------------------------------------------------------- 
-AlderLakeBoardPkg/Gpio: Remove the use of D14 for ISH UART
+[PCH] Remove the use of D14 for ISH UART
 
 The D14 is assigned for Slot PWR enable
 
@@ -3805,7 +3790,7 @@ Commit: 208ca8c18380aac08d0da2eb37d25c1714f197b7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:13:31 2021 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/Hsio: Upadting HSIO lane for ADL M
+[PCH] Upadting HSIO lane for ADL M
 
 Lane 11 and 12 for ADL M will be handled by soft strap.
 
@@ -3910,7 +3895,7 @@ Commit: 556306247637298d16030d829795556ebb89793e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:12:23 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL][IMAGE] Support GPIO function "Strobe_En"
+[PCH][ADL][IMAGE] Support GPIO function "Strobe_En"
 
 Adding Camera GPIO setup item "Strobe_En"
 
@@ -3933,7 +3918,7 @@ Commit: 4e8314159fbc8b3f46cc193b7a28621fe28798d4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:12:19 2021 +0530 
 -------------------------------------------------------------------------------- 
-ADL M (LP5) AEP Bios support.
+[PCH] ADL M (LP5) AEP Bios support.
 Added ADL-M AEP BIOS Support
  - Added BoardID
  - GPIO changes
@@ -4017,9 +4002,9 @@ Commit: 2bc5e5b0f58dff436d58b78d788eddee13dc00e9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:11:55 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADLM][PO]:Changing Pch ssd reset gpio polarity from High ->Low.
+[PCH][ADLM][PO]:Changing PCH SSD reset gpio polarity from High ->Low.
 
-Verfication:Booted to OS with Nvme connected to Pch slot.
+Verfication:Booted to OS with NVMe connected to PCH slot.
 
 Hsd-es-id: 16012586324
 Original commit date: Wed Feb 3 10:58:42 2021 +0530
@@ -4351,7 +4336,7 @@ Commit: 8a701a33874bd47a4f6de28cc89c7373779102a5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:09:56 2021 +0530 
 -------------------------------------------------------------------------------- 
-[CNV][WIFI][BIOS] DSM UHB Enabled func return wrong value
+[PCH][CNV][WIFI][BIOS] DSM UHB Enabled func return wrong value
 
 Updating UHB Support option to meet CNV Platform BIOS SPEC.
 
@@ -4432,7 +4417,7 @@ Commit: 949c461ef6244e8c586067ac0bb196f617230b80
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:09:42 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL] Set Display GPIO inversion bit to default
+[PCH][ADL] Set Display GPIO inversion bit to default
 
 Hsd-es-id: 16012576885, 16012575331
 Original commit date: Sat Jan 30 16:35:25 2021 +0530
@@ -4448,7 +4433,7 @@ Commit: ff548f56f623f36f4c033384ab74d01481fc8fef
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:09:40 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-P][TCSS]: BIOS Support to add GPIO to control Aux override for Non Retimer Port.
+[PCH][ADL-P][TCSS]: BIOS Support to add GPIO to control Aux override for Non Retimer Port.
 
 Type-C Aux Override feature need Additional GPIO. Same GPIO is used for other purpose.
 So based on AuxOverride BIOS setup option GPIO will be configure as Aux Override GPIO.
@@ -4492,7 +4477,7 @@ Commit: b4831af37ef94fd5103e6b4998f144159156b527
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:09:34 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-S + ADP-S DDR5][PS_ON] PS ON REQ signal always pulled HIGH in S0 on DDR5 boards
+[PCH][ADL-S + ADP-S DDR5][PS_ON] PS ON REQ signal always pulled HIGH in S0 on DDR5 boards
 
 1. Add GPIO_VER4_S_GPP_K4 (PLX_SX_ENTRY_G1_PCH_N)
        GPIO_VER4_S_GPP_K3 (PD_SX_ACK_G2_PCH)
@@ -4571,7 +4556,7 @@ Commit: bbfc5c398103c968670f17948da4deb51deedb9b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:09:15 2021 +0530 
 -------------------------------------------------------------------------------- 
-[ADL-P][CNV] PLDR Register address update for ADL-P
+[PCH][ADL-P][CNV] PLDR Register address update for ADL-P
 
 Resolution: There is only minor difference between Ver2 and Ver4 CNVi register, so move them back to CnviRegs.h.
 
@@ -4613,9 +4598,7 @@ Commit: 8d4c9373ec2196b1d7661024d8f6e9dbd59948a5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:09:05 2021 +0530 
 -------------------------------------------------------------------------------- 
-Revert "[ADL-P][TCSS]: BIOS Support to add GPIO to control Aux override for Non Retimer Port."
-
-This reverts commit e7f464dd802b817f1fa088d1024d034335eccaa1.
+Revert "[PCH][ADL-P][TCSS]: BIOS Support to add GPIO to control Aux override for Non Retimer Port."
 
 Mon Feb 8 11:20:05 2021 +0530
 Original commit date: Mon Feb 8 11:20:05 2021 +0530
@@ -4637,9 +4620,7 @@ Commit: bc444ded3a81547810c401aa81a0ba002ccd4f4b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 2 12:09:03 2021 +0530 
 -------------------------------------------------------------------------------- 
-Revert "[ADL] Set Display GPIO inversion bit to default"
-
-This reverts commit 578e5cf7626f9cd1a5f726442a6a9d61a1a31d04.
+Revert "[PCH][ADL] Set Display GPIO inversion bit to default"
 
 Mon Feb 8 11:19:58 2021 +0530
 Original commit date: Mon Feb 8 11:19:58 2021 +0530
