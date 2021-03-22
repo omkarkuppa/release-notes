@@ -1,0 +1,319 @@
+*********************************************************************************
+Commit: 8281a2392d24aab085a1c84e9108ea1c685e7439 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [TGL-H] PEG10 device can't get to gen4
+  
+  Revert "[TGL][PEG] Do HWEQ after SpeedChange to fix ANFES"
+  This reverts commit 6b0a3f8d2b5be7bc8ea80cc5d37b9ea2eae31ebc.
+  
+  Hsd-es-id: 22012657709
+  Change-Id: I123159bd33d465e8639ff45790f7e5e1a9026a05
+  Original commit hash: 80a33cc5cc41235f0d0f69a4efe90943c59b0dc4
+  
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: eae4e55548407a6ee01a932be410d9005a9a4830 
+*********************************************************************************
+
+[SiliconPkg], [PCH], [PlatformPkg]
+
+  Revert "ClientOneSiliconPkg/PeiDxeSmmPmcPrivateLib: Fix programming of Pcie ref ssc pll"
+  
+  This reverts commit 95528afb7f01939c6becc4d11d91897a68c57278.
+  
+  Left 'PcieRefPllSsc' policy in Fspmupd to be backwards compatible
+  
+  Hsd-es-id: 22012649185
+  Change-Id: Ided5b8a32138cf749d8dcf2c4aec3707a26e41c4
+  Original commit hash: d6971096f2b909d9430c9eeadb4a78c64f0c793f
+  
+  ClientOneSiliconPkg/Fru/TglPch/IncludePrivate/Library/PeiPchInitPreMemFruLib.h
+  ClientOneSiliconPkg/Fru/TglPch/LibraryPrivate/PeiPchInitPreMemFruLib/PeiPchInitPreMemFruLib.c
+  ClientOneSiliconPkg/Include/Register/PmcRegs.h
+  ClientOneSiliconPkg/IpBlock/Pmc/IncludePrivate/Library/PmcPrivateLib.h
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
+  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PchPreMemPrintPolicy.c
+  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PchPreMemPrintPolicyVer3.c
+  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPreMemPolicyLib.c
+  ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/PchInitPreMem.c
+  TigerLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiPchPolicyUpdatePreMem.c
+  TigerLakeFspPkg/Upd/FspmUpd.dsc
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdatePreMem.c
+  TigerLakePlatSamplePkg/Setup/PchSetup.hfr
+  TigerLakePlatSamplePkg/Setup/PchSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 895041a1ef7b102893da986a57cc7b7e07cbf07c 
+*********************************************************************************
+
+[PlatformPkg]
+
+  TigerLakeBoardPkg: Intel SST Support for Windows Bluetooth A2DP Sideband
+  
+  Revert "TigerLakeBoardPkg: Intel SST Support for Windows Bluetooth A2DP Sideband"
+  This reverts commit 508a345d58939744647b0f2574b2e0f5e7e3d1a4.
+  This change is not required for next release.
+  
+  Hsd-es-id: 22011649652
+  Change-Id: Ifcf0f5e9eb5d7908b0706bb0fab9317ae093323a
+  Original commit hash: ae26efebf672c133d2ecf3152bdad7ba9cc1f3ad
+  
+  TigerLakePlatSamplePkg/Library/DxeInstallNhltTableLib/DxeCreateNhltTableLib.c
+  TigerLakePlatSamplePkg/Library/DxeInstallNhltTableLib/NhltConfig.c
+  TigerLakePlatSamplePkg/Library/DxeInstallNhltTableLib/NhltEndpoints.c
+  TigerLakePlatSamplePkg/Library/DxeInstallNhltTableLib/NhltEndpoints.h
+  TigerLakePlatSamplePkg/Setup/PchSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 8598a4eb445134c474e435815bc24b28d1efe505 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [C1S/MemoryInit/TGL]: Fix the Fast Boot failure when ECC DIMMs are used
+  
+  [Issue]
+  With ECC Dimms, MarginLimitCheck failed during Fast Boot.
+  The GsmMccEccMode was only set on MrcMcActive() which was not executed during Fast Boot.
+  
+  [Solution]
+  Program the GsmMccEccMode to emBothActive in the MrcNormalMode(), which covers all PM flows.
+  During saves/restores, GsmMccEccMode are set to emEccIoActive instead of emBothActive for training steps.
+  
+  Additional Changes:
+  Add ECC byte error check support on MrcGetMiscErrStatus.
+  Improve debug message in MarginLimitCheck.
+  Use McChBitMask instead of ValidChBitMask in MarginLimitCheck. (since they are the same)
+  New EFI status code: EFI_COMPUTING_UNIT_MEMORY | EFI_CU_MEMORY_EC_CORRECTABLE when MarginLimitCheckFailed.
+  
+  [Impact Platform]
+  TGL-H ECC DDR4 Only
+  
+  Hsd-es-id: 22012540921
+  Change-Id: I6f0164b730efe98555617895a55b6a9d3cbe5ebc
+  Original commit hash: eff9258d93f7563f73d3b62c35b88cfb2b7d998d
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/MrcCpgcApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Tgl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: e581c9f3db6b28ea72bd57f29d99774d5b50f87e 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  Request for bios knobs - TCCOLD duty cycle knobs for USB detection
+  
+  BIOS must send mailbox cmd=9 to communicate with IOM for the new feature requested by every reset/S5/G3 exit.
+  Value of "data" will be 0-255 which will represent "X" in seconds,
+  which is the time we stay in TCCOLD before exiting TCCOLD for 10s.
+  The "Y" in seconds is set to 10s by default, and reserve the option for internal debugging usage.
+  
+  Hsd-es-id: 1508823138
+  Change-Id: Ia240785909d61fba0df6e5a9f5eac4e46c4eb873
+  Original commit hash: 7f411791540435fbd1d1f74f77cf24dad61b7d57
+  
+  ClientOneSiliconPkg/Fru/TglCpu/IncludePrivate/Register/IomRegs.h
+  ClientOneSiliconPkg/Include/ConfigBlock/Tcss/TcssPeiConfig.h
+  ClientOneSiliconPkg/IpBlock/Tbt/IncludePrivate/Library/PeiITbtInitLib.h
+  ClientOneSiliconPkg/IpBlock/Tbt/LibraryPrivate/PeiITbtInitLib/PeiITbtInitLib.c
+  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssInitLib/TcssInit.c
+  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssPolicyLib/PeiTcssPolicyLib.c
+  TigerLakeFspPkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdate.c
+  TigerLakeFspPkg/Upd/FspsUpd.dsc
+  TigerLakePlatSamplePkg/Include/SetupVariable.h
+  TigerLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdate.c
+  TigerLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  TigerLakePlatSamplePkg/Setup/SaSetup.hfr
+  TigerLakePlatSamplePkg/Setup/SaSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 606330406aa15ea6b6a1147454589d5451a0de77 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Platform Debug Consent is not getting reverted to default once changed in BIOS page when we press F3-load default.
+  
+  1. remove PDC token override check for PDC callback for it is redundant. When Token is existed and PDC is overriden, the option will be grayout
+  and it can never fall into this callback.
+  2. remove EFI_BROWSER_ACTION_DEFAULT_STANDARD for PDC callbak or it may utilize browser setup instead of original default.
+  
+  Hsd-es-id: 14013599476
+  Change-Id: If74f72cb2945fc2d9b94ce0276d29e06ee4e3708
+  Original commit hash: 34dcf8196b2f8baea4f08e6a7ec2786bc2cc456e
+  
+  TigerLakePlatSamplePkg/Setup/DebugSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: be3c5db5cac623c3062310c3705926925192ce52 
+*********************************************************************************
+
+[PlatformPkg]
+
+  TigerLakeBoardPkg: Intel SST Support for Windows Bluetooth A2DP Sideband
+  
+  Update A2DP format for TGL-C only.
+  
+  
+  Hsd-es-id: 22011649652
+  Change-Id: I52151dee5860a76be8588cbcf5fcf3652bec1b3d
+  Original commit hash: 508a345d58939744647b0f2574b2e0f5e7e3d1a4
+  
+  TigerLakePlatSamplePkg/Library/DxeInstallNhltTableLib/DxeCreateNhltTableLib.c
+  TigerLakePlatSamplePkg/Library/DxeInstallNhltTableLib/NhltConfig.c
+  TigerLakePlatSamplePkg/Library/DxeInstallNhltTableLib/NhltEndpoints.c
+  TigerLakePlatSamplePkg/Library/DxeInstallNhltTableLib/NhltEndpoints.h
+  TigerLakePlatSamplePkg/Setup/PchSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: a6945e33ff007be908606df0368207a0635e7d0a 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/IpBlock/Hda: NO HD audio device for display audio enumerated when connecting DUT to external monitor via Surface Dock or USBC
+  - fix audio T-mode default value to 8T
+  
+  Hsd-es-id: 22012550120
+  Change-Id: I9498658e7e7c9dcb0441fa3ff36ac52fa26adec8
+  Original commit hash: 34653333eeebae0deb95cdce83013779aa02cdc8
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/Hda/HdAudioConfig.h
+  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaPolicyLib/PeiHdaPreMemPolicyLib.c
+  TigerLakeFspPkg/Upd/FspmUpd.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: surface
+
+*********************************************************************************
+Commit: e28fed51a3ef47d1d4c7f81ffb4d56dd593dc4a6 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [TGL][PEG] Do HWEQ after SpeedChange to fix ANFES
+  
+  Hsd-es-id: 16012702271
+  Change-Id: If5561ea71b0f41b01df181254483e9e3bb686fe6
+  Original commit hash: 6b0a3f8d2b5be7bc8ea80cc5d37b9ea2eae31ebc
+  
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 636d66fe0d1b5d75c6f33428fb7334ce757b7b74 
+*********************************************************************************
+
+[ASL]
+
+  [DELL][HORIZON] The definition of D6EN offset is wrong at HostBus.asl
+  
+  Hsd-es-id: 1508904121
+  Change-Id: I17e9c3bea1234db20f63bfa3eba05c1432a3ef2a
+  Original commit hash: 620ae276e8b0b69c520d13c3a336e3a0008a00d9
+  
+  ClientOneSiliconPkg/IpBlock/HostBridge/AcpiTables/HostBus.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: Dell
+
+*********************************************************************************
+Commit: 7a1fc25c344439ad801916c099c1ba94a8d7cf3e 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [BIOS][PCIe] BIOS boot takes longer due to HWEQ_DONE_POLL_TIMEOUT
+  
+  Hsd-es-id: 1508878104
+  Change-Id: I1ac40f5abac35602db3a7abdaf8ea2584ac0bf3b
+  Original commit hash: b40a1942731af5f61c538e2ce9d175297f6314ed
+  
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+################################################################################
+
+Report Summary: Backstop found 11 suspect commits for review 
+
+Warnings Found:
+  Commit: 8281a23    --Commit Message Contains Key Word: HW
+  Commit: 8281a23    --Commit Message Contains Key Word: revert
+  Commit: eae4e55    --Commit Message Contains Key Word: revert
+  Commit: 895041a    --Commit Message Contains Key Word: revert
+  Commit: 8598a4e    --Commit Message Contains Key Word: step
+  Commit: e581c9f    --Commit Message Contains Key Word: internal
+  Commit: 6063304    --Commit Message Contains Key Word: revert
+  Commit: be3c5db    --Commit Message Contains Key Word: internal
+  Commit: a6945e3    --Commit Message Contains Oem: surface
+  Commit: e28fed5    --Commit Message Contains Key Word: HW
+  Commit: 636d66f    --Commit Message Contains Oem: Dell
+  Commit: 7a1fc25    --Commit Message Contains Key Word: HW
