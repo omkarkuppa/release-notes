@@ -1,0 +1,153 @@
+================================================================================ 
+Commit: 6aa8db553993899ddaecdc6ebf25cef32666ffe1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 20 12:37:58 2021 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] JSL Auto-Commit BIOS ID update CI BIOS Version to 3173_00
+
+Hsd-es-id: N/A
+Original commit date: Wed Apr 21 00:11:10 2021 -0700
+Change-Id: I736910f18d15678dc0b6afaa3125c208e89377f6
+Original commit hash: dcfda5d6f647c5b57db2617c6eeb040e26854554
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+JasperLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 4c3713e38cce338ce1c109a8c2c205e8ee24fa16 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 20 12:37:57 2021 +0530 
+-------------------------------------------------------------------------------- 
+SD card CLK#, DATA# and CMD# work around
+
+Integrated SD card controller won't respect
+pin invertion settings when controller is
+put into D3. We work around this by changing
+GPIO pad ownership to GPIO controller and driving
+the signal to inactive manually.On D3 entry BIOS
+will reassign GPIO pad ownership to SD controller
+after power gating is disabled.
+
+Hsd-es-id: 16012834256
+Original commit date: Thu Mar 11 15:56:43 2021 +0530
+Change-Id: I2a3ee504596cec2f046eb8d6880ca78ae774c0f3
+Original commit hash: 8efc7edac15a6492b94d7c35340dd9cb5f233622
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Gpio/IncludePrivate/Library/GpioPrivateLib.h
+ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLib.c
+ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibInternal.h
+ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer1.c
+ClientOneSiliconPkg/IpBlock/Scs/AcpiTables/ScsSdCard.asl
+ClientOneSiliconPkg/Pch/LibraryPrivate/PeiPchInitLib/IclPchScs.c
+
+================================================================================ 
+Commit: a9ab577195186c7235a6ab68b836d6d7934d0f73 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 20 12:37:56 2021 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg: [ADL][JSL] Set UART mode to COM port is not functioning under windows - JSL branch
+
+Resolution: When we set UART mode to "Communication Port (COM)" the UART is not work.
+            In SerialIoUartInit(), if the UART mode is SerialIoUartCom, it need to call SerialIoAcpiInterruptSet.
+            But it will be overridden by SerialIoInterruptSet.
+            Sync up code flow from ICL platform to correct code flow.
+
+Hsd-es-id: 1508925594
+Original commit date: Tue Mar 9 19:10:19 2021 +0800
+Change-Id: I073eb7b3b8087a78b5190aa3cab57cfb48f89613
+Original commit hash: b86843f6f3f62f1cda819035fa0bdec6ef3b637e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/SerialIo/LibraryPrivate/PeiSerialIoInitLib/PeiSerialIoUartLib.c
+
+================================================================================ 
+Commit: ffe9b9b44b969a5f4eac7e8dec56e45ea38f0a4b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 20 12:37:54 2021 +0530 
+-------------------------------------------------------------------------------- 
+[JSL][MRC]Only do Read Amplifier Training when frequency <= 2667
+
+[Issue/Feature Description]
+  High EFI boot failures (0.80% - Yield fall out) are observed in factory for JSL PPV.
+  Tested with "Enable Power training for Read Amplifier until 2667 frequency" in MRC @ default temp (20C), observed 80% of  units passed with this change.
+
+[Resolution]
+  Change to do Read Amplifier Training when frequency <= 2667
+
+[Impacted Platform]
+JSL
+
+Hsd-es-id: 16013175794
+Original commit date: Tue Apr 20 15:06:44 2021 +0800
+Change-Id: If05e9b6a3e21d6af7fd545beb1960a8cd3d21aa6
+Original commit hash: 5edf9b0ee2efb2695dd7d62b598cb3328c97d544
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+
+================================================================================ 
+Commit: a391dcda3c8f34cfc4d5a6b7a888d8295620a6db 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 20 12:37:53 2021 +0530 
+-------------------------------------------------------------------------------- 
+Converged ACM release v1.14.20 CBNT [JSPP]
+
+Staging Debug and PW for release v1.14.20 [Padded 128KB]
+
+Hsd-es-id: 14013788242
+Original commit date: Tue Mar 23 22:42:57 2021 -0700
+Change-Id: I23540adb40d3546c32139720fb6dc732e77b734c
+Original commit hash: b9f132de746faa14b3a778fb257e8b3194437ae0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+JasperLakeBoardPkg/Binaries/BootGuard/ACM/Acm.json
+JasperLakeBoardPkg/Binaries/BootGuard/ACM/ReleaseNotes.txt
+JasperLakeBoardPkg/Binaries/BootGuard/ACM/StartupAcm.bin
+JasperLakeBoardPkg/Binaries/BootGuard/ACM/StartupAcmProd.bin
+
+================================================================================ 
+Commit: dcb556e39c28fdeacfe32b6d1b1f72ff141e5c13 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 20 12:37:52 2021 +0530 
+-------------------------------------------------------------------------------- 
+[JSL]FW capsule update fails to initialize new BIOS SaSetup variables
+
+[Issue/Feature Description]
+It has been found that new SaSetup entry variables like RefreshPanicWm/RefreshHpWm
+are not being initialized when customers use the FW capsule update
+mechanism.
+
+[Resolution]
+Bounds checking for new variables added after PV (using
+RefreshPanicWm/RefreshHpWm as first example of having bounds checking).
+
+[Impacted Platform]
+JSL
+
+Hsd-es-id: 22012528020
+Original commit date: Tue Mar 2 13:43:50 2021 -0800
+Change-Id: I3ffe32caec2e3d736dab9d1105ece22905c1c705
+Original commit hash: d392eada9b9ebf26321e93e82f8ac37fed753f9b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver1/MemoryConfig.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MemoryInit.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Icl/MiniBios/MEMORY/MrcSetup.c
+JasperLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+JasperLakeFspPkg/Upd/FspmUpd.dsc
+JasperLakePlatSamplePkg/Include/SetupVariable.h
+JasperLakePlatSamplePkg/Library/PeiPolicyDebugLib/PeiSaPolicyDebugLib.c
+JasperLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+JasperLakePlatSamplePkg/Setup/SaSetup.hfr
+JasperLakePlatSamplePkg/Setup/SaSetup.uni
