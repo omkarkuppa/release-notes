@@ -1,0 +1,349 @@
+*********************************************************************************
+Commit: dc9e18a943605c7eaf1b39bfd21bb5b0a4ee5170 
+*********************************************************************************
+
+[BoardPkg]
+
+  AlderlakeBoardPkg/BoardInit: Removing the GPIO programming of CLK OEB
+  
+  Removed the CLK OEB GPIO programming. This reverts commit ed6e8cbd9d9ecf8d7262f9b692a843a4473c9fcb.
+  
+  Hsd-es-id: 1509198035, 1509197822
+  Change-Id: I19cae8ce7c08507cddc3e0764448605308dbf6fb
+  Original commit hash: 0748bfae5a064d8afa60e31718030d95ec28bf8f
+  
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/GpioTableAdlPPreMem.h
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
+  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlPPreMem.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: c7065a0484f41d0aec9dfb7c650392336d085494 
+*********************************************************************************
+
+[PlatformPkg]
+
+  AlderLakePlatSamplePkg: Fix AMT HTTP ISO file Cannot Retrieve Problem
+  
+  Fix AMT HTTP ISO file Cannot Retrieve Problem.
+  
+  Hsd-es-id: 16013220496
+  Change-Id: I06e3f6de726a5c09b64717882649814cd76a546e
+  Original commit hash: c28c693068f5107c6a0635586e5523d91e3763c0
+  
+  AlderLakePlatSamplePkg/Features/Amt/OneClickRecovery/OneClickRecovery.c
+  AlderLakePlatSamplePkg/Features/Amt/OneClickRecovery/OneClickRecoveryHttpsSupport.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: f9358977588602a0d5eb2ef2bc7ef2bce85be753 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [RPL-S][S14] RTD3 support Initial version
+  
+  Add the necessary files for RPL S14 RTD3 support
+  
+  Hsd-es-id: 1509126975
+  Change-Id: I40ad8f575ce7cc4d6e0a60f8d25116e2764ef964
+  Original commit hash: 6e1fa9fe4f472d05f165b3f3580fd8d084419926
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Dsdt.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/RplSRvpRtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/RplSRvpTbtRtd3.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: f3f6a6b8be06564c41c2c1a4eac108af5e1b9db7 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][1508971330][ADL-S] Limit RdRdSG and RdRdDG in RdMpr training
+  
+  [Title]
+  Limit RdRdSG and RdRdDG in RdMpr and ReadLeveling
+  
+  [Issue/Feature Description]
+  If DDR4 tRDRD_sg is increased above max spec value of 8, as in OC scenario,
+  then we need to keep it at 8 during RDMPR and Read Leveling training steps,
+  otherwise B2B traffic is broken.
+  
+  [Resolution]
+  Updated SetupMcMprConfig to ensure tRDRD_sg/dg are correct for B2B traffic.
+  Updated SetupMcMprConfig to use MC_MPR_CONFIG_SAVE struct for register save/restore.
+  Fixed issue with MC0_CR_CPGC2_V_CHICKEN not being properly restored.
+  Removed bank group mapping programming from SetupMcMprConfig, this is done in PreTraining.
+  Added SetupMcMprConfig call in ReadLeveling, for DDR4/5 only.
+  
+  [Impacted Platform]
+  ADL-S DDR4.
+  
+  Hsd-es-id: 1508971330
+  Change-Id: I15f1a71a3ef387db8f2f0f70c2516ca39cf2a933
+  Original commit hash: 07c86bd021f0ffd2bddcb38bcde9d4d8f19aeece
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: chicken
+*********************************************************************************
+Commit: 2e181de47df9b9c530c78e61c6f23f49af32de40 
+*********************************************************************************
+
+[PlatformPkg], [SA]
+
+  [MRC][22012129963][ADL-S][DDR5]: Dynamic Memory Boost with SAGV
+  
+  [Title]
+  Dynamic Memory Boost with SAGV
+  
+  [Issue/Feature Description]
+  New Setup option added for Dynamic Memory Boost (DMB) feature
+  DMB is enabled only for XMP Profiles 1, 2, and 3. (Profile 3 supported with DDR5 only)
+  
+  MRC's role is to train both default and DMB profile, and store in SAGV space, when this feature is enabled.
+  
+  [Resolution]
+  If MRC training fails with DMB enabled, a reset will be issued to revert back to Standard SPD profile, with DMB disabled.
+  Optimize MRC training for Standard SPD Profile with DMB enabled
+  
+  [Impacted Platform]
+  ADL-S DDR4 DDR5.
+  
+  Hsd-es-id: 22012129963
+  Change-Id: Ie49303f2e7da3d2adb8e7df27416de8fe0ba6ba0
+  Original commit hash: 48e55d50773222072c84d69ce0e685af96b2e8c5
+  
+  AlderLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  AlderLakeFspPkg/Upd/FspmUpd.dsc
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  AlderLakePlatSamplePkg/Platform/PlatformSetup/Dxe/PlatformPolicySetup.c
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  AlderLakePlatSamplePkg/Setup/SaSetup.uni
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver2/MemoryConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  ClientOneSiliconPkg/SystemAgent/Include/MemInfoHob.h
+  ClientOneSiliconPkg/SystemAgent/Include/Protocol/MemInfo.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: bce985d1e2fe1c5b06b4659840a0fb6b1e9e7184 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [ADL] Remove deprecated skuid check for ADL-S
+  
+  Hsd-es-id: 1509133213
+  Change-Id: I8ae1f9de46675c0c178d6e9443bd9288440500f2
+  Original commit hash: 39387dcfae79db2cda45c5d148a9baff467a163f
+  
+  AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiSaPolicyBoardConfigPreMem.c
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 945ef7d851a0d2fee9e7ea192597f65bee450b25 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][22012132405][ADL-S | DDR4 | DDR5] Comp Optimization Training
+  
+  Implement COMP Optimization step.
+  - Only run on ADL-S (DDR4/5)
+  - Re-enable WRDSEQT on DDR4 only, and increase OptWrDS sweep range from {-10, 10} to {-10, 15}
+  
+  Additional changes:
+  - WRDSEQT: add WrT recentering at the end, including per-bit
+  - DDR5 ECT: Use CaVref from CATM phase 0 in DDR5 ECT, and skip the 2D in CATM phase 1.
+  This gives better CaVref centering in CATM.
+  
+  Hsd-es-id: 22012132405, 22012132406
+  Change-Id: Id1f52cd11cc11ca96a88c99237dc6a3dd081e3e0
+  Original commit hash: 7911f6314c5763975efbbb3ec04b1df4e1e822fa
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 2aa1570d3a59dd36832902e779249b761f92d70e 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ise][1508847028] RowHammer modify refresh_hp/panic_wm to meet design recommendation
+  
+  [Title]
+  RowHammer modify refresh_OEMx_wm to meet design recommendation
+  
+  [Issue/Feature Description]
+  RowHammer modify refresh_OEMx_wm to meet design recommendation
+  
+  [Resolution]
+  1) pTRR register field BlockState_Delay need be configured to 4 for DDR5
+  2) Change default WM values:
+  Default: Panic_wm=8, high_wm=7
+  If pTRR enabled:  Panic_wm=7, high_wm=6
+  
+  3) GsmMccRefreshAbrRelease: need be = RefreshHpWm
+  4) Swizzling for Micron: use Density+DieRev as index to find swizzling data for DDR4, and Density for DDR5/LPDDR4/5.
+  5) In 2DPC cases, if one DIMM requires RFM while the other doesn't, and
+  user chooses RFM, MRC will configure RFM only for that channel. Don't
+  fallback to pTRR for the other dimm. User can choose pTRR in BIOS menu.
+  6) In MrcRhConfigPTRR, add checking Inputs->J0.
+  7) Change default lfsr_0_mask = lfsr_1_mask = 0xb.
+  
+  [Impacted Platform]
+  ADL ALL.
+  
+  Hsd-es-id: 1508847028,18014948090
+  Change-Id: I86c8b6d95e48258509b0a9d2848d7ce02bceb32c
+  Original commit hash: e849c9d2522372ad4b8cf3b1c39157d0e9ee70c9
+  
+  AlderLakeFspPkg/Upd/FspmUpd.dsc
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+  --Commit Message Contains Memory Vendor: Micron
+
+*********************************************************************************
+Commit: bdf0f367e3fb6cad693e3e479a33b816af0d0c77 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert of Removal of mrIndexMR36 and MR36
+  
+  This removal of MR36 was added as part of MRC version 2.4
+  This was causing boot failure in LP5.
+  
+  Hsd-es-id: 16013306592
+  Change-Id: Ic00cd348865f0cc119b32a6f366f1d32e22189bc
+  Original commit hash: 1fde653002b740634ecb453b68df0b5babc9511f
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+*********************************************************************************
+Commit: 85e1e9a95c82241870c44662932d2f0103cbeb2a 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL-S + ADPS B0] Additional steps are required to be added in EQ flow
+  
+  Several lines of description for the change.
+  
+  Hsd-es-id: 22012646603
+  Change-Id: Ib916b679c0e1edff7a2531e646aa6ada44174118
+  Original commit hash: efbe06bed70a87d879bf771977c5a8e4be9e3eab
+  
+  ClientOneSiliconPkg/IpBlock/CpuDmi/LibraryPrivate/PeiCpuDmiInitLibVer2/PeiCpuDmi16.c
+  ClientOneSiliconPkg/IpBlock/PchDmi/IncludePrivate/Library/PeiPchDmiLib.h
+  ClientOneSiliconPkg/IpBlock/PchDmi/LibraryPrivate/PeiDxeSmmPchDmiLib/PeiPchDmi15.c
+  ClientOneSiliconPkg/IpBlock/PchDmi/LibraryPrivate/PeiDxeSmmPchDmiLib/PeiPchDmiLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 7a0bb8db0b3846d67a5bb406cc62ceeb8555c256 
+*********************************************************************************
+
+[SiliconPkg]
+
+  SyncScript: Revert override commits.
+  
+  Mon May 17 03:43:48 2021 -0700
+  Original commit hash: 45bdb0b0f72d46fc8aa154830c01eabd740ec6d4
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+################################################################################
+
+Report Summary: Backstop found 11 suspect commits for review 
+
+Warnings Found:
+  Commit: dc9e18a    --Commit Message Contains Key Word: revert
+  Commit: c7065a0    --Commit Message Contains Key Word: http
+  Commit: f935897    --Commit Message Contains Oem: NEC
+  Commit: f3f6a6b    --Commit Message Contains Key Word: step
+  Commit: f3f6a6b    --Commit Message Contains Key Word: chicken
+  Commit: 2e181de    --Commit Message Contains Key Word: revert
+  Commit: bce985d    --Commit Message Contains Key Word: sku
+  Commit: 945ef7d    --Commit Message Contains Key Word: step
+  Commit: 2aa1570    --Commit Message Contains Oem: HP
+  Commit: 2aa1570    --Commit Message Contains Memory Vendor: Micron
+  Commit: bdf0f36    --Commit Message Contains Key Word: revert
+  Commit: 85e1e9a    --Commit Message Contains Key Word: step
+  Commit: 7a0bb8d    --Commit Message Contains Key Word: revert
