@@ -1,0 +1,243 @@
+*********************************************************************************
+Commit: 842dabbd57a6c325a35707dbc82a3b163d6f685f 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "[ADL] System not booting to OS [Hung] when Reset with D18Q GFx card present due to overwriting of GPIO set by PcieCardSelect menu option"
+  
+  This reverts commit 15da0c14de9cb928247fd01a968719afc37c8446.
+  
+  Hsd-es-id: 16013393710
+  Change-Id: I0d89c842d8ea8d3ced029d7818545323af5372cf
+  Original commit hash: fb1df56cb640268b9a1d0214931ec58c0310edc5
+  
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: db7c0217372a70c6aef30808177af572e9b1f555 
+*********************************************************************************
+
+[BoardPkg]
+
+  SW Drips and HW drips are not showing in sleep study because of WWAN active
+  
+  Hsd-es-id: 16013371791
+  Change-Id: I4fd748ded3ec8fe5937d92b2e09d29e580dcd5db
+  Original commit hash: 60905397d59d3480b7dea3d4bca6a4e8ec244468
+  
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/GpioTableAdlPPreMem.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 630c94ba82727958142a0a35eef31bd41cf5dc11 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "ADL_G0 Production patchID 0x00000219"
+  
+  This reverts commit db5200b5f76b87471df78ce817c1cde6337c8ade.
+  
+  Hsd-es-id: 16013241790 16013301534
+  Change-Id: I15c3753043acc270659d547098befb1f340cbc7e
+  Original commit hash: 4b750f86c6374d35ff240cf040242105e2b7f098
+  
+  AlderLakeBoardPkg/BoardPkg.fdf
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+*********************************************************************************
+Commit: a615933f449eaa69fb371b811108b2cd384500e7 
+*********************************************************************************
+
+[PlatformPkg]
+
+  AlderLakePlatSamplePkg/AlderLakeRestrictedPkg: [ADL PCH] Moving beyond TDP - new Intel/ CCG management and Marketing decision
+  
+  Resolution: To update several of power parameters description in BIOS UEFI help menu
+  
+  Hsd-es-id: 22013120514
+  Change-Id: I17ed00e6771af89ebbf7f78ff7ba48c4838b9433
+  Original commit hash: 2dbc79e945886c3eb585df029a230b0de6fff974
+  
+  AlderLakePlatSamplePkg/Setup/CpuSetup.uni
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: marketing
+
+*********************************************************************************
+Commit: 8166a97f42d108de5a4c4bf07f78e3eb115b3860 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][22012130074][ADL-M ADL-P | LP4 LP5 DDR4 DDR5 ] Need vccddq LVR for early DVFS in comp block
+  
+  Initialize new comp LVR per design recommendations, for Q0 and later steppings.
+  
+  Hsd-es-id: 22012130074
+  Change-Id: Ia73196c22ac52c9bdea7150df9d7c3d83de0272d
+  Original commit hash: cb156b96d67418c9e3e0d78251a9540ca0e594a2
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: 9eda2e634bff89586320d24b48520c840217acf0 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [bug][14014163075][ADL-S][C0][DDR5][2DPC] Early/Late Command Voltage Centering fails on 2R-2R DDR5
+  
+  Issue:
+  One byte shows zero margin during early or late CMDVC step on 2R-2R DDR5 at 4000/G2.
+  If CMDVC is skipped, system boots fine.
+  At 3600 this byte shows speckling during CMDVC.
+  
+  Root cause:
+  CMDVC / DQTimeCentering1D resets CmdV to 0 before the 1D sweep, so that offsets are relative to 0.
+  This assumes that CmdVref offset of 0 is inside a passing eye.
+  This value is used for JEDEC resets after each RunIOTest during the sweep.
+  When we have low CmdV margin at high speeds, offset 0 might be outside of the passing eye.
+  This breaks JEDEC Reset and causes speckling / zero margin during the sweep.
+  RMT uses GetBERMarginCh which does not reset CmdV, and uses the current (good) value for JEDEC resets,
+  hence RMT was working fine.
+  
+  Solution:
+  Do not reset CmdV value before the 1D sweep - keep the current working value which was trained in ECT.
+  Adjust the CmdV sweep range according to the current value for each rank, to avoid JEDEC range overflow.
+  
+  Hsd-es-id: 14014163075
+  Change-Id: I90c759814c1bac55db98ddc59ac299b1ca600fc0
+  Original commit hash: 0a0ceab446e8d14fb5ef9f69c188cfd4f2ee3e34
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 0524ca45d180ad8fd86d40ea5f2bf142db5461ca 
+*********************************************************************************
+
+[BoardPkg]
+
+  [RPL-S] BIOS board porting for S-14 ERB - part2
+  
+  1.Aligned S17 and S20 Simics config with RPL-S SKU.
+  2.Aligned S17 board config with S8.
+  3.Corrected S20 RVP name.
+  
+  Hsd-es-id: 1509091624
+  Change-Id: I44debbe35b20f3244e740fd9f0001e28d515e04d
+  Original commit hash: 20e97b29dda69efbfa0e491a1667fcf1fe0edc92
+  
+  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiDetect.c
+  AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b258bcc396eb1e15f447ac1168b8a6ee323d5f9c 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [ADL][CNV][WIFI] Remove Wi-Fi PHY Filter Configuration from Intel SampleCode packages
+  
+  Keep the WPFC ASL code restricted; hence moving it under TestMenu
+  as then the options wouldn't be exposed in external bios build.
+  
+  Hsd-es-id: 16013032657
+  Change-Id: I4959588742ac06e74fd57f8111e207c070bb7eb1
+  Original commit hash: 855e3aa74798a2c1b94ff43b00cd60e2037438ef
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/WifiRegulatory.asl
+  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  AlderLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  AlderLakePlatSamplePkg/Features/Cnv/CnvUefiVariables/CnvUefiVariables.c
+  AlderLakePlatSamplePkg/Features/Cnv/CnvUefiVariables/CnvUefiVariables.h
+  AlderLakePlatSamplePkg/Features/Cnv/CnvUefiVariables/CnvUefiVariables.inf
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Library/DxeAcpiGnvsInitLib/DxeAcpiGnvsInitLib.c
+  AlderLakePlatSamplePkg/Setup/ConnectivitySetup.hfr
+  AlderLakePlatSamplePkg/Setup/ConnectivitySetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: be6626d805e25a0e5adb5afbddcf408d5a84fd3b 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[ADL-S] Rollback the microcode patch"
+  
+  This reverts commit 7e7d2a5c8c4cd99b53673237f707e0293fd10bba.
+  
+  (cherry picked from commit 673752767258601024a2ff8a6253cc46884fe913)
+  
+  Mon May 24 16:52:17 2021 +0530
+  Original commit hash: a22d3eb06d6809322a449f98ce84e138fc8bba59
+  
+  AlderLakeBoardPkg/BoardPkg.fdf
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+################################################################################
+
+Report Summary: Backstop found 9 suspect commits for review 
+
+Warnings Found:
+  Commit: 842dabb    --Commit Message Contains Key Word: revert
+  Commit: db7c021    --Commit Message Contains Key Word: HW
+  Commit: 630c94b    --Commit Message Contains Key Word: revert
+  Commit: a615933    --Commit Message Contains Key Word: marketing
+  Commit: 8166a97    --Commit Message Contains Key Word: step
+  Commit: 8166a97    --Commit Message Contains Key Word: stepping
+  Commit: 9eda2e6    --Commit Message Contains Key Word: step
+  Commit: 0524ca4    --Commit Message Contains Key Word: sku
+  Commit: b258bcc    --Commit Message Contains Key Word: restricted
+  Commit: be6626d    --Commit Message Contains Key Word: revert
