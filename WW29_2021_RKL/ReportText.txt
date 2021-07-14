@@ -1,0 +1,207 @@
+*********************************************************************************
+Commit: 9d8424815921004535b3287ab36668a1b8850486 
+*********************************************************************************
+
+[BoardPkg]
+
+  [14014230566][CML-S][TGP-H] Default MRC Input policies are not set correctly in SaSetup Menu
+  
+  [Issue/Feature Description]
+  The default Input policies for CML-S + TGP-H are not set correctly for the following Training Steps:
+  
+  TrainingEnables2.EWRDSEQ: 0
+  TrainingEnables2.CMDSR: 0
+  TrainingEnables2.CMDDSEQ: 0
+  TrainingEnables2.CMDNORM: 0
+  
+  [Root Cause]
+  The default values for these four training step policies are incorrectly set, based on different defaults from RKL
+  
+  [Resolution]
+  Apply the correct Default setting for each Training step enable for CML-S MRC within mCometLakeSDdr4RvpSaSetupConfigPatchTable Patch Table
+  [Internal-only]
+  
+  Hsd-es-id: 14014230566
+  Change-Id: Ia7e462a9d19c44a074f75cc26da547172ab4d149
+  Original commit hash: 6fb9a6f818c5e0465a40c45b8151b2c857cc4ce2
+  
+  RocketLakeBoardPkg/RocketLakeSBoards/Include/RocketLakeSBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 43d14510115c0f84f11ff118cbbf6b862a097c57 
+*********************************************************************************
+
+[CPU]
+
+  DGR:[RKL] Fixed - VTD engine 4 to 7 regions are write protected in SMM as they are not necessary
+  
+  Fixed - VTD engine 4 to 7 regions are write protected in SMM as they are not necessary.
+  
+  Hsd-es-id: 16013788084
+  Change-Id: I818a6b7ed19999a398357d7ad05a31eb09a93d6a
+  Original commit hash: ea7038436b40379d516c19fc66ab0ed54abfd224
+  
+  ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
+  ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmSps.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 489c709ef841f64234630815134261254af43267 
+*********************************************************************************
+
+[PlatformPkg]
+
+  PlatformSamplePkg/Features/TrustedDeviceSetup: When BIOS Setup lock is not set or seal is broken during TDS boot, Disk unlock is not happening
+  
+  When TDS is active but the TDS BIOS Configuration Lock option is NOT set (the user has aborted the lock or seal is BROKEN for other reason),
+  the BIOS SHOULD follow its normal  boot sequence i.e. The system should revert to allow the user to enter the BIOS menu according to system design as if TDS is not enabled.  , TDS Extension launch should happen based on the "TDS Boot option" variable
+  
+  Hsd-es-id: 1308828100
+  Change-Id: Ia3a7b74c3ebcc44c0509c68508fbfa95d7e712e4
+  Original commit hash: 628dc0d975880e385927b6ea52637370893b732b
+  
+  RocketLakePlatSamplePkg/Features/TrustedDeviceSetup/TrustedDeviceSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: c36f4bf64c4a3ad3600961860ef73aa6ce607abc 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "RocketLake/Capsule: BIOS NIST Resiliency - Bios resiliency recovery not getting triggered in BPM corrupted case with 0T profile."
+  
+  This reverts commit 43a87892aff90122f8af39ee3769a66a8499a929.
+  Regarding to the test case it was handling (BPM/KM corruption on 0T profile), ACM will take care. So no more BIOS manual check needed.
+  
+  Hsd-es-id: 16012839051
+  Change-Id: I91227a48c668006376846b815efb0e1b0a63b0f3
+  Original commit hash: 5eb32d4bf14598d21ab865e55dda6cd17ffb92a7
+  
+  RocketLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.c
+  RocketLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 2cbeccd5d412c1f94a879f416e18585f865f8fae 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [RKLS] sync fixes from Tatlow
+  
+  [description]
+  
+  TAT update to use even values for gear2.
+  - TAT register should have even numbers in Gear2
+  - Revert back last checkin related CMD_rate and RxVref
+  - Disable TAT training for 3200G2 (Temporarily till catch RMT zero margin issue)
+  
+  Low Margin fix for frequency 3200
+  - update in RComp table, f3200 will use same values as OC frequencies,
+  smaller RdOtd value will give better margin.
+  
+  MRC array bounds overflow
+  Issue:
+  Static code analysis tool reports array out of bounds issue with Rank variable inside GetBERMarginByte
+  
+  Root cause:
+  Rank variable is being initialized using GetRankToStoreResults(), and then this value is clobbered
+  inside a per-rank loop when Param is RcvEnaX.
+  Later on, this Rank variable is used as an index in MarginResult array, but instead of GetRankToStoreResults
+  it has a garbage value of 4.
+  
+  Hsd-es-id: NA
+  Change-Id: Ia7ea6dce1216e0a93e50fde748136a0f8e7ff220
+  Original commit hash: 8c1a95d70594269b13e679666e1adb825e147a07
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 28fdc3acbbbe592361633ad51005575dba8d9239 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  Revert "[RKL] TBT MR RTD3 entry and exit sequence - BIOS managing the PCIe clock"
+  
+  This reverts commit ea8ae7b092a69bf33174cc55971c21499b70a9cd.
+  
+  Hsd-es-id: NA
+  Change-Id: Ic5c717c25262a644c60e9ae0199465d3df00d31e
+  Original commit hash: 32888c8b990c482260e87bf872d81064ee4774d1
+  
+  RocketLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieTbt.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 3bf1705f89aee6dda022cfe150eced023b2028ca 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  Revert "[RKL-S] Change request to BIOS - GPIO behavior definition"
+  
+  This reverts commit e52941cf57458e0773bbaedb468e5d86ba8bf0de.
+  
+  Hsd-es-id: NA
+  Change-Id: I38fde5b86554a9a6b5e371d0c2de04951b366999
+  Original commit hash: a841bc5e62e4960dbcb949b468badb909b560355
+  
+  RocketLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+################################################################################
+
+Report Summary: Backstop found 7 suspect commits for review 
+
+Warnings Found:
+  Commit: 9d84248    --Commit Message Contains Key Word: step
+  Commit: 9d84248    --Commit Message Contains Key Word: internal
+  Commit: 43d1451    --Commit Message Contains Oem: NEC
+  Commit: 489c709    --Commit Message Contains Key Word: revert
+  Commit: c36f4bf    --Commit Message Contains Key Word: revert
+  Commit: 2cbeccd    --Commit Message Contains Key Word: revert
+  Commit: 28fdc3a    --Commit Message Contains Key Word: revert
+  Commit: 3bf1705    --Commit Message Contains Key Word: revert
