@@ -1,0 +1,480 @@
+*********************************************************************************
+Commit: 747b8a62c40a0f67e9c1daa65372865809401ce6 
+*********************************************************************************
+
+[PlatformPkg], [CPU]
+
+  Handle specific Race condition and its response per guidance
+  
+  Added RaceConditionResponse option to CPU setup and Policy
+  
+  internal-only:
+  This is Lemongrass PRT response for ICL systems.
+  Impacted skus are *All*. U/Y/UN/YN skus.
+  
+  This change adds RaceConditionResponse option to setup and Cpu Policy to
+  govern behavior per guidance received
+  
+  Hsd-es-id: 22012988504
+  
+  Change-Id: Iad56be98d8246c47b825dd44dd92315f4654af5c
+  Original commit hash: a4c0125a2f1bfa99a425829095ff653eac99192a
+  
+  IceLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  IceLakeFspPkg/Upd/FspsUpd.dsc
+  IceLakePlatSamplePkg/Include/SetupVariable.h
+  IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  IceLakePlatSamplePkg/Setup/CpuSetup.hfr
+  IceLakePlatSamplePkg/Setup/CpuSetup.uni
+  IceLakeSiliconPkg/Cpu/Include/ConfigBlock/CpuConfig.h
+  IceLakeSiliconPkg/Cpu/Include/Private/Library/CpuInitLib.h
+  IceLakeSiliconPkg/Cpu/Library/PeiCpuPolicyLib/CpuPrintPolicy.c
+  IceLakeSiliconPkg/Cpu/Library/Private/PeiCpuInitLib/Features.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: prt
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 667f7f8682df2717b16ec5ee7bfca748831806de 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ICL] Update OpenSSL Tool version 1.1.1j at PlatformPkg\Tools\OpenSSL
+  
+  [Description]
+  OpenSSL 1.1.1j address the CVE-2021-23840 and CVE-2021-23841.
+  EDKII project also fixed in CryptoPkg. To align in PlatformPkg
+  to avoid any conflicts.
+  
+  [Add]
+  1. Add Readme.md file as a BKM to build from source code.
+  
+  [Update]
+  1. Update the OpenSSL binaries tool version from 1.1.0j to 1.1.1j.
+  2. Update the OpenSSL license file copyright year.
+  
+  [Impacted Platform]
+  ICL
+  
+  internal-only: HSD-ES
+  Hsd-es-id: 1509078587
+  
+  Change-Id: I9703f315e327ca0222cfc64c66517558a496d010
+  Original commit hash: 0bd6f2b3e0b48a6e449f55b7f085f7434e2cb57b
+  
+  IceLakePlatSamplePkg/Tools/OpenSSL/Readme.md
+  IceLakePlatSamplePkg/Tools/OpenSSL/libcrypto-1_1.dll
+  IceLakePlatSamplePkg/Tools/OpenSSL/libssl-1_1.dll
+  IceLakePlatSamplePkg/Tools/OpenSSL/license.txt
+  IceLakePlatSamplePkg/Tools/OpenSSL/openssl.exe
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 3dc60827e242420f0cd7efaed26012dafb5aa9b5 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ICL] CryptoPkg/OpenSSL: update OpenSSL to 1.1.1j in submodule [Part -2]
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  Hsd-es-id: 22012908196
+  Change-Id: Ife841d38fd20a3ba508e7eceeceeae619faa894f
+  Original commit hash: 8c5e9fa8ff4fdbcf09572e34083049dc627f2163
+  
+  .gitmodules
+  CryptoPkg/CryptoPkg.dec
+  CryptoPkg/CryptoPkg.dsc
+  CryptoPkg/Library/Include/CrtLibSupport.h
+  CryptoPkg/Library/Include/crypto/dso_conf.h
+  CryptoPkg/Library/Include/openssl/opensslconf.h
+  CryptoPkg/Library/IntrinsicLib/Ia32/MathFtol.c
+  CryptoPkg/Library/IntrinsicLib/IntrinsicLib.inf
+  CryptoPkg/Library/OpensslLib/OpenSSL-HOWTO.txt
+  CryptoPkg/Library/OpensslLib/OpensslLib.inf
+  CryptoPkg/Library/OpensslLib/OpensslLib.uni
+  CryptoPkg/Library/OpensslLib/OpensslLibCrypto.inf
+  CryptoPkg/Library/OpensslLib/OpensslLibCrypto.uni
+  CryptoPkg/Library/OpensslLib/buildinf.h
+  CryptoPkg/Library/OpensslLib/process_files.pl
+  IceLakePlatSamplePkg/FlashMap/SIZE_100_FSP_WRAPPER.fdf
+  IceLakePlatSamplePkg/FlashMap/SIZE_100_UEFI_BOOT.fdf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 4e23672e418d61cec8b0bec4acd0f12f63b2260c 
+*********************************************************************************
+
+[PlatformPkg], [SA], [MRC]
+
+  [ICL]FW capsule update fails to initialize new BIOS SaSetup variables
+  
+  [Issue/Feature Description]
+  It has been found that new SaSetup entry variables like RefreshPanicWm/RefreshHpWm
+  are not being initialized when customers use the FW capsule update
+  mechanism.
+  
+  [Resolution]
+  Bounds checking for new variables added after PV (using
+  RefreshPanicWm/RefreshHpWm as first example of having bounds checking).
+  
+  [Impacted Platform]
+  ICL
+  
+  internal-only:
+  Hsd-es-id: https://hsdes.intel.com/appstore/article/#/22012526937
+  
+  Change-Id: I1e79d9405a207fc480c455fcaa24149a14e99577
+  Original commit hash: 75c9a28f3ef77a921e2aa018fa9b6f834b3bb270
+  
+  IceLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  IceLakeFspPkg/Upd/FspmUpd.dsc
+  IceLakePlatSamplePkg/Include/SetupVariable.h
+  IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  IceLakePlatSamplePkg/Setup/SaSetup.hfr
+  IceLakePlatSamplePkg/Setup/SaSetup.uni
+  IceLakePlatSamplePkg/Setup/UqiList.uni
+  IceLakeSiliconPkg/SystemAgent/Include/ConfigBlock/MemoryConfig.h
+  IceLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/PeiSaPolicyLib.c
+  IceLakeSiliconPkg/SystemAgent/Library/PeiSaPolicyLib/SaPrintPolicy.c
+  IceLakeSiliconPkg/SystemAgent/MemoryInit/Include/MemoryInit.h
+  IceLakeSiliconPkg/SystemAgent/MemoryInit/Include/MrcInterface.h
+  IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  IceLakeSiliconPkg/SystemAgent/MemoryInit/MiniBios/MEMORY/MrcSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: fe356264c3c1401f25e68db269cbc1273c76afa0 
+*********************************************************************************
+
+[SA]
+
+  [ICL] Integrate GOP V1043
+  
+  internal-only:
+  - [GOP][ICL] Increase voltage for the 324 to 326.4 cdclk frequencies level 0 to level 1
+  - [GOP][ICL] Adding CODEOWNERS File
+  
+  Hsd-es-id: N/A
+  Change-Id: I282f9260e6c7dd231436c04e1f8b3342196dd090
+  Original commit hash: 0fb49e3d1e1cdfa2edd0d7240ccfd6b08b0a630d
+  
+  IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+  IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+  IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimSimics.efi
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 17e80782ae3e71e25a94a2667088189dbf0ad317 
+*********************************************************************************
+
+[MRC]
+
+  [ICL][MRC][Porting from RKL] Scomp corner case fix
+  
+  description:
+  One corner case occurs, in case of harmonic lock did not caught the algorithm will limit max to 12.
+  
+  Hsd-es-id: NA
+  
+  Change-Id: Ib6b89d2dceb9550274777567c64c30ad4000bc04
+  Original commit hash: 445efdbe497a7543773d179b3c6735e4310c2842
+  
+  IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 39263b123e0094cf5d3c30f2aa955722a7c85274 
+*********************************************************************************
+
+[PCH]
+
+  PeiHsioLib:  PCH HSIO Interface Tuning Guide does not match RC
+  
+  Update HSIO Port ID for PCH-N lanes.
+  
+  internal-only: Place holder for information that in internal to intel, for ex: information related to internal-only/restricted code, hsd, gerrit, bugzilla links etc.
+  Hsd-es-id: 22011690369
+  Change-Id: I7a90c98f37767731d54f862bd362caa7c3b92341
+  Original commit hash: 3413c0c1f9320a3763c4709563933be589f544c0
+  
+  IceLakeSiliconPkg/Pch/Library/Private/PeiHsioLib/PeiHsioLibIcl.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 4419ec95f002eb110afd45a180e40facc4fafe3a 
+*********************************************************************************
+
+[SiliconPkg], [SA]
+
+  [ICL] Integrate  ICL GOP 14.0.1042
+  
+  internal-only:
+  - [GOP][BUG]: Rairtron HDMI Display blank out with 1039 GOP 14.0.1042
+  - [GOP]: Disable DSC for downstream MST device
+  
+  Hsd-es-id: N/A
+  Change-Id: Iee80c595ce36ef88baa0b8877794037538b9f28b
+  Original commit hash: eac9eac8536b68c16f4bf06647f2b892d122b12a
+  
+  IceLakeFspBinPkg/SampleCode/Vbt/Vbt.bin
+  IceLakeFspBinPkg/SampleCode/Vbt/Vbt.bsf
+  IceLakeFspBinPkg/SampleCode/Vbt/Vbt.json
+  IceLakeSiliconPkg/SampleCode/IntelGraphicsVbt/Vbt.bin
+  IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+  IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+  IceLakeSiliconPkg/SystemAgent/IntelGraphicsPeim/Binaries/IntelGraphicsPeimSimics.efi
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 7d4f9429ab099c6325b4f7fb2559f4521722764c 
+*********************************************************************************
+
+[SA]
+
+  IceLakeSiliconPkg/PeiVtdInitLib: Fixed issue with hanging platform
+  
+  Problem:
+  Platform hangs on boot to OS when an user sets "VT-d = Disabled".
+  It happens because the VTD3 bar is cleared in Prem-mem, so PMR
+  clean up doesn't happen (which has place in Post-mem).
+  
+  Changes:
+  1. Adjusted code to coding standard.
+  2. Reverted 23a7b2a6a686bbb9f559ac02007e7f97643d9db7.
+  3. Added clearing VTD3 BAR in VtdLateInit in case of disabled VT-d.
+  4. Added dump of VTD BARs.
+  
+  Hsd-es-id: 16012086630
+  
+  1. Removed clearing VTD3 BAR from VtdInit (function called in Pre-mem).
+  
+  Change-Id: Ia4907fc7c8a08a9fd2df8514c8cf2d46d4050b13
+  Original commit hash: 57a365bbd0b57761281aa575ba71010917c27722
+  
+  IceLakeSiliconPkg/SystemAgent/Library/Private/PeiVtdInitLib/PeiVtdInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: fde1d71337a72cb11c6b12773b935515d46c5b94 
+*********************************************************************************
+
+[SA]
+
+  IceLakeSiliconPkg/Vtd: Fixed issue with hanging platform
+  
+  Problem:
+  Platform hangs when an user sets "VT-d = Disabled" or "Control
+  Iommu Pre-boot Behavior = Disable IOMMU" in BIOS setup.
+  
+  Changes:
+  1. Removed conditions which check content of VT-d's bars.
+  2. Adjusted code to coding standard.
+  
+  Hsd-es-id: 16012086630
+  
+  Change-Id: I0775c013540539948e53400af5341b3cb0fae62d
+  Original commit hash: 23a7b2a6a686bbb9f559ac02007e7f97643d9db7
+  
+  IceLakeSiliconPkg/SystemAgent/Library/Private/PeiVtdInitLib/PeiVtdInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: f3f40cea48e5bf78d2d46e4b8ddf869a4b7cb617 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ICL] VBT parsing error in block 27 leading to assert while using DEBUG GOP
+  -  No effect after disabling PEI graphics from BIOS menu
+  -  PEI Graphics and GOP driver are receiving different configuration VBT
+  
+  Hsd-es-id: 16012021717, 16012021868, 16012021841
+  
+  Change-Id: I987903d12504283fafd0bf4de8de69948f316108
+  Original commit hash: 5dc0a024c41b0a82efaeabe85ba1c64c048aab77
+  
+  IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdate.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 72ee24a4c8106158bedb861882a71b244d81e579 
+*********************************************************************************
+
+[SA]
+
+  Removed clearing IOP VT-d BAR when pre-boot DMA protection is not enabled
+  
+  Change:
+  Removed code which clears VTD3 BAR when pre-boot DMA protection is not enabled.
+  
+  Hsd-es-id: 18013468961
+  
+  Change-Id: I0e8f437a76f64f74e1f5a3dfc0120ba8275297d8
+  Original commit hash: 5bcd411e76af27e302277f9c0fbac74abc08ee17
+  
+  IceLakeSiliconPkg/SystemAgent/Library/Private/PeiVtdInitLib/PeiVtdInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 2f29d7b131f37d2d351b13cb06ee2d1cdf47d20f 
+*********************************************************************************
+
+[SA], [MRC]
+
+  KW Fixes
+  
+  Hsd-es-id: N/A
+  
+  Change-Id: I245e2cc6125696ca68464c5c23cbf01a3de01b41
+  Original commit hash: cbd5404f9bc4d90d7a547aa601eb0562ac2dbf1c
+  
+  IceLakeSiliconPkg/SystemAgent/Library/Private/PeiVtdInitLib/PeiVtdInitLib.c
+  IceLakeSiliconPkg/SystemAgent/MemoryInit/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 515b8ee398d3dffde17344e15e61e5061c77c807 
+*********************************************************************************
+
+[PCH]
+
+  [ICL][GPIO] ICL-N Device ID conflict with Broxton audio codec
+  
+  - Changed GPIO Device ID to INT34C9 for ICL-N
+  
+  Hsd-es-id: 14012133209
+  Change-Id: I411840fdf165426d13fbc27a4230a18d097cfcf2
+  Original commit hash: bad0d0ae9702525c1d67185351defa3668a3370d
+  
+  IceLakeSiliconPkg/Pch/AcpiTables/Dsdt/GpioAcpiDefinesIcl.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 6f44779f3efc1bc78b4f5716c709f8c4e996cdf0 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Need a new editable field in BIOS to change SSID in PCI header cfg space for HDA bus ctrl.
+  
+  Added new BIOS setup option (AudioSubsystemIds) to choose Subsystem ID for HDA bus ctrl
+  This new option is required only for SoundWire validation.
+  
+  Hsd-es-id: 22011186118
+  
+  Change-Id: Ic81eb3e6c94b8652bdb0bb18f14b8e3b69fe364e
+  Original commit hash: e7b7045890952f2e7ec945c4ce64ae448db94654
+  
+  IceLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSiPolicyUpdate.c
+  IceLakePlatSamplePkg/Setup/PchSetup.hfr
+  IceLakePlatSamplePkg/Setup/PchSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+################################################################################
+
+Report Summary: Backstop found 15 suspect commits for review 
+
+Warnings Found:
+  Commit: 747b8a6    --Commit Message Contains Key Word: internal
+  Commit: 747b8a6    --Commit Message Contains Key Word: prt
+  Commit: 747b8a6    --Commit Message Contains Key Word: sku
+  Commit: 667f7f8    --Commit Message Contains Key Word: internal
+  Commit: 3dc6082    --Commit Message Contains Key Word: restricted
+  Commit: 3dc6082    --Commit Message Contains Key Word: internal
+  Commit: 4e23672    --Commit Message Contains Key Word: internal
+  Commit: 4e23672    --Commit Message Contains Key Word: http
+  Commit: fe35626    --Commit Message Contains Key Word: internal
+  Commit: 17e8078    --Commit Message Contains Key Word: internal
+  Commit: 39263b1    --Commit Message Contains Key Word: restricted
+  Commit: 39263b1    --Commit Message Contains Key Word: internal
+  Commit: 4419ec9    --Commit Message Contains Key Word: internal
+  Commit: 7d4f942    --Commit Message Contains Key Word: revert
+  Commit: 7d4f942    --Commit Message Contains Key Word: internal
+  Commit: fde1d71    --Commit Message Contains Key Word: internal
+  Commit: f3f40ce    --Commit Message Contains Key Word: internal
+  Commit: 72ee24a    --Commit Message Contains Key Word: internal
+  Commit: 2f29d7b    --Commit Message Contains Key Word: internal
+  Commit: 515b8ee    --Commit Message Contains Key Word: internal
+  Commit: 6f44779    --Commit Message Contains Key Word: internal
