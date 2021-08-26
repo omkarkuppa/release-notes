@@ -1,0 +1,158 @@
+*********************************************************************************
+Commit: 8bbc2f951ca1b8e4039602af9defd64a2fc14afc 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [RKLS][MRC] Fix ReadLeveling failure
+  
+  [Title]
+  Fix ReadLeveling failure
+  
+  [Issue/Feature Description]
+  ReadLeveling training fails at either step 5 or Step 7.
+  Usually, the issue can be reproduced on RVP by running ColdBoot
+  with full bios. Hit once per 80 Coldboot times.
+  
+  [Resolution]
+  Change RcompTarget to { 50, 25, 25, 25, 25 } for high speed (>= 2933)
+  
+  [Impacted platform]
+  RKL-S DDR4.
+  
+  Hsd-es-id: 1509580235
+  Change-Id: I3f683359c930d8e48b3d95a6febf732b6ba8c804
+  Original commit hash: 3f620022349dd0df416422f200c1db101205e011
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: ae8e2ecdd27f73bfec75a25b566b87c15b2cf0ab 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [RKLS][MRC] Add per-Dimm CmdV support
+  
+  [Title]
+  Add per-Dimm CmdV support
+  
+  [Issue/Feature Description]
+  - Current CmdVoltageCentering uses per-channel voltage config.
+  DDR4 board usually supports per-dimm VrefCa.
+  - Check chError based on RunIOTest retval
+  During CmdVref training, RunIOTest might return some error channels,
+  but ByteGroupErrStatus still reports Bytes all succeed. It misleads
+  training steps and RankMarginTool to report wrong margin and center
+  values.
+  - CmdVoltageCentering results have clear fluctuation
+  CmdVoltageCentering calls DQTimeCentering1D which drives CADB to train CmdV.
+  Due to unknow reason, DQTimeCentering1D result is not stable. The
+  margin/center values which are calcualted from the results sometimes
+  have big fluctuation.
+  At 2DPC high freq, such fluctuation causes CmdVref margin misses the target.
+  
+  [Impacted Platform]
+  RKL.
+  
+  Hsd-es-id: NA
+  Change-Id: I5cbb0ee4504619541a8362e650b70a16264166e4
+  Original commit hash: e3598677ef7cc79f9a9b1fe29e356487eeaad5ea
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcGlobal.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 908f7eb2cc6191a72e97f223b347bc47c059c950 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [RKLS][MRC] The MRC will fail at the normal mode memory test after ACM issuing LT_RESET for SCLEAN
+  
+  [Issue Description]
+  The ACM performs the SCLEAN flow after the system power lost with Getsec[SENTER] + secrets bit asserted condition,
+  and observing MRC failures at the normal mode memory test at customer system (AMI BIOS).
+  
+  [Root Cause]
+  Missing to lock registers and signal "mrc_done" before handing over
+  the control to TXT ACM firmware (wich performs a warm reset)
+  
+  [Resolution]
+  Set GsmMccPuMrcDone and GsmMccMrcDone to 1, call McRegistersLock before
+  handing over control to TxtLib ClearSecretsBit
+  
+  Additional changes:
+  Increased the size of FSP-M FV by 2 Blocks
+  to resolve FSP_Binary_GCC_Debug CI build failure.
+  
+  Hsd-es-id: 1509460848
+  Change-Id: Ibd3ea304021eb01ce50cf4fba092ee288becf03b
+  Original commit hash: bfba32d10cffdb68db6718b70b3ee7f8abdd4f7c
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcMemoryScrub.c
+  RocketLakeFspPkg/RocketLakeFspPkg.fdf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains IBV: AMI
+
+*********************************************************************************
+Commit: f25a5a5f37f9870f6793e9749dede5c15df83d59 
+*********************************************************************************
+
+[SiliconPkg], [PCH], [PlatformPkg]
+
+  Add fuse disable ADSP input as another trigger for BIOS flow to disable Audio DSP
+  
+  Add function for reading Audio DSP fuse state.
+  Hide option for enabling/disbaling Audio DSP when DSP is not present.
+  Merge ADL-S and ADL-P HDA init library.
+  Set DOAIS to max value.
+  
+  Hsd-es-id: 22012940114
+  Change-Id: I03a702957cab210396798b2d975986166bdc77dc
+  Original commit hash: c8b055436779c40c3bf8f71ffc151132c8b031fd
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/Hda/HdAudioConfig.h
+  ClientOneSiliconPkg/IpBlock/Hda/IncludePrivate/Register/HdaRegs.h
+  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiHdaInitLib/PeiHdaInitLib.c
+  ClientOneSiliconPkg/Pch/Include/PchInfoHob.h
+  RocketLakePlatSamplePkg/Include/OemSetup.h
+  RocketLakePlatSamplePkg/Setup/PchSetup.c
+  RocketLakePlatSamplePkg/Setup/PchSetup.hfr
+  RocketLakePlatSamplePkg/Setup/PchSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+
+################################################################################
+
+Report Summary: Backstop found 4 suspect commits for review 
+
+Warnings Found:
+  Commit: 8bbc2f9    --Commit Message Contains Key Word: step
+  Commit: ae8e2ec    --Commit Message Contains Key Word: step
+  Commit: 908f7eb    --Commit Message Contains IBV: AMI
+  Commit: f25a5a5    --Commit Message Contains Key Word: fuse
