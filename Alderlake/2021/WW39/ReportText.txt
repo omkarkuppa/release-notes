@@ -1,0 +1,357 @@
+*********************************************************************************
+Commit: 4358e281542560e622c086414f154258ce09d408 
+*********************************************************************************
+
+[SiliconPkg]
+
+  C1S/ME: HMRFPO Disable command was not sent in ME FW Downgrade B3 step
+  
+  Issue: HMRFPO disable command is not sent due to wrong operation mode check.
+  Solution: When CSME is HMRFPO enabled, its operation mode should be ME_MODE_SECOVER, not ME_MODE_NORMAL.
+  
+  Hsd-es-id: 1509899932
+  Change-Id: Ic5a73c43e5a37a6c34ee1c0388c81e30221b1f49
+  Original commit hash: 28c8aa8710c99afe159e9f5b4c81cee29af04f00
+  
+  ClientOneSiliconPkg/IpBlock/Me/Library/DxeMeLib/HeciMsgDxeLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 0ddd1bfe1dd83d956bafc15f93070b1ff2779864 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "AlderLakeBoardPkg: Enable FSP-S measurements in PcdFspMeasurementConfig"
+  
+  Reverting the change from Trunk, as per Security Validation, it has to be filed as a design change and validation assessment from security DT is not done yet.
+  Developer to follow up with security validation team for next steps.
+  
+  This reverts commit 7da3b33cba80b1c4e7c3df20be28cb31d5a52e3e
+  
+  Hsd-es-id: 14014877527
+  Change-Id: If6b67ee3d716f264ec6478038d7066250c30dcc5
+  Original commit hash: 5fe5faa4bf77a5cc3a57c36f1d3786927897272a
+  
+  AlderLakeBoardPkg/BoardPkgPcdInit.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: security
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: d459548c866e1ac742af80f6488f1fcdd2f3afe8 
+*********************************************************************************
+
+[BoardPkg]
+
+  AlderLakeBoardPkg/sh: Fix incorrect internal tag usage
+  
+  Remove KeyEnroll code.
+  
+  Hsd-es-id: 16014513415
+  Change-Id: I01b2367d9b152b73dd7c66e54cb247289d0125ca
+  Original commit hash: 6f222c2eb23afe88ee4c7a1da1646887ff9a9493
+  
+  AlderLakeBoardPkg/PostBuild.sh
+  AlderLakeBoardPkg/postbuild.bat
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: ca316f3d05658ac0275ea9dd6dccd7bffe424af7 
+*********************************************************************************
+
+[SiliconPkg], [SA]
+
+  Modify BIOS knob for Resizable BAR Support by adding "Auto" option and making it default - Phase2
+  
+  Modifying comments and adding under Restricted.
+  
+  Hsd-es-id: 22013743977
+  Change-Id: Ibca833b567181b161f651782582f602f01374884
+  Original commit hash: 61084cc2dc860a92e01708bb5415fe6b4aa2e365
+  
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieVgaInitLib/PeiCpuPcieVgaInit.c
+  ClientOneSiliconPkg/SystemAgent/Include/ConfigBlock/SaMiscPeiPreMemConfig.h
+  ClientOneSiliconPkg/SystemAgent/LibraryPrivate/PeiSaInitLib/SaInitPreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: f5d249b9bab3b5cd5988078e836c10fe54a8d165 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ise][1509680767][ADL][DDR4 | DDR5 | LPDDR4 | LPDDR5] Enable RFM by default and change other default values
+  
+  [Feature Description]
+  Update RFM parameter values.
+  FV and performance teams ask to change a few default configuration
+  around row hammer.
+  
+  [Resolution]
+  1) Per FV request, we need configure RhSelect=RhRfm by default. If chips
+  or DIMM don't support RFM, enable PTRR.
+  2) We need configure Refresh_ABR_release/Refresh_HP_WM/Refresh_panic_wm/PBR_Disable:
+  When PTRR disabled:5, 7, 8, 0
+  When PTRR enabled: 5, 6, 7, 0
+  Exception: DDR4's PBR_Disable need be 1.
+  3) Move the initialization of Inputs->RefreshPanicWm/RefreshHpWm to
+  function MrcSetupMrcData, because MrcSetupMrcData might change it to
+  4,5 for Hynix memory.
+  4) Add RPL support: if RPL and (MntsCbit.BitsRpl.REFm_REF_wm_block_sel == 0),
+  configure PanicWm/HpWm with smaller values.
+  5) If a channel has 2 dimms, but only one dimm supports RFM, don't
+  enable RFM. By default, fall back to PTRR.
+  6) Set REFm_Disable_on_hot to 0.
+  7) Set IGNORE_HIGH_WM_BLOCK to 0.
+  
+  Implement all items in Description.
+  
+  [Impacted Area]
+  ADL all, Row Hammer.
+  
+  Hsd-es-id: 1509680767, 1308915568
+  Change-Id: I4ad4e173c5f9a21ec0d8705c52e2196ea731f8b3
+  Original commit hash: ee290bbdb2877a85c2f4728b73e4d3b6f2711c22
+  
+  AlderLakeFspPkg/Upd/FspmUpd.dsc
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Memory Vendor: Hynix
+  --Commit Message Contains Oem: HP
+
+*********************************************************************************
+Commit: 7d6cd0f4c4d05fe5ed4bea1d500eb506ee6fa34e 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ise][1509761063][ADL-S | DDR5][OC] Support PMIC voltage step size 10mv
+  
+  [Title]
+  Support PMIC voltage step size 10mv
+  
+  [Feature Description]
+  1) XMP3.0 Revision 1.1
+  1.1) Defines 10mv voltage tuning step size.
+  1.2) Clarify the unclear definition on System CMD Rate Mode3.
+  2) PMIC requirement Revision 0.92
+  2.1) Reg 0x2B[5] for SWA, Reg 0x2B[4] for SWB. Optional 0xReg 0x2B[3]
+  for SWC. When the bits are 1, the voltage is using 10mv step size.
+  Otherwise, use 5mv.
+  2.2) 0x3E[0] is reset bit. Setting to 1 will trigger resetting to
+  Factory default setting.
+  
+  [Resolution]
+  1) Follow new XMP3.0 Revision 1.1 and PMIC requirement to implement
+  10mv step size.
+  Add a new parameter IsPmicSupport10MVStep to function
+  MrcDefaultSetMemoryPmicVoltage to facilitate coding instead of
+  searching it from Controller/Channel/Dimm loop. We don't change
+  prototype MrcCall->MrcSetMemoryPmicVoltage as ADL is released.
+  Even without the new parameter, MrcCall->MrcSetMemoryPmicVoltage still
+  can work by searching IsPmicSupport10MVStep from DimmOut.
+  As 10mv need new config and spec has no detailed info, the patch
+  add some extra checkings and some debug messages.
+  2) As for Reset bit, just define it and don't use it
+  , partially because if memory training fails at a step, MRC
+  will hang there, or fail over to STD profile by a Warm Reset, then
+  retrain from start. The 2nd reason is memory module might be not stable
+  on such advanced feature.
+  3) Add comments around GetChannelDimmNmode for DDR5, but still use
+  NMODEMINPOSSIBLE Nmode for XMP memory.
+  
+  [Impacted Platform]
+  ADL-S DDR5 OverClock Only.
+  
+  Hsd-es-id: 1509761063
+  Change-Id: I6d469c088ec02ce80e22952c3999d777fbcc5035
+  Original commit hash: 0160d3cbdeb2b1c8eb21601a54cdf333acbcf303
+  
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcSpdData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcPmic.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcPmic.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: a6b11830eff5aad122ffa6f133c0b7b3e697db75 
+*********************************************************************************
+
+[SiliconPkg]
+
+  L0s exit timeout and deskew buffer full in Gen4 RXL0s Gen4 nFTS increase from 0x90 to 0E0
+  
+  Hsd-es-id: 22013762993
+  Change-Id: If7764e168009bce3668d9acaa187d35ad4a844e5
+  Original commit hash: 6578d6b0f5480810220b6e7b4db39a2e4642fdaa
+  
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieSip17InitLib/PeiCpuPcieSip17InitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: FTS
+
+*********************************************************************************
+Commit: 20d934b219ecd9f9cf79d40a21502ee132797134 
+*********************************************************************************
+
+[PlatformPkg]
+
+  PcieResizableBarSupport  setup option needs to be removed from internal
+  
+  Hsd-es-id: 16014575473
+  Change-Id: I9c8a59ec6a7addaacb3795fcb302e26f608b22e6
+  Original commit hash: f9e6d77c4601d2749f9ab043daad207bbff96800
+  
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 61d69ec89984772265cbd2b8126c9f33c1e39d50 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ADLP]: AdlP RVP Root port 08 D3cold and Wake capability
+  
+  Since port configuration depends on the HSIO board mapping in RVP document.Need to add RP08 workarounds on the board configs which has pch pcie slot on Rootport 08.
+  
+  Changes.
+  1.Rp08D3ColdSupport disabling this knob on HSIO and DualMR boards since this boardconfig doesnt have Rootport 08.
+  2.Adding Rp08 wake capability for the AdlP Rvp which has rootport08 pins ported in *.c file.
+  
+  Hsd-es-id: 16014564290
+  Change-Id: I429077713ff80ad6ec1adbf397b0d313120ee9cc
+  Original commit hash: e5dafdc0e007cf7b31860d64543f110f36081089
+  
+  AlderLakeBoardPkg/AlderLakePBoards/Include/AlderLakePRvpBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 281e25e87b3625c424b7fdc3b81b40a46ca152ba 
+*********************************************************************************
+
+[CPU]
+
+  Fix SmiEntry.nasm warnings
+  
+  Warning 1:label alone on a line without a colon might be in error
+  Fix with:Include "%include "StuffRsbNasm.inc" to make StuffRsb64 operational for security purpose
+  which mentioned by CVE-2017-5715
+  Warning 2:absolute address can not be RIP-relative
+  Fix with:Use RBX as temp reg to do addressing operation
+  
+  Hsd-es-id: 1509837850
+  Change-Id: I78da5336fcd2476f88be12ebe0b32b305bc37745
+  Original commit hash: df34e03e23616cabcdf23d86a1ec2c8a083e8883
+  
+  ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/X64/SmiEntry.nasm
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 95009f1f0e0dacc7936558b9d37664635f9bf910 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ADL-S] BIOS workaround for games that use Denuvo DRM
+  BIOS W/A for games that use a specific DRM
+  Core Parking Hint based on Scroll Lock
+  When Scroll lock is pressed, trap with SMM IO Trap hanlder and tell pCode to change core parking.
+  
+  Hsd-es-id: 22013741465
+  Change-Id: I73a9eb8fb04e77e893c2f342d4ba9476278844d2
+  Original commit hash: 430def4495883e5782a2ce67ee28ec0ca7f94b79
+  
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedSmm/PlatformInitAdvancedSmm.h
+  AlderLakePlatSamplePkg/Setup/AcpiSetup.c
+  AlderLakePlatSamplePkg/Setup/CpuSetup.hfr
+  AlderLakePlatSamplePkg/Setup/CpuSetup.uni
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  AlderLakePlatSamplePkg/Setup/SetupCallbackExList.h
+  AlderLakePlatSamplePkg/Setup/SetupId.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+################################################################################
+
+Report Summary: Backstop found 11 suspect commits for review 
+
+Warnings Found:
+  Commit: 4358e28    --Commit Message Contains Key Word: step
+  Commit: 0ddd1bf    --Commit Message Contains Key Word: revert
+  Commit: 0ddd1bf    --Commit Message Contains Key Word: security
+  Commit: 0ddd1bf    --Commit Message Contains Key Word: step
+  Commit: d459548    --Commit Message Contains Key Word: internal
+  Commit: ca316f3    --Commit Message Contains Key Word: restricted
+  Commit: f5d249b    --Commit Message Contains Memory Vendor: Hynix
+  Commit: f5d249b    --Commit Message Contains Oem: HP
+  Commit: 7d6cd0f    --Commit Message Contains Key Word: step
+  Commit: a6b1183    --Commit Message Contains Oem: FTS
+  Commit: 20d934b    --Commit Message Contains Key Word: internal
+  Commit: 61d69ec    --Commit Message Contains Key Word: Workaround
+  Commit: 281e25e    --Commit Message Contains Key Word: security
+  Commit: 95009f1    --Commit Message Contains Key Word: Workaround
