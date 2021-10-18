@@ -1,0 +1,108 @@
+*********************************************************************************
+Commit: 83a51f9d52055c51b41156dd79fa81298949f49b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Dekel Recipe and nFTS value modification to address L0s Gen1 failures
+  
+  Hsd-es-id: 16014535372
+  Change-Id: I63db688dacadb1dcffc268193c27776f1abeaeb0
+  Original commit hash: d7e5720b906e1eb61c98b53b359faff8e08ebd05
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/CpuPcieRp/LibraryPrivate/PeiCpuPcieDekelInitLib/PeiCpuPcieDekelInitLib.c
+  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Register/CpuPcieDekelRecipe.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: FTS
+
+*********************************************************************************
+Commit: 3afe53a4796bf08da3c6cdf8effa1f5cbcfc9998 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "[ise][16014716637][ADL-P ADL-M | LP4 LP5 DDR4 DDR5] BwSel Calibration algorithm update for low frequency calibration"
+  
+  Changes:
+  BwSel Calibration algorithm implementation from v0.0.2.201 causing DdrIO initialization failures on LP4.
+  Hence reverting this change
+  
+  [Impacted Area]
+  ADL-P ADL-M | LP4 LP5 DDR4 DDR5
+  
+  [Registers impacted]
+  Phy
+  
+  Hsd-es-id: N/A
+  Change-Id: I7139199a208a3f2bca6d2f2661b2e8cfa8d5cb3f
+  Original commit hash: a213c93c398089f18efe3c103795467eb74e3ca8
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: d79686d74b3cbd2f18fe36144967ee13bc10d083 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL-S | DDR5] Reg32.Bits.pwr_good_io_type need keep default 0
+  
+  [Issue/Feature Description]
+  On re-worked boards for OverClock, some memory modules with specific
+  PMIC models are installed and system fails at training.
+  
+  Those PMIC don't want pwr_good_io_type to be initialized to 1.
+  R32 [5]: PWR_GOOD_IO_TYPE
+  PMIC PWR_GOOD Output Signal Type
+  0 = Output Only
+  1 = Input & Output
+  
+  Otherwise, PMIC might power up VDD/VDDQ, then power down them
+  immediately. Later on, memory training fails.
+  
+  [Resolution]
+  1) Keep Reg32.Bits.pwr_good_io_type to default 0.
+  2) Dump some PMIC register values for debug.
+  3) Per XMP spec owner's suggestion, don't reset voltage to the
+  smallest when switching step size 5mv=>10mv. There is an assumption
+  that step size reg is only a flag and wouldn't trigger voltage change
+  immediately. Real voltage change happens when voltage registers
+  are configured.
+  
+  [Impacted Platform]
+  ADL DDR5 OC.
+  
+  Hsd-es-id: 15010012525
+  Change-Id: I03b5d5b412574636d2969d97c2df0fb93a2d898b
+  Original commit hash: cc0d2de45554ca990b8978ba68cc6acb41da8563
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcPmic.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+################################################################################
+
+Report Summary: Backstop found 3 suspect commits for review 
+
+Warnings Found:
+  Commit: 83a51f9    --Commit Message Contains Oem: FTS
+  Commit: 3afe53a    --Commit Message Contains Key Word: revert
+  Commit: d79686d    --Commit Message Contains Key Word: step
