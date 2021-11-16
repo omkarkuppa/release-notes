@@ -1,0 +1,95 @@
+*********************************************************************************
+Commit: ad988db289b804637a5a79e1b6d1105f491d02b4 
+*********************************************************************************
+
+[SiliconPkg]
+
+  C1S/MemoryInit: Reserve memory higher than 128GB if enable CPU TraceHub.
+  
+  In general, for real memory map, there is a hole 1216MB - 4096M
+  resolved for memory map IO and other usage. So a system with 128GB
+  memory has about 2.8G memory has offset higher than 128G.
+  And enable CPU Trace Hub will map some memory at the offset 4012MB.
+  
+  So a system with 128GB memory and enable CPU trace hub, need about
+  11 variable MTRR entries. If the CPU has only 10 entries, then will
+  failed to set MTRR entry which plan to set the 128G-256G to write back,
+  and cause the 128G - 256G memory to uncacheable at last.
+  
+  And when Windows try to access the 2.8G memory which offset higher than
+  128G, will get bad performance, and cause need long time to boot to
+  Windows.
+  
+  Now we reserve the memory higher than 128GB to work around this issue.
+  
+  Hsd-es-id: 16014811323
+  Change-Id: I3e61efc15b7a5e0504a1b128eee67e9253bddd9b
+  Original commit hash: 97e02f446b257bb2e3d3d570e6a0712f3d6bf592
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: work around
+
+*********************************************************************************
+Commit: 1baa1e4c2fc8810f41e3b26d85b84f13fa0ddbe2 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg: Do not touch RTC TopSwap during init
+  
+  Currently BIOS during RTC init flow and initial programming of Daylight
+  Saving also writes TopSwap bit since it's located in the same register.
+  Value of that bit depends on TopSwap strap and writing one to register
+  writes it into RTC internal latch ending in restoring TopSwap on reboot.
+  Due to that additional reset on platform is required for that status to
+  go away and act correctly.
+  This change removes that need of additional reset since BIOS will not
+  program TopSwap bit during the initial programming of RTC.
+  
+  Hsd-es-id: 18018784025
+  Change-Id: I453182a0045d71314e8ff1afd4b990656d87bcb7
+  Original commit hash: fa424a2e90ae5f4624233ab7fdf9f2e9b8287a20
+  
+  ClientOneSiliconPkg/IpBlock/Rtc/LibraryPrivate/PeiRtcLib/PeiRtcLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: strap
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: a590a5ef523867684a5f2cc1eaf771a80c46b61b 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ADL-P] Revert the commits which was done for the ADL-P PV Dot label build
+  This reverts the commit from 9f5a98f8add008bb691b4073bee45c0eaf4dca9d to d5ce58af9dd2a797af2bf771119ef52f32f4e886
+  
+  Hsd-es-id: N/A
+  Change-Id: I4a35238e502463400b97465b0475da15bf7209c7
+  Original commit hash: dca1bb3dbc8453005dc9230188860aeb3695c3a1
+  
+  AlderLakeBoardPkg/BiosId.env
+  AlderLakeBoardPkg/BoardPkg.fdf
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+################################################################################
+
+Report Summary: Backstop found 3 suspect commits for review 
+
+Warnings Found:
+  Commit: ad988db    --Commit Message Contains Key Word: work around
+  Commit: 1baa1e4    --Commit Message Contains Key Word: strap
+  Commit: 1baa1e4    --Commit Message Contains Key Word: internal
+  Commit: a590a5e    --Commit Message Contains Key Word: revert
