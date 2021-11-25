@@ -1,0 +1,497 @@
+================================================================================ 
+Commit: 26ea14499c2e8a3faa7742944a565e7b928fb347 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:39:20 2021 +0530 
+-------------------------------------------------------------------------------- 
+Updated Doxygen
+Removed redundant files
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/RplSS18RvpRtd3.asl
+AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableRplSPreMem.dsc
+Doxygen/AlderLake_FSP_Integration_Guide.chm
+Doxygen/AlderLake_FSP_Integration_Guide.pdf
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+
+================================================================================ 
+Commit: 76ea5d3fef0f89175a9bdecf815b4e8dd4dca0f0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:37:09 2021 +0530 
+-------------------------------------------------------------------------------- 
+Revert "ADL-SBGA: Support SPI Touch Panel Rework"
+
+This reverts commit 72c75c62dbf497473715539e9e4b8ee9b4e420ee.
+
+Hsd-es-id: 22014179853
+Original commit date: Wed Nov 24 02:22:34 2021 -0700
+Change-Id: I64bd0ed0fc1defad18226aefc4db49a179631666
+Original commit hash: e990e055aa71549fb48c0c6c280c458cc9fdce39
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvp3Rtd3.asl
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvp3TbtRtd3.asl
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvpRtd3.asl
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvpTbtRtd3.asl
+AlderLakeBoardPkg/AlderLakeSBoards/Include/AlderLakeSBoardConfigPatchTable.h
+
+================================================================================ 
+Commit: bf14259d5fe0ff1c2b96d18554a61dc88987fd23 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:37:07 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ADL]:Bug fix for ConfigTdpLevel
+
+Fix patch :Change-Id: I206b9f240caf19a83fef159a5ca92441dbe23781
+
+Hsd-es-id: 22013985433
+Original commit date: Tue Nov 23 16:17:09 2021 +0800
+Change-Id: If9ca97b68d479099ce66d32ec71aa50715d1e031
+Original commit hash: 6f359de9f07292a49a6d62cf45ffa4549aaafcbf
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Include/Protocol/CpuInfo.h
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.c
+
+================================================================================ 
+Commit: c65aa7ef7b138963231e3de4598c30252026ad52 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:37:05 2021 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.30
+
+Wed Nov 24 01:52:26 2021 +0000
+Original commit date: Wed Nov 24 01:52:26 2021 +0000
+Original commit hash: f8ad847e929e6217297b1a02aff8a04e2d01bb31
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 900dfeb46e77c3bfead871f0537c11af91dc3ecc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:37:04 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ise][16015230273][ADL-P ADL-M | LP5] - WCK leveling training is not aligning WCK to CLK on Gear4.
+
+[Issue Description]
+At the end of WCK2CK Leveling, positive edge of WCK aligns with negative edge of CK causing
+random MRC failures with Gear4. An additional offset of 256 PI was subtracted from
+WCK2CK trained value of WckPi which was shifting the WCK alignment by 0.5CK.
+
+[Resolution]
+Skip subtracting 256 PI from trained value of WckPi value after 'Jedec WCK2K Leveling' training step.
+Change default CK PI value for LP5 Gear4 from 512 to 256 and adjust Ctl, Cmd and Wck PI codes accordingly.
+Adjust TxFifoSeperation for 2400G4 from -2 to -4 to avoid saturated TxRankMuxDelay values due to CLkPi change.
+Program cas2wrwck, cas2rdwck and cas2fswck from 'WCK control registers' as per design recommended values.
+
+[Additional Changes]
+ - Issue MRW to correct MR10 register
+ - During LockUi re-run, consider CompOffset change also
+
+[Impacted Area]
+ADL-P ADL-M | LP5
+
+[Register Impacted]
+Phy
+
+Hsd-es-id: 16015230273
+Original commit date: Tue Nov 23 10:54:46 2021 +0530
+Change-Id: I0da7161a78caae9f6499c9ed4ccf48fa2f6873b8
+Original commit hash: 68ebbdbdc91ff44fa0c7f2d97cd7f750007d37c7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+
+================================================================================ 
+Commit: 0cb7765e349a513d4b9101f33bea2b7062dc3f1a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:37:01 2021 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.29
+
+Tue Nov 23 10:21:46 2021 +0000
+Original commit date: Tue Nov 23 10:21:46 2021 +0000
+Original commit hash: ac9a7eeda45a507badadb9320a6536d3c3f0bf6b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 31d656f1dceb761836844859329416ec7f742b07 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:37:00 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-P/M] Add new microcode for ADL-P/M L0/R0 Production patchID 0x00000413
+
+Hsd-es-id: N/A
+Original commit date: Tue Nov 23 14:12:16 2021 +0530
+Change-Id: I81ffd79670e0dbea63326032c03e4b975036aa1b
+Original commit hash: f667eacbccf6863bce9cdaec82476c6577fa9ad4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: cfaa9ab78e25c4be6396a4a456f25f51078c3a40 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:58 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010095541] DDR5 HMP MRC support
+[Feature Description]
+DDR5 HMP MRC support
+
+[Resolution]
+Add DDR5 HMP MRC support.
+
+[Impacted Area]
+NA
+
+[Register Impacted]
+MC and PHY
+
+Hsd-es-id: 15010095541
+Original commit date: Wed Oct 27 23:17:16 2021 +0800
+Change-Id: I99102b09fd765bfbe6b624db90ce9be97fc43033
+Original commit hash: 46355d11ecb459d1a0970d5d417ba95ea1ebc506
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+
+================================================================================ 
+Commit: 135c89741e45bc3e27bb20b3272e9323a4fa95f1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:55 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-P][R0 -Silicon ][LP5 T3 RVP][DC-3] PCIe X1 slot is not enabled on LP5 T3 RVP
+
+Hsd-es-id: 16015223991
+Original commit date: Tue Nov 23 11:21:55 2021 +0530
+Change-Id: Ic7ca90f21ef8f1de53cdbd2dfe1404069e5d25ed
+Original commit hash: 022e7d72b00bf314d6e7ea05809f0c6f6f7a49f1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+
+================================================================================ 
+Commit: 511ab14c1241f7c693e659b3b29ca2483ea9ce0b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:54 2021 +0530 
+-------------------------------------------------------------------------------- 
+AlderLakeSamplePkg/PlatformSetup: When RTD3 is enable, non-mobile SKU would only support D3Cold
+
+  Fix issue : D3Hot option is not saved correctly
+
+Hsd-es-id: 15010150223
+Original commit date: Tue Nov 23 12:55:08 2021 +0800
+Change-Id: Iac8937cb674cda4fa97fc7fc4ecd5a1fd99bd50d
+Original commit hash: 4107be679a11bbb9ea1a44261999ac2d70c916bd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/PlatformSetup.c
+
+================================================================================ 
+Commit: d8e149d7fb0f96a4fe3cf77e0e588291b113ee31 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:52 2021 +0530 
+-------------------------------------------------------------------------------- 
+Integrate ADL-S GOP V1073
+
+Hsd-es-id: NA
+Original commit date: Mon Nov 22 15:00:11 2021 +0530
+Change-Id: Id1ca28353ac9b57754f243b0e536b711b84f2b51
+Original commit hash: 2dc84f6f0dc8f8534db662189b0b048705e14839
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspBinPkg/SampleCode/Vbt/Vbt.json
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+
+================================================================================ 
+Commit: ac2122585c69aaa9edefe6e43d722e0754da9f61 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:50 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ADLS BGA] Mega Block Above 1MB is failing to allocate - Part2
+
+To Set the MaxTolud item by default.
+
+Hsd-es-id: 1309068768
+Original commit date: Mon Nov 22 16:04:47 2021 +0800
+Change-Id: Id0c5cc97005ed2d25fd11e609238a1eb5c8b57e5
+Original commit hash: e17bedb27f58262fa8ae0c740296c4eea4d1a3c6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakeSBoards/Include/AlderLakeSBoardConfigPatchTable.h
+
+================================================================================ 
+Commit: 118274eb3bbe2e3dde6d89641bd1ea0405051d6f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:47 2021 +0530 
+-------------------------------------------------------------------------------- 
+ADL Processor PCIe x16 cannot be detected if dGFX not support CLKREQ
+
+Hsd-es-id: 22013984790
+Original commit date: Wed Nov 10 19:56:13 2021 +0530
+Change-Id: I977be08cac0e40f2d61c0eb4d0b1780fe4544453
+Original commit hash: 9f0174dfb022a4ea170c824cb7424f759e997d05
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer2.c
+
+================================================================================ 
+Commit: 8b35db7b5173bcac9dd204d6646557188b54dd28 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:45 2021 +0530 
+-------------------------------------------------------------------------------- 
+ADL Platform VR POR file WW42_2021
+ - Updated ADL SBGA PL1 Tau from 28 S to 56 S
+ - Updated ICCMax for 401 60W
+
+Hsd-es-id: 22013963666
+Original commit date: Mon Nov 15 16:36:29 2021 +0530
+Change-Id: I9b03ab710b6b97db10312da782a0cb3e1f71dabc
+Original commit hash: 8e7de53e8a075a6c68a20840f62f56bec9be9ff0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/Include/CpuPowerMgmt.h
+ClientOneSiliconPkg/Cpu/IncludePrivate/Library/CpuInfoFruLib.h
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerLimits.c
+ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+ClientOneSiliconPkg/Fru/AdlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+
+================================================================================ 
+Commit: e4209e740c6f033093c97a3a7b3c547252835dfc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:43 2021 +0530 
+-------------------------------------------------------------------------------- 
+Updating Bios ID minor version for the PV dot label.
+Final version number is 2471_02
+
+Hsd-es-id: NA
+Original commit date: Sat Nov 20 13:26:19 2021 +0530
+Change-Id: If3cfe25fd60a057051d6233489dda03df00240c8
+Original commit hash: cf55d780a8cf96479e319b7114d182fd8f445969
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: e29211c6c43a12b080403c21a00441e42dd6f203 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:41 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-P] Update CPU Frequency base on cTdp
+
+CPU Frequency should be dynamically when cTdp enable .
+
+Hsd-es-id: 16015060243
+Original commit date: Wed Oct 27 15:09:36 2021 +0800
+Change-Id: I206b9f240caf19a83fef159a5ca92441dbe23781
+Original commit hash: 960364ab561d237b9e1a21f9a709c686cca5dbc7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuAcpi.c
+ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuInitDxe.c
+ClientOneSiliconPkg/Cpu/IncludePrivate/CpuInitDataHob.h
+ClientOneSiliconPkg/Cpu/IncludePrivate/Library/MsrFruLib.h
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.c
+ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseMsrFruLib/BaseMsrFruLib.c
+
+================================================================================ 
+Commit: d465cc9005e86c509c7244cec56636bb65958c3a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:40 2021 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.28
+
+Fri Nov 19 18:06:32 2021 +0000
+Original commit date: Fri Nov 19 18:06:32 2021 +0000
+Original commit hash: 04f9f1447ce3ad451d8c68673833fe74723133d2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: b07eb713ec4e8c37150de68f7a26d097f72dc525 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:38 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ise][16015194163][ADL-P ADL-M | LP5 ] Disable Weaklock Feature for LP5
+
+[Issue/Feature Description]
+  Memory Corruptions observed in PPV with latest parts.
+
+[Resolution]
+  Recommended by design to disable the weaklock
+
+[Impacted Area]
+  ADL-P ADL-M | LP5
+
+ [Registers impacted]
+   MC [ ] Phy [x] Both [ ]
+
+Hsd-es-id: 16015194163
+Original commit date: Thu Nov 18 12:49:33 2021 +0530
+Change-Id: I7115a75a050f366d1a01023374606fea98e360d2
+Original commit hash: 7b9fc6f5d801b70e0d6757ae244af55a78418b0f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+
+================================================================================ 
+Commit: 1c3bcaf48219e3b994e52a4ad1c7ebb4d7c1d8d0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:36 2021 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.27
+
+Fri Nov 19 17:29:13 2021 +0000
+Original commit date: Fri Nov 19 17:29:13 2021 +0000
+Original commit hash: 9703401d67b10bc0a549606fd5a22baab7d7eeda
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: e7e0ee078a59ba0da76a49c7e659f2bc496bd0ea 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:34 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ise][16015192613][ADL-P ADL-M | LPDDR5] Tune LockUi parameters and Update Sweep Range for Read Timing Centering
+
+[Feature Description]
+MRC shall update sweep range for Read Timing Centering
+
+[Resolution]
+- InitialFwdClkOffsetPs = 120 (instead of 80)
+- RDTC sweep range adjusted using (CompDataComp1.Bits.Dqs_fwdclkp/n - 64 * SaveOutputs->CompOffset)
+- Clear MprLeftEdge at the beginning of each RDMPR
+
+[Impacted Area]
+ADL-P ADL-M LPDDR5
+
+[Register Impacted]
+PHY
+
+Hsd-es-id: 16015192613
+Original commit date: Wed Nov 17 21:56:57 2021 -0800
+Change-Id: If7eba1f137ada99ebd63deb0ee4ffde449443695
+Original commit hash: 1f06a4bb464e51a39110dbb63a4a083dbef54e80
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: 63785eb6683b0354b3f59a5854e31d6d1fafc13d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:32 2021 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.26
+
+Wed Nov 17 21:38:23 2021 +0000
+Original commit date: Wed Nov 17 21:38:23 2021 +0000
+Original commit hash: 33a4b7b2f8fe0a1df86fa5a3aa1bc3d9667316d7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 65259dad263b46a4354cc7a13e95bda1580ba547 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:30 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ise][16015113301][ADL-P ADL-M | LPDDR5] Rerun Lock UI Calibration - fix MR10 update code
+
+[Feature/Issue Description]
+ In case UiLock is changing when we re-run LockUI calibration, we need to update LP5 RDPRE in MR10.
+ The code was updating MR18 in the host struct by mistake.
+
+[Resolution]
+ Use mrIndexMR10 instead of mrIndexMR18
+
+[Impacted Area]
+ ADL-P ADL-M LPDDR5
+
+Hsd-es-id: 16015113301
+Original commit date: Wed Nov 17 13:13:51 2021 -0800
+Change-Id: I0810999171813b5c59eef174b5de4c3fdffd5e5e
+Original commit hash: 398c97922178d66d41ecd829881d86fd6d584e95
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+
+================================================================================ 
+Commit: c117185ac98e864816533d74d68182e4e57fb385 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:29 2021 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.25
+
+Tue Nov 16 06:12:19 2021 +0000
+Original commit date: Tue Nov 16 06:12:19 2021 +0000
+Original commit hash: d0d774d3b637b13fcde11a8476ff2adf73807eb5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 4923e120ce59e302592093774807799a76a6e0e0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 25 10:36:27 2021 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010262864][ADL-S | DDR4] Not increase 2 for tRDRDsg and tRDRDdg when DDR4 OC Frequency is f3733
+
+[Feature Description]
+Not increase 2 for tRDRDsg and tRDRDdg when DDR4 OC Frequency is f3733.
+It's to solve the Memory OC Performance drop at 3733Mhz
+
+[Resolution]
+1. Not increase 2 for tRDRDsg and tRDRDdg when DDR4 OC Frequency is f3733.
+
+[Impacted Area]
+ DDR4 OC
+
+[Register Impacted]
+ MC, PHY, DRAM
+
+Hsd-es-id: 15010262864
+Original commit date: Wed Nov 10 14:22:31 2021 +0800
+Change-Id: I10dce941c277d51179715952f085707cf20c8068
+Original commit hash: 58f7ff51a3eb31f54e0dc90a4322e9349ffdbd5f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c

@@ -1,0 +1,101 @@
+*********************************************************************************
+Commit: 76ea5d3fef0f89175a9bdecf815b4e8dd4dca0f0 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  Revert "ADL-SBGA: Support SPI Touch Panel Rework"
+  
+  This reverts commit 72c75c62dbf497473715539e9e4b8ee9b4e420ee.
+  
+  Hsd-es-id: 22014179853
+  Change-Id: I64bd0ed0fc1defad18226aefc4db49a179631666
+  Original commit hash: e990e055aa71549fb48c0c6c280c458cc9fdce39
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvp3Rtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvp3TbtRtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvpRtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvpTbtRtd3.asl
+  AlderLakeBoardPkg/AlderLakeSBoards/Include/AlderLakeSBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 900dfeb46e77c3bfead871f0537c11af91dc3ecc 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][16015230273][ADL-P ADL-M | LP5] - WCK leveling training is not aligning WCK to CLK on Gear4.
+  
+  [Issue Description]
+  At the end of WCK2CK Leveling, positive edge of WCK aligns with negative edge of CK causing
+  random MRC failures with Gear4. An additional offset of 256 PI was subtracted from
+  WCK2CK trained value of WckPi which was shifting the WCK alignment by 0.5CK.
+  
+  [Resolution]
+  Skip subtracting 256 PI from trained value of WckPi value after 'Jedec WCK2K Leveling' training step.
+  Change default CK PI value for LP5 Gear4 from 512 to 256 and adjust Ctl, Cmd and Wck PI codes accordingly.
+  Adjust TxFifoSeperation for 2400G4 from -2 to -4 to avoid saturated TxRankMuxDelay values due to CLkPi change.
+  Program cas2wrwck, cas2rdwck and cas2fswck from 'WCK control registers' as per design recommended values.
+  
+  [Additional Changes]
+  - Issue MRW to correct MR10 register
+  - During LockUi re-run, consider CompOffset change also
+  
+  [Impacted Area]
+  ADL-P ADL-M | LP5
+  
+  [Register Impacted]
+  Phy
+  
+  Hsd-es-id: 16015230273
+  Change-Id: I0da7161a78caae9f6499c9ed4ccf48fa2f6873b8
+  Original commit hash: 68ebbdbdc91ff44fa0c7f2d97cd7f750007d37c7
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 511ab14c1241f7c693e659b3b29ca2483ea9ce0b 
+*********************************************************************************
+
+[PlatformPkg]
+
+  AlderLakeSamplePkg/PlatformSetup: When RTD3 is enable, non-mobile SKU would only support D3Cold
+  
+  Fix issue : D3Hot option is not saved correctly
+  
+  Hsd-es-id: 15010150223
+  Change-Id: Iac8937cb674cda4fa97fc7fc4ecd5a1fd99bd50d
+  Original commit hash: 4107be679a11bbb9ea1a44261999ac2d70c916bd
+  
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 3 suspect commits for review 
+
+Warnings Found:
+  Commit: 76ea5d3    --Commit Message Contains Key Word: revert
+  Commit: 900dfeb    --Commit Message Contains Key Word: step
+  Commit: 511ab14    --Commit Message Contains Key Word: sku
