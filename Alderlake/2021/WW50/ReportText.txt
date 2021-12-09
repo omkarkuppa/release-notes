@@ -1,0 +1,435 @@
+*********************************************************************************
+Commit: 60252fd2c17746fbf8a23e912728d32c4aae2698 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL] Update HwEq default policy mismatch values.
+  
+  Hsd-es-id: 16015299014
+  Change-Id: I3c7f9fd2ba8866739e52a7485c23930b77582687
+  Original commit hash: 6c59281d80315d049dd2f1fc918c493fe459d452
+  
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPciePolicyLib/PeiCpuPciePolicyLib.c
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer2.c
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieSip17InitLib/PeiCpuPcieSip17InitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 1d84749e48fa1b6d2e990e92e2a6641421f40e66 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[ADL-S]Updated the ucode for ADL S C0"
+  
+  This reverts commit a718236c4e7468038d95b7449e7d657248361d1e.
+  
+  Hsd-es-id: N/A
+  Change-Id: I6d20ea01061cbb1635e5321a66cc69c986ae37c1
+  Original commit hash: 8b46fb4afdfded42a4a736a890eb24d15cc398b9
+  
+  AlderLakeBoardPkg/BoardPkg.fdf
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+*********************************************************************************
+Commit: 48c3f31f2b1c64b03ea3e7c6b5601f220135aab6 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Change the warm reset to cold reset after setting BIOS DLVR bypass knob
+  
+  Once soft strap (OC_DLVR_FORCE_BYPASS) value is updated in BIOS to
+  enable/disable DLVR bypass mode, BIOS is performing warm reset instead
+  of cold reset which is resulting to MCA.
+  
+  Hsd-es-id: 15010338062
+  Change-Id: I7d0f1e8610ca33d9f8a35e0561eeeeb7fd5eed18
+  Original commit hash: 01212262b8770d092edc9aea0b8ec3d354543731
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/PeiCpuInitFruLib/PeiCpuInitFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+  --Commit Message Contains Key Word: strap
+
+*********************************************************************************
+Commit: 17593f64b31e79d2ee7ce4557599e2522f136ea7 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [bug][ADL-P ADL-M ADL-S | LP5 DDR5] MRC is not relaxing tWRRD parameter for LPDDR5 and DDR5
+  
+  [Issue Description]
+  MRC is not relaxing tWRRD parameter and using ideal calculated value for TAT.
+  
+  [Resolution]
+  Update MRC code to relax the tWRRD timing with correct variable
+  
+  [Impacted Area]
+  ADL-P ADL-S ADL-M LP5 DDR5
+  
+  [Registers impacted]
+  MC [x] Phy [] Both [ ]
+  
+  internal only:
+  
+  Hsd-es-id: 16015271637
+  Change-Id: I0ec565f296107edb8f10045ebcfe51fc84401c94
+  Original commit hash: b2eaa06ba104dd5b2fb8c83bb0e5c2356822898c
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 244bf0f6fd0678bf56bc855cab526446ea3c3210 
+*********************************************************************************
+
+
+  [Catlow] - Changes to enable Catlow IP Clean build
+  
+  1. Internal graphics is not POR for Catlow. Hence the related files are snipped off using the PCD gBoardModuleTokenSpaceGuid.PcdIntelGopEnable. But the build is failed due to below error because of the call existing in AlderLakeFspPkg.dsc.
+  
+  error 000E: File/directory not found in workspace
+  
+  ClientOneSiliconPkg\Fru\AdlCpu\Graphics\IntelGraphicsPeim\Binaries\IntelGraphicsPeim.inf is not found in packages path.
+  
+  2. To add restricted tag to EC as it is not POR for Catlow
+  
+  Hsd-es-id: 16015251364
+  Change-Id: If3dd898d95c014aed7ec6a0123bb053f11c9981e
+  Original commit hash: 8a22b55b06665d480eb9261acfcb1b16baa995b3
+  
+  AlderLakeFspPkg/AlderLakeFspPkg.dsc
+  AlderLakeFspPkg/FspPkgPcdInit.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: 4e462c4c5d6772dc2303252c93188f209467df5d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][15010247259][ADL S] checking conditions before ecc injection
+  
+  [Feature Description]
+  The ecc injection is only available for adls cpu that supports ecc and dimm that supports ecc.
+  And meanwhile we need to enable ecc_dft and disable write0.
+  
+  [Resolution]
+  Check the cpu sku, ecc support, ecc_dft and write0 before injecting.
+  
+  Other change: correct EccErrInjCount's default value in upd.
+  
+  [Impacted Area]
+  ADL S
+  
+  [Register Impacted]
+  MC
+  
+  Hsd-es-id: 15010247259
+  Change-Id: I5e17a8694d5fbd4691998e52c959cc8e45a4439f
+  Original commit hash: 4db2df424886f336e5bcc3e480eda76cfe207b56
+  
+  AlderLakeFspPkg/Upd/FspmUpd.dsc
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 4b020607a77e9bf85e956cafb2965056b354f741 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  Revert "ADL-SBGA: Support SPI Touch Panel Rework"
+  
+  This reverts commit 72c75c62dbf497473715539e9e4b8ee9b4e420ee.
+  
+  Hsd-es-id: 22014179853
+  Change-Id: I64bd0ed0fc1defad18226aefc4db49a179631666
+  Original commit hash: e747198519f6b304d76f9e92142c1238c90ad836
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvp3Rtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvp3TbtRtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvpRtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvpTbtRtd3.asl
+  AlderLakeBoardPkg/AlderLakeSBoards/Include/AlderLakeSBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 3eb120ed2ecdfecfc367889384f172342d31cc90 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][16015230273][ADL-P ADL-M | LP5] - WCK leveling training is not aligning WCK to CLK on Gear4.
+  
+  [Issue Description]
+  At the end of WCK2CK Leveling, positive edge of WCK aligns with negative edge of CK causing
+  random MRC failures with Gear4. An additional offset of 256 PI was subtracted from
+  WCK2CK trained value of WckPi which was shifting the WCK alignment by 0.5CK.
+  
+  [Resolution]
+  Skip subtracting 256 PI from trained value of WckPi value after 'Jedec WCK2K Leveling' training step.
+  Change default CK PI value for LP5 Gear4 from 512 to 256 and adjust Ctl, Cmd and Wck PI codes accordingly.
+  Adjust TxFifoSeperation for 2400G4 from -2 to -4 to avoid saturated TxRankMuxDelay values due to CLkPi change.
+  Program cas2wrwck, cas2rdwck and cas2fswck from 'WCK control registers' as per design recommended values.
+  
+  [Additional Changes]
+  - Issue MRW to correct MR10 register
+  - During LockUi re-run, consider CompOffset change also
+  
+  [Impacted Area]
+  ADL-P ADL-M | LP5
+  
+  [Register Impacted]
+  Phy
+  
+  Hsd-es-id: 16015230273
+  Change-Id: I0da7161a78caae9f6499c9ed4ccf48fa2f6873b8
+  Original commit hash: 96cb21946c7b76608fb7514c834719bef49a93fe
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 1a5ade6a06565a63db0f8f7f597b665df90f2243 
+*********************************************************************************
+
+[PlatformPkg]
+
+  AlderLakeSamplePkg/PlatformSetup: When RTD3 is enable, non-mobile SKU would only support D3Cold
+  
+  Fix issue : D3Hot option is not saved correctly
+  
+  Hsd-es-id: 15010150223
+  Change-Id: Iac8937cb674cda4fa97fc7fc4ecd5a1fd99bd50d
+  Original commit hash: e96448938f4b47edb76d47ef1ab9210480c1f75f
+  
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 23205cb363bc2cd5df071be0a20e89d974729e5f 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Chasm Falls: Check me version ton determine right GUID for me capsule
+  
+  me capsule GUID depend on me version, currently, adl me version major is 16,
+  and rpl me version is 17, so simply use rpl build is not accurate due to compatibility,
+  change to use me version major to determine GUID for compatibility support.
+  in future, rpl me version major will change back to 16 and minor will change to 1,
+  will use minor to justify once this change is done.
+  
+  Hsd-es-id: 16015199331
+  Change-Id: Iaf2d776be5ab4fb74a9da1873eaa5b0aeb7cef1d
+  Original commit hash: 309cf806b31719e48a966eb547c3d05212948e32
+  
+  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Tools/GenerateCapsule/GenCapsuleSysFwMe.bat
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: future
+
+*********************************************************************************
+Commit: da655922f7105bb26c778486f36ac8fba2cf7a06 
+*********************************************************************************
+
+[CPU]
+
+  Revert "Some of Turbo Flags are set even if TURBO feature is FUSE Disabled"
+  This reverts commit fccbbcf4c0e02ebfffe9a4e1186c50682f24fa10.
+  Due to the regression:: Turbo is getting disabled even if it is enabled.
+  
+  Hsd-es-id: 16015075824
+  Change-Id: I1f532325c9ffcb568b5a3ab3abfba19b210f8141
+  Original commit hash: 28dbc45d47a9eed2814c40d5cd1412cb3e939c67
+  
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/CpuInitPreResetCpl.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 2e83a75e024b1a80f2cd0c94351477eaaf8935b1 
+*********************************************************************************
+
+[BoardPkg], [SA]
+
+  [ADL-M][LP5][HLK][DTPM] : TPM 2.0 - Supplemental test with dTPM failed with "Error executing command! HR: 0x90284001"
+  
+  This reverts commit 45428314cab1819b1af2d8dd6ab2fe354b5db6f3.
+  Which cause HLK test fail.
+  
+  Hsd-es-id: 16014644983
+  Change-Id: I2d0d5176348086f3031a44f13be7aa7534dcd146
+  Original commit hash: c5bd9fd1e5c5ed82efb5ac08a986f0cf91e602ac
+  
+  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  ClientOneSiliconPkg/Fru/AdlPch/LibraryPrivate/PeiPchInitLib/PchSmbus.c
+  ClientOneSiliconPkg/SystemAgent/SaInit/Smm/SaLateInitSmm.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: dd80e3443eaae049166ffffd7fee1e5e2ac9a76f 
+*********************************************************************************
+
+[CPU]
+
+  Some of Turbo Flags are set even if TURBO feature is FUSE Disabled
+  
+  When TURBO FUSE is disabled, there are some flows in BIOS which needs to be corrected
+  If TURBO FUSE is disabled should not be accessing this MSR.
+  
+  Hsd-es-id: 16015075824
+  Change-Id: I65be71b6ce47cedae0d11f5435a5d33e2d668832
+  Original commit hash: 80445607df66e20b823c4a1540b0e2812c2d6f61
+  
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/CpuInitPreResetCpl.c
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+
+*********************************************************************************
+Commit: c16d3bc8483c5975210603cbdbe978b152a702ad 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [CNV][WIFI][ADL-S]Update function of the WiFi DSM OemWifiFeaturesDsm
+  
+  Applied new CNV changes below to ADLS.
+  1.Support Tile BTLC Revision 1 for all ADL related sku and remove Revision 0
+  2.Wireless WAN/LAN Antenna Isolation
+  3.Update function of WifiFeaturesDsm
+  
+  Hsd-es-id: 14015456385
+  Change-Id: Id441de32e958844f8f6f1a71073c869ec878fc9e
+  Original commit hash: bc42e8f4ff5e17677b82d865d01a5f57d862ac93
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/WifiFeatureDsm.asl
+  AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  AlderLakePlatSamplePkg/Library/DxeAcpiGnvsInitLib/DxeAcpiGnvsInitLib.c
+  AlderLakePlatSamplePkg/Setup/ConnectivitySetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 924ee386c80cdd72c6c725ab353ae3a261f3a3a8 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  Revert all the commits which was done for the Dot label builds
+  This reverts the commit from 0e9c5f1a29e3cd2a93d514c83193afa3b78c39db to dac1a6b2192b039419c830246f9ba9df296ae1f9
+  
+  Hsd-es-id: N/A
+  Change-Id: Id922226996974492abe904bb2f55124aa8d4638c
+  Original commit hash: d4caf57498ac50dc28848a6fb643ddb9d8a2c6bf
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvp3Rtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvp3TbtRtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvpRtd3.asl
+  AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlSBRvpTbtRtd3.asl
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  AlderLakeBoardPkg/AlderLakeSBoards/Include/AlderLakeSBoardConfigPatchTable.h
+  AlderLakeBoardPkg/BiosId.env
+  AlderLakeBoardPkg/BoardPkg.fdf
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+################################################################################
+
+Report Summary: Backstop found 15 suspect commits for review 
+
+Warnings Found:
+  Commit: 60252fd    --Commit Message Contains Key Word: HW
+  Commit: 1d84749    --Commit Message Contains Key Word: revert
+  Commit: 48c3f31    --Commit Message Contains Key Word: bypass
+  Commit: 48c3f31    --Commit Message Contains Key Word: strap
+  Commit: 17593f6    --Commit Message Contains Key Word: internal
+  Commit: 244bf0f    --Commit Message Contains Key Word: internal
+  Commit: 244bf0f    --Commit Message Contains Key Word: restricted
+  Commit: 4e462c4    --Commit Message Contains Key Word: sku
+  Commit: 4b02060    --Commit Message Contains Key Word: revert
+  Commit: 3eb120e    --Commit Message Contains Key Word: step
+  Commit: 1a5ade6    --Commit Message Contains Key Word: sku
+  Commit: 23205cb    --Commit Message Contains Key Word: future
+  Commit: da65592    --Commit Message Contains Key Word: fuse
+  Commit: da65592    --Commit Message Contains Key Word: revert
+  Commit: 2e83a75    --Commit Message Contains Key Word: revert
+  Commit: dd80e34    --Commit Message Contains Key Word: fuse
+  Commit: c16d3bc    --Commit Message Contains Key Word: sku
+  Commit: 924ee38    --Commit Message Contains Key Word: revert
