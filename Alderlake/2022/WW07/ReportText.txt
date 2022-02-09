@@ -1,0 +1,275 @@
+*********************************************************************************
+Commit: f7119c8dec4b584a2ed642f9392601a99cec6b82 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][15010681389][ADL-P ADL-M | DDR5 DDR4 LP5 LP4] MRC FLL WA
+  
+  [Feature Description]
+  MRC FLL WA
+  
+  [Resolution]
+  MRC FLL WA
+  1.
+  This should happen just before "PBD step calibration". This can be done with the following programming:
+  
+  cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.dllen_ovren = 1 //enable overrides
+  
+  cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.ldoen_ovrval = 1 // assert dllldoen
+  
+  cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.dllen_ovrval = 0 // deassert mdllen (should already be 0 from static cfg)
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.dllen_ovren = 1 // enable overrides
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.ldoen_ovrval = 1 // assert dllldoen
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.dllen_ovrval = 0 // deassert mdllen (should already be 0 from static cfg)
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.dllen_ovren = 1 // enable overrides
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.ldoen_ovrval = 1 // assert dllldoen
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.dllen_ovrval = 0 // deassert mdllen (should already be 0 from static cfg)
+  
+  2. At the end of training the following should be programmed:
+  cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.dllen_ovren = 0 // disable overrides
+  
+  cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.ldoen_ovrval = 0
+  
+  cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.dllen_ovrval = 0
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.dllen_ovren = 0 // disable overrides
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.ldoen_ovrval = 0
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.dllen_ovrval = 0
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.dllen_ovren = 0 // disable overrides
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.ldoen_ovrval = 0 // assert dllldoen
+  
+  cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.dllen_ovrval = 0
+  
+  [Impacted Area]
+  COMP
+  
+  [Register Impacted]
+  PHY
+  
+  Hsd-es-id: 15010681389
+  Change-Id: I44c24276dfd8627dee75916b2b3f919069981c91
+  Original commit hash: f800c8c335d05eef78d28db55805586d1af11f5a
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 4c6bb15393efb042934461fa9ea89b742b29eedf 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][ADL-M | LP4 LP5] MRC cke configuration change for ADL-M R0 9W only
+  
+  [Feature Description]
+  Program pm_adaptive_cke_0_0_0_mchbar.max_pdwn_idle_counter to 1280 for ADL-M  R0 9W part
+  
+  [Resolution]
+  Update the CSR value as the feature description
+  
+  [Impacted Area]:
+  ADL-M LP5 LP4
+  
+  [Registers impacted]
+  MC [x] PHY [] Both []
+  
+  internal only:
+  
+  Hsd-es-id: 16015735121
+  Change-Id: Ibd878a5e4696771dec6c51413295d6924d921c9b
+  Original commit hash: edd280c1c17ace339c1ccefed9979a295d1fae88
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcPowerModes.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: a3acf0755076aeff65a717ac85bb675be26c3d66 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL-S ADL-P ADL-M | LP4 LP5 DDR4 DDR5] Enable IBECC: Range 0 in mode 2 for all ADL SKUs.
+  
+  [Issue Description]
+  The In-Band ECC in operation mode 2 bug was fixed.
+  Need to enable it for all SKUs.
+  
+  [Resolution]
+  Enable Range 0 in mode 2 for all ADL SKUs.
+  
+  [Impacted Area]
+  ADL-S ADL-P ADL-M | LP4 LP5 DDR4 DDR5
+  
+  [Registers impacted]
+  MC [x] Phy [] Both []
+  
+  Hsd-es-id: 16015717225
+  Change-Id: Idf44e3e6abbd5db3bf26ed0661a43399408bdfa7
+  Original commit hash: 89c139b2031c440e5db5ce14e9d4a0493db5ef95
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b9c140f862270a66843a67afc87971af90644b48 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][16015692035][ADL-P ADL-M | LP5] ECT optimizations to reduce MRC boot time
+  
+  [Issue Description]
+  ECT EalryCsCmd2D algorithm sweeps 256 PIs in steps of 16 for both CS and CMD resulting in more boot time.
+  CS trained value is not centered properly if left edge of CS sweep saturated in both ECT and LCT.
+  
+  [Resolution]
+  1) Increase EalryCsCmd 2D step size to 32 to reduce boot time and EarlyChipSelect 1D sweep training step
+  introduced to find better CS eye.
+  2) Update CADB buffer values and CADB Clock ratio to make CS signal one full CK wide in CADB mode on Gear4.
+  3) Added logic to check if left edge of CS sweep is saturated in both ECT and LCT and align CS to 0.5 CK
+  towards left from right edge of CS eye.
+  
+  [Impacted Area]
+  ADL-P ADL-M | LP5
+  
+  [Register Impacted]
+  PHY
+  
+  Hsd-es-id: 16015692035
+  Change-Id: I049ea8942afb8766d0390b615a28f476d2ad7d94
+  Original commit hash: 2c6d1c57e90ff7c75c7a115d6926998ce48f1fd0
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcMcConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 9d898815174352e653e91d244145e5552319b517 
+*********************************************************************************
+
+[BoardPkg], [ASL], [SA]
+
+  [ADL] Exposing SSDT Table for HG
+  
+  Hsd-es-id: 16015670722
+  Change-Id: I62d25de37688a0c3d3249f16b9a3a7963b1242e3
+  Original commit hash: 19d509a4923049dda73809b1f866e7acfdda9e4b
+  
+  AlderLakeBoardPkg/BoardPkg.fdf
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Pch/AcpiTable/AmdAcpiTablePch.inf
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Pch/AcpiTable/AmdpxPch.ASL
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Pch/AcpiTable/AtifPch.ASL
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Pch/AcpiTable/AtpxSsdt.asl
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Pch/AcpiTable/PxportPch.ASL
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Peg/AcpiTable/AmdAcpiTable.inf
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Peg/AcpiTable/Amdpx.asl
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Peg/AcpiTable/Atif.asl
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Peg/AcpiTable/Atpx.asl
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/AmdHgfx/Peg/AcpiTable/Pxport.asl
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/Include/HybridGraphicsInfo.h
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/IncludePrivate/Library/DxeHybridGraphicsInitLib.h
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.c
+  ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.inf
+  ClientOneSiliconPkg/Product/AlderLake/SiPkgDxe.dsc
+  ClientOneSiliconPkg/SystemAgent/SaInit/Dxe/SaInitDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: AMD
+
+*********************************************************************************
+Commit: d5544abdc9de255df043f7912620164f78450769 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][ADL-M ADL-P | DDR5 DDR4 LP4 LP5] Observed lpmode2 traffic before oddrphy_initcomplete is assert during Warm Reset
+  
+  [Issue]
+  LpMode2 traffic is issued by MC before oddrphy_initcomplete is asserted by PHY
+  This causes Warmboot hang or MCA in system.
+  
+  [Root Cause]
+  MRC enables LpMode in ColdBoot and saves config values for FastBoot/WarmBoot.
+  MC starts issuing Lpmode traffic as soon as MRC restores LpMode values in FastBoot/WarmBoot.
+  PHY is not ready to handle the traffic before oddrphy_initcomplete is asserted.
+  This causes boot hang or MCA in system.
+  
+  [Resolution]
+  One way to ensure that 10 cycles between init_complete and lpmode !=0 limitation is met, is for MRC to re-enable lpmode as part of exit flow, only after SR exit.
+  During MRC Training mode program LpMode Disable and save same value for MRC save restore.
+  Enable Lpmode only after PHY init is complete at the end of MRC just before SAGV switch.
+  This will make LpMode traffic disabled during MRC and Pcode will get correct LpMode enabled values.
+  LpMode wil be enabled at the end of MRC.
+  
+  [Register Impacted]
+  PHY, MC
+  
+  [Impacted Area]:
+  ADL-P ADL-M LP5 LP4 DDR4 DDR5
+  
+  internal only:
+  
+  Hsd-es-id: 16015600777
+  Change-Id: Ifcfa678eab180c6d56578c1f17c9352818d67461
+  Original commit hash: edaa229a62a0bea48872e98ed0a86b02b5059b1f
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.h
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+################################################################################
+
+Report Summary: Backstop found 6 suspect commits for review 
+
+Warnings Found:
+  Commit: f7119c8    --Commit Message Contains Key Word: step
+  Commit: 4c6bb15    --Commit Message Contains Key Word: internal
+  Commit: a3acf07    --Commit Message Contains Key Word: sku
+  Commit: b9c140f    --Commit Message Contains Key Word: step
+  Commit: 9d89881    --Commit Message Contains Oem: AMD
+  Commit: d5544ab    --Commit Message Contains Key Word: internal
