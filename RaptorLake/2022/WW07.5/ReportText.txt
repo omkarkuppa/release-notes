@@ -1,0 +1,668 @@
+*********************************************************************************
+Commit: 7745c8bd49f1077b933245b6e52a4e5e5d38ca41 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Nvme recovery: Enable ACM/ucode/me code resiliency in BKC bios
+  
+  Enable acm ucode me code resiliency in bkc bios, this is an follow up
+  of nvme recovery, witht this enabling, bkc bios will have full functinality for
+  NIST193-800
+  
+  Hsd-es-id: 15010139300
+  Change-Id: I118c9f324b5738cc8aa6880132194c0076a06a9a
+  Original commit hash: 4237b4d9a4f43cfe0696b2476e06f0f002bbed6b
+  
+  AlderLakeBoardPkg/BoardPkg.dsc
+  AlderLakeBoardPkg/BoardPkg.fdf
+  AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibMe/FmpDeviceLibMe.c
+  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibMe/FmpDeviceLibMe.inf
+  AlderLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: kc
+
+*********************************************************************************
+Commit: eb41adf1d309462335e9fc3e9cd11f53cdeaca0c 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [RPL] More Reuse RPL-S SKUs Support
+  
+  Support RPLS 6+8 & 6+4 SKUs based on ADL 8+8 (with new CPUID)
+  and RPLS 4+0 & 2+0 SKUs based on ADL 6+0 (with new CPUID).
+  
+  Hsd-es-id: 15010587229
+  Change-Id: I8d3c463930613168749dfb299a7d6c7d530d771c
+  Original commit hash: cd1931f84c9d0712280d77206b54e8d8f977cbf5
+  
+  AlderLakePlatSamplePkg/Setup/CpuSetup.hfr
+  AlderLakePlatSamplePkg/Setup/CpuSetup.uni
+  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/CpuGenInfoFruLib.h
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/Fru/AdlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 265bd804326d004f327245b0fa2f1af84e202e3e 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][ADL-M ADL-P | DDR5 DDR4 LP4 LP5] Observed lpmode2 traffic before oddrphy_initcomplete is assert during Warm Reset
+  
+  [Issue]
+  LpMode2 traffic is issued by MC before oddrphy_initcomplete is asserted by PHY
+  This causes Warmboot hang or MCA in system.
+  
+  [Root Cause]
+  MRC enables LpMode in ColdBoot and saves config values for FastBoot/WarmBoot.
+  MC starts issuing Lpmode traffic as soon as MRC restores LpMode values in FastBoot/WarmBoot.
+  PHY is not ready to handle the traffic before oddrphy_initcomplete is asserted.
+  This causes boot hang or MCA in system.
+  
+  [Resolution]
+  One way to ensure that 10 cycles between init_complete and lpmode !=0 limitation is met, is for MRC to re-enable lpmode as part of exit flow, only after SR exit.
+  During MRC Training mode program LpMode Disable and save same value for MRC save restore.
+  Enable Lpmode only after PHY init is complete at the end of MRC just before SAGV switch.
+  This will make LpMode traffic disabled during MRC and Pcode will get correct LpMode enabled values.
+  LpMode wil be enabled at the end of MRC.
+  
+  [Register Impacted]
+  PHY, MC
+  
+  [Impacted Area]:
+  ADL-P ADL-M LP5 LP4 DDR4 DDR5
+  
+  internal only:
+  
+  Hsd-es-id: 16015600777
+  Change-Id: Ifcfa678eab180c6d56578c1f17c9352818d67461
+  Original commit hash: 555a984d40314601cc514e87b565f07875a7f71c
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: a228279c32e34e7c776f7e4a8093a021ac5fa228 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL-HX] [Cinnamon Bay] Dell Precision 7670/7770 ES2 MODS HW drips 8~10% delta to SW drips.
+  
+  Update SPI Power Control Enable programming
+  
+  Hsd-es-id: 14015839131
+  Change-Id: I6e21cdb87f1305f4455f8ada3bbc2b5e9cef1305
+  Original commit hash: a7d3279cb723f2a68b459c4e0141adad605252f4
+  
+  ClientOneSiliconPkg/IpBlock/Espi/LibraryPrivate/PeiEspiInitLib/PeiEspiInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+  --Commit Message Contains Oem: Dell
+
+*********************************************************************************
+Commit: 965f10dcddf80907966044a3b049f29cb6c2460b 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ADL-P][ADL-M] AlderLakeBoardPkg: Move latest strpping uCode to first order
+  
+  [Description]
+  Due to the FV size limit, resiliency debug BIOS only support one uCode.
+  Require to move the latest stepping uCode into first priority.
+  
+  [Change]
+  1. Move the L0/R0 uCode into first priority.
+  
+  [Impacted Platform]
+  ADL-P
+  ADL-M
+  
+  Hsd-es-id: N/A
+  Change-Id: If1655acca62fb9750b25a1c363f3bcfa76507288
+  Original commit hash: afb00cb4a752209fa31bdb7dd39610d37e91922f
+  
+  AlderLakeBoardPkg/BoardPkg.fdf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: 7a792573326e29f352991f9d4bb90a6898c789d4 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "Fix Performance build not able to enable PcdPerformanceEnable"
+  
+  This reverts commit 650b556d6c0909db21450aa10dd727443331fa46.
+  
+  Change-Id: I9efb927d818ed786ed46f4e953a3262ff0699d72
+  Original commit hash: dd5cca1a7a6b3a9d7fe54588590eb8f154cfabba
+  
+  AlderLakeBoardPkg/BoardPkgPcdInit.dsc
+  AlderLakeBoardPkg/prep.bat
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 7c6edea0f9b21e274ccdbf69a86968dba0fbc274 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "[RPL] Optimize SA PCIe Init to use Code-Execution delays in-place of polling for Hardware Events."
+  
+  This reverts commit c9c454abba31f9c22e19ec147ca834246cbd4e23.
+  
+  The original code will cause S4 resume failed in RPL-S Upgrade platform
+  with storage in PCH M.2 slot.
+  
+  Hsd-es-id: 15010591149
+  Change-Id: I52585fd4277e978affcf5b7a86fde2af4a4045ec
+  Original commit hash: 265ed72519ead6ef62a799cfb2d94c6f61dc30a2
+  
+  AlderLakeFspPkg/AlderLakeFspPkg.dsc
+  ClientOneSiliconPkg/Fru/AdlCpu/PeiLib.dsc
+  ClientOneSiliconPkg/Include/CpuPcieHob.h
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/IncludePrivate/Library/PeiCpuPcieRpInitLib.h
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer3.c
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer3.inf
+  ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInit.c
+  ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInit.inf
+  ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInitFsp.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: b1619bba7b04f1ea997c215516b995303eb05fab 
+*********************************************************************************
+
+[PlatformPkg]
+
+  HstiIhvDxe: System Agent tests incorrectly failing for ADL-S CPU
+  
+  Removed HSTI flags for System Agent Tests when internal graphic device disabled.
+  
+  Hsd-es-id: 15010562596
+  Change-Id: I703d8131517dfd2efe7826439ef616e7dff4fe4a
+  Original commit hash: c31cc12d5e514a14601a8ba6b92a0be1f6ee304d
+  
+  AlderLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: c321aa759fd031eb548dac1cfd513125187dc8d6 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "[RPLS]Rebranding DPTF to IPF requires BIOS setup string changes"
+  
+  This reverts commit 2a304aba089f81546a60677ffb156b1962eebade.
+  
+  Hsd-es-id: 22014439580
+  Change-Id: I45ddec14807fffa0c9aca717f6af72fd10e2293d
+  Original commit hash: d0df3768de57d96d42bf55824a1474a5b37be555
+  
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: branding
+
+*********************************************************************************
+Commit: 79deb860465d2a7769edae222c4cc61ed2a20015 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/Rtc: Topwarp policy always override TopSwap bit to disabled in boot
+  
+  Since it is not avoidable to program TS bit when programming Daylight Saving Override bit, use below mitigation:
+  Write 0 and read back to examine if TS is asserted by HW. If it is asserted by HW, the readback value will stay as 1.
+  If it is asserted by HW, write 0 to TS bit. Otherwise, keep its original state (either 0 or 1).
+  
+  Hsd-es-id: 16015350113
+  Change-Id: I614873927ed2f26d85523c8086f6a85a2750dc41
+  Original commit hash: ff5c4d5e3de068f6778ba6d5ec8a6efc58ee836c
+  
+  ClientOneSiliconPkg/IpBlock/Rtc/LibraryPrivate/PeiRtcLib/PeiRtcLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 415f1507ef87919d92cd4c06e00d47401ba1f08c 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [RPLS]Rebranding DPTF to IPF requires BIOS setup string changes
+  
+  Rebranding BIOS string "DPTF" to "IPF".
+  Intel(R) Dynamic Tuning Technology > Intel(R) Innovation Platform Framework
+  Intel(R) Dynamic Tuning Technology Configuration > Intel(R) Innovation Platform Framework Configuration
+  INT3400 Device > IPF Manager Device
+  Enable/Disable Intel Dynamic Platform Thermal Framework > Enable/Disable Innovation Platform Framework
+  
+  Hsd-es-id: 22014439580
+  Change-Id: I0cbb70ab9c9d9177bf4376c38e29dc5d1880efad
+  Original commit hash: c0f71723649db6bf55068106cdf092cf73807bb7
+  
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  AlderLakePlatSamplePkg/Setup/PlatformSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: branding
+
+*********************************************************************************
+Commit: eb73bd7bc9e70c7792ec02cfb50713efce39547b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [RPL] Optimize SA PCIe Init to use Code-Execution delays in-place of polling for Hardware Events.
+  
+  Hsd-es-id: 16015347418
+  Change-Id: I5f576d9b9495d8c66a4f39509bc15dade96c620a
+  Original commit hash: 9e6df72e6303d2959bdc014ea26385b76b917277
+  
+  AlderLakeFspPkg/AlderLakeFspPkg.dsc
+  ClientOneSiliconPkg/Fru/AdlCpu/PeiLib.dsc
+  ClientOneSiliconPkg/Include/CpuPcieHob.h
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/IncludePrivate/Library/PeiCpuPcieRpInitLib.h
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer3.c
+  ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer3.inf
+  ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInit.c
+  ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInit.inf
+  ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInitFsp.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: 7563063806b4faf357daa802114d46920acc506c 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Security/TXT: [RPL] Add support for ACM benchmarking
+  
+  This change adds support for collecting benchmarking data for BootGuard ACM.
+  Building BIOS with -perf flag enables collection of benchmarking data from MTRR8. Also, ACM should have benchmarking support enabled.
+  
+  Hsd-es-id: 14015376522
+  Change-Id: I42c131e1a17d1a827b6a993f3aaaa8b3d3e58285
+  Original commit hash: 270df8341b710b5d92d59e610aa6a537cfbc124b
+  
+  AlderLakeBoardPkg/BoardPkg.dec
+  AlderLakeBoardPkg/BoardPkgPcdInit.dsc
+  AlderLakeBoardPkg/prep.bat
+  AlderLakePlatSamplePkg/Features/CapsuleUpdate/PlatformInitRecovery/PlatformInitRecoveryPei.inf
+  AlderLakePlatSamplePkg/Include/Library/PeiBootGuardEventLogLib.h
+  AlderLakePlatSamplePkg/Library/PeiBootGuardEventLogLib/PeiBootGuardEventLogLib.c
+  AlderLakePlatSamplePkg/Library/PeiBootGuardEventLogLib/PeiBootGuardEventLogLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 45aede0957ad495e01809ae979962a017b1c64f5 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [bug][ADL-P ADL-M | LP5] JEDEC Reset does not shift LP5 Rank 0 CTL PI code or MR programming
+  
+  [Issue]
+  JEDEC Reset does not shift LP5 Rank 0 CTL PI code for MR programming
+  
+  [Root Cause]
+  It was found via Code Review that ShiftPIforCmdTraining is passing Rank as an index when the API calls for a bit mask.
+  This leads to Rank 0 Chip Select not being shifted for LPDDR5.
+  
+  [Resolution]
+  Conver the Rank parameter on the function call to a bitmask.
+  
+  [Register Impacted]
+  PHY
+  
+  internal only:
+  
+  Hsd-es-id: 22014184073
+  Change-Id: Ia274f1349399c133a1b9d1f83db194beb73b69ce
+  Original commit hash: 4b6a83395b38ebff43f10241eaabed744eee6ce8
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 018b72353cce528cdc968059161f4eac2a1027ae 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TCSS][ADLP]BIOS should enable UCSI option for all ADL-P DDR SKU which uses CCG6 PD AIC."
+  
+  This reverts commit 8bc41b04b6620fcb9d494ad4707f8716d3a9a91b.
+  
+  Hsd-es-id: 16015523160
+  Change-Id: I6206216bc0789f8cddc5dd5aa41a925363688c00
+  Original commit hash: 309da33396a3eb22adbc317689801ad01dd038cd
+  
+  AlderLakeBoardPkg/AlderLakePBoards/Include/AlderLakePRvpBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: cd587d9a326bd47906b247091c1f6433f764ec35 
+*********************************************************************************
+
+[BoardPkg]
+
+  [TCSS][ADLP]BIOS should enable UCSI option for all ADL-P DDR SKU which uses CCG6 PD AIC.
+  
+  Hsd-es-id: 16015523160
+  Change-Id: Ic868823dd021bdd8e9f188b9367b03d155e3a63f
+  Original commit hash: d8e2f739a2e8ca7d1c9ce1b7c75ea0aff00469f6
+  
+  AlderLakeBoardPkg/AlderLakePBoards/Include/AlderLakePRvpBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 0e8c4f2c5f3e8a9050e672e2877aca93f2fc4729 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][15010537672][ADL-P ADL-M | DDR5 DDR4 LP5 LP4] Enable DCM with VDDQ 0.8 for all sagv points and set dvfscomp_lvrmuxvccddqgsel = 1.
+  
+  [Feature Description]
+  Enable DCM with VDDQ 0.8 for all sagv points and set dvfscomp_lvrmuxvccddqgsel = 1 as there is no VDDQ difference during SAGV switching.
+  
+  [Resolution]
+  Enable DCM with VDDQ 0.8 for all sagv points and set dvfscomp_lvrmuxvccddqgsel = 1 as there is no VDDQ difference during SAGV switching.
+  
+  If all SAGV points have the same Vddq voltage then:
+  DDRCOMP_CR_VCCDDQLDO_DVFSCOMP_CTRL0_0_0_0_MCHBAR.dvfscomp_lvrmuxvccddqgsel = 1 :always bypass LVR and use global vddq
+  else:
+  DDRCOMP_CR_VCCDDQLDO_DVFSCOMP_CTRL0_0_0_0_MCHBAR.dvfscomp_lvrmuxvccddqgsel = 0 :enable LVR for early DVFS comp scenarios
+  
+  [Impacted Area]
+  ADL-P and ADL-M Power and Margin
+  
+  [Register Impacted]
+  PHY
+  
+  Hsd-es-id: 15010537672
+  Change-Id: I4e826a513f1a43c36c5dac5f22cdd2e28ad0f0af
+  Original commit hash: 38a31a6dafaf5f984c55f22b68d91d4d79afdc94
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: 2cad6142699f71e28a068ac911929681c4b41c7d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [bug][16015508142][ADL-S ADL-P ADL-M | DDR4 DDR5 LP4 LP5] vccddqldo_dvfscomp_ctrl0 register values are not matching expected values.
+  
+  [Issue Description]
+  vccddqldo_dvfscomp_ctrl0 register offset from Q0 is same as rxdqscomp_cmn_ctrl1_new register offset
+  of A0/J0. Programming rxdqscomp_cmn_ctrl1_new register on Q0 and later steps corrupting
+  vccddqldo_dvfscomp_ctrl0 register values
+  
+  [Resolution]
+  Skip programming rxdqscomp_cmn_ctrl1_new for Q0 and later steppings.
+  
+  [Impacted Area]
+  ADL-S ADL-P ADL-M | DDR4 DDR5 LP4 LP5
+  
+  [Registers impacted]
+  MC [] Phy [X] Both []
+  
+  Hsd-es-id: 16015508142
+  Change-Id: If0eebf467ae38d5d7be905da173d270722e549bf
+  Original commit hash: 668f627c942de009e044b7eda6b0267ae11be041
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: 3c8f3fca17e47166ea8d1648c2d71d74be74a6f9 
+*********************************************************************************
+
+[SiliconPkg]
+
+  VccInAux IccMax update for ADL N SKUs
+  
+  Hsd-es-id: 16015501281
+  Change-Id: Ia5c39596b1a5fa37c15e868cbeaac05fbf2ca772
+  Original commit hash: aea1bc7fd5a0f1722dc5e2f3fd0bee8e6d52ba48
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: a48c901833807324a81b70520879b87be29ccd41 
+*********************************************************************************
+
+[SiliconPkg]
+
+  RPLS: Reuse ADL VR/PM data for fused ADL SKUs
+  
+  Hsd-es-id: 1509205252
+  Change-Id: I9827186b08b300327505c108c2aa35345fe39475
+  Original commit hash: 2f2cd6d22fe0597ee42d0a92ae9d022f58f9dbd9
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/CpuGenInfoFruLib.h
+  ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/Fru/AdlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 92c8d7faccc1b3c8074edbe223a411f45b2815d6 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ADL-P]: Updated the comment with proper info.
+  
+  Corrected the comment from "// 0.75V@Bypass-0.75V@Bypass-1.05V@Internal"
+  to "// 0.78V@Bypass-0.78V@Bypass-1.05V@Internal".
+  
+  Hsd-es-id: 16015486466
+  Change-Id: Ib63b185c0838a246c7afe69e8964c91e68906022
+  Original commit hash: 61b78aa0c45a5307f3ec438a126004785608e771
+  
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: e74b1893eb6b50c42b521ce7306f2f9548622300 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL-P ADL-M | LP4] JEDEC tZQCAL needs both channel & rank ZQCAL serialization on some byte-mode LP4 parts
+  
+  [Issue/Feature Description]
+  When a system has byte-mode LP4 parts, as indicated by the SPD,
+  MRC needs to set the following ADL configuration register setting bits to ensure MC schedules ZQCAL commands in serial across ranks:
+  cpu.mem.mcs.scheduler_chs.sched_cbit_0_0_0_mchbar.serialize_zq = 1
+  cpu.mem.mcs.maintenance_chs.tc_srexittp_0_0_0_mchbar.serial_zq_between_sub_ch = 1
+  
+  [Resolution]
+  If a system has byte-mode LP4 parts or 4 ranks, indicated by the SPD.
+  Then MRC needs to set the following  configuration register setting bits to ensure MC schedules ZQCAL commands in serial across channels
+  -> Sched_cbit_0_0_0_mchbar.serialize_zq = 0x1
+  -> Tc_srexittp_0_0_0_mchbar.serial_zq_between_sub_ch = 0x1
+  
+  [Impacted Area]:
+  ADL-P ADL-M LP4
+  
+  [Registers impacted]
+  MC [x] PHY [] Both []
+  
+  internal only:
+  
+  Hsd-es-id: 16014958430
+  Change-Id: I99445bbdf1c329c32c3bc8d5915ed3c11c4993a3
+  Original commit hash: f0436cce495ca99b10a596a9f2f6829fa339b9ab
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+################################################################################
+
+Report Summary: Backstop found 22 suspect commits for review 
+
+Warnings Found:
+  Commit: 7745c8b    --Commit Message Contains Key Word: kc
+  Commit: eb41adf    --Commit Message Contains Key Word: sku
+  Commit: 265bd80    --Commit Message Contains Key Word: internal
+  Commit: a228279    --Commit Message Contains Key Word: HW
+  Commit: a228279    --Commit Message Contains Oem: Dell
+  Commit: 965f10d    --Commit Message Contains Key Word: step
+  Commit: 965f10d    --Commit Message Contains Key Word: stepping
+  Commit: 7a79257    --Commit Message Contains Key Word: revert
+  Commit: 7c6edea    --Commit Message Contains Key Word: hardware
+  Commit: 7c6edea    --Commit Message Contains Key Word: revert
+  Commit: b1619bb    --Commit Message Contains Key Word: internal
+  Commit: c321aa7    --Commit Message Contains Key Word: revert
+  Commit: c321aa7    --Commit Message Contains Key Word: branding
+  Commit: 79deb86    --Commit Message Contains Key Word: HW
+  Commit: 415f150    --Commit Message Contains Key Word: branding
+  Commit: eb73bd7    --Commit Message Contains Key Word: hardware
+  Commit: 7563063    --Commit Message Contains Key Word: security
+  Commit: 45aede0    --Commit Message Contains Key Word: internal
+  Commit: 018b723    --Commit Message Contains Key Word: revert
+  Commit: 018b723    --Commit Message Contains Key Word: sku
+  Commit: cd587d9    --Commit Message Contains Key Word: sku
+  Commit: 0e8c4f2    --Commit Message Contains Key Word: bypass
+  Commit: 2cad614    --Commit Message Contains Key Word: step
+  Commit: 2cad614    --Commit Message Contains Key Word: stepping
+  Commit: 3c8f3fc    --Commit Message Contains Key Word: sku
+  Commit: a48c901    --Commit Message Contains Key Word: fuse
+  Commit: a48c901    --Commit Message Contains Key Word: sku
+  Commit: 92c8d7f    --Commit Message Contains Key Word: bypass
+  Commit: e74b189    --Commit Message Contains Key Word: internal
