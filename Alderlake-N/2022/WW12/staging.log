@@ -71,7 +71,7 @@ Commit: 264a594730d26a790770b8cc3a4256628bd13202
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:46:07 2022 +0530 
 -------------------------------------------------------------------------------- 
-Revert "[ADLN] 6W Freq Clipping : Workaround for ES0"
+Revert "[ADLN] 6W Freq Clipping"
 
 This reverts commit c334c91fd349da9ee47625a929f8024c029111b7.
 
@@ -324,10 +324,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Tue Mar 15 17:45:14 2022 +0530 
 -------------------------------------------------------------------------------- 
 ClientOneSiliconPkg/Fru : BIOS ACPI code will suppress PCIe device 25-28,
-if they are not supported
-
-PCH PCIe device 25-28 are suppressed for ADL-P/M/N SKUs, as they are
-supported only for S SKUs
+if they are not supported.
 
 Hsd-es-id: 16015799200
 Original commit date: Wed Feb 23 10:50:35 2022 +0530
@@ -615,26 +612,7 @@ Commit: adc98a0d5473a1e19ff3f08647d06d54584cb4df
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:44:10 2022 +0530 
 -------------------------------------------------------------------------------- 
-[ise][ADL-M | LP4 LP5] MRC cke configuration change for parts less than 9W TDP
-
-[Feature Description]
-  Update on top of Mrc 3.115
-  Perf team requested to update max_pwdn_idle_counter  for 9W and less TDP parts
-  9W or less TDP parts -> Program pm_adaptive_cke_0_0_0_mchbar.max_pdwn_idle_counter to 1280 for ADL-M
-
-[Resolution]
-  Update the CSR value as the feature description
-
-[Other Change]
-  Skip programming of SpidLowPowerCtl.Bits.powerdown_latency = 0 while disabling LpMode
-
-[Impacted Area]:
-  ADL-M LP5 LP4
-
-[Registers impacted]
-  MC [x] PHY [] Both []
-
-internal only:
+[ADL-M | LP4 LP5] Update the CSR value as the feature description
 
 Hsd-es-id: 16015768473
 Original commit date: Tue Feb 8 13:35:58 2022 +0530
@@ -693,9 +671,9 @@ Commit: 35bd7a38277856017c6aa454ed712d4e05bd77f5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:44:02 2022 +0530 
 -------------------------------------------------------------------------------- 
-AlderLakePlatSamplePkg/WifiConnectionManager: Insert a check to bypass the NiC clean that assers when theres only 1 NiC in the list.
+AlderLakePlatSamplePkg/WifiConnectionManager:
 
-    This assert occurs in PBA OCR WLAN flows due to AMT only passing the one NiC.
+Issue fix : This assert occurs in PBA OCR WLAN flows due to AMT only passing the one NiC.
 
 Hsd-es-id: 16015883075
 Original commit date: Tue Feb 15 15:44:01 2022 -0800
@@ -1038,7 +1016,7 @@ Commit: ed2c091c3ef0ee383a113a8a04230eafe7693ad9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:42:50 2022 +0530 
 -------------------------------------------------------------------------------- 
-[RPL-S Upgrade][RPL_P][A0][Security][LPE]: LPE is not getting triggered with latest Bios : v3077_00_408 .
+[RPL-S Upgrade][RPL_P][LPE]: LPE is not getting triggered with latest Bios : v3077_00_408 .
 
 Hsd-es-id: 16015841829
 Original commit date: Fri Feb 18 17:15:04 2022 +0530
@@ -1289,13 +1267,7 @@ Commit: 7c5a8aa836d789cc02bbb9972275922be154d490
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:41:47 2022 +0530 
 -------------------------------------------------------------------------------- 
-Revert "[ADL-HX] [Cinnamon Bay] Dell Precision 7670/7770 ES2 MODS HW drips 8~10% delta to SW drips."
-
-This reverts commit 54ca4bfc832819affc110c01fe05ce25d2cfa185.
-Previously, this patch is used to fix issue reported from Dell, later Dell confirmed that
-this issue is caused by:set termination of GPP_A_1 to none, it is an board issue.
-and this patch caused current SPI related test failure, so far we have 3 failed HSD related with this.
-listed 15010685821, 16015715642 here
+[ADL-HX] This reverts commit 54ca4bfc832819affc110c01fe05ce25d2cfa185.
 
 Hsd-es-id: 16015785465
 Original commit date: Wed Feb 16 19:45:27 2022 -0700
@@ -1365,17 +1337,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Tue Mar 15 17:41:37 2022 +0530 
 -------------------------------------------------------------------------------- 
 [RPL] BIOS shall configure the VR parameters as per VR Spec WW07'22
-
-Changes include:
-* RPL all segments and SKUs FVM feature values and IA ICCMAX, iPL2, iRMS and Power limit were updated,
-need to go over all the sheets and SKU and to update the data.
-* Added RPL DT 8+16  150W - same spec as RPL DT 8+16 125W
-* Added new RPL DT 4+0/2+0 reuse from ADL which will be named RPL
-* No iRMS support for DT, BIOS should have iRMS disable by default
-* Add the Itrip before ICC LIMIT in BIOS setup
-* Add comment in VR current limit that this is ICCMAX
-* Align with the CPU/PCH DID spec WW07'22
-* Clean all undefined CPU SKUs
 
 Hsd-es-id: 15010697121
 Original commit date: Sat Feb 12 01:18:45 2022 +0800
@@ -1622,9 +1583,7 @@ Commit: ab64a7de8d347719c55dac80e51a2f3145e9c740
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:40:40 2022 +0530 
 -------------------------------------------------------------------------------- 
-Revert "Revert "PmcFivr: [ADL-N] [rev0] Enable PCH external bypass rails by default""
-
-This reverts commit c4041062bf82cdaad0bfe0be849ee1b935b8cfa9.
+This reverts commit c4041062bf82cdaad0bfe0be849ee1b935b8cfa9
 
 This change restores the following PnP recommended settings that need to be configured for ADL-N
   - External Bypass settings enabled by default for PCH rails
@@ -2044,35 +2003,7 @@ Commit: b805b39329deb3df0447dab5e1a221a5e7015880
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:39:25 2022 +0530 
 -------------------------------------------------------------------------------- 
-[ise][15010707356][ADL-S BGA| DDR5] DIMM ODT, Read ODT and Read Amplifier training update for BGA.
-
-[Feature Description]
-DIMM ODT, Read ODT and Read Amplifier training update for BGA.
-
-[Resolution]
-DDR5 SBGA only:
-1. Change order of read training steps, new order : MrcReadAmplifierPower, MrcReadODTTraining, MrcReadEQTraining.
-2. Added functions to MrcCommon to save/restore read/write voltage/timing centering values.
-3. DimmOdtDdr5:
-   3.1 Added more values to scan for SBGA.
-   3.2 Refactor code to support new values to scan (SBGA, 2dimmPerSide module).
-   3.3 Per Volume data,
-       Issue: In some CPUs @High temperature (>50) RdV1DCentering can't find a passing window. The eye goes higher then calculated RxVref.
-      Solution:
-       3.4.1. Add 8mv (4 ticks) to be able to catch smaller eyes shifted above vref.
-       3.4.2. Restore odt values including centering in case one of the margins after dimm odt gets zero value.
-
-Other:
-1. AC VOC fix to find a more accurate center in between ranks.
-2. DimmDfe change implementation from GetMarginCh to GetMarginByte
-3. DDR5 dimmodt added UPM tables into MRC code to better tradeoff odt values with margin results
-4. Change 2DPC 1R 1R CCC initial dimm odt value.
-
-[Impacted Area]
-Read ODT and Read Amplifier training
-
-[Register Impacted]
-PHY
+[15010707356][ADL-S BGA| DDR5] DIMM ODT, Read ODT and Read Amplifier training update for BGA.
 
 Hsd-es-id: 15010707356
 Original commit date: Mon Jan 31 18:18:00 2022 +0530
@@ -2577,8 +2508,6 @@ Commit: f21c879e08a5b03d0db612e142208b50b1b278bf
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:37:47 2022 +0530 
 -------------------------------------------------------------------------------- 
-Revert "[RPL] Optimize SA PCIe Init to use Code-Execution delays in-place of polling for Hardware Events."
-
 This reverts commit 2e12e84623276a8d108defdfa6013b4a934f6854.
 
 The original code will cause FSP API mode BIOS can't boot to OS.
@@ -2727,7 +2656,7 @@ Commit: 28cb0a3d0031ff5f1e455b13128e613303f8679a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:37:20 2022 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/CatlowPlatSamplePkg : Enabled HWP-OOB functionality on Catlow.
+ClientOneSiliconPkg/CatlowPlatSamplePkg : 
 
 1. Enabled PECI interface by sending mailbox command to PCODE
 2. Configured HWP OOB mode where we have set MISC_PWR_MGMT[8]=1
@@ -2901,52 +2830,7 @@ Commit: f9e0a6cba2067ca6d0a441e0db4c6bed215e3fe1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:36:39 2022 +0530 
 -------------------------------------------------------------------------------- 
-[ise][15010681389][ADL-P ADL-M | DDR5 DDR4 LP5 LP4] MRC FLL WA
-
-[Feature Description]
-MRC FLL WA
-
-[Resolution]
-MRC FLL WA
-1.
-This should happen just before "PBD step calibration". This can be done with the following programming:
-
-cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.dllen_ovren = 1 //enable overrides
-
-cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.ldoen_ovrval = 1 // assert dllldoen
-
-cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.dllen_ovrval = 0 // deassert mdllen (should already be 0 from static cfg)
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.dllen_ovren = 1 // enable overrides
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.ldoen_ovrval = 1 // assert dllldoen
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.dllen_ovrval = 0 // deassert mdllen (should already be 0 from static cfg)
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.dllen_ovren = 1 // enable overrides
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.ldoen_ovrval = 1 // assert dllldoen
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.dllen_ovrval = 0 // deassert mdllen (should already be 0 from static cfg)
-
-2. At the end of training the following should be programmed:
-cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.dllen_ovren = 0 // disable overrides
-
-cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.ldoen_ovrval = 0
-
-cpu.ddrphy_env.data.sb.ddrdata_cr_pmfsm1.dllen_ovrval = 0
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.dllen_ovren = 0 // disable overrides
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.ldoen_ovrval = 0
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_0.dllen_ovrval = 0
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.dllen_ovren = 0 // disable overrides
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.ldoen_ovrval = 0 // assert dllldoen
-
-cpu.ddrphy_env.ccc_global.sb.ddrccc_cr_pm_fsm_ovrd_1.dllen_ovrval = 0
+[ise][15010681389][ADL-P ADL-M | DDR5 DDR4 LP5 LP4] Fix MRC FLL 
 
 [Impacted Area]
 COMP
@@ -3057,7 +2941,7 @@ Commit: 348a75c6c7a0e37c47ce10e49665750e46859e0c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:36:12 2022 +0530 
 -------------------------------------------------------------------------------- 
-[RPL] Optimize SA PCIe Init to use Code-Execution delays in-place of polling for Hardware Events.
+[RPL] Optimize SA PCIe Init to use Code-Execution delays in-place of polling for Events.
 
 Hsd-es-id: 16015347418
 Original commit date: Tue Jan 18 22:01:53 2022 +0530
@@ -3266,21 +3150,7 @@ Commit: 01fc97586beff90e12b3d38a3854bbfda56b85ed
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Mar 15 17:35:30 2022 +0530 
 -------------------------------------------------------------------------------- 
-[ise][ADL-M | LP4 LP5] MRC cke configuration change for ADL-M R0 9W only
-
-[Feature Description]
-  Program pm_adaptive_cke_0_0_0_mchbar.max_pdwn_idle_counter to 1280 for ADL-M  R0 9W part
-
-[Resolution]
-  Update the CSR value as the feature description
-
-[Impacted Area]:
-  ADL-M LP5 LP4
-
-[Registers impacted]
-  MC [x] PHY [] Both []
-
-internal only:
+[ADL-M | LP4 LP5] Update the CSR value as the feature description
 
 Hsd-es-id: 16015735121
 Original commit date: Thu Feb 3 15:56:29 2022 +0530
