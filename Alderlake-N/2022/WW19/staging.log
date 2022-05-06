@@ -1,0 +1,4025 @@
+================================================================================ 
+Commit: c046c2e86836e3ac947bf2ec4807ab5b81eba1f6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 16:12:11 2022 +0530 
+-------------------------------------------------------------------------------- 
+removed redundant code
+updated files
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.dec
+AlderLakeBoardPkg/BoardPkg.dsc
+AlderLakeBoardPkg/BoardPkg.fdf
+AlderLakeBoardPkg/BoardPkgPcdInit.dsc
+AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+AlderLakeBoardPkg/Include/PlatformBoardId.h
+AlderLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+AlderLakeBoardPkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiSaPolicyBoardConfig.c
+AlderLakePlatSamplePkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
+AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/CpuGenInfoFruLib.h
+ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Register/IgdRegs.h
+ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+ClientOneSiliconPkg/Fru/AdlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+ClientOneSiliconPkg/Fru/AdlPch/Include/AcpiTables/Dsdt/GpioGroupsTglLp.asl
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/m_32_b0671_00000103.inc
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/m_c0_b06a2_00004102.inc
+ClientOneSiliconPkg/IpBlock/Sps/Library/MeUefiFwHealthStatusLib/MeUefiFwHealthStatusNullLib.c
+ClientOneSiliconPkg/IpBlock/Sps/Library/MeUefiFwHealthStatusLib/MeUefiFwHealthStatusNullLib.inf
+ClientOneSiliconPkg/IpBlock/Sps/Library/PeiMeServerPreMemPolicyLib/PeiMeServerPreMemPolicyNullLib.c
+ClientOneSiliconPkg/IpBlock/Sps/Library/PeiMeServerPreMemPolicyLib/PeiMeServerPreMemPolicyNullLib.inf
+ClientOneSiliconPkg/IpBlock/Sps/Library/PeiPchFiaPolicyNullLib/PeiFiaPolicyNullLib.inf
+ClientOneSiliconPkg/IpBlock/Sps/Library/PeiPchFiaPolicyNullLib/PeiFiaPreMemPolicyNullLib.c
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+ClientOneSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 0a336e8ab30d04ba17c0d54a63343dfa049412d1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:28 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.224
+
+(cherry picked from commit 9ffe3a48a8c1f797e81948ce04de15c6c94aea4b)
+
+Tue Apr 26 16:22:24 2022 +0000
+Original commit date: Tue Apr 26 16:22:24 2022 +0000
+Original commit hash: 1220b0f233a46909484452b6d0c817a361b5eab5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: a99b35870980c0524290eec2c3ec9585c2890209 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:26 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-P ADL-M | LP5] Less RMT margins observed at higher frequency points on customer systems.
+
+[Issue Description]
+RMT margins were couple of ticks off from baseline for 5200G4 frequency point with mrc ver3.128.
+
+[Resolution]
+- Disable RxDFE Tap2
+
+ Additional improvements that helps for higher speed (6000G4) as well:
+- Update RCOMP target values for LP5 high frequencies.
+- Set InitialFwdClkOffsetPs to 96 ps.
+- Set DRAM SoC ODT to 48 Ohms.
+- Run PerBit RdTP/RdTN during 'Weak Read Timing Centering' for frequencies > 5200 MHz.
+
+[Impacted Area]
+ADL-P ADL-M | LP5
+
+[Registers impacted]
+MC [] Phy [X] Both []
+
+Hsd-es-id: 22014725442
+Original commit date: Tue Apr 26 19:03:09 2022 +0530
+Change-Id: I51b34e80bbcf6da4b31b44c67ab784ee395d8efa
+Original commit hash: a61616db02cfa89d012f339c3c8619449356ef0e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: 738e586f9c76080661cae3f060d60192d472b300 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:23 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3182_00
+
+(cherry picked from commit 4512c4c978bdd57caf05e45960c87a25adf13a9b)
+
+Tue Apr 26 08:46:24 2022 -0700
+Original commit date: Tue Apr 26 08:46:24 2022 -0700
+Original commit hash: c6fe9ebb2863f9a4fdfdce90db132d1927d6fd4f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: d5dd84ff7230b3a6cdcac87b827ecbd7a99dbc87 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:22 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.223
+
+(cherry picked from commit a89a77688ed620ca57b866fa79ace5132f51c1e6)
+
+Tue Apr 26 14:33:01 2022 +0000
+Original commit date: Tue Apr 26 14:33:01 2022 +0000
+Original commit hash: 789009f3dd41e0406d3e888f8116753d6953460d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 38276a9b27a54b53b9818356f569e4dc83b52315 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:18 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg: Update of xHCI LTR parameter
+
+Updated xHCI LTR to 568 us
+
+Hsd-es-id: 16016483845
+Original commit date: Mon Apr 25 21:09:23 2022 +0200
+Change-Id: I187dd381917096ab45173148e1f27792209f7123
+Original commit hash: fc5651c86f28efce8bdf99577fe1592c424e56bb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/UsbHostControllerInit.c
+
+================================================================================ 
+Commit: c229330f81d3b95578add3e65111950c8d1c1067 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:15 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-N]:Update MSR to 0x1AD for Atom core
+
+-Update legacy msr for turbo ratio limit and cores for atom only cores.
+
+Hsd-es-id: 16016289804
+Original commit date: Tue Apr 5 16:46:03 2022 +0530
+Change-Id: I13b8c22db1880a2f69e04ab7a9bf464613d8c126
+Original commit hash: 59c3ed82bfe883ecf977406f3141dd35a8b98c33
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/CpuSetup.c
+ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/PeiCpuInitFruLib/PeiCpuInitFruLib.c
+
+================================================================================ 
+Commit: 9e0e51c1872371421b4dfd71efa82e7bd2d49faa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:10 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/Hsio: Remove Mbp Hob dependency in Chipset init sync
+
+Chipset init sync to check SkipMbpHob, if Mbp hob is not available use
+ICC_READ_FROM_MPHY_CMD HECI.
+
+Hsd-es-id: 16016478186
+Original commit date: Mon Apr 25 10:40:23 2022 +0530
+Change-Id: I6921baa19cfe248d66496f07ac2ffc10aa35b120
+Original commit hash: 97a6c46814a51ca5efaf4247e802d81a27d386c4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Hsio/LibraryPrivate/ChipsetInitLib/ChipsetInitLib.c
+
+================================================================================ 
+Commit: 1d3eed879c825d17713d7fa803b58b309fd2cf11 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:08 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 10
+
+(cherry picked from commit 9099361c096e7d01100d5fdd8c79295e3c9ef6a1)
+
+Tue Apr 26 01:22:08 2022 -0700
+Original commit date: Tue Apr 26 01:22:08 2022 -0700
+Original commit hash: f6544d6a8598b5b6025796c17f9f8253e409823f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 1638b5282558c9bd382f0f68021e419e1558029d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:05 2022 +0530 
+-------------------------------------------------------------------------------- 
+PlatformPkg/RPE: SATA SSD erase is failing with OPAL feature enabled after BIOS v3177
+
+Issue: SATA SSD erase with OPAL feature is failing due to wrong condition check.
+Solution: Perform erase in post erase if SATA SSD enables OPAL feature.
+
+Hsd-es-id: 15011118066
+Original commit date: Mon Apr 25 11:08:33 2022 +0800
+Change-Id: Ia696b7c38bc7ce3124f25321d0fdad24980e1684
+Original commit hash: 5002486d75296901b5b14f67f57dff03f12bb4c5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/AtaSecureErase.c
+
+================================================================================ 
+Commit: 6a723263364ddf672a83392d7ea3ef1b2bdf6762 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:43:03 2022 +0530 
+-------------------------------------------------------------------------------- 
+KeemBay RTD3-SR support on CPU SSD1 port
+
+Add KeemBay RTD3-SelfRefesh support on CPU SSD1 port on RPL-P RVP.
+
+Hsd-es-id: 16016477185
+Original commit date: Wed Apr 20 15:05:37 2022 +0800
+Change-Id: I76daaeffdb9fedca229f3faa2b6a7602018f6c26
+Original commit hash: 7ccecd24054e1ee59ef6a47eec4598b064e83e9d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlPRvpRtd3.asl
+
+================================================================================ 
+Commit: 4cf4e9f3fc091d3b3d3509bbcc533460b4892dbf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:58 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3181_00
+
+(cherry picked from commit 0f8e46aeca1d0c35fd9293f70a3453108a907704)
+
+Mon Apr 25 08:46:45 2022 -0700
+Original commit date: Mon Apr 25 08:46:45 2022 -0700
+Original commit hash: 9163c44bcf249f4940284964472fbd3bc26bf530
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 344593ad60c82537e2fc6da6062975547e40941e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:54 2022 +0530 
+-------------------------------------------------------------------------------- 
+Support ADL with RPL X-comp BIOS - PSR support
+
+Add a dynamic PCD PcdIsPsrSupported for the switch of PSR.
+(PSR feature should not be exposed to Native ADL-S + ADP-S SKU)
+
+Hsd-es-id: 15010896877
+Original commit date: Fri Apr 22 14:21:39 2022 +0800
+Change-Id: I9eb105ad6859dbbd4f0c67a2cd2eda57428bb4c7
+Original commit hash: 0279bc837129624059f5ee44d69263d14f2c87c9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+
+================================================================================ 
+Commit: 5e326ce42cd2f22f1333c12af64faf6e429ce1a6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:48 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 9
+
+(cherry picked from commit 06277086477b1d90c21a091d19dd0044160adfb4)
+
+Mon Apr 25 01:21:50 2022 -0700
+Original commit date: Mon Apr 25 01:21:50 2022 -0700
+Original commit hash: ecd6a74a69f35df8d9bd676e137d1718daeca2ce
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 62168c53c00a35ec170b46ef9a64ca0f4f34c0ec 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:47 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL-P]: Revert: Modify camera BIOS default setting for RPL-P
+Revert: Modify camera BIOS default setting for RPL-P.
+
+Hsd-es-id: 16016347694
+Original commit date: Mon Apr 25 14:56:34 2022 +0800
+Change-Id: I0989eafdeeeaded2b49c25bb6492dcd80b217a4e
+Original commit hash: 7b3cf8dfb1fc2b33df5068a9356e08e5b6431f1d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+
+================================================================================ 
+Commit: d66990a6a27426978f15c7928ac3a7766a392c05 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:44 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL-P]: Revert: Modify camera BIOS default setting for RPL-P
+
+Revert: Modify camera BIOS default setting for RPL-P.
+
+Hsd-es-id: 16016347694
+Original commit date: Mon Apr 25 13:07:28 2022 +0800
+Change-Id: I432cd18adcb52cbd33618483de9db2fbe2f440ac
+Original commit hash: 130badf21ffc9e8512cf2d01e2fd6f966e935221
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/MipiCameraRpl.hfr
+AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+
+================================================================================ 
+Commit: 505c30e57e387b4251d3bbe51dcf70de4b522cff 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:41 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3177_00
+
+(cherry picked from commit 4464fd7d7dbdcf982cc0b6e9bf724937c5637c1a)
+
+Sun Apr 24 16:09:50 2022 -0700
+Original commit date: Sun Apr 24 16:09:50 2022 -0700
+Original commit hash: 47d82bd036200ee76290b1287bb68c08da590940
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 17d75a417f6016946d71f6e0d44790b17ce04ec1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:39 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 8
+
+(cherry picked from commit e112f3004232f57168185dcefec2ae6a2f302c46)
+
+Sun Apr 24 01:21:46 2022 -0700
+Original commit date: Sun Apr 24 01:21:46 2022 -0700
+Original commit hash: 41447e8602bb36483b4e31f47b19d72aa7abec86
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: b84f73302855b81dd5cb109ed25cb81ad3dd9c78 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:36 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3176_00
+
+(cherry picked from commit dadfea2a5bf1c5dfdf88e01b1dec541d967000e2)
+
+Sat Apr 23 08:47:05 2022 -0700
+Original commit date: Sat Apr 23 08:47:05 2022 -0700
+Original commit hash: 09777f291528868f7b413930806ab0f10d3d9a87
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 0f3a7870e3fc1cca663a10acec9c8dd4c0b54fd9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:35 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 7
+
+(cherry picked from commit 8e577c5d90b08064b4ec619e9d3dcebf13d3b7ab)
+
+Sat Apr 23 01:25:35 2022 -0700
+Original commit date: Sat Apr 23 01:25:35 2022 -0700
+Original commit hash: 2220b15de3aa4df17d4d4cde5ef4e98aee77b002
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: c49cad8c0e8fdbdcb3bc2b8356dce3938e5e6359 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:32 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver:  QuickSPI UEFI driver Zero out some THC Registers
+
+- Updated QuickSpi SetFrequency function
+- Fixed QuickSpiLibCleanUp and moved to Field based cleanup
+
+Hsd-es-id: 22014968859
+Original commit date: Wed Apr 20 16:42:26 2022 -0700
+Change-Id: Icef959f42ee25102f219af2021bdfbba54d20fc9
+Original commit hash: 3978a6afd0530e5a5f182a3ced88cef9009c3e3c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiDriver.c
+ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiLibPrivate.c
+ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiLibPrivate.h
+ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiPrivate.h
+
+================================================================================ 
+Commit: f2fde663b7293268ea34fb80087b59ff23f8cfea 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:30 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3175_00
+
+(cherry picked from commit 990d51914c43ecd74de74827d29666f0c370454a)
+
+Fri Apr 22 08:46:31 2022 -0700
+Original commit date: Fri Apr 22 08:46:31 2022 -0700
+Original commit hash: cc673f5bd1c342430bcebf0b7abfddffea77392d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 16389589f0861ec4cacbb866aae97d86c3208e0b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:27 2022 +0530 
+-------------------------------------------------------------------------------- 
+SSD erase is failing with Intel SATA SSD when display is connected to GFX card.
+AMT_086 BIOS didn't perform RPE correctly
+
+Issue: 1. dGFX card is connected after END_OF_DXE due to defer 3rd party driver feature, and the SATA frozen bit is set in END_OF_DXE event.
+       2. In RPE AMT_086 test case, wrong password is given through remote host, and system tries the wrong password multiple times to reach password max retry count.
+          The password retry count is not cleared in warm reset.
+Solution: 1. Seperate erase process to two parts: before END_OF_DXE and after all console connected.
+             Devices without password protection need to be erased before devices are lock in END_OF_DXE event.
+             Devices with password protection can be deferred after all console out are connected since password input/erase result requires display on screen.
+          2. If password is given from remote host, try only once and trigger cold reset to reset max retry count.
+
+Hsd-es-id: 15010833793, 15011063182
+Original commit date: Tue Apr 19 10:37:28 2022 +0800
+Change-Id: I333291d1b3177d79f625a43ae35780ade7df4cff
+Original commit hash: cb8c670fb65a7e7e333d4daa712ac78d963486f6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Amt/Include/Library/SecureEraseDxeLib.h
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/AtaSecureErase.c
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/AtaSecureErase.h
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/NvmeSecureErase.c
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/NvmeSecureErase.h
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/OpalSecureErase.c
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/OpalSecureErase.h
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/SecureEraseCommon.h
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/SecureEraseDxeLib.c
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/SimulatedSecureErase.c
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/SimulatedSecureErase.h
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/Ui.c
+AlderLakePlatSamplePkg/Features/Amt/Library/SecureEraseDxeLib/Ui.h
+AlderLakePlatSamplePkg/Features/Amt/SecureEraseDxe/SecureErase.c
+AlderLakePlatSamplePkg/Features/Amt/SecureEraseDxe/SecureEraseDxe.inf
+AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.c
+AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.inf
+AlderLakePlatSamplePkg/Features/Rpe/RpeEraseActions.c
+AlderLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+AlderLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerHiiFreeLib.inf
+AlderLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerLib.inf
+AlderLakePlatSamplePkg/PlatformPkg.dec
+AlderLakePlatSamplePkg/Setup/AmtSetup.uni
+ClientOneSiliconPkg/IpBlock/Me/Library/DxeMeLib/HeciMsgDxeLib.c
+
+================================================================================ 
+Commit: 7cd848598a4ba282718fddcbd43979a9c2281dee 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:25 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.222
+
+(cherry picked from commit a364e7989ff6bb6bb0c800874c846c5001925301)
+
+Fri Apr 22 09:31:51 2022 +0000
+Original commit date: Fri Apr 22 09:31:51 2022 +0000
+Original commit hash: f09f379e5782cb5e78891d8bdb22de0e85ad3036
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 9f4126db5e965717f74b8acfa76e7d671d672310 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:23 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15011098868] HSIO LP4 RVP - Board Support
+
+[Feature Description]
+HSIO LP4 RVP - Board Support
+
+[Resolution]
+1. add spd, dqdqs mapping, spd address for mini bios
+2. add spd for full bios
+
+[Impacted Area]
+spd, dqdqs mapping
+
+Register Impacted: NA
+
+Hsd-es-id: 15011098868
+Original commit date: Tue Apr 12 17:22:16 2022 +0800
+Change-Id: If205579ab032509936c4ffa2bddb42fcf709b70f
+Original commit hash: 1cb0da4e5dd9557013f39f25e95b5a4b730cf2cb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/RplPDqMap.dsc
+
+================================================================================ 
+Commit: cdf2129eeebc0e820099d366590f5120c3b64a2c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:21 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 6
+
+(cherry picked from commit 51530c189f89b7baa6e83042a12e26a9483ecd84)
+
+Fri Apr 22 01:22:14 2022 -0700
+Original commit date: Fri Apr 22 01:22:14 2022 -0700
+Original commit hash: 5d3b049ee537a924c11d6312f6251a7c98b07d2b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: aa6a1a8ef4eb80ed5b47df9fba2c25b1b78a2deb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:19 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/TraceHub: PPO BIOS hangs in TraceHub Disable flow
+
+Program inbound bus timer timeout value for error handling
+
+Hsd-es-id: 16016399175
+Original commit date: Fri Apr 22 12:25:16 2022 +0530
+Change-Id: I3394753b45abbb76fc704aaecb7b81169d6dd8f6
+Original commit hash: bdbcbe0a1d5341d6dd572652605ba7a368e43701
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiPchTraceHubLib/PeiPchTraceHubLib.c
+
+================================================================================ 
+Commit: 3f3e31832831519ab0140354a8ac5ad7c0f67b2a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:17 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.221
+
+(cherry picked from commit cd65317247b9b97eeb1aab98b30d8712176f632b)
+
+Fri Apr 22 07:42:03 2022 +0000
+Original commit date: Fri Apr 22 07:42:03 2022 +0000
+Original commit hash: 519eed4a364a331f6f64fd1b18935cb028b68031
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 450fa80b95043aad122f8a0fc720642d2eb9a996 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:15 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15011107629][All] tMRR and tMRRMRW update
+
+[Feature Description]
+tMRR and tMRRMRW update
+
+[Resolution]
+tMRR and tMRRMRW update
+
+[Impacted Area]
+tMRR and tMRRMRW
+
+[Register Impacted]
+MC
+
+Hsd-es-id: 15011107629
+Original commit date: Fri Apr 22 14:31:52 2022 +0800
+Change-Id: If1fe2a51f218904e4219455b3da540ab7116363c
+Original commit hash: f9d0739f177a2227230f8a928601920ea252eae4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+
+================================================================================ 
+Commit: 2575955f49902a4ce232a4d49eb59722c6c2eba1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:13 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL-P][CAMERA]: Modify camera BIOS default setting for RPL-P
+
+Add hfr for RPL to Modify camera sensor BIOS as default setting.
+
+Hsd-es-id: 16016347694
+Original commit date: Wed Apr 20 17:11:48 2022 +0800
+Change-Id: Ic33393f9e23ed50e05c7f8ad763ce030223eebda
+Original commit hash: eb96e5cca7288840ae058c57c773b476871c43a8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/MipiCameraRpl.hfr
+AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+
+================================================================================ 
+Commit: de81570e53d7f27952c22ff91770fa2d10fd82d3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:08 2022 +0530 
+-------------------------------------------------------------------------------- 
+FSP_NON_VOLATILE_HOB2 is not being populated after FSPMemInit
+
+BuildFspNonVolatileStorageHob2 should be executed before returning to bootloader from Memory Init API.
+
+Hsd-es-id: 22014731743
+Original commit date: Wed Apr 20 16:31:54 2022 +0800
+Change-Id: I05ffc096b257b7e84a95b3ee5a6224b4bce7c613
+Original commit hash: 0d2376780f14cc88ec12c18215a88f5760ad9e40
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInitPreMem.c
+
+================================================================================ 
+Commit: 62c78cc0c63fae6b1645849011cbf298469aefb1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:07 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.220
+
+(cherry picked from commit b49dfa994af4c3bfb4afd36a5c42244749edd7f8)
+
+Fri Apr 22 03:22:13 2022 +0000
+Original commit date: Fri Apr 22 03:22:13 2022 +0000
+Original commit hash: a9f0814503b2c0f08819358a4b9ea83e4e59ebd0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: d900aeef5c0c235434e434b6b4a7442764e40f48 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:05 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15011104000][All] CSR save and restore update
+
+[Feature Description]
+CSR save and restore update
+
+[Resolution]
+CSR save and restore update
+
+[Impacted Area]
+MC CSR save and restore
+
+[Register Impacted]
+MC
+
+Hsd-es-id: 15011104000
+Original commit date: Sun Apr 17 22:21:48 2022 +0800
+Change-Id: Ia36242a96c305df96d952430de307a48f775b1f6
+Original commit hash: 77a96930a65dc5d8bb276c79a25cacd0c1104eae
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/PeiSaInitFruLib/PeiSaInitFruLib.inf
+ClientOneSiliconPkg/IpBlock/Gna/LibraryPrivate/PeiGnaInitLib/PeiGnaInitLib.inf
+ClientOneSiliconPkg/IpBlock/HostBridge/LibraryPrivate/PeiHostBridgeInitLib/PeiHostBridgeInitLib.inf
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcSchedulerParameters.c
+ClientOneSiliconPkg/IpBlock/Psmi/LibraryPrivate/PeiPsmiInitLib/PeiPsmiInitLibVer2.inf
+ClientOneSiliconPkg/LibraryPrivate/PeiPolicyOverrideLib/PeiSiPolicyOverrideLib.inf
+
+================================================================================ 
+Commit: b2c81f69776a41deadfe0f6017e9b623b126bb56 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:03 2022 +0530 
+-------------------------------------------------------------------------------- 
+Support ADL with RPL X-comp BIOS - RPE support
+
+1. Add PcdRpeOrderOfActionsPattern to define OrderOfActionPattern by platform
+2. RPL projects use V2 pattern. ADL projects use V1 pattern if the platform is supported.
+3. RPE driver use V2 pattern in default.
+4. ADLS returns unsupported by PcdIsRpeSupported.
+5. LPE should be hidden in setup menu if run on ADLS and ADL SBGA with rpls build
+
+Hsd-es-id: 15010896881
+Original commit date: Wed Apr 20 13:42:27 2022 +0800
+Change-Id: I6d18431faa2efd39d0b24fdba3c85a17ce0add33
+Original commit hash: 131dd73bc2d84302fdd9cc2b14fa32fa4be6bb14
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.c
+AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.c
+AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.inf
+AlderLakePlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: 23be8d52320c71facf439cb64002272cd4adbf3c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:42:00 2022 +0530 
+-------------------------------------------------------------------------------- 
+AlderLakePlatSamplePkg: Include amending value for BIOS Read Access for HSTI testing
+
+Added BIOS Region Read Access Value for Padding Region 9 for Boot Firmware Media Protection HSTI testing
+
+Hsd-es-id: 22014946994
+Original commit date: Tue Apr 19 13:35:20 2022 -0700
+Change-Id: I46734c5fbf5f0e6b29ac9eb6d83889f941d714c3
+Original commit hash: 757a94973e438ae7ab044414354487363f313d2d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/BootFirmwareMediaProtection.c
+
+================================================================================ 
+Commit: 6632a48a5b3152d0dd0382c24f54b99cc26015b7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:58 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3174_00
+
+(cherry picked from commit 07fdcdfea8e83120dfd0c29bc5beac522fc6728d)
+
+Thu Apr 21 08:46:35 2022 -0700
+Original commit date: Thu Apr 21 08:46:35 2022 -0700
+Original commit hash: 4305025430c433dec6331829f43fe63971f9c6c5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: df691f541afe6d75bd97d04be89fcad2a13c5d47 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:56 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 5
+
+(cherry picked from commit 9ec47b14406c514ba70b60605b267f58ab3bf59c)
+
+Thu Apr 21 01:21:47 2022 -0700
+Original commit date: Thu Apr 21 01:21:47 2022 -0700
+Original commit hash: ef26e15463057ee82ff735001c41956df47bdf49
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 7211a6c41e7cda23a03919b506e04e5866e4fc58 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:51 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.219
+
+(cherry picked from commit 49cbe221dc665c6952721164b14e44fca6777072)
+
+Thu Apr 21 05:14:03 2022 +0000
+Original commit date: Thu Apr 21 05:14:03 2022 +0000
+Original commit hash: acd7ada272d17619137558f04ebca423aa5d4c1c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 5f9402e7fea5627bed11639d7e98f1a3df50d175 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:48 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL] Add WWAN Coex support as UEFI variable
+
+Create or update IntelUefiCnvWwanSkuSupport UEFI variable when needed
+for WiFi and WWAN CoEx on RPL.
+
+Hsd-es-id: 15011062275
+Original commit date: Mon Apr 18 21:59:23 2022 +0800
+Change-Id: I6200538ccf97842648a07d08e5c62168175eea63
+Original commit hash: ee00adad8fb415f09c4300b3ced659f9ed5ab547
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Cnv/CnvUefiVariables/CnvUefiVariables.c
+AlderLakePlatSamplePkg/Features/Cnv/CnvUefiVariables/CnvUefiVariables.h
+AlderLakePlatSamplePkg/Include/CnvVariables.h
+
+================================================================================ 
+Commit: fea8f536ac9af9db4208c21e5eb9bf49b9647973 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:45 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3173_00
+
+(cherry picked from commit b0489b05f2b3f4cd3603afb846bac11af68144f3)
+
+Wed Apr 20 08:46:26 2022 -0700
+Original commit date: Wed Apr 20 08:46:26 2022 -0700
+Original commit hash: 918bc06ef5406fcf9dafc31679a8ef5638e08f49
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 3bf1fd395d9dfd334d2184f6461460d7c4e03143 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:44 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL][RPL] BIOS support for HSPHY unified FW for different ADL and RPL SKUs and steppings.
+
+Hsd-es-id: 16015954909
+Original commit date: Mon Apr 18 20:38:46 2022 +0530
+Change-Id: I103f74d6578de8f95bda57428192fe7f6725a5f6
+Original commit hash: e10e312dd499a57be8a2944b577948018880880e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/AdlCpu/CpuPcieRp/LibraryPrivate/PeiCpuPcieHsPhyInfoLib/PeiCpuPcieHsPhyInfoLib.c
+ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Register/CpuPcieRegs.h
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/IncludePrivate/Library/PeiCpuPcieHsPhyInfoLib.h
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieRpInitLib/PeiCpuPcieRpInitLibVer2.c
+
+================================================================================ 
+Commit: a693309173181c0da82c3c957c2507f851547230 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:42 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-P/M] Add new microcode for Lx/Rx Production patchID 0x0000041d
+
+Hsd-es-id: 16016444570
+Original commit date: Wed Apr 20 14:44:06 2022 +0530
+Change-Id: I913199c2299bb9bdaf42476d07d10b8c3d200fbc
+Original commit hash: 7e195ffec34e455187d366e6a2e732d51a39379d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 54833c2d42051d21d1e97c645dce56512e7d77fe 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:40 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL] Fix for the unexpected runtime modem D3/L3 transition
+
+OSPM may invoke WWAN _DSW with arg1=1 right before Sx transition. It leads
+to an unexpected modem D3/L3 transition during S0. Updated the If condition
+in WWAN _DSW method for RPL mobile platform as short-term fix for the issue.
+
+Hsd-es-id: 15011075601
+Original commit date: Mon Apr 18 22:06:50 2022 +0800
+Change-Id: I585197d5725888a6534e68758fc8bcf222651803
+Original commit hash: 6ae9cebcf79cd7ff6db9e33cde468e0b681b70a1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieWwan.asl
+
+================================================================================ 
+Commit: 5b4da3613a06b1e56c363f5bf6ddbfe3f9a444ae 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:38 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 4
+
+(cherry picked from commit b28bf408df710ec39ec9ba9c58d643a843f76eb7)
+
+Wed Apr 20 01:21:51 2022 -0700
+Original commit date: Wed Apr 20 01:21:51 2022 -0700
+Original commit hash: 1578c26b319f8608a67ed3d647986eacc1921429
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 95eef780221903680dd5ae046702fda396a9e719 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:37 2022 +0530 
+-------------------------------------------------------------------------------- 
+[PM][RTD3] ADL-P Support for DG2 Display hotplug when DGfx is in D3Hot.
+
+When in D3 hot a PCIE PME event should be used wake the Gfx device in the case
+ of a display hotplug. However, Windows OS does not support PMEs for gfx devices.
+ So BIOS has to provide temporary solution by adding Wake capability of PCIE Wake
+ GPIO when DG2 Child device goes to D3Hot.
+For this temporary solution BIOS has hook the _PS0/_PS3 method of DG2 Child device
+  to enable the wake capability of PCIE Wake GPIO/HPD GPIO Acting as Wake GPIO.
+
+Hsd-es-id: 16016366100
+Original commit date: Tue Apr 19 20:16:06 2022 +0530
+Change-Id: I43627f6a5e4f9174d3d815d3da9a063c3cb47bb4
+Original commit hash: 0e9f441e57b433ae6ca0ef62d59c6540ec39c407
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlPDdr5MrDTbtRvpRtd3.asl
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlPHsioRvpRtd3.asl
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlPRvpRtd3.asl
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/PcieRpDiscreteGraphicsHpdAsD3WakeRtd3HotHook.asl
+
+================================================================================ 
+Commit: e68c352407d329c3f17ce61b9d58fe8c458c6af5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:35 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-N] Support seamless recovery with eMMC as main storage
+
+[Description]
+To support the BIOS recovery feature. Require external storage
+to keep capsule image file and OBB backup files for recovery usage.
+Current flow only support NVMe, UFS and SATA SSD storage to support.
+Extend the support to eMMC storage.
+
+[Change]
+1. PEI phase
+    - Add the SdMmc HC and eMMC BlockIo driver
+    - eMMC read block from device maxium transfer size decide by PcdEmmcReadPeiMaxTransferSize
+    - Assign the MMIO address for SdMmc device
+2. DXE phase
+    - Connect the eMMC PCI device for seamless recovery support ealier to detect eMMC
+3. On ADL platform default transfer size is 64K (Value depend on DmaBufferSize)
+
+[Impacted Platform]
+ADL
+
+Hsd-es-id: 16016240628
+Original commit date: Mon Apr 18 16:49:25 2022 +0800
+Change-Id: I79e44aff4323a97b43ccb83740c4538f6383baaf
+Original commit hash: af0e096c3181574e95f64c11b287d6dc3f7bef6c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.dec
+AlderLakeBoardPkg/BoardPkg.dsc
+AlderLakeBoardPkg/BoardPkg.fdf
+AlderLakeBoardPkg/BoardPkgPcdInit.dsc
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/SeamlessRecoverySupportLib/SeamlessRecoverySupportLib.c
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/DmaMem.c
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/EmmcBlockIoPei.c
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/EmmcBlockIoPei.h
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/EmmcBlockIoPei.inf
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/EmmcBlockIoPei.uni
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/EmmcBlockIoPeiExtra.uni
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/EmmcHcMem.c
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/EmmcHcMem.h
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/EmmcHci.c
+AlderLakePlatSamplePkg/Features/Emmc/EmmcBlockIoPei/EmmcHci.h
+AlderLakePlatSamplePkg/Features/Emmc/SdMmcPciHcPei/SdMmcPciHcPei.c
+AlderLakePlatSamplePkg/Features/Emmc/SdMmcPciHcPei/SdMmcPciHcPei.h
+AlderLakePlatSamplePkg/Features/Emmc/SdMmcPciHcPei/SdMmcPciHcPei.inf
+AlderLakePlatSamplePkg/Features/Emmc/SdMmcPciHcPei/SdMmcPciHcPei.uni
+AlderLakePlatSamplePkg/Features/Emmc/SdMmcPciHcPei/SdMmcPciHcPeiExtra.uni
+
+================================================================================ 
+Commit: 042d03c31c11d64a2161c5611b4f0ab8e21c797b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:33 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.218
+
+(cherry picked from commit 2dbe9fdee8d721ff97f756ebf9f969d65aa044f5)
+
+Wed Apr 20 05:44:38 2022 +0000
+Original commit date: Wed Apr 20 05:44:38 2022 +0000
+Original commit hash: 50f26fca77716f2cb76f42ff9147073157911b33
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: b78d436a80bc65201a7b87230228a41d63516a17 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:31 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ISE][15011085282][All]: Fix build error with -Werror
+
+[Issue]
+Build Error with -Werror
+
+[Change]
+Fix -Werror build error.
+
+[Impacted]
+Build
+
+Hsd-es-id: 15011085282
+Original commit date: Wed Apr 20 09:56:13 2022 +0800
+Change-Id: If77b974ef364a28f909c3d4b019927d997001095
+Original commit hash: b2c5420a67200d8bc1cbcb0d0ef24161ac6d4c01
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: b9c69e75e961e8048738bf66f619351eea472c8f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:28 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3172_00
+
+(cherry picked from commit 8788cabef46001396a91c3d91edd3d9580636f95)
+
+Tue Apr 19 08:46:47 2022 -0700
+Original commit date: Tue Apr 19 08:46:47 2022 -0700
+Original commit hash: 38eabfa04a673f0c116e0f4104f7245243560501
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 350d6c3f52aca49195df75ba541783143261a39d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:26 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.217
+
+(cherry picked from commit 491a1bb29d6628f2a8c550d7eb40ffa7f7b21272)
+
+Tue Apr 19 14:49:24 2022 +0000
+Original commit date: Tue Apr 19 14:49:24 2022 +0000
+Original commit hash: 21422a913ebff04e1c4e3a53e3eb60f82eaf5b55
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: c9b1f521059c3936c985d19d4d138592042a6389 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:24 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15011036591][DDR5] Enable the early DIMM DFE training for DDR5 5200 or above.
+
+[Feature Description]
+Enable the early DIMM DFE training for DDR5 5200 or above.
+
+[Resolution]
+Enable the early DIMM DFE training for DDR5 5200 or above.
+
+[Impacted Area]
+DDR5 5200 or above
+
+[Register Impacted]
+PHY
+
+Hsd-es-id: 15011036591
+Original commit date: Wed Apr 6 14:44:30 2022 +0800
+Change-Id: Ib2d937563853bdf290aa04df66ad0725893806f4
+Original commit hash: 695bef9e8a4df56378ee1db2b42c56ec23d90ea3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+
+================================================================================ 
+Commit: 21de7e992ac60ad5f7873137141623d9bc1c55d8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:21 2022 +0530 
+-------------------------------------------------------------------------------- 
+Revert "[ADL-P] FSP_NON_VOLATILE_HOB2 is not being populated after FSPMemInit"
+
+This reverts commit 3e8ad3fb38ee5e7e8508aca0bbca5874a40f5a50.
+
+(cherry picked from commit 1a8a90b460aec4995b5d9f1f886a167ca794367c)
+
+Tue Apr 19 18:33:25 2022 +0800
+Original commit date: Tue Apr 19 18:33:25 2022 +0800
+Original commit hash: d19e9e586f0c9447242ce841d4944a5c5a94a588
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInitPreMem.c
+
+================================================================================ 
+Commit: aa2a1a1976d8daa6f85814f756aebccabfb1b9ce 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:19 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 3
+
+(cherry picked from commit 4afecd2dfb2b6adc47eb72cf9761e47478ca4db7)
+
+Tue Apr 19 01:21:39 2022 -0700
+Original commit date: Tue Apr 19 01:21:39 2022 -0700
+Original commit hash: 4bf0a805422d99e55df3c797d5d91347640d1335
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 4baae169fb10ad50c949c66bdd3e08681dfc0cf9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:17 2022 +0530 
+-------------------------------------------------------------------------------- 
+HSIO LP4 RVP - Board Support #2
+
+Delta change from ADL-P HSIO RVP: update GPIO and USB config, enable eDP MUX.
+
+Hsd-es-id: 15011041384
+Original commit date: Thu Apr 7 16:40:48 2022 +0800
+Change-Id: Iae1cd8013d77b21b7991d34933b01623cb7aa47f
+Original commit hash: d0ee1c22e13db5af50f252006a3b5ffa37cdb3f6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/AdlPHsioRvpRtd3.asl
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciAdlLp4Rvp.asl
+
+================================================================================ 
+Commit: ee9d14bd400c474cf6100722ee5985494cb0a753 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:16 2022 +0530 
+-------------------------------------------------------------------------------- 
+HSIO LP4 RVP - Board Support #1
+
+Base change: add SKU/Board ID, use ADL-P config.
+
+Hsd-es-id: 15011041384
+Original commit date: Fri Apr 1 17:22:31 2022 +0800
+Change-Id: I4ebdaa6fa53dc3c2176d09d725e7726aef7ebc62
+Original commit hash: 63492438e000aab73caa3bde2484823a1a30f03e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+AlderLakeBoardPkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiSaPolicyBoardConfig.c
+AlderLakeBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/AdlPDqsMap.dsc
+AlderLakeBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/RplPDqsMap.dsc
+AlderLakeBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/RplPSpdMap.dsc
+AlderLakePlatSamplePkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
+
+================================================================================ 
+Commit: 2fdc0888466f47c06aa0dc9e797725a13bb9b823 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:12 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3171_00
+
+(cherry picked from commit 3a72f96633b246d9b1409e0fa91464bbf3b7a804)
+
+Mon Apr 18 08:46:30 2022 -0700
+Original commit date: Mon Apr 18 08:46:30 2022 -0700
+Original commit hash: 941ab044e02d9a21b4e8b810a33754bc6fec4bd7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: f84dd122a7bf8f1cc99aa4f2a55557eb75fb7fe7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:11 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-P] FSP_NON_VOLATILE_HOB2 is not being populated after FSPMemInit
+
+BuildFspNonVolatileStorageHob2 should be executed before returning to bootloader from Memory Init API.
+
+Hsd-es-id: 22014731743
+Original commit date: Mon Apr 18 16:27:09 2022 +0800
+Change-Id: I36edc5bdbf6aa99965c73d223937144626429a13
+Original commit hash: 79fc685536b6c4f577951c2dd0785e1bf234f810
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInitPreMem.c
+
+================================================================================ 
+Commit: 1b8b34a8e1976d3e775d4cdf09571eae43b913ce 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:09 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 2
+
+(cherry picked from commit 85bf420505d18078f53d32cb9ba74b5f28462bbc)
+
+Mon Apr 18 01:30:19 2022 -0700
+Original commit date: Mon Apr 18 01:30:19 2022 -0700
+Original commit hash: a1c01e1b0fa9fd7816c6567b49c0fe1e4cde24f7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 3163d98ad982bc129684fabff7ae5e14d491ba05 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:07 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.216
+
+(cherry picked from commit 8fc6270330fc71ed12f70c5d175a073787c08332)
+
+Mon Apr 18 08:33:33 2022 +0000
+Original commit date: Mon Apr 18 08:33:33 2022 +0000
+Original commit hash: a27617e13267512cd58c69219dbd8831d37ea383
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 70f5e89b7854937c33c59ffe07bbac63f05afefd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:06 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15011052314] update j0 micro code in mini BIOS
+
+[Feature Description]
+update j0 micro code in mini BIOS
+
+[Resolution]
+update j0 micro code in mini BIOS
+
+[Impacted Area]
+Mini BIOS
+
+[Register Impacted]
+NA
+
+Hsd-es-id: 15011052314
+Original commit date: Wed Apr 13 20:12:11 2022 +0800
+Change-Id: Ibf6c8ced531aa560ad58b66a0f3950aa60e3c15c
+Original commit hash: 4122245a91651f8e1c89bccabb8ef493e9ffdff5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/m_c0_b06a2_00004102.inc
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/m_c0_b06a2_81004101.inc
+
+================================================================================ 
+Commit: afc4366424d835a25932a896c637aee08536bda7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:02 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3167_00
+
+(cherry picked from commit a814971aa5ca4c6f5e971b597b0fa40206245816)
+
+Sun Apr 17 08:46:30 2022 -0700
+Original commit date: Sun Apr 17 08:46:30 2022 -0700
+Original commit hash: 6938004926dd96bb6d0da13111b392b72819801e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 31da9d8ab60712a3363b664fd691512eeb7af3c0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:41:00 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC_github CI 1
+
+(cherry picked from commit a574bd7c74a65ca35a5494040962368f3e794dbe)
+
+Sun Apr 17 02:12:29 2022 -0700
+Original commit date: Sun Apr 17 02:12:29 2022 -0700
+Original commit hash: 5b13bd8d77bcf5f576e59892fd53931767b2a680
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 58356cd2eed92cf49282d7ad46380ea664684a57 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:57 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update_github CI BIOS Version to 3166_00
+
+(cherry picked from commit cd846cb84323b049e026b046207c83cb81368cb3)
+
+Sat Apr 16 08:46:53 2022 -0700
+Original commit date: Sat Apr 16 08:46:53 2022 -0700
+Original commit hash: 6d8069274f486c19138032d1e200f73ee08893f2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: fad12b2c9baa2c5336f6ddf4a8721d3f8fb4d092 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:54 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.215
+
+(cherry picked from commit 9d876a30dce19da0c2e84821f485f272be365c2a)
+
+Wed Apr 13 16:39:05 2022 +0000
+Original commit date: Wed Apr 13 16:39:05 2022 +0000
+Original commit hash: f1416a8e744a0527b95a780f1c2bfb6b49a8e095
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: cb3d0f43aa55ff772fe4880b4ae593a13ee3c8fe 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:51 2022 +0530 
+-------------------------------------------------------------------------------- 
+NvmeRecoveryDxe: code enhancement
+
+Fixed 6 potential coding issues.
+
+Hsd-es-id: 15011038901
+Original commit date: Wed Apr 13 17:06:54 2022 +0800
+Change-Id: I492eac1960ed00338223d0acf5630d04dc80f111
+Original commit hash: 4b5b36ea1d1ae0009f516b8cb703d891a9753a62
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/NvmeBasedRecovery/NvmeRecoveryDxe/KeyMigrationHii.c
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/NvmeBasedRecovery/NvmeRecoveryDxe/NvmeDevice.c
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/NvmeBasedRecovery/NvmeRecoveryDxe/NvmeRecoveryDxe.c
+
+================================================================================ 
+Commit: acd642731eddf0904df3221d2058955de34d1d6b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:49 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3163_00
+
+Hsd-es-id: N/A
+Original commit date: Wed Apr 13 08:50:27 2022 -0700
+Change-Id: Id99758845096a733ddd76ef26c911698a1b43b57
+Original commit hash: 2821e1d1e19dc46018d66502b1a0b640c66f0ec6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: b192a176bbdd344f94c7be579f3c9a36425c63c7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:46 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPE] RPE feature should be enabled for ADL-M
+
+1. PcdIsRpeSupported follows PcdRemotePlatformErase in default
+2. PcdIsRpeSupported will be disabled if the configuration is ADLS native and not contain ADL SBGA.
+
+Hsd-es-id: 15011026662
+Original commit date: Fri Apr 8 14:44:48 2022 +0800
+Change-Id: I91994cce990a98c7d6804de1e9f71d7cef699b88
+Original commit hash: b539d7cf94c0c0d3c9303ce915ea9de2585536b2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+
+================================================================================ 
+Commit: 6608c29ccc63acc66b598dd4e59ded5d87e9e7f7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:45 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.214
+
+(cherry picked from commit 0b49b39ca3e5d82ed9dabac77572902087cda190)
+
+Wed Apr 13 01:22:58 2022 +0000
+Original commit date: Wed Apr 13 01:22:58 2022 +0000
+Original commit hash: bf3f98329acaf298cdff5d8d92a9fb28b264d1a0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: b50c3106cc1fdca5afc5cc9dc8ca6e6f175def16 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:43 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL]Remove obsolete TGPH Board IDs
+
+Reclaim Board ID resource to reuse for RPL.
+
+Hsd-es-id: 15010950812
+Original commit date: Mon Apr 11 10:06:46 2022 +0800
+Change-Id: I0e050c890cfd09ca4b96b817c58affc88b3a5d18
+Original commit hash: 7bae8846af3856ec6d06d9de674941d509a03e8c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Include/PlatformBoardId.h
+AlderLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+
+================================================================================ 
+Commit: 18c0952e44d1ca9b8961d8f1b3b24e4577e2614a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:40 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3162_00
+
+Hsd-es-id: N/A
+Original commit date: Tue Apr 12 08:50:08 2022 -0700
+Change-Id: Ief7ad9b1744f61daa1beef6255cbec8940ab592b
+Original commit hash: f27c6dd1812bce3af3751d8952106a06bec5cf8b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: c541cb7591d33170453e10a79869f10d67eae565 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:37 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL][PNP][Bug] BIOS knobs always shown Patchable.
+
+Fix Coding error, correct SetVariableToHob input parameter 3 to DataSize.
+
+Hsd-es-id: 15011037220
+Original commit date: Thu Mar 24 02:28:55 2022 -0700
+Change-Id: If1e90a121acc60f328c113ee4898a3b2c6146ba8
+Original commit hash: 0dc309f6e296ae0b2b5ee5c6eab40bf5d2058cd6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Features/Setup/Library/PeiSetupInitLib/PeiSetupInitLib.c
+
+================================================================================ 
+Commit: d29b97b3ca01e888027e073156e823ce4230008c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:35 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL-S][Native][ADL-S] FSP API BIOS no display when use no-GT cpu
+
+Restore CpuPcieHob in PeiFspWrapperHobProcessLib for FspApi Mode.
+
+Hsd-es-id: 15010831172
+Original commit date: Tue Mar 15 17:00:37 2022 +0530
+Change-Id: I17710a4be03ea2a044cc9dc73be0b29adc9fd6ad
+Original commit hash: c0b6df523edd9993028943ab9529ece490fe339e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/FspWrapper/Library/PeiFspWrapperHobProcessLib/FspWrapperHobProcessLib.c
+
+================================================================================ 
+Commit: b3a741f308847fc70ed37f734be3114ffd0fbccf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:31 2022 +0530 
+-------------------------------------------------------------------------------- 
+Revert "[ADL-N] Update minor ID to 01"
+
+This reverts commit 9116a9082d37197061718b4f3ab9c995ef51e1dc.
+
+Original commit date: Wed Apr 27 12:54:50 2022 +0530
+Change-Id: I7d51a0067f18b2cdc81b586b673b2a80ca2ee62d
+Original commit hash: 971538fa3385f21b27652ac2fa54c6cedec575e7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 310adcaacd152108064135df89e228c8882deb31 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:29 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-N] Update minor ID to 01
+
+[Description]
+Update minor ID to 01
+
+[Change]
+Biosid.env
+
+[Impacted Platform]
+ADL
+
+Hsd-es-id: <HSD-ES bug/ise id>
+Original commit date: Fri Apr 22 12:36:05 2022 +0530
+Change-Id: Iccd6bf5a8492eb912f036bde2ab98ebbb95252be
+Original commit hash: 9116a9082d37197061718b4f3ab9c995ef51e1dc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 32b66bc9a20148b8d9b7eac9e670915195ac74be 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:24 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL] Add error check after getting pointer address.
+
+It should return if it cannot get pointer address.
+
+Hsd-es-id: 15010979706
+Original commit date: Fri Apr 8 13:55:00 2022 +0800
+Change-Id: Ia4e9ece1b1c1a7afab6c055509f27725f893e58c
+Original commit hash: b67707eaa2e99ec2e3120ae394a8fadf5bb7e0d6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Features.c
+
+================================================================================ 
+Commit: e84449ce27ca54aac519fe3db1482949b323102e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:21 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3161_00
+
+Hsd-es-id: N/A
+Original commit date: Mon Apr 11 08:54:42 2022 -0700
+Change-Id: I8d11cf8c0ea05063dd90f2a0a4552faea3de202f
+Original commit hash: 21b9401e55f73aa251176210ed45fbbed9b65bee
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 66a7dcb0dc32b0d1733412bf21d1974132760f79 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:20 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg: Advertise HSII workaround enable
+
+Adding _DSM function for xHCI that will be called bo OS driver to
+determine whether workaround should be applied or not.
+
+Hsd-es-id: 18021438857
+Original commit date: Wed Apr 6 15:19:42 2022 +0200
+Change-Id: Ie59de2f1197f7ece61b4414260c7e8cecd63fe2f
+Original commit hash: 22e9422826ac58c95d9507057a0bef20486ffeb3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/PchXhci.asl
+
+================================================================================ 
+Commit: a2cce0d9009bfb5ef5c42191966cb94358ecc9d9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:18 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg: Fixing CPX programming for USB3 TCSS
+
+Adding missing CPU family check for TCSS initialization.
+
+Hsd-es-id: 16016343734
+Original commit date: Mon Apr 11 15:26:56 2022 +0200
+Change-Id: I0cc229c86aa0bc62d902e2933508291d42f3815c
+Original commit hash: df6054d2273faf630e3130b173c021488daf15ba
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInitTcss.c
+
+================================================================================ 
+Commit: 7e2b6e2a147bf05bb89e9fbe87ab32cad9829679 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:16 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.213
+
+(cherry picked from commit c95092f6d8e2ae667cf3e1145d41b2c86b23f06a)
+
+Mon Apr 11 14:33:38 2022 +0000
+Original commit date: Mon Apr 11 14:33:38 2022 +0000
+Original commit hash: 9844e13d563a86c131fc5a42a8c96f0a4ae458d7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 88a2b3fd25d12953debec65c4b6734076b5fde76 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:13 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.212
+
+(cherry picked from commit d304f889ee3441f9ac25ac94791e9851902cb21d)
+
+Mon Apr 11 13:27:36 2022 +0000
+Original commit date: Mon Apr 11 13:27:36 2022 +0000
+Original commit hash: 5626331c0643e49f03a658a1c2132032894ad39a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 25d512b559407a9a3dbbda7c0c7e79acbd0afa4a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:12 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15011038936][ADL-S ADL-P M | DDR5] WA to fix  x16 DRAM 2x refresh rate issue
+
+[Feature Description]
+WA to fix  x16 DRAM 2x refresh rate issue
+
+[Resolution]
+WA to fix  x16 DRAM 2x refresh rate issue
+The MC DESWIZZLE register low byte and high byte are programmed mapping to DRAM low byte for DDR5 x16 DRAM.
+
+[Impacted Area]
+DDR5 refresh rate
+
+[Register Impacted]
+MC
+
+Hsd-es-id: 15011038936
+Original commit date: Mon Mar 28 00:16:08 2022 -0700
+Change-Id: I2ace333378e2675d56cb87cb7b50844e3dc38b4c
+Original commit hash: ae0f573b9c1e13d25bb3120e06df0749239b87f3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+
+================================================================================ 
+Commit: 5fb94ad0bcdb667df8790910de94edd6b77f57c0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:10 2022 +0530 
+-------------------------------------------------------------------------------- 
+Integrate ADLP GOP V1053
+
+Hsd-es-id: 16016351146
+Original commit date: Mon Apr 11 16:44:42 2022 +0530
+Change-Id: Iedfe1b991a686610f6bc9e0949db4354d01871f7
+Original commit hash: 654e18ad5c123d0e245c8715698b74a39a2fd3ff
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspBinPkg/SampleCode/Vbt/VbtAdlP.json
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimAdlP.efi
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimAdlPDebug.efi
+
+================================================================================ 
+Commit: 1c69fe1e6e0ec420c05410eb23ae48321f39d0e3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:08 2022 +0530 
+-------------------------------------------------------------------------------- 
+AlderLakeBoardPkg/Build: Disable PEI phase DMA Protection in FSP API Mode
+
+Disable PEI phase pre-boot DMA protection in FSP API Mode.
+DXE phase pre-boot DMA protection is enabled.
+
+Hsd-es-id: 15010831172
+Original commit date: Tue Mar 22 15:39:17 2022 +0800
+Change-Id: Ifdfb58fbc401baf9523e13d55d49665765e081c1
+Original commit hash: e2c137a92d67a1569948e040af85402fc0a41db8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+
+================================================================================ 
+Commit: 60f3f9dfca0e7070b072af60999bfde041a6d5ea 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:06 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.211
+
+(cherry picked from commit 4fa5b11f40014e23f63c5a803f5f7ffeaf55acf7)
+
+Mon Apr 11 09:26:26 2022 +0000
+Original commit date: Mon Apr 11 09:26:26 2022 +0000
+Original commit hash: 5c96167a9bdf09e3410921569e30ec02ffd3e3b6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 43b52584331f9feebba945ad6c0d1699d524716e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:04 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ISE][15011036951][ADL-N|DDR4]: Remove ddr4 Sagv safe config
+
+[Feature/Issue]
+Remove ddr4 Sagv safe config
+
+[Changes]
+Remove ddr4 Sagv safe config
+
+[Impacted]
+Adl-N Ddr4
+
+Hsd-es-id: 15011036951
+Original commit date: Thu Apr 7 14:56:39 2022 +0800
+Change-Id: I56a82d164c2c31a0bf5d5267b210d82c24a3a671
+Original commit hash: 8b84f5b50f68bfcfa130dc68e36256ad22cb654b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+
+================================================================================ 
+Commit: 04602d1315a228629d06937448b1bc8023c26a3c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:40:00 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL] Remove ConfigureCtdpPowerLimitsOverrides()
+
+InitConfigurableTdpSettings() updates mCtdpPowerLimit1[] and mCtdpPowerLimit2[] from MSR value, PPM override table and user inputs, no need to override again.
+
+Hsd-es-id: N/A
+Original commit date: Tue Dec 7 10:19:34 2021 +0800
+Change-Id: I32c69eff0186ff86af653cc103c341f4870213b0
+Original commit hash: bd4f08120313261540915c7917e37bc0d6c2543f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerLimits.c
+
+================================================================================ 
+Commit: 8c6bac4a60cf20048e0dfaed71996c80d82b4406 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:58 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL] Remove frequency and L4 cache string in setup
+
+Either BIOS or OS do not consume/needed the Small Core Freq and L4 cache info.
+
+Hsd-es-id: 16016155825
+Original commit date: Thu Apr 7 14:27:51 2022 +0800
+Change-Id: I3f5523d6b85a83ed5e9feed13c1bc30f5f458e4d
+Original commit hash: 50d7317cefbd516301dad0ed437cbc9db5304021
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/CpuSetup.c
+AlderLakePlatSamplePkg/Setup/CpuSetup.hfr
+AlderLakePlatSamplePkg/Setup/CpuSetup.uni
+
+================================================================================ 
+Commit: 527ea4e0afab2deda3c8c282e20e4e886c32c719 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:56 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg: Add support for RPL-P in Usb controller initialization.
+
+Hsd-es-id: 15011033767
+Original commit date: Sun Apr 3 14:27:09 2022 +0800
+Change-Id: I2ea0bc94e4f51015341b388b1cee59f2120f2828
+Original commit hash: 2dd14499f72d8377303c627c6545413377d989cd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/SiInitTcss.c
+
+================================================================================ 
+Commit: 8fddb54d51e5ecb044fc253feaeb8e991c0aa08b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:54 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL-Px]Fix Hot-plug issue on X4 PCIe Slot
+
+Expose Tier-2 GPE for Wake pin of X4 PCIe Slot in _PRW() of RP#5.
+
+Hsd-es-id: 16016314680
+Original commit date: Fri Apr 8 10:59:17 2022 +0800
+Change-Id: Ic8998a7cf47b835e38beb12770b4b798235c9a7d
+Original commit hash: 91efa015fcab965eb6ada15c71d5dd664a57a7af
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Dsdt.asl
+
+================================================================================ 
+Commit: 94e8b989b5e645f9d874ca70a6dcc6cbdae3badd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:51 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC CI
+
+Hsd-es-id: N/A
+Original commit date: Sun Apr 10 11:39:44 2022 -0700
+Change-Id: Idee57cbea32f40e970c47e39faeafcec006ea70a
+Original commit hash: 967f8009d81a26ac6721f12605daea2e3ac3d29c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 19b995fca4c33f322294f7b68cdbe5973c687897 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:49 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3157_00
+
+Hsd-es-id: N/A
+Original commit date: Sun Apr 10 08:49:46 2022 -0700
+Change-Id: Ib9c89d2f0ad692a0bf01317a558e9037927bd657
+Original commit hash: d2c42c5144bbd1a163568014692764959f1b6b3c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 726a3b050deb8c2cd4f3ea1f132724cd827021ea 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:46 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3156_00
+
+Hsd-es-id: N/A
+Original commit date: Sat Apr 9 08:52:39 2022 -0700
+Change-Id: Ibb37c3e797d0dcae66dd0138e2a48e0e7d382746
+Original commit hash: 354f99e6764391d99ca8c1e02b08dffc8ff3a2bc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 31512d028c03aab655abb2755ff5cc564463ef4b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:43 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3155_00
+
+Hsd-es-id: N/A
+Original commit date: Fri Apr 8 08:54:31 2022 -0700
+Change-Id: Ie04e4e0a1ba9495d1af15c3a646ca4df97e7af64
+Original commit hash: dc2dcaf8adede404b70591549deaea1caca3ee21
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 5ec0459daa0f1aff1b28943468f28ad84cce5355 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:39 2022 +0530 
+-------------------------------------------------------------------------------- 
+AlderLakeBoardPkg/Acpi: [RPL-S][BIOS] Power meter Support
+
+Change VR_VDD_IMVP to DRAM+VIN_BULK
+
+Hsd-es-id: 16016289098
+Original commit date: Fri Apr 8 14:26:00 2022 +0800
+Change-Id: I8a1c414b8836003015e3dcb09201e67c24d7313b
+Original commit hash: eb2b2497acc7fdbf5422f3dd2adf2f961e218557
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeterAdlS.asl
+
+================================================================================ 
+Commit: df807450dcb07916d801145add8f5cafc554dba7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:37 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.210
+
+(cherry picked from commit f905dc0a2cb853f9fb7edff3ab6d56a4310d0c7d)
+
+Fri Apr 8 04:30:40 2022 +0000
+Original commit date: Fri Apr 8 04:30:40 2022 +0000
+Original commit hash: 96cfa08f62354cfba38e7e59ec65503555a1cfb1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 3d1290b01023f2f10f4acc276ced4ea78f11e826 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:34 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.209
+
+(cherry picked from commit 5844c0591521c834718c3118c96c9d6edd589e54)
+
+Fri Apr 8 03:12:46 2022 +0000
+Original commit date: Fri Apr 8 03:12:46 2022 +0000
+Original commit hash: d4f03484f54aac9b032ead57dc7bd962d54ed310
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 8f7e6fa219f1de029ac6df9b988ac4cd994e42dc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:32 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15011023725][LPDDR5] Write0 feature is Disabled for BG mode or 16B mode with SAGV enabled.
+
+[Feature Description]
+Write0 feature is Disabled for BG mode or 16B mode with SAGV enabled
+
+[Resolution]
+Write0 feature is Disabled for BG mode or 16B mode with SAGV enabled
+
+[Impacted Area]
+MC and PHY LP5 write 0 feature in BG and 16B mode
+
+[Register Impacted]
+MC, PHY, DRAM
+
+Hsd-es-id: 15011023725
+Original commit date: Fri Apr 8 00:08:48 2022 +0800
+Change-Id: Ie60adc2fe4c3d9aa7549ed4edc35a6a4b26bf788
+Original commit hash: adfd7f86520acaef67fd9d5f5ed20358b844c2ca
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+
+================================================================================ 
+Commit: 7b5cb211cab6ac6cc70811909dfc5ee79774e3db 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:29 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3154_00
+
+Hsd-es-id: N/A
+Original commit date: Thu Apr 7 08:52:49 2022 -0700
+Change-Id: Ib46ce8533ac8d56210faf1194baa0632f5718276
+Original commit hash: da642d5a9a21a838f9d9a8e6026db69fe02be780
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 5fe68437d2b11245f6cfaca6f99396a7238d4c09 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:26 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.208
+
+(cherry picked from commit 72dcc83526aa46b3fcddea802a16da8b690806af)
+
+Thu Apr 7 14:36:02 2022 +0000
+Original commit date: Thu Apr 7 14:36:02 2022 +0000
+Original commit hash: 658ddf6063282496f185f2448400610e647b6654
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 281e751b8d7e49ecaf5af6c01a1e746e2ebebfe5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:24 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15011023423][LP5] Update the WCK register when issuing the fast sync command.
+
+[Feature Description]
+Update the WCK register when issuing the fast sync command.
+
+[Resolution]
+Update the WCK register when issuing the fast sync command.
+
+[Impacted Area]
+LP5
+
+[Register Impacted]
+PHY
+
+Hsd-es-id: 15011023423
+Original commit date: Thu Apr 7 01:40:10 2022 +0800
+Change-Id: Ic9e892307a26f7836f3ce49092d508d86e613d82
+Original commit hash: a940c42b600983e05bdf729aadb3ac0af55ef282
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.c
+
+================================================================================ 
+Commit: f834e8215c199c0b5310e1c081b49360041c847d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:21 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADLN] 6W SKU IMON Slope - BIOS default value change
+
+Hsd-es-id: 16016232047
+Original commit date: Thu Mar 31 17:43:52 2022 +0530
+Change-Id: I513ecd0bb9a26b2a7e33feb67200a857c2d0020f
+Original commit hash: 7f9e77c49daade15792ea81709d601d20c91cac7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakeNBoards/Include/AlderLakeNRvpBoardConfigPatchTable.h
+AlderLakeBoardPkg/AlderLakeNBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+AlderLakeBoardPkg/AlderLakeNBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+
+================================================================================ 
+Commit: 4c94b2ee96297977a73e3fb96de2517fea36a875 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:19 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL N] Platform VR POR update for WW14_2022
+
+Hsd-es-id: 16016278637
+Original commit date: Wed Apr 6 19:08:16 2022 +0530
+Change-Id: I75e6765918f969ff41522ef9d3276f567d00c33b
+Original commit hash: f6abe49e5f7105db5855f6d37fb591a6e2b76e1b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/CpuGenInfoFruLib.h
+ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+ClientOneSiliconPkg/Fru/AdlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+
+================================================================================ 
+Commit: ba50f6030a875f5ae7d32f237b00c24c6c9b536f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:17 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-S]Updated uCode support for ADL S C0
+
+Updated the Ucode 0x00000020 of C0
+
+Hsd-es-id: 15011020210
+Original commit date: Thu Apr 7 13:54:50 2022 +0800
+Change-Id: Iaa31474a7756c83f130b108a1c845bb631794d69
+Original commit hash: f713129094cdfc10bacfa5b45a7fe985c4b30300
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 3e7e69eac88cdb6b4d655ade72a6d22a2673a3b6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:15 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg/Fru : Update PadCfg Offset for vGPIO as per ADL-N GPIO spec.
+
+Padcfg offset is different for vGPIO  for ADL-P (0xBD0) and ADL-N (0xB90)
+Hence GPCL package for vGPIO is updated with the correct offset for ADL-N
+
+Hsd-es-id: 16016271515
+Original commit date: Mon Apr 4 16:50:33 2022 +0530
+Change-Id: I2a2444fab3a22b674b1adf21fda086c10598bcac
+Original commit hash: 7909f79594a0e1854adfed17e6c0e4c3a64bfbaf
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/AdlPch/Include/AcpiTables/Dsdt/GpioGroupsTglLp.asl
+
+================================================================================ 
+Commit: 5076c2aa12373a83e1c13a4bf2e3a34bf49883f6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:13 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-P]ACPI variable HGMD is not synced on DG2 SUT
+
+Hsd-es-id: 16016251606
+Original commit date: Fri Apr 1 18:22:21 2022 +0530
+Change-Id: I1a3e68a2d6e01bd7a16472416e8d48f73d7835ca
+Original commit hash: 11cec910928e0b1b664e9daf6429f07be3187570
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.c
+
+================================================================================ 
+Commit: 590ad3593b80bac4955d5d951f4d40003d53670c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:11 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.207
+
+(cherry picked from commit 99cf8a54b8986678d1ef20273ff1fc1bb1bc711e)
+
+Thu Apr 7 02:58:01 2022 +0000
+Original commit date: Thu Apr 7 02:58:01 2022 +0000
+Original commit hash: 02ed43e8cf62a6a0adbe8e144f8ede9ef5185afd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 6d2a46625b9f440e303a73c46754330aadea9897 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:08 2022 +0530 
+-------------------------------------------------------------------------------- 
+[bug][15010978386] KW issues on 3107_00_108 - MRC
+
+[Feature Description]
+fix KW issues on 3107_00_108 - MRC
+
+[Resolution]
+remove unneeded code
+
+[Impacted Area]
+NA
+
+[Register Impacted]
+NA
+
+Hsd-es-id: 15010978386
+Original commit date: Fri Apr 1 15:43:26 2022 +0800
+Change-Id: I73bda85bc6bbcca92ae349ba13b1480fa6094d31
+Original commit hash: d729838c101a006bea0fa9dfd503a734f663e398
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+
+================================================================================ 
+Commit: 7fcf4413ec96fbce6e23d1c19e6568016bc5ef4a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:04 2022 +0530 
+-------------------------------------------------------------------------------- 
+Integrate ADL-S GOP V1075
+
+Hsd-es-id: 16016268458
+Original commit date: Thu Mar 10 23:50:49 2022 +0530
+Change-Id: I123c1e8d742fe76db3d3ebe13cedfab5d5f9c5ae
+Original commit hash: 1e1aa7b7e0824aff591d73d6242552ee0d26b6c5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspBinPkg/SampleCode/Vbt/Vbt.bin
+AlderLakeFspBinPkg/SampleCode/Vbt/Vbt.json
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+
+================================================================================ 
+Commit: 62084afcf1bdf1c1a8d081e98b530d3c62eb07d4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:02 2022 +0530 
+-------------------------------------------------------------------------------- 
+Integrate ADLP GOP V1052
+
+Hsd-es-id: 16016283005
+Original commit date: Tue Apr 5 12:28:50 2022 +0530
+Change-Id: I52e00bcee1ceb24aae26f5bff422c81f0b36fe2a
+Original commit hash: 3ca3d6abd094df49954825e73adef5f80e97812a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspBinPkg/SampleCode/Vbt/VbtAdlP.json
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimAdlP.efi
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimAdlPDebug.efi
+
+================================================================================ 
+Commit: d84fd10d5855a1b099548c343342a994def64994 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:39:01 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3153_00
+
+Hsd-es-id: N/A
+Original commit date: Wed Apr 6 08:50:27 2022 -0700
+Change-Id: I95ddb0412820f92a68114b85b11f0868168e5d75
+Original commit hash: e806147938fcbbc99649b87376966cdf4b302018
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 915eb19bd286af6c63dbe1e34a0c2e2d7fc3d625 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:59 2022 +0530 
+-------------------------------------------------------------------------------- 
+Features/Storage: Set UFS device Ref clk frequency to 19.2Mhz.
+
+UFS Host subsystem supplies 19.2 MHz as REF_CLK and hence need
+to set UFS device Ref clk frequency attribute to 19.2Mhz.
+
+Hsd-es-id: 16015987734
+Original commit date: Tue Apr 5 21:15:03 2022 +0530
+Change-Id: Idfc720783923f44d7ff0b11c309e67226d1932bc
+Original commit hash: bfa03ff4b676abac9ed411b7686577f181f3c1e4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Storage/UfsFeaturePkg/UfsPlatform/UfsPlatform.c
+
+================================================================================ 
+Commit: f469a507da3b4a10f8c20c982e1c4add0497d408 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:57 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg\Thc: Converged Touch SPI controller (THC supporting both HIDSPI and IPTS protocols)
+
+Part 5.
+   -- Fix Set feature response Timeout issue.
+      Input Report Type 0x9 Signals that the set feature has completed.
+   -- Disable IPTS Set up option in BIOS setup for ADL-N
+   -- Defensive checks for PRD table entries.
+
+Hsd-es-id: 16015675623
+Original commit date: Tue Apr 5 09:53:38 2022 +0530
+Change-Id: Id79df61e4d917c1928eba5e223dfc88cf9f50bed
+Original commit hash: 117a9e24fd280529441599c0a38e6e913db38f30
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/PchThcController.hfr
+ClientOneSiliconPkg/IpBlock/Thc/AcpiTables/ThcController.asl
+ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiDriver.c
+
+================================================================================ 
+Commit: a0dc6f14d440083c8518167be4108a7e75b713ee 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:56 2022 +0530 
+-------------------------------------------------------------------------------- 
+AlderLakeBoardPkg: Add NULL Pointer check for return value of PcdGetPtr
+
+Return EFI_INVALID_PARAMETER if return value of PcdGetPtr is NULL
+
+Hsd-es-id: 15010947154
+Original commit date: Mon Mar 28 20:26:03 2022 +0800
+Change-Id: Iced162a7818b0e8e401bbb5bc3534a1ef44543cb
+Original commit hash: b7e5589fb040bbf4b41eb284779f0c4bafe68952
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedPmaxDxe.c
+AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/GenSsdtLib.c
+AlderLakeBoardPkg/AlderLakeMBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+AlderLakeBoardPkg/AlderLakeUSimicsBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+AlderLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+
+================================================================================ 
+Commit: 3e8b3ee8bdf455abac6c6eb3a7010c45070f8a79 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:54 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.206
+
+(cherry picked from commit d62d17d05cdd2efba1bdbac02538888d4e0a2185)
+
+Wed Apr 6 02:07:16 2022 +0000
+Original commit date: Wed Apr 6 02:07:16 2022 +0000
+Original commit hash: e16ef73dd27c21ce7339fa8373ad9ca0174d5a6b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 7e7ff6709046a39ebb2f4c7cb000a556968e4ed9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:52 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15011009050][LP5] Place the receive enable signal at the right place at the beginning of read leveling training for LP5 BG mode.
+
+[Feature Description]
+Place the receive enable signal at the right place at the beginning of read leveling training for LP5 BG mode.
+
+[Resolution]
+Place the receive enable signal at the right place at the beginning of read leveling training for LP5 BG mode.
+Decrease the RxIoTclInit by 5.
+
+[Impacted Area]
+LP5 BG Mode
+
+[Register Impacted]
+PHY
+
+Hsd-es-id: 15011009050
+Original commit date: Tue Apr 5 22:18:50 2022 +0800
+Change-Id: I55ffa8a28b4cdfa2939f69e3db9f45e936bd12c0
+Original commit hash: 22b3683819fed5892ef07078c12ef7e6af27d3c1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+
+================================================================================ 
+Commit: cc09e04ed5714710c1e7602a4e393a75e9b4ed32 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:50 2022 +0530 
+-------------------------------------------------------------------------------- 
+BIOS shall test SMRR lock bit in HSTI
+
+Add new lock test for SMRR and SMRR2 in SecureCpuConfiguration
+
+Hsd-es-id: 22014747401
+Original commit date: Tue Mar 22 11:55:27 2022 +0100
+Change-Id: If2c5f07c98ce5dfd429a46fddaf286a4402cd3f7
+Original commit hash: 28f98a9ca621a6747758799738248ce6b7a50dd4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureCpuConfiguration.c
+AlderLakePlatSamplePkg/Include/HstiFeatureBit_1_1a.h
+
+================================================================================ 
+Commit: f307638c3ae614835b5da755c4417fe4b29024d5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:47 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3152_00
+
+Hsd-es-id: N/A
+Original commit date: Tue Apr 5 08:51:07 2022 -0700
+Change-Id: I8f6097aa9fb819844274c60fbfc42676028b3578
+Original commit hash: dcae8ed9b105d45258e44e637a9d7d85f2efe061
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: d48efb6035ea810457784195837bfa2ebeae02ca 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:46 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC CI
+
+Hsd-es-id: N/A
+Original commit date: Tue Apr 5 04:11:48 2022 -0700
+Change-Id: Ieb8411f4167ac2a46cb52764d04b506893d1382f
+Original commit hash: 9a9e92147945ecb4f42a80586dc0a1b8e9f7eb64
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 6d5f39b1cc5a8f836528469035a2bb6aa3d60889 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:41 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-N][DDR4]: HDMI-ALS Display over TCP1 Port is not enumerating
+
+Setting Aux Override to disabled in BIOS by default so that E20 and E21
+pins gets configured as native DDC pins for enabling support for HDMI
+over TCP1.
+
+Hsd-es-id: 16016270755
+Original commit date: Fri Apr 1 16:37:21 2022 +0530
+Change-Id: I008dfcb6b7ac6da042632fa40582e07c30c94fe9
+Original commit hash: ae6141ed51c080ea3c356eca85b9be79ee56175e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakeNBoards/Include/AlderLakeNRvpBoardConfigPatchTable.h
+AlderLakeBoardPkg/AlderLakeNBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+AlderLakeBoardPkg/AlderLakeNBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+
+================================================================================ 
+Commit: a9e8f10e6a69600d0a48f4f990b6fc453f091d9d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:39 2022 +0530 
+-------------------------------------------------------------------------------- 
+Chasm Falls: integrate CSME and fix existing bugs for nvme recovery
+
+Hsd-es-id: 15010990941
+Original commit date: Tue Feb 8 16:54:57 2022 +0800
+Change-Id: Ib3af691da5ca8f1792d98184905cbac93f00019a
+Original commit hash: d5331184f77db6b7dbf436f21ca2a087ba784c24
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Include/Library/FWUpdateLib.h
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FwUpdateLib/FwUpdateEfiLib.lib
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FwUpdateLib/FwUpdateLib.inf
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FwUpdateLib/FwUpdateLibNull.c
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/NvmeBasedRecovery/NvmeRecoveryDxe/NvmeDevice.h
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/NvmeBasedRecovery/NvmeRecoveryDxe/NvmeRecoveryDxe.c
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/NvmeBasedRecovery/NvmeRecoveryDxe/NvmeRecoveryDxe.h
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/NvmeBasedRecovery/NvmeRecoveryPei/NvmeRecoveryPei.c
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/Resiliency/NvmeBasedRecovery/NvmeRecoveryPei/NvmeRecoveryPei.inf
+
+================================================================================ 
+Commit: 9dc4d22e369e2abcd61d4bb6e180407c4a077a48 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:38 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3151_00
+
+Hsd-es-id: N/A
+Original commit date: Mon Apr 4 08:49:31 2022 -0700
+Change-Id: I9b4acecde521621d70f2d1a3b3c7a8bc07a8d31f
+Original commit hash: a463f5b5b76a6c5137dd76e2fa81916f78d11cc3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 4c1e413319bbf920e7f50fee3fd88d8b0f61c9bc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:33 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3147_00
+
+Hsd-es-id: N/A
+Original commit date: Sun Apr 3 08:52:52 2022 -0700
+Change-Id: I09bf153d054f2ca7a7a225b37b7c5acc1e4519c2
+Original commit hash: a41883f2a2d6adcd5f213bbdd76e5b9e477b897a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 202f29c7f7e63ae43f2aada53bdfea7af4ecf810 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:31 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC CI
+
+Hsd-es-id: N/A
+Original commit date: Sun Apr 3 08:38:47 2022 -0700
+Change-Id: Ide4cf805ed959486b660c6c7ced79c4109a410b9
+Original commit hash: 5b6dc3b47a58bdd224bd85eb17a699623e99e4fa
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 250b0312d4c3ab1db7510b4cd2e2b51ebac3af3c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:30 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.205
+
+(cherry picked from commit fcdf954d629b8fc4673eb2c0603adb1fbb1396c7)
+
+Sun Apr 3 04:28:38 2022 +0000
+Original commit date: Sun Apr 3 04:28:38 2022 +0000
+Original commit hash: 45ba4d1afe190c7abbfaeca1795ce7298342c347
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: db5f8707e4562c073814c9851d0edcbb98b8e0ad 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:28 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][ADL-S ADL-P ADL-M][15010991747][All] Pass the SLE and HSLE build
+
+[Feature Description]
+Pass the SLE and HSLE build
+
+[Resolution]
+Pass the SLE and HSLE build
+
+[Impacted Area]
+SLE and HSLE
+
+[Register Impacted]
+NA
+
+Hsd-es-id: 15010991747
+Original commit date: Sun Apr 3 10:39:53 2022 +0800
+Change-Id: Ia3e5e623da9315a4d3f03cd9dd587afb65497aa3
+Original commit hash: c2b9f357c770fc959ac1df49afaa8e9f5eccd449
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: c836471033290894ed6da106d9b2ee7db1350952 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:25 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3146_00
+
+Hsd-es-id: N/A
+Original commit date: Sat Apr 2 08:51:51 2022 -0700
+Change-Id: Ic9d5b07cb127f9928049a4676301dd09365a2999
+Original commit hash: 8d1b7b81cf5e954bfde11c8e64abf7b5d3fde1ac
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 6dc1cab3c353dbcf8999f77c7620bffac97d4501 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:23 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.204
+
+(cherry picked from commit 9ccf7120e63f124c28982eb2fdbc942d2ad7e0f1)
+
+Sat Apr 2 13:25:02 2022 +0000
+Original commit date: Sat Apr 2 13:25:02 2022 +0000
+Original commit hash: 37d2c70f867d567864a26bb9bf8108bf9de1889f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: d3d00058f8301d3fe6f64579ff2ea395b3def50c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:22 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010988887][ADL-S ADL-P ADL-M | DDR5 DDR4 LP5 LP4] Adaptive VCC DLL flow
+
+[Feature Description]
+Adaptive VCC DLL flow instead of the static table.
+
+[Resolution]
+Adaptive VCC DLL flow
+
+Use the original VCCDLL target table
+1. VCCDLL target = Initial VCCDLL target - 25MV
+2. Run BeSelCal, InitDCC, DwSelCal2, Locl All DLL
+3. Check the MDLL Lock status
+4. If not locked, increase the VCCDLL target by 25MV and to back to step 2.
+5. If locked and the guardband is met, continue.
+
+[Impacted Area]
+VccDll
+
+[Register Impacted]
+PHY
+
+Hsd-es-id: 15010988887
+Original commit date: Thu Feb 10 23:11:05 2022 +0800
+Change-Id: Ie705a2813ee5664bfbdda9ea431616a7af4473fe
+Original commit hash: a1e538a572dc0d9508cc696c78fe9743e4699061
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 91d4ad7c4ac4fe67c82c1d9eb8e9d285f23386e8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:18 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC CI
+
+Hsd-es-id: N/A
+Original commit date: Fri Apr 1 13:19:16 2022 -0700
+Change-Id: I6d38ba4e2dfd5aa26de5ea6a9968c8e947b5298b
+Original commit hash: 03227759b3cc276e5309d76d1be1503c3e9ed616
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: e27b195b493312f7ba7c56f5c7aff704847030b1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:17 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3145_00
+
+Hsd-es-id: N/A
+Original commit date: Fri Apr 1 08:50:26 2022 -0700
+Change-Id: I6a7e2af187bc08c7e7734e27e8df4ce1062e2d00
+Original commit hash: c10d399defb1e1d4ed86576d03fcc0e1fd150612
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 046444d7f7b9f76c6602bbad971798a381a7e490 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:15 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.203
+
+(cherry picked from commit 9132be97eac408bb20dc36af39b4cfb1bea6ba9d)
+
+Fri Apr 1 15:35:09 2022 +0000
+Original commit date: Fri Apr 1 15:35:09 2022 +0000
+Original commit hash: 88c0cafdabe9971c299e87a37499fb85d478c9bc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: b86af609578c4236312048369ed5562c8f12546e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:12 2022 +0530 
+-------------------------------------------------------------------------------- 
+device connected to PEG60/62 is not detecting
+
+Hsd-es-id: 16016260519
+Original commit date: Fri Apr 1 15:56:14 2022 +0530
+Change-Id: Ie8f0855a161bc9c737c585a4d30dcd5fed16d6ce
+Original commit hash: 6bf458fac172b2f2680c4277e527522b72f9409c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/AdlCpu/CpuPcieRp/Library/PeiDxeSmmCpuPcieInfoFruLib/CpuPcieInfoFruLib.c
+ClientOneSiliconPkg/Fru/AdlCpu/CpuPcieRp/LibraryPrivate/PeiCpuPcieDekelInitLib/PeiCpuPcieDekelInitLib.c
+
+================================================================================ 
+Commit: 289026d1abf233988ff7716051246a0f095e25f9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:10 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.202
+
+(cherry picked from commit 0fffb50f280fe8bf48363e3e5c4f4f442bc580ec)
+
+Fri Apr 1 14:50:33 2022 +0000
+Original commit date: Fri Apr 1 14:50:33 2022 +0000
+Original commit hash: 6b6a2942104554c4c4342d66217deedd68aa5224
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 1ed76725c127587c96236ecf51d4f78594b6778e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:09 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ISE][15010986603][Lp5]: fix bgmode error in CTE
+
+[Issues]
+some errors in CTE for bgmode
+
+[Changes]
+1, Lp5 2400g4 static time for passing gate
+2, save tRDRDsg and TcBubbleInj before training, and restore them after trainig finish.
+
+[Impact]
+CTE, bgmode
+
+Hsd-es-id: 15010986603
+Original commit date: Fri Apr 1 09:09:21 2022 +0800
+Change-Id: Ia9636879ef493b7a1c61cd3b341ec375bfd90820
+Original commit hash: cb3f4c91bef4addfcec65d333ca5f8c2c1dadb9b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+
+================================================================================ 
+Commit: e483034775b633364c84ab5dbe9214e3df5db012 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:05 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.201
+
+(cherry picked from commit 88512afc902dbe9038f0d871928b749a164baba7)
+
+Fri Apr 1 06:52:45 2022 +0000
+Original commit date: Fri Apr 1 06:52:45 2022 +0000
+Original commit hash: dbe87a9d4870b765f4a87f1e7358ccb343162580
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: eedc6292b73637f9bb9f650d1df4be6b5db56093 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:03 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][14016231938][ADL-S ADL-P ADL-M | DDR5 DDR4 LP5 LP4] Enable Individual Row Test During PPR Execution
+
+[Feature Description]
+1. Add functionality to test rows immediately before and after PPR execution
+2. Provide immediate feedback on whether a row repair was successful, before the full MATS memtest retry
+
+Additional changes:
+1. Fixed function header formatting
+
+[Impacted Area/Platform]
+DDR5/DDR4/LP5/LP4 with PPR enabled only
+
+Registers impacted: CPGC
+
+Hsd-es-id: 14016231938
+Original commit date: Thu Feb 17 17:41:52 2022 -0800
+Change-Id: Ic1b45e6a53158858ffab20a3e4d5e0300ac8d4bd
+Original commit hash: 47e9fd7458a5e22df91975f4a48b0709063d1f2f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/MrcCpgcApi.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/MrcCpgcApi.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr4.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcPpr.c
+
+================================================================================ 
+Commit: 33995626aa87e2b0e9933abb6c370640a6924c13 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:38:01 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.200
+
+(cherry picked from commit e89f998cc6d597374438ba73a38526285f538b68)
+
+Fri Apr 1 03:20:17 2022 +0000
+Original commit date: Fri Apr 1 03:20:17 2022 +0000
+Original commit hash: b54f76a053f2d8f441bb603b03fb42e8c3aa2ecb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 4af50ca215097f94fcbc246f54f422488144a20c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:59 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010947326][ADL-S] Enable margin with functional test in full BIOS of ADL-S DDR4 and DDR5
+
+[Feature Description]
+enable CMOS with full BIOS to offset Timing and Vref for DQ and CA per CH
+
+[Resolution]
+Implement the MrcApplyMcRegOffsets, controled by CMOS
+
+[Impacted Area]
+COMS
+
+[Register Impacted]
+NA
+
+Hsd-es-id: 15010947326
+Original commit date: Sun Jan 31 23:58:21 2021 +0200
+Change-Id: Id718b3ad4d08bc267dbe8df69ace87950649d392
+Original commit hash: d91e35b4d51863f70cedb4c3a7017d6313601944
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+
+================================================================================ 
+Commit: ce819048556491d0e4577f3d6577bb93d1a5a8ac 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:56 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.199
+
+(cherry picked from commit b939820ea613b87ad8ed279a129874a382951dc8)
+
+Fri Apr 1 02:11:34 2022 +0000
+Original commit date: Fri Apr 1 02:11:34 2022 +0000
+Original commit hash: 9f497ed1b4482a0f07bc210b2caa5928b1460239
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 12f2b9e5df99cdfe4d7b7435ed1256f72e219094 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:55 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][22014377567][ADL-P ADL-M | LP5] Follow JEDEC values for tRFMpb
+
+[Feature Description]
+tRFMpb set based on tRFCpb, needs to be updated to follow JEDEC values
+
+[Resolution]
+Program tRFMpb based on JEDEC values
+
+[Impacted Area]
+LP5 Rowhammer Refresh Management (RFM)
+
+[Register Impacted]
+MC
+
+Hsd-es-id: 22014377567
+Original commit date: Mon Dec 20 15:42:22 2021 -0800
+Change-Id: I7dec52281adba5265773374104220eb07502b9e1
+Original commit hash: 1a504aec20516249e7a41b0f4cc010c4000985da
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcRefreshConfiguration.h
+
+================================================================================ 
+Commit: 2cef9d94ad4e1f8bf4bb18656bb39e239ae51a97 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:51 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3144_00
+
+Hsd-es-id: N/A
+Original commit date: Thu Mar 31 09:04:10 2022 -0700
+Change-Id: Icda7275731a8b0c713160af4196d0659e123bff2
+Original commit hash: 708ba151887f7285419c46ea56cc1107e2836db9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 71d58cd57142ca483d655beaddb7a97fb12f3110 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:50 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.198
+
+(cherry picked from commit fe39f4ad5fe6bdedf07b512aba06c0dd8520814f)
+
+Thu Mar 31 13:03:57 2022 +0000
+Original commit date: Thu Mar 31 13:03:57 2022 +0000
+Original commit hash: 9b88a06efb9ab98ce12f97ac68b4d4550d4804cd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 04fbe68bcfdec1ddfb9e9cf38cc67519565a323a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:48 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-S ADL-P ADL-M | DDR4 DDR5 LP4 LP5] Change PprEnable input policy to only execute in MRC once when it is requested
+[Issue/Feature Description]
+Adding dynamic setup option for PprEnable so that it is only run once by MRC when the policy is requested by SaSetup.
+PprEnable input policy controls the execution of MRC's Memory Testing and Post Package Repair sequence, but the PprEnable policy should not be kept across multple boots.
+
+[Resolution]
+To reduce the impact of PprEnable on MRC execution, the Input policy will only be used once when it is requested and on subsequent boot flows, the PprEnable will not be set unless it is manually requested again.
+
+Hsd-es-id: 14016388838
+Original commit date: Tue Mar 29 15:02:44 2022 -0700
+Change-Id: I3c4269dea6d027756b70fcc972a19aea771bdb20
+Original commit hash: 7485e68938d7e1a6cf1042ecce6e9d74a9172d8a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Setup/SaSetup.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+
+================================================================================ 
+Commit: 573744ffc0d0f02a7573e41930be8750dad5b18b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:46 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.197
+
+(cherry picked from commit 57f4c1557705a184f9d6a4c7784a9c715126338e)
+
+Thu Mar 31 11:25:43 2022 +0000
+Original commit date: Thu Mar 31 11:25:43 2022 +0000
+Original commit hash: ef164bbf4b0ac9be5cb38c2079ea3628e478e93c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: abc801dbfe2eacaa895d4b8a2ffaec0eee6ee1f6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:45 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010980575][LPDDR5] Enable EBH for LP5 BG mode.
+
+[Feature Description]
+Enable EBH for LP5 BG mode.
+
+[Resolution]
+Enable EBH for LP5 BG mode.
+The previous encode/decode fail was caused by the RTL model checker code, not caused by MRC. The model fix is updated in the latest CTE model.
+
+[Impacted Area]
+LP5 BG Mode EBH
+
+[Register Impacted]
+MC
+
+Hsd-es-id: 15010980575
+Original commit date: Thu Mar 31 14:03:13 2022 +0800
+Change-Id: I353a6cf8d40972f43ad2339d7dd4956a1463a029
+Original commit hash: 0071697dc012e6acde56658ca4b6babea944c472
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+
+================================================================================ 
+Commit: 8e93d0d3106c0701ff1c6b692dc3e39f587c626b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:42 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPL-SBGA] Add new BOM ID to support 1 DPC configuration
+
+Add BOM ID 0x01 for RPL-SBGA DDR5 SODIMM 1DPC PPV.
+
+Hsd-es-id: 15010920216
+Original commit date: Thu Mar 31 14:57:53 2022 +0800
+Change-Id: Iba3c308e1465e7f1d443380961cd77529e795468
+Original commit hash: 82ef760b3a5c5423a6d4cb4b688c31971c5bc4a1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Include/PlatformBoardId.h
+
+================================================================================ 
+Commit: e00a661f76c7a458b32428577336a879cd3f4ce8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:40 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.196
+
+(cherry picked from commit 9eb07e675c6d609a06fed14a0886bc2b411165ee)
+
+Thu Mar 31 08:01:47 2022 +0000
+Original commit date: Thu Mar 31 08:01:47 2022 +0000
+Original commit hash: a8b594b78202c25cc95b3c30cd254c7bdc9d8f3a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 9d93a7edaafb1c785e0371119cd3576751045fa9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:38 2022 +0530 
+-------------------------------------------------------------------------------- 
+Clean up server specific code.
+
+- remove or isolate functions IsServerSku() MeServerPreMemPrintPolicyPpi() IsPchServer() for ADL.
+- replace SERVER_BIOS_FLAG and SPS_SUPPORT with PcdSpsEnable.
+
+Hsd-es-id: 15010978648
+Original commit date: Wed Mar 23 14:12:17 2022 +0800
+Change-Id: I2e0804a30c9863f0f4fa332b6418f8d553609ab3
+Original commit hash: 1fa4e5d0e24b85af853128ecda23952209fda1e7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/Cpu.asl
+AlderLakeBoardPkg/Library/BasePlatformHookLib/BasePlatformHookLib.c
+AlderLakeFspPkg/AlderLakeFspPkg.dsc
+AlderLakeOpenBoardPkg/TigerLakeSimics/Library/BasePlatformHookLib/BasePlatformHookLib.c
+ClientOneSiliconPkg/Fru/AdlPch/PeiLib.dsc
+ClientOneSiliconPkg/IpBlock/Amt/Mebx/Dxe/MebxCore.c
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeUmaLib/PeiMeUmaLib.inf
+ClientOneSiliconPkg/Pch/PchInit/Smm/PchPcieSmm.c
+ClientOneSiliconPkg/Pch/PchSmiDispatcher/Smm/PchSmiDispatch.c
+ClientOneSiliconPkg/Product/AlderLake/Library/PeiSiPolicyLib/PeiSiPolicyLib.inf
+ClientOneSiliconPkg/Product/AlderLake/Library/PeiSiPolicyLib/PeiSiPolicyLibPreMem.c
+ClientOneSiliconPkg/Product/AlderLake/SiInit/Pei/PeiSiPreMemPolicyPrint.c
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPeiLib.dsc
+ClientOneSiliconPkg/SystemAgent/Library/PeiDxeSmmSaPlatformLib/PeiDxeSmmSaPlatformLib.inf
+ClientOneSiliconPkg/SystemAgent/Library/PeiDxeSmmSaPlatformLib/SaPlatformLibrary.c
+Features/Manageability/MebxFeaturePkg/MebxSetup/MebxSetupVfr.vfr
+
+================================================================================ 
+Commit: 1b8494e444d6c0ef2a9c8fe382402af2034ab82d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:36 2022 +0530 
+-------------------------------------------------------------------------------- 
+ClientOneSiliconPkg: ME msg allowance switch case fix
+
+Fixed wrong switch case for me normal path checking HECI message allowance.
+
+Hsd-es-id: 18021325312
+Original commit date: Wed Mar 30 10:22:19 2022 +0200
+Change-Id: I5771d190634e1895c9e273bc8c15a01714d3c793
+Original commit hash: d90bcf9b8cd44fd36d2e5a8595171b7931b14dad
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiDxeHeciInitLib/HeciCore.c
+
+================================================================================ 
+Commit: bf83eda2f4d772da3a95856b96d42ef9f658c20d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:34 2022 +0530 
+-------------------------------------------------------------------------------- 
+RaptorLake: [BIOS RCR] Request to add new HWID for ICCWDT device for RPL platform
+
+Hsd-es-id: 15010486392
+Original commit date: Wed Dec 22 15:10:23 2021 +0800
+Change-Id: I6ebe38f8bff6207c4380abfe0b443b5bb5655390
+Original commit hash: d38072d0a22766902ff8d6d0949ce4ec1e4f6a68
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/LpcDev.asl
+AlderLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/LPC_DEV.ASL
+
+================================================================================ 
+Commit: 6fb373f77a43fc7ba1f90b1850c4bf593adbcb7c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:32 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.195
+
+(cherry picked from commit 2cd3541b9fce45ff02671277b4e6ab4775407862)
+
+Thu Mar 31 03:05:36 2022 +0000
+Original commit date: Thu Mar 31 03:05:36 2022 +0000
+Original commit hash: abfd8bea2b341e0eb37b9f1a4b480c38765796d4
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 639973baa140071eb8beb87b879bb239284c5db8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:27 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3143_00
+
+Hsd-es-id: N/A
+Original commit date: Wed Mar 30 08:56:44 2022 -0700
+Change-Id: Ibe0c5a1132097404ad6c74146e503ec1f6811034
+Original commit hash: 5e108390aaafd618c10c077dadee6c8ccaa488d7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: d91cd591f6d11b315b91ceac4cdd457eac43f89c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:25 2022 +0530 
+-------------------------------------------------------------------------------- 
+RPL: Fix 'mRplCpuFamilyString' defined but not used issue
+
+Hsd-es-id: 16016236714
+Original commit date: Wed Mar 30 16:15:30 2022 +0800
+Change-Id: I2416ca47c553642a57da3222099ed5a6ba30e7f6
+Original commit hash: f1972dc05ea8793be47027ef77034eead632de0a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/AdlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+
+================================================================================ 
+Commit: a59416e328a0801ebfcc41167b9071d05cfe0f3f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:22 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC CI
+
+Hsd-es-id: N/A
+Original commit date: Wed Mar 30 04:34:57 2022 -0700
+Change-Id: Ia8ffe2ffa8ed82a065b8ac3f2a0f3ca88a0107e9
+Original commit hash: b0a608d5a3f5632dab0818af91bcaa2264b293fb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: a2a60982fcd68514bfaa126e2efd8c3e66d05042 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:20 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.194
+
+(cherry picked from commit 2d4f3d631eaa172fbb8d2309dac25963ae9be74a)
+
+Wed Mar 30 08:04:33 2022 +0000
+Original commit date: Wed Mar 30 08:04:33 2022 +0000
+Original commit hash: f1a6a61bb5a7a3762282a4b1df9555eb3e7db90d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: f03f2c7082eae289deca5a1d2992c9c4731c0838 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:19 2022 +0530 
+-------------------------------------------------------------------------------- 
+[bug][16016236189][ADL P ADL M | LP4] System fails to boot with MC0 disabled on LP4
+
+[Issue Description]
+  With MC0 disabled system fails to boot on LP4 with FastBoot enabled.
+  In MRC FastBoot flow, Jedec Reset is called after 'Static South Spine Gating' is enabled.
+  Changing PHY registers after 'Static South Spine Gating' enabled causing system hang.
+  This issue happens only in LP4 since during Jedec Reset MRC switch to low frequency and
+  as part this flow MRC does Save/Restore of registers between low frequency and high frequency.
+
+[Resolution]
+  Disable 'Static South Spine Gating' during Jedec Reset in MRC FastBoot flow.
+
+[Impacted Area]
+  ADL-P ADL-M | LP4
+
+[Registers impacted]
+  MC [] Phy [X] Both []
+
+Hsd-es-id: 16016236189
+Original commit date: Tue Mar 29 15:54:04 2022 +0530
+Change-Id: I6d8182e1e6a05de4afd910c5d6bb195da9dd9e4a
+Original commit hash: b3543a79249102eebd1f26182d5314f84c02d5c0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcReset.c
+
+================================================================================ 
+Commit: 9d90e49814ec9fcd7f2acc11c188d2058c0e6a02 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:14 2022 +0530 
+-------------------------------------------------------------------------------- 
+AlderLakePlatSamplePkg/WifiProfileSync: Modifing a PCD check for OneClickRecovery WLAN profile sync capability enabling in SMBIOS table 130.
+
+Modifing platform PCD check to set profile sync PCD to true for ADLM.
+
+Hsd-es-id: 16016045574
+Original commit date: Mon Mar 28 16:59:59 2022 -0700
+Change-Id: Ie4fbc453f7004741b8c483af4dd3a2d6e34c3689
+Original commit hash: ca306c2366d57c7fd2d504093054d04412f9b369
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakeMBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakeMBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+
+================================================================================ 
+Commit: 06990e1dc9cb30ce8e3809ce13b945295d5da4c2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:13 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3142_00
+
+Hsd-es-id: N/A
+Original commit date: Tue Mar 29 08:49:45 2022 -0700
+Change-Id: I17656eb612cccf93d81ddf27765dd192be0f987e
+Original commit hash: c6cc19460b2245af0b4f9b66d315589de7f56999
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 273d3073a802a6e244d713a2d35903bb90db0800 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:11 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL/RPL] external release code should have no Me Sps related code
+
+ME SPS code put under the PcdSpsEnable PCD that is defined as TRUE only for the projects supporting SPS FW
+
+Hsd-es-id: 18021070399
+Original commit date: Mon Mar 14 13:16:09 2022 +0100
+Change-Id: I033e8da11eebf012bef7c5e20a34ac1bf705c3e5
+Original commit hash: 1192847bd89f7b48fcd5c1c059d245447e126815
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Policy/Library/PeiSiliconPolicyUpdateLib/PeiSiliconPolicyUpdateLib.inf
+AlderLakeBoardPkg/Policy/Library/PeiSiliconPolicyUpdateLib/PeiSiliconPolicyUpdateLibFsp.inf
+AlderLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxePolicyUpdateLib.inf
+ClientOneSiliconPkg/Fsp/FspInit/Pei/FspInit.inf
+ClientOneSiliconPkg/Include/Library/MeTypeLib.h
+ClientOneSiliconPkg/Include/Library/MeUtilsLib.h
+ClientOneSiliconPkg/IpBlock/Amt/AmtInit/Dxe/AmtInitDxe.inf
+ClientOneSiliconPkg/IpBlock/Amt/Library/DxeAmtPolicyLibNull/DxeAmtPolicyLibNull.inf
+ClientOneSiliconPkg/IpBlock/Amt/Library/PeiAmtPolicyLib/PeiAmtPolicyLib.inf
+ClientOneSiliconPkg/IpBlock/Amt/Mebx/Dxe/Mebx.inf
+ClientOneSiliconPkg/IpBlock/Amt/Sol/Dxe/SerialOverLan.inf
+ClientOneSiliconPkg/IpBlock/Me/Asf/Dxe/AsfDxe.inf
+ClientOneSiliconPkg/IpBlock/Me/HwAsset/Dxe/HwAssetDxe.inf
+ClientOneSiliconPkg/IpBlock/Me/Library/DxeMeLib/DxeMeLib.inf
+ClientOneSiliconPkg/IpBlock/Me/Library/DxeMeLib/HeciMsgDxeLib.c
+ClientOneSiliconPkg/IpBlock/Me/Library/DxeMeLib/MePolicyDxeLib.c
+ClientOneSiliconPkg/IpBlock/Me/Library/DxeMePolicyLib/DxeMePolicyLib.inf
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeMeTypeLib/MeTypeLib.c
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeMeTypeLib/PeiDxeMeTypeLib.inf
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsCommon.c
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeSmmMeUtilsLib/MeUtilsLib.inf
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiMeLib/HeciMsgPeiLib.c
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiMeLib/HeciPpiInit.c
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiMeLib/MePolicyCommonPeiLib.c
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiMeLib/PeiMeLib.inf
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiMePolicyLib/PeiMePolicyCommonLib.c
+ClientOneSiliconPkg/IpBlock/Me/Library/PeiMePolicyLib/PeiMePolicyLib.inf
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiDxeHeciInitLib/HeciCore.c
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiDxeHeciInitLib/PeiDxeHeciInitLib.inf
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MeInitPostMem.c
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/MeInitPostMemCommon.c
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/PeiMeInitLib.inf
+ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeUmaLib/PchMeUma.c
+ClientOneSiliconPkg/IpBlock/Me/MeFwDowngrade/Dxe/MeFwDowngrade.inf
+ClientOneSiliconPkg/IpBlock/Me/MeSmbiosDxe/MeSmbiosDxe.inf
+
+================================================================================ 
+Commit: 93b724baae2acf6d8a3deb335c0c1d9177a68021 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:09 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL] Plug Gatkex Creek *3 the reserved bus will be wrong
+
+If Reserved Bus < (UpStream Bus + DownStream Bus + Total Non-HotPlug Bus), stop allocation.
+Increase Extra Reserved Bus to 56, add some help message.
+
+Hsd-es-id: 15010855463
+Original commit date: Thu Mar 10 19:12:01 2022 +0800
+Change-Id: Ie50951fc6e266584018e9271a9fb423472b3de04
+Original commit hash: 778941cc3bd6117dda336281dece11d10de1b4b7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlug.c
+AlderLakePlatSamplePkg/Setup/IntegratedTbtOptions.hfr
+AlderLakePlatSamplePkg/Setup/TbtSetup.uni
+
+================================================================================ 
+Commit: d291c5066de53294c834243246e0eefc98a33104 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:37:02 2022 +0530 
+-------------------------------------------------------------------------------- 
+Rpe: Fix a build error when use GCC build for ADL-S.
+
+The original code will cause build error:
+RemotePlatformErase.c: In function 'RemotePlatformEraseEntryPoint':
+RemotePlatformErase.c:705:39: error: variable 'IsLpeCsmeUnconfigureEnabled' set but not used [-Werror=unused-but-set-variable]
+   BOOLEAN                             IsLpeCsmeUnconfigureEnabled;
+                                       ^
+cc1: all warnings being treated as errors
+
+Hsd-es-id: 15010958944
+Original commit date: Mon Mar 28 22:55:14 2022 +0800
+Change-Id: Ie02594acb7e5e47475734766487b08df54fcc2c0
+Original commit hash: 73686cef3560de2b7328a54662c8ee2401297824
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.c
+
+================================================================================ 
+Commit: 81cfea67282c76c6fefe1626034b5e606362899c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:59 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3141_00
+
+Hsd-es-id: N/A
+Original commit date: Mon Mar 28 08:49:58 2022 -0700
+Change-Id: I920b0ac4a44c12ea70734f7b28f0d3a0a26b13ed
+Original commit hash: 11ebb3f3f95181d082718319d28ce697276db0e0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 0a700396d5a5efda23128ea4cbb1038b7e05144b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:57 2022 +0530 
+-------------------------------------------------------------------------------- 
+AlderLakePlatSamplePkg/WifiProfileSync: Modifing a PCD check for OneClickRecovery WLAN profile sync capability enabling in SMBIOS table 130 -Part2
+
+Modifing platform PCD check to set profile sync PCD to true for RPL-S CPU + ADL-S PCH platform.
+
+Hsd-es-id: 16016045574
+Original commit date: Mon Mar 28 19:59:10 2022 +0800
+Change-Id: I843ce9b50e22285f505bcb8df426186ed3d52be6
+Original commit hash: 610d35c7db549b6a57cd152bbc555df41e202427
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.c
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
+AlderLakePlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: 850378b33712a4b1cfc8032278c7d7d15d7c023e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:53 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.193
+
+(cherry picked from commit d7b5e95965c7982744d309dfa38bd4bbc1f7890a)
+
+Mon Mar 28 07:02:42 2022 +0000
+Original commit date: Mon Mar 28 07:02:42 2022 +0000
+Original commit hash: c86c1a797ad7b9f6e47cafd007223c486fcc643f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: ac461ac1d63ddaadb19eaa64bec9b0ee2fde54b3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:50 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.192
+
+(cherry picked from commit fd798d9d71abf8cf8d3013c85baf81a8e46a6258)
+
+Mon Mar 28 06:09:42 2022 +0000
+Original commit date: Mon Mar 28 06:09:42 2022 +0000
+Original commit hash: c840becf368347a5f13bb587436c692d284f2b0c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: dcadcc50ca9161213dc41fd2aa6412b172efbde3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:48 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010943165][RPL][LP5][Port from MTL]Read Leveling support for BG Mode
+
+[Issue/Feature Description]
+    Due to hardware limitations read leveling cannot generate B2B traffic when in LP5 BG Mode
+    ReadLeveling trainig requires B2B traffic and current CPGC setup will not work with MC BG Mode scheduler
+
+[Resolution]
+    Map CPGC logical banks to different physical Bank Groups to ensure that bank transitions will iterate
+through Bank groups.
+    Fix Read Leveling CPGC logical to physical bank mapping for BG mode to generate a unique pattern
+of reads to same/different bank groups. By doing this, this will create gaps between read bursts which will
+allow enough time for RecEn to toggle as expected.
+    Read to Read same Rank TAT timing should be increased for BG mode in read leveling training
+to create gaps between read transactions to allow RecEn to toggle.
+
+[Impacted Platform]
+    RPL bgmode
+
+Registers impacted: MC [ ] Phy [ ] Both [ ]
+
+Hsd-es-id: 15010943165
+Original commit date: Mon Jan 17 18:07:24 2022 +0800
+Change-Id: I18f83ce1cb70e1ba977507f8bdd6cebc4192850a
+Original commit hash: c60f03dd1c78c3edc9c90b99b0274a8ab9900314
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+
+================================================================================ 
+Commit: 0d3256500b667af9dec8a85e8699815bf07f7b43 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:45 2022 +0530 
+-------------------------------------------------------------------------------- 
+Enable Remote Platform Erase for ADLS BGA
+
+Enable Remote Platform Erase for ADLS BGA
+
+Hsd-es-id: 22014831068
+Original commit date: Mon Mar 28 11:05:09 2022 +0800
+Change-Id: I030c3ed70dbca22c8ce607ee003bdbf50606d605
+Original commit hash: e868b3118b2788a9cff44f4ea5ae70c797f1d915
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+AlderLakePlatSamplePkg/Features/Amt/AsfTable/AsfTable.c
+AlderLakePlatSamplePkg/Features/Amt/AsfTable/AsfTable.inf
+AlderLakePlatSamplePkg/Features/Me/MeSmbiosUpdateConfigDxe/MeSmbiosUpdateConfig.c
+AlderLakePlatSamplePkg/Features/Me/MeSmbiosUpdateConfigDxe/MeSmbiosUpdateConfigDxe.inf
+AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.c
+AlderLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.inf
+AlderLakePlatSamplePkg/Include/SetupVariable.h
+AlderLakePlatSamplePkg/PlatformPkg.dec
+AlderLakePlatSamplePkg/Setup/AmtSetup.hfr
+
+================================================================================ 
+Commit: 456a9ca2e4c0372aad627833d0218a7532065c76 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:43 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC CI
+
+Hsd-es-id: N/A
+Original commit date: Sun Mar 27 21:00:16 2022 -0700
+Change-Id: Iae066c1cb7e39838dde0af6ec1bc458e0d09bdd7
+Original commit hash: 90033ab6df3c9a11ba4eefd17f9ce17057a32087
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 3e32401cb341f4825b06f58a6a2efb391b90ed17 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:40 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3137_00
+
+Hsd-es-id: N/A
+Original commit date: Sun Mar 27 08:49:34 2022 -0700
+Change-Id: I7c46e322cd690e791c8bf19c813081f4c2ce952b
+Original commit hash: d96c01ae6d33a9ef1230b5ad50b16b6c8668edc0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 6393a15d21963e373634454ec06b21ae8729512e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:37 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3136_00
+
+Hsd-es-id: N/A
+Original commit date: Sat Mar 26 08:51:49 2022 -0700
+Change-Id: I53d36a803437dc14e05af198cc6b2729f38877d8
+Original commit hash: 375ce2e6f31030726be284d20b6b306852e0cd3f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 384a1fef250c8fb9f10d5c80b6f996e0e3a23827 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:35 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.191
+
+(cherry picked from commit 941b7553fbdfd55fe250e7ac58d7e3b0f2b54916)
+
+Sat Mar 26 13:57:06 2022 +0000
+Original commit date: Sat Mar 26 13:57:06 2022 +0000
+Original commit hash: dc7ae8f45c5739e24b6c02b832408f9bac04dc1e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: fa3af917fb5e40a3bae9aba9fa1770c061ecd960 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:34 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010947853][LPDDR5] Disable EBH for LP5 BG mode.
+
+[Feature Description]
+Disable EBH for LP5 BG mode.
+
+[Resolution]
+Disable EBH for LP5 BG mode. MrcEnableExtendedBankHashing returns false for LP5 BG mode.
+
+[Impacted Area]
+LPDDR5
+
+[Register Impacted]
+MC, EBH
+
+Hsd-es-id: 15010947853
+Original commit date: Sat Mar 26 16:26:27 2022 +0800
+Change-Id: Ia07215a162eb55a88b89dbc16a7de4477075ff98
+Original commit hash: ae88382bbb96a48809795ea1d1d40c05fc7a5d80
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcAddressDecodeConfiguration.c
+
+================================================================================ 
+Commit: 31442434422f92e430ad2b728946152e3ceaa2e4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:32 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC CI
+
+Hsd-es-id: N/A
+Original commit date: Sat Mar 26 04:58:12 2022 -0700
+Change-Id: I69a1a2151eb3cb577bcac72dc0ea856f80fa9a8e
+Original commit hash: a8c66ab21401da25d9278b49df0d49883d6ac39c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 246e5f418df85a6c1f41c8cb327ef2b11aaff39a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:30 2022 +0530 
+-------------------------------------------------------------------------------- 
+AlderLakePlatSamplePkg/WifiProfileSync: Modifing a PCD check for OneClickRecovery WLAN profile sync capability enabling in SMBIOS table 130.
+
+Modifing platform PCD check to only set profile sync PCD to true for ADLP. ADLSBGA. RPLS and RPLP platform.
+
+Hsd-es-id: 16016045574
+Original commit date: Fri Mar 25 17:09:49 2022 +0800
+Change-Id: I83969a334a058e9c471f369bc46b8e3bdd821aab
+Original commit hash: 93df2a12694042b5597f7ebbedfa6f0e40aecc67
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakeSBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+AlderLakeBoardPkg/BoardPkg.dsc
+AlderLakeBoardPkg/BoardPkg.fdf
+AlderLakeBoardPkg/BoardPkgPcdUpdate.dsc
+AlderLakePlatSamplePkg/Features/Amt/OneClickRecovery/OemOneClickRecovery.c
+AlderLakePlatSamplePkg/Features/Amt/OneClickRecovery/OneClickRecoveryHttpsSupport.c
+AlderLakePlatSamplePkg/Features/Amt/WifiProfileSync/WifiProfileSync.c
+AlderLakePlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: d4f8f1e7e358f7c16eca875acbae010e8f92bc28 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:28 2022 +0530 
+-------------------------------------------------------------------------------- 
+[RPLS][dTBT/PCH USB Type-C Ports] USBC Over Current Support
+
+Enable use of OC VW Pins for PCH S
+Configure RPL-S OC mapping for use of OC VW Pins
+
+Hsd-es-id: 15010629511
+Original commit date: Thu Mar 3 22:43:37 2022 +0800
+Change-Id: Idaf14d8c816baa7531041fc87146d8a805b7b658
+Original commit hash: e8f17566067ba4ff86e222dcb83f2e0005919655
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Gpio/LibraryPrivate/PeiDxeSmmGpioPrivateLib/GpioNativePrivateLibVer4.c
+
+================================================================================ 
+Commit: 2126f4e043878a87e666d6286b3b0c5ad70642d0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:27 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3135_00
+
+Hsd-es-id: N/A
+Original commit date: Fri Mar 25 08:51:12 2022 -0700
+Change-Id: I80c09381234fb12f11b233e558dad1bd41d598c2
+Original commit hash: 0f923c13e220cadbc3e05743749cd983e5e2741a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 852d6f50c7f0d5f718c574a7feab0d24a4e23d34 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:25 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.190
+
+(cherry picked from commit d6c58464500c9c92915d845fb1e533bca8b261bc)
+
+Fri Mar 25 13:28:40 2022 +0000
+Original commit date: Fri Mar 25 13:28:40 2022 +0000
+Original commit hash: 7e610909964f2df804e2ccdac275d7c52f8e5824
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 68745a857a3e61b4e7b846495c972d520b010931 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:23 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ISE][15010923808][LPDDR5] TaT update for Lp5 bank group mode.
+
+[Features]
+Support TaT for Lpddr5 bgmode.
+
+[Changes]
+1, update tCCD_S tCCD_L for bgmode
+2, update tWTR_S tWTR_L for bgmode
+3, update Bgmode same bank group timing using BLn_max.
+4, update Bgmode different bank group timing using BLn_min.
+5. update timing MAX values according to Spec.
+6. remove TaT for CTE, after relax MAX values.
+7, some additional CTE fix for bg mode.
+
+[Impacted Area]
+Bgmode TaT
+
+[Register Impacted]
+MC
+
+Hsd-es-id: 15010923808
+Original commit date: Tue Mar 15 16:01:36 2022 +0800
+Change-Id: Icc52df10bc8bdaff4bd50e3023eee476775480b7
+Original commit hash: 6ab7295c870f05371ff7e00767dd5395dd218ac5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+
+================================================================================ 
+Commit: 3550b0c6023310251fbf16e80e31016fdbc8f4a8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:21 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.189
+
+(cherry picked from commit 5f52d758622dca79682cb3f760b04d9c5bfc43e7)
+
+Fri Mar 25 11:49:23 2022 +0000
+Original commit date: Fri Mar 25 11:49:23 2022 +0000
+Original commit hash: afaf51aa5877dd79a6b28184f9291617ddadeb71
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: a80370ec64cb366a346b5692843bbd246ba13253 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:18 2022 +0530 
+-------------------------------------------------------------------------------- 
+WifiProfileSync: Add NULL Pointer check for WcmProfile
+
+Return EFI_INVALID_PARAMETER if 'WcmProfile' is NULL
+
+Hsd-es-id: 15010946588
+Original commit date: Fri Mar 25 17:17:41 2022 +0800
+Change-Id: I8f5ed2d6904a04be16d4cae72655ca2f84fafd6d
+Original commit hash: 4a04f0c99b90899df27383428965410cdddfd04f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Amt/WifiProfileSync/WifiProfileSync.c
+
+================================================================================ 
+Commit: f58fa05a053e6e5ff25614869cd67609931f0a81 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:17 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.188
+
+(cherry picked from commit ea5d6143adec83ac8d5465a44739e07bab057554)
+
+Fri Mar 25 10:23:30 2022 +0000
+Original commit date: Fri Mar 25 10:23:30 2022 +0000
+Original commit hash: 473993db949bb0b56c02546b8d1d451fc9648916
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: bae2809c852c1d248787408778de3f1fbd9cd6eb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:15 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010927281][RPL-P][LP5][Port from MTL] Fix early rdmpr 2D issue in LP5 BGmode
+
+[Feature Description]
+Prior early rdmpr 2D training start, need to move MC to 16B mode.
+After training is over, need to move MC back to BG mode
+
+[Resolution]
+Prior early rdmpr 2D training start, move MC to 16B mode.
+After training is over, move MC back to BG mode
+
+[Impacted Area]
+LP5 Bank Mode
+
+[Register Impacted]
+MC
+
+Hsd-es-id: 15010927281
+Original commit date: Wed Mar 23 15:26:00 2022 +0800
+Change-Id: I1b89269322246110f36217662d0e9ae4f0c85f46
+Original commit hash: f51d24e7fd2e5acea7e12731a186408bf62f3530
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+
+================================================================================ 
+Commit: 4aeabdb07d46c20e2e0510728a931f146a1612cf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:13 2022 +0530 
+-------------------------------------------------------------------------------- 
+AV1 decode failures due to Incorrect DFTRING hub bypass
+
+Hsd-es-id: 16016183216
+Original commit date: Thu Mar 17 15:42:40 2022 +0530
+Change-Id: Ib08ba941d09da76e94cdaf0e1a42067c1ce5e3b3
+Original commit hash: 4d5254d33cbfa36ecca597c61164389226d38e5f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/AlderLakeFspPkg.dsc
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/LibraryPrivate/PeiGraphicsInitFruLib/PeiGraphicsInitFruLib.c
+ClientOneSiliconPkg/Fru/AdlCpu/Graphics/LibraryPrivate/PeiGraphicsInitFruLib/PeiGraphicsInitFruLib.inf
+ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Library/PeiGraphicsInitFruLib.h
+ClientOneSiliconPkg/Fru/AdlCpu/IncludePrivate/Register/IgdRegs.h
+ClientOneSiliconPkg/Fru/AdlCpu/PeiLib.dsc
+ClientOneSiliconPkg/Include/Library/GraphicsInfoFruLib.h
+ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen12/PeiGraphicsInitLib.inf
+ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen12/PeiGraphicsPmInit.c
+
+================================================================================ 
+Commit: 19c53cf422f2092a9df9d46a2f7f5ce37c5f8679 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:12 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ADL-P/M] Add new microcode for Lx/Rx Production patchID 0x0000041c
+
+Hsd-es-id: 16016192058
+Original commit date: Fri Mar 25 13:35:59 2022 +0530
+Change-Id: I976900432b8048c801187d81dec955eb98a592d3
+Original commit hash: 0bc7324d0994a807171caa8fdd57499f5706bc85
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 0431751dbe7d1666c3badacb3cff98f88627b4f4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:10 2022 +0530 
+-------------------------------------------------------------------------------- 
+GFX Enable Bus Initiator and Memory access on 0:2:0
+  - During FastBoot enabled InitSaStrings will not be get called, so
+  PCI Command will be get set for Graphics.
+  - After PCI Enumeration Initiate to Memory Access if not set.
+
+Hsd-es-id: 15010825219
+Original commit date: Tue Mar 22 18:39:45 2022 +0530
+Change-Id: I398e88cd70327a441a292d0020041f411ae8c771
+Original commit hash: 72b813b30379ddf0a97e5d256fdb3202ac2fe2b1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.h
+AlderLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureIntegratedGraphicsConfiguration.c
+
+================================================================================ 
+Commit: f718aeada31887e26e58542c2772f8d588694bc0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:08 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.187
+
+(cherry picked from commit dd7442cb13b475d2fdf8f1156be968e66357705f)
+
+Fri Mar 25 05:13:32 2022 +0000
+Original commit date: Fri Mar 25 05:13:32 2022 +0000
+Original commit hash: 94f8a259d74185bbcf8c1085d3215a2af199e6e8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 47277c3c41dbd8e3642d6c91bee316aa248c3088 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:06 2022 +0530 
+-------------------------------------------------------------------------------- 
+[bug][1309638901][ADL P ADL M | LP5] CAS WS_FS command is required before putting the DRAM into enhanced RDQS mode
+
+[Issue Description]
+  LPDDR5 will enter Enhanced RDQS training mode and RDQS toggle mode by writing MR46.
+  Before issuing MRW command, CAS WS_FS is required as per LP5 spec.
+  We are not issuing CAS WS_FS in current MRC.
+
+[Resolution]
+  Issue CAS WS_FS through Mode Register Handler before putting the DRAM into
+  Enhanced RDQS training mode or RDQS toggle mode.
+
+[Other Changes]
+  Relax maximum 'WR to RD between different banks' turnaround to meet spec limits at higher frequencies.
+
+[Impacted Area]
+  ADL-P ADL-M | LP5
+
+[Registers impacted]
+  MC [] Phy [] Both [X]
+
+Hsd-es-id: 1309638901
+Original commit date: Wed Nov 17 11:11:11 2021 +0530
+Change-Id: Iab3a84a9cc998b69706f1a8c18458cd8a0e57a31
+Original commit hash: cc0943c1a6267357fa24dcc80c7574a2cea5db31
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/McConfiguration/MrcTimingConfiguration.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+
+================================================================================ 
+Commit: eb57cf95c2a756ce868fddbb1a1f4681778d2cc6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:03 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.186
+
+(cherry picked from commit 8ce41c79b9fa03a08c1656e12a4edf490a080bb4)
+
+Thu Mar 24 16:21:08 2022 +0000
+Original commit date: Thu Mar 24 16:21:08 2022 +0000
+Original commit hash: 3755b65ab9a83208b376a88a6e4e263db1f03ed8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 6bd34136ffd59ba619a0fda18a8f85743010fe8f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:01 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_BIOS_ID_Update CI BIOS Version to 3134_00
+
+Hsd-es-id: N/A
+Original commit date: Thu Mar 24 08:54:44 2022 -0700
+Change-Id: Ifdf0ade22e97a05c254f955a41b6dd314c2dc1a1
+Original commit hash: 93d1e164907d76c2d43f89a8a36969930f6f0bc1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 3019466636b8104838b6308427ba0bcae976be63 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:36:00 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010940015][ADL-S | DDR5] add ddr5 4800 g4 support
+
+[Feature Description]
+add ddr5 4800 g4 support for adls
+
+[Resolution]
+remove ulxult restriction of read preamble
+
+[Impacted Area]
+DDR5
+
+[Register Impacted]
+NA
+
+Hsd-es-id: 15010940015
+Original commit date: Wed Mar 16 17:51:37 2022 +0800
+Change-Id: Idf2c49195a3901fddc6b834a39205c12fc8514a1
+Original commit hash: 9c6e712c0cfd6a87aa96ab90aed172d288b0eb07
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+
+================================================================================ 
+Commit: 0cbb6deebcd59d792905a8d2b0ab3aebe4c6df81 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:35:58 2022 +0530 
+-------------------------------------------------------------------------------- 
+[TeamCity] ADL Daily_Auto_Commit_Update_FSP_RC CI
+
+Hsd-es-id: N/A
+Original commit date: Thu Mar 24 07:38:02 2022 -0700
+Change-Id: I283dcd7a129819ec172c97e9ee5e71054365fd13
+Original commit hash: 21a361304b170bcf0ed9f273d135ba4056aefb58
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 8401f5e05a7c11d81450e5cddcf3964be57ddd92 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:35:57 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.3.185
+
+(cherry picked from commit 13f24da915a2d8e599f657526d27aefff6f81997)
+
+Thu Mar 24 14:04:28 2022 +0000
+Original commit date: Thu Mar 24 14:04:28 2022 +0000
+Original commit hash: 78ce2cbb38643a5808c95e9f00b9f16186c003ab
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 6b1faca8d8dafdb016cbbef45740fff2fad3096c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:35:55 2022 +0530 
+-------------------------------------------------------------------------------- 
+[ise][15010931082] update b0/j0 micro code in mini BIOS
+
+[Feature Description]
+update b0/j0 micro code in mini BIOS
+
+[Resolution]
+update b0/j0 micro code in mini BIOS
+
+[Impacted Area]
+Mini BIOS
+
+[Register Impacted]
+NA
+
+Hsd-es-id: 15010931082
+Original commit date: Wed Mar 23 23:22:28 2022 +0800
+Change-Id: I5ae68244d58728270d6a8ef448732afc35d3daf5
+Original commit hash: 1f0fa38199800c55f7a8f92d513571a6d423fb0b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/m_32_b0671_00000103.inc
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/MiniBios/CPU/UCODE/m_c0_b06a2_81004101.inc
+
+================================================================================ 
+Commit: 61de75e26e49a52342b6dd481f0a3087949111b0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:35:52 2022 +0530 
+-------------------------------------------------------------------------------- 
+Update DG OpRegion MailBox 5
+- PHED and BDDC fields addition in OpRegion Mailbox Structure 5
+
+Hsd-es-id: 15010928060
+Original commit date: Tue Mar 8 14:25:53 2022 +0530
+Change-Id: I8a22a0bfc73746c10b11ee9ec96d37beefb47879
+Original commit hash: 10bdf3f56bbbcbee533605fb191eac34b653446f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/PcieRpDiscreteGraphicsDeviceRtd3Hook.asl
+AlderLakePlatSamplePkg/Features/DashG/DgOpRegion.h
+
+================================================================================ 
+Commit: c7670971cbfc3d49faefb8e927573fa98a6fc8b4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu May 5 15:35:50 2022 +0530 
+-------------------------------------------------------------------------------- 
+Revert "[ADLN] Update minor ID to 01"
+
+This reverts commit 9de9fb37cadcf8c477ce70af35d3e0c6c191e0ca.
+
+Tue Apr 12 11:16:42 2022 +0530
+Original commit date: Tue Apr 12 11:16:42 2022 +0530
+Original commit hash: 468261cbd00a6de590bd6d293c884185e2a231ba
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
