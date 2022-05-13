@@ -1,0 +1,123 @@
+*********************************************************************************
+Commit: 45fab4d4e8c5aeeb8d528cc6632bfc7cfa002af5 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][15011038936][ADL-S ADL-P M | DDR5] WA to fix  x16 DRAM 2x refresh rate issue
+  
+  [Feature Description]
+  WA to fix  x16 DRAM 2x refresh rate issue
+  
+  [Resolution]
+  WA to fix  x16 DRAM 2x refresh rate issue
+  The MC DESWIZZLE register low byte and high byte are programmed mapping to DRAM low byte for DDR5 x16 DRAM.
+  
+  [Impacted Area]
+  DDR5 refresh rate
+  
+  [Register Impacted]
+  MC
+  
+  Hsd-es-id: 15011038936
+  Change-Id: I2ace333378e2675d56cb87cb7b50844e3dc38b4c
+  Original commit hash: 876724152329d5a8b0d2ccf3b1e530670428928a
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  WA 
+
+*********************************************************************************
+Commit: 1cc47a0c4b50a5d94563720946f9d4a002af98de 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][15010988887][ADL-S ADL-P ADL-M | DDR5 DDR4 LP5 LP4] Adaptive VCC DLL flow
+  
+  [Feature Description]
+  Adaptive VCC DLL flow instead of the static table.
+  
+  [Resolution]
+  Adaptive VCC DLL flow
+  
+  Use the original VCCDLL target table
+  1. VCCDLL target = Initial VCCDLL target - 25MV
+  2. Run BeSelCal, InitDCC, DwSelCal2, Locl All DLL
+  3. Check the MDLL Lock status
+  4. If not locked, increase the VCCDLL target by 25MV and to back to step 2.
+  5. If locked and the guardband is met, continue.
+  
+  [Impacted Area]
+  VccDll
+  
+  [Register Impacted]
+  PHY
+  
+  Hsd-es-id: 15010988887
+  Change-Id: Ie705a2813ee5664bfbdda9ea431616a7af4473fe
+  Original commit hash: 487873c43b76850c74dd2617f56575a829ce2915
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcMcConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: b51630df099dc047a105baa980905457ab42e870 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][15010943165][RPL][LP5][Port from MTL]Read Leveling support for BG Mode
+  
+  [Issue/Feature Description]
+  Due to hardware limitations read leveling cannot generate B2B traffic when in LP5 BG Mode
+  ReadLeveling trainig requires B2B traffic and current CPGC setup will not work with MC BG Mode scheduler
+  
+  [Resolution]
+  Map CPGC logical banks to different physical Bank Groups to ensure that bank transitions will iterate
+  through Bank groups.
+  Fix Read Leveling CPGC logical to physical bank mapping for BG mode to generate a unique pattern
+  of reads to same/different bank groups. By doing this, this will create gaps between read bursts which will
+  allow enough time for RecEn to toggle as expected.
+  Read to Read same Rank TAT timing should be increased for BG mode in read leveling training
+  to create gaps between read transactions to allow RecEn to toggle.
+  
+  [Impacted Platform]
+  RPL bgmode
+  
+  Registers impacted: MC [ ] Phy [ ] Both [ ]
+  
+  Hsd-es-id: 15010943165
+  Change-Id: I18f83ce1cb70e1ba977507f8bdd6cebc4192850a
+  Original commit hash: 1c10f7ccc22f99108ff87133eab02300f9c96568
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadReceiveEnable.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+################################################################################
+
+Report Summary: Backstop found 3 suspect commits for review 
+
+Warnings Found:
+  Commit: 45fab4d    --Commit Message Contains Key Word:  WA 
+  Commit: 1cc47a0    --Commit Message Contains Key Word: step
+  Commit: b51630d    --Commit Message Contains Key Word: hardware
