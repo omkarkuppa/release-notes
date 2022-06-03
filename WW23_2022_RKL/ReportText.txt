@@ -1,0 +1,157 @@
+*********************************************************************************
+Commit: 19fc2bd4ad5c131d7622b7a7d358f49a6b637c4e 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "Integrate RKL GOP V1075 and Update VBT Header"
+  
+  This commit caused the FSP_Wrapper_Performance_VS build failure in TC,
+  due to increased FSP-S FV space consumption.
+  Temporarily reverting this commit to unblock IPU 2022.3 label release.
+  
+  This reverts commit 9653f56db3c707bafe2eaf4c8f82e278335030f8.
+  
+  Hsd-es-id: N/A
+  Change-Id: I1feca68fe951fd8964a06cb4986b616dcc174f74
+  Original commit hash: be0eaf22ce921463db8df27672c3dc0d84e5589a
+  
+  ClientOneSiliconPkg/Fru/RklCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeim.efi
+  ClientOneSiliconPkg/Fru/RklCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimDebug.efi
+  RocketLakeFspBinPkg/SampleCode/Vbt/Vbt.bin
+  RocketLakeFspBinPkg/SampleCode/Vbt/Vbt.json
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: e5b871bbde7a5ff52ed8c840a52f4de1d6513d0f 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg: Fix unsafe usage of external buffer
+  
+  It was found that memory copy used on an external buffer if used with
+  malicious data could lead to a memory copy from SMRAM to outside buffer.
+  This change negates that vulnerability and changes that only internal
+  copy of the communication buffer will be used in SPI SMM handler code.
+  This is a fix for CVE-2022-21198.
+  
+  Hsd-es-id: 18020908839
+  Change-Id: I8ff0d15bbd06c192e5b9edd110dd9c2a9bb06faa
+  Original commit hash: 81e37d53bb4a97769de6c65dfc082e44ba266cf4
+  
+  ClientOneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: CVE
+
+*********************************************************************************
+Commit: 601ba4349c3142276eff9a53a1b68ba8a533defe 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [Port from Tatlow | DDR4] Decrease sweep range 2 steps at TAT Classic WR2WR dd and dr training
+  
+  [Issues]
+  When memory frequency set to 2667MHz, system will hang at post 40
+  
+  [Resolution]
+  MC/Phy is not stable when WR2WR dd/dr training fails at small WR2WR
+  number, and such failure can't recover.
+  CHange the low bar with 2 ticks more.
+  
+  Hsd-es-id: 15010679009
+  Change-Id: Ifbbb7abde9b2d9d0a924dadd006017382bdd900b
+  Original commit hash: 48e33b7d38552c12bb492df2270b83366ade262b
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: fdaa6fa2938905c4ef8a412711eb0825041a74cd 
+*********************************************************************************
+
+[SiliconPkg]
+
+  RKL: choose ClassicTraining at TAT
+  
+  [Issues]
+  memtest fails with ECC memory at 3200Gear1 and 2933Gear2.
+  
+  [Resolution]
+  
+  TAT has 2 implementations. The one is old ClassicTraining,
+  and the other is Optimization.
+  The Optimization tries every cycle for a timing parameter in down
+  sequence. It fails at the last step, and doesn't do cleanup,
+  such like CLK shifting back. Then, ClkGrpPi will be -7 or +7 shifted
+  from the center.
+  
+  The patch fixes it by calling ClassicTraining.
+  
+  Hsd-es-id: 22014294888
+  Change-Id: Id00f14183aefe3f8b7a8d500fa1f817e79327461
+  Original commit hash: 9a210fc036c88c71334e1fb3cce5ea55c0ac2930
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Rkl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 450bae25ea84a04dadb9413a13a8ae33d6b9a9ba 
+*********************************************************************************
+
+[PCH], [PlatformPkg]
+
+  * [RKL | RSTe/VROC no function in BIOS menu in AMT SVR in PV & PLR1
+  
+  [Issues]
+  RSTe/VROC cannot be enable.
+  
+  [Resolution]
+  Updating VROC FW to VROC_7.7.0.1273_PV
+  Adding PCH device ID, and correcting RSTe string according to Server or Non-Server SKU
+  
+  Hsd-es-id: 15010381400
+  Change-Id: I11474db3496772a78545565239795168903532ce
+  Original commit hash: 91bd34c7bcec91419012c4a7fef25f4d39484f87
+  
+  ClientOneSiliconPkg/Pch/Library/PeiDxeSmmPchInfoLib/PchInfoLibTgl.c
+  RocketLakePlatSamplePkg/Setup/PchSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 5 suspect commits for review 
+
+Warnings Found:
+  Commit: 19fc2bd    --Commit Message Contains Key Word: revert
+  Commit: e5b871b    --Commit Message Contains Key Word: internal
+  Commit: e5b871b    --Commit Message Contains Key Word: CVE
+  Commit: 601ba43    --Commit Message Contains Key Word: step
+  Commit: fdaa6fa    --Commit Message Contains Key Word: step
+  Commit: 450bae2    --Commit Message Contains Key Word: sku
