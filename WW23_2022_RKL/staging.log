@@ -33,10 +33,6 @@ Date: Thu Jun 2 11:16:57 2022 -0700
 -------------------------------------------------------------------------------- 
 Revert "Integrate RKL GOP V1075 and Update VBT Header"
 
-This commit caused the FSP_Wrapper_Performance_VS build failure in TC,
-due to increased FSP-S FV space consumption.
-Temporarily reverting this commit to unblock IPU 2022.3 label release.
-
 This reverts commit 9653f56db3c707bafe2eaf4c8f82e278335030f8.
 
 Hsd-es-id: N/A
@@ -795,13 +791,7 @@ Commit: e5b871bbde7a5ff52ed8c840a52f4de1d6513d0f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Jun 2 11:15:36 2022 -0700 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg: Fix unsafe usage of external buffer
-
-It was found that memory copy used on an external buffer if used with
-malicious data could lead to a memory copy from SMRAM to outside buffer.
-This change negates that vulnerability and changes that only internal
-copy of the communication buffer will be used in SPI SMM handler code.
-This is a fix for CVE-2022-21198.
+ClientOneSiliconPkg: Updated usage of external buffer
 
 Hsd-es-id: 18020908839
 Original commit date: Tue Nov 23 18:40:56 2021 +0100
@@ -1194,14 +1184,6 @@ Date: Thu Mar 24 14:41:04 2022 -0700
 -------------------------------------------------------------------------------- 
 [Port from Tatlow | DDR4] Decrease sweep range 2 steps at TAT Classic WR2WR dd and dr training
 
-[Issues]
-When memory frequency set to 2667MHz, system will hang at post 40
-
-[Resolution]
-MC/Phy is not stable when WR2WR dd/dr training fails at small WR2WR
-number, and such failure can't recover.
-CHange the low bar with 2 ticks more.
-
 Hsd-es-id: 15010679009
 Original commit date: Fri Feb 25 09:40:46 2022 +0800
 Change-Id: Ifbbb7abde9b2d9d0a924dadd006017382bdd900b
@@ -1298,20 +1280,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu Mar 24 14:40:54 2022 -0700 
 -------------------------------------------------------------------------------- 
 RKL: choose ClassicTraining at TAT
-
-[Issues]
-memtest fails with ECC memory at 3200Gear1 and 2933Gear2.
-
-[Resolution]
-
-TAT has 2 implementations. The one is old ClassicTraining,
-and the other is Optimization.
-The Optimization tries every cycle for a timing parameter in down
-sequence. It fails at the last step, and doesn't do cleanup,
-such like CLK shifting back. Then, ClkGrpPi will be -7 or +7 shifted
-from the center.
-
-The patch fixes it by calling ClassicTraining.
 
 Hsd-es-id: 22014294888
 Original commit date: Wed Dec 29 22:58:51 2021 +0800
@@ -2212,7 +2180,7 @@ RSTe/VROC cannot be enable.
 
 [Resolution]
 Updating VROC FW to VROC_7.7.0.1273_PV
-Adding PCH device ID, and correcting RSTe string according to Server or Non-Server SKU
+Adding PCH device ID, and correcting RSTe string
 
 Hsd-es-id: 15010381400
 Original commit date: Tue Dec 21 11:53:03 2021 +0530
