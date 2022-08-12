@@ -1,0 +1,247 @@
+*********************************************************************************
+Commit: 35b8d9ab21172a082ac06c4bb702ba35bd1dbc5c 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL] "ClientOneSiliconPkg: Fix unsafe usage of external buffer""
+  
+  adding back the security fix 6766b6552c7c7f7f2359da398dbce4eecd0e4273 that was reverted earlier.
+  This reverts the revert commit 62b85fd6a3797c573d27f61eabe29b9a021455e1.
+  
+  Hsd-es-id: 18020908819, 16017513714
+  Change-Id: I36da0748714db71d4b44730584ce4735436b48a7
+  Original commit hash: 2452054aba96ee68bd573db1aac57dc01503cd92
+  
+  ClientOneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: b3f4fb8d6e9ce18d01aa09e4f079678cdcf3e8b7 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ADL-S | DDR5 | OC] Add OCSafeMode to control some OverClocking configs
+  
+  [Issue/Feature Description]
+  Some XMP memory modules use very aggressive timing parameters.
+  Memory training might fail. MRC uses workaround to tune them, such like
+  tCL. However, some special memory modules do work with such aggressive
+  configures.
+  
+  MRC need add a BIOS knob to control it.
+  
+  [Resolution]
+  Add OCSafeMode to control some OverClocking configs.
+  When OCSafeMode=1, MRC uses less aggressive configures.
+  By default, OCSafeMode=1.
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  ADL-S DDR5 DDR4 OC.
+  
+  Hsd-es-id: 13010017553
+  Change-Id: I4f5074e8c1bebbf088305e1012f6ae23ef08549a
+  Original commit hash: 63c8fc2df3ff63ca79b257d67fa625354089d174
+  
+  AlderLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  AlderLakeFspPkg/Upd/FspmUpd.dsc
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  AlderLakePlatSamplePkg/Setup/SaSetup.uni
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver2/MemoryConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 07a03311fea7aa111c8fbc1729b281fce1c2a97b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][22015524864][LPDDR5] Enable dynamic wck for LPDDR5 1R
+  
+  [Feature Description]
+  Enable dynamic wck for LPDDR5 1R
+  
+  [Resolution]
+  Enable dynamic wck by reverting MRC change 0.0.3.49
+  
+  [Impacted Platform]
+  LPDDR5
+  
+  Hsd-es-id: 22015524864
+  Change-Id: Iecc3978d2e465e803656a8167a4d0299159a6ae8
+  Original commit hash: aac511f74dbe161bd85d985bb0cd78595916159b
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: e24f5b84d8b7f3b102c76dd804fbd9b96ea1fdf3 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL-S | OC] Resequence training order at WarmReset and S3
+  
+  [Issue/Feature Description]
+  Users report hang at WarmReset when DMB or RMF is enabled and system
+  is running at high SAGV point.
+  
+  [Resolution]
+  During WarmReset, the training sequence of SAGV points might be
+  different from the one at ColdBoot. If WarmRset sequence is
+  Sagv point 1,2,4,3 or 2,3,4,1, MRC will not run training
+  for LastSaGvPoint or the MF_GV_1 steps.
+  
+  If sequence is 1,2,4,3, change it to 1,2,3,4;
+  If sequence is 2,3,4,1, change it to 4,3,2,1;
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  ADL-S RPL_S OC.
+  
+  Hsd-es-id: 22015463606,15011530240
+  Change-Id: I00235601d7dd1175af52759d44f6f0b26fca8703
+  Original commit hash: 8571fd08374524f0dddb99754976d9843bab984f
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: c1cf7a3aed34dfb7ced8284b136f5796e035fbb0 
+*********************************************************************************
+
+[CPU]
+
+  AlderLakePlatSamplePkg: [ADL] BIOS setup show Intel Turbo Boost Technology item in Performance page when disable "Intel SpeedStep & Intel Speed Shift Technology" on Intel Pentium SKU.
+  
+  Change logic to disable turbo mode if EIST and HWP are both disabled
+  
+  Hsd-es-id: 15011322570
+  Change-Id: I4ce469f3c228c4b45b55b9ba7603a611ebb49098
+  Original commit hash: 17038f006b8839b92ec580ab5a5fbd335367677b
+  
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PerformanceStates.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: b88a856a62749af6023021316cdb2bf09642385a 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [RPL]Support Ucode Resiliency Capsule update on RPL
+  [issue] The bgup uCode capsule is based on the Resiliency BIOS, the capsule generation tool does not support bgup uCode capsule on BKC BIOS
+  [solution] Move TopSwap control out of BGSL to FMP
+  
+  Hsd-es-id: 16016656596
+  Change-Id: If4b971cc458dc1ed98699325875de766263fb387
+  Original commit hash: 737cd11e6c6a29c97bb91d5792591f7ed320cba9
+  
+  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Library/FmpDeviceLibuCode/MicrocodeUpdate.c
+  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Tools/NewGenCap/NewGenCap.py
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: kc
+
+*********************************************************************************
+Commit: e13bf112f8a4d9357be0dda4f4815cdb2cef8c2b 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Support Ucode Resiliency Capsule update on RPL
+  
+  [issue] The bgup uCode capsule is based on the Resiliency BIOS, the capsule generation tool does not support bgup uCode capsule on BKC BIOS
+  
+  Hsd-es-id: 16016656596
+  Change-Id: I6751d2ffa668410f137d5d48d727070e605d05f8
+  Original commit hash: b5d418c70bdf8390ed5bfd8edd38bbdedac29e3f
+  
+  AlderLakePlatSamplePkg/Features/CapsuleUpdate/Tools/NewGenCap/NewGenCap.py
+  AlderLakePlatSamplePkg/capsulebuild.bat
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: kc
+
+*********************************************************************************
+Commit: a7911022d021de8b9457d656f9b3eaae5bf32adc 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ClientOneSiliconPkg/Fru/PeiDxeSmmPchInfoLib: Adding WM690 to supported PCHSKU list
+  
+  - Adding {V_ADL_PCH_S_LPC_CFG_DEVICE_ID_MB_13, "WM690"}, to mSkuStrs []
+  
+  Hsd-es-id: 16016750290
+  Change-Id: I63b0dd3ebe93d5e968df8b3d6285e7b15edea137
+  Original commit hash: 0ca93f8d7d7ad049c67df213e13b29f1f5d6856b
+  
+  ClientOneSiliconPkg/Fru/AdlPch/Library/PeiDxeSmmPchInfoLib/PchInfoLibAdl.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 8 suspect commits for review 
+
+Warnings Found:
+  Commit: 35b8d9a    --Commit Message Contains Key Word: security
+  Commit: 35b8d9a    --Commit Message Contains Key Word: revert
+  Commit: b3f4fb8    --Commit Message Contains Key Word: Workaround
+  Commit: 07a0331    --Commit Message Contains Key Word: revert
+  Commit: e24f5b8    --Commit Message Contains Key Word: step
+  Commit: c1cf7a3    --Commit Message Contains Key Word: step
+  Commit: c1cf7a3    --Commit Message Contains Key Word: sku
+  Commit: c1cf7a3    --Commit Message Contains Key Word: HW
+  Commit: b88a856    --Commit Message Contains Key Word: kc
+  Commit: e13bf11    --Commit Message Contains Key Word: kc
+  Commit: a791102    --Commit Message Contains Key Word: sku
