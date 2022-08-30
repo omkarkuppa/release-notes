@@ -31,7 +31,7 @@ Commit: ee397398de0b63e65f2ca0d1b772dc133ff71fad
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:50:47 2022 +0800 
 -------------------------------------------------------------------------------- 
-[ADL-N] [FIVR WA] FIVR changes for Display flicker issue on EDP panel
+[PCH][FIVR] FIVR changes for Display flicker issue on EDP panel
 
 [Issue Description]
 When processor enters PKC C8 or deeper, a PCH PLL providing a reference clock to the processor
@@ -77,7 +77,7 @@ Date: Mon Aug 29 11:50:45 2022 +0800
 
 [Resolution]
 With rework of TCP1 as HDMI, GPPC_A20 should be set to NF1 by setup menu "intel advance>SA>display>DDI PORT 2".
-It is before PostMem phase, so we need to remove GPIO configuire of GPPC_A20 in PostMem phase in order not
+It is before PostMem phase, so we need to remove GPIO configure of GPPC_A20 in PostMem phase in order not
 to override the configure of setup menu.
 Its default configure has been done in PreMem GPIO configure table.
 
@@ -102,8 +102,7 @@ Date: Mon Aug 29 11:50:43 2022 +0800
 -------------------------------------------------------------------------------- 
 [RPL-S]keep debug config data only in debug BIOS
 
-1. Change DEBUG_CODE_BEGIN to macro MDEPKG_NDEBUG in PeiSetupInitLib.c, because PlatformInitPreMem.inf is linked to BaseDebugLibNull.inf in Resiliency BIOS brought by this commit 88a2376d2f976e1c08ee50e5c053c18cee688d23
-2. revert commit 4f892d1b4fd3741087abf75dd32acfdcf2244e46
+Change DEBUG_CODE_BEGIN to macro MDEPKG_NDEBUG in PeiSetupInitLib.c, because PlatformInitPreMem.inf is linked to BaseDebugLibNull.inf in Resiliency BIOS 
 
 Hsd-es-id: 16017467435
 Original commit date: Mon Aug 15 13:03:58 2022 +0800
@@ -202,7 +201,7 @@ Commit: fb98624cb64bc5c4667086c8f27e46c41cfdf8ef
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:50:38 2022 +0800 
 -------------------------------------------------------------------------------- 
-Free allocated memory in SMRAM for all paths
+[PCH][SPI] Free allocated memory in SMRAM for all paths
 
 [Issue Description]
 During SPI calls through SMM to make our code hardened against TOCTOU
@@ -410,13 +409,12 @@ Commit: 4e70d3454bd5243bd50f49ea378e499e52c92c16
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:50:18 2022 +0800 
 -------------------------------------------------------------------------------- 
-Revert "[bug][ADL-S-BGA][FXVL onboard][vPro]FXVL gets an FW reset when platform restarts with KVM session"
+Revert "[PCH][GPIO] FXVL gets an FW reset when platform restarts with KVM session"
 
 [Issue Description]
-[ADL-SBGA][Automation][BIOS][Regression]:SUT is getting hang at PC:00E1 while wake from S3 cycle through ICT tool version(1.19.1002) with Bios version 3253_00_311
+[ADL-SBGA] SUT is getting hang at PC:00E1 while wake from S3 cycle through ICT tool version(1.19.1002) with Bios version 3253_00_311
 
 [Resolution]
-This reverts commit 5f61598800766544a44e55e7b5fb028a5615a851.
 
 Package/Module:
 
@@ -625,7 +623,7 @@ Commit: 69566800050b6b5211023af4d36d81f085d1d399
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:50:00 2022 +0800 
 -------------------------------------------------------------------------------- 
-USB programming updates
+[PCH] USB programming updates
 
 [Feature Description]
 After replugging dock with USB hub equipped for multiple times
@@ -1165,7 +1163,7 @@ Commit: ef8637a863f5e2e6b85a6dd5a78c3132de92cc14
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:49:15 2022 +0800 
 -------------------------------------------------------------------------------- 
-Request for THC recovery flow when THC is unresponsive with stall bit set.
+[PCH] Request for THC recovery flow when THC is unresponsive with stall bit set.
 
 [Issue Description]
 Quick SPI stalls when it cannot read data in time as TPL is taken over by some other IP.
@@ -1521,15 +1519,15 @@ Commit: a70773209df39f9c9866c97e0f6f9306c462f8ed
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:48:44 2022 +0800 
 -------------------------------------------------------------------------------- 
-[RPL-S CPU/ADL-S PCH][WM RPL CSLP]
+[RPL-S CPU/ADL-S PCH]
 The system intermittently wake up S4 mode with
 Graphics card (FR:2/5).
 
 [Issue Description]
-Call ClearPcieSciForCpuRp API for external builds.
+Call ClearPcieSciForCpuRp API.
 
 [Resolution]
-Call ClearPcieSciForCpuRp API for external builds.
+Call ClearPcieSciForCpuRp API.
 
 Package/Module:
 CpuPcieRp
@@ -1734,7 +1732,7 @@ Commit: 81669c744bddc10848d9d683803c73ce2c6deb7c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:48:29 2022 +0800 
 -------------------------------------------------------------------------------- 
-[RPL-SBGA] TCSS: Type-C display does not enumerate correctly
+[PCH][GPIO][RPL-SBGA] TCSS: Type-C display does not enumerate correctly
 
 [Issue Description]
 When selecting "Runtime Switch" option for DP Mux, it is observed that:
@@ -1843,7 +1841,7 @@ Commit: 03094a6e0bc541bdcd42bdb3368ff0a5f005215b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:48:22 2022 +0800 
 -------------------------------------------------------------------------------- 
-BT lost after S3_S4 mixed test when BT is disabled in device manager
+[PCH] BT lost after S3_S4 mixed test when BT is disabled in device manager
 
 [Issue Description]
 BT device lost in device manager after system run S3_S4 mixed testing when BT is disabled in device manager
@@ -2132,7 +2130,7 @@ Commit: 58d6a1e8a930ee51c09bece6a54c39903930cb9f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:47:55 2022 +0800 
 -------------------------------------------------------------------------------- 
-[RPL-P][HSIO]Set GPIO GPP_A6 to High
+[PCH][RPL-P][HSIO] Set GPIO GPP_A6 to High
 
 [Feature Description]
 In RPL-P HSIO RVP, GPP_A6 as X4_PCIE_SLOT3_PWR_EN to HIGH in default.
@@ -2417,16 +2415,13 @@ Commit: 36f59757b028800cd0224415e81d34167b30cb86
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:47:28 2022 +0800 
 -------------------------------------------------------------------------------- 
-[CTL] Resolve GPIO Errors reported during the Boot
+[PCH] Code clean up
 
 [Issue/Feature Description]
-- GPP_C0, C1 shouldnt be programmed by BIOS since they are owned by SPS
-- GPP_C18, GPP_C19 and GPP_H5 owned by Host
 
 Package/Module:CatlowBoardPkg/CatlowBoards
 
 [Impacted Platform]
-Catlow
 
 Hsd-es-id: 16017456897
 Original commit date: Thu Jul 28 17:26:06 2022 +0530
@@ -2522,7 +2517,7 @@ Commit: 9caee0ca47a24f3ddea1f217802351007d84c691
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:47:16 2022 +0800 
 -------------------------------------------------------------------------------- 
-Update DID strings for SBGA SKUs.
+[PCH] Update DID strings for SBGA SKUs.
 
 [Issue/Feature Description]
 Without correct string it shows as unknown SKU.
@@ -2595,7 +2590,7 @@ Commit: bde30b5f01cdf46530ea11bf4b84574dbd48872f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:47:12 2022 +0800 
 -------------------------------------------------------------------------------- 
-[RPL-P][LP5][DDR5]GPP_R_6 as Wake pad of PCH X4 slot
+[PCH][RPL-P][LP5][DDR5] GPP_R_6 as Wake pad of PCH X4 slot
 
 [Feature Description]
 PCIe X4_slot wake signal(X4_PCIE_SLOT_WAKE_N) is changed to GPP_R6 on RVP.
@@ -2630,7 +2625,7 @@ Date: Mon Aug 29 11:47:09 2022 +0800
 -------------------------------------------------------------------------------- 
 AlderLakeFspPkg: Export IccLimit and EnableFastVmode UPDs
 
-Export `IccLimit' and `EnableFastVmode' UPDs to in the FSP partial
+Export 'IccLimit' and 'EnableFastVmode' UPDs to in the FSP partial
 headers to allow coreboot to enable and configure the FastVMode
 feature.
 
@@ -2812,13 +2807,12 @@ Commit: e8ea2e6d31de7a6f624c163d18889ca2063bc21c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:46:45 2022 +0800 
 -------------------------------------------------------------------------------- 
-Update restricted tags for RPL. ACX support should be included only in RPL ext builds.
+[PCH] Add ACX support for RPL
 
 [Issue/Feature Description]
-ACX support in not present in RPL ext bulds.
+ACX support is not present in RPL bulds.
 
 [Resolution]
-Use RPL:RestrictedTags insted of ACPI:RestrictedTags or PCH:RestrictedTags.
 
 Package/Module:
 
@@ -3054,14 +3048,11 @@ Commit: d24171fe4439f108f97777c0ab6ab9f3e049f47c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:46:22 2022 +0800 
 -------------------------------------------------------------------------------- 
-ACX support for internal validation
+[PCH] Refactoring HDA ACPI code
 
 [Issue/Feature Description]
-Audio funciton 1 for ALC711 is included in ALC714 scope.
 
 [Resolution]
-Fix inlcude path for ALC714.
-Update SSID list.
 
 Package/Module:
 AlderLakeBoardPkg
@@ -3130,7 +3121,7 @@ Commit: 8e4fa2b1951bc65ff65c654fd5e1e4c8aea31d24
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:46:16 2022 +0800 
 -------------------------------------------------------------------------------- 
-[RPL-HX Mobile AEP] PO learning changes.
+[RPL-HX Mobile AEP] Add Power meter Support
 
 [Issue/Feature Description]
 Added power meter support changes.
@@ -3234,7 +3225,7 @@ Commit: 0f0ed3fb374f5c107cf61ec5ab594ffbaa44d0f0
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:46:08 2022 +0800 
 -------------------------------------------------------------------------------- 
-[RPL-HX-Mobile-AEP] [PO learning]: Battery icon missing due to override in PeiInitPostMemLib.c
+[RPL-HX-Mobile-AEP] Battery icon missing due to override in PeiInitPostMemLib.c
 
 [Issue/Feature Description]
 Battery icon missing due to override in PeiInitPostMemLib.c
@@ -3305,10 +3296,10 @@ Commit: 0b0aedd5d8bda337d2c092f5869393d77dd7209e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:46:03 2022 +0800 
 -------------------------------------------------------------------------------- 
-PCH reads undefined in BIOS page under PCH information.
+[PCH] PCH reads undefined in BIOS page under PCH information.
 
 [Issue/Feature Description]
-RPL-Hx B1 Production PCH reads undefined
+RPL-Hx Production stepping PCH reads undefined
 in BIOS page under PCH information
 
 [Resolution]
@@ -3767,7 +3758,7 @@ Commit: 4eae04be0276652ae3791fcb06fd48e7692e7a45
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Aug 29 11:45:26 2022 +0800 
 -------------------------------------------------------------------------------- 
-[RPL-HX Mobile AEP] Add Smart C Cover support.
+[PCH] Add Smart C Cover support.
 
 [Issue/Feature Description]
 Added changes for Smart C Cover support.
