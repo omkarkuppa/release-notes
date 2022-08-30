@@ -33,16 +33,6 @@ Date: Tue Aug 30 11:10:30 2022 +0530
 -------------------------------------------------------------------------------- 
 [ADL-N] [FIVR WA] FIVR changes for Display flicker issue on EDP panel
 
-[Issue Description]
-When processor enters PKC C8 or deeper, a PCH PLL providing a reference clock to the processor
-may introduce a clocking issue that disrupts the eDP interface clocking subsystem.
-When this issue occurs, a voltage variation on VCC1p05_OUT_FET is observed
-
-[Resolution]
-BIOS implementation for this WA
-- Disable External 1.05V VR in S0 by disabling ExternalV1p05StateEnable[5] knob.
-- BIOS to send mailbox command (cmd(2b) and sub-command(11)) when "VCCST ICCMax Control" knob is enabled.
-
 [Impacted Platform]
 ADL-N.
 
@@ -72,9 +62,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Tue Aug 30 11:10:25 2022 +0530 
 -------------------------------------------------------------------------------- 
 [RPL-S]keep debug config data only in debug BIOS
-
-1. Change DEBUG_CODE_BEGIN to macro MDEPKG_NDEBUG in PeiSetupInitLib.c, because PlatformInitPreMem.inf is linked to BaseDebugLibNull.inf in Resiliency BIOS brought by this commit 88a2376d2f976e1c08ee50e5c053c18cee688d23
-2. revert commit 4f892d1b4fd3741087abf75dd32acfdcf2244e46
 
 Hsd-es-id: 16017467435
 Original commit date: Mon Aug 15 13:03:58 2022 +0800
@@ -138,22 +125,8 @@ Date: Tue Aug 30 11:10:17 2022 +0530
 -------------------------------------------------------------------------------- 
 [C1S] Fix HWP OOB BSOD issue & Dmesg command ACPI error
 
-[Issue/Feature Description]
-There is a ACPI BIOS Error: AE_AML_PACKAGE_LIMIT, Index (0x000000016) is
-beyond end of object.
-The issue was caused by the 1f3c62324008299da6190fb57caca2dcc5d5ac38, it
-changed the ACPI CPOC package to version 2, thus leading to the beyond end
-of object index override.
-
 [Resolution]
 This reverts commit 1f3c62324008299da6190fb57caca2dcc5d5ac38.
-
-For HWP OOB support, the HWP OOB Mode option enables HWP to run completely
-independent of the OS. ACPI objects that describe capabilities and interfaces
-for frequency control are not exposed to the OS.
-
-Package/Module:
-ClientOneSiliconPkg/Cpu/AcpiTables
 
 Hsd-es-id: 16017468568
 Original commit date: Thu Aug 11 13:23:44 2022 +0800
@@ -434,10 +407,11 @@ Commit: 15c6289edf99b0adebc57f0184c2b5f45e58aecd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 30 11:09:39 2022 +0530 
 -------------------------------------------------------------------------------- 
-Revert "[bug][ADL-S-BGA][FXVL onboard][vPro]FXVL gets an FW reset when platform restarts with KVM session"
+Revert "[ADL-S-BGA][FXVL onboard][vPro]FXVL gets an FW reset when platform restarts with KVM session"
 
 [Issue Description]
-[ADL-SBGA][Automation][BIOS][Regression]:SUT is getting hang at PC:00E1 while wake from S3 cycle through ICT tool version(1.19.1002) with Bios version 3253_00_311
+[ADL-SBGA][Automation][BIOS]:SUT is getting hang at PC:00E1 while wake from S3 cycle 
+through ICT tool version(1.19.1002) with Bios version 3253_00_311
 
 [Resolution]
 This reverts commit 5f61598800766544a44e55e7b5fb028a5615a851.
@@ -463,15 +437,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Tue Aug 30 11:09:36 2022 +0530 
 -------------------------------------------------------------------------------- 
 Add new board ID for LP5x Memory Combo device
-
-[Feature Description]
-Add support for new ADL-N Lp5x MC board
-Board ID allocated: 0x20
-
-[Resolution]
-Added board Id and other details needed to support new board.
-
-Package/Module: AlderLakeBoardPkg, AlderLakePlatSamplePkg
 
 [Impacted Platform]
 ADL-N
@@ -563,13 +528,7 @@ Commit: 0ad188a9e7e9121345f33f2ffa2d727ea24b70e5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 30 11:09:24 2022 +0530 
 -------------------------------------------------------------------------------- 
-Change the DDR5 write leveling internal cycle alignment sweep range to 16.
-
-[Feature Description]
-Change the DDR5 write leveling internal cycle alignment sweep range to 16.
-
-[Resolution]
-Change the DDR5 write leveling internal cycle alignment sweep range to 16.
+Change the DDR5 write leveling cycle alignment sweep range to 16.
 
 Package/Module: MRC
 
@@ -1715,10 +1674,7 @@ BT device lost in device manager after system run S3_S4 mixed testing when BT is
 
 [Resolution]
 Toggle BT RF kill pin if CNVi USB BT port is connected but disabled.
-If toggle time is 0, skip this step.
-
-Package/Module:
-PlatformPkg/CNVi
+If toggle time is 0, skip it.
 
 [Impacted Platform]
 ADL, RPL
@@ -1744,14 +1700,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Tue Aug 30 11:05:47 2022 +0530 
 -------------------------------------------------------------------------------- 
 Enabling EET (Energy Efficient Turbo) feature from BIOS
-
-[Feature Description]
-Enabling this feature is improving the fan noise acoustics in lower watt SKUs (35 W and 125 W); No regression in perf KPIs or turbo frequency seen with performance and balanced modes (till EPP33).
-
-[Resolution]
-Enabling EET (Energy Efficient Turbo) feature from BIOS
-
-Package/Module:
 
 [Impacted Platform]
 ALL
@@ -1928,9 +1876,7 @@ Commit: f422ec7762ae6dc8add011aaabd30bbc609f3267
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 30 11:05:17 2022 +0530 
 -------------------------------------------------------------------------------- 
-[ADLN][LP5 MemSkt][2starC1] DP Display is not enumerating when move from 8GB to 6GB RAM
-
-Rectifying incorrect SkuId mapping for ADL-N 6G board.
+[ADLN][LP5 MemSkt] DP Display is not enumerating when move from 8GB to 6GB RAMs
 
 Hsd-es-id: 22015383361
 Original commit date: Mon Aug 1 18:03:59 2022 +0530
@@ -2472,19 +2418,6 @@ Date: Tue Aug 30 11:03:16 2022 +0530
 -------------------------------------------------------------------------------- 
 [ADL-S | DDR5 | OC] Add OCSafeMode to control some OverClocking configs
 
-[Issue/Feature Description]
-Some XMP memory modules use very aggressive timing parameters.
-Memory training might fail. MRC uses workaround to tune them, such like
-tCL. However, some special memory modules do work with such aggressive
-configures.
-
-MRC need add a BIOS knob to control it.
-
-[Resolution]
-Add OCSafeMode to control some OverClocking configs.
-When OCSafeMode=1, MRC uses less aggressive configures.
-By default, OCSafeMode=1.
-
 Package/Module:
 
 [Impacted Platform]
@@ -2602,15 +2535,7 @@ Commit: 45066822af1c24a0beb7fc1fd1b16dbfb25e640e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 30 11:02:38 2022 +0530 
 -------------------------------------------------------------------------------- 
-Update restricted tags for RPL. ACX support should be included only in RPL ext builds.
-
-[Issue/Feature Description]
-ACX support in not present in RPL ext bulds.
-
-[Resolution]
-Use RPL:RestrictedTags insted of ACPI:RestrictedTags or PCH:RestrictedTags.
-
-Package/Module:
+Update tags for RPL. ACX support should be included only in RPL builds.
 
 [Impacted Platform]
 All
@@ -3232,10 +3157,9 @@ Commit: 3859500e46388d75e5bf5922aeea6c197a1e9bd5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 30 11:00:34 2022 +0530 
 -------------------------------------------------------------------------------- 
-[RPL-S][SWCM Ver2] BIOS to skip lanes bonding for Gen4 to support Barlow Ridge
-
-When USB4 link is in Gen4 mode, bonding is done automatically by HW,
-hence CM is not required to do the bonding
+[RPL-S][SWCM Ver2]
+  When USB4 link is in Gen4 mode, bonding is done automatically by HW,
+  hence CM is not required to do the bonding.
 
 Hsd-es-id: 15010571338
 Original commit date: Wed Jun 1 17:24:13 2022 +0800
@@ -3723,7 +3647,7 @@ Commit: f4532d3b21a2c79a1e48d24d8e44b2111cc3c549
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Aug 30 10:58:48 2022 +0530 
 -------------------------------------------------------------------------------- 
-Revert "[ADLN][LP5 MemSkt][2starC1] DP Display is not enumerating when move from 8GB to 6GB RAM"
+Revert "[ADLN][LP5 MemSkt] DP Display is not enumerating when move from 8GB to 6GB RAM"
 
 This reverts commit 568e8db58fd7da12d8d0980ca45cbd3e2d1f77a2.
 Reverting this dot label commit for main line label release.
