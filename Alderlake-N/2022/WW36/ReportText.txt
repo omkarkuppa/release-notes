@@ -1,0 +1,700 @@
+*********************************************************************************
+Commit: f9aeba539c02db60b978d20829bcff1d0e97c25e 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg], [PCH]
+
+  [ADL-N] [FIVR WA] FIVR changes for Display flicker issue on EDP panel
+  
+  [Issue Description]
+  When processor enters PKC C8 or deeper, a PCH PLL providing a reference clock to the processor
+  may introduce a clocking issue that disrupts the eDP interface clocking subsystem.
+  When this issue occurs, a voltage variation on VCC1p05_OUT_FET is observed
+  
+  [Resolution]
+  BIOS implementation for this WA
+  - Disable External 1.05V VR in S0 by disabling ExternalV1p05StateEnable[5] knob.
+  - BIOS to send mailbox command (cmd(2b) and sub-command(11)) when "VCCST ICCMax Control" knob is enabled.
+  
+  [Impacted Platform]
+  ADL-N.
+  
+  Hsd-es-id: 16017742782
+  Change-Id: I31c4003ef6d696efc0a3cc31e04aea766a2cf14f
+  Original commit hash: 0064dc18c442669c007b1c77acbfd1b5ceb186de
+  
+  AlderLakeBoardPkg/AlderLakeNBoards/Include/AlderLakeNRvpBoardConfigPatchTable.h
+  AlderLakeFspPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+  AlderLakeFspPkg/Upd/FspsUpd.dsc
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+  AlderLakePlatSamplePkg/Setup/PchSetup.uni
+  AlderLakePlatSamplePkg/Setup/PmcFivrSetup.hfr
+  ClientOneSiliconPkg/Include/ConfigBlock/Fivr/FivrConfig.h
+  ClientOneSiliconPkg/Include/Library/CpuMailboxLib.h
+  ClientOneSiliconPkg/IpBlock/Pmc/LibraryPrivate/PeiPmcPrivateLib/PeiPmcPrivateLibFivr.c
+  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PchPrintPolicy.c
+  ClientOneSiliconPkg/Pch/Library/PeiPchPolicyLib/PeiPchPolicyLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: kc
+
+*********************************************************************************
+Commit: 96ee85231ffe55bd4630c0a5091b0fe7e0255cc1 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [RPL-S]keep debug config data only in debug BIOS
+  
+  1. Change DEBUG_CODE_BEGIN to macro MDEPKG_NDEBUG in PeiSetupInitLib.c, because PlatformInitPreMem.inf is linked to BaseDebugLibNull.inf in Resiliency BIOS brought by this commit 88a2376d2f976e1c08ee50e5c053c18cee688d23
+  2. revert commit 4f892d1b4fd3741087abf75dd32acfdcf2244e46
+  
+  Hsd-es-id: 16017467435
+  Change-Id: Ieb0748c9ac31847cb77608faa636169cdb2f02b0
+  Original commit hash: edce2b3aa28a9cb585e72d205efa23c07e8124b2
+  
+  AlderLakeBoardPkg/Features/Setup/Library/PeiSetupInitLib/PeiSetupInitLib.c
+  AlderLakePlatSamplePkg/Include/Setup.h
+  AlderLakePlatSamplePkg/Setup/Advanced.vfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 54130ccf29fb94e31f8287b41ab0cc97d6e4b6c3 
+*********************************************************************************
+
+[CPU], [ASL]
+
+  [C1S] Fix HWP OOB BSOD issue & Dmesg command ACPI error
+  
+  [Issue/Feature Description]
+  There is a ACPI BIOS Error: AE_AML_PACKAGE_LIMIT, Index (0x000000016) is
+  beyond end of object.
+  The issue was caused by the 1f3c62324008299da6190fb57caca2dcc5d5ac38, it
+  changed the ACPI CPOC package to version 2, thus leading to the beyond end
+  of object index override.
+  
+  [Resolution]
+  This reverts commit 1f3c62324008299da6190fb57caca2dcc5d5ac38.
+  
+  For HWP OOB support, the HWP OOB Mode option enables HWP to run completely
+  independent of the OS. ACPI objects that describe capabilities and interfaces
+  for frequency control are not exposed to the OS.
+  
+  Package/Module:
+  ClientOneSiliconPkg/Cpu/AcpiTables
+  
+  Hsd-es-id: 16017468568
+  Change-Id: I5af8bbc5e5b6805a678bc43e0057755b04df6360
+  Original commit hash: ff06c17d191b7ac81e06f411b18d270748c92b94
+  
+  ClientOneSiliconPkg/Cpu/AcpiTables/CpuSsdt/Cpu0Hwp.asl
+  ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuAcpi.c
+  ClientOneSiliconPkg/Cpu/IncludePrivate/CpuInitDataHob.h
+  ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuPowerMgmtLib/PowerMgmtInitPeim.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 15c6289edf99b0adebc57f0184c2b5f45e58aecd 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Revert "[bug][ADL-S-BGA][FXVL onboard][vPro]FXVL gets an FW reset when platform restarts with KVM session"
+  
+  [Issue Description]
+  [ADL-SBGA][Automation][BIOS][Regression]:SUT is getting hang at PC:00E1 while wake from S3 cycle through ICT tool version(1.19.1002) with Bios version 3253_00_311
+  
+  [Resolution]
+  This reverts commit 5f61598800766544a44e55e7b5fb028a5615a851.
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  ADL-SBGA
+  
+  Hsd-es-id: 16017029138
+  Change-Id: I9a1a948e76608357fd5d0cf4a0f430e09fbda5ef
+  Original commit hash: d1e93f77b648151d13ca86a4c8a809ffe99ff8a0
+  
+  AlderLakeBoardPkg/SBCVpdStructurePcd/GpioTableAdlSPostMem.dsc
+  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: bd83873bc119230dbd910a29e5d37362a72bde9b 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  Add new board ID for LP5x Memory Combo device
+  
+  [Feature Description]
+  Add support for new ADL-N Lp5x MC board
+  Board ID allocated: 0x20
+  
+  [Resolution]
+  Added board Id and other details needed to support new board.
+  
+  Package/Module: AlderLakeBoardPkg, AlderLakePlatSamplePkg
+  
+  [Impacted Platform]
+  ADL-N
+  
+  Hsd-es-id: 15011704073
+  Change-Id: I7bd0f5c12aa4d908fa21b16303066f77c25d2415
+  Original commit hash: 13046f5bbbc91f617106a70fba116d3c35ad28ad
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PowerMeterAdlN.asl
+  AlderLakeBoardPkg/AlderLakeNBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  AlderLakeBoardPkg/AlderLakeNBoards/BoardVpdPcdsInit/SkuIdAdlNLp5RvpMC.dsc
+  AlderLakeBoardPkg/AlderLakeNBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  AlderLakeBoardPkg/AlderLakeNBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  AlderLakeBoardPkg/AlderLakeNBoards/Library/BoardInitLib/Pei/PeiDetect.c
+  AlderLakeBoardPkg/AlderLakeNBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  AlderLakeBoardPkg/AlderLakeNBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  AlderLakeBoardPkg/BoardPkg.dsc
+  AlderLakeBoardPkg/Include/PlatformBoardId.h
+  AlderLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+  AlderLakeBoardPkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+  AlderLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiSaPolicyBoardConfig.c
+  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 0ad188a9e7e9121345f33f2ffa2d727ea24b70e5 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Change the DDR5 write leveling internal cycle alignment sweep range to 16.
+  
+  [Feature Description]
+  Change the DDR5 write leveling internal cycle alignment sweep range to 16.
+  
+  [Resolution]
+  Change the DDR5 write leveling internal cycle alignment sweep range to 16.
+  
+  Package/Module: MRC
+  
+  [Impacted Platform]
+  DDR5
+  
+  Hsd-es-id: 15011755974
+  Change-Id: Ic7a4ef38d03155cd0116c9f2c95c90acf896716c
+  Original commit hash: 65c7ea437f5c8881211ec634d13dd41152713ab2
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 2ad25663448dc822a180edf02052dbb7668ae7d5 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ADL | DDR5] Zero MR23 data during DDR5 hPPR execution
+  
+  [Issue Description]
+  There is an illegal MR23 issue. When MR23 OP[2] is set to 1 during MRR,
+  sPPR/hPPR will not be executed correctly.
+  
+  [Resolution]
+  Set MR23 data to zero before setting hPPR or sPPR bit. This ensures only one
+  bit is nonzero.
+  
+  Package/Module: MRC
+  
+  [Impacted Platform]
+  ALL DDR5 when PPR enabled
+  
+  Hsd-es-id: 15011631856
+  Change-Id: I94d77767c08936a6afe1604be72e40034e17362c
+  Original commit hash: ac454694fbaf4f5069eb952b338447abae991c3f
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+*********************************************************************************
+Commit: 4be416ce12bc4aae2c6f79a115515f41e3964715 
+*********************************************************************************
+
+[PlatformPkg], [PCH]
+
+  BT lost after S3_S4 mixed test when BT is disabled in device manager
+  
+  [Issue Description]
+  BT device lost in device manager after system run S3_S4 mixed testing when BT is disabled in device manager
+  
+  [Resolution]
+  Toggle BT RF kill pin if CNVi USB BT port is connected but disabled.
+  If toggle time is 0, skip this step.
+  
+  Package/Module:
+  PlatformPkg/CNVi
+  
+  [Impacted Platform]
+  ADL, RPL
+  
+  Hsd-es-id: 15011672837
+  Change-Id: I851bde3b7c43dfb107529fe5094aa722a72947cf
+  Original commit hash: b98595702c3cde119bd019ec69c7bc7b5a8e716e
+  
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
+  AlderLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.inf
+  AlderLakePlatSamplePkg/Setup/ConnectivitySetup.hfr
+  AlderLakePlatSamplePkg/Setup/ConnectivitySetup.uni
+  ClientOneSiliconPkg/Fru/AdlPch/Library/PeiDxeSmmPchInfoLib/PchInfoLibAdl.c
+  ClientOneSiliconPkg/Pch/Include/Library/PchInfoLib.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: bf9e20f4f023d63e16d103f09931097fb5eaa77a 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg], [CPU]
+
+  Enabling EET (Energy Efficient Turbo) feature from BIOS
+  
+  [Feature Description]
+  Enabling this feature is improving the fan noise acoustics in lower watt SKUs (35 W and 125 W); No regression in perf KPIs or turbo frequency seen with performance and balanced modes (till EPP33).
+  
+  [Resolution]
+  Enabling EET (Energy Efficient Turbo) feature from BIOS
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15011672681
+  Change-Id: Ibd654aa296f120408cf4aeed57cccb9dbfbcc7cd
+  Original commit hash: 2b45067723d9554d68e03f8c8053b6f759a0523e
+  
+  AlderLakeBoardPkg/AlderLakeMBoards/Include/AlderLakeMRvpBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakeNBoards/Include/AlderLakeNRvpBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakePBoards/Include/AlderLakePRvpBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakeSBoards/Include/AlderLakeSBoardConfigPatchTable.h
+  AlderLakeBoardPkg/AlderLakeUSimicsBoards/Include/AlderLakePBoardConfigPatchTable.h
+  AlderLakeFspPkg/Upd/FspsUpd.dsc
+  AlderLakePlatSamplePkg/Setup/CpuSetup.hfr
+  ClientOneSiliconPkg/Cpu/Library/PeiCpuPolicyLib/PeiCpuPolicyLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 00e3e997291f868392726009960c07a858fd22b7 
+*********************************************************************************
+
+[PlatformPkg]
+
+  RPE: Do not register RPE_PYRITE_REVERT capbility now
+  
+  [Issue Description]
+  MeshCommander will show RPE "Pyrite Revert" option,
+  if user select it and will find does not do "Pyrite Revert" at last.
+  
+  [Resolution]
+  The RPE_PYRITE_REVERT is supported in RPE_SECURE_ERASE_ALL_SSD now,
+  so this capbility should not be registered any more,
+  then MeshCommander will not show this option.
+  And also remove the define of RPE_PYRITE_REVERT.
+  
+  Package/Module: AlderLakePlatSamplePkg/Features/Rpe/
+  
+  [Impacted Platform]
+  RPL-S/SBGA, RPL-P.
+  
+  Hsd-es-id: 16017448511
+  Change-Id: I4b6a70da88974b4ced775d96987e9a2b93939518
+  Original commit hash: 51318d549648570b6e1cf2ea0c272a40042e65a4
+  
+  AlderLakePlatSamplePkg/Features/Rpe/Include/RemotePlatformErase.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: f422ec7762ae6dc8add011aaabd30bbc609f3267 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ADLN][LP5 MemSkt][2starC1] DP Display is not enumerating when move from 8GB to 6GB RAM
+  
+  Rectifying incorrect SkuId mapping for ADL-N 6G board.
+  
+  Hsd-es-id: 22015383361
+  Change-Id: Ica564a9467884302e3fc75325f3c554a0745724d
+  Original commit hash: f44220b65a5bd24193d42c1d90126cec85e4486f
+  
+  AlderLakeBoardPkg/AlderLakeNBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  AlderLakeBoardPkg/AlderLakeNBoards/BoardVpdPcdsInit/SkuIdAdlNLp5Rvp6G.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 903244af72887236df85858f02aa6e6b29376320 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Update DID strings for SBGA SKUs.
+  
+  [Issue/Feature Description]
+  Without correct string it shows as unknown SKU.
+  
+  [Resolution]
+  Added required strings for SKUs.
+  
+  Package/Module: ClientOneSiliconPkg/Fru/AdlPch
+  
+  [Impacted Platform]
+  SBGA
+  
+  Hsd-es-id: 16017450533
+  Change-Id: I53ba165057940586c913e2d5c0a1057c37f368de
+  Original commit hash: 3b81dfa0a7d44de485a1fa81c4c8d651d61d0199
+  
+  ClientOneSiliconPkg/Fru/AdlPch/IncludePrivate/Register/PchRegsLpcAdl.h
+  ClientOneSiliconPkg/Fru/AdlPch/Library/PeiDxeSmmPchInfoLib/PchInfoLibAdl.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 2bee953f599d9615d40687563ce9cd78ca4678cd 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ADL-S | DDR5 | OC] Add OCSafeMode to control some OverClocking configs
+  
+  [Issue/Feature Description]
+  Some XMP memory modules use very aggressive timing parameters.
+  Memory training might fail. MRC uses workaround to tune them, such like
+  tCL. However, some special memory modules do work with such aggressive
+  configures.
+  
+  MRC need add a BIOS knob to control it.
+  
+  [Resolution]
+  Add OCSafeMode to control some OverClocking configs.
+  When OCSafeMode=1, MRC uses less aggressive configures.
+  By default, OCSafeMode=1.
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  ADL-S DDR5 DDR4 OC.
+  
+  Hsd-es-id: 13010017553
+  Change-Id: I4f5074e8c1bebbf088305e1012f6ae23ef08549a
+  Original commit hash: 563d496b6256f4119494f4ae23548f2a96149e7f
+  
+  AlderLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  AlderLakeFspPkg/Upd/FspmUpd.dsc
+  AlderLakePlatSamplePkg/Include/SetupVariable.h
+  AlderLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+  AlderLakePlatSamplePkg/Setup/SaSetup.uni
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver2/MemoryConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/Library/PeiMemPolicyLib/PeiMemPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 45066822af1c24a0beb7fc1fd1b16dbfb25e640e 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  Update restricted tags for RPL. ACX support should be included only in RPL ext builds.
+  
+  [Issue/Feature Description]
+  ACX support in not present in RPL ext bulds.
+  
+  [Resolution]
+  Use RPL:RestrictedTags insted of ACPI:RestrictedTags or PCH:RestrictedTags.
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 18023189278
+  Change-Id: I10a80df2413c7a68e233418646f5948320c55628
+  Original commit hash: a7397444681e38642bc8ca2ea27d1846b30c1933
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  AlderLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  AlderLakePlatSamplePkg/Setup/PchSetup.hfr
+  AlderLakePlatSamplePkg/Setup/PchSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: 0160e427b6bb41625357fbf53577ba062e510fcb 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  ACX support for internal validation
+  
+  [Issue/Feature Description]
+  Audio funciton 1 for ALC711 is included in ALC714 scope.
+  
+  [Resolution]
+  Fix inlcude path for ALC714.
+  Update SSID list.
+  
+  Package/Module:
+  AlderLakeBoardPkg
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 18023189278
+  Change-Id: Ifa65deb23419bf1886800ad84a964c6578922f64
+  Original commit hash: 23192e7a89ff2df22f2326768246beacaf203d04
+  
+  AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/HdaSoundWireDev/HdaSoundWireDev.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 3859500e46388d75e5bf5922aeea6c197a1e9bd5 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [RPL-S][SWCM Ver2] BIOS to skip lanes bonding for Gen4 to support Barlow Ridge
+  
+  When USB4 link is in Gen4 mode, bonding is done automatically by HW,
+  hence CM is not required to do the bonding
+  
+  Hsd-es-id: 15010571338
+  Change-Id: I806494b63a5a95190c74bc213f9d71f21cad5162
+  Original commit hash: f4a5a01c8cc1d606d8b7b1fdf3536445f2ad9c0c
+  
+  AlderLakePlatSamplePkg/Features/Usb4Cm/Include/Usb4Capabilities.h
+  AlderLakePlatSamplePkg/Features/Usb4Cm/Library/Usb4RtEnumLib/Usb4Adapter.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 29792f1c66d28c86ab3053067d9ff8188798f41d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ise][22015524864][LPDDR5] Enable dynamic wck for LPDDR5 1R
+  
+  [Feature Description]
+  Enable dynamic wck for LPDDR5 1R
+  
+  [Resolution]
+  Enable dynamic wck by reverting MRC change 0.0.3.49
+  
+  [Impacted Platform]
+  LPDDR5
+  
+  Hsd-es-id: 22015524864
+  Change-Id: Iecc3978d2e465e803656a8167a4d0299159a6ae8
+  Original commit hash: ade8ae8120609ae0773290e3f7f0a56e98646590
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 01cd8bcc295c7c1bfd80fca1f910a594f0312439 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[ADL-N]Updating BIOS ID to 3301"
+  
+  This reverts commit 378d0b4ce97c4a9e33fbd9b3306065a88315e268
+  Reverting this dot label commit for main line label release.
+  Original commit hash: ee92cceb64ab393c3c1e1046e66b1014aea89b3c
+  
+  AlderLakeBoardPkg/BiosId.env
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+*********************************************************************************
+Commit: f4532d3b21a2c79a1e48d24d8e44b2111cc3c549 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[ADLN][LP5 MemSkt][2starC1] DP Display is not enumerating when move from 8GB to 6GB RAM"
+  
+  This reverts commit 568e8db58fd7da12d8d0980ca45cbd3e2d1f77a2.
+  Reverting this dot label commit for main line label release.
+  
+  Wed Aug 17 00:36:59 2022 -0700
+  Original commit hash: 7c0bf567ded1f4bb0d6eb20bfc21600fed51429a
+  
+  AlderLakeBoardPkg/AlderLakeNBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  AlderLakeBoardPkg/AlderLakeNBoards/BoardVpdPcdsInit/SkuIdAdlNLp5Rvp6G.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 18ace22dc94b80fe474e56b2a03e70a57ff6fac2 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "Integrate ADLP GOP V1056"
+  
+  This reverts commit 5cba05792b09c66287cc7225f2dde8f5836c3731.
+  Reverting this dot label commit for main line label release.
+  
+  Wed Aug 17 00:36:14 2022 -0700
+  Original commit hash: 1d4b778fcc5d4ec1579b402b1d989d85737a8e34
+  
+  ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimAdlP.efi
+  ClientOneSiliconPkg/Fru/AdlCpu/Graphics/IntelGraphicsPeim/Binaries/IntelGraphicsPeimAdlPDebug.efi
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 73d30e7a9334be4b2a692f5deeee93a2841f2696 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[ADLN] Updated the Minor ID from 00 to 01"
+  
+  This reverts commit 9d399c71978c86756824326e79057473b865f423.
+  Reverting this dot label commit for main line label release.
+  
+  Wed Aug 17 00:35:32 2022 -0700
+  Original commit hash: 796cc88116e56e675846566bbdd2db6f54e510c5
+  
+  AlderLakeBoardPkg/BiosId.env
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+################################################################################
+
+Report Summary: Backstop found 21 suspect commits for review 
+
+Warnings Found:
+  Commit: f9aeba5    --Commit Message Contains Key Word: kc
+  Commit: 96ee852    --Commit Message Contains Key Word: revert
+  Commit: 54130cc    --Commit Message Contains Key Word: HW
+  Commit: 54130cc    --Commit Message Contains Key Word: revert
+  Commit: 15c6289    --Commit Message Contains Key Word: revert
+  Commit: bd83873    --Commit Message Contains Key Word: sku
+  Commit: 0ad188a    --Commit Message Contains Key Word: internal
+  Commit: 2ad2566    --Commit Message Contains Oem: HP
+  Commit: 4be416c    --Commit Message Contains Key Word: step
+  Commit: bf9e20f    --Commit Message Contains Key Word: sku
+  Commit: 00e3e99    --Commit Message Contains Key Word: revert
+  Commit: f422ec7    --Commit Message Contains Key Word: sku
+  Commit: 903244a    --Commit Message Contains Key Word: sku
+  Commit: 2bee953    --Commit Message Contains Key Word: Workaround
+  Commit: 4506682    --Commit Message Contains Key Word: restricted
+  Commit: 0160e42    --Commit Message Contains Key Word: internal
+  Commit: 3859500    --Commit Message Contains Key Word: HW
+  Commit: 29792f1    --Commit Message Contains Key Word: revert
+  Commit: 01cd8bc    --Commit Message Contains Key Word: revert
+  Commit: f4532d3    --Commit Message Contains Key Word: revert
+  Commit: f4532d3    --Commit Message Contains Key Word: sku
+  Commit: 18ace22    --Commit Message Contains Key Word: revert
+  Commit: 73d30e7    --Commit Message Contains Key Word: revert
