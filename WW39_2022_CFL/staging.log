@@ -1,0 +1,136 @@
+================================================================================ 
+Commit: 5d763497015fe5f298d1a51812c8c02152e138cd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 20 23:56:26 2022 -0700 
+-------------------------------------------------------------------------------- 
+Updated files and added LICENSE.txt
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspBinPkg/Include/GpioConfig.h
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/PlatformNonNvs.asl
+CannonLakePlatSamplePkg/FspWrapper/FspWrapperExtractGuidedPeim/FspWrapperExtractGuidedPeim.c
+CannonLakePlatSamplePkg/Include/PlatformNonNvsAreaDef.h
+CannonLakePlatSamplePkg/Include/PlatformNvsAreaDef.h
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/PlatformBootOption.c
+LICENSE.txt
+
+================================================================================ 
+Commit: 88bb0d2a9e5c1789bda4b4bf1939883a360bf9ba 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 20 22:52:45 2022 -0700 
+-------------------------------------------------------------------------------- 
+[CFL] Update BIOS ID
+
+Increment BIOS Major Version
+
+Hsd-es-id: 16017370851
+Original commit date: Wed Jul 20 14:04:59 2022 +0530
+Change-Id: I69fab64d0d6747ab9e2657aa58441a76872c7b8f
+Original commit hash: cc5f86e8596ec728172e95288a3bf5f0062cb47d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Tools/GenBiosId/BiosId.env
+
+================================================================================ 
+Commit: d505a674a376522414216e523ca54fd791e2f67e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 20 22:52:43 2022 -0700 
+-------------------------------------------------------------------------------- 
+[CFL][PSIRT]Insecure handling of "CpuSmm" NVRAM variable - Part 2
+
+[Issue/Feature Description]
+A security researcher reported a weakness with the NVRAM variable "CpuSmm".
+UEFI implementations do not correctly protect and validate information contained in the 'CpuSmm' UEFI variable.
+
+This variable can be overwritten using operating system APIs or UEFI shell.
+By tampering with this variable, SW attacker can disable SMM protection mechanisms (e.g., CpuSmmCodeAccessCheck).
+
+[Resolution]
+Add dependency gDxeCpuPolicyProtocolGuid into SmmCpuFeaturesLib.inf because it consumes the protocol.
+
+Package/Module: CannonLakeSiliconPkg/SmmCpuFeaturesLib
+
+[Impacted Platform]
+CFL
+
+Hsd-es-id: 15011592487
+Original commit date: Thu Jul 21 17:22:06 2022 +0800
+Change-Id: I19c0d58a32c8aca8bcc6c02e3be8242fbb1915a9
+Original commit hash: 16b20c303fc2a948571faa77f9a3fd7d51dbbab5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
+
+================================================================================ 
+Commit: a46f48d2a34dc56c0d6aaeb6c6d4088246a29868 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 20 22:52:42 2022 -0700 
+-------------------------------------------------------------------------------- 
+[CFL][PSIRT]Insecure handling of "CpuSmm" NVRAM variable
+
+[Issue/Feature Description]
+A security researcher reported a weakness with the NVRAM variable "CpuSmm".
+UEFI implementations do not correctly protect and validate information contained in the 'CpuSmm' UEFI variable.
+
+This variable can be overwritten using operating system APIs or UEFI shell.
+By tampering with this variable, SW attacker can disable SMM protection mechanisms (e.g., CpuSmmCodeAccessCheck).
+
+[Resolution]
+Remove NVRAM variable CpuSmm entirely to avoid variable been tampered.
+Use CpuSetup to contain all CPU setup options.
+Use CpuPolicyProtocol to contain policies consumed by CPU RC.
+
+Package/Module: CannonLakePlatSamplePkg/PolicyInitDxe
+
+[Impacted Platform]
+CFL
+
+Hsd-es-id: 15011592487
+Original commit date: Tue Jul 19 15:48:37 2022 +0800
+Change-Id: I7253a5fc254ca0b1226062ead46c8724ee435c8a
+Original commit hash: fac9ffb53628ff2410522be0b9a999ce2a6a778a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakePlatSamplePkg/Include/CpuSmm.h
+CannonLakePlatSamplePkg/Include/SetupVariable.h
+CannonLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeCpuPolicyUpdate.c
+CannonLakePlatSamplePkg/PlatformInit/PolicyInitDxe/PolicyInitDxe.c
+CannonLakePlatSamplePkg/PlatformInit/PolicyInitDxe/PolicyInitDxe.inf
+CannonLakePlatSamplePkg/PlatformPkg.dec
+CannonLakePlatSamplePkg/PlatformPkg.dsc
+CannonLakePlatSamplePkg/Setup/Advanced.vfr
+CannonLakePlatSamplePkg/Setup/CpuSetup.hfr
+CannonLakePlatSamplePkg/Setup/DebugSetup.hfr
+CannonLakePlatSamplePkg/Setup/HiiConfigAccess.c
+CannonLakePlatSamplePkg/Setup/InitStringList.h
+CannonLakePlatSamplePkg/Setup/SetupId.h
+CannonLakeSiliconPkg/Cpu/Include/Protocol/CpuPolicyProtocol.h
+CannonLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeatures.h
+CannonLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.c
+CannonLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
+CannonLakeSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 39127ead21ad6c6153102519137e1032f0b10005 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Sep 20 22:52:38 2022 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] Weekly Update BIOS ID
+
+Increment BIOS Major Version and reset Minor Version to 0
+Original commit date: Sat Apr 9 05:50:28 2022 -0700
+Original commit hash: 74b3cf4d3c83071b9d63834c67276627b40394fe
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+CannonLakeFspBinPkg/Include/GpioConfig.h
+CannonLakePlatSamplePkg/Acpi/AcpiTables/Dsdt/PlatformNonNvs.asl
+CannonLakePlatSamplePkg/FspWrapper/FspWrapperExtractGuidedPeim/FspWrapperExtractGuidedPeim.c
+CannonLakePlatSamplePkg/Include/PlatformNonNvsAreaDef.h
+CannonLakePlatSamplePkg/Include/PlatformNvsAreaDef.h
+CannonLakePlatSamplePkg/Library/DxePlatformBootManagerLib/PlatformBootOption.c
+LICENSE.txt
