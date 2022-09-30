@@ -1,0 +1,63 @@
+*********************************************************************************
+Commit: 5d21d27140c2cd548c4ac975d85962d7122ccf64 
+*********************************************************************************
+
+[PlatformPkg], [CPU]
+
+  [CML][PSIRT]Insecure handling of "CpuSmm" NVRAM variable
+  
+  [Issue/Feature Description]
+  A security researcher reported a weakness with the NVRAM variable "CpuSmm".
+  UEFI implementations do not correctly protect and validate information contained in the 'CpuSmm' UEFI variable.
+  
+  This variable can be overwritten using operating system APIs or UEFI shell.
+  By tampering with this variable, SW attacker can disable SMM protection mechanisms (e.g., CpuSmmCodeAccessCheck).
+  
+  [Resolution]
+  Remove NVRAM variable CpuSmm entirely to avoid variable been tampered.
+  Use CpuSetup to contain all CPU setup options.
+  Use CpuPolicyProtocol to contain policies consumed by CPU RC.
+  
+  Package/Module: CometLakePlatSamplePkg/PolicyInitDxe
+  
+  [Impacted Platform]
+  CML
+  
+  Hsd-es-id: 15011592465
+  
+  Change-Id: I086f77a80ef9b60d1d7eb3e4692700539c32264c
+  Original commit hash: d13becde49b2c655325ab36cc8831f3bdf35946a
+  
+  CometLakePlatSamplePkg/Features/NiftyRock/PpamPlatformSmm/PpamPlatformSmm.c
+  CometLakePlatSamplePkg/Features/NiftyRock/PpamPlatformSmm/PpamPlatformSmm.inf
+  CometLakePlatSamplePkg/Include/CpuSmm.h
+  CometLakePlatSamplePkg/Include/SetupVariable.h
+  CometLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeCpuPolicyUpdate.c
+  CometLakePlatSamplePkg/PlatformInit/PolicyInitDxe/PolicyInitDxe.c
+  CometLakePlatSamplePkg/PlatformInit/PolicyInitDxe/PolicyInitDxe.inf
+  CometLakePlatSamplePkg/PlatformPkg.dec
+  CometLakePlatSamplePkg/PlatformPkg.dsc
+  CometLakePlatSamplePkg/Setup/Advanced.vfr
+  CometLakePlatSamplePkg/Setup/CpuSetup.hfr
+  CometLakePlatSamplePkg/Setup/DebugSetup.hfr
+  CometLakePlatSamplePkg/Setup/HiiConfigAccess.c
+  CometLakePlatSamplePkg/Setup/SetupId.h
+  CometLakeSiliconPkg/Cpu/Include/Protocol/CpuPolicyProtocol.h
+  CometLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeatures.h
+  CometLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.c
+  CometLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: psirt
+  --Commit Message Contains Key Word: security
+
+################################################################################
+
+Report Summary: Backstop found 1 suspect commits for review 
+
+Warnings Found:
+  Commit: 5d21d27    --Commit Message Contains Key Word: psirt
+  Commit: 5d21d27    --Commit Message Contains Key Word: security
