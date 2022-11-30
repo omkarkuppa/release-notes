@@ -1,0 +1,3099 @@
+*********************************************************************************
+Commit: 5a2bbd0bd9cfa660ac905cff08f45fc392d8aa33 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "Unable to enumerate PCH PCIe devices."
+  
+  This reverts commit 6343830aa2292af6dda7d039e79f1368b258518c.
+  
+  Hsd-es-id: 22016207720
+  Change-Id: Id49acdbdd11fc990e4587c16719847b0519fe344
+  Original commit hash: c8c340203689343651c1ee826b26e387d825f4c5
+  
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchRootPorts.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Library/PeiPcieSipInitLib.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 814f021ec36e4899853d829dc302a77393a8cf4f 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [MTL] Check BootState variable is presented within UnsetBootState
+  
+  [Issue Description]
+  - If BootState variable is not found would get Assert.
+  - This is not necessary since the intension of this function is to
+  unset the variable.
+  
+  [Resolution]
+  - Check if the BootState is present or not first.
+  - If it is not present, return the function directly.
+  - Else attempt to unset it.
+  
+  Package/Module: PlatSamplePkg/DxeBootState
+  
+  [Impacted Platform]
+  ALL.
+  
+  Hsd-es-id: 16018864676
+  Change-Id: Ic31d2262364f503fc911797cc50624ffc5fc01f8
+  Original commit hash: 8deacd74624b746d052afe404bac74de1759eade
+  
+  MeteorLakePlatSamplePkg/Library/DxeBootStateLib/DxeBootStateLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: aa6e723c1f1f624cc11b4d7d7e1c7515a96d4b6c 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-M MTL-P MTL-S | DDR5 LP5] Update Write Retraining STP Check on
+  Close Mrrs for A0 Only
+  
+  [Issue Description]
+  The original STP check for updating Write Retraining on close Mrrs used
+  the externalInputs parameter SocStepping to check for A0.
+  This means the change would not apply on all A stp for Mobile.
+  
+  [Resolution]
+  The externalInput parameter is no longer used for the stp check.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 22016121805
+  Change-Id: I1cb7a8ab610e811ce8bc7ac892689f4d6b7ab68b
+  Original commit hash: 835c0cd2802d44efe8b85c2e1ef00e74faf774dd
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcTurnAround.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: 48c94acc162e0943a0e5774619bb9ab6062cfc7d 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  [MTL-S MTL-M MTL-P | DDR5 LP5] Execute Qclk DDC Offset feature
+  based on derivative
+  
+  [Issue Description]
+  There is currently no way to know the SOC derivative within the MRC
+  There are 2 features that require this knowledge:
+  The Qclk DDC offset feature was not being executed on A2 steppings
+  
+  [Resolution]
+  Add support to check for soc derivative in input paramters
+  Execute Qclk DDC Offset feature based on derivative
+  Enable Minibios to check for soc derivative
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  M,P,S
+  
+  Hsd-es-id: 22015664529
+  Change-Id: Ie3cbb9a3a172d8e4b1e105878200741f7119784b
+  Original commit hash: f6998b1515c8ff3f9216fec25154ffd1a8afec7a
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver4/MemoryConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcExtInputs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcExtTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakePlatSamplePkg/Setup/SaSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: b8a82440361114c5b84e18cf73b6e0b57edfa96f 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S | DDR5] Change to check IsDdrIoDtHalo for MinAllowedNMode
+  
+  [Feature Description]
+  To differentiate between M/P and S, we should use
+  IsDdrIoDtHalo instead of SkuType.
+  
+  Package/Module: ClientOneSiliconPkg\IpBlock\MemoryInit\Mtl
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 22015945818
+  Change-Id: Ic9ff62cd842b09f622682e2b854fe601ba7288d7
+  Original commit hash: db5f751efa4bf854a2157e106af423264a2cd851
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 89a00801a1335180c6ee120b3804a25f344e96d5 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "Revert "[TeamCity] MTL MeteorLake_Edk2Master_Daily_github Daily Updating Version/ID: MeteorLake_2473_01""
+  
+  This reverts commit a6cfff3cb99c737f5cca397999a80a096ab0f066.
+  
+  Thu Nov 17 01:55:40 2022 +0530
+  Original commit hash: a680999b9a11a5e23e2850dbe49b0e61dda01516
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 1c85004a241a4090ec98ceb7515ae579c54dde1b 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2472_01"
+  
+  This reverts commit 162c03423a5b3098f2c03d1389ecda61d3561b48.
+  
+  Thu Nov 17 01:55:35 2022 +0530
+  Original commit hash: cbac4acab60c374bd103b873af7ab508f056a167
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 0d3026275fcc9b4ce73911c9dab48e2ceb81fa4f 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "Program branch Update BIOS ID"
+  
+  This reverts commit 07e1fc993d91dfb5a7239a2b1e41059d4b3b093c.
+  
+  Thu Nov 17 01:55:31 2022 +0530
+  Original commit hash: aad3c005b0d51722779fb345be9b77e170fa2561
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 90480eb85ac2661ae27bdc99a758078e8985fa06 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2473_81"
+  
+  This reverts commit 483d2d98f64e101094ce861c3ef4d6bba6a140fb.
+  
+  Thu Nov 17 01:55:27 2022 +0530
+  Original commit hash: bbe7028cb08faaa38732479dfb56c754673782bb
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: a438549621775d92bd142d62f8ce81fa5caf2403 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_Edk2Master_Daily_github Daily Updating Version/ID: MeteorLake_2473_01"
+  
+  This reverts commit 65e235bacb02d72a2b6185441d397b6e8299844c.
+  
+  Change-Id: If0d61bbbdbca79d6ee0a307fa03f627a9b808eb5
+  Original commit hash: a6cfff3cb99c737f5cca397999a80a096ab0f066
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: cceca1789260064848b0856281d90f373f441b2d 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg], [PlatformPkg]
+
+  Addressed code quality issues 2467
+  
+  [Issue Description]
+  MtlPchDci.c : Pointer 'PchConfig' checked for NULL at line 107 will
+  be dereferenced at line 111.
+  
+  PlatformVoltageControlLib.c : 'Status' might be used uninitialized.
+  
+  PciResources.c : 'Child' might be used uninitialized.
+  Pointer 'FirstResource' returned 'BridgeGetFirstResourceNode' at line 255
+  may be NULL and may be dereferenced at line 266.
+  Also there is one similar error on line 285.
+  
+  OneClickRecovery.c : Pointer
+  'AppendDevicePathNode(NewDevicePath(EFI_DEVICE_PATH_PROTOCOL* )NullUriPath)'
+  returned from call to function 'AppendDevicePathNode' at line
+  534 may be NULL and will be dereferenced at line 534.
+  
+  Pointer 'AsfHttpProxy' & 'mOcrProxyInfo' returned 'AllocateZeroPool'
+  may be NULL.
+  
+  MtlPchDmiInit.c : 'PchConfig' might be used uninitialized.
+  
+  PchDmiExtLib.c : Null pointer 'PchConfig' that comes from
+  line 141 may be dereferenced at line 163.
+  
+  StorageErase.c : 'TmpDev' might be used uninitialized in
+  EraseAndVerifySpecificDevice.
+  
+  [Resolution]
+  Added NULL check to all the variables causing issue.
+  
+  Package/Module: ClientOneSilicionPkg, EC, MeteorLake.
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22015617723
+  Change-Id: I73b61312605efbead1ccb35901678266486e6f61
+  Original commit hash: 5fd1970f08e2d7de6ca23bb97499c99590d9e672
+  
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PchDmiExtLib/PchDmiExtLib.c
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchDci.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/PcieBusPei/PciResources.c
+  MeteorLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiCpuPolicyBoardConfigPreMem.c
+  MeteorLakeBoardPkg/Library/PlatformVoltageControlLib/PlatformVoltageControlLib.c
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateHw.c
+  MeteorLakePlatSamplePkg/Features/PlatformErase/StorageEraseDxe/StorageErase.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 5d0692cc274451fe38c0ab14113e9c0a9063de96 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "MTL M\P PSF powergating in C3 and deeper states."
+  
+  [Feature Description]
+  Revert Bios to program the IOE PMC register to allow IOE PSF
+  power gating only in C3 and deeper states.
+  
+  Package/Module: ClientOneSiliconPkg/Fru/MtlSoc
+  
+  [Impacted Platform]
+  M, P.
+  
+  Hsd-es-id: 16018780136
+  Change-Id: Iaee89e4c6321aa5a3157fcc1962b4f6984bd33af
+  Original commit hash: 75a88ec033d3b8b023132a17e072af5a8f0dc297
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/Include/Library/MtlSocInfoLib.h
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocPmc.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: abd4d9e98c05874a2d7e4960d75a6ea120428d44 
+*********************************************************************************
+
+[BoardPkg]
+
+  [MTL-s][A0]:SRCCLK for DMI needs to be set by BIOS
+  
+  [Issue Description]
+  SRCCLK for DMI needs to be set by Bios
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  S
+  
+  [Resolution]
+  making clk0 free-running
+  
+  Hsd-es-id: 16018781952
+  Change-Id: Icaa91354b734a0e4532dfdf4de16132a8d1d91cd
+  Original commit hash: f98f3259d5de1ce41c557c669de1de363b6bffd8
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 16088d10f9d15281b74c1202c1667d23145b0062 
+*********************************************************************************
+
+[BoardPkg]
+
+  Display support: MTL S with UDIMM DDR5 RVP board
+  
+  [Feature Description]
+  Display Configuration for MTLS UDIMM 1DPC
+  Default : EDP + TCP + TCP + HDMI + DP
+  Default : EDP + TCP + TCP + DP + DP
+  
+  Package/Module: Graphics
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22015251875
+  Change-Id: I651826f57a473540df2f4aeb885762d96e901264
+  Original commit hash: a78266492377464eeebae0bd57228e8afd5fb527
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: a5f69d93498e0239c2b30a76247a412179c0eb73 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  Move DualTauBoost/StepDownMode to CpuPowerDeliveryConfig
+  
+  [Feature Description]
+  Remove global variable in ConfigTDP
+  Move CPU PM config to CpuPowerDeliveryConfig
+  
+  Package/Module:
+  ClientOneSiliconPkg/PeiCpuPowerManagementLib
+  
+  [Impacted Platform]
+  C1S
+  
+  Hsd-es-id: 15012266401
+  Change-Id: I415dc07e3cb9e5cc6eacf24717aee17b64f8e4b3
+  Original commit hash: 286778a5c6556483ded71a8e4361393366c7038c
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/CpuPowerManagement/CpuPowerDeliveryConfig.h
+  ClientOneSiliconPkg/Include/ConfigBlock/CpuPowerManagement/CpuPowerMgmtBasicConfig.h
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PowerLimits.c
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementPolicyLib/CpuPowerManagementPolicyLib.c
+  MeteorLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: e125f61c235c09a7038a453a01cf865a19727733 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Remove global variable:mConfigTdpBootModeIndex,mCtdpLevelsSupported
+  
+  [Feature Description]
+  Remove global variable in ConfigTDP
+  Move CPU PM config to CpuPowerDeliveryConfig
+  mConfigTdpBootModeIndex:
+  * When Config TDP is not supported, it is not used for hardware
+  programming and it's set to 0 which will be saved in HOB.
+  * When Config TDP is supported, its inial value is from
+  ConfigTdpLevel in a ConfigBlock. It's set to 0 in following cases:
+  1. TDP Limit is not programmable (MSR_CE[BIT29] = 0)
+  2. Config TDP is disabled (ApplyConfigTdp in ConfigBlock is 0)
+  3. it exceeds the supported level
+  
+  mCtdpLevelsSupported is from MSR_CE[BIT34:33].
+  Package/Module:
+  ClientOneSiliconPkg/PeiCpuPowerManagementLib
+  
+  [Impacted Platform]
+  C1S
+  
+  Hsd-es-id: 15012266401
+  Change-Id: I160a3b73026315c3aa16f226abe51aa6f4c305fc
+  Original commit hash: d40b0067fbd027ca8546279e4f0a8bbd53834094
+  
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PowerLimits.c
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PowerManagementInit.c
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PowerMgmtCommon.h
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PowerMgmtInit.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: 1106ff2e0c5404cca717d96afdc14655fea547c5 
+*********************************************************************************
+
+[BoardPkg]
+
+  Board support for MTL S with UDIMM 1DPC OC RVP board
+  
+  [Feature Description]
+  Board support: MTL S with UDIMM DDR5 RVP board - Overclocking
+  
+  Package/Module:
+  Board pkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 14017318214
+  Change-Id: I8601d5b1e9f6e3f87134b338eab6c214066129b7
+  Original commit hash: 99d7dda7c8ed4e9263da980b1a889879bbd7bf70
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: d75f61158cb43371308fc154d8ede3d7fe9eafcd 
+*********************************************************************************
+
+[BoardPkg]
+
+  Corrected RST GPIO polarity for RTD3
+  
+  [Feature Description]
+  Board support for MTL-S RVP board continued
+  
+  Package/Module:
+  Board pkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 14017246613
+  Change-Id: I4c379d82a123fa0685d4ec7e81acd7758c71b0be
+  Original commit hash: 6275fdf7e98a2aec30b116874997c515d2ec59f2
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 3ba4c497d9e8f13b9798321f44e0d75a2685ccd1 
+*********************************************************************************
+
+[BoardPkg]
+
+  [MTL-P]DC3][SV2][A2][HLK]: USB4 Systems Backward Compatible With
+  TBT3 is failing with the error "Please connect a Thunderbolt 3 device
+  router to a USB4 root port and re-run the test."
+  
+  [Issue Description]
+  MTLP LP5x T3 RVP HLK USB4 test, TBT3 backward compatibility verified
+  fail.
+  
+  [Resolution]
+  1. TCP0 doesn't support TBT, disable TcssItbtPcie0En and TcssDma0En.
+  2. TCP1 doesn't support USB function, disable it in
+  VpdPcdCpuXhciPortSupportMap.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL-P
+  
+  Hsd-es-id: 22016151615
+  Change-Id: I8f266b3dd1f2e4a96d2fa36db51f2cbd99754420
+  Original commit hash: 64d573e19a59a72f84f908811170176f5798521b
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePRvpBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: debb4bf4a7ff221b5634af0f9d1939c1bcc57380 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  Revert "Update configuration for SoC-S vs PCH-S"
+  
+  [Issue Description]
+  Bios setup option update is not saved after reboot
+  
+  [Resolution]
+  Temporarily reverting the cahnges until root caused.
+  This reverts commit 4f863e9a460fed6d1149765c613ffa88b1197c3a.
+  
+  Package/Module: ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 16018744312
+  Change-Id: Ia0853cafc1edecd3a578fd67d079b4eacfe2d3bd
+  Original commit hash: d22bda9d3cdd72aad8a3af21166b77c582501894
+  
+  ClientOneSiliconPkg/Fru/MtlPch/Dxe/PchInit.c
+  ClientOneSiliconPkg/Fru/MtlPch/Dxe/PchInitDxeFsp.inf
+  ClientOneSiliconPkg/Fru/MtlPch/Dxe/PchInitFsp.inf
+  ClientOneSiliconPkg/Fru/MtlPch/IncludePrivate/Library/MtlPchPeiPmcPolicyLib.h
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchPmc.c
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiPmcPolicyLib/MtlPchPeiPmcPolicyLib.c
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiPmcPolicyLib/MtlPchPeiPmcPolicyLib.inf
+  ClientOneSiliconPkg/Fru/MtlPch/PeiLib.dsc
+  ClientOneSiliconPkg/Fru/MtlSoc/CommonLib.dsc
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocPmc.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiPmcPolicyLib/PeiPmcPolicyLib.c
+  ClientOneSiliconPkg/Product/MeteorLake/Library/PeiDxeSmmPmcLib/PmcLib.c
+  ClientOneSiliconPkg/Product/MeteorLake/Library/PeiSiPolicyLib/PeiPchPolicyLib.c
+  ClientOneSiliconPkg/Product/MeteorLake/Library/PeiSiPolicyLib/PeiSiPolicyLib.inf
+  ClientOneSiliconPkg/Product/MeteorLake/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiDxeSmmPmcPrivateLib.inf
+  ClientOneSiliconPkg/Product/MeteorLake/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PeiDxeSmmPmcPrivateLibWithS3.inf
+  ClientOneSiliconPkg/Product/MeteorLake/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLib.c
+  ClientOneSiliconPkg/Product/MeteorLake/LibraryPrivate/PeiDxeSmmPmcPrivateLib/PmcPrivateLibWithS3.c
+  ClientOneSiliconPkg/Product/MeteorLake/MeteorLakeSiliconPkg.dsc
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 2cc28332ba36ea0de2c49a988eea4590f429f4d9 
+*********************************************************************************
+
+[ASL], [BoardPkg]
+
+  [MTL] Add PD-less Ps on support
+  
+  [Feature Description]
+  Config retimer power state GPIO for PD less PS ON.
+  
+  Package/Module:
+  Intel\Features\Ec\EcFeaturePkg
+  Intel\MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTLS
+  
+  Hsd-es-id: 15012037842
+  Change-Id: I10b7b5f7642d3bd0dc73965cf07bfc2d2d7e751b
+  Original commit hash: 45053c89ded657d9082ffff81322e06b1304e19a
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcBase.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcExternalMethod.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformEcMethods.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 1cf402418b58febde529bda33ca094cc079436f4 
+*********************************************************************************
+
+[BoardPkg]
+
+  MTL-P -Set the right retimer number to LP5xT3 board
+  
+  [Feature Description]
+  Set the right retimer number to LP5xT3 board to enable read version
+  
+  Package/Module: BoardPkg
+  
+  [Impacted Platform]
+  MTL-P
+  
+  Hsd-es-id: 16018653589
+  Change-Id: Ib95dfd04a5a2706a09c84f93bb18cb522b5b1b80
+  Original commit hash: 96d8fa011f728f3e5a699abf2958fcb68d4b275f
+  
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf1Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf2Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT4Rvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: d89d1ad89e3fb97618c432436ec95971ccecf9f8 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "Revert BIOS ID"
+  
+  This reverts commit 8570a1bfa9ed50bc446bca30e7be0c317dd5e7a6.
+  
+  Wed Nov 16 12:08:22 2022 +0530
+  Original commit hash: 812b06506fa77f4bd21ce7da7e7a902a8fcfbcc4
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: d43b2b8a4d3aaff33cb074230f5bf66b7c9f0635 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2463_80"
+  
+  This reverts commit 716f1f5456f2571f90018a20ace83877645f5e90.
+  
+  Wed Nov 16 12:08:18 2022 +0530
+  Original commit hash: 94b6ae523e8cb5fe6710967fac961fe99e020bd8
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 711cb9b422ca639ae7b35e8a30b5b5c11c521713 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2463_81"
+  
+  This reverts commit b0518a5314c44837df5747d949a77f0bbf247b30.
+  
+  Wed Nov 16 12:08:07 2022 +0530
+  Original commit hash: 75d594bcce943caed6567e5007af7a4101cd54f1
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 6e61c161b86297b368d839491411e0161e4adcb9 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert BIOS ID
+  
+  [Feature Description]
+  Revert BIOS ID
+  
+  Package/Module: MeteorLakeBoardPkg/BiosId.env
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: NA
+  Change-Id: I11d16f04744bd26aba719dc7059ae329e1d98cd1
+  Original commit hash: 8570a1bfa9ed50bc446bca30e7be0c317dd5e7a6
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 596ef9ba69ea4cd635123177ede67d509e7d12fd 
+*********************************************************************************
+
+
+  Hsti New SMRR and TSEG IMR in SAF consistency test
+  
+  [Feature Description]
+  New test introduced for HST on LNL
+  
+  Package/Module: LunarLakePlatSamplePkg/HstiIhvDxe
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14017476274
+  Change-Id: I253cc1c31df028dd2f90677ba5528a6f7a24de35
+  Original commit hash: e6266fd60cd24b06542c64e98974c348df71ecf5
+  
+  Features/Security/HstiFeaturePkg/Include/HstiFeatureBit_1_1a.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 9e7253426b00140a0b89545b6dda9da607a62642 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [MTL] HSTI thermal lock testing fix
+  
+  [Issue Description]
+  HSTI thermal lock error code not coresponding with FAS
+  
+  [Resolution]
+  New HSTI error codes and strings have been added to align with FAS.
+  Each thermal lock test has its own test block and idependent output.
+  
+  Package/Module: MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 14017843230
+  Change-Id: I8d3ceccd6dcea3437886c4ec6bd8cbc16cb29aa4
+  Original commit hash: 303f9f05f5a8a585128d96fc2d6fa38e6b093ee0
+  
+  Features/Security/HstiFeaturePkg/Include/HstiFeatureBit_1_1a.h
+  MeteorLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecurePchConfiguration.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 98d6cb5f6a2c044930cbcce572154978394c896e 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Move Boot Guard related defines and CPU_SKU
+  
+  [Feature Description]
+  1. Move Boot guard related header defines to C1S root.
+  2. Move CPU_SKU to CpuGenInfo header.
+  Rationale: Change in public APIs necessitates the change
+  in customer code and more validation to make sure that
+  there are no new bugs due to the changes. This also
+  discards all the goodness in terms of quality accumulated
+  over previous generation's validation cycles. All this leads
+  to increase in cost for the customer.
+  
+  Package/Module: ClientOneSiliconPkg\LnlCDie,
+  ClientOneSiliconPkg\MtlCpu,
+  LunarLakePlatSamplePkg
+  
+  [Impacted Platform]
+  MTL, LNL
+  
+  Hsd-es-id: 16018177790, 16018177894
+  Change-Id: I8190aa61a672d11e308193f6a28af2a3b052b20b
+  Original commit hash: 002d02d9157c99053e339dd681b0a51617e4f204
+  
+  ClientOneSiliconPkg/Fru/MtlCpu/Include/CpuGenInfo.h
+  ClientOneSiliconPkg/Include/CpuRegs.h
+  ClientOneSiliconPkg/Include/Library/BootGuardLib.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: f1af00a2e7827e00f2abedc07f76bf3630c91f10 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Move CpuNvsArea.h to C1S root
+  
+  [Feature Description]
+  Move CpuNvsArea.h & CpuNvsAreaDef.h to C1S root.
+  Rationale: Change in public APIs necessitates the change
+  in customer code and more validation to make sure that
+  there are no new bugs due to the changes. This also
+  discards all the goodness in terms of quality accumulated
+  over previous generation's validation cycles. All this leads
+  to increase in cost for the customer.
+  
+  Package/Module: ClientOneSiliconPkg,
+  ClientOneSiliconPkg/CpuPowerManagement
+  
+  [Impacted Platform]
+  MTL, LNL
+  
+  Hsd-es-id: 16018178124
+  Change-Id: I4ebb190c246f6a19b4336ffd92d25673c7313165
+  Original commit hash: ed84a4a91e163d838eafffc7c4cdb14263e7bbd3
+  
+  ClientOneSiliconPkg/IncludePrivate/CpuNvsAreaDef.h
+  ClientOneSiliconPkg/IncludePrivate/Protocol/CpuNvsArea.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 28b979c656d861dce9793c48de13920a3a32b5a4 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg]
+
+  [Regression] System not booting to OS with Bios_v2454_01
+  
+  [Issue Description]
+  System not booting to OS with Bios_v2454_01
+  
+  [Resolution]
+  Revert "Addressed code quality issues 2445"
+  This reverts commit 7b41f3ca452444f0fc54f78a5bf8c948b7eda403.
+  
+  Package/Module: ClientOneSilicionPkg, EC, MeteorLake.
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16018714882
+  Change-Id: Ifc12277772547c2f70dbd20e7e46f19cd2f8a2af
+  Original commit hash: b80997f6088471df3f6b1fdc414dd53778454f90
+  
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PchDmiExtLib/PchDmiExtLib.c
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchDci.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/PcieBusPei/PciResources.c
+  Features/Ec/EcFeaturePkg/LibraryPrivate/EcPrivateLib/EcPrivateLib.c
+  MeteorLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiCpuPolicyBoardConfigPreMem.c
+  MeteorLakeBoardPkg/Library/PlatformVoltageControlLib/PlatformVoltageControlLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: ef95a84e944800c5ecba9b3eaf1c483fb8c8df0e 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Implement PCH PCIE clock policy from platform side
+  
+  [Feature Description]
+  Implement PCH PCIE clock policy from platform side
+  This is for for discrete PCH such as MTPS.
+  
+  Package/Module: MeteorLakeBoardPkg, MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 16018659140
+  Change-Id: I9e3d9f914771c275b74c9057e7695a7a7cbb033e
+  Original commit hash: dc9875e7860627b88b6a4ff7e3fd62e21a014e64
+  
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: f2cf84b0661f34ebc7df57079793ce5413c27c30 
+*********************************************************************************
+
+
+  [TCSS] New tests TCSS Lock bits shall be implemented in HSTI Interface
+  
+  [Feature Description]
+  HSTI shall verify locked stated of TCSS registers
+  
+  Package/Module: LunarLakePlatSamplePkg/HstiIhvDxe
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14017390003
+  Change-Id: I7d0574b11ccd75f5c98542a288a712a6beeac542
+  Original commit hash: d671a54efe9aa507b7d3360d937579d2af72aff7
+  
+  Features/Security/HstiFeaturePkg/Include/HstiFeatureBit_1_1a.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: b7375fd78564ab25509b714240e106a2a527f81f 
+*********************************************************************************
+
+[BoardPkg]
+
+  [MTLS RVP] Correct SPD address mapping table
+  
+  [Issue Description]
+  Current SPD address mapping (VpdPcdMrcSpdAddressTable) is incorrect.
+  
+  [Resolution]
+  Correct S01/S03/S04 VpdPcdMrcSpdAddressTable according to schematics.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTLS
+  
+  Hsd-es-id: 15012250515
+  Change-Id: Idd355a63d3e33498c03fc3b53653191d1634b253
+  Original commit hash: 7d86d9b30e2dd8af7e38f87c687aa5b8fdad04fd
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 6a0d1c5f00e96135a7455a19aa9f5bcc16ab44b9 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  Revert "[MTL-P dTBT] Update platform mapping sheet for GPIO output"
+  
+  This reverts commit 32178b6ef263ba291be7df96df33a22dd8adca8e.
+  
+  Wed Nov 9 12:08:05 2022 +0530
+  Original commit hash: d16f6cfcc78c963c6bc0aec02ceb903a390d4b6b
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5MemSolderDowndTBTRvp.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: ff104e1edc2017a0571a0d029612533b9b5359b8 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "Reverted BIOSID Minor"
+  
+  This reverts commit d21f920db792afe309fa3039a891b4e062cd4f2b.
+  
+  Wed Nov 9 12:08:01 2022 +0530
+  Original commit hash: d7a5cf5a0a65f7ce9c032423ff9baa76f7ef90aa
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: dbd07d754e2cde581f7750d35ce9c825979df535 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2453_01"
+  
+  This reverts commit 8956d4fbf2e3a867c42d24c0e1c5b2d5eaad6978.
+  
+  Wed Nov 9 12:07:56 2022 +0530
+  Original commit hash: 142f540aaf3b17b5e67b9d7e7c2888f198bffb72
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 6d916ae11c41c52fab127cfc789355e18c47e8a3 
+*********************************************************************************
+
+
+  Fix VTIO default values in BIOS menu
+  
+  [Issue Description]
+  After enabling VTIO in BIOS, defaults values were not getting
+  populated. gVtioSetupData was overriding the defaults populated
+  by VFR.
+  
+  [Resolution]
+  Added a condition on BlockToConfig to run only when VTIO is enabled
+  
+  Package/Module: VtioFeaturePkg
+  
+  [Impacted Platform]
+  Default All
+  
+  Hsd-es-id: 16018621950
+  Change-Id: Ic5fa22c9679de0e823cdc06c6ffc44bffa1b3382
+  Original commit hash: 2dd2bdfc5a9942aadbcbf0c8e23339aac833ac7f
+  
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 9f0d0949c01311dfeb77421d6d698a2c5681b767 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [MTL-P dTBT] Update platform mapping sheet for GPIO output
+  state pin of GPP_B11, C19 & F10
+  
+  [Feature Description]
+  correcting GPIO polarity as per new RVP document
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 16018680911
+  Change-Id: Id7811c0b706fc5eeb4319c6601fdfa9322c6a871
+  Original commit hash: 40db591d92e301d91cf08fa38cf3649c2722916c
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5MemSolderDowndTBTRvp.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5MemSolderDowndTBTRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: e8fa2ab969a210f7d8cd70f39aaa5b909c737ef8 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Update BIOS Crashlog flow to align with spec
+  
+  [Feature Description]
+  Remove deprecated steps and send command thru correct sequence
+  
+  Package/Module:
+  MeteorLakePlatSamplePkg/CrashLog
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 15012205200
+  Change-Id: Icdae255d8996aa448f286481c7a56cd9604ff99a
+  Original commit hash: be1b9a0bb9711aeed5e2708024a288730d123b55
+  
+  MeteorLakePlatSamplePkg/Features/CrashLog/Agent/CpuCrashLogAgent/CpuCrashLog.c
+  MeteorLakePlatSamplePkg/Features/CrashLog/Agent/CpuCrashLogAgent/CpuCrashLog.h
+  MeteorLakePlatSamplePkg/Features/CrashLog/Agent/CpuCrashLogAgent/CpuCrashLogUtils.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: c7f953e3eaf495bd1a1417be62906c72597abcf2 
+*********************************************************************************
+
+[BoardPkg]
+
+  SyncScript: Revert override commits.
+  
+  Wed Nov 2 04:44:53 2022 -0700
+  Original commit hash: 26cfeddd175ec5243c3e16c1e0578f5fd1ceb7f3
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 60096e897813285d04727a669d2ad8a21596fbe6 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg]
+
+  Add function to check D0I3 bit status
+  
+  [Feature Description]
+  A new function is added to check the D0I3 bit status. This
+  function is used by the RPMC libraries to set/clear D0I3
+  bit in order to communicate with CSME.
+  
+  Package/Module: C1S, ProtectedVariableFeaturePkg, MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 22015395586
+  Change-Id: Ieca6e6a17e1382c54341b2ab2054b1beae4643f8
+  Original commit hash: e79ef62262e5934c8ab4df9f91480ffa7807e686
+  
+  ClientOneSiliconPkg/Include/Library/MeChipsetLib.h
+  ClientOneSiliconPkg/IpBlock/Me/Library/PeiDxeMeChipsetLib/PeiDxeMeChipsetLibCommon.c
+  Features/Security/ProtectedVariableFeaturePkg/Library/PeiRpmcLib/PeiRpmcLib.inf
+  Features/Security/ProtectedVariableFeaturePkg/Library/SmmRpmcLib/SmmRpmcLib.c
+  Features/Security/ProtectedVariableFeaturePkg/Library/SmmRpmcLib/SmmRpmcLib.inf
+  Features/Security/ProtectedVariableFeaturePkg/ProtectedVariableFeaturePkg.dec
+  MeteorLakeBoardPkg/Features/Setup/SetupVariablePei/SetupVariablePei.c
+  MeteorLakeBoardPkg/Features/Setup/SetupVariablePei/SetupVariablePei.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: fc94f60dc9eda20e5ad9e8dec0e3f60836f9764d 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  USB Exposed Port System Test is failing with error
+  
+  [Issue Description]
+  Port mapping in SUT is mis-matching.
+  Super speed ports are interchanged
+  
+  [Resolution]
+  Modified the knobs value
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 16018655019
+  Change-Id: Ice21c476626028595f2a0e8710711754a327c795
+  Original commit hash: 8af158fba578f7193e15255f4af814e14592fc07
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5SODimmSbsRvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5T4SODimmSbsRvp.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT4Rvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: e4e166e7ec036908e1e79641ceb36a6c5d4084b3 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [MTL-P] LP5x T3 RVP - Update USB Port properties
+  
+  [Feature Description]
+  Disabled USB TCP1 port by following Platform Mapping Document.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  P
+  
+  Hsd-es-id: 16018655008
+  Change-Id: I64e16e8a649b4d57b85144c41dddbeb381b55141
+  Original commit hash: 1bef64f082654fc60e94a389b89a34fed29f0447
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPLp5xT3Rvp.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT3Rvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 42c4d1b945cb352aceb63b3b8c3e881531a49574 
+*********************************************************************************
+
+
+  [TSE] Correct Null check ordering
+  
+  [Issue Description]
+  
+  Null check is occurring after a dereference operation.
+  
+  [Resolution]
+  
+  Place the Null check before any dereference operation in the logic flow.
+  
+  Package/Module:
+  TseFeaturePkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 15012195757
+  Change-Id: I838067ce02cac59b318df1561996ae7d194491ba
+  Original commit hash: 78d7a9b432cbabab8bd3fd4c066b9f70ab536534
+  
+  Features/Security/TseFeaturePkg/TseNvmExpressDxe/NvmExpressBlockIoCrypto.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 9c8d0827400113d186408954fc0b920d9c6e028f 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  [MTL][PCIe] HWEQ setup options are broken
+  
+  [Issue Description]
+  PCIe BIOS setup options for Preset/coefficient is not programming the
+  lists correctly for all speeds - gen3/gen4/gen5
+  
+  [Resolution]
+  fixed policy update in ClientOneSiliconPkg
+  
+  Package/Module: ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14017787538
+  Change-Id: I8f667836693bddebe811d27629430c3a1c1ae3d9
+  Original commit hash: 65010e3810f712384ee5f25c9a11c72f41441287
+  
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  MeteorLakeFspPkg/Upd/FspsUpd.dsc
+  MeteorLakePlatSamplePkg/Setup/PchPcieSetupSinglePort.hfr
+  MeteorLakePlatSamplePkg/Setup/PcieSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: e392bdf5eb04233f5c540bc89c055bf428f704b9 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "Reverted BIOSID from Edk2Master"
+  
+  This reverts commit ab0bcd51f01468ad5e08d59fb994b7b7a280e676.
+  
+  Change-Id: I65a5d2dac48698b25ef452c7b28737f18e7608bb
+  Original commit hash: 3eabc2a0c3ee20ede0429aa07027acc92080b748
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: f0a9cc06791554fea56e9e482d2f7232c61acc18 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2444_80"
+  
+  This reverts commit 193ded9cd2729784c3e5399c2634c2a9a63ccccd.
+  
+  Wed Nov 2 12:39:09 2022 +0530
+  Original commit hash: 9b73ac1f4ba7aa518afe2529dd83787a3be31825
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 3175fb59888f8fc9598be2d81275ecd88e8ab838 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2444_81"
+  
+  This reverts commit a44ba54cff2755d3ea45bc48b28021414e7483b5.
+  
+  Wed Nov 2 12:39:02 2022 +0530
+  Original commit hash: fb850e60de83cf3041eb9e71204a02a388027de7
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: db31a3a5b5c8ffb61ef426c5262add92550a367e 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Disable ATS replay mechanism for all MTL/ARL SOC SKUs
+  
+  [Feature Description]
+  BIOS FW needs to disable ATS replay mechanims during ATS invalidation
+  for GFX in case of all MTL/ARL SOC SKUs when VT-d is enabled.
+  
+  Package/Module:
+  C1S/PeiGraphicsInitFruLib
+  
+  [Impacted Platform]
+  MTL, ARL
+  
+  Hsd-es-id: 18024772006
+  Change-Id: Ief487072a058caf4e6e5e9fb728cc81ea5f11dde
+  Original commit hash: 045400d661dd7daec56f0e325e390268b77fa3c1
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/Graphics/LibraryPrivate/PeiGraphicsInitFruLib/PeiGraphicsInitFruLib.c
+  ClientOneSiliconPkg/Fru/MtlSoc/Graphics/LibraryPrivate/PeiGraphicsInitFruLib/PeiGraphicsInitFruLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 0bc1d5f58e1d6559f74b730326c314f759790ba1 
+*********************************************************************************
+
+[ASL]
+
+  BIOS support to simulate Lid switch via _DSM for validation
+  
+  [Feature Description]
+  Added Lid switch simulation support in _DSM method
+  
+  Package/Module:ClientOneSiliconPkg, Ec
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 16018133586
+  Change-Id: I32b2d8de466b42f17934a0c424378e5aa88d885f
+  Original commit hash: 36edd617a2670dc159ef89fac22d959e30495015
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/Include/AcpiTables/Dsdt/PcieRpDgEdpFeatureHook.asl
+  ClientOneSiliconPkg/IpBlock/Graphics/AcpiTables/IgfxDsm.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Lid0.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 8b7e3e0bc05e8c0c72b1eb1c0e36d52939499d5b 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [RPE] BIOS ask for password after storage erase successfully
+  
+  [Issue Description]
+  After erase completes, bios asks for the drive passwords
+  even after entering the correct password.
+  
+  [Resolution]
+  BIOS shall check if opal is enabled to perform opal revert
+  
+  Package/Module:
+  MeteorLakePlatSamplePkg/PlatformErase
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 22015919903, 22015919933
+  Change-Id: I083ab0a24f055d2c98c73342552adab24481f55e
+  Original commit hash: d3f44ec1051c510147cc6a216cb78476ba1a689d
+  
+  MeteorLakePlatSamplePkg/Features/PlatformErase/Include/Protocol/PlatformOpalProtocol.h
+  MeteorLakePlatSamplePkg/Features/PlatformErase/PlatformOpalDxe/PlatformOpalDxe.c
+  MeteorLakePlatSamplePkg/Features/PlatformErase/StorageEraseDxe/DeviceHandler.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 80a9d59b7a669044bc2a254c3902bede7911afa0 
+*********************************************************************************
+
+[ASL], [BoardPkg]
+
+  MeteorLake: Fix ACPI bugs affecting table loading
+  
+  [Issue Description]
+  \_SB.PC00.XDCI and \_SB.PC00.RP02.HPEX are not defined on MTL-S SOC
+  
+  [Resolution]
+  Add CondRefOf around common code which references those varibales.
+  Package/Module: MeteorLakeBoardPkg, ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  MTL-S
+  
+  Hsd-es-id: 18024878492
+  Original commit hash: e52966a935b642b3cf5eb3b07ba3e8355333982e
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/Include/AcpiTables/Soc/SocCommonSsdt.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Dsdt.asl
+  MeteorLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/Platform.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+*********************************************************************************
+Commit: 9f1f6b2c4766f4e8bff806b06c4dd7fcf7d042ad 
+*********************************************************************************
+
+[BoardPkg]
+
+  Board support for MTL S with UDIMM DDR5 RVP board - part 2
+  
+  [Feature Description]
+  Added board support for MTL-S UDIMM 1DPC RVP board
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTLS
+  
+  Hsd-es-id: 14017179483
+  Change-Id: I7a8c5e72cc977dbf97c797ce950806cd2a029962
+  Original commit hash: be11e99df3ae08ec94d5995707e9f5613eaef538
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSHsioRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 5d90e569d534b45dacd71136bb70ad8b662ba729 
+*********************************************************************************
+
+[PlatformPkg]
+
+  IPT: limit IPT to set the memory size.
+  
+  [Issue Description]
+  Set IPT memory size to 128M,
+  It need total memory 128M * ThreadCount * 2 for IPT.
+  Current system memory is not enough for IPT, memory test fail.
+  
+  [Resolution]
+  According the system memory to add the limition in IPT setup menu.
+  when IPT memory needed is larger than system memory,
+  popup a windows to prompt user can't set,
+  and revert the setup to last setting.
+  
+  Package/Module: MeteorLakePlatSamplePkg/DebugSetup
+  
+  [Impacted Platform]
+  MTL.
+  
+  Hsd-es-id: 22015964066
+  Change-Id: I05342c8bd243e3720636cc214d43539bb07ccce9
+  Original commit hash: e3eb4fba4f08a92cc6f9b595416576c5fd763f28
+  
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/Setup/DebugSetup.c
+  MeteorLakePlatSamplePkg/Setup/DebugSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/DebugSetup.uni
+  MeteorLakePlatSamplePkg/Setup/SetupCallbackExList.h
+  MeteorLakePlatSamplePkg/Setup/SetupId.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 8e48b713b1fac98487aab91397dc181dcc7d17da 
+*********************************************************************************
+
+
+  [TSE] Add BlockIoTestApp support for CryptoIvInput and NULL Index input.
+  
+  [Feature Description]
+  
+  Refactored BlockIoTestApp to use configuration input structures instead
+  of using individual parameters.
+  
+  Included missing help usage option entries.
+  
+  Added support for the BlockIoTestApp to call the BlockIoCrypto
+  protocol without performing TSE encryption.
+  
+  Added support for the new BlockIoCrypto API which requires a
+  valid CryptoIvInput structure parameter when performing
+  inline encryption operations.
+  
+  Package/Module: ClientOneSiliconPkg, TseFeaturePkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 14017131738, 14017714845
+  Change-Id: Ie8a5b78536659130cf1f4dea56ff1ea050cfaa92
+  Original commit hash: f6e7c6646d8c26958078e5cbba4b18c992f5c6ba
+  
+  Features/Security/TseFeaturePkg/BlockIoTestApp/BlockIoTestApp.c
+  Features/Security/TseFeaturePkg/BlockIoTestApp/BlockIoTestApp.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 20a566295d75e2246eba85a2faf174dab014a440 
+*********************************************************************************
+
+
+  [TSE] BlockIoCrypto support for unencrypted IO & custom tweak values.
+  
+  [Feature Description]
+  
+  The BlockIoCrypto protocol API defined in the UEFI specification
+  describes two parameters for read & write extended operations:
+  Index and CryptoIvInput:
+  
+  1) BIOS will consume the optional Index parameter to determine if
+  the operation should be handled by the BlockIoCrypto protocol
+  performing inline encryption through the TSE engine or deferred
+  to the BlockIo protocol to perform a regular NVMe IO.
+  
+  2) BIOS should consume the caller's CryptoIvInput as a
+  EFI_BLOCK_IO_CRYPTO_IV_INPUT_AES_XTS structure as defined in
+  the UEFI spec to determine the tweak value for the AES XTS
+  algorithm. This parameter becomes mandatory for the
+  BlockIoCrypto protocol supporting TSE.
+  
+  Package/Module: ClientOneSiliconPkg, TseFeaturePkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 14017131738, 14017714845
+  Change-Id: I477ddec9b493a77c7aededee19f8950b453d7f26
+  Original commit hash: 48d4f2f260db9a4893bafebe7b78b7e8cef9d8ab
+  
+  Features/Security/TseFeaturePkg/TseNvmExpressDxe/NvmExpressBlockIoCrypto.c
+  Features/Security/TseFeaturePkg/TseNvmExpressDxe/NvmExpressPassthru.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: ca6912d2efd7dc1e10d30bf2af639143570e0511 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Add sample HTTP Boot Device Path in InstallNetworkCallback()
+  
+  [Feature Description]
+  Add comments describing sample HTTP Boot Device Path
+  
+  Package/Module: MeteorLakePlatSamplePkg/Features/Amt/OneClickRecovery
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 14017484774
+  Change-Id: Ie275574f60894b1f84ea6820459ecb8b45cca546
+  Original commit hash: dbf755f79cc99e812dc424c738c0b4b6e9309f5c
+  
+  MeteorLakePlatSamplePkg/Features/Amt/OneClickRecovery/OneClickRecovery.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: bac7b2b78373898cd66897010e16436b6977f22a 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg]
+
+  Introduce PcieBusPei driver
+  
+  [Feature Description]
+  This change introduce PcieBusPei library. This library allows to assign
+  resources for necessary devices, serve interface
+  to access and allow to enumerate them in PEI phase.
+  
+  Package/Module: ClientOneSiliconPkg/PcieBusPei
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 18021420416
+  Change-Id: Ia7048248674b2e068a8058dec81c3e4bc8d25e40
+  Original commit hash: b26dc4146624a447fce84855b35e595b9ec38c6b
+  
+  ClientOneSiliconPkg/IpBlock/Ioc/Library/PciHostBridgeLibIoc/PciHostBridgeLibIoc.inf
+  ClientOneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Library/PciExpressHelpersLib.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PciExpressHelpersLibrary/PciExpressHelpersLibrary.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/PcieBusPei/PciResourceHelpers.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/PcieBusPei/PciResources.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/PcieBusPei/PcieBusPei.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/PcieBusPei/PcieBusPei.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/PcieBusPei/PcieBusPei.inf
+  ClientOneSiliconPkg/LibraryPrivate/PciIoLib/PciIoLib.c
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/BoardPkg.fdf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 26fdf280ed2bc1c47141cdcef7cbb8c38bdf2d53 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [MTL-S] RTD3 support: MTL-S 2DPC UDIMM DDR5 RVP board
+  
+  [Feature Description]
+  PCIe RPs RTD3 support for UDIMM 2DPC DDR5 RVP board.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL-S
+  
+  Hsd-es-id: 14017322296
+  Change-Id: Id5e84253a3cc8cc0454601a7a6375d10b9ba954b
+  Original commit hash: 82494886d98d35c3264eed6395652e38d2717bf8
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/MtlSRvp2DPCRtd3.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 8830c426a75afa119b1ced20956a001619c8bb85 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  Modify PcdBatteryPresent to PcdBatterySupport and move to EC FeaturePkg
+  
+  [Issue Description]
+  Locate battery protocol fail
+  
+  [Resolution]
+  Modify PcdBatteryPresent to PcdBatterySupport and move to EC FeaturePkg
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15012129025
+  Change-Id: Ie66d9aa348069c678578a28c178925f26e2e5c6d
+  Original commit hash: 88d1a700cbc7649177c82a2a36445b9fdf9583cf
+  
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/EcInit.c
+  MeteorLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/PlatformNvs.asl
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPDdr5Crb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Crb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5DpHdmiRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Erb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5OnlyDpRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf1Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf2Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5MemSolderDowndTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5Gcs.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT4Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSHsioRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPDdr5SODimmB2bHsioRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPDdr5SODimmSbsPpvRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPSDdr5Ppv.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Simics/SkuIdMtlSSimics.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Simics/SkuIdMtlSimics.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlM/SkuIdMtlMLp5xAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlM/SkuIdMtlMLp5xAepp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlP/SkuIdMtlPLp5xAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeMultiBoardInitlib.inf
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: f70e569454e4d370011377494931f677c5ded11a 
+*********************************************************************************
+
+[ASL]
+
+  Modify PcdBatteryPresent to PcdBatterySupport and move to EC FeaturePkg
+  
+  [Issue Description]
+  Locate battery protocol fail
+  
+  [Resolution]
+  Modify PcdBatteryPresent to PcdBatterySupport and move to EC FeaturePkg
+  
+  Package/Module:
+  EcFeaturePkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15012129025
+  Change-Id: I0a995e0f5ec2fd35678659f789c71e1882f2cbdb
+  Original commit hash: d29abe19eafb178652c405771b1b7e1e08e467f4
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat0Virt.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat1Real.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcNvs.asl
+  Features/Ec/EcFeaturePkg/BatteryDxe/BatteryDxe.c
+  Features/Ec/EcFeaturePkg/BatteryDxe/BatteryDxe.inf
+  Features/Ec/EcFeaturePkg/EcFeaturePkg.dec
+  Features/Ec/EcFeaturePkg/Include/EcNvsAreaDef.h
+  Features/Ec/EcFeaturePkg/Include/Library/DxeBatteryLib.h
+  Features/Ec/EcFeaturePkg/Library/DxeBatteryLib/DxeBatteryLib.c
+  Features/Ec/EcFeaturePkg/Library/DxeBatteryLib/DxeBatteryLib.inf
+  Features/Ec/EcFeaturePkg/Library/DxeBatteryLibNull/DxeBatteryLibNull.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: f666f66182f92d0d503a361fe5961c514ebc8b0d 
+*********************************************************************************
+
+[BoardPkg]
+
+  Board support for MTL S with UDIMM 2DPC RVP board
+  
+  [Feature Description]
+  Added board support for MTL-S UDIMM 2DPC RVP board
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTLS
+  
+  Hsd-es-id: 14017180956
+  Change-Id: I2071658c28a73a0463559f89dd7767a1b72513bf
+  Original commit hash: 2fb680087cbfbd7aaf4ef8e4212756057b069601
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: c890f456dd969cb6de2ce837ec69cbf80fab892b 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2433_02"
+  
+  This reverts commit 191663f1ac737b3a8f7fb4d34180e2b6d95bfb9c.
+  
+  Wed Oct 26 18:20:24 2022 +0530
+  Original commit hash: d8ec6a12f33616d88d7046e58ff382499529af3f
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 374b01a934871be0a356fedda6f9b38788e8769c 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "MTL Enable Turbo Mode by default in BIOS setup for MTL P but not"
+  
+  This reverts commit 79e815e7112dda2e3474902f075756f5e04d2d01.
+  
+  Wed Oct 26 18:20:05 2022 +0530
+  Original commit hash: 9b91dc53e36f234771aeb21b4988257d37fc3664
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakeMRvpBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 6898aef4797ed4f225b2dfbabae0b1193b5905db 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2434_80"
+  
+  This reverts commit 40d46d5790d23ff33677c65519f8a209b41d6f67.
+  
+  Wed Oct 26 18:19:58 2022 +0530
+  Original commit hash: f2808e8b234d36c20c61bd156217c3dce0ea423b
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 3acc64001b3e99361bb758a9d5160ccbff36bef3 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2434_81"
+  
+  This reverts commit 103ccd3ddde6306a317d793c734ae06551443941.
+  
+  Wed Oct 26 18:19:49 2022 +0530
+  Original commit hash: e98b212e5f1352a38c1fecead70cbff45ee8076a
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 739c83aff6b8cdb33eb4164cfa90df881342f16b 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "MTL: Disable Turbo MCP A0 in External BIOS"
+  
+  This reverts commit 03d232b602471d0cb615f1147374fced4b88bdb5.
+  
+  Wed Oct 26 18:19:36 2022 +0530
+  Original commit hash: f430b93dd2c73b249dc7a13fd80a14156f0275e6
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakeMRvpBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePRvpBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 8c5f8e65cdb65d6c5fc04f5ef5ec52fb1dc79368 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2434_82"
+  
+  This reverts commit 49489c67698f9977cc57f502c050a5f03edab6ae.
+  
+  Wed Oct 26 18:19:26 2022 +0530
+  Original commit hash: d1ad0623ab78e9217a9bd4d8202b99a6e1ebd5f1
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: cd9cdf9006f3801fa8a5651d9805b0040e46f85d 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2435_80"
+  
+  This reverts commit c7e08c2ac3849075063f0719b3c4bfde083c57a5.
+  
+  Wed Oct 26 18:19:16 2022 +0530
+  Original commit hash: d02225613b4693e068837094c15f42553cefffd9
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: ca7f4b183c54abc57641915920a5b51dbff58bc5 
+*********************************************************************************
+
+[BoardPkg]
+
+  [MTL-P][HID WoV LED] : Slave Device not Getting Recognized
+  
+  [Feature Description]
+  Slave address missed due to inhertance, correcting it
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 16018561749
+  Change-Id: Ia176e7adf5796d8d121e1c4885fb1c45ad7caf24
+  Original commit hash: 98d4909f269243cc92d0af1801ff78537556d2ee
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT4Rvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 775d8c9d58ea4ed4cc665d856498e87111f7281e 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  [MTL-P] Apply VR and TDP 28W limits if a 45W fused MTL-P is present.
+  
+  [Feature Description]
+  BIOS RCR is to request implementation in BIOS to detect 28W VR vs 45W VR
+  and to apply VR and TDP 28W limits if a 45W fused MTL-P is present in a
+  system which is only 28W VR capable (not reworked for 45W VR config).
+  
+  Package/Module:
+  ClientOneSiliconPkg/Fru
+  
+  [Impacted Platform]
+  MTL-P
+  
+  Hsd-es-id: 14017647590
+  Change-Id: I0b5e1c9eb60b444b8b118dabd06e661ca8a75b45
+  Original commit hash: fd1b94ffe797f946e11e9c7a90b4ba7461b1ba8a
+  
+  ClientOneSiliconPkg/Fru/MtlCpu/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PowerManagementInit.c
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+
+*********************************************************************************
+Commit: 29e7128d8ebb3b8100cfb132a5b0740677462188 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [MTL-S] RTD3 support: MTL-S 1DPC SODIMM DDR5 RVP board
+  
+  [Feature Description]
+  PCIe RPs RTD3 support for SODIMM 1DPC DDR5 RVP board.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL-S
+  
+  Hsd-es-id: 14017322384
+  Change-Id: Id5e84253a3cc8cc0454601a7a6375d10b9ba954b
+  Original commit hash: 13cf207250a38677f629fb30f25dc4d2ca90abb9
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/MtlSRvpSODIMMRtd3.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3SRvpLpss.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 2e769fd1426aba5e56ff64b715dce3744eca8d27 
+*********************************************************************************
+
+[ASL]
+
+  [MTL][LNL][iTBT] Clean up ADBG tags on .asl file
+  
+  [Feature Description]
+  Clean up ADBG tag in EcExternalMethod.asl.
+  
+  Package/Module:
+  Intel\Features\Ec\EcFeaturePkg\AcpiTables\EcSsdt
+  
+  [Impacted Platform]
+  MTL, LNL
+  
+  Hsd-es-id: 15012157065, 15012157109
+  Change-Id: I0d46ed54a21166b966cb013aa9d531e619c0c3db
+  Original commit hash: acbc38582db62a79a4bc13e3d87125bcc47f85a2
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcExternalMethod.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: f10a4d6d5fb95e16a70b8e4d45bc66fe7d22a62f 
+*********************************************************************************
+
+[PlatformPkg]
+
+  CrashLog BIOS knob status is in incorrect
+  
+  [Issue Description]
+  Global reset Trigger mask status reverted back to Modify
+  when the global reset trigger masks were set to some value
+  other than default settings.
+  
+  [Resolution]
+  BIOS shall not reference global reset trigger masks to change status
+  when user set mask status to default.
+  
+  Package/Module:
+  MeteorLakePlatSamplePkg/CrashLog
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 16018484930
+  Change-Id: I2307cecbd45964b5279f5e97969cde1d2b4ab524
+  Original commit hash: 64a51a428d128120da95ab1217f569de7fdd13fc
+  
+  MeteorLakePlatSamplePkg/Features/CrashLog/Agent/SocCrashLogAgent/SocCrashLogUtils.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 36f730474a9c649621afb4e716da80285ecaf472 
+*********************************************************************************
+
+[BoardPkg]
+
+  Board support for MTL S with SODIMM 1DPC RVP board
+  
+  [Feature Description]
+  Added board support for MTL-S SODIMM 1DPC RVP board
+  
+  Package/Module:
+  Board pkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 14017246613
+  Change-Id: I7afbf232de397a104c8ffb9703d5fd26f2fa5df8
+  Original commit hash: fbdae1c1ec2a495a9823a3b59248896fe15b6610
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b801c86046d200fdb7b7a3adea55dd8af9039886 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S MTL-M MTL-P | DDR5 LP5] VccClkFF training workarounds
+  
+  [Feature Description]
+  Workarounds needed for VccClkFF training
+  
+  Package/Module:
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22015936227
+  Change-Id: I64d70f47f76a4c979b680ddef0b44b7e7fb5564d
+  Original commit hash: dacec6c01207b35bb7f5d83e5dbaeacc8c5a8abe
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfigPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: ff70c3328656663a2cea9d229751359ecc213017 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Condition check fix
+  
+  [Issue Description]
+  If EFI_ERROR (Status) was true then it would have returned,
+  but going forward under false branch the same condition is
+  checked.
+  
+  [Resolution]
+  This was resolved by adding proper Status checks when necessary.
+  
+  Package/Module: ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 16017531437
+  Change-Id: I0c9a54ef6c2df9a948c90b3795b37684a4ce3234
+  Original commit hash: 5bde12c5309e6b7253224fe94b3bc5e2e2d5fbb9
+  
+  ClientOneSiliconPkg/IpBlock/Thc/ThcDriver/Thc.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 798f9db16aa541b4432bc1b27c1386e8f32cdc1e 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Remove remaining legacy MEBx items.
+  
+  [Issue Description]
+  Legacy MEBx related items still available in the code.
+  
+  [Resolution]
+  Removed existing references to legacy MEBx.
+  
+  Package/Module:
+  CpPcPlatPkg
+  LunarLakePlatSamplePkg
+  MeteorLakePlatSamplePkg
+  ServerPlatformPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 18024630917
+  Change-Id: I0672f593a3a966bf40000e3ad3516faf7242e55e
+  Original commit hash: e4706c951cf0aff2ae4659893595f2ced43dda41
+  
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetup.c
+  MeteorLakePlatSamplePkg/Setup/SetupId.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 766e32baabf0ed9e584d7b9d0bbfb18a9bb82e36 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Remove Mebx Protocol.
+  
+  [Issue Description]
+  Legacy MEBx related items still available in the code.
+  
+  [Resolution]
+  Removed legacy MEBx Protocol.
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 18024606394
+  Change-Id: I91c2a0ed511a109b060d63c28bdd160a6d2d1dc8
+  Original commit hash: 225a617f106c9e34188cd20aa2e8df6910eabaa2
+  
+  ClientOneSiliconPkg/IpBlock/Me/HwAsset/Dxe/HwAssetDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: fb49c33f1f7668ee9e99663ea612b1c6e339162b 
+*********************************************************************************
+
+[PlatformPkg]
+
+  RPL-LPE DXE driver allocate memory at wrong place and not clean up.
+  
+  [Issue Description] DXE driver memory allocation happend in wrong place
+  un-necessarily the memory is allocated and not cleared.
+  
+  [Resolution] allocated Memory after all checks completed.
+  
+  Package/Module: MeteorLakePlatSamplePkg/Features/Rpe/
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 16018549536
+  Change-Id: Ife1e4abeac9a4af41aca8902376cd8b1d43c88af
+  Original commit hash: 8434bcdd90a7e47cfc7350bb7579f401e397bbd1
+  
+  MeteorLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 57556b79ddbef7681147a2878f2bef0a2da10326 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  Board support for MTL S with UDIMM DDR5 RVP board
+  
+  [Feature Description]
+  Added board support for MTL-S UDIMM 1DPC RVP board
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTLS
+  
+  Hsd-es-id: 14017179483, 22015251916
+  Change-Id: I65f9c3fca38bc440bb8c51498ae632ff208509f4
+  Original commit hash: beb126b44ab888e6e992b9e51cca52dc840924fe
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/MtlSRvpRtd3.asl
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/BoardPkgPcdInit.dsc
+  MeteorLakeBoardPkg/Include/Library/BoardConfigLib.h
+  MeteorLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+  MeteorLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.inf
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+  MeteorLakePlatSamplePkg/Features/Pct/PlatformConfigTool.inf
+  MeteorLakePlatSamplePkg/Features/Pct/PlatformConfigToolDataParser.c
+  MeteorLakePlatSamplePkg/Library/PeiPlatformHookLib/PeiPlatformHooklib.c
+  MeteorLakePlatSamplePkg/Library/PeiPlatformHookLib/PeiPlatformHooklib.inf
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b8d1c8a2c7853e7c6950c39d372353856f9f0444 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Revert "[MTL-P]String patch table for string type question data update."
+  
+  [Issue Description]
+  SUT hangs at PC AC10 After provisioning and Enabling TXT with DTPM.
+  
+  [Resolution]
+  reverts commit c4c364cecc097a6e8ee752d810412e67223158f5.
+  
+  Package/Module:
+  MeteorLakeBoardPkg,MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  MTL-P
+  
+  Hsd-es-id: 16018549805
+  Change-Id: If1bcb35700488de56023011d6583bf6dfcfafa20
+  Original commit hash: 69a93a006f140a68358ea2f88e1fb5a89aed47e1
+  
+  MeteorLakeBoardPkg/Features/Setup/Include/Library/SetupInitLib.h
+  MeteorLakeBoardPkg/Features/Setup/Library/PeiSetupInitLib/PeiSetupInitLib.c
+  MeteorLakeBoardPkg/Include/Library/BoardConfigLib.h
+  MeteorLakeBoardPkg/Library/DxeBoardConfigLib/DxeBoardConfigLib.c
+  MeteorLakeBoardPkg/Library/DxeBoardConfigLib/DxeBoardConfigLib.inf
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePRvpBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeMultiBoardInitlib.inf
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  MeteorLakePlatSamplePkg/PlatformPkg.dec
+  MeteorLakePlatSamplePkg/Setup/HiiConfigAccess.c
+  MeteorLakePlatSamplePkg/Setup/SaSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/Setup.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: f982173e6f2ccffbe2a3dbd6b5492cd7abd42a58 
+*********************************************************************************
+
+[BoardPkg]
+
+  MTL P DDR5 Board Powermeter Table correction
+  
+  [Issue Description]
+  Incorrect resistor value in powermeter.
+  
+  [Resolution]
+  Corrected the resistor value
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL-P
+  
+  Hsd-es-id: 15011538605
+  Change-Id: I4916e0da2e858d124a896c0a7509b383cc7c32fc
+  Original commit hash: e59c9d48e3a12eb3952a611bc4aae316013b44b5
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 4457a4daf38a66aac0e505f31bc33cb31d68506d 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Support required to retrieve MAC address from PSS chip.
+  
+  [Feature Description]
+  Default MAC Address is read from the Flash region.
+  MAC Address is read from PSS Chip.
+  New MAC Address is checked with the Default MAC Address.
+  Default MAC Address is updated with the New MAC Address.
+  Setup option is created in the BIOS Setup Menu.
+  It is by default Enabled.
+  Upon updating the Default MAC Address with New
+  MAC Address the Setup option is the Disabled.
+  
+  Package/Module: Features/MacUpdate
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 15011172467
+  Change-Id: Idb755559cc67f96746070cf08dfffbbb034dd2d3
+  Original commit hash: 293c5626c777b7f9175b13d4fb6db2d209249c6c
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/BoardPkg.fdf
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdate.inf
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateDefines.h
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateHw.c
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateInit.c
+  MeteorLakePlatSamplePkg/Include/Library/PssLib.h
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  MeteorLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/PlatformSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: a15cf309e62fa0fcf696b8f9f927578bdb7240e6 
+*********************************************************************************
+
+[SiliconPkg]
+
+  BIOS shall configure PL1 = PL2 for all K SKUs
+  
+  [Feature Description]
+  BIOS has to configire as PL1=PL2 & PL1 Tau should be 56 Sec
+  
+  Package/Module:MtlCpu
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 16018536759
+  Change-Id: If99d97ceda6b4723c8b061bc4e193c15c959ecda
+  Original commit hash: 0341abba79f238b04f3e90e3fc42f9f195de9c5d
+  
+  ClientOneSiliconPkg/Fru/MtlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: ae148d50d872a83ef9f708a386dec6668eef1b3a 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Scan Matrix Setup option is default set to Enabled for mobilesku.
+  
+  [Issue Description]
+  Scan Matrix Setup option is changed from default set to Disabled
+  to Enabled for mobilesku.
+  
+  [Resolution]
+  If issue resolution, describe generally how was this fixed
+  
+  Package/Module: Ec/EcFeaturePkg
+  
+  [Impacted Platform]
+  MeteorLake
+  
+  Hsd-es-id: 16017169019
+  Change-Id: Ib14651c051fdabb09c9142da3cd11f22f533e270
+  Original commit hash: b90d905b9ae4a1ce752d457b30701fe1727bd14a
+  
+  MeteorLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b81bbe3dbce18f0c594ccfac35f9a22e3b7d39b9 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  MTL S with SODIMM DDR5 RVP board
+  
+  [Feature Description]
+  TCSS Board support for MTL S SODIMM DDR5
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MeteorLake S
+  
+  Hsd-es-id: 22012118470
+  Change-Id: I0787a2e39c8ed44d6e20162b46566f7c68eb815b
+  Original commit hash: 7812b4e7dc4e6d2cc8c24f27b50fdccdc3fb309f
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSSD02Rvp.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 394e4496b9acb93fe1c5b41cc8815861d3974212 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  AMT : "System boot failure" can be seen in AMT Event Log
+  
+  [Issue Description]
+  System hits a watchdog timeout when stay in setup over 5 minutes.
+  
+  [Resolution]
+  Send Asf Stop Watchdog if system uses corporate IFWI.
+  
+  Package/Module:
+  ClientOneSiliconPkg/Amt
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15012117406
+  Change-Id: I5a9d0570991036ee02fb97a0131d4a632b46d1e0
+  Original commit hash: 28d17900ab4a0ad06035c954152b8784f5b66c2f
+  
+  ClientOneSiliconPkg/IpBlock/Amt/AmtInit/Dxe/AmtInitDxe.c
+  ClientOneSiliconPkg/IpBlock/Amt/AmtInit/Dxe/AmtInitDxe.h
+  ClientOneSiliconPkg/IpBlock/Amt/AmtInit/Dxe/AmtInitDxe.inf
+  ClientOneSiliconPkg/IpBlock/Amt/AmtInit/Dxe/Kvm.c
+  ClientOneSiliconPkg/IpBlock/Amt/AmtInit/Dxe/PetMessage.c
+  ClientOneSiliconPkg/Product/MeteorLake/SiInit/Pei/SiInit.c
+  MeteorLakePlatSamplePkg/Setup/SecuritySetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: b0cb87de5112de5de46ab62e04b30cf34871fac1 
+*********************************************************************************
+
+[BoardPkg]
+
+  Board support MTL-P DDR5 Mem Solder down dTBT RVP
+  
+  [Feature Description]
+  Contains spd data size changes
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL-P
+  
+  Hsd-es-id: 16018385075
+  Change-Id: Id71d57b3872bdbf71db893dbc35dae9087bf8438
+  Original commit hash: 5c6514a5e91439ba56975cf011e0f5680975b027
+  
+  MeteorLakeBoardPkg/Include/PlatformBoardConfig.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5MemSolderDowndTBTRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 1bf255038131d365fdb2ca4fecd2d66179158f3c 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2423_02"
+  
+  This reverts commit 34eda629054248820e75e288ed592d0c1b60d3d6.
+  
+  Change-Id: I2ca15a1f2fe7b2c3aa32748db1e0286f32661627
+  Original commit hash: 34f2d10e6136ab20217bdf5e786e9662f03a4638
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 54b144b0e4359b0000d6883e9986a9c843871156 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2423_03"
+  
+  This reverts commit 849063047e9171b60cf141c527db6893b5578234.
+  
+  Wed Oct 19 18:48:33 2022 +0530
+  Original commit hash: cb725d9a6a0b8d39073ec19a1a333d4761fbf486
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 33ac41a6fb8bd8d9c0a128b35a70f227fc1683e5 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2426_80"
+  
+  This reverts commit bec02ce195f62c21586cb519d2e6537fb92b8016.
+  
+  Wed Oct 19 18:48:30 2022 +0530
+  Original commit hash: de1ca0d1db4ae60c999bbc04eca822fc17387ffe
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: f61a287a2f84a58d0a2ccd2ae2ce3bc12874aca6 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Revert "Revert "[MTL-P]String patch table for string type question data update.""
+  
+  This reverts commit 4b481f654d37ed173ef8274283ee0ef354eb7ce2.
+  
+  Wed Oct 19 18:48:26 2022 +0530
+  Original commit hash: 8cac146db689dc02edd131b7dd4836b3354cf724
+  
+  MeteorLakeBoardPkg/Features/Setup/Include/Library/SetupInitLib.h
+  MeteorLakeBoardPkg/Features/Setup/Library/PeiSetupInitLib/PeiSetupInitLib.c
+  MeteorLakeBoardPkg/Include/Library/BoardConfigLib.h
+  MeteorLakeBoardPkg/Library/DxeBoardConfigLib/DxeBoardConfigLib.c
+  MeteorLakeBoardPkg/Library/DxeBoardConfigLib/DxeBoardConfigLib.inf
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePRvpBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeMultiBoardInitlib.inf
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  MeteorLakePlatSamplePkg/PlatformPkg.dec
+  MeteorLakePlatSamplePkg/Setup/HiiConfigAccess.c
+  MeteorLakePlatSamplePkg/Setup/SaSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/Setup.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: b915571f69f402a416da65c53c8cd14a316dbc6a 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2427_80"
+  
+  This reverts commit d0626ed1d87dabd640a8f6281de10bf8b9b395a1.
+  
+  Wed Oct 19 18:48:22 2022 +0530
+  Original commit hash: b4cc372182802f7d9a15f400e20df9723e4acaa3
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 641c20320191fb7a8506ed2a6566891b3b9c7b7d 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily_github Daily Updating Version/ID: MeteorLake_2431_80"
+  
+  This reverts commit 437237a06d143aecd69c90403f9c9ab3c6f70234.
+  
+  Wed Oct 19 18:47:24 2022 +0530
+  Original commit hash: 1aa252cc1bc9d6d6620a0af13560221b968d4c17
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+################################################################################
+
+Report Summary: Backstop found 96 suspect commits for review 
+
+Warnings Found:
+  Commit: 5a2bbd0    --Commit Message Contains Key Word: revert
+  Commit: 814f021    --Commit Message Contains Oem: NEC
+  Commit: aa6e723    --Commit Message Contains Key Word: stepping
+  Commit: 48c94ac    --Commit Message Contains Key Word: step
+  Commit: 48c94ac    --Commit Message Contains Key Word: stepping
+  Commit: b8a8244    --Commit Message Contains Key Word: sku
+  Commit: 89a0080    --Commit Message Contains Key Word: revert
+  Commit: 1c85004    --Commit Message Contains Key Word: revert
+  Commit: 0d30262    --Commit Message Contains Key Word: revert
+  Commit: 90480eb    --Commit Message Contains Key Word: revert
+  Commit: a438549    --Commit Message Contains Key Word: revert
+  Commit: cceca17    --Commit Message Contains Key Word: HW
+  Commit: 5d0692c    --Commit Message Contains Key Word: revert
+  Commit: abd4d9e    --Commit Message Contains Key Word: sku
+  Commit: 16088d1    --Commit Message Contains Key Word: sku
+  Commit: a5f69d9    --Commit Message Contains Key Word: step
+  Commit: e125f61    --Commit Message Contains Key Word: hardware
+  Commit: 1106ff2    --Commit Message Contains Key Word: sku
+  Commit: d75f611    --Commit Message Contains Key Word: sku
+  Commit: 3ba4c49    --Commit Message Contains Key Word: sku
+  Commit: debb4bf    --Commit Message Contains Key Word: revert
+  Commit: 2cc2833    --Commit Message Contains Oem: ecs
+  Commit: 2cc2833    --Commit Message Contains Key Word: sku
+  Commit: 1cf4024    --Commit Message Contains Key Word: sku
+  Commit: d89d1ad    --Commit Message Contains Key Word: revert
+  Commit: d43b2b8    --Commit Message Contains Key Word: revert
+  Commit: 711cb9b    --Commit Message Contains Key Word: revert
+  Commit: 6e61c16    --Commit Message Contains Key Word: revert
+  Commit: 596ef9b    --Commit Message Contains Key Word: security
+  Commit: 9e72534    --Commit Message Contains Key Word: security
+  Commit: 98d6cb5    --Commit Message Contains Key Word: sku
+  Commit: 98d6cb5    --Commit Message Contains Oem: NEC
+  Commit: f1af00a    --Commit Message Contains Oem: NEC
+  Commit: 28b979c    --Commit Message Contains Key Word: revert
+  Commit: ef95a84    --Commit Message Contains Key Word: sku
+  Commit: f2cf84b    --Commit Message Contains Key Word: security
+  Commit: b7375fd    --Commit Message Contains Key Word: sku
+  Commit: 6a0d1c5    --Commit Message Contains Key Word: revert
+  Commit: ff104e1    --Commit Message Contains Key Word: revert
+  Commit: dbd07d7    --Commit Message Contains Key Word: revert
+  Commit: 6d916ae    --Commit Message Contains Key Word: security
+  Commit: 9f0d094    --Commit Message Contains Key Word: sku
+  Commit: e8fa2ab    --Commit Message Contains Key Word: step
+  Commit: c7f953e    --Commit Message Contains Key Word: revert
+  Commit: 60096e8    --Commit Message Contains Key Word: security
+  Commit: fc94f60    --Commit Message Contains Key Word: sku
+  Commit: e4e166e    --Commit Message Contains Key Word: sku
+  Commit: 42c4d1b    --Commit Message Contains Key Word: security
+  Commit: 9c8d082    --Commit Message Contains Key Word: HW
+  Commit: e392bdf    --Commit Message Contains Key Word: revert
+  Commit: f0a9cc0    --Commit Message Contains Key Word: revert
+  Commit: 3175fb5    --Commit Message Contains Key Word: revert
+  Commit: db31a3a    --Commit Message Contains Key Word: sku
+  Commit: 0bc1d5f    --Commit Message Contains Oem: ecs
+  Commit: 8b7e3e0    --Commit Message Contains Key Word: revert
+  Commit: 80a9d59    --Commit Message Contains Oem: HP
+  Commit: 9f1f6b2    --Commit Message Contains Key Word: sku
+  Commit: 5d90e56    --Commit Message Contains Key Word: revert
+  Commit: 8e48b71    --Commit Message Contains Key Word: security
+  Commit: 20a5662    --Commit Message Contains Key Word: security
+  Commit: ca6912d    --Commit Message Contains Key Word: http
+  Commit: bac7b2b    --Commit Message Contains Oem: NEC
+  Commit: 26fdf28    --Commit Message Contains Key Word: sku
+  Commit: 8830c42    --Commit Message Contains Key Word: sku
+  Commit: f70e569    --Commit Message Contains Oem: ecs
+  Commit: f666f66    --Commit Message Contains Key Word: sku
+  Commit: c890f45    --Commit Message Contains Key Word: revert
+  Commit: 374b01a    --Commit Message Contains Key Word: revert
+  Commit: 6898aef    --Commit Message Contains Key Word: revert
+  Commit: 3acc640    --Commit Message Contains Key Word: revert
+  Commit: 739c83a    --Commit Message Contains Key Word: revert
+  Commit: 8c5f8e6    --Commit Message Contains Key Word: revert
+  Commit: cd9cdf9    --Commit Message Contains Key Word: revert
+  Commit: ca7f4b1    --Commit Message Contains Key Word: sku
+  Commit: 775d8c9    --Commit Message Contains Key Word: fuse
+  Commit: 29e7128    --Commit Message Contains Key Word: sku
+  Commit: 2e769fd    --Commit Message Contains Oem: ecs
+  Commit: f10a4d6    --Commit Message Contains Key Word: revert
+  Commit: 36f7304    --Commit Message Contains Key Word: sku
+  Commit: b801c86    --Commit Message Contains Key Word: Workaround
+  Commit: ff70c33    --Commit Message Contains Oem: NEC
+  Commit: 798f9db    --Commit Message Contains Key Word: security
+  Commit: 766e32b    --Commit Message Contains Key Word: HW
+  Commit: fb49c33    --Commit Message Contains Oem: NEC
+  Commit: 57556b7    --Commit Message Contains Key Word: sku
+  Commit: b8d1c8a    --Commit Message Contains Key Word: revert
+  Commit: f982173    --Commit Message Contains Key Word: sku
+  Commit: 4457a4d    --Commit Message Contains Key Word: HW
+  Commit: a15cf30    --Commit Message Contains Key Word: sku
+  Commit: ae148d5    --Commit Message Contains Key Word: sku
+  Commit: b81bbe3    --Commit Message Contains Key Word: sku
+  Commit: 394e449    --Commit Message Contains Key Word: security
+  Commit: b0cb87d    --Commit Message Contains Key Word: sku
+  Commit: 1bf2550    --Commit Message Contains Key Word: revert
+  Commit: 54b144b    --Commit Message Contains Key Word: revert
+  Commit: 33ac41a    --Commit Message Contains Key Word: revert
+  Commit: f61a287    --Commit Message Contains Key Word: revert
+  Commit: b915571    --Commit Message Contains Key Word: revert
+  Commit: 641c203    --Commit Message Contains Key Word: revert
