@@ -1,0 +1,467 @@
+================================================================================ 
+Commit: a09802e68b633152177a6dfa47157e52d8216479 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 12:31:35 2023 +0800 
+-------------------------------------------------------------------------------- 
+Added doxygen files
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Doxygen/AlderLake_FSP_Integration_Guide.chm
+Doxygen/AlderLake_FSP_Integration_Guide.pdf
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+
+================================================================================ 
+Commit: 802330ffc7f50702880a58e61263f542eae75c3e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:55 2023 +0800 
+-------------------------------------------------------------------------------- 
+Update BIOS ID and FSP Version for 3534_00
+
+[Feature Description]
+Update PcdFspVersionRevision and PcdSiliconInitVersionRevision to 0x9C
+Update PcdFspVersionBuild and PcdSiliconInitVersionBuild to 0x30
+Update BIOS version to 3534_00
+
+Package/Module:
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: N/A
+Original commit date: Thu Dec 29 15:22:49 2022 +0800
+Change-Id: I0b2507ffc78c7fb53738703a8f9924b75e906b25
+Original commit hash: 9ddaddb5a0528338a6edfc46dd72743c65eab5b2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 9c1a244a7a178dddf7d1937e24f0de17f6270825 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:53 2023 +0800 
+-------------------------------------------------------------------------------- 
+[ADL][RPL]Reading E-Core Nominal Performance via B2P mailbox for
+non-turbo SKU
+
+[Issue Description]
+The CPU frequency(Check in the task manager) is
+lower than 1.3Ghz (CPU = i5-1235U) while run Aida64.
+
+[Resolution]
+1. To check if non-Turbo to apply mailbox
+to get E-Core Nominal freq (P1) for ACPI _CPC
+2. Revert "Atom ACPI Maximum performance percentage miscalculation"
+
+This reverts commit 7f899ca416f2a72ffba8e9ac51b34e78ae4df84d.
+
+Package/Module:
+ClientOneSiliconPkg/Cpu
+
+[Impacted Platform]
+P, U, Celeron
+
+Hsd-es-id: 15012568107
+Original commit date: Tue Dec 27 22:15:01 2022 -0800
+Change-Id: I51390e9075233d854fab66208f3818fd6d577585
+Original commit hash: b64bc63408cc3a93f92b55be36a004650005b1ba
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/CpuInit/Dxe/CpuAcpi.c
+ClientOneSiliconPkg/Cpu/IncludePrivate/CpuInitDataHob.h
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/Features.c
+ClientOneSiliconPkg/Include/Library/CpuMailboxLib.h
+
+================================================================================ 
+Commit: 29eacafae414131413494598f01b889550716bb0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:51 2023 +0800 
+-------------------------------------------------------------------------------- 
+BIOS Guide Updates for ADL CPU, ADPLP and ADPS (v19) Programs (Rev23)
+
+[Feature Description]
+RxDet timer change from 100ms to 18ms by updating the multipler form 12
+to 2.
+
+Package/Module:
+ClientOneSiliconPkg/PeiUsbHostControllerInitLib
+
+[Impacted Platform]
+ADL, RPL.
+
+Hsd-es-id: 15012551375
+Original commit date: Fri Dec 23 18:56:37 2022 +0800
+Change-Id: I45d5c3bed8b33c501e7cd8782c7a0939ce3972b2
+Original commit hash: dd4a5033806da6c4a5f15479c6a38df7582ac66a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/Register/UsbRegs.h
+ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/UsbHostControllerInit.c
+
+================================================================================ 
+Commit: 7ea88547af358e16631e07ba2d17ff0b12843f65 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:49 2023 +0800 
+-------------------------------------------------------------------------------- 
+HidKbDxe: Fix avoiding Memory Corruption Due to Malformed HID Report
+
+[Feature Description]
+As per finding NCC-2022-WBA, malformed BLE KeyBoard HID Report
+leads to out of bounds memory write. This adds additional check
+before writing to memory and avoids memory corruption.
+
+Package/Module:
+BluetoothPkg
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 16019210438
+Original commit date: Wed Dec 7 07:48:38 2022 +0200
+Change-Id: Ia1254c0985ac9fd91065b1e23b77ad232e037aa4
+Original commit hash: 8490496beab9f070e4a90f6b08ea6aa07df1f9a0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/BluetoothPkg/HidKbDxe/KeyBoard.c
+
+================================================================================ 
+Commit: 419922f9b35359a1c5a7c273bbcbf241331bcf6f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:47 2023 +0800 
+-------------------------------------------------------------------------------- 
+Disabled USB3 U1 U2 for typeC ports with retimer
+
+[Feature Description]
+TypeC ports with retimer should *not* enter USB3 U1/U2 link state. The
+retimer adds a delay which violates the U1 exit delay requirements.
+
+Package/Module:ClientOneSiliconPkg/Tcss
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 15012528493
+Original commit date: Fri Sep 23 08:23:04 2022 +0800
+Change-Id: Ib400c456072740624ab2b3c793d3cbdd8f176efe
+Original commit hash: dbe3b4e306e130415b76cad6560f98ae59540dc2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/TcssDataHob.h
+ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssSsdt.asl
+ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssXhci.asl
+ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/DxeTcssInitLib/DxeTcssInit.c
+ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiTcssInitLib/TcssInit.c
+ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/SaNvs.asl
+ClientOneSiliconPkg/SystemAgent/IncludePrivate/SaNvsAreaDef.h
+
+================================================================================ 
+Commit: d4ccca670c5fd924837246a4672342030cc3d11d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:45 2023 +0800 
+-------------------------------------------------------------------------------- 
+[ADL-S]Microcode patch 0x0000002B update for ADLS C0
+
+[Feature Description]
+Updated patch 0x0000002B for ADLS C0
+
+Package/Module:
+AlderLakeBoardPkg
+
+[Impacted Platform]
+ADL-S
+
+Hsd-es-id: 15012528737
+Original commit date: Wed Dec 21 11:33:28 2022 +0800
+Change-Id: Ic57ddad2ddd00e61b5ffd2d89b3c9576dba593b8
+Original commit hash: 79cfdd6fc717d351855e4e36db6a63eb6c193d45
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 454986830a5f3ee1d1d13ba857a4b524f8743080 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:43 2023 +0800 
+-------------------------------------------------------------------------------- 
+[ADL-S]Fix the capsule update skip on ADL.
+
+[Issue Description]
+Capsule update can not be triggered on ADL platform.
+
+[Resolution]
+Remove ADL platform detection before capsule update.
+This conditional judgment caused the capsule update on ADL to skip.
+
+Package/Module:
+AlderLakePlatSamplePkg
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16019174110
+Original commit date: Tue Dec 20 10:35:10 2022 +0800
+Change-Id: Ia59ee80a7d5be51a04e2e552db260b0b4e670f2f
+Original commit hash: 5676719b20bf89ad4d2db971d3b087a1cd339842
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+
+================================================================================ 
+Commit: f10db370dba8b600c7362d0cda97e2e2f45c388b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:40 2023 +0800 
+-------------------------------------------------------------------------------- 
+[ADL-P/M] Add new microcode for Lx/Rx Production patchID 0x00000428
+
+[Feature Description]
+Updating microcode to patchID 0x428
+
+Package/Module: AlderLakeBoardPkg
+
+[Impacted Platform]
+ADL-P/M
+
+Hsd-es-id: 16019211951
+Original commit date: Mon Dec 19 14:25:20 2022 +0530
+Change-Id: I6a8cbb84574704e6aa4616f1b80880c6c25cec14
+Original commit hash: 5f8ea01a4cddcffab8fb84b8e243683aa6f2b920
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 5b4ca72d928be033b047da3ab135aceb485554d8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:38 2023 +0800 
+-------------------------------------------------------------------------------- 
+Overrun issue in AlderLake_Daily3517_00_272
+
+[Issue Description]
+Buffer overrun issue.
+
+[Resolution]
+Fixed buffer overrun issue.
+
+Package/Module: AlderLakePlatSamplePkg/Features and
+ClientOneSiliconPkg/IpBlock/Thc/
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 15012514726
+Original commit date: Mon Dec 19 10:02:29 2022 +0530
+Change-Id: I27e1950bc5259f0585ed752dff8ad747f720cc4a
+Original commit hash: 2eeba764317032504ae50ced55cc43a181cf0702
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/I2c/I2cTouchPanelDxe/I2cTouchPanel.c
+ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiHid.c
+ClientOneSiliconPkg/IpBlock/Thc/ThcDriver/ThcHid.c
+
+================================================================================ 
+Commit: 16e57a9fa5cbd095ac3dc80038845dd5853d4272 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:36 2023 +0800 
+-------------------------------------------------------------------------------- 
+Make I2C resistant to buffer overflow/underflow
+
+[Feature Description]
+Make I2C resistant to buffer overflow/underflow by adding
+by adding Maximum buffer reach and size should not be
+less that zero checks.
+
+Package/Module: AlderLakePlatSamplePkg/Features and
+ClientOneSiliconPkg/IpBlock
+
+[Impacted Platform]
+ADL and RPL
+
+Hsd-es-id: 16019169504
+Original commit date: Thu Dec 8 13:54:57 2022 +0530
+Change-Id: I93ec5bab5af3941ee5c830cf76e34e2675c20b9c
+Original commit hash: ddc4e8a4a6a0675b39cc2e628d95cf510a5e36a9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/I2c/I2cTouchPanelDxe/I2cTouchPanel.c
+ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiHid.c
+ClientOneSiliconPkg/IpBlock/Thc/ThcDriver/ThcHid.c
+
+================================================================================ 
+Commit: 5e1dc7a8f1a633226ebecf6c45fed902e66f07be 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:34 2023 +0800 
+-------------------------------------------------------------------------------- 
+Sventx_crc32: replace CRC32 with version 1.2.13
+
+[Issue Description]
+Not use the zlib directly
+
+[Resolution]
+replace the CRC32 implementation with version 1.2.13
+
+Package/Module: ClientOneSiliconPkg/TraceHubDebugLibSvenTx
+
+[Impacted Platform]
+ADL, RPL
+
+Hsd-es-id: 15012504415
+Original commit date: Thu Dec 15 11:02:12 2022 +0800
+Change-Id: I5a9ea8ef6570c30f8093fdc17566826d082838ed
+Original commit hash: 76cdf54db1575395ba7f5b7dafed6309aa792e4b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Library/TraceHubDebugLibSvenTx/BaseTraceHubDebugLibSvenTx.inf
+ClientOneSiliconPkg/Library/TraceHubDebugLibSvenTx/DxeTraceHubDebugLibSvenTx.inf
+ClientOneSiliconPkg/Library/TraceHubDebugLibSvenTx/PeiTraceHubDebugLibSvenTx.inf
+ClientOneSiliconPkg/Library/TraceHubDebugLibSvenTx/sventx/crc32.h
+ClientOneSiliconPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_crc32.c
+ClientOneSiliconPkg/Library/TraceHubDebugLibSvenTx/sventx/src/sventx_write.c
+ClientOneSiliconPkg/Library/TraceHubDebugLibSvenTx/sventx/sventx_crc32.h
+
+================================================================================ 
+Commit: 6882b88fa4bf3fc066bcec0bea49e22ed53d53d0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:32 2023 +0800 
+-------------------------------------------------------------------------------- 
+Access PEI DMA buffer in SMI
+
+[Issue Description]
+Some SMM driver wanted to access PEI DMA buffer in one of the SMI
+handler during S3 resume. It is blocked because the type is
+EfiReservedMemoryType.
+
+[Resolution]
+Change the memory type to EfiRuntimeServicesData and
+DualChannelDdrMainMemory.
+
+Package/Module: ClientOneSiliconPkg/PeiMemoryInitLib
+
+[Impacted Platform]
+ADL, RPL
+
+Hsd-es-id: 16018943092
+Original commit date: Thu Nov 24 16:43:04 2022 +0800
+Change-Id: Iff00d82aa36f794e9524f8c57e74e22890a1addd
+Original commit hash: 70129c0a9451f0eccf7ee8e4fe83daf9cf03845b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+
+================================================================================ 
+Commit: 85ab84d027cc6243854102bc7f739136ad27671f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:30 2023 +0800 
+-------------------------------------------------------------------------------- 
+Update BIOS ID and FSP Version for 3505_00
+
+[Feature Description]
+Update PcdFspVersionRevision and PcdSiliconInitVersionRevision to 0x99
+Update PcdFspVersionBuild and PcdSiliconInitVersionBuild to 0x40
+Update BIOS version to 3505_00
+
+Package/Module:
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: N/A
+Original commit date: Fri Dec 9 15:56:15 2022 +0800
+Change-Id: Ifa4c689f7904f1a486d8bf8f15623698016fe87a
+Original commit hash: 438ca51129113fae44f754ae45cddd35c8b477ff
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: f2f0b34e6b9d27a8c2cd562c6d47ad36ab71feed 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:28 2023 +0800 
+-------------------------------------------------------------------------------- 
+[ADL-S]Microcode patch 0x00000029 update for ADLS C0
+
+Updated patch 0x00000029 for ADLS C0
+
+Package/Module:
+Microcode/m_07_90672_00000029
+
+[Impacted Platform]
+Default ADL-S
+
+Hsd-es-id: 15012473837
+Original commit date: Fri Dec 9 15:12:12 2022 +0800
+Change-Id: If587b360b555e2ba970649d7bb2ab2fced310a76
+Original commit hash: 2da3794c233d9d0af2afda52cc90cc71b795a4f2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 796953a59247c56fdedd3e338a55af610f83cfd4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:26 2023 +0800 
+-------------------------------------------------------------------------------- 
+[ADL-P/M] Add new microcode for Lx/Rx Production patchID 0x00000426
+
+[Feature Description]
+Updating microcode to patchID 0x426
+
+Package/Module: AlderLakeBoardPkg
+
+[Impacted Platform]
+ADL-P/M
+
+Hsd-es-id: 16018824644
+Original commit date: Tue Nov 15 15:35:50 2022 +0530
+Change-Id: Id692d2b0877fc2f85bbde72b1bce62353f8303bd
+Original commit hash: b759be42c2b922f56d1a0f7585541c6439007c28
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: bab0ccb22073b9c7b1aa5fa88b4692d45fe8a666 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Tue Jan 17 09:59:22 2023 +0800 
+-------------------------------------------------------------------------------- 
+BIOS Guide update for ADL/RPL (v18) Programs (rev 41)
+
+[Feature Description]
+Define Global Port Control and its HBUF water mark field [30;12].
+HBUF water mark programmed to 0x2.
+
+Package/Module: ClientOneSiliconPkg/PeiUsbHostControllerInitLib
+
+[Impacted Platform]
+ADL, RPL.
+
+Hsd-es-id: 18025655208
+Original commit date: Wed Nov 30 16:47:01 2022 +0100
+Change-Id: I8c8f350075bc24975913c02edc1428ac2526dad0
+Original commit hash: 953f8963af201aa6bc8f2cbaa4ee34ad84f67a15
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Include/Register/UsbRegs.h
+ClientOneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/UsbHostControllerInit.c
