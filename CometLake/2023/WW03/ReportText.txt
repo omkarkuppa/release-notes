@@ -1,0 +1,107 @@
+*********************************************************************************
+Commit: b8e15dc2efa0a2b7445c1d40885c1c1c40791ecf 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [CML][CVE-2022-33894]Insecure handling of "CpuSmm" NVRAM variable
+  
+  [Issue/Feature Description]
+  A security researcher reported a weakness with the NVRAM variable "CpuSmm".
+  UEFI implementations do not correctly protect and validate information contained in the 'CpuSmm' UEFI variable.
+  
+  This variable can be overwritten using operating system APIs or UEFI shell.
+  By tampering with this variable, SW attacker can disable SMM protection mechanisms (e.g., CpuSmmCodeAccessCheck).
+  
+  [Resolution]
+  Set the attribute NV+BS for the CpuSmm NVRAM variable and do not include the RT attribute.
+  It prevents this variable from being tampered with in runtime.
+  
+  Package/Module:CometLakePlatSamplePkg/PlatformInitDxe
+  
+  [Impacted Platform]
+  
+  Hsd-es-id: 15011592465
+  
+  Change-Id: I174e24666ffa06d5eb3f233f27890b93c5ba3581
+  Original commit hash: bd8be1bc5cd16f991ad4897f5e76345318ece745
+  
+  CometLakePlatSamplePkg/PlatformInit/PlatformInitDxe/PlatformInitDxe.c
+  CometLakePlatSamplePkg/PlatformInit/PlatformInitDxe/PlatformInitDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: a0d36516de44e9aa6eb94b3b142c8f0ba6b84fa7 
+*********************************************************************************
+
+[PlatformPkg], [CPU]
+
+  Revert "[CML][PSIRT]Insecure handling of "CpuSmm" NVRAM variable"
+  
+  This reverts commit d13becde49b2c655325ab36cc8831f3bdf35946a.
+  
+  Hsd-es-id: 15011592465
+  Original commit hash: 763fa4af2f2701ed6024e292214c86f0736516a3
+  
+  CometLakePlatSamplePkg/Features/NiftyRock/PpamPlatformSmm/PpamPlatformSmm.c
+  CometLakePlatSamplePkg/Features/NiftyRock/PpamPlatformSmm/PpamPlatformSmm.inf
+  CometLakePlatSamplePkg/Include/CpuSmm.h
+  CometLakePlatSamplePkg/Include/SetupVariable.h
+  CometLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeCpuPolicyUpdate.c
+  CometLakePlatSamplePkg/PlatformInit/PolicyInitDxe/PolicyInitDxe.c
+  CometLakePlatSamplePkg/PlatformInit/PolicyInitDxe/PolicyInitDxe.inf
+  CometLakePlatSamplePkg/PlatformPkg.dec
+  CometLakePlatSamplePkg/PlatformPkg.dsc
+  CometLakePlatSamplePkg/Setup/Advanced.vfr
+  CometLakePlatSamplePkg/Setup/CpuSetup.hfr
+  CometLakePlatSamplePkg/Setup/DebugSetup.hfr
+  CometLakePlatSamplePkg/Setup/HiiConfigAccess.c
+  CometLakePlatSamplePkg/Setup/SetupId.h
+  CometLakeSiliconPkg/Cpu/Include/Protocol/CpuPolicyProtocol.h
+  CometLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeatures.h
+  CometLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.c
+  CometLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: psirt
+
+*********************************************************************************
+Commit: 50092cff068ac6063019cc2cec8def1a1b2654c2 
+*********************************************************************************
+
+[CPU]
+
+  Revert "Consume SmmSpsEnable from CPU Policy instead of Pcd"
+  
+  This reverts commit c36be2b6e2b2d5f094dcfa39ba217127579ea8f9.
+  
+  Hsd-es-id: 15011592465
+  Original commit hash: 04de14f630c5a0ccbe7cd708d2c8f4f4dd1b8833
+  
+  CometLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.c
+  CometLakeSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+################################################################################
+
+Report Summary: Backstop found 3 suspect commits for review 
+
+Warnings Found:
+  Commit: b8e15dc    --Commit Message Contains Key Word: security
+  Commit: a0d3651    --Commit Message Contains Key Word: revert
+  Commit: a0d3651    --Commit Message Contains Key Word: psirt
+  Commit: 50092cf    --Commit Message Contains Key Word: revert
