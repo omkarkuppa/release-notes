@@ -736,14 +736,7 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu Feb 23 16:47:32 2023 +0530 
 -------------------------------------------------------------------------------- 
 [MTL-S MTL-M MTL-P | DDR5 LP5] Need to set ForceRxOn CR to 1 for
-LP5 in MTLM-A0 and MTLM-B0
-
-[Feature Description]
-Due to bug in the DQ pad mux where vref input to the DQ SAL does not
-charge up in time, therefore remove the DDR_SAFE_ODT_SENSEAMP SafeMode
-dependency and functional runs of MTLM-A0 and B0 should set forcerxon
-with the following condition:
-DDRCrDataControl0.forcerxon = (LP5 & (MTLM-A0 | MTLM-B0)) ? 1 : 0
+LP5 in MTLM
 
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
@@ -1444,11 +1437,6 @@ Date: Thu Feb 23 16:45:13 2023 +0530
 when Transitioning from Vtt Disabled GV Point to Vtt Enabled GV
 Point A0 Only
 
-[Feature Description]
-The change in 22014671674 has been identified as only
-being applicable to MTL-M/P A0.
-A conditional has been added to enforce this.
-
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
 [Impacted Platform]
@@ -1756,7 +1744,7 @@ Commit: 09571e26f04ea8550b6ac009aca5c20d820cf457
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Feb 23 16:44:15 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S][A0][PO] S0ix and Sx.ix Entry blocked due to AON3 and AON3_SPI
+[MTL-S] S0ix and Sx.ix Entry blocked due to AON3 and AON3_SPI
 are active
 
 [Feature Description]
@@ -4268,8 +4256,6 @@ read ad leads to training failures in unmatched write time centering.
 To address this, Senseampduration should be increased to 0xF when
 EarlyDqs is enabled.
 
-This change is only for MTL-M/P B0 and MTL-S A0
-
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
 [Impacted Platform]
@@ -5249,7 +5235,7 @@ S0ix not hitting 0.00%.
 
 [Resolution]
 FIA_CPCB programming not applicable for MTL
-Revert "[MTL-S][A0][PO] FIA_CPCB BWG mismatch"
+Revert "[MTL-S][PO] FIA_CPCB BWG mismatch"
 This reverts commit d8e5587a572c542bd9fc337da03fa53ea5c74d8a.
 
 Package/Module: FiaSocLib
@@ -5349,7 +5335,7 @@ Package/Module:
 ClientOneSiliconPkg/IpBlock/Thc/LibraryPrivate/PeiThcInitLib
 
 [Impacted Platform]
-MTL, LNL
+MTL
 
 Hsd-es-id: 18026682962
 Original commit date: Tue Jan 17 09:17:00 2023 +0100
@@ -5379,7 +5365,7 @@ Package/Module:
 ClientOneSiliconPkg/IpBlock/Espi/LibraryPrivate/PeiEspiInitLib
 
 [Impacted Platform]
-MTL, LNL
+MTL
 
 Hsd-es-id: 18026715036
 Original commit date: Tue Jan 17 10:13:07 2023 +0100
@@ -5505,7 +5491,7 @@ Commit: 40035378eadef5502a5a13bdf3afe29b042a8322
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Feb 23 16:34:09 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S][A0][PO] FIA_CPCB BWG mismatch
+[MTL-S][PO] FIA_CPCB BWG mismatch
 
 [Issue Description]
 FIA_CPCB BWG mismatch
@@ -6438,7 +6424,7 @@ Commit: 1931959643cb7ef4793981b7b0f6be9538d5e50c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Feb 23 16:31:56 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S][A0][PO] Device initiated wake is failing with PXPA x16 Slot
+[MTL-S][PO] Device initiated wake is failing with PXPA x16 Slot
 
 [Issue Description]
 RTD3: endpoint initiated wake failed, RP not exit RTD3/L2 when unplug
@@ -6471,7 +6457,7 @@ Commit: 5c9ef12954f40dc3339c5cda732a6629c274784e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Feb 23 16:31:53 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTLS A0] Update SODIMM/OC RVP PCIE clock usage map
+[MTLS] Update SODIMM/OC RVP PCIE clock usage map
 
 [Issue Description]
 1. SOC CLKREQ 3 does not match board layout
@@ -7343,7 +7329,7 @@ Commit: d8618fa3043627524a94afc0df90b377693935a5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Feb 23 16:29:23 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL_S][PM][A1] Power button functionality is not working
+[MTL_S][PM]Power button functionality is not working
 
 [Issue Description]
 Bios Program HostOwnership for GPIOV2_MTL_SOC_S_VGPIO_EC_SCI1 as
@@ -7467,7 +7453,7 @@ Commit: f739ae6d90a7f3bb070700a2e4fc464257079c34
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Feb 23 16:29:06 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S][A0]Port remaining Safe Settings to main
+[MTL-S]Port remaining Safe Settings to main
 
 [Feature Description]
 Port remaining Safe Settings to main
@@ -7925,7 +7911,7 @@ Commit: b77c372c40468faa74c6516e8144530bac7c8513
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Feb 23 16:26:47 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-P][GC/DC1][B0][BIOS]: Virtual Keyboard not responding with
+[MTL-P][GC/DC1][BIOS]: Virtual Keyboard not responding with
 BOM 6 THC
 
 [Issue Description]
@@ -7962,9 +7948,6 @@ the TSE engine at boot mode by using BlockIoCrypto protocol thru
 BlockIo protocol.
 
 Package/Module: LunarLakePlatSamplePkg, LunarLakeRestrictedPkg, TseFeaturePkg
-
-[Impacted Platform]
-LNL
 
 Hsd-es-id: 14018126771
 Original commit date: Mon Oct 24 12:42:48 2022 +0200
@@ -8392,15 +8375,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu Feb 23 16:24:30 2023 +0530 
 -------------------------------------------------------------------------------- 
 [MTL-M MTL-P | DDRR5 LP5] Default Memory Data Rate Updates
-
-[Feature Description]
-[MTL-M MTL-P | LP5] B0 max Frequency to be updated to 5600 G4
-(1) MRC must set the default LP5 data rate to 5600 on B0
-
-[MTL-M MTL-P | DDR5 LP5] Limitation to top frequency bin for A* silicon
-(1) MRC must set the default LP5 max data rate to 5600 MT/s on A0
-(2) MRC must set the default DDR5 max data rate to 4800 MT/s on A0
-(3) MRC must not change the max data rate based on rev check
 
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
@@ -8834,10 +8808,7 @@ Commit: 7ad441f44e786bdf230cb10bab2fdec2d6ab3806
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Feb 23 16:23:11 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-M MTL-P | LP5] Set 2tck Read Preamble for B0
-
-[Feature Description]
-MTL M/P B0 should only support a 2tck Read Preamble
+[MTL-M MTL-P | LP5] Set 2tck Read Preamble 
 
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
@@ -10383,13 +10354,6 @@ Date: Thu Feb 23 16:18:46 2023 +0530
 [MTL-M MTL-P | DDR5 LP5] Use PHY IP version for MTL Ax Mc Safe Mode
 settings check
 
-[Issue Description]
-IsMcMbA0 input is not set when Mc Safe Mode Overrides are configured.
-
-[Resolution]
-Inputs IsMcMbA0 should change to use IsDdrIoMbA0 when checking for
-IpVersion before setting McSafeMode values.
-
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
 [Impacted Platform]
@@ -10690,9 +10654,6 @@ and 0.5 tCK. tWpre (wr preamble) was hardcoded as 2 nCK via
 MrcGetWpre () , not supported on 5200 and above speed.
 tWPST: Write postamble default was set to 0, means 0.5 tCK,
 not support on 5200 and above.
-
-[Resolution]
-Ported changes from LNL shown in HSD comments.
 
 Package/Module: ClientOneSiliconPkg/MemoryInit/Mtl
 
@@ -11345,7 +11306,7 @@ Set these register to larger value
 Package/Module: PCIe
 
 [Impacted Platform]
-MTL, LNL
+MTL
 
 Hsd-es-id: 15012595678
 Original commit date: Fri Jan 6 18:49:29 2023 +0530
@@ -11368,9 +11329,6 @@ BIOS to toggle LTREN based on LTR override
 
 Package/Module:
 IpBlock/PcieRp
-
-[Impacted Platform]
-LNL-M
 
 Hsd-es-id: 16019375576
 Original commit date: Tue Jan 10 11:52:14 2023 +0530
@@ -11442,7 +11400,7 @@ Package/Module:
 ClientOneSiliconPkg/IpBlock/Tcss
 
 [Impacted Platform]
-MTL, LNL
+MTL
 
 Hsd-es-id: 15012601284
 Original commit date: Mon Jan 9 14:20:03 2023 +0800
@@ -11869,7 +11827,7 @@ Package/Module:
 ClientOneSiliconPkg/CpuPowerManagement
 
 [Impacted Platform]
-MTL/LNL
+MTL
 
 Hsd-es-id: 15012628717
 Original commit date: Thu Jan 12 17:14:29 2023 +0800
@@ -11981,7 +11939,7 @@ RW/O bit was getting written twice, hence it was not getting updated.
 Package/Module: ClientOneSiliconPkg
 
 [Impacted Platform]
-MTL, LNL
+MTL
 
 Hsd-es-id: 22016475022
 Original commit date: Fri Jan 13 10:41:42 2023 +0530
@@ -12004,9 +11962,6 @@ BIOS code update for VR spec update in WW01'23
 
 Package/Module:
 ClientOneSiliconPkg
-
-[Impacted Platform]
-LNL
 
 Hsd-es-id: 16016575099
 Original commit date: Wed Jan 4 14:41:21 2023 +0530
@@ -12031,7 +11986,7 @@ Package/Module:
 PCIe
 
 [Impacted Platform]
-LNL, MTL
+MTL
 
 Hsd-es-id: 15012595693
 Original commit date: Thu Dec 15 12:35:33 2022 +0530
@@ -12092,15 +12047,12 @@ GpioLib (GpioV1) is deprecated and longer supported.
 Remove any dependency on GpioLib
 - Added missing GPE to Gpio Group mapping values for GPIO
 and PMC module.
-- Added missing GPIOV2_PAD_GROUP defines in LNL gpio
+- Added missing GPIOV2_PAD_GROUP defines in platform gpio
 topology.
 - Added GetGlobalGroupIndex to GpioV2Services
 
 Package/Module:
 GPIOV2, GpioLib
-
-[Impacted Platform]
-LNL
 
 Hsd-es-id: 18025654625
 Original commit date: Thu Dec 1 09:07:38 2022 +0100
@@ -12263,17 +12215,9 @@ Date: Thu Feb 23 15:26:34 2023 +0530
 -------------------------------------------------------------------------------- 
 Revert "Skip some PMC commands not supported in emulated platform."
 
-[Issue Description]
-There is a WA will skip two PMC commands and wrong added in LNL
 This reverts commit 279e9f067221aeaf7949a27690981a9d8eed43b1.
 
-[Resolution]
-Remove this WA in LNL
-
 Package/Module: ClientOneSiliconPkg/IpBlock/Pmc/
-
-[Impacted Platform]
-LNL-M
 
 Hsd-es-id: 15012635314
 Original commit date: Wed Jan 11 16:08:56 2023 +0800
@@ -12434,9 +12378,6 @@ LunarLakeBoardPkg/SiliconInitLib
 LunarLakeBoardPkg/BasePlatformHookLib
 ClientOneSiliconPkg/Fsp/SecSerialPortInitLib
 Features/SecFspWrapperPlatformSecLib
-
-[Impacted Platform]
-LNL
 
 Hsd-es-id: 15012408801
 Original commit date: Tue Jan 10 17:32:54 2023 +0100
