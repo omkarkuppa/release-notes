@@ -1,0 +1,194 @@
+*********************************************************************************
+Commit: 2c144283782b942446f01177560c133b91af92ac 
+*********************************************************************************
+
+
+  [MTL] Support BGUP Capsule Update signed with RSA3072/SHA256
+  
+  [Feature Description]
+  - BiosGuard had been upgraded the certificate into RSA3072/SHA256.
+  - Change is used to support capsule update that BGUP signed with 3K key.
+  
+  [Changes]
+  - PlatformFlashAccessLib.c/PlatformFlashAccessLibInternal.c:
+  - Remove the BGUPC size hardcoded.
+  - BgupImageSupportLib.h:
+  - Port the BGUPC header definition.
+  - BgupImageSupportLib.c:
+  - Add the new internal function (DecomposeBgupImage) to decompose
+  the BGUP image.
+  - Add the new internal function (IsBgupCValid) to check the BGUPC
+  information based on input buffer dynamically.
+  
+  Package/Module: CapsuleFeaturePkg/PlatformFlashAccessLib
+  
+  [Impacted Platform]
+  ALL.
+  
+  Hsd-es-id: 15012871389
+  Change-Id: Ie2783c88bd802071204617b2b2e8af0f732927df
+  Original commit hash: 91671133bc7169edd06677f22020cef74b0ac365
+  
+  Features/FirmwareGuard/CapsuleFeaturePkg/Library/PlatformFlashAccessLib/BgupImageSupport.c
+  Features/FirmwareGuard/CapsuleFeaturePkg/Library/PlatformFlashAccessLib/BgupImageSupport.h
+  Features/FirmwareGuard/CapsuleFeaturePkg/Library/PlatformFlashAccessLib/PlatformFlashAccessLib.c
+  Features/FirmwareGuard/CapsuleFeaturePkg/Library/PlatformFlashAccessLib/PlatformFlashAccessLib.inf
+  Features/FirmwareGuard/CapsuleFeaturePkg/Library/PlatformFlashAccessLib/PlatformFlashAccessLibInternal.c
+  Features/FirmwareGuard/CapsuleFeaturePkg/Library/PlatformFlashAccessLib/PlatformFlashAccessLibInternal.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: d9c8e307d764a1a03420ab7e79b564770dd17a82 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S MTL-M MTL-P | DDR5 LP5] Generic postcode 0xDF54 (or 0080)
+  reported by ttk instead of actual failure postcode
+  
+  [Issue Description]
+  Port80 genric postcode 54 "Memory Error" always reported when
+  MRC training failed and MrcStatus equals to default/unsuccessful
+  case.
+  
+  [Resolution]
+  The code change is to report the postcode of the MRC training
+  step instead of the genric memory error postcode. See attached
+  screenshot in HSD for example: DF indicates MRC failure occurs
+  and 26 indicates MRC reset sequence where the failure occurs.
+  The info is sufficient for debugging purpose.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14018759477
+  Change-Id: Ie35aa141a0bd9d178f317da9db3b67701e4909ec
+  Original commit hash: db4775039780dfbf6282438901b64a1c85575262
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 9953c987ba593cd92974d81d014cc67c8364c4da 
+*********************************************************************************
+
+[SiliconPkg], [ASL]
+
+  CPU PM: Change _CPC() to fix HWP malfunction in E-core
+  
+  [Feature Description]
+  Change _CPC() result as following:
+  ReferencePerformance = MSR_PLATFORM_INFO.MaxNonTurbo * IpcScaling[i];
+  // was 0
+  NominalFrequency = MAILBOX_BIOS_CMD_DFX.DATA[bits 15:8] * BusFrequency;
+  // was MSR_PLATFORM_INFO.MaxNonTurbo * BusFrequency
+  NominalPerformance = MAILBOX_BIOS_CMD_DFX.DATA[bits 15:8] * IpcScaling[i];
+  // was MSR_PLATFORM_INFO.MaxNonTurbo * IpcScaling[i]
+  
+  The general idea is to use the actual P1 ratio for each CPU thread to
+  calculate NominalFrequency and NominalPerformance.
+  The ReferencePerformance is returend for each CPU thread using
+  the actual IPC scaling.
+  (xxPerformance always includes the IPC scaling information.)
+  
+  Package/Module: ClientOneSiliconPkg/CpuPowerManagementDxe
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15012872228
+  Change-Id: I32d88c1aee6350e54bffd9bed732ec9f97fb9cf1
+  Original commit hash: 5aa77f2811c0fa9886ee90f2a86dc4499563a842
+  
+  ClientOneSiliconPkg/Fru/MtlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/IncludePrivate/CpuNvsAreaDef.h
+  ClientOneSiliconPkg/IncludePrivate/Library/CpuInfoFruLib.h
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/AcpiTables/ApHwp.asl
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/AcpiTables/Cpu0Hwp.asl
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/AcpiTables/CpuAcpiTables.inf
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/AcpiTables/CpuNvs.asl
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/Dxe/CpuNvsAreaInit.c
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/Dxe/DxeCpuPowerManagement.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 07e3746dac9fa95a3d0a8f07124025927b08982c 
+*********************************************************************************
+
+[CPU]
+
+  CpuInitDxe: Avoid memory allocation for simpler code
+  
+  [Feature Description]
+  The patch changes _CPU_INFO_PROTOCOL.CpuInfo
+  from pointer to static array to avoid memory allocation.
+  Additionally CPU_INFO.BrandString and CPU_INFO.CacheInfo
+  are changed from pointer to static array as well.
+  
+  Package/Module: ClientOneSiliconPkg/CpuInitDxe
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15012872228
+  Change-Id: I76413c0b6fbe5b7c31e3575603121b1eabe2b866
+  Original commit hash: 80d2ae59c8b8b86c015c802298b69284b6071971
+  
+  ClientOneSiliconPkg/Cpu/Include/Protocol/CpuInfo.h
+  ClientOneSiliconPkg/IpBlock/CpuInit/Dxe/CpuInitDxe.c
+  ClientOneSiliconPkg/IpBlock/CpuInit/Dxe/CpuInitDxe.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: brand
+
+*********************************************************************************
+Commit: 3e0200c852f23c99970d756049c137955d820928 
+*********************************************************************************
+
+
+  Revert "MeteorLakeFspPkg/Upd: Remove RDODTT UPD from Partial Header list."
+  
+  This reverts commit 17d7d67c63540281784a8a64eb3460bd1e310141.
+  
+  Hsd-es-id: 16019930638
+  Change-Id: Ie4c9d8d5defe781ca0b39e935868450663108a70
+  Original commit hash: 9750dc57f706a57131fa3425d0e255681010dfba
+  
+  MeteorLakeFspPkg/Upd/UpdList/FSPM.txt
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+################################################################################
+
+Report Summary: Backstop found 5 suspect commits for review 
+
+Warnings Found:
+  Commit: 2c14428    --Commit Message Contains Key Word: internal
+  Commit: d9c8e30    --Commit Message Contains Key Word: step
+  Commit: 9953c98    --Commit Message Contains Key Word: HW
+  Commit: 07e3746    --Commit Message Contains Key Word: brand
+  Commit: 3e0200c    --Commit Message Contains Key Word: revert
