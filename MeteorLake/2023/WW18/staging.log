@@ -91,7 +91,7 @@ Commit: 9e3788bfe4c907d1eeb987896298eab7a5313c12
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:10:25 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S][S08 HSIO] Event storm L6B observed on PXPF
+[PCH][MTL-S] Event storm L6B observed on PXPF
 
 [Issue Description]
 Event storm L6B observed when EP asserts WAKE# pin on PXPF.
@@ -166,13 +166,13 @@ Commit: 7f7c6607227a0cb10e40a50be44261d6e7b4a913
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:10:09 2023 +0530 
 -------------------------------------------------------------------------------- 
-Fixed PCI LCAP APMS programming for MTL SOC/IOE.
+[PCH][SOC I/O] Fixed PCI LCAP ASPM programming for MTL SOC/IOE.
 
 [Issue Description]
-LCAP APMS is not correctly programmed for MTL SOC/IOE PCIe.
+LCAP ASPM is not correctly programmed for MTL SOC/IOE PCIe.
 
 [Resolution]
-- Added PCI APSM L0S support flag per PCI private config.
+- Added PCI ASPM L0S support flag per PCI private config.
 
 Package/Module:
 ClientOneSiliconPkg
@@ -265,14 +265,14 @@ Commit: b2e887d413e7e99951bad6505b6b8106a6849a67
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:09:52 2023 +0530 
 -------------------------------------------------------------------------------- 
-[DMI] Implement BWG Version 2.15
+[PCH][DMI] Implement BWG Version 2.15
 
 [Feature Description]
 Programmed L12LTRTLV to 0xE6 for DPDMI and UPDMI
 Updated PTM TX/RX propagation delay for DPDMI
 
 Package/Module:
-ClientOneSiliconPkg\IpBlock\dm\
+ClientOneSiliconPkg\IpBlock\Dmi\
 
 [Impacted Platform]
 MTL-S
@@ -379,10 +379,10 @@ Commit: 2ba6d07129957a0744b5bb303ad08f8ee065f891
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:09:29 2023 +0530 
 -------------------------------------------------------------------------------- 
-Need dsdt update to help in fixing noise issue with 3.5mm-Jack-Headset
+[SOC I/O] Need DSDT update to help in fixing noise issue with 3.5mm-Jack-Headset
 
 [Feature Description]
-Update Disco for ALC711.
+Update DisCo for ALC711.
 
 Package/Module:
 SndwDevTopologyFeaturePkg
@@ -524,13 +524,13 @@ Commit: 58ddbb477da9a394aa93b2799dd47f39fbb7ccbb
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:08:58 2023 +0530 
 -------------------------------------------------------------------------------- 
-1x16 PCIe RP BIOS settings mismatches vs BWG r2p12
+[SOC I/O] 1x16 PCIe RP BIOS settings mismatches vs BWG r2p12
 
 [Issue Description]
 1x16 PCIe RP BIOS settings mismatches vs BWG r2p12
 
 [Resolution]
-Corrected a few registers that needed updatation as per r2p12
+Corrected a few registers that needed updating as per r2p12
 
 Package/Module:
 ClientOneSilicon
@@ -555,11 +555,11 @@ Commit: 3f3d9429b80476136d8ebdf43bfa4a260e0b97a4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:08:53 2023 +0530 
 -------------------------------------------------------------------------------- 
-PCH DMI PHY does not power gate in x4 mode.
+[PCH] PCH DMI PHY does not power gate in x4 mode.
 
 [Issue Description]
 DMI PIPEPDCTL2.DUCFGPGPDCTL and PIPEPDCTL2.DUCFGNOPGPDCTL are programmed
-whreas new BWG forbade it to do so.
+whereas new BWG forbade it to do so.
 
 [Resolution]
 Remove programming for DMI PIPEPDCTL2.DUCFGPGPDCTL
@@ -585,7 +585,7 @@ Commit: d904c90882810b1831b0b8bb325bc85c5fd7cc23
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:08:47 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-P][SOC & IOE - PCIE4] Preset 7 Tx EQ Pre-shoot results
+[SOC I/O][MTL-P] Preset 7 Tx EQ Pre-shoot results
 are marginally passing for Gen4 and Gen3 C16 PCIe Lanes
 
 [Feature Description]
@@ -728,7 +728,7 @@ Commit: 5e43c7067b29fb5f49af964a59eb88f69712cafd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:08:20 2023 +0530 
 -------------------------------------------------------------------------------- 
-Fix buffer overflow in PeiIshPolicyLib
+[PCH][SOC I/O] Fix buffer overflow in PeiIshPolicyLib
 
 [Issue Description]
 IshConfig->Spi[0].CsEnable array have only one element, but the
@@ -761,14 +761,14 @@ Commit: eebef77986c123f20fd8bbe921c073ae563fbebe
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:08:14 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL]:SUT not entering CS after S4 cycle
+[PCH] SUT not entering CS after S4 cycle
 
 [Issue Description]
 WADT STS bit was not getting cleared which was
-causing continous interrupt storm
+causing continuous interrupt storm
 
 [Resolution]
-Cleared WADT sts bit in \_L6B handler
+Cleared WADT STS bit in \_L6B handler
 
 Package/Module:ClientOneSiliconPkg
 
@@ -966,10 +966,9 @@ Commit: 3f481b45860b325924aeab5660558043ee4731ca
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:07:32 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S] Add WA to disable DMI PG once ChipetInit is updated
+[PCH][SOC I/O][MTL-S] To disable DMI PG once ChipetInit is updated
 
 [Feature Description]
-This reverts commit f7cbe1c82a0a838d971a301272ed16d57b274ec9.
 
 Package/Module: ClientOneSiliconPkg
 
@@ -993,10 +992,9 @@ Commit: 01630f18c4df12e1b4d6177e8a0f95ea3a48d86e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:07:26 2023 +0530 
 -------------------------------------------------------------------------------- 
-Update LTR values once PMC FW is updated
+[PCH][SOC I/O] Update LTR values
 
 [Feature Description]
-This reverts commit a2a19b276a0904407b388081ab0362abfd09e8d1.
 
 Package/Module: PeiMtlPchInitLib
 
@@ -1019,7 +1017,7 @@ Commit: c5feebc14bdda670220d8386c11b1409ddc0b091
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:07:21 2023 +0530 
 -------------------------------------------------------------------------------- 
-Bwg changes Rev2.15 and Rev2.16 for MTL.
+[PCH][SOC I/O] BWG changes Rev2.15 and Rev2.16 for MTL.
 
 [Feature Description]
 FCTL2.HRTCTL BIOS to program it to 000b (2ms).
@@ -1130,16 +1128,14 @@ Commit: efa9c981c7ebbaab01587c1a25f64684482bde3c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:06:49 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL] External FSP Wrapper BIOS is not booting to OS
+[PCH][SOC I/O] FSP Wrapper BIOS is not booting to OS
 
 [Issue Description]
-External FSP Wrapper BIOS is not booting to OS.
-For External BIOS, MaxPayload is set to 7.
-For Default BIOS, MaxPayload is set to 1.
+FSP Wrapper BIOS is not booting to OS.
+MaxPayload doesn't align to default value.
 
 [Resolution]
-Setting RpMaxPayloadCapability as PchPcieMaxPayload256 for both
-external bios and default bios based on TestMenu setup.
+Setting RpMaxPayloadCapability as PchPcieMaxPayload256 for BIOS.
 
 Package/Module:
 ClientOneSiliconPkg
@@ -1248,7 +1244,7 @@ Commit: fdf5dbad445efdf34a80899fc81d73fefcddeb22
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:06:17 2023 +0530 
 -------------------------------------------------------------------------------- 
-Mismatch in GPIO pad definitions for MTL-S SODIMM
+[PCH] Mismatch in GPIO pad definitions for MTL-S SODIMM
 
 [Issue Description]
 Found GPIO setting missmatch between UDIMM/SODIMM
@@ -1413,7 +1409,7 @@ Commit: 8bb468e3d91fd77f2667d4867bf931298a2f1939
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:05:41 2023 +0530 
 -------------------------------------------------------------------------------- 
-ACPI GPE mapping fix
+[PCH] ACPI GPE mapping fix
 
 [Issue Description]
 1) GGPE ACPI method returns wrong GPE mapping values.
@@ -1452,7 +1448,7 @@ Commit: 27456a43a992bb9eab6445fe92a69f491481d4ec
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:05:36 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S] PCH-S GPIO servcice SetGroupToGpeMapping sets
+[PCH][MTL-S] PCH-S GPIO service SetGroupToGpeMapping sets
 SOC PMC mapping instead of PCH PMC
 
 [Issue Description]
@@ -1704,7 +1700,7 @@ Commit: 84bda5657462ee38e5513efa24f9ff8b081c1a5b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:04:52 2023 +0530 
 -------------------------------------------------------------------------------- 
-ClientOneSiliconPkg/P2Sb: Set FBE to 0xF for simics
+[PCH][SOC I/O] Set FBE to 0xF for simics
 
 [Issue Description]
 Simics hangs when executing P2SB transaction with FBE != 0xF.
@@ -1712,11 +1708,10 @@ Given that this doesn't reproduce on machine it seems like a simics
 only error.
 
 [Resolution]
-Force FBE to 0xF for simics. This might cause issues in some flows
-but it is better then hang.
+Force FBE to 0xF for simics.
 
 Package/Module:
-OneSiliconPkg/P2Sb
+ClientOneSiliconPkg/P2Sb
 
 [Impacted Platform]
 ALL
@@ -1734,10 +1729,10 @@ Commit: 424eac3609348dfee50a944c403356878b148fa2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:04:46 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL] Add PCH ClkSrc/ClkReq UPD
+[MTL][PCH] Add PCH ClkSrc/ClkReq UPD
 
 [Issue Description]
-When API Debug BIOS flashed, Nvme is not detecting in BIOS Page.
+When API Debug BIOS flashed, NVMe is not detecting in BIOS Page.
 ClkSrc/ClkReq is not correctly updated from UPD.
 
 [Resolution]
@@ -1782,7 +1777,7 @@ Commit: cf89ea0b7298f8207652e761ed45b0e3bb14e132
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:04:35 2023 +0530 
 -------------------------------------------------------------------------------- 
-Update LTR Threshold Programming
+[PCH][SOC I/O] Update LTR Threshold Programming
 
 [Feature Description]
 Update LTR Threshold Programming to allow S0i2.2
@@ -1808,7 +1803,7 @@ Commit: f74a9bf7e66395e4afad0c9d90a064c4994b1722
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:04:30 2023 +0530 
 -------------------------------------------------------------------------------- 
-Programming to disable DMI PG for S0i2.2
+[PCH][SOC I/O] Programming to disable DMI PG for S0i2.2
 deadlock issue.
 
 [Feature Description]
@@ -2736,7 +2731,7 @@ Commit: 21fece4966bc0fb587924daa0753d31633db1dc9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:00:31 2023 +0530 
 -------------------------------------------------------------------------------- 
-MTL/ARL-S (SOC+IOE) GEN5 PCIe Lanes Stagger Delay To 48ns
+[PCH] MTL/ARL-S (SOC+IOE) GEN5 PCIe Lanes Stagger Delay To 48ns
 
 [Feature Description]
 Update FIA stagger delay and stagger multiplier registers.
@@ -2851,7 +2846,7 @@ Commit: 6cfa67efca40b856d7d92d961670c399f156c5a5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 12:00:09 2023 +0530 
 -------------------------------------------------------------------------------- 
-[GCC} System hangs and cannot enter the UEFI Shell
+[PCH][SOC I/O] System hangs and cannot enter the UEFI Shell
 
 [Issue Description]
 Function caller get arguments garbabe due different calling
@@ -3589,7 +3584,7 @@ Commit: 94646c0ee66d759d93e51fc3800fa9a677a58958
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:56:52 2023 +0530 
 -------------------------------------------------------------------------------- 
-Fix for MTL-S PCIe RP BWG mismatches
+[PCH] Fix for MTL-S PCIe RP BWG mismatches
 
 [Issue Description]
 There are mismatches present in PCH PCIe RPs programming compared
@@ -3618,7 +3613,7 @@ Commit: bfbaf7a98b99c9d5297cf9467096476f13143cdc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:56:46 2023 +0530 
 -------------------------------------------------------------------------------- 
-Incorrect Preset to coefficient mapping
+[PCH] Incorrect Preset to coefficient mapping
 for some Gen3 coefficients in Gen5 controllers.
 
 [Issue Description]
@@ -4687,7 +4682,7 @@ Commit: f655ebe7a5dbea7c18bfb9b2da5ff6d3f40a6a00
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:51:57 2023 +0530 
 -------------------------------------------------------------------------------- 
-PMC Code update as per BWG.
+[PCH] PMC Code update as per BWG.
 
 [Feature Description]
 Bios should not enable Clock wake for eSPI
@@ -4711,8 +4706,7 @@ Commit: 49e0b1105a70e93dfd130f08d3d0121100cb33bc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:51:52 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL][PCIe] - MaxPayload Size option in Intel Test Menu doesn't
-work and wrong field with 64 Byte
+[MTL][PCIe] - MaxPayload Size option doesn't work and wrong field with 64 Byte
 
 [Issue Description]
 MPS programing is not correct
@@ -4790,11 +4784,10 @@ System not entering to S3/S4/S5 state.
 Regression: System not entering to S3/S4/S5 state.
 
 [Resolution]
-Revert "Missing cmd_ssv flow on MTP-S."
-This reverts commit 3e386044fc2661406bb6e44ce6906f99ad679ade.
+Revert "[PCH] Missing cmd_ssv flow on MTP-S."
 
 Package/Module:
-OneSiliconPkg/Fru/MtlSoc/SocInit/Smm
+ClientOneSiliconPkg/Fru/MtlSoc/SocInit/Smm
 
 [Impacted Platform]
 MTL.
@@ -4813,7 +4806,7 @@ Commit: 57fc6c71c8a650957bfe479d419323b6f160d83d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:51:32 2023 +0530 
 -------------------------------------------------------------------------------- 
-[TCSS][MTL] AUX GPIO Setting for MTL-S SODIMM board
+[SOC I/O][TCSS][MTL] AUX GPIO Setting for MTL-S SODIMM board
 
 [Issue Description]
 Missing IOM AUX settings for MTL-SOC-M in GpioIomAuxOriSetting()
@@ -4857,7 +4850,7 @@ Commit: fa36a542578022ae3bd53f7e4074c81d1c184f6c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:51:17 2023 +0530 
 -------------------------------------------------------------------------------- 
-Incorrect Preset to Coefficient mapping
+[PCH] Incorrect Preset to Coefficient mapping
 programming for PCH PCIe root ports.
 
 [Issue Description]
@@ -5023,12 +5016,12 @@ Commit: 30325b5bf352f05107783a56292cd46c634bcdbb
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:50:41 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTLS][SoC] PCIe Function Disable flow not implemented in BIOS for
-SoC PEG controllers with DEVEN=0 (DSKU flow)
+[MTLS][PCH][SOC I/O] PCIe Function Disable flow not implemented in BIOS for
+SoC PEG controllers with DEVEN=0 
 
 [Issue Description]
 PCIe Function Disable flow not implemented in BIOS for SoC PEG
-controllers with DEVEN=0 (DSKU flow)
+controllers with DEVEN=0 
 
 [Resolution]
 Check DevEn and DevEnLock bit.
@@ -5057,7 +5050,7 @@ Commit: 7f9ffaa86255f84fe1fb7648021fd4702a9892ac
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:50:36 2023 +0530 
 -------------------------------------------------------------------------------- 
-Add GpioOverride check to GpioConfigureIoStandbyState.
+[PCH][SOC I/O] Add GpioOverride check to GpioConfigureIoStandbyState.
 
 [Issue Description]
 GpioConfigureIoStandbyState funtion did not check if GpioOverride
@@ -5085,7 +5078,7 @@ Commit: 225393c7821f1ca812e30bac0176acbf6b9108d4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:50:31 2023 +0530 
 -------------------------------------------------------------------------------- 
-[CrashLog] BIOS need to setup both SOC PMC and PCH PMC crashlog
+[PCH] BIOS need to setup both SOC PMC and PCH PMC crashlog
 
 [Feature Description]
 Add crashlog collection flow on PCH PMC
@@ -5127,7 +5120,7 @@ Commit: 6e37bf56e2f9b10f6716eddb0a37590d885c6faa
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:50:25 2023 +0530 
 -------------------------------------------------------------------------------- 
-THC driver doesn't work in OS despite THC enabled
+[PCH][SOC I/O] THC driver doesn't work in OS despite THC enabled
 
 [Issue Description]
 There's a problem with THC enabling on MTP-S. No traffic is seen on THC
@@ -5353,7 +5346,7 @@ Commit: 5deaadc90363988e194f3af0b7e809ff19442411
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:49:43 2023 +0530 
 -------------------------------------------------------------------------------- 
-Missing cmd_ssv flow on MTP-S.
+[PCH] Missing cmd_ssv flow on MTP-S.
 
 [Issue Description]
 XHCI USB2 debug mode back to back WR support is required
@@ -5386,7 +5379,7 @@ Commit: c926d7b30e9020115a627b967cb8a051e5dd26b2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:49:38 2023 +0530 
 -------------------------------------------------------------------------------- 
-OneSiliconPkg/Pcie: Remove deferred rp disable
+[PCH][SOC I/O] Remove deferred rp disable
 
 [Feature Description]
 Remove deferred root port disabling during function remapping.
@@ -5415,7 +5408,7 @@ Commit: 9b107fcb6f977369727fede9d48e627e661cdcbe
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:49:33 2023 +0530 
 -------------------------------------------------------------------------------- 
-OneSiliconPkg/P2Sb: Set byte enables
+[PCH][SOC I/O] Set byte enables
 
 [Issue Description]
 BIOS is not setting byte enable field correctly for byte and word
@@ -5426,7 +5419,7 @@ fields are next to the word/byte fields that user wants to access.
 Set byte enable field to mask bytes we don't want to access.
 
 Package/Module:
-OneSiliconPkg/P2Sb
+ClientOneSiliconPkg/P2Sb
 
 [Impacted Platform]
 ALL
@@ -5567,7 +5560,7 @@ Commit: f56dda8df23ab454747b358bd04a7a0c5f796d9d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:49:11 2023 +0530 
 -------------------------------------------------------------------------------- 
-[ClientOneSiliconPkg/Thermal] Update Thermal Throttle levels register
+[PCH] Update Thermal Throttle levels register
 Add PCH Hot Enable Gpio Configuration for MTP-S
 
 [Issue Description] or [Feature Description]
@@ -5634,7 +5627,7 @@ Commit: f98df855b0f1ffe910a39e267fe804c8599f950e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:48:56 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL] SGOM default value not correct
+[PCH][SOC I/O][MTL] SGOM default value not correct
 
 [Issue Description]
 SGOM default value not correct
@@ -5765,7 +5758,7 @@ Commit: 722b1b70d452419dafc8751725ae1803f2cf3e88
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:48:35 2023 +0530 
 -------------------------------------------------------------------------------- 
-USB programming update
+[PCH][SOC I/O] USB programming update
 
 [Feature Description]
 This changes SSCTGE for v19.1 projects value from 0xF to 0xE.
@@ -5789,7 +5782,7 @@ Commit: abd9b1ea46a526b0ed2a9c59d9496b62b8520521
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:48:30 2023 +0530 
 -------------------------------------------------------------------------------- 
-Expanding LPC GMR size to 1MB
+[PCH][SOC I/O] Expanding LPC GMR size to 1MB
 
 [Feature Description]
 For MTL-S LGMR range size is 1MB and eSPI will decode 1MB accesses.
@@ -5881,7 +5874,7 @@ Commit: e5d433f99940820968dff612acf89578b17b6cff
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:48:09 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S][SODIMM 1 DPC][S04][PM] System is auto waking from PSON
+[PCH][MTL-S] System is auto waking from PSON
 
 [Issue Description]
 System is auto-waking from CS/PSON
@@ -5912,7 +5905,7 @@ Commit: d813e6cc8030eceff334a22a03691b09072ffec9
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:48:04 2023 +0530 
 -------------------------------------------------------------------------------- 
-Initialize properly in all LPSS Slice disable case
+[PCH] Initialize properly in all LPSS Slice disable case
 
 [Issue Description]
 System unable to boot after enabling all LPSS slices with release
@@ -5973,7 +5966,7 @@ Commit: 861bc76863199c53638df33190362e32102e95e7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:47:53 2023 +0530 
 -------------------------------------------------------------------------------- 
-PCH xHCI LTR parameters update
+[PCH] PCH xHCI LTR parameters update
 
 [Feature Description]
 To achieve better power efficiency and deeper Cstates tuning was
@@ -5982,7 +5975,7 @@ xHCI.
 This change implements those parameters.
 
 Package/Module:
-OneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib
+ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib
 
 [Impacted Platform]
 MTL PCH
@@ -6000,7 +5993,7 @@ Commit: 88369ffce67995192ff0b25c8ba62dadd5f9507a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:47:47 2023 +0530 
 -------------------------------------------------------------------------------- 
-PCIE PTM Pipe Stage Delay programming.
+[SOC I/O] PCIE PTM Pipe Stage Delay programming.
 
 [Issue Description]
 PCIE PTM Pipe Stage Delay not matching PCIe BWG.
@@ -6009,7 +6002,7 @@ PCIE PTM Pipe Stage Delay not matching PCIe BWG.
 - Updated PCIE PTM Pipe Stage Delay table for SipPhyVersion SE32.
 
 Package/Module:
-OneSiliconPkg
+ClientOneSiliconPkg
 
 [Impacted Platform]
 MTL
@@ -6111,7 +6104,7 @@ Commit: 3790e29b5f5ca1095dc2485335106c1df7c72c28
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:47:24 2023 +0530 
 -------------------------------------------------------------------------------- 
-Klog failures observed AE_NOT_FOUND error
+[PCH] Klog failures observed AE_NOT_FOUND error
 
 [Issue Description]
 Klog failures: ACPI BIOS Error (bug): Could not resolve symbol
@@ -6411,7 +6404,7 @@ Commit: 8cc4fc0774ae6141b583f77c6c857b20f0c2c12d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:46:24 2023 +0530 
 -------------------------------------------------------------------------------- 
-Unable to detect codec when SDI1 is selected in the BIOS for HDA
+[PCH][SOC I/O] Unable to detect codec when SDI1 is selected in the BIOS for HDA
 
 [Issue Description]
 During playback, no sound can be heard from the SDI1 from the
@@ -6477,10 +6470,10 @@ Commit: bcbd60718e8bdfa2a47ae07ac72152c995062eda
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:46:11 2023 +0530 
 -------------------------------------------------------------------------------- 
-Bwg Rev2.14 changes for MTL
+[PCH][SOC I/O] BWG Rev2.14 changes for MTL
 
 [Feature Description]
-Bwg Rev2.14 Changes PCIe for MTL
+BWG Rev2.14 Changes PCIe for MTL
 
 Package/Module:
 PCIe
@@ -6588,7 +6581,7 @@ Commit: ad31bbbbc1c0f45b878c77be2dc42fa3532da7cc
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:45:43 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S] Observing ICCWDT Yellow Bang
+[PCH][MTL-S] Observing ICCWDT Yellow Bang
 
 [Issue Description]
 IO Range 9000 - FFFF is reported as the one that will be decoded
@@ -6732,7 +6725,7 @@ Commit: e0bfafff7310145188ae626608117a6d2e52ff93
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:45:19 2023 +0530 
 -------------------------------------------------------------------------------- 
-Provide setup option to en/disable SOC/PCH PMC WDT
+[PCH][SOC I/O] Provide setup option to en/disable SOC/PCH PMC WDT
 
 [Issue Description]
 Responsiveness boot delay due to PmcInit Module by en/disabling PMC WDT.
@@ -6910,7 +6903,7 @@ Commit: 8d91dae65a70b65532be4e56d41a4a1a43194fc4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:44:47 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL] Add back changes to support serial Uart0 PCI mode
+[SOC I/O][MTL] Add back changes to support serial Uart0 PCI mode
 for embedded build
 
 [Issue Description]
@@ -6919,7 +6912,6 @@ which causes PCI segment read error during exit boot service
 
 [Resolution]
 Add back serial Uart0 PCI mode code
-Previous commit 143e96a6b59eca87c599fe3a0da2944372ef0656
 
 Package/Module:ClientOneSiliconPkg/MeteorLakePlatSamplePkg
 
@@ -6972,7 +6964,7 @@ Commit: 211cafd1e351ddc8e1d892f44167fb454419404a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:44:38 2023 +0530 
 -------------------------------------------------------------------------------- 
-OneSiliconPkg/Smb: Change frequent logs to verbose level
+[PCH][SOC I/O] Change frequent logs to verbose level
 
 [Issue Description]
 Some frequent logs from SMB are printed on INFO level which
@@ -6983,7 +6975,7 @@ and obscures actually important log messages.
 Change the log level to verbose.
 
 Package/Module:
-OneSiliconPkg/Smb
+ClientOneSiliconPkg/Smb
 
 [Impacted Platform]
 ALL
@@ -7381,7 +7373,7 @@ Commit: b7365e54b8e0965916733bbab8d901132677184f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:43:26 2023 +0530 
 -------------------------------------------------------------------------------- 
-BIOS not masking the unused clkreq in ceratin PCIe flow
+[PCH] BIOS not masking the unused clkreq in ceratin PCIe flow
 
 [Feature Description]
 Added code to disable clocks mapped to function disable pcie root ports
@@ -7408,7 +7400,7 @@ Commit: 4ecc3de918319ad72b224f966b29926399cb4d6e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:43:20 2023 +0530 
 -------------------------------------------------------------------------------- 
-Fixed LCAP.APMS bits programming.
+[PCH] Fixed LCAP.APMS bits programming.
 
 [Issue Description]
 BIOS does not set LCAP.APMS bits correctly on PCH PCIe
@@ -7419,7 +7411,7 @@ BIOS does not set LCAP.APMS bits correctly on PCH PCIe
 ADL and MTL should only L1.
 
 Package/Module:
-OneSiliconPkg
+ClientOneSiliconPkg
 
 [Impacted Platform]
 MTL
@@ -7644,7 +7636,7 @@ Commit: 95a70cba1287f38d527b0a92b48510b356c966e1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:42:27 2023 +0530 
 -------------------------------------------------------------------------------- 
-[ClientOneSiliconPkg/Pmc] Update PCH ETR3, IOE PG_CTL_PSF as per WG
+[PCH][SOC I/O] Update PCH ETR3, IOE PG_CTL_PSF as per WG
 
 [Issue Description] or [Feature Description]
 Following registers are not programmed as per BWG
@@ -7903,7 +7895,7 @@ Commit: 7250eb231080c51784a9de7fbee793c7254bf060
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:41:36 2023 +0530 
 -------------------------------------------------------------------------------- 
-Soundwire select codec topology BIOS knob shouldn't be visible for MTL-S
+[PCH] Soundwire select codec topology BIOS knob shouldn't be visible for MTL-S
 
 [Issue Description]
 The ACX feature is not applicable for MTL-S, thus the option for
@@ -8133,7 +8125,7 @@ Commit: c3b138eae87bd4b57cf8d8c91c970306053542c7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:41:03 2023 +0530 
 -------------------------------------------------------------------------------- 
-Add GpioOverride check.
+[PCH][SOC I/O] Add GpioOverride check.
 
 [Issue Description]
 Few functions don't check state of GpioOverride UPD.
@@ -8310,7 +8302,7 @@ Commit: 6850512bcccccc161debcae1dff07a9a3ce308a2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:40:30 2023 +0530 
 -------------------------------------------------------------------------------- 
-Enabling MtlSocExtendedBiosDecodeRangeRegistration by default
+[SOC I/O] Enabling MtlSocExtendedBiosDecodeRangeRegistration by default
 
 [Issue Description]
 Before change customer had to rebuild FSP binary to enable
@@ -9237,7 +9229,7 @@ Commit: 3141500f78521b7d951367050668c670a8066e89
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:37:55 2023 +0530 
 -------------------------------------------------------------------------------- 
-GetGpiSmiNumFromPad() incorrectly iterates through communities
+[PCH][SOC I/O] GetGpiSmiNumFromPad() incorrectly iterates through communities
 and groups to calculate GpiNum
 
 [Issue Description]
@@ -9379,7 +9371,7 @@ Commit: 44153b3c7528faab579f3b9052268fa2c87225fd
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:37:41 2023 +0530 
 -------------------------------------------------------------------------------- 
-Remove redundant code for which already removed
+[SOC I/O] Remove redundant code for which already removed
 
 [Issue Description]
 Build failure on the customer end
@@ -9407,7 +9399,7 @@ Commit: bae828e25549426b1ba334e7235ddac851f1f9ef
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:37:37 2023 +0530 
 -------------------------------------------------------------------------------- 
-Implement USB port mapping for GCS platform
+[SOC I/O] Implement USB port mapping for GCS platform
 
 [Feature Description]
 Implement USB port mapping for GCS platform
@@ -9435,7 +9427,7 @@ Commit: ddd2687f9f1fcfa6580c1bce84abb391dd323781
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:37:33 2023 +0530 
 -------------------------------------------------------------------------------- 
-Update correct XHCI port setting on MTL-S
+[PCH] Update correct XHCI port setting on MTL-S
 
 [Issue Description]
 Bluetooth device will display as ejectable device
@@ -9487,7 +9479,7 @@ Commit: 0297c89024597010f68cadd725bb63552c5e8c72
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:37:24 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S] Modify GPIO settings for B_1, B_21, E_17 on MTL-S S04
+[PCH][MTL-S] Modify GPIO settings for B_1, B_21, E_17 on MTL-S S04
 
 [Feature Description]
 Modify GPIO settings for B_1, B_21, E_17 to fix Sx autowake issue on S04
@@ -9566,7 +9558,7 @@ Commit: efbb830d99bddd3cbae47593d42c1069b8c7e706
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:37:11 2023 +0530 
 -------------------------------------------------------------------------------- 
-MTL-SOC-S has NullPointer dereference in PSF code
+[SOC I/O] MTL-SOC-S has NullPointer dereference in PSF code
 
 [Issue description]
 MTL-SOC-S has NullPointer dereference in PSF code, in function
@@ -9595,7 +9587,7 @@ Commit: 46d7bbed47d703ac08f2c9d7818ce2cd618c6ca6
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:37:06 2023 +0530 
 -------------------------------------------------------------------------------- 
-Revert commit "IMR transactions not going through VC1"
+Revert commit "[PCH] IMR transactions not going through VC1"
 
 [Issue Description]
 Commit cause PEI Assert in BootGuardLib.
@@ -9665,7 +9657,7 @@ Commit: 2a58bd745a94a1e339fa750ca8f193eda1104326
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:36:58 2023 +0530 
 -------------------------------------------------------------------------------- 
-[DMI]Implement BWG Version 2.14
+[PCH][DMI]Implement BWG Version 2.14
 
 [Feature Description]
 Implement DMI BWG 2.14 changes
@@ -9863,8 +9855,8 @@ Commit: 30d757f9777837009acf39bc0efc6a0c1c50ac03
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Apr 24 11:36:27 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-PS][Win10] Issue fix: Observed Automatic wake from S5
-due to XHCI due to Hotplug/unplug of USB
+[SOC I/O][MTL-PS][Win10] Issue fix: Observed Automatic wake from S5 
+due to Hotplug/unplug of USB
 
 Package/Module:
 MeteorLakePlatSamplePkg
