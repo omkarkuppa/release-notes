@@ -1,0 +1,1118 @@
+*********************************************************************************
+Commit: 5d8e012b3792147a4d04142c195189ee42f1b23a 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  Provide BIOS option to disable PCIe throttling for survivability
+  
+  [Feature Description]
+  1. BIOS shall provide new setup option to disable PCIe throttling
+  for survivability.
+  2. PCIe throttling will be enabled by default. User can disable it
+  whenever needed (if the issue is encountered).
+  3. This option will be available for all SKUs of MTL and ARL.
+  4. Option will be visible only when the SOC Power Floor Management is
+  enabled.
+  
+  Package/Module:ClientOneSiliconPkg, MeteorLakeFspPkg, MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22018445870
+  Change-Id: I16ad8ee143f33767494c2c16c355041119867785
+  Original commit hash: 9dc247a64bf69bd3c69709e2eb242ca25b57ffd1
+  
+  ClientOneSiliconPkg/Include/ConfigBlock/CpuPowerManagement/CpuPowerMgmtBasicConfig.h
+  ClientOneSiliconPkg/Include/Library/CpuMailboxLib.h
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PowerMgmtPreResetCpl.c
+  ClientOneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementPolicyLib/CpuPowerManagementPolicyLib.c
+  MeteorLakeFspPkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  MeteorLakeFspPkg/Upd/FspsUpd.dsc
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdate.c
+  MeteorLakePlatSamplePkg/Setup/CpuSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/CpuSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 5ebbe36357fb9affb3e7a0e77b0aadb48831922e 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-M MTL-P | DDR5 LP5] Need Vccclk and VCC safemode bit reverted to 0
+  
+  [Feature Description]
+  MrcSafemode[bit2] needs to be set to 0 for MTL P/M C0 and onwards.
+  
+  Package/Module: OneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  M, P
+  
+  Hsd-es-id: 22018442327
+  Change-Id: I334357a7ae943a13708235ab0626dc72a8865509
+  Original commit hash: 80d0b1f2998b1a3d2b819e934539d88b50ac83fa
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 4720025964fb8dfe9d0d904515f7e92fe58d5899 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-M MTL-P | DDR5 LP5] Limit G2 max frequency to 5600 in MRC
+  
+  [Feature Description]
+  MRC must limit FreqMax to 5600 when Gear2 only,
+  due to MTL C0 QS parts fuses for Qclk max updated from 2.8GHz to 3.2GHz
+  causing an incorrect SAGV WP[3] = 6400G2.
+  
+  Package/Module: OneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  M, P
+  
+  Hsd-es-id: 22018444532
+  Change-Id: I201c7b1459a5292138a5b3b66c7e1045becbe7e9
+  Original commit hash: 49caee6db3181bb94fddb57f5f551048a12a2aaf
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/Pma/MrcPmaApi.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+
+*********************************************************************************
+Commit: 46368bb178de68984403bde1a440a364b4adb31f 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL] Bios Guard performance measurement fix
+  
+  [Issue Description]
+  In perforce measurement build AP suspend timeout might be observed
+  is BiosGuardModuleExecute method. Performance measurement macro has
+  significant impact on time necessary to suspend AP thread, which
+  might exceed defined safe limits on MTL platform.
+  
+  [Resolution]
+  Performce measurement macro was removed from BiosGuardModuleExecute
+  method. It still posible to measure overall BiosGuard execution time
+  using markers placed in BiosGuardProtocolExecute method, where
+  additional time introduced by measurement is negligible. Different
+  strategy needs to be followed to measure exact BiosGuard ACM module
+  execution time on particul thred if necessary.
+  
+  Package/Module: ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  MTL, ARL
+  
+  Hsd-es-id: 18030112816
+  Change-Id: I19c929b8a2e00b4e245c5811cb7512f46b2b0df6
+  Original commit hash: 50f65113edae368285958ec1d480558490080ea2
+  
+  ClientOneSiliconPkg/IpBlock/BiosGuard/Smm/BiosGuardServices.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 77026388b5bfcbd8a3689033abbf9b5a4790e627 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ArlHx] Set PCH GPP_B_12 to Hi-Z GPIO Mode
+  
+  [Feature Description]
+  Set PCH GPP_B_12 to Hi-Z GPIO Mode as
+  MTL-S Has Implemented CPU GPP_SA_8 for SLP_S0
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-Hx
+  
+  Hsd-es-id: 15013656134
+  Change-Id: I008117ce59f0159a1a9479182de3f115a80ac171
+  Original commit hash: 7f7e5423b1e5ab008de03dd9e7062faab98827e7
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 5815778e7be85aa20fea2ea48e71e8cf953c7a93 
+*********************************************************************************
+
+[BoardPkg]
+
+  Support ARLHx RVP1 PPV board
+  
+  [Feature Description]
+  Add ARLHx RVP1 PPV board to SkuId list
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARLHx PPV
+  
+  Hsd-es-id: 15013656091
+  Change-Id: Iaffe74c349cff452b556e35496976f9a3a04d5ab
+  Original commit hash: 8f90d8b809758b1e0ec8801e3f87e2813de9c6e3
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: c446f22de0df14db730284cc05bdd7b9f7922587 
+*********************************************************************************
+
+[BoardPkg]
+
+  Change display id for ARL-HX 1DPC CRB board
+  
+  [Feature Description]
+  Change display id from 0x02 to 0x00
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-HX
+  
+  Hsd-es-id: 15013656090
+  Change-Id: I16c819d1c2fa33c108f33a6e23bf88bd736c17b5
+  Original commit hash: 7ebb1f8890c57740893a6b0f2f64f2d4186bf298
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 22cf34aa8163125c938212cd27a44f19fef52531 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  MtlBoardpkg: Fixing Reset pin polarity and interrupt pin config
+  
+  [Issue Description]
+  Touch panel don't work when bus speed is selected as 400Khz.
+  When 400Khz speed is selected in that case only RTD3 flow is exposed,
+  where in _ON/_OFF method reset and interrupt pin is used. Since these
+  pins are not configured correctly, seeing YB.
+  
+  [Resolution]
+  Set Reset pin high in _ON method and low in _OFF method.
+  Map interrupt correctly.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  Default ALL
+  
+  Hsd-es-id: 22018429634
+  Change-Id: Ie260a79d564e3aaf4f465168dd9c5d1c01642ec0
+  Original commit hash: 181ee8d24baa8743d9603def6850e45f0b027f2f
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3I2cTouchPanel.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3MPRvpLpss.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3SRvpLpss.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf1Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf2Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5MemSolderDowndTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvpBomSku.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT4Rvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 50ec4d7c87548b0a82efe0d6be7e195c16e74e41 
+*********************************************************************************
+
+[ASL]
+
+  Integrate DisCo SDCA 2.1 Tables into MTL-P Platform BIOS
+  
+  [Feature Description]
+  SDCA configuration for MTL is introducing new HWID
+  scheme and DisCo 2.1 update that needs to be updated in BIOS.
+  
+  Package/Module:
+  Features/Audio/SndwDevTopologyFeaturePkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 18030696975
+  Change-Id: Ia48a23eab12f4ca958b7bacef6fbcf1f90b01ed1
+  Original commit hash: 8790494403aba192fcebd9ad539164909fa1ae8e
+  
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/AggregationAudioComposition.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/AudioFunction_1316_SPK1.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/AudioFunction_1316_SPK2.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/AudioFunction_711_HID.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/AudioFunction_711_UAJ.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/AudioFunction_714_MIC.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/Peripheral_1316_SPK1.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/Peripheral_1316_SPK2.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/Peripheral_711.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/Peripheral_714.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/SndwDevTopologySt01Ssdt.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 290e2e19c96449e4c8da29825a06890658c0db74 
+*********************************************************************************
+
+[BoardPkg]
+
+  SyncScript: Revert override commits.
+  
+  Mon Jun 19 02:58:32 2023 -0700
+  Original commit hash: 0df97a2e9644f5355117beb5c436e0940c192c91
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 4b19d6c67c3b1a9fdc89a0dee053ad999e396c90 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [PCIe] Advisory NonFatal error(completion timeout or unexpected
+  completion) is flagged in RP at warm reset[PV_MUST_FIX]
+  
+  [Issue Description]
+  In WarmReset case, TLS will be set as it was in previous
+  cycle(because TLS is sticky bit).
+  If LSTP = 1, it will consider TLS value to train the link and that will
+  cause issue in RL which happening during CommonClockConfiguration.
+  Because once RL happens link will be in recovery at TLS which is
+  not correct
+  
+  [Resolution]
+  LSTP should program after HWEQ configuration and before Speechange/
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14019510195
+  Change-Id: Ie05e6bea90293ca4bfd5d112624455ed9b0f8894
+  Original commit hash: 89c2fdbc4781632b895e5894fcbfb2c88b99f043
+  
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: b4395ca92c640ceb76776910cb79e4211dd6a275 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  Observed Hung in BIOS with PC:0E25/0E27
+  during Furmark_Diskspd_CC_Hotplug_TBT_ST_S4.json
+  
+  [Issue Description]
+  When create NVMe HwAsset table, the hot plug TBT device contains
+  a NVMe device with invalid Namespace Capacity over 0x80 Namespace,
+  which leads to BIOS creates over 0x80 media and
+  exceeds SMBIOS table size.
+  
+  [Resolution]
+  1. Follow EDK2 to validate Namespace Capacity.
+  2. Set correct parameter when reading NVMe controller data,
+  the parameter should be different whether NVMe is under
+  VMD controller or not.
+  
+  Package/Module:
+  ClientOneSiliconPkg/IpBlock/Me
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 22018267016
+  Change-Id: Ic694946904fb2c7682365315c6774adebd6e1be9
+  Original commit hash: 32ba1c27847facc8b341849c8a36e66b8f7fb516
+  
+  ClientOneSiliconPkg/IpBlock/Me/HwAsset/Dxe/HwAssetDxe.inf
+  ClientOneSiliconPkg/IpBlock/Me/HwAsset/Dxe/Inventory.c
+  ClientOneSiliconPkg/IpBlock/Me/HwAsset/Dxe/Inventory.h
+  MeteorLakePlatSamplePkg/Features/Amt/AsfTable/AsfTable.c
+  MeteorLakePlatSamplePkg/Library/DxePolicyUpdateLib/DxeMePolicyUpdate.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: fb10477eb496348b6cb5fe7590fb8d7439b0f752 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert - PAM target cannot be registered
+  
+  [Issue Description]
+  Base Memory Test Failed at C0000h
+  
+  [Resolution]
+  Changed PAM region memory type to Reserved
+  
+  Package/Module: ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14018879071
+  Change-Id: I9eb52a8a52e6a583255fa0243b1c7161102d6927
+  Original commit hash: aeeea8feeee6577496404734aace86b6e54dbcd5
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MemoryInit.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/Product/MeteorLake/SiInit/Pei/TempRamExit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: fbcb5bb96a600d7551fd5f7126bf98e9639bf9e2 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [REVERTME] [MTL-S | MTL-P | OC | DDR5] Disable OCDivider
+  
+  [Feature Description]
+  SenceAmp training fails when OCDivider=1.
+  Disable it.
+  TODO: need measure VccClk and VccIog when OCDivider=1.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  MTL-S, and MTL-P if it supports OC.
+  
+  Hsd-es-id: 15013506496
+  Change-Id: If4762e943cb5d9b250b2050950eb27b3bb6a85a2
+  Original commit hash: ce6d70e64a704588544c8a5c0f219c0fa013eabb
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 76b6c32f73f9c1a87ad3d1df71fcd05b4c600af8 
+*********************************************************************************
+
+[ASL]
+
+  Fix incorrect adapter variable override
+  
+  [Issue Description]
+  When check the PPS adapter state, BIOS would
+  override the PWRS value that init by AC and USB-C-PD
+  power supply. Which would cause the battery icon
+  not update with correct state when SUT plugin AC and
+  USB-C-PD power supply.
+  
+  [Resolution]
+  Check both AC, USB-C-PD and PPS and initialize the
+  PWRS to avoid the override.
+  
+  Package/Module:
+  EcFeaturePkg/EcSsdt
+  
+  [Impacted Platform]
+  Y, U, H, etc.
+  
+  Hsd-es-id: 15013598578
+  Change-Id: I01b01bdf90aa1eb515aa70a72434412389761fe8
+  Original commit hash: c3b865b47e9e8265834969ea8e4c4221145030cf
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcQevent.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 85238ccb36b26e812f0ecf80ec3aae5d2c28c459 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [MTLS][S04][SODIMM 1DPC] Modify OC(Over Current) config for
+  USB2 Port1 & Port9 of FAB2
+  
+  [Feature Description]
+  Since EE modified USB2 Port1 & Port9 to be tri-pad option
+  and keep Port1 as default for S04 FAB2,
+  so need BIOS team to modify the code.
+  If fab ID is for FAB1, need to keep original code,
+  but if the ID is FAB2, please implement USB2_OC1 to port 1 and port9
+  needs to be NA.
+  FAB1 ITBT TYPE-C port - PORT9
+  FAB2 ITBT TYPE-C port - PORT1
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTLS
+  
+  Hsd-es-id: 15013470440
+  Change-Id: I534d66d747094376819b66ca1f2f0a8777703802
+  Original commit hash: 7714a7a995f4a8b31b1469ffe636635893fe6200
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSSD02Rvp.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: f266e5036fa5d8668d52bf8efe4bb8b0286de921 
+*********************************************************************************
+
+[BoardPkg]
+
+  Set PCH GPP_B_12 to Hi-Z GPIO Mode For MTL-S
+  
+  [Feature Description]
+  Please BIOS team members help set PCH GPP_B_12 to Hi-Z GPIO mode
+  from the current Native 1 mode as MTL-S has implemented CPU GPP_SA_8 for
+  SLP_S0 already.
+  After that, it might save some power consumption and prevent unexpected
+  problems from happening.
+  The Pad Reset Config (padrstcfg) of PCH GPP_B_12 can be configured as
+  Global Reset.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL-S
+  
+  Hsd-es-id: 14019501966
+  Change-Id: I5a07fd2f8a7dbb7e3a004e26962e91f554b458e5
+  Original commit hash: fcdcc5706f657e3d63aa185781e12e52c723e0c8
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: f5864b83763acb294b81df4fe24b5d0131ba8fcf 
+*********************************************************************************
+
+[BoardPkg]
+
+  [MTL OpenBoard] Modify build flow in Openboard
+  
+  [Issue Description]
+  1. Add FSP binary build in MTL Openboard
+  2. Rename MeteorLakeOpenboard.rom
+  
+  [Resolution]
+  Build steps :
+  cd ../../Intel/MeteorLakeOpenBoardPkg
+  prep
+  bld
+  
+  Package/Module: MeteorLakeOpenBoardPkg
+  
+  [Impacted Platform]
+  Default ALL
+  
+  Hsd-es-id: 16020909290
+  Change-Id: Iadf2d82f51ee1d1975ca78f21e0a5bddd1c52ce3
+  Original commit hash: 9045a6327d75342b7de858e130641a700d13fa98
+  
+  MeteorLakeOpenBoardPkg/OpenBoardPkg.fdf
+  MeteorLakeOpenBoardPkg/bld.bat
+  MeteorLakeOpenBoardPkg/cln.bat
+  MeteorLakeOpenBoardPkg/postbuild.bat
+  MeteorLakeOpenBoardPkg/prebuild.bat
+  MeteorLakeOpenBoardPkg/prep.bat
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: aede027c57d9b354ba41a04aaeb9b465bcdc0a54 
+*********************************************************************************
+
+[ASL], [BoardPkg], [PlatformPkg]
+
+  SyncScript: Revert override commits.
+  
+  Tue Jun 13 12:06:37 2023 -0700
+  Original commit hash: 69996defa4809289dd85701ac277dad046d1b0d7
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcQevent.asl
+  MeteorLakeBoardPkg/BiosId.env
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakePlatSamplePkg/Setup/VoltageRegulatorSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 9d2bd20c880ef5ecc191eb3d66da1a17d5a3ac5e 
+*********************************************************************************
+
+[ASL]
+
+  Fix incorrect adapter variable override
+  
+  [Issue Description]
+  When check the PPS adapter state, BIOS would
+  override the PWRS value that init by AC and USB-C-PD
+  power supply. Which would cause the battery icon
+  not update with correct state when SUT plugin AC and
+  USB-C-PD power supply.
+  
+  [Resolution]
+  Check both AC, USB-C-PD and PPS and initialize the
+  PWRS to avoid the override.
+  
+  Package/Module:
+  EcFeaturePkg/EcSsdt
+  
+  [Impacted Platform]
+  Y, U, H, etc.
+  
+  Hsd-es-id: 15013598578
+  Change-Id: I01b01bdf90aa1eb515aa70a72434412389761fe8
+  Original commit hash: a781b3922d114ab29e96004193e8885b088a71c9
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcQevent.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: c0b38f83b6f0b6a00f2a126043d4ea97b8fcab3a 
+*********************************************************************************
+
+[BoardPkg]
+
+  Minor version revert in Program Branch
+  
+  Change-Id: I754881ced4bfe4f1ff5cd8342f8fd94a569e40b0
+  Original commit hash: d14b8da5ba716217f18a17efd88b0dad6d077b32
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: e57120175c689005fc959924c63f92901cc8de98 
+*********************************************************************************
+
+[ASL]
+
+  Programmable Power Supply to update the AC state
+  
+  [Issue Description]
+  When the PPS adaptor plugin, it should be treated
+  as an power supply as AC and PD adaptor. In previous
+  PPS feature implementation, it doesn't cover this part.
+  The AC device would always return 0 as no power plugin
+  which cause the windows battery icon doesn't update the
+  charging state.
+  
+  [Resolution]
+  Update the PWRS when PPS plugin, AC device would report
+  the power state base on it.
+  
+  Package/Module:
+  EcFeaturePkg/EcSsdt
+  
+  [Impacted Platform]
+  Y, U, H, etc.
+  
+  Hsd-es-id: 16020866102
+  Change-Id: I2df2d28acf52cfeb0259b8a5de1e1af3302ec151
+  Original commit hash: 571e01521be974950653c4c0f561a327655d34c0
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcQevent.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: c1d73a2f1af11791930595aad3f5dd21f2e61699 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  [MTL-S | DDR5] Use DFETap StepSize instead of specific Tap values
+  
+  [Feature Description]
+  DIMM's DFE values highly depend on specific DIMM
+  and working frequency. iExcept experts, users have
+  no knowledge about what DFE values should be used
+  for the memory module installed in system.
+  MRC need do a DFE Tap1 and Tap2 sweep coarsely during
+  early write training.
+  The 1st implementaion can be in early write timing
+  centering 2D.
+  
+  Later on, we might add such sweep in unmatched write
+  centering training based on experimental results..
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  MTL-S.
+  
+  Hsd-es-id: 15013452718
+  Change-Id: I786c73baa49c9e6b304144a458c557665b5ff2a6
+  Original commit hash: ab49e49f33d40da18847f2e2f340eb51af993f38
+  
+  ClientOneSiliconPkg/Include/MemInfoHob.h
+  ClientOneSiliconPkg/Include/Protocol/MemInfo.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcExtInputs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/InputBlock/MrcInputBlock.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/InputBlock/MrcInputBlock.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  MeteorLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/Platform/PlatformSetup/Dxe/PlatformPolicySetup.c
+  MeteorLakePlatSamplePkg/Setup/OverClockSetup.c
+  MeteorLakePlatSamplePkg/Setup/SaSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/SaSetup.uni
+  MeteorLakePlatSamplePkg/Setup/SetupId.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 874cfbd59fbfa168fbf134e96d5c2095e4cd512b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-M MTL-S] Improve Overflow/Underflow checks in MRC
+  
+  [Feature Description]
+  Improve Overflow/Underflow checks in MRC based on prior program
+  MRB/PRTs
+  Changes Added for feature enable
+  - Added api for Severity error check for critical register list
+  - Updated new group ID for requireds Critical Cr's to support
+  Error detection
+  - added and update status flag Critcical Saturation for list
+  - Task execution flow update based on Error type detected
+  Eg: Oveflow/underflow for Critcical Saturation halts execution
+  or Oveflow/underflow for warning in nature will continue boot
+  - RecEnDelay Max value set to < 1151 for gear2
+  - Extending GetSet Feature for applicable Ddrio Critical Reg Program
+  - LocalStub changes for error overflow/undeflorw handling
+  
+  Package/Module:
+  MemoryInit
+  
+  [Impacted Platform]
+  M and S
+  
+  Hsd-es-id: 22015425080
+  Change-Id: Ia93f298184451a3ef82674499325dd7d28202407
+  Original commit hash: babca347e8959c209caeabdd30b93d97c51b7eb7
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcTurnAround.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: prt
+
+*********************************************************************************
+Commit: f75e81fa4e63ad2ec21a0f43bf5bbb7a1b634b49 
+*********************************************************************************
+
+[BoardPkg]
+
+  [LP5 T3] Retimer1 version is not showing on BIOS setup menu
+  
+  [Issue Description]
+  Expected behavior:
+  Showing two retimer version since it has two retimer flash part.
+  Actual behavior:
+  Only showing retimer0 version.
+  
+  [Resolution]
+  1.Define VpdPcdTcssRetimerNumber to 2
+  2.Add a set of Retimer configurations to VpdPcdTcssRetimerConfigTable
+  
+  Package/Module: BoardPkg
+  
+  [Impacted Platform]
+  P
+  
+  Hsd-es-id: 15013584315
+  Change-Id: Ib7e3b394f00eff23c647413cbb9c45f3bcee9cfa
+  Original commit hash: ed710b8a2a54e772bf3268711dbe750452ea92cb
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT3Rvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b94aa07cfbedd125103433535ab6e439c5019e06 
+*********************************************************************************
+
+[BoardPkg]
+
+  [MTLS][S03][S05] Change reset config of Foxville GPIO
+  
+  [Issue Description]
+  LAN is not detected if reset in BIOS/UEFI Shell.
+  
+  [Resolution]
+  1. Set LAN_CTRL_PWREN (GPP_E_18) to low in GpioInit, set it to high
+  later according to setup option.
+  2. Configure WAKE pin to SCI based on the setup option
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTLS
+  
+  Hsd-es-id: 15013256850
+  Change-Id: Ie59cd9c9cf0983730d11bbf4d9a4c1ca821acbf8
+  Original commit hash: 4ce485632834d9fa9c5d1ed61f0a1387a4acb462
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakeSRvpBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 7fcf8feac77b1b5ec720f472508282a3837b320c 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [MTLS] Get PSS serial number with right I2C config address
+  
+  [Issue Description]
+  Unable to get the PSS Serial number of SUT.
+  
+  [Resolution]
+  1. Correct I2C config arguments used for SerialIoI2cRead/Write.
+  2. Skip to read PSS number in Simics
+  
+  Package/Module: MeteorLakeBoardPkg, MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 16020645836, 16020295915
+  Change-Id: Ifdf291e20e94ec30244e5f91c2dd28d44fcbaad7
+  Original commit hash: 108f1ca8df14a453356b6bad57833f11a42c01ae
+  
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Simics/SkuIdMtlSSimics.dsc
+  MeteorLakePlatSamplePkg/Library/PssLib/PssLib.c
+  MeteorLakePlatSamplePkg/Library/PssLib/PssLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: a6cb307dc0a98ddbb1240606f5d84d7251a77d7a 
+*********************************************************************************
+
+[ASL]
+
+  TBT-PCIe: New flow to nullify the LTR for devices not supporting LTR
+  
+  [Feature Description]
+  1. Enable Hotplug SCI always
+  2. In SCI routine, sikp 100 ms if all iTBT RP in D0
+  3. WA for toggle LTREN
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 15013552614
+  Change-Id: Ibc56acee4225e58b2dffb4cd618f82331e01d547
+  Original commit hash: e5979371576a6d4fc405c962d2ee2533a377632a
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/Include/AcpiTables/Soc/SocGpeSsdt.asl
+  ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssItbtPcieRp.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  WA 
+
+*********************************************************************************
+Commit: f891d2967aa4ea4471ac5ca9465b274989c23e15 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [NEX] Add MTL-PS AUX Orientation Override configurations.
+  
+  [Feature Description]
+  Add MTL-PS AUX Orientation Override configurations.
+  
+  Package/Module:AUX Orientation Override
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 15013449652
+  Change-Id: I790518e18970253f8b0b20969b73d0f83be731b4
+  Original commit hash: 860367af75fbeab608b68c6e80f7e160f7156cb9
+  
+  MeteorLakeBoardPkg/Library/PeiPolicyBoardConfigLib/PeiSaPolicyBoardConfig.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Sbc.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePCrbBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePsCrbBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePsPpvBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePsRvpBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePsSbcBoardConfigPatchTable.h
+  MeteorLakePlatSamplePkg/Setup/Advanced.vfr
+  MeteorLakePlatSamplePkg/Setup/SioIT8659ESetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 27595051f992a307f3f3acfe694676c3a67f0108 
+*********************************************************************************
+
+[SiliconPkg]
+
+  BIOS to set 1/4 FIFO size.
+  
+  [Feature Description]
+  BIOS to set the EM3L.I2SL1EXT2 register
+  field to 1/4 FIFO size in order to avoid the
+  input host DMA SRAM buffer become full and potentially
+  roll over the pointer causing out of sync of FIFO tracking.
+  
+  Package/Module:
+  ClientOneSilicongPkg
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 14019326748
+  Change-Id: I3da838f990380507d9e7bbc5aad03be9cc8668d5
+  Original commit hash: 210084ebe4137abd57642625935604fd50334af0
+  
+  ClientOneSiliconPkg/IpBlock/Hda/IncludePrivate/Register/AceRegs.h
+  ClientOneSiliconPkg/IpBlock/Hda/LibraryPrivate/PeiAceInitLib/PeiAceInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: Acer
+
+*********************************************************************************
+Commit: 2c34f30edf788b50b5a01e78b28ffdbfc5a46411 
+*********************************************************************************
+
+[BoardPkg]
+
+  SyncScript: Revert override commits.
+  
+  Wed Jun 7 05:20:06 2023 -0700
+  Original commit hash: e1dd1da252f098037f4e3731b61083e330a39236
+  
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+################################################################################
+
+Report Summary: Backstop found 31 suspect commits for review 
+
+Warnings Found:
+  Commit: 5d8e012    --Commit Message Contains Key Word: sku
+  Commit: 5ebbe36    --Commit Message Contains Key Word: revert
+  Commit: 4720025    --Commit Message Contains Key Word: fuse
+  Commit: 46368bb    --Commit Message Contains Oem: NEC
+  Commit: 7702638    --Commit Message Contains Key Word: sku
+  Commit: 5815778    --Commit Message Contains Key Word: sku
+  Commit: c446f22    --Commit Message Contains Key Word: sku
+  Commit: 22cf34a    --Commit Message Contains Key Word: sku
+  Commit: 50ec4d7    --Commit Message Contains Key Word: HW
+  Commit: 290e2e1    --Commit Message Contains Key Word: revert
+  Commit: 4b19d6c    --Commit Message Contains Key Word: HW
+  Commit: b4395ca    --Commit Message Contains Key Word: HW
+  Commit: fb10477    --Commit Message Contains Key Word: revert
+  Commit: fbcb5bb    --Commit Message Contains Key Word: revert
+  Commit: 76b6c32    --Commit Message Contains Oem: ecs
+  Commit: 85238cc    --Commit Message Contains Key Word: sku
+  Commit: f266e50    --Commit Message Contains Key Word: sku
+  Commit: f5864b8    --Commit Message Contains Key Word: step
+  Commit: aede027    --Commit Message Contains Key Word: revert
+  Commit: aede027    --Commit Message Contains Oem: ecs
+  Commit: 9d2bd20    --Commit Message Contains Oem: ecs
+  Commit: c0b38f8    --Commit Message Contains Key Word: revert
+  Commit: e571201    --Commit Message Contains Oem: ecs
+  Commit: c1d73a2    --Commit Message Contains Key Word: step
+  Commit: 874cfbd    --Commit Message Contains Key Word: prt
+  Commit: f75e81f    --Commit Message Contains Key Word: sku
+  Commit: b94aa07    --Commit Message Contains Key Word: sku
+  Commit: 7fcf8fe    --Commit Message Contains Key Word: sku
+  Commit: a6cb307    --Commit Message Contains Key Word:  WA 
+  Commit: f891d29    --Commit Message Contains Key Word: sku
+  Commit: 2759505    --Commit Message Contains Oem: Acer
+  Commit: 2c34f30    --Commit Message Contains Key Word: revert
