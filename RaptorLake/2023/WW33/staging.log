@@ -1,0 +1,76 @@
+================================================================================ 
+Commit: 5d8797d582197ddf7570cd92c5bad35176014391 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Aug 16 16:06:38 2023 +0800 
+-------------------------------------------------------------------------------- 
+Update BIOS ID for 4313_00
+
+[Feature Description]
+Update BIOS version to 4313_00
+Update PcdFspVersionRevision and PcdSiliconInitVersionRevision to 0xBB
+Update PcdFspVersionBuild and PcdSiliconInitVersionBuild to 0x30
+
+Package/Module:
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: N/A
+Original commit date: Wed Aug 2 14:57:51 2023 +0800
+Change-Id: Icdf4cdc3723767bdaf7b3a431b3d647e284b2314
+Original commit hash: 043e681af4a95c1c39f279bf72dd109af043c0f0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 4d106d256ee113ffe50242871cd6186ad978bd8e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Aug 16 16:06:35 2023 +0800 
+-------------------------------------------------------------------------------- 
+RPL Hx update: Map GPP_E[21:0] to GPE[53:32]
+
+[Issue Description]
+Issue happens in Display Topology: DG2 Card (PEG10 slot) <-> DP port <->
+Bobcat Card (PCH slot2) <-> TypeC port<-> External Monitor
+
+When hotplug Type-c Port, wake signals to PCH slot2 and PEG10 slot
+are very near. There's race condition for OS to serve same tie2 GPE event (0x6F)
+from PEG1(DG2) and PCH slot2(bobcat). Sometimes this cause DG2 exit D3 delay.
+The side effect is Type-c display sometimes not show in time after hotplug
+monitor
+
+The solution is maping PEG1 wake pin GPP_E6 and PCH slot2 wake pin GPP_E19 to
+seperate tier1 GPE. Meanwhile, report _PRW with native PCIE_EXP GPE which is
+0x69 with S4 capabilities and define _L26 unconditionally. As there's case
+connected DG2 enter D3, but PEG1 RP still stay in D0.
+
+After mapping GPP_E to Tier1, total three GPIO GPE changed
+E6 (PEG1 wake pin): GPE 0x6F => GPE 0x26
+E19 (Slot2 wake pin): GPE 0x6F => GPE 0x33
+E20 (Slot3 wake pin): GPE 0x6F => GPE 0x34
+
+Package/Module:
+AlderLakeBoardPkg
+
+[Impacted Platform]
+RPL Hx update
+
+Hsd-es-id: 15013928825
+Original commit date: Tue Jun 27 14:23:15 2023 +0800
+Change-Id: I92a12a9e596463bd731ce8552c3438b49b30baa0
+Original commit hash: 48fcdb1ae643c6672e9ee8e5a4f325e1c4d83815
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/RplSBUpdRvpRtd3.asl
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/RplSBUpdRvpTbt1Rtd3.asl
+AlderLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/RplSBUpdRvpTbt2Rtd3.asl
+AlderLakeBoardPkg/RaptorLakeSBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+BackStopTool.py
+fetch_log.bat
+reword.bat
+reword.py
