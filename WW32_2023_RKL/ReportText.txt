@@ -1,0 +1,44 @@
+*********************************************************************************
+Commit: 88e30fc6860058120312c192cda16fa4ec01d91b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Fixing potentiall overflow in SMM SPI handler
+  
+  [Issue Description]
+  SMM SPI handler is susceptible to TOCTOU attack using DMA modification
+  between the time when handler copies and then fixes enclosed structure
+  pointers.
+  If attacker allocates external communication buffer right before SMRAM
+  then on handler exit it is possible to cause overflow and corrupt SMRAM.
+  
+  [Resolution]
+  Added parameter to FixBufferPointer function for function detection in
+  SMM_SPI_HEADER instead of relying of data in said header because this is
+  potential vector of attack.
+  This is a fix for CVE-2023-32282.
+  
+  Package/Module:
+  OneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 18030824920
+  Original commit hash: 2f7325a3f414ab4a2f3e12b2e92c5524603f0380
+  
+  ClientOneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: CVE
+
+################################################################################
+
+Report Summary: Backstop found 1 suspect commits for review 
+
+Warnings Found:
+  Commit: 88e30fc    --Commit Message Contains Key Word: CVE
