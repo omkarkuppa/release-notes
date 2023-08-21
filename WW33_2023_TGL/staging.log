@@ -1,0 +1,90 @@
+================================================================================ 
+Commit: adaac0889004de2de3e0d9d3c2d1c7b2b53808db 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Aug 21 10:31:42 2023 -0700 
+-------------------------------------------------------------------------------- 
+Added build files for TGL.6261.00
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/SiPkg.dec
+ClientOneSiliconPkg/SystemAgent/Include/MemInfoHob.h
+
+================================================================================ 
+Commit: 7f7a1232fda85b2b0f4c5f4f69851ede0aa3abd5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Aug 17 17:04:53 2023 -0700 
+-------------------------------------------------------------------------------- 
+[TeamCity] TGL Auto-Commit BIOS ID update_github TGLMaster BIOS Version to 6261_00
+
+Mon Jun 26 22:34:15 2023 -0700
+Original commit date: Mon Jun 26 22:34:15 2023 -0700
+Original commit hash: adb15cbf31a8ec9cade3046ef660f8ffede8b0f2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+TigerLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 4b596567cc6dac54b012900cb02c81dd4415d998 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Aug 17 17:04:45 2023 -0700 
+-------------------------------------------------------------------------------- 
+Fixing potentiall overflow in SMM SPI handler
+
+[Issue Description]
+SMM SPI handler is susceptible to TOCTOU attack using DMA modification
+between the time when handler copies and then fixes enclosed structure
+pointers.
+If attacker allocates external communication buffer right before SMRAM
+then on handler exit it is possible to cause overflow and corrupt SMRAM.
+
+[Resolution]
+Added parameter to FixBufferPointer function for function detection in
+SMM_SPI_HEADER instead of relying of data in said header because this is
+potential vector of attack.
+This is a fix for CVE-2023-32282.
+
+Package/Module:
+OneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 18030824593
+Original commit date: Thu Jun 1 10:24:20 2023 +0200
+Original commit hash: 66a23f2d97cccd7dbde17be29db5c74bc979a475
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub.c
+
+================================================================================ 
+Commit: d522635367a12b8d7f7745580592b6bdb4c9b6c0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Aug 17 17:04:34 2023 -0700 
+-------------------------------------------------------------------------------- 
+[TGL-H] BSOD(ACPI_BIOS_ERROR) occurred and system will auto reboot
+several times with NAVI device
+
+[Issue Description]
+With NAVI card, BSOD(ACPI_BIOS_ERROR) occurred and
+system will auto reboot several times
+
+[Resolution]
+Cap offset is not correct because of wrong endpoint bus
+
+Package/Module:
+OneSiliconPkg
+
+[Impacted Platform]
+TGL-H
+
+Hsd-es-id: 15012739257
+Original commit date: Wed Feb 8 02:51:22 2023 +0530
+Change-Id: I56bd8bb5f317456b496309b6e686464e44d9d4e9
+Original commit hash: 04872b4daaca101d6e891d493ce535c9ed011415
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.c
