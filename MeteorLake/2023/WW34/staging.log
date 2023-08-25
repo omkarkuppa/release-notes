@@ -3,7 +3,8 @@ Commit: e7c21c4f092ee53a1c774c7ed5a774881bc64137
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Aug 24 20:15:19 2023 +0530 
 -------------------------------------------------------------------------------- 
-Added Doxygen and License
+Added Doxygen and License.
+Code clean up.
 
 -------------------------------------------------------------------------------- 
 [Changed Files]
@@ -151,14 +152,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu Aug 24 19:42:31 2023 +0530 
 -------------------------------------------------------------------------------- 
 [MTL-S MTL-P MTL-M | DDR5 LP5] Fix MrcBitSwap unsigned underflow
-
-[Issue Description]
-Delta = (Margin - *LastPass); Delta + 1 underflow in MrcBitSwap
-
-due to LastPass is initialed to 0x7F, and first run is fail,
-(IsPassing = FALSE), Margin and MinTested will update, then
-(Delta +1) underflow in MrcBitSwap. Errors is wrong in this case,
-thus make MrcInterpolateMargin underflow.
 
 [Resolution]
 set Delta to -1 when Delta <=-2 (use MAX(Delta, -1))
@@ -1554,18 +1547,6 @@ Date: Thu Aug 24 19:41:37 2023 +0530
 -------------------------------------------------------------------------------- 
 [MTL-S | DDR5] DCC Downsteam Training Fails on 2DPC Intermittently
 
-[Feature Description]
-In 2SPC Dimm1-only config (0R1R/0R2R), while calculating the stepsize,
-we are writing DCC Offset to rank2,
-but internally the FSM is expecting offset has to be written on Rank0
-because of rank mux settings.
-This has caused DccLaneStatusResults does not show much different
-when DCC offset extreme values are set (-15 and +15).
-In order to support 2SPC Dimm1 only config (Rank0 disabled),
-set GsmIocRankOverrideEn and set the GsmIocRankOverrideVal to
-first populated rank before calculating DCC StepSize and
-clear GsmIocRankOverrideEn at the end of the function.
-
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
 [Impacted Platform]
@@ -1743,14 +1724,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu Aug 24 19:41:28 2023 +0530 
 -------------------------------------------------------------------------------- 
 [MTL-M MTL-P | DDR5 LP5] Boot Time Optimization for IoReset
-
-[Feature Description]
-(1) MRC must use the multicast PHY register
-DATA_CR_DDRCRDATACONTROL0_REG (0x00008CFC) to configure the
-InternalClocksOn field on all instances of the register.
-
-This change is needed to reduce the overall number of CR accesses
-performed in the MRC
 
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
@@ -6150,7 +6123,7 @@ Commit: 7946ce15ffd53968564d4cc4366801cf8c0face7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Thu Aug 24 19:38:31 2023 +0530 
 -------------------------------------------------------------------------------- 
-[ARL S][A1][PNP] Resizable Bar not getting enabled with specific GPU
+[ARL S][PNP] Resizable Bar not getting enabled with specific GPU
 
 [Issue Description]
 Resizable Bar not getting enabled with specific GPU's.
@@ -6455,13 +6428,6 @@ Author: ClientSysFWGit <clientsysfwgit@intel.com>
 Date: Thu Aug 24 19:38:19 2023 +0530 
 -------------------------------------------------------------------------------- 
 SUT looping at PC: AC10 and does not boot to OS
-
-[Issue Description]
-SUT looping at PC: AC10 and does not boot to OS
-after SINIT driver being installed successfully and enabling VSM
-
-[Resolution]
-Revert "[MTL-S-681-A0][PO][SVOS] PAM target cannot be registered"
 
 Package/Module: ClientOneSiliconPkg
 
