@@ -1,0 +1,194 @@
+================================================================================ 
+Commit: 684ec6a2498cd55589dc36a55a715d09302898a6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 9 11:59:16 2023 +0530 
+-------------------------------------------------------------------------------- 
+[ADLN] Updating Major BIOS ID to 4263
+
+[Issue Description]
+Updating BIOS ID for IPU 24.1 Release
+
+[Resolution]
+Update BIOS ID to 4263
+
+Package/Module:
+AlderLakeBoardPkg/BiosId.env
+
+Hsd-es-id: 16021127639
+Original commit date: Wed Jun 28 12:00:17 2023 +0530
+Change-Id: I16cbe54bc06ddb0a05671dba739def9ef199f04c
+Original commit hash: e369d92b8373da18dfb00827ef7fa227c3902689
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: e8272a5dee8525cb88513ea90ec7016223cde0cf 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 9 11:59:07 2023 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment ADL MRC build revision to 0.0.4.74
+
+Hsd-es-id: N/A
+Original commit date: Mon Jun 5 17:27:55 2023 -0700
+Change-Id: I403f628e53a829591588983a60e6649e6fd9072b
+Original commit hash: 778dfecd23dcd12d8290e4e335f36ff3d60fcea1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: de7d494165d7e76ffaada38e3b72f997e4c67064 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 9 11:58:57 2023 +0530 
+-------------------------------------------------------------------------------- 
+[ADLN] FSP and SI version Update
+
+[Issue Description]
+Updating the FSP and SI version for IPU 24.1
+
+[Resolution]
+Updated FSP and SI version
+
+Package/Module:
+
+[Impacted Platform]
+AlderLakeFspPkg, ClientOneSiliconPkg
+
+Hsd-es-id: 16021127639
+Original commit date: Wed Jun 28 15:19:30 2023 +0530
+Change-Id: I6a0451a054cc3452662b6b3ebd8f4e5e3709073d
+Original commit hash: 2dc9b7f3726dd414cf8bfb2565563180171c3980
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: c5335fdc8cb8f49e01bbaa4dc234e18a40a1b478 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 9 11:58:48 2023 +0530 
+-------------------------------------------------------------------------------- 
+MemoryInit: change the solution to get required memory size.
+
+[Feature Description]
+Get the memory size from gEfiMemoryTypeInformationGuid.
+Previous check if the memory type is EfiMaxMemoryType,
+it is EfiMaxMemoryType, means reach the end of HOB.
+But currently the HOB data no change,
+EfiMaxMemoryType defined in EDK2 is changed.
+so it can't read the acturally memory data from HOB
+Currently check the data length of HOB,
+get the data from HOB according acturally HOB data length
+
+Package/Module: C1S/MemoryInit
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 15013576331
+Original commit date: Thu Jun 1 09:27:19 2023 +0800
+Change-Id: Iedd0695bf1f1f32e7e9527f3f4e673d301f93703
+Original commit hash: 006bae265a5768d89088dad5136389c6bec33f27
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Adl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+
+================================================================================ 
+Commit: f7d9eb123d321b6e9b1cd6f39d7d30326b6097b7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 9 11:58:39 2023 +0530 
+-------------------------------------------------------------------------------- 
+Adding MRC Version to FSP
+
+[Feature Description]
+Adding MRC version into FSP.
+
+Package/Module:
+AlderLakeFspPkg, AlderLakeFspBinPkg, ClientOneSiliconPkg
+
+[Impacted Platform]
+Default ALL.
+
+Hsd-es-id: 16020743978
+Original commit date: Thu May 18 17:01:12 2023 +0530
+Change-Id: Id2d6ce9176ba0164ffa02a4f045931e53cc4bf53
+Original commit hash: bce065ffdf00be6c279c36cecc49058e31eb6819
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeFspPkg/BuildFv.cmd
+AlderLakeFspPkg/BuildFv.sh
+ClientOneSiliconPkg/Fsp/Include/MrcVersionInfo.h
+
+================================================================================ 
+Commit: 6cb6520b290f8afde909bfdaf6403526b644df6b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 9 11:58:30 2023 +0530 
+-------------------------------------------------------------------------------- 
+FSP MultiPhase Si Init API is unable to return any error status
+
+[Issue Description]
+After Control reaches back to MultiPhaseSiliconInitHandler, it
+should return without changing the return value.But in the
+existing implementation, it is retuning EFI_SUCCESS which is
+Zero (in value).
+
+[Resolution]
+After Control reaches back to MultiPhaseSiliconInitHandler,
+return immediately without changing the return value.This
+helps to return correct status to Bootloader
+
+Package/Module:
+ClientOneSiliconPkg
+
+[Impacted Platform]
+RPL, ADL
+
+Hsd-es-id: 16020500643
+Original commit date: Thu Apr 27 16:49:15 2023 +0530
+Change-Id: I2b1637408d8789bf886b06847309c60af0b91658
+Original commit hash: b9f62d65a37b61815fe92caeded9cfbcff4c5100
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fsp/Library/SecFspSiliconLib/SecFspSiliconLib.c
+
+================================================================================ 
+Commit: 685c11923e59aaf9ae73695cf6baa5d3a552ded4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 9 11:58:21 2023 +0530 
+-------------------------------------------------------------------------------- 
+[CVE-2023-32282]Fixing potentiall overflow in SMM SPI handler
+
+[Issue Description]
+SMM SPI handler is susceptible to TOCTOU attack using DMA modification
+between the time when handler copies and then fixes enclosed structure
+pointers.
+If attacker allocates external communication buffer right before SMRAM
+then on handler exit it is possible to cause overflow and corrupt SMRAM.
+
+[Resolution]
+Added parameter to FixBufferPointer function for function detection in
+SMM_SPI_HEADER instead of relying of data in said header because this is
+potential vector of attack.
+This is a fix for CVE-2023-32282.
+
+Package/Module:
+OneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 18030824501
+Original commit date: Thu Jun 1 10:24:20 2023 +0200
+Change-Id: Ibd1807d12b80d3a304f5ea8e40cf2f4ed81d49db
+Original commit hash: fa15bf08976291cadbc331bd816099719e105c8e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub.c
