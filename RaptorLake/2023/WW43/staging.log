@@ -1,0 +1,148 @@
+================================================================================ 
+Commit: c770f2923ad77280e46a47a56555116dfeb62094 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 23 16:54:02 2023 +0800 
+-------------------------------------------------------------------------------- 
+Update BIOS ID for 4415_00
+
+[Feature Description]
+Update BIOS version to 4415_00
+Update PcdFspVersionBuild and PcdSiliconInitVersionBuild to 0x50
+
+Package/Module:
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: N/A
+Original commit date: Fri Oct 13 17:39:53 2023 +0800
+Change-Id: I2c51b267ca720dfb5358aedcf9833f55cb874468
+Original commit hash: fa893e4fc6e3aecce6c3dc7f0526f547b07a23a5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: e7263ab3a20a1f7b3c3cbbde4517a1869cda3a42 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 23 16:53:59 2023 +0800 
+-------------------------------------------------------------------------------- 
+Fix for CVE-2023-41833
+
+[Issue Description]
+Communication buffer that comes to SMI handler for SPI is not properly
+verified before using. This can lead to potential caller overwrite SMRAM
+data if SMM communication header is setup in a certain way that doesn't
+align with expected data allocated for the payload buffer.
+Right now BIOS only verifies if incoming buffer size is at least size of
+SMM communication header and accesses payload data without checking if
+anything is there at all.
+This fixes CVE-2023-41833.
+
+[Resolution]
+Before fixing pointers embedded in the structure, BIOS shall verify that
+allocated space for payload align with data present in the communication
+header at all.
+After successful verification it can move on with the pointers fixing.
+
+Package/Module:
+OneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 18034300868
+Original commit date: Wed Sep 20 13:09:07 2023 +0200
+Change-Id: Ia85c08369f5cb721e3a207af3d072741c7412b55
+Original commit hash: 96938fa0477887aa1f362fcfc275682334a3fca8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub.c
+
+================================================================================ 
+Commit: 308c4edf8d4e790d0ed076e7f96be66cc49800f1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 23 16:53:56 2023 +0800 
+-------------------------------------------------------------------------------- 
+Support customized _PRW for PEG10/11 endpoint
+
+[Feature Description]
+Implement BPRW, EPRW hook in CpuPcieRp.asl
+for device-initiated wake on PEG10/11 RTD3 Cold
+
+Package/Module: ClientOneSiliconPkg
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 15014451980
+Original commit date: Thu Oct 12 14:01:54 2023 +0800
+Change-Id: I4c8ea3191a092254913246a60da278dd80720f7e
+Original commit hash: 1aa358eb8489e038ce1298c99b4e3060d086e4df
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/SystemAgent/AcpiTables/SaSsdt/CpuPcieRp.asl
+
+================================================================================ 
+Commit: 0b32a6ebf0e6d581f786367a6f099748cb5bb4ec 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 23 16:53:52 2023 +0800 
+-------------------------------------------------------------------------------- 
+Skip Check VGA Init for storage device
+
+[Issue Description]
+Configure the PCI space will cause some storage device
+can't be detected after Check VGA Init.
+
+[Resolution]
+Check the Class code, skip check VGA Init if the device
+is storage.
+
+Package/Module:
+ClientOneSiliconPkg
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 15014353043
+Original commit date: Thu Sep 14 09:51:42 2023 +0800
+Change-Id: Id6fa5c3891766def33291198c182a7f774034b1b
+Original commit hash: 0ca043a3b357b69053ce25c17e2525e5e3a5bd22
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/CpuPcieRp/LibraryPrivate/PeiCpuPcieVgaInitLib/PeiCpuPcieVgaInit.c
+
+================================================================================ 
+Commit: 640ddc64ac6fab0d6cc35e91c909a6ef2aa9e9a7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Mon Oct 23 16:53:49 2023 +0800 
+-------------------------------------------------------------------------------- 
+[RPL-S ] Remove Intel Rapid Recover Technology option in BIOS Menu
+
+[Feature Description]
+Intel Rapid Recover Technology unsupported from RST 18.0. Removing
+this option from the BIOS menu.
+
+Package/Module:
+PlatSamplePkg
+
+[Impacted Platform]
+S
+
+Hsd-es-id: 22018791390
+Original commit date: Thu Sep 7 10:58:50 2023 -0700
+Change-Id: Ide2e21616399162e1cc2de5000af5db41044c8b2
+Original commit hash: 5650b2b06a299c035c7c379ab170940db4ed36c2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/Rst/RstUefiDriverSupport/RstUefiDriverSupport.c
+AlderLakePlatSamplePkg/Features/Rst/RstUefiDriverSupport/RstUefiDriverSupport.inf
+AlderLakePlatSamplePkg/Setup/SaSetup.hfr
+AlderLakePlatSamplePkg/Setup/SaSetup.uni
