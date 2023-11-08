@@ -1218,10 +1218,10 @@ Commit: 6202172bc81094ec6dec3ce35e9ba8eee185304a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Nov 6 14:56:49 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S | DDR5] Enable 6400 as default SaGv Point for B0
+[MTL-S | DDR5] Enable 6400 as default SaGv Point
 
 [Feature Description]
-For UDIMM 1DPC 1R B0:
+For UDIMM 1DPC 1R:
 Update FreqMax to 6400
 Update SaGv table to support 6400G2/G4
 
@@ -1556,10 +1556,10 @@ Commit: 54c43d4acb8d4328af237ccdef30c762b70ea753
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Nov 6 14:54:56 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S | DDR5 | OC] Enable freq 8000 on B0 chip
+[MTL-S | DDR5 | OC] Enable freq 8000
 
 [Feature Description]
-Need enable 8000 on MTL-S B0 and ARL-S.
+Need enable 8000 on MTL-S and ARL-S.
 
 Tune RcompTarget for freq 6400, 7600, 8000, 8267, 8400.
 Freq 6400 RdODT=100 can solve ARL-S 6400 boot issue.
@@ -1651,7 +1651,7 @@ This issue is caused by:
 1. Non-existing ranks written in the CMD Timing Centering function
 2. Missing CCC Per-Pin normalization in CMD Timing Centering final
 centering.
-3. A bug in the function setting Outputs->Is2RankDdr5, which is set
+3. A function setting Outputs->Is2RankDdr5, which is set
 based only on the first valid DIMM and not on all populated DIMMs.
 
 [Resolution]
@@ -2838,10 +2838,10 @@ Commit: 8a0fa3a6d351b0b0df61b66755b6960fdf418bb5
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Nov 6 14:48:40 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S | DDR5 ] Enable RDVC2D for 2DPC (for B0 onwards only)
+[MTL-S | DDR5 ] Enable RDVC2D for 2DPC
 
 [Feature Description]
-Enable RDVC2D for 2DPC for B0 onwards only
+Enable RDVC2D for 2DPC 
 
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
@@ -3191,7 +3191,7 @@ Date: Mon Nov 6 14:46:54 2023 +0530
 [PCH] Toggle MSI enable bit in hotplug flow for MTL PCH PCIe only.
 
 [Feature Description]
-Due to known bug, we need an additional programming in SMI
+Due to known issue, we need an additional programming in SMI
 handler on MC_MSIE bit.
 
 Package/Module:
@@ -4758,10 +4758,7 @@ Commit: e8fd81527cd6d77efca7b0a1028f7ef533d33a9f
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Nov 6 14:38:33 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S | DDR5] B0 safe mode update
-
-[Feature Description]
-Update B0 safe mode to be the same with A0
+[MTL-S | DDR5] Safe mode update
 
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
@@ -7540,8 +7537,7 @@ Date: Mon Nov 6 14:24:34 2023 +0530
 [ARL-S][MTL-S][TCSS] Fixed TCSS resource issue.
 
 [Issue Description]
-A bug that always assigned same resource to every devices
-behind iTBT RP.
+Assignes same resource to every devices behind iTBT RP.
 
 [Resolution]
 Devices behind the iTBT RP will be assigned resource according to
@@ -7874,13 +7870,6 @@ Date: Mon Nov 6 14:22:54 2023 +0530
 -------------------------------------------------------------------------------- 
 [MTL-S MTL-M MTL-P | DDR5 LP5] CPGC setup fix in SetupIOTest
 
-[Issue Description]
-The bug happens if SetupIOTest does not set
-Cpgc2AddrSize.Bits.Block_Size_Max_Rank. This was accomplished in
-TGL by means of calling Cpgc20BasicMemTest in SetupIOTest, which
-set this field. However, this function was deprecated in MTL,
-and this field was never added back to SetupIOTest.
-
 [Resolution]
 Cpgc2AddrSize.Bits.Block_Size_Max_Rank set to 0 by calling
 Cpgc20SetAddrMaxRank in SetupIOTest.
@@ -8205,7 +8194,7 @@ Date: Mon Nov 6 14:21:11 2023 +0530
 [MTL-S MTL-P MTL-M | LP5 DDR5] fix string overflow
 
 [Issue Description]
-Mrc hang at Ddr5 Xtalk training on MTL-S B0.
+Mrc hang at Ddr5 Xtalk training on MTL-S.
 
 string overflow in MrcPrintHeaderTestScope.
 Max 1032 char per line printed when scope is BitScope,
@@ -9243,7 +9232,7 @@ Commit: 6bb3e9e2b2031613c21ea53f74eb5b751a0041b1
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Nov 6 14:15:44 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-M MTL-P | DDR5 LP5] 1 Segment mode bug fixes
+[MTL-M MTL-P | DDR5 LP5] 1 Segment mode issue fixes
 
 [Feature Description]
 Remove Rd ODT - SOC ODT equivalency check (at least for 1 segment mode)
@@ -9974,9 +9963,6 @@ Revert "[MTLS][S02] Correct RTD3 PCIE IOE clock number".
 Change 2e16dbcc248402998baf888e3405e28556fac74f causes
 PS_ON regression.
 
-[Resolution]
-Revert the change for now to unblock MTLS ES1 and B0 label.
-
 Package/Module: MeteorLakeBoardPkg
 
 [Impacted Platform]
@@ -10529,7 +10515,6 @@ Date: Mon Nov 6 14:09:48 2023 +0530
 1. Add dTBT config for CRB board id.
 2. Use GetDTbtRpDevFun replaced with ConfigData
 before ConfigData is ready.
-3. Fixed coding bug.
 
 Package/Module:
 ClientOneSiliconPkg
