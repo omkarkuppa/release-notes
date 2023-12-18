@@ -83,11 +83,11 @@ Date: Mon Dec 18 13:07:07 2023 +0530
 [BR] Observed YB on UCM-UCSI ACPI Device
 
 [Issue Description]
-Observed UCM-UCSI with yello-Bang when enabling UCSI BIOS knob.
-In addition, USBC on Barlow Ridge also supports UCSI.
+Observed UCM-UCSI with Yellow-Bang when enabling UCSI BIOS knob.
+In addition, USB-C on Barlow Ridge also supports UCSI.
 
 [Resolution]
-USBC ports mapping modified dynamically depends on
+USB-C ports mapping modified dynamically depends on
 Barlow Ridge enabling.
 
 Package/Module:
@@ -115,7 +115,7 @@ Commit: 7ea95ebb143056ded413568b7eb229db3b2fc542
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 13:06:57 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-S] BIOS to enable SoC PME_EN bit
+[SOC I/O][MTL-S] BIOS to enable SoC PME_EN bit
 
 [Feature Description]
 PME_EN is set on S3, S4 and S5 entry to support CSME remote wake
@@ -323,11 +323,11 @@ Commit: e300a876c87f6b1a3463063843d515661ce78ac4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 13:05:43 2023 +0530 
 -------------------------------------------------------------------------------- 
-Board support: MTL/ARL-H LPDDR5 CAMM ERB
+[SOC I/O] MTL/ARL-H LPDDR5 CAMM ERB
 
 [Feature Description]
 Added CAMM RVP board ID to 0x3F,
-CRD_PRVICAY_LED (GPP_F20) default state changed to LOW.
+CRD_PRIVACY_LED (GPP_F20) default state changed to LOW.
 
 Package/Module:
 MeteorLakeBoardPkg
@@ -410,7 +410,7 @@ Commit: 90aa170df06de3c5d961d4dd47d1cb539f5fd3da
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 13:04:46 2023 +0530 
 -------------------------------------------------------------------------------- 
-[CNVd][WiFi/Bt] GaP PRR - BIOS support.
+[PCH][SOC I/O][CNVd][WiFi/Bt] GaP PRR - BIOS support.
 
 [Feature Description]
 BIOS shall use PCIE_CAP_INITIATE_FLR is bit15 instead of bit28
@@ -518,7 +518,7 @@ Date: Mon Dec 18 13:04:04 2023 +0530
 
 [Feature Description]
 A memory corruption issue was causing display underrun in GFX.
-A similar issue was noted in MTL-S. Until a solution is found, the fix
+A similar issue was noted in MTL-S. The fix
 for now is to include MTL-M/P into the current MTL-S fix.
 
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
@@ -725,14 +725,12 @@ Such timing parameters usually configure 2 sides.
 The one is MC and phy. The other is DIMM side by MR
 registers.
 
-HSD 15014485239 was trying to solve issues that
+It was trying to solve issues that
 old DDR5 modules don't support the new JEDEC spec.
-However, it also causes new moudle not well-supported.
+However, it also causes new module not well-supported.
 
-Revert patch 4554d60a1f, as we want to use another way
+Change to use another way
 to support both old and new DDR5 modules.
-
-Revert patch 9e47fecfc1661.
 
 Change OCSafeMode to a bitmap. Bit 0 means OC_SAFE_tCL.
 Bit 1 means OC_SAFE_OLD_TIMING_SPEC. Limit tWR, tRTP,
@@ -1139,7 +1137,7 @@ Commit: 59219c99d7b614879a4611aab5182d12d14d6a1c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:59:26 2023 +0530 
 -------------------------------------------------------------------------------- 
-Add ARL-SoC-M GPIO HID handling
+[SOC I/O] Add ARL-SoC-M GPIO HID handling
 
 [Feature Description]
 This commit adds ARL-SoC-M GPIO HID handling to the ASL code.
@@ -1270,13 +1268,13 @@ Commit: 3ee347ba4223fa3b08c72ec286917470280dcd91
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:58:31 2023 +0530 
 -------------------------------------------------------------------------------- 
-SUT takes multiple restarts with BIOS guard enabled
+Code clean up
 
 [Issue Description]
-SUT takes multiple restarts with BIOS guard enabled
+Code clean up
 
 [Resolution]
-Enable BIOS guard by default using ucode 0xB
+Code clean up
 
 Package/Module: MeteorLakeBoards
 
@@ -1329,10 +1327,9 @@ Commit: 62118fbf31a6a98d70fed0213b6730c995647ba3
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:58:12 2023 +0530 
 -------------------------------------------------------------------------------- 
-PCH DMI PG Enable as default
+[PCH] PCH DMI PG Enable as default
 
 [Feature Description]
-Revert "[Silicon WA] Changing PCH DMI PG Disable as default"
 
 Package/Module: MeteorLakeBoardPkg
 
@@ -1355,10 +1352,10 @@ Commit: 4fa1e25bf95417999e12e5358d58fb31ce77ad48
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:58:04 2023 +0530 
 -------------------------------------------------------------------------------- 
-SoC is coming as Undefined
+[SOC I/O] SoC shows as Undefined
 
 [Issue Description]
-SoC is coming as Undefined in Debug logs
+SoC shows as Undefined in Debug logs
 
 [Resolution]
 Add SoC description string.
@@ -1436,10 +1433,10 @@ Commit: 4173881ed7b7ec9a581e296602abed079bb25d5e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:57:36 2023 +0530 
 -------------------------------------------------------------------------------- 
-[ARL] Support ARL-H SKUs
+[ARL] Update comment for ARL SKUs
 
 [Feature Description]
-Support ARL-H SKUs
+Update comment for ARL SKUs
 
 Package/Module:
 ClientOneSiliconPkg/Fru/MtlCpu
@@ -1499,7 +1496,7 @@ Date: Mon Dec 18 12:57:09 2023 +0530
 Not to install CNV FV in the first boot if EfiNetwork is disabled
 
 [Issue Description]
-After First flash IFWI PXEv6 & PXEV4 enumerating in Boot manager
+After First flash IFWI PXEv6 & PXEv4 enumerating in Boot manager
 menu when knobs disabled in BIOS page by default
 
 [Resolution]
@@ -1569,7 +1566,7 @@ Commit: 3b65dfee859adbba8ef0f067fcae99d2bcf1d4da
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:56:49 2023 +0530 
 -------------------------------------------------------------------------------- 
-[ARLHx RVP1] Report USB3 OC mapping by lane
+[PCH][SOC I/O] Report USB3 OC mapping by lane
 
 [Feature Description]
 Report USB3 OC mapping by lane on ARLHx RVP1 CRB
@@ -1596,8 +1593,8 @@ Date: Mon Dec 18 12:56:41 2023 +0530
 [DTBT][ARL] Add _RMV for the XHCI and NHI of Barlow Ridge
 
 [Feature Description]
-The XHCI and TBT controllers are unremoveable of BR.
-Add _RMV for XHCI and NHI to avoid showing removeable
+The XHCI and TBT controllers are unremovable of BR.
+Add _RMV for XHCI and NHI to avoid showing removable
 capability.
 
 Package/Module: MeteorLakePlatSamplePkg
@@ -1936,7 +1933,7 @@ Commit: c6477f29191bc86e8603a29d13f50e35e7de664d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:53:55 2023 +0530 
 -------------------------------------------------------------------------------- 
-Display GPIOs to choose between GPP_SA/GPP_SD Group
+[SOC I/O] Display GPIOs to choose between GPP_SA/GPP_SD Group
 
 [Feature Description]
 Provide option to Bootloader to choose the Display GPIOs
@@ -2223,7 +2220,7 @@ Date: Mon Dec 18 12:52:22 2023 +0530
 2, Rtt: {60, 34, 40, 60, 48} // 2DPC 1R1R
 3, RdOdt = 70
 
-Package/Module: ClientOneSiliconPkg/Ipblck/MemoryInit/Mtl
+Package/Module: ClientOneSiliconPkg/Ipblock/MemoryInit/Mtl
 
 [Impacted Platform]
 MTL-S DDR5 UDimm 2DPC 1R1R
@@ -2325,7 +2322,7 @@ Date: Mon Dec 18 12:51:44 2023 +0530
 [MTL-S MTL-P MTL-M | DDR5] force enable Pmic before Ckd config
 
 [Feature Description]
-Ckd config word is not accessable when Pmic is not enabled.
+Ckd config word is not accessible when Pmic is not enabled.
 Pmic can be enabled by pull up VR_EN pin or
 set Pmic Reg32.Vr_en bit to 1.
 
@@ -2583,7 +2580,7 @@ Commit: 3a84607e0f61680ce23ce9b09a5715a3e391357c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:49:49 2023 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-P MTL-M MTL-S | DDR5] Add to approve 5600 dimmm ID
+[MTL-P MTL-M MTL-S | DDR5] Add to approve 5600 dimm ID
 
 [Feature Description]
 Add an Vendor ID to approve 5600 list
@@ -2638,7 +2635,7 @@ While applying our RxVref temperature offset, we need to set VccSa
 to Vboot for our temperature readout. In the case that the Pcode doesn't
 support this temperature polling, we must exit the function. Otherwise,
 our temperature readout will default to the SSKPD fields default value
-of 0 and our offset will be inaccuarate.
+of 0 and our offset will be inaccurate.
 
 Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
 
@@ -2914,7 +2911,7 @@ Date: Mon Dec 18 12:47:47 2023 +0530
 CA Parity Pattern Boot Time Optimization Revert for Desktop
 
 [Feature Description]
-Implemente the requirements:
+Implement the requirements:
 (1) MRC must use the high stress CA Parity Patter on Desktop IP based
 Platforms (MTL-S, ARL-S, ARL-Hx).
 (2) MRC must use the high stress CA Parity Patter on OC enabled configs.
@@ -3201,7 +3198,7 @@ Commit: 7aa4f0df968121cff11202aa90777b2544a3d19a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:46:09 2023 +0530 
 -------------------------------------------------------------------------------- 
-Assign correct GPIO pin to SATA Led blink.
+[PCH] Assign correct GPIO pin to SATA Led blink.
 
 [Issue Description]
 SATA Led blink is assigned to wrong GPIO pin.
@@ -3344,11 +3341,11 @@ Date: Mon Dec 18 12:45:13 2023 +0530
 [Issue Description]
 RMC and MarginLimitCheck UPDs are enabled by default to
 enable fast and cold reboot trainings which results in
-increase of boot time on chrome platfroms(~60ms)
+increase of boot time on chrome platforms(~60ms)
 
 [Resolution]
 Add MarginLimitCheck to PartialHeader list to disable
-it from coreboot.
+it from Coreboot.
 
 Package/Module:
 MeteorLakeFspPkg
@@ -3391,7 +3388,7 @@ TPM GPIO IRQ not assigned
 
 [Issue Description]
 IRQ of TPM from device manager and "TPM Interrupt Number: xxx"
-string is not printing in debug log before/after DTPM clear
+string is not printing in debug log before/after dTPM clear
 
 [Resolution]
 Set VpdPcdTpm2IntGpio
@@ -3799,7 +3796,7 @@ Date: Mon Dec 18 12:42:30 2023 +0530
 CA Parity Pattern Boot Time Optimization Revert for Desktop
 
 [Feature Description]
-Implemente the requirements:
+Implement the requirements:
 (1) MRC must use the high stress CA Parity Patter on Desktop IP based
 Platforms (MTL-S, ARL-S, ARL-Hx).
 (2) MRC must use the high stress CA Parity Patter on OC enabled configs.
@@ -4040,7 +4037,7 @@ Otherwise, sagv 0 might hit training failure.
 When DMB or RMF is enabled, call MrcGetSagvConfig to get FreqMax
 for STD_PROFILE.
 
-When DMB failover happens, set FrexMax to 4000.
+When DMB failover happens, set FreqMax to 4000.
 
 This change applied to both DMB and RMF features.
 
@@ -4572,10 +4569,10 @@ Commit: aba934e405dff2c558ae9771430364de0997806b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Mon Dec 18 12:37:27 2023 +0530 
 -------------------------------------------------------------------------------- 
-[OEMx][MTL-H][Willie] Hardware Security Testability Interface Test item fail
+[MTL-H] Hardware Security Testability Interface Test item fail
 
 [Feature Description]
-Update HSTI BIOS Region Flash Read Access code to accomodate
+Update HSTI BIOS Region Flash Read Access code to accommodate
 all permission values
 
 Package/Module: PlatSamplePkg/HstiIhvDxe
