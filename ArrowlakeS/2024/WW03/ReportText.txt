@@ -1,0 +1,595 @@
+*********************************************************************************
+Commit: 729806e80247771c0a9e48396a0beae395c71575 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [MTLS] Disable Foxville Wake capability in DeepSx
+  
+  [Feature Description]
+  Foxville does not support DeepSx while its wake pin is under
+  GPD group. Disable interrupt config of the wake pin in DeepSx
+  entry to avoid unexpected autowake issue.
+  When Amt is provisioned, DeepSx will be demoted to Sx, so no
+  need to disable Foxville WOL in that case.
+  
+  This change is needed only for MTLS RVP that uses GPD as
+  Foxville wake pin.
+  
+  Package/Module: MeteorLakeBoardPkg, MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  MTL S
+  
+  Hsd-es-id: 15015043231
+  Change-Id: I7d6bd32ebc003ce2173a0c957e595540ba6a2c34
+  Original commit hash: fffe73cc8f376257d4e5a04df9543e03bb31cf64
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedSmm/PlatformInitAdvancedSmm.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedSmm/PlatformInitAdvancedSmm.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 0a6260bbbea9309e0ee384280604a72a0db75d68 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Ethernet Controller has MAC address written in incorrect byte order
+  
+  [Issue Description]
+  MAC address is actually reported in format like this 49 90 0A FA 9E 8A
+  (byte-swapped order)
+  
+  [Resolution]
+  Expected behavior: MAC address should be reported in format like this:
+  90 49 FA 0A 8A 9E (MAC address with normal byte order).
+  Byte swapping done to write MAC address in proper format.
+  
+  Package/Module:
+  PlatSamplePkg
+  
+  [Impacted Platform]
+  MTLS
+  
+  Hsd-es-id: 22019269295
+  Change-Id: I195825386eb900dd9e7631422a2ee8e8ffba2c9e
+  Original commit hash: 9f621a77aad119db9ce2053f3ed1e9ee6e5c9383
+  
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateHw.c
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: acd0fb0acafe22efe79b55afa64d53b874536a3b 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [MTL] HTTP not enumerate after setting Onboard NIC
+  
+  [Issue Description]
+  HTTP boot option is not enumerating
+  after setting EFI network to Onboard NIC.
+  
+  [Resolution]
+  Unload Discrete EFI Network Driver when it is disabled in setup
+  
+  Package/Module: MeteorLakeSamplePkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16022781916
+  Change-Id: I71aa70b0037364702cda05d6c68a0efdc9d95be0
+  Original commit hash: 64714aa0a35ae309de7c0927f886fc90da51018b
+  
+  MeteorLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: e4a12384cedf7048fe234ed1577519f5c482d48c 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [MTL-S][FXVL-C]: FXVL gets LSC during exit from S5
+  
+  [Issue Description]
+  FXVL gets LSC during exit from S5 flow by PB when critical session are
+  open
+  
+  [Resolution]
+  The FXVL power is turned off only when FXVL is totally disabled in
+  BIOS setting. When FXVL is enabled in setup menu, it is turned on even
+  in low power modes like Sx.
+  
+  Package/Module:MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 13011100083
+  Change-Id: Iada1b0e6489654d5e0f9ac831ae08d98a686ab15
+  Original commit hash: 2011e1e346e9257af84a8bab1cc05ae9d8fcb462
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: eecba92d3715627b214dde2c8a14406a43603b83 
+*********************************************************************************
+
+[BoardPkg]
+
+  Pull low on GPP_E_19 (LAN_GPIO_RST_N)
+  
+  [Feature Description]
+  Pull low on GPP_E_19 (LAN_GPIO_RST_N) at pre-memory stage
+  
+  Package/Module: MeteorLakeBoards
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 14021111987
+  Change-Id: Ie61e749f20096c56e2cdc380fd2d430e7bb164c1
+  Original commit hash: 2d574dac6db0e3a1b9c29b434275fc3140effa56
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 846c1e1fb22e02f2af0f3cc3b73b6e5dc93f5465 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Alternate PSS chip location for MAC address on MTL-S RVP boardsm
+  
+  [Feature Description]
+  MTL-S RVP motherboards have MAC address programmed into PSS chip
+  in a different PSS chip location than was expected. Request BIOS to
+  read alternate PSS location for MTL-S RVP boards, as thousands have
+  already been built and deployed. MTL-S RVP board SKUs used Block 2
+  PSS chip (start address 64) instead of Block 5 PSS Chip location
+  (start address 136). The data was also stored in ASCII rather
+  than Hex format, and with no JV letters preceding the MAC address.
+  
+  Package/Module:
+  BoardPkg
+  PlatSamplePkg
+  
+  [Impacted Platform]
+  MTLS, ARLS
+  
+  Hsd-es-id: 16022613859
+  Change-Id: I4bff2bda93b16f1860f7a0f1f2f51393c8e8d705
+  Original commit hash: 53e375c1d0b808f68e927523966098239d38bfa7
+  
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdate.inf
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateDefines.h
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateHw.c
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateInit.c
+  MeteorLakePlatSamplePkg/Include/Library/PssLib.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: ea6eb6afd59eb545e76e04c9e72f442c70195b7b 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg]
+
+  [MTL-S]x8x4x4 lane-reversal support - platform code change
+  
+  [Feature Description]
+  Add x8x4x4 lane-reversal support
+  
+  Package/Module:MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 15014135202
+  Change-Id: Ib1f10d62d62dd44b0a11e23f0628645c7c13e387
+  Original commit hash: f433e898d18f36e93d1a1afee9f2720d54f6338f
+  
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLibVer6.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 33fb4cef64cba7c4d2863866018a2a6519149e4e 
+*********************************************************************************
+
+[ASL], [BoardPkg]
+
+  Add _BTP support for battery participant
+  
+  [Feature Description]
+  Enable _BTP support for ARL battery participant.
+  
+  Package/Module:
+  EcFeaturePkg/EcNvs
+  EcFeaturePkg/Bat1Real
+  MeteorLakeBoardPkg/EcInit
+  
+  [Impacted Platform]
+  All.
+  
+  Hsd-es-id: 15014767028
+  Change-Id: I83f85ebf8c278ddd70219fdfefe366b04f92e3c1
+  Original commit hash: d3b7ee0435e58eff5a01b5186182ddf15c311e3e
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat1Real.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcNvs.asl
+  Features/Ec/EcFeaturePkg/Include/EcNvsAreaDef.h
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/EcInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 416fae2cf0a5a1a9017a7c006e7a5b2009441c98 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [ARL-Hx][HLK][SV2]:USB Exposed Port System Test IS failing
+  
+  [Issue Description]
+  USB Exposed Port System Test IS failing with
+  \\***Failing Exposed Connector***\\.
+  
+  [Resolution]
+  HydraCreek and FP in ARL-Hx RVP2 was moved to not in POR.
+  Removed FP Connector declaration.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-Hx
+  
+  Hsd-es-id: 16022650603
+  Change-Id: Iae72adacdd3c845abf7c59caeb849e0aedd8f582
+  Original commit hash: 46417daaffeb2c89e6393f1d561f0e8e2f35b229
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlSbgaUDimm2Dpc.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 695e8f5ecff38526009076667f64db354d0fd256 
+*********************************************************************************
+
+[BoardPkg]
+
+  Enable USBC OC via Physical wire
+  
+  [Feature Description]
+  Defeature USBC overcurrent over eSPI VWM and
+  Enable USBC OC via Physical wire.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL/ARL S, Hx
+  
+  Hsd-es-id: 15014715551
+  Change-Id: I67ada214f98625d493805d75c23616506e26d882
+  Original commit hash: b14cf62578e7323005a604c18d2f7f7ed8859b2e
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: e4ead60cd77aedc6b13ad8acebe2598f8cb923e2 
+*********************************************************************************
+
+[SiliconPkg]
+
+  SPI DMA Transfer Hang WA
+  
+  [Feature Description]
+  Both WA 1 and WA 2 are required to be implemented as complete WA
+  for the DMA Boundary Condition bug
+  
+  BIOS WA 1 : (Disable Power and Clock Gating to prevent the bug)
+  To have WA in BIOS during boot by disabling IP-level clock gating and
+  disabling all PSFs power and clock gating before issuing DMA commands.
+  Then, after all DMA commands are fully completed,
+  BIOS re-enables them back.
+  Before Issuing DMA comands :
+  BIOS to set
+  FAB_PG_CTL_PSF--> 0xA0000086
+  PLCC_DCGE -> '0' (disable)
+  PLPC_DCGE -> '0' (disable)
+  BIOS to disable the following register bits of all PSF to '0' :
+  Trunk clock gating PSF_<x>_PSF_GLOBAL_CONFIG[4] - (enTCG)
+  Local clock gating PSF_<x>_PSF_GLOBAL_CONFIG[3] - (enLCG)
+  Partition clock gating PSF_<x>_PSF_GLOBAL_CONFIG[12] - (enPCG)
+  Clock gate holdoff timeout value to 0xF
+  
+  After DMA completes :
+  BIOS to set
+  FAB_PG_CTL_PSF : 0x20000082
+  PLCC_DCGE : '1' (enable)
+  PLPC_DCGE : '1' (enable)
+  BIOS to re-enable back the following register bits to '1' :
+  Trunk clock gating PSF_<x>_PSF_GLOBAL_CONFIG[4] - (enTCG)
+  Local clock gating PSF_<x>_PSF_GLOBAL_CONFIG[3] - (enLCG)
+  Partition clock gating PSF_<x>_PSF_GLOBAL_CONFIG[12] - (enPCG)
+  Clock gate holdoff timeout value to 0x0
+  
+  BIOS WA 2 : (Recovery Mechanism as mitigation if PSF traffic is backpressured)
+  
+  Apart from Power Gating and Clock Gating factors, there is another factor
+  called PSF traffics Backpressure could possibly trigger this DMA
+  boundary condition bug. Based on technical assessment,
+  the probability of the DMA boundary condition to be triggered due to
+  PSF traffics backpressure is very rare.
+  However, for safety reason, to propose a contingency BIOS fallback
+  mechanism to CopyMem (non-DMA command) if DMA traffic is hang and
+  timeout due to rare PSF traffics backpressure.
+  Thus, even if PSF traffics backpressure really happens during boot,
+  BIOS has recovery steps to boot up with copy mem approach
+  The BIOS Recovery steps as following :
+  Once BIOS detects DMA hangs, BIOS can clear the DMA start bit and
+  fallbacks to copy mem approach.
+  Clearing the DMA start bit is important because the DMA start bit will
+  cause SPBC controller to keep requesting for clk and will indirectly
+  block the system from low power entry.
+  
+  Package/Module: OneSiliconPkg/IpBlock/Spi/LibraryPrivate/PeiSpiDmaLib
+  
+  [Impacted Platform]
+  MTL-S
+  
+  Hsd-es-id: 22019064556
+  Change-Id: Ib5fad435c917fc934092a20534bd563da9ceeac1
+  Original commit hash: 7817f140b3b192ac1cb92865b5900e02507b4246
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocEndOfPei.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocInitPei.h
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocInitPreMem.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/PeiMtlSocInitLib.inf
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/PeiMtlSocInitLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/Spi/LibraryPrivate/PeiSpiDmaLib/PeiSpiDmaReg.c
+  ClientOneSiliconPkg/Product/MeteorLake/SiPkgPcdInit.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: abd55c87fab608de8a8542663b6a66fe4711adac 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ARL] Bios Guard ARL-H Z0 PO support
+  
+  [Feature Description]
+  Bios Guard support for ARL-H Z0 SKUs
+  
+  Package/Module: MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 13011412287
+  Change-Id: Ibeb7c72eb298049aa2150527662a94ddc14f36f6
+  Original commit hash: dfacdc13f9b204f3138f4168ac3d99524354f281
+  
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 29564a434d8b3c3162605236fab461df7422b136 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [MTL H Modular PC] Added PO Porting Changes.
+  
+  [Feature Description]
+  Added GPIO,HSIO,USB and PO related changes
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL H
+  
+  Hsd-es-id: 16021445277
+  Change-Id: Ia9beba1836a30fcee176c6de5df9de8cf00e76bb
+  Original commit hash: 807ee0da615bb45273177f6d87119044b86b4671
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/MtlHLpCammModPcRtd3.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlHLpCammModPc.asl
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlH/SkuIdMtlHLpCammModularPc.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 0059d0a54c23a86c85e6c1d6e1863bfe7dec3fc7 
+*********************************************************************************
+
+[BoardPkg]
+
+  GAP peak wifi module is not enumerated in DM after F-02 rework
+  
+  [Issue Description]
+  wifi device is not enumerated in dxe phase while PCIE enumeration.
+  On 0x6 display skuid,clock is not correctly mapped for WLAN PCIE RP.
+  
+  [Resolution]
+  Inherited ARL H DDR5 Skuid for SKUid with display id 0x6.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  H
+  
+  Hsd-es-id: 22019135209
+  Change-Id: I274790911d9f4fc822d6d10a07e0e3601d1d98de
+  Original commit hash: 6559dc6b3e4276b3ee3433ebc292452b96ea442a
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 11057b43ca0fbf7d7e97d07874fb1037ab9b9d80 
+*********************************************************************************
+
+[BoardPkg]
+
+  Multiple Re-timer fields are not showing up in BIOS page
+  
+  [Issue Description]
+  Multiple Re-timer fields are not showing up in BIOS page.
+  
+  [Resolution]
+  Update the retimer info for this board.
+  
+  Package/Module: BoardPkg
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 16022531603
+  Change-Id: Ide47835eefd4e47c7a086f1c501f39b0d7d2e928
+  Original commit hash: 703ba30daefafef70a98f7b00f0ada747c008f08
+  
+  Features/Tcss/TcssCapsuleFeaturePkg/CapsuleBuild/ConfigSample/DTbtPayloadConfig.ini
+  Features/Tcss/TcssCapsuleFeaturePkg/CapsuleBuild/ConfigSample/DTbtRetimerPayloadConfig.ini
+  MeteorLakeBoardPkg/Features/TcssCapsuleUpdate/Config/DTbtPayloadConfig.ini
+  MeteorLakeBoardPkg/Features/TcssCapsuleUpdate/Config/DTbtRetimerPayloadConfig.ini
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 15 suspect commits for review 
+
+Warnings Found:
+  Commit: 729806e    --Commit Message Contains Key Word: sku
+  Commit: 0a6260b    --Commit Message Contains Key Word: HW
+  Commit: acd0fb0    --Commit Message Contains Key Word: http
+  Commit: e4a1238    --Commit Message Contains Key Word: sku
+  Commit: eecba92    --Commit Message Contains Key Word: sku
+  Commit: 846c1e1    --Commit Message Contains Key Word: sku
+  Commit: 846c1e1    --Commit Message Contains Key Word: HW
+  Commit: ea6eb6a    --Commit Message Contains Key Word: sku
+  Commit: 33fb4ce    --Commit Message Contains Oem: ecs
+  Commit: 416fae2    --Commit Message Contains Key Word: sku
+  Commit: 695e8f5    --Commit Message Contains Key Word: sku
+  Commit: e4ead60    --Commit Message Contains Key Word: step
+  Commit: abd55c8    --Commit Message Contains Key Word: sku
+  Commit: 29564a4    --Commit Message Contains Key Word: sku
+  Commit: 0059d0a    --Commit Message Contains Key Word: sku
+  Commit: 11057b4    --Commit Message Contains Key Word: sku
