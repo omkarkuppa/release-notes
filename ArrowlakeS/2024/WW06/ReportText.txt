@@ -1,0 +1,372 @@
+*********************************************************************************
+Commit: 35e268c1722f0587dfe947e76a338652eb09066f 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [ARL-Hx][BR] BIOS changes to expose number of TCP connectors
+  
+  [Feature Description]
+  Need below changes in BIOS to accommodate below config.
+  
+  ARL-Hx 5* - iTBT Enabled
+  2 Ports - dTBT 0 and 1 disabled in BIOS
+  BIOS is expected to expose 2 Connectors as dTBT is completed disabled
+  Reports 2 ports based on 1 x PD AIC
+  
+  ARL-Hx 3* - dTBT 0 Enabled on IOE
+  2 Ports - iTBT and dTBT1 disabled in BIOS
+  BIOS is expected to expose 2 connectors as iTBT and dTBT1
+  is disabled in BIOS set-up
+  Need to remove PD AIC for iTBT as well to avoid EC reporting 2 ports
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  ARL-Hx
+  
+  Hsd-es-id: 15015163261
+  Change-Id: I8c035c6fcb77a49eaa2443d2f54e59630b1e40eb
+  Original commit hash: 322e267ce0e6a336d3d98341f8f7bf973ed21afd
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlSbgaErb.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 1431b68efd900905e875e1816d2ef037e6eb94f7 
+*********************************************************************************
+
+[ASL], [BoardPkg], [PlatformPkg]
+
+  [ARL] Type C Connectors UPC capability support enabled
+  
+  [Feature Description]
+  BIOS shall support ACPI rev.6.5 Chapter 9.12 _UPC capabilities
+  related to USBC retimer. Benefits to Customers by having this
+  change is Improve Type-C connector mapping and user experience
+  on Windows ecosystem. Help user connect the docking station on
+  correct Type-C capable port for best Thunderbolt/USB4 docking
+  experience. For example, OS will send UI notification on desktop
+  if a user connects a Thunderbolt dock to non-TBT port (sub-optimal
+  performance), the notification will help user connect to right
+  Thunderbolt/USB4 port for optimal user experience.
+  
+  Package/Module:
+  MeteorLakeBoardPkg,
+  MeteorLakePlatSamplePkg,
+  ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 16022280556
+  Change-Id: I51b144669d8184c2453958edc58893afd9284f14
+  Original commit hash: 24a08ac60b2cf43825f99dead53de76a86d678ec
+  
+  ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssXhci.asl
+  ClientOneSiliconPkg/IpBlock/Usb/AcpiTables/PchXhci.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlHDdr5SODimmAep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlSDdr5SODimm2DpcAep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlSbgaErb.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlMLp5xAep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlMLp5xConf1Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5MemSolderDowndTBTRvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5SODimmB2bHsioRvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5SODimmSbsRvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5SODimmSbsRvpBom2.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5T4SODimmSbsRvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPGcs.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPLp5xAep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPLp5xBep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPLp5xT3Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSSD02Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSU1D01Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSU1DOC04Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSU2D03Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciWrapper.asl
+  MeteorLakeBoardPkg/Include/PlatformBoardConfig.h
+  MeteorLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5CammRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPDdr5Crb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Crb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5OnlyDpRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Sbc.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf1Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf2Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdArlHDdr5SODimmErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5MemSolderDowndTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvpBomSku.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5Gcs.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5GcsFab2.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT4Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdArlHDdr5SODimmPpvRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlMLp5xConf1PpvRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPDdr5SODimmB2bHsioRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPDdr5SODimmSbsPpvRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPSDdr5Ppv.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Simics/SkuIdMtlSSimics.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Simics/SkuIdMtlSimics.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/ArlH/SkuIdArlHDdr5SODimmAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlM/SkuIdMtlMLp5xAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlM/SkuIdMtlMLp5xAepp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlP/SkuIdMtlPLp5xAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlP/SkuIdMtlPLp5xBep.dsc
+  MeteorLakePlatSamplePkg/Features/Acpi/AcpiTables/TbtTypeC/TbtTypeC.asl
+  MeteorLakePlatSamplePkg/Features/Acpi/AcpiTables/TbtTypeC/TbtTypeCWrapper.asl
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/Include/UsbTypeC.h
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeC.asl
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 07dd48b62fd29d92fb4d43a2116483ce55172a55 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [ARL] Update the Type-C port map
+  
+  [Feature Description]
+  Update the Type-C port map to support
+  the _UPC for DTBT.
+  
+  Package/Module:
+  MeteorLakeBoardPkg,
+  MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 16022280556
+  Change-Id: Id3b5ed4aebb6d9e97c5e26c0984d03006f60db4a
+  Original commit hash: 53733db972ce5e390f05cd2d1c69d32ff7c509a2
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: dca2a78bd6f59bae01b4120296cbc9f4985cbd6f 
+*********************************************************************************
+
+[ASL]
+
+  Fix the method error reported by FWTS tool
+  
+  [Issue Description]
+  Enable the _BTP support for LNL battery participant, but method:
+  \_SB_.PC00.LPCB.H_EC.BAT1._BTP returned values, it was expected
+  to return nothing.
+  
+  [Resolution]
+  Remove the return() code for _BTP method.
+  
+  Package/Module: EcFeaturePkg/Bat1Real
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15015084491
+  Change-Id: Ib5651816154947455cd59b918b2cfe4a934bbd24
+  Original commit hash: cb377bdc3038c01f92db4d06ee0f7defb2e7a77a
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat1Real.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 2c10d26e49fef561a6df09b89be2f97d2c3911d1 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [MTL-H] [MTL-U] [MTL-S] [HID]: HEBC value option missing in BIOS
+  
+  [Issue Description] or [Feature Description]
+  HEBC value option missing in setup page
+  
+  [Resolution]
+  Removed "HebcValueSupport" condition as it supports for all SKUs.
+  So enabled by default at HFR
+  
+  Package/Module:
+  MeteorlakeBoardPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 22019142074
+  Change-Id: I50f884f404e411110fbb61b028bb33e09f81a47f
+  Original commit hash: 28f72bb574a608846bcc4ee063e815d4f2bc0b8f
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakeSRvpBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakeSimicsBoardsConfigPatchTable.h
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  MeteorLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 961232118f8c7486f83c1df16a5968694f57907a 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S ARL-H | DDR5] Partial CKD DIMM Support
+  
+  [Feature Description]
+  When mixed CKD and non-CKD DIMMs, operate the CKD DIMM in BypassMode
+  Disable IsCkdSupported to skip CKD code
+  Default PLL Mode (CKD Control Word 0) is in BypassMode
+  
+  Package/Module: ClientOneSiliconPkg\IpBlock\MemoryInit\Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15012207279
+  Change-Id: Ia6d7ab63fc113020cacc3a7345ceaa183cc9d50e
+  Original commit hash: 5907a90527f67f3b1398a3a174ecb685a840fb2c
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: 96556c3d730d2b81c4e970aef5a2975b4f17b230 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL] DDR5 CCC ODT revert from previous check-in
+  
+  [Feature Description]
+  Revert previously changed DDR5 CCC ODT due to unexpected failures
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  DDR5
+  
+  Hsd-es-id: 22019253174
+  Change-Id: I720c6022f134da488bce4596b973d613907026e4
+  Original commit hash: 80185eee58b9d05e1e9013f0fa2d38b67ba86aad
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 824ddeabde7bdb263e022b2f47de39340d48f365 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S | DDR5] CKD Training - Helper functions
+  
+  [Feature Description]
+  Added input parameter to EarlyCaTraining to include Pi to CKD scale
+  Added MrcGetDdr5ClkIndex function to return Physical MC/Ch/Rank that CLK
+  resides in
+  Added MrcCccLimits function to gather the Left and Right Shift Limits
+  for CLK/CS
+  Added MrcCccDelays function to keep CLK/CS PI shifting within the Limits
+  from MrcCccLimits and updates the Limits based on the shift
+  Added MrcGetDelayInCkdSteps function to calculate the CKD Steps based on
+  CKD shift in PI ticks
+  Updated Sweep2D:
+  1. Input parameter for PiToCkdScale as optional
+  2. Removed CLK/CTL shifting between CSTM and CATM
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22016466831
+  Change-Id: I2dc53e96e1bc6a969aa28e98d066244ef219e3ac
+  Original commit hash: 25ce9e25eb3bbc5a14e34e1522df7682dff523a1
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTrainingPrivate.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+################################################################################
+
+Report Summary: Backstop found 8 suspect commits for review 
+
+Warnings Found:
+  Commit: 35e268c    --Commit Message Contains Key Word: sku
+  Commit: 1431b68    --Commit Message Contains Key Word: sku
+  Commit: 07dd48b    --Commit Message Contains Key Word: sku
+  Commit: dca2a78    --Commit Message Contains Oem: ecs
+  Commit: 2c10d26    --Commit Message Contains Key Word: sku
+  Commit: 9612321    --Commit Message Contains Key Word: bypass
+  Commit: 96556c3    --Commit Message Contains Key Word: revert
+  Commit: 824ddea    --Commit Message Contains Key Word: step
