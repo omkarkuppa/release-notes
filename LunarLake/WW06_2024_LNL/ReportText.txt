@@ -1,0 +1,756 @@
+*********************************************************************************
+Commit: 47114ac2f39662fcff90840f9db5705c6c330381 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "BIOS shall expose SSE HECI1 device to OS"
+  
+  This reverts commit 8e4cf362fb9b709ca80c9adf508ccb9f45faccf3.
+  
+  Mon Jan 22 15:17:59 2024 +0530
+  Original commit hash: a1be59cc6a35feea5632fda032b197e4110d2ff8
+  
+  OneSiliconPkg/Fru/LnlSoc/LibraryPrivate/PeiLnlSocInitLib/LnlSocSse.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 4fe9c98aaa87c777499145c0feda175605641a46 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "VR spec Update WW02_24"
+  
+  This reverts commit 7ed38d5b622135780205d5dac47cca6a99f1db4c.
+  
+  Mon Jan 22 15:16:16 2024 +0530
+  Original commit hash: 1657e94d04a7f92e863ffce4d80e4296502d9333
+  
+  OneSiliconPkg/Fru/LnlCDie/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 208195826382f894dc9de7c51142e21c8a636ee0 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "PL2 & PL4 VALUE UPDATE FOR B0"
+  
+  Mon Jan 22 14:04:14 2024 +0530
+  Original commit hash: 15df82f5bb24ebf381f70268e743684c9ecce39f
+  
+  OneSiliconPkg/Fru/LnlCDie/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  OneSiliconPkg/Fru/LnlCDie/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+  OneSiliconPkg/IncludePrivate/Library/CpuInfoFruLib.h
+  OneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PeiCpuPowerManagementLib.inf
+  OneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PowerLimits.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 4cac0f25682c3709d6759c62acdf35bd5da9bf62 
+*********************************************************************************
+
+[ASL], [BoardPkg]
+
+  Add Power Limit setting base on AC state at runtime
+  
+  [Issue Description]
+  At runtime the Power Limit setting in Isys register is
+  not update base on the AC state change.
+  
+  [Resolution]
+  Add a new method UPIS on silicon side to update power limit
+  L1Enable and L2Enable base on the AC state. The method would
+  be called in the EC Qevent.
+  Add ISEN ACPI NVS to control the whole features.
+  
+  Package/Module:
+  EcFeaturePkg/EcQevent
+  OneSiliconPkg/SocCommonSsdt
+  LunarLakeBoardPkg/Platform
+  
+  [Impacted Platform]
+  ALL.
+  
+  Hsd-es-id: 22019285357
+  Change-Id: I60899e20c62223f91ce86e0624f0ded17b6161fb
+  Original commit hash: 81d94a3c28e6fec6d2beb6a3683d939ddb746494
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcBase.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcQevent.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  OneSiliconPkg/Fru/LnlSoc/Include/AcpiTables/Soc/SocCommonSsdt.asl
+  OneSiliconPkg/IncludePrivate/CpuNvsAreaDef.h
+  OneSiliconPkg/IpBlock/CpuPowerManagement/AcpiTables/CpuNvs.asl
+  OneSiliconPkg/IpBlock/CpuPowerManagement/Dxe/CpuNvsAreaInit.c
+  OneSiliconPkg/IpBlock/CpuPowerManagement/IncludePrivate/CpuPowerManagementPrivateDataHob.h
+  OneSiliconPkg/IpBlock/CpuPowerManagement/LibraryPrivate/PeiCpuPowerManagementLib/PowerManagementInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 38246be2c485ead633d2f2d3f845ae10e0649ece 
+*********************************************************************************
+
+
+  Fix DXE ASSERT error while select 'Intel Advanced Menu'
+  
+  [Issue Description]
+  DXE ASSERT occurs with RPMC BIOS because a reclaim()
+  operation (which tries to erase from flash) is
+  happening after BIOS Guard enables flash wear-out
+  protection.
+  
+  [Resolution]
+  The non-volatile variable usage was incorrectly being
+  incremented for all volatile/non-volatile variable updates.
+  This caused BIOS to think, variable memory is filled
+  and so it issued a reclaim(). The fix is to make sure
+  only non-volatile variable updates non-volatile variable
+  usage.
+  
+  Package/Module:
+  ProtectedVariablePkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 15015039288
+  Change-Id: Iff981af0992c610369682c71b467889ff8831bb1
+  Original commit hash: 56338844ee4d9ea9340b8f422bfce70b846126af
+  
+  Features/Security/ProtectedVariablePkg/Universal/ProtectedVariable/RuntimeDxe/Variable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 358c6e5a1ca0d2a84ed073b510468557f7fa982e 
+*********************************************************************************
+
+[BoardPkg]
+
+  SyncScript: Revert override commits.
+  
+  Wed Jan 17 21:40:59 2024 -0800
+  Original commit hash: 0da5a61f43fb89346405cee13092aa6d2856b176
+  
+  Features/Security/ProtectedVariablePkg/Universal/ProtectedVariable/RuntimeDxe/Variable.c
+  LunarLakeBoardPkg/BiosId.env
+  LunarLakeBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  LunarLakeBoardPkg/LunarLakeBoards/Include/LunarLakeMRvpBoardsConfigPatchTable.h
+  LunarLakeBoardPkg/LunarLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 0e524aaf03fafee8b8ee750cb92ba00a373361da 
+*********************************************************************************
+
+
+  Fix DXE ASSERT error while select 'Intel Advanced Menu'
+  
+  [Issue Description]
+  DXE ASSERT occurs with RPMC BIOS because a reclaim()
+  operation (which tries to erase from flash) is
+  happening after BIOS Guard enables flash wear-out
+  protection.
+  
+  [Resolution]
+  The non-volatile variable usage was incorrectly being
+  incremented for all volatile/non-volatile variable updates.
+  This caused BIOS to think, variable memory is filled
+  and so it issued a reclaim(). The fix is to make sure
+  only non-volatile variable updates non-volatile variable
+  usage.
+  
+  Package/Module:
+  ProtectedVariablePkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 15015039288
+  Change-Id: Iff981af0992c610369682c71b467889ff8831bb1
+  Original commit hash: 1b88324f667731383c8b26d08a55fca8da558da2
+  
+  Features/Security/ProtectedVariablePkg/Universal/ProtectedVariable/RuntimeDxe/Variable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: f519955b28091fad038d08c924631b309bd37731 
+*********************************************************************************
+
+[BoardPkg]
+
+  Remove unused VPD PCDs
+  
+  [Issue Description]
+  There are unused VPD present in the LNL source which is showing
+  build warning.
+  
+  [Resolution]
+  Removed unused VPD in LNL source
+  
+  Package/Module:
+  LunarLakeBoardPkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 16023029925
+  Change-Id: I783ce0490fc0ac7a640d5f66320efc0a41d294ff
+  Original commit hash: f3337b59306d1ca7c6779f1f79b981383ce0f0d8
+  
+  LunarLakeBoardPkg/BoardPkg.dec
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5GcsFab1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp4.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMxHmpRvp.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlSimics/SkuIdLnlSimics.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/Xep/LnlM/SkuIdLnlMLp5Aep.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b8a065ce9ee34572339f636fb096439e1a8c6917 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [LNL][CVS] Add CV Chip Reset support
+  
+  [Feature Description]
+  Add CV Chip Reset support for computer vision driver device
+  
+  Package/Module:
+  BoardPkg
+  
+  [Impacted Platform]
+  ALL Mobile Platform
+  
+  Hsd-es-id: 16023014490
+  Change-Id: I2878fe6ef2adc3b29ff12d8cceb55861917bb8b7
+  Original commit hash: 949f57475962ae20faaf8ce17ba6f423f46518c1
+  
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Lch.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  LunarLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  LunarLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp4.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMxHmpRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 99b72470b5d6d81a53bc827dd23369e70f752001 
+*********************************************************************************
+
+
+  [LNL][TSE] Fix Redundant function call
+  
+  [Issue Description]
+  - In Function EnumerateNvmeDevNamespace
+  - Redundnat function call to gBS->OpenProtocol()
+  
+  [Resolution]
+  - Removed the extra function call
+  
+  Package/Module: TseNvmExpressDxe
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 14021189364
+  Change-Id: Id18eb1415b1682dd3718e52c36632dd3601d7c6d
+  Original commit hash: 5395b25365e0fcd9df1b9b68ee679cd3947041df
+  
+  Features/Security/TseFeaturePkg/TseNvmExpressDxe/NvmExpress.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: b2af672a561de78e30e0721c69d8d3c50bb25eb9 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "Move PO safe settings to default - Security"
+  
+  This reverts commit d176f5b961da951b5697a13062f4b0ebecf94d8d.
+  
+  (cherry picked from commit a2e96c58075832e0259be82a9f500cf36fd7f3a5)
+  
+  Tue Jan 2 16:45:59 2024 +0530
+  Original commit hash: 0228c02bf19b486283cf2dc79d362c84e8b4a3c7
+  
+  LunarLakeFspPkg/Upd/FspmUpd.dsc
+  OneSiliconPkg/IpBlock/BootGuard/LibraryPrivate/PeiBootGuardPolicyLib/PeiBootGuardPolicy.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: cherry
+
+*********************************************************************************
+Commit: 2ff7ec47f99f8f41b7f673f528249aa35ece7fe3 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "Disable BiosGuard by default"
+  
+  This reverts commit 9d37124bdb1389c0c0b453aad3495abb7285f6e1.
+  
+  (cherry picked from commit 01b5ddbf18a8973da54289a4103e96627237b5ad)
+  
+  Tue Jan 2 16:45:49 2024 +0530
+  Original commit hash: 8a9bf8b980be615575c9d2d1ee0c242f40cc52fd
+  
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: cherry
+
+*********************************************************************************
+Commit: c5eef02aa81a17855993ec8d50456a4d46eb3044 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Cat Error wiht Ext BKC bin
+  
+  [Issue Description]
+  System Cat error at postcode 10B4 and observed exception in uart log
+  with EXT FSP BKC bin
+  
+  [Resolution]
+  Update Pcie Default Configs of P2P as disabled and making Uprs to 64
+  byte since it should not be set more than MPS
+  
+  Package/Module:
+  LunarLakeFspPkg, OneSiliconPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15015005862
+  Change-Id: I0244c4b1de0ee3159a92521a3b44a2ff5d6e13cb
+  Original commit hash: b5584ecfb4e9330581e8d903276ce0d44d92d57a
+  
+  LunarLakeFspPkg/Upd/FspsUpd.dsc
+  OneSiliconPkg/Fru/LnlSoc/LibraryPrivate/PeiPolicyLib/PeiLnlSocPolicyLib.c
+  OneSiliconPkg/IpBlock/IpPcieSip17/IpPcieLib/IpPcie.c
+  OneSiliconPkg/IpBlock/IpPcieSip17/IpPcieLib/IpPcieSipInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: kc
+
+*********************************************************************************
+Commit: 88ca9428ea56ca18b871c712b02f24e05a7d8564 
+*********************************************************************************
+
+[BoardPkg]
+
+  [LNL] Fix LunarLakeOpenBoardPkg RVP Assert MRC.
+  
+  [Issue Description]
+  Assert MRC.
+  
+  [Resolution]
+  Add MRC setting for RVP.
+  
+  Package/Module: OpenBoardPkg
+  
+  [Impacted Platform]
+  Default ALL
+  
+  Hsd-es-id: 15014996630
+  Change-Id: I58447e9ef285656630cba1caad9d147a6c73f737
+  Original commit hash: 168f9d521f7a0f6ab4932471063ba748d9f444f1
+  
+  LunarLakeOpenBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+  LunarLakeOpenBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiDetect.c
+  LunarLakeOpenBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.c
+  LunarLakeOpenBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
+  LunarLakeOpenBoardPkg/FspWrapper/Library/PeiFspPolicyInitLib/PeiFspPolicyInitLib.inf
+  LunarLakeOpenBoardPkg/FspWrapper/Library/PeiFspPolicyInitLib/PeiFspSaPolicyInitLib.c
+  LunarLakeOpenBoardPkg/Include/PlatformBoardConfig.h
+  LunarLakeOpenBoardPkg/Include/PlatformBoardId.h
+  LunarLakeOpenBoardPkg/Include/PolicyUpdateMacro.h
+  LunarLakeOpenBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp1.dsc
+  LunarLakeOpenBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/OpenBoardVpdPcdInit.dsc
+  LunarLakeOpenBoardPkg/OpenBoardPkg.dec
+  LunarLakeOpenBoardPkg/OpenBoardPkg.dsc
+  LunarLakeOpenBoardPkg/OpenBoardPkgPcdInit.dsc
+  LunarLakeOpenBoardPkg/SBCVpdStructurePcd/AllStructPCD.dsc
+  LunarLakeOpenBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/LnlMLp5RvpDqMap.dsc
+  LunarLakeOpenBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/LnlMLp5RvpDqsMap.dsc
+  LunarLakeOpenBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/LnlMLp5RvpSpdMap.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b322732cace48ee6bc8faba5033f33b2f349760e 
+*********************************************************************************
+
+[ASL]
+
+  Fix the method error reported by FWTS tool
+  
+  [Issue Description]
+  Enable the _BTP support for LNL battery participant, but method:
+  \_SB_.PC00.LPCB.H_EC.BAT1._BTP returned values, it was expected
+  to return nothing.
+  
+  [Resolution]
+  Remove the return() code for _BTP method.
+  
+  Package/Module:
+  EcFeaturePkg/Bat1Real
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 15014978265
+  Change-Id: Ic78a562e48e2b84f2eb255e74cd6897c03d84f46
+  Original commit hash: 5d45f787c0bbc161da1e0431b223c13b6219d773
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat1Real.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 05af925c6c831aced503298a3cf32a30eb386383 
+*********************************************************************************
+
+[BoardPkg]
+
+  Support Discrete Graphics on LNL-Mx - GPIO support
+  
+  [Feature Description]
+  To Support Discrete Graphics on LNL-Mx updated GPIO pins
+  as per DGPU updated platform mapping document
+  
+  Package/Module:
+  LunarLakeBoardPkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 16022681403
+  Change-Id: I3137a249069c087dce15f89272bdd55dd95cee05
+  Original commit hash: 771cc4977866cecd8ffa098a05ae04216e6fa070
+  
+  LunarLakeBoardPkg/BoardPkg.dec
+  LunarLakeBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  LunarLakeBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp2.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: eaee391cf5b0176e95493e0cfacbcc84df060d3f 
+*********************************************************************************
+
+[ASL], [BoardPkg], [PlatformPkg], [PCH]
+
+  SyncScript: Revert override commits.
+  
+  Thu Jan 11 12:22:45 2024 -0800
+  Original commit hash: fe855f7caab94ebe95dba1a593ae3c4d6c95ecbf
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat1Real.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Dsdt.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Lch.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Wwan.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/LnlMPPVRvpRtd3.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/LnlMRvpRtd3.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/LnlMRvpSsdRtd3.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/PcieRpGenericPcieDeviceRtd3.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3Common.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3Pcie5GWwan.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3PcieWwan.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/Rtd3Xdci.asl
+  LunarLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  LunarLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/DSDT.ASL
+  LunarLakeBoardPkg/BiosId.env
+  LunarLakeBoardPkg/BoardInitAdvanced/BoardInitAdvancedPei/BoardInitAdvancedPreMem.c
+  LunarLakeBoardPkg/BoardInitAdvanced/BoardInitAdvancedPei/BoardInitAdvancedPreMem.inf
+  LunarLakeBoardPkg/BoardPkg.dec
+  LunarLakeBoardPkg/BoardPkg.fdf
+  LunarLakeBoardPkg/BoardPkgPcdUpdate.dsc
+  LunarLakeBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  LunarLakeBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  LunarLakeBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+  LunarLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp4.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMxHmpRvp.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/Include/LunarLakeMRvpBoardsConfigPatchTable.h
+  LunarLakeBoardPkg/LunarLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  LunarLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  LunarLakeFspPkg/LunarLakeFspPkg.fdf
+  LunarLakeFspPkg/Upd/FspmUpd.dsc
+  LunarLakeFspPkg/Upd/FspsUpd.dsc
+  LunarLakePlatSamplePkg/Features/Dptf/AcpiTables/BiosDataVaultGcs.asl
+  LunarLakePlatSamplePkg/Features/PlatformData/Acpi/PlatformData.asl
+  LunarLakePlatSamplePkg/Include/SetupVariable.h
+  LunarLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdate.c
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdate.c
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdate.h
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  LunarLakePlatSamplePkg/Platform/PciPlatform/Dxe/PciPlatform.c
+  LunarLakePlatSamplePkg/Setup/AcpiSetup.hfr
+  LunarLakePlatSamplePkg/Setup/CpuSetup.hfr
+  LunarLakePlatSamplePkg/Setup/PchPcieSetupSinglePort.hfr
+  LunarLakePlatSamplePkg/Setup/SaSetup.hfr
+  LunarLakePlatSamplePkg/Setup/SaSetup.uni
+  OneSiliconPkg/Fru/LnlCDie/DxeLib.dsc
+  OneSiliconPkg/Fru/LnlCDie/Graphics/LibraryPrivate/PeiGraphicsInitFruLib/PeiGraphicsInitFruLib.c
+  OneSiliconPkg/Fru/LnlCDie/Graphics/LibraryPrivate/PeiGraphicsInitFruLibNull/PeiGraphicsInitFruLibNull.c
+  OneSiliconPkg/Fru/LnlCDie/HybridGraphics/Library/PeiDxeSmmHybridGraphicsInfoFruLib/HybridGraphicsInfoFruLib.c
+  OneSiliconPkg/Fru/LnlCDie/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  OneSiliconPkg/Fru/LnlCDie/PeiLib.dsc
+  OneSiliconPkg/Fru/LnlSoc/Include/AcpiTables/Dsdt/LnlSoc.asl
+  OneSiliconPkg/Fru/LnlSoc/IncludePrivate/HgNvsAreaDef.h
+  OneSiliconPkg/Fru/LnlSoc/IncludePrivate/Protocol/HgNvsArea.h
+  OneSiliconPkg/Fru/LnlSoc/LibraryPrivate/PeiLnlSocInitLib/LnlSocPmc.c
+  OneSiliconPkg/Fru/LnlSoc/LibraryPrivate/PeiPolicyLib/PeiLnlSocPolicyLib.c
+  OneSiliconPkg/Fsp/FspInit/Pei/FspInitPreMem.c
+  OneSiliconPkg/Fsp/FspInit/Pei/FspInitPreMem.inf
+  OneSiliconPkg/Include/ConfigBlock/Graphics/Gen13/GraphicsConfig.h
+  OneSiliconPkg/Include/Register/PmcRegs.h
+  OneSiliconPkg/IncludePrivate/ImrConfigHob.h
+  OneSiliconPkg/IncludePrivate/Library/CpuInfoFruLib.h
+  OneSiliconPkg/IpBlock/BootGuard/LibraryPrivate/PeiBootGuardPolicyLib/PeiBootGuardPolicy.c
+  OneSiliconPkg/IpBlock/Graphics/Include/Ppi/GraphicsPlatformPolicyPpi.h
+  OneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayInitLibGen14Plus/PeiDisplayInitLib.c
+  OneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayInitLibGen14Plus/PeiDisplayInitLib.inf
+  OneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen13/PeiGraphicsInitLib.c
+  OneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen13/PeiGraphicsInitLib.inf
+  OneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen13/PeiGraphicsPmInit.c
+  OneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsPolicyLibGen13/PeiGraphicsPolicyLib.c
+  OneSiliconPkg/IpBlock/HybridGraphics/IncludePrivate/Library/DxeHybridGraphicsInitLib.h
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.c
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.inf
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLibNull/DxeHybridGraphicsInitLibNull.c
+  OneSiliconPkg/IpBlock/IpPcieSip17/IpPcieLib/IpPcie.c
+  OneSiliconPkg/IpBlock/IpPcieSip17/IpPcieLib/IpPcieSipInitLib.c
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Blue/PeiMemoryInitLib/Source/UcManagement/MrcUcPayloadData.c
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/Include/MrcVersion.h
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/PeiMemPolicyLib/PeiMemPolicyLib.c
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/PeiMemoryInitLib/Source/MemoryTypes/MrcMemoryApi.c
+  OneSiliconPkg/IpBlock/Pmc/AcpiTables/Pmc.asl
+  OneSiliconPkg/IpBlock/Usb/AcpiTables/PchXhci.asl
+  OneSiliconPkg/LibraryPrivate/PeiExtGfxCardDetectLib/PeiExtGfxCardDetectLib.c
+  OneSiliconPkg/LibraryPrivate/PeiExtGfxCardDetectLib/PeiExtGfxCardDetectLib.inf
+  OneSiliconPkg/LibraryPrivate/PeiExtGfxCardDetectLib/PeiExtGfxCardDetectLibFsp.inf
+  OneSiliconPkg/Pch/AcpiTables/Dsdt/HsioDefine.asl
+  OneSiliconPkg/Pch/AcpiTables/Dsdt/HsioLib.asl
+  OneSiliconPkg/Product/LunarLake/Library/PeiSiPolicyLib/PeiSiPolicyLib.inf
+  OneSiliconPkg/Product/LunarLake/Library/PeiSiPolicyLib/PeiSiPolicyLibPreMem.c
+  OneSiliconPkg/Product/LunarLake/SiInit/Dxe/SiInitDxe.c
+  OneSiliconPkg/Product/LunarLake/SiInit/Dxe/SiInitDxe.inf
+  OneSiliconPkg/Product/LunarLake/SiInit/Pei/SiInitPreMem.c
+  OneSiliconPkg/Product/LunarLake/SiPkgDxe.dsc
+  OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Oem: ecs
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 2c2969ef1d330543d681029b5dd823ea8fce499d 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [LNL][CVS] Add CV Chip Reset support
+  
+  [Feature Description]
+  Add CV Chip Reset support for computer vision driver device
+  
+  Package/Module:
+  BoardPkg
+  
+  [Impacted Platform]
+  ALL Mobile Platform
+  
+  Hsd-es-id: 16023014490
+  Change-Id: I2878fe6ef2adc3b29ff12d8cceb55861917bb8b7
+  Original commit hash: 467b1218064196d4b4d68ab56660a1e4f3490588
+  
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Lch.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  LunarLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  LunarLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp4.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMxHmpRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b4996b9fe8039a30d046a03b8e46c24d371ee047 
+*********************************************************************************
+
+[ASL]
+
+  Fix the method error reported by FWTS tool
+  
+  [Issue Description]
+  Enable the _BTP support for LNL battery participant, but method:
+  \_SB_.PC00.LPCB.H_EC.BAT1._BTP returned values, it was expected
+  to return nothing.
+  
+  [Resolution]
+  Remove the return() code for _BTP method.
+  
+  Package/Module:
+  EcFeaturePkg/Bat1Real
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 15014978265
+  Change-Id: Ic78a562e48e2b84f2eb255e74cd6897c03d84f46
+  Original commit hash: 7b09d77479105ce745dcd1cf7b71fc9051ff38e9
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat1Real.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+################################################################################
+
+Report Summary: Backstop found 19 suspect commits for review 
+
+Warnings Found:
+  Commit: 47114ac    --Commit Message Contains Key Word: revert
+  Commit: 4fe9c98    --Commit Message Contains Key Word: revert
+  Commit: 2081958    --Commit Message Contains Key Word: revert
+  Commit: 4cac0f2    --Commit Message Contains Oem: ecs
+  Commit: 38246be    --Commit Message Contains Key Word: security
+  Commit: 358c6e5    --Commit Message Contains Key Word: revert
+  Commit: 358c6e5    --Commit Message Contains Key Word: security
+  Commit: 0e524aa    --Commit Message Contains Key Word: security
+  Commit: f519955    --Commit Message Contains Key Word: sku
+  Commit: b8a065c    --Commit Message Contains Key Word: sku
+  Commit: 99b7247    --Commit Message Contains Key Word: security
+  Commit: b2af672    --Commit Message Contains Key Word: security
+  Commit: b2af672    --Commit Message Contains Key Word: revert
+  Commit: b2af672    --Commit Message Contains Key Word: cherry
+  Commit: 2ff7ec4    --Commit Message Contains Key Word: revert
+  Commit: 2ff7ec4    --Commit Message Contains Key Word: cherry
+  Commit: c5eef02    --Commit Message Contains Key Word: kc
+  Commit: 88ca942    --Commit Message Contains Key Word: sku
+  Commit: b322732    --Commit Message Contains Oem: ecs
+  Commit: 05af925    --Commit Message Contains Key Word: sku
+  Commit: eaee391    --Commit Message Contains Key Word: revert
+  Commit: eaee391    --Commit Message Contains Oem: ecs
+  Commit: eaee391    --Commit Message Contains Key Word: sku
+  Commit: 2c2969e    --Commit Message Contains Key Word: sku
+  Commit: b4996b9    --Commit Message Contains Oem: ecs
