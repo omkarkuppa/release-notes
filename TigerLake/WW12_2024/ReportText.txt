@@ -1,0 +1,70 @@
+*********************************************************************************
+Commit: 573e4f8b968c8b809d6416630b3db1df02d44a0e 
+*********************************************************************************
+
+[BoardPkg]
+
+  Microcode Update for TGL.
+  Stepping R0, B0 , U-R
+  
+  Hsd-es-id: 16022768282
+  Change-Id: Ie50967abd86dc5dbc399dda9e0f6ea3884802b26
+  Original commit hash: 9534ec51747776feb7d883c8d787f3a04b7cb152
+  
+  TigerLakeBoardPkg/BoardPkg.fdf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: e7f784fea639809d61a77bea9f9687a98c55da3b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Fix for CVE-2023-41833
+  
+  [Issue Description]
+  Communication buffer that comes to SMI handler for SPI is not properly
+  verified before using. This can lead to potential caller overwrite SMRAM
+  data if SMM communication header is setup in a certain way that doesn't
+  align with expected data allocated for the payload buffer.
+  Right now BIOS only verifies if incoming buffer size is at least size of
+  SMM communication header and accesses payload data without checking if
+  anything is there at all.
+  This fixes CVE-2023-41833.
+  
+  [Resolution]
+  Before fixing pointers embedded in the structure, BIOS shall verify that
+  allocated space for payload align with data present in the communication
+  header at all.
+  After successful verification it can move on with the pointers fixing.
+  
+  Package/Module:
+  OneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 18034380972
+  Change-Id: Ia85c08369f5cb721e3a207af3d072741c7412b55
+  Original commit hash: 8b8b10858adab66aa90467fa72a36a915bdfe896
+  
+  ClientOneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: CVE
+
+################################################################################
+
+Report Summary: Backstop found 2 suspect commits for review 
+
+Warnings Found:
+  Commit: 573e4f8    --Commit Message Contains Key Word: stepping
+  Commit: e7f784f    --Commit Message Contains Key Word: CVE
