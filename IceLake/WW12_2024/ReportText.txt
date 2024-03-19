@@ -1,0 +1,103 @@
+*********************************************************************************
+Commit: 2e8756a914eb5bacb84cf44e6570acafaba6461e 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Integrate In IceLake New Microcode Patch.
+  Update Microcode Patch.(D1-Step)
+  
+  Hsd-es-id: 16022768269
+  Change-Id: Id612139b6ed21e2c7a5e3fae42e9c6c745afdc5a
+  Original commit hash: f9385b662711bdebe617f991eb83b8614e734a7f
+  
+  IceLakeOpenBoardPkg/IclUDdr4Type3Tcpd/OpenBoardPkg.fdf
+  IceLakePlatSamplePkg/PlatformPkg.fdf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: d1d04b3239f1436fefd157250e47d4efbc746341 
+*********************************************************************************
+
+[PCH]
+
+  Fix for CVE-2023-41833
+  
+  [Issue Description]
+  Communication buffer that comes to SMI handler for SPI is not properly
+  verified before using. This can lead to potential caller overwrite SMRAM
+  data if SMM communication header is setup in a certain way that doesn't
+  align with expected data allocated for the payload buffer.
+  Right now BIOS only verifies if incoming buffer size is at least size of
+  SMM communication header and accesses payload data without checking if
+  anything is there at all.
+  This fixes CVE-2023-41833.
+  
+  [Resolution]
+  Before fixing pointers embedded in the structure, BIOS shall verify that
+  allocated space for payload align with data present in the communication
+  header at all.
+  After successful verification it can move on with the pointers fixing.
+  
+  Package/Module:
+  IceLakeSiliconPkg/Pch/Spi/Dxe/SpiSmmStub
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 18034380943
+  Change-Id: Ia85c08369f5cb721e3a207af3d072741c7412b55
+  Original commit hash: 533ddf0f87a2dcf3089a8f8a9290ebc0db00554b
+  
+  IceLakeSiliconPkg/Pch/Spi/Dxe/SpiSmmStub.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: CVE
+
+*********************************************************************************
+Commit: 7ec8deca2f7a2d4c9a0d078d5fe9586176f11b58 
+*********************************************************************************
+
+[PCH]
+
+  [CVE-2023-32282]Fixing potentiall overflow in SMM SPI handler
+  [Issue Description]
+  SMM SPI handler is susceptible to TOCTOU attack using DMA modification
+  between the time when handler copies and then fixes enclosed structure
+  pointers.
+  If attacker allocates external communication buffer right before SMRAM
+  then on handler exit it is possible to cause overflow and corrupt SMRAM.
+  [Resolution]
+  Added parameter to FixBufferPointer function for function detection in
+  SMM_SPI_HEADER instead of relying of data in said header because this is
+  potential vector of attack.
+  Package/Module:
+  OneSiliconPkg/IpBlock/Spi/Dxe/SpiSmmStub
+  [Impacted Platform]
+  ALL
+  
+  
+  IceLakeSiliconPkg/Pch/Spi/Dxe/SpiSmmStub.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: CVE
+
+################################################################################
+
+Report Summary: Backstop found 3 suspect commits for review 
+
+Warnings Found:
+  Commit: 2e8756a    --Commit Message Contains Key Word: step
+  Commit: d1d04b3    --Commit Message Contains Key Word: CVE
+  Commit: 7ec8dec    --Commit Message Contains Key Word: CVE
