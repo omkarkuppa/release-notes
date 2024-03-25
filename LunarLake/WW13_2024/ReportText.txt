@@ -1,0 +1,379 @@
+*********************************************************************************
+Commit: d25076f1d64ec190fd6baec154f479ecade44a8a 
+*********************************************************************************
+
+[ASL]
+
+  [LNL-Mx]BT Offload using A2DP and HFP is not happening
+  
+  [Issue Description]
+  Issue observed that Bluetooth Offload using A2DP
+  and HFP is not happening, not showing intel corporation.
+  
+  [Resolution]
+  BIOS exposing GLAI method twice. One is under WIFI
+  and other under BT.Driver don't check which scope
+  you are including it. It just search for
+  GLAI method and found two instance. Acutally GLAI is needed
+  to be exposed
+  under BT and WiFi scope It is not bug , this is design.
+  BT Dirver should look methods only under BT Scope ,
+  else it needs to be fixed at Bt driver side
+  
+  Package/Module:
+  Features/Connectivity
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 15015590803
+  Change-Id: I8cc22b219ed61e151a765e8dc808880db0332d0c
+  Original commit hash: cf0ccc7e60911580407fc32b36ddd54f14a50c34
+  
+  Features/Connectivity/CnvFeaturePkg/AcpiTables/Ssdt/Connectivity.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  bug
+
+*********************************************************************************
+Commit: 0453ce4f52a4d223601eff59fbf1ac8c556ef032 
+*********************************************************************************
+
+[ASL]
+
+  [LNL]BTOffload using A2DP and HFP is not happening
+  
+  [Issue Description]
+  [LNL-Mx][B0][CNVi][BT][SV3]BTOffload using A2DP and HFP is not happening
+  
+  [Resolution]
+  Now are only publishing GuidLock if it is BT PCI interface.
+  Currently it was enable regardless of BT Interface.
+  So now WiFi and BT PCI Interface will only have GuildLockStatus
+  indicator object, And BT Offload will be working.
+  So only thing we are reverting is BT Non-PCIE interface Guid Lock Status
+  
+  Package/Module:
+  CnvFeaturePkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 15015590803
+  Change-Id: Ia14dbe1466052a3361c376d185a2ec48c12b7ce1
+  Original commit hash: b2eaf2c837eab6c7db7bbee64a90d4ccb5828679
+  
+  Features/Connectivity/CnvFeaturePkg/AcpiTables/Ssdt/Connectivity.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: d4268657f46553b67c6b9058000deb76960cc4a0 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "[LNL] Select MSI interrupt as default in ISH configuration"
+  
+  This reverts commit 6b84d250f2459030500ffeacf73f786b0d71b971.
+  
+  Tue Mar 5 13:24:53 2024 +0530
+  Original commit hash: d28807e6b586332508417887ff1cf6d2dbf0c10e
+  
+  LunarLakeFspPkg/Upd/FspsUpd.dsc
+  LunarLakePlatSamplePkg/Setup/PchSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 6764b89eb675d02d09f3bb7bd474d0cbdbff19c4 
+*********************************************************************************
+
+[BoardPkg]
+
+  SyncScript: Revert override commits.
+  
+  Wed Feb 28 22:49:12 2024 -0800
+  Original commit hash: 2a088c71a2c8fcc7a89245ac15673ce3991dbb08
+  
+  LunarLakeBoardPkg/BiosId.env
+  OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 8c3e3edea172954c6f759c3a6b13b605d86052ac 
+*********************************************************************************
+
+
+  [TSE] Fix CryptoBlockNumber overflow condition
+  
+  [Issue Description]
+  
+  The CryptoBlockNumber value is used in the AES-XTS 256 algorithm
+  as the tweak input value. When performing a multi-block operation,
+  the tweak value increments per block.
+  
+  The input CryptoBlockNumber is defined as a 64-bit integer in the
+  BlockIoCrypto API.
+  
+  IOCCE uses only 44 bits to represent the tweak value.
+  
+  There are multiple overflow conditions which need to be caught
+  and handled prior to issuing any partial IO operation.
+  
+  Additionally, some error handlers are not restoring the TPL.
+  
+  [Resolution]
+  
+  Adding checks to the CryptoBlockNumber input parameter when
+  calling the BlockIoCrypto function to issue read & write operations.
+  
+  Include missing calls to RestoreTPL() on error handler flows.
+  
+  Package/Module:
+  TseNvmExpressDxe
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 22019484684
+  Change-Id: Ib5a69f6295d35b77d0b1b145619db0c016d395a8
+  Original commit hash: 142aa4c03e151e7878e65ef0e575953cad014b4b
+  
+  Features/Security/TseFeaturePkg/TseNvmExpressDxe/NvmExpress.h
+  Features/Security/TseFeaturePkg/TseNvmExpressDxe/NvmExpressBlockIoCrypto.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 83ac977f927c2e2c74432e899b2ab16022604c59 
+*********************************************************************************
+
+[BoardPkg]
+
+  [LNL] Update GPIO Pad Reset Mode on CNVi reset pin
+  
+  [Issue Description]
+  Wrong GPIO Pad Reset Mode settings on CNVi reset pin
+  
+  [Resolution]
+  Update GPIO Pad Reset Mode on CNVi reset pin as Host Deep Reset
+  
+  Package/Module:
+  BoardPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16023363956
+  Change-Id: I9f2e4b0d11fafc091b6dd84e77b312996f7dafb1
+  Original commit hash: 3dee11e6a61856c652289cf348df9f8bf375286f
+  
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5GcsFab1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp1.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp4.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/Xep/LnlM/SkuIdLnlMLp5Aep.dsc
+  LunarLakeOpenBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp1.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 0a1aef9f60a3ec8f52392ea86d17ea38f63fdd60 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "[LNL] Select MSI interrupt as default in ISH configuration"
+  
+  This reverts commit e037858c9c75bcfbc1fab0671ee564354b2c1e02.
+  
+  (cherry picked from commit 02d6518428cb8d2813492eb3fa516a3de1b5c9ef)
+  
+  Thu Feb 15 09:51:40 2024 +0530
+  Original commit hash: 79119bc217823f866c08e947dbde2427e06d1399
+  
+  LunarLakeFspPkg/Upd/FspsUpd.dsc
+  LunarLakePlatSamplePkg/Setup/PchSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: cherry
+
+*********************************************************************************
+Commit: 3eae23be42564d39c94e66653576e0bb39d764e0 
+*********************************************************************************
+
+[BoardPkg]
+
+  [LNL-M] [RVP2] RTD3 SSDT table support
+  
+  [Feature Description]
+  [LNL-M] [RVP2] RTD3 SSDT table is not loaded when
+  WwanEnable is disabled
+  
+  Package/Module:
+  LunarLakeBoardPkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 15015314950
+  Change-Id: I7849f32f90374550890bf1fe3b024c470e367183
+  Original commit hash: 9f70c3bac1d166fd7d32bf031498650a26f0586e
+  
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp2.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 660aae6e5e45da3b0f1d2192d2f89242f0824fc9 
+*********************************************************************************
+
+[ASL]
+
+  DTT is unable to set the recommended CPU Power Limit PL1
+  
+  [Issue Description]
+  Intel DTT is unable to set the recommended CPU Power Limit PL1
+  after Sensor Device 4 and Sensor Device 5 crosses the
+  Passive threshold trip point
+  
+  [Resolution]
+  Only Low trip point was getting set when PAT0 and PAT1
+  was called. Made changes in the respective method to
+  set both the low trip point and high trip point.
+  
+  Package/Module:
+  EcFeaturePkg
+  DptfFeaturePkg
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 16023239949
+  Change-Id: Id9431a4b3bb3eec7113c2ef1d9ac1f0f2a28749d
+  Original commit hash: b8126379e8b39f5520fd2cfcb6f1d02f7bb78e2b
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/DptfApis.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/Sen1Participant.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/Sen2Participant.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/Sen3Participant.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/Sen4Participant.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/Sen5Participant.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: a683e6fc973a29157f23fa67c1e5193d09df12cd 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Fix iostate for HPD GPIO pads.
+  
+  [Issue Description]
+  HPD GPIO pads have wrong iostate value.
+  
+  [Resolution]
+  HPD GPIO pads have correct iostate value.
+  
+  Package/Module:
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 18036636306
+  Change-Id: Ie2cc7ecd8bc7df7f9764cbf95888c4e1fb8865fb
+  Original commit hash: 03d622e00ea21070d1eaccd68f27919aad75c894
+  
+  OneSiliconPkg/Fru/LnlSoc/Library/LnlSocGpioTopology/GpioV2LnlSocMNativeSignals.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+*********************************************************************************
+Commit: c8132753e1220956e29df1802514d7c646790919 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  SyncScript: Revert override commits.
+  
+  Wed Feb 28 16:47:57 2024 -0800
+  Original commit hash: bf9b16a03f1073e833e6aaf933207edecf31f16e
+  
+  LunarLakeBoardPkg/BiosId.env
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp2.dsc
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp2.dsc
+  LunarLakeFspPkg/Upd/FspsUpd.dsc
+  LunarLakePlatSamplePkg/Setup/PchSetup.hfr
+  OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 11 suspect commits for review 
+
+Warnings Found:
+  Commit: d25076f    --Commit Message Contains Key Word:  bug
+  Commit: 0453ce4    --Commit Message Contains Key Word: revert
+  Commit: d426865    --Commit Message Contains Key Word: revert
+  Commit: 6764b89    --Commit Message Contains Key Word: revert
+  Commit: 8c3e3ed    --Commit Message Contains Key Word: security
+  Commit: 83ac977    --Commit Message Contains Key Word: sku
+  Commit: 0a1aef9    --Commit Message Contains Key Word: revert
+  Commit: 0a1aef9    --Commit Message Contains Key Word: cherry
+  Commit: 3eae23b    --Commit Message Contains Key Word: sku
+  Commit: 660aae6    --Commit Message Contains Oem: ecs
+  Commit: a683e6f    --Commit Message Contains Oem: HP
+  Commit: c813275    --Commit Message Contains Key Word: revert
+  Commit: c813275    --Commit Message Contains Key Word: sku
