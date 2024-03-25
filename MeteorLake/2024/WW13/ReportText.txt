@@ -1,0 +1,2021 @@
+*********************************************************************************
+Commit: dc6fef4b9d4f2573eb1bccfcccad72b19399eb3a 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "Enable MIPI VTIO Support for Secure Biometrics feature by default"
+  
+  This reverts commit 1073a134992a0d144ebfbcaa16f105d8f6466125.
+  
+  Tue Mar 12 11:35:58 2024 +0530
+  Original commit hash: 2f09ef74edbbb345ffeb4d71b34ce9d67c8b12c9
+  
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetup.inf
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupStrings.uni
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupVfr.vfr
+  MeteorLakePlatSamplePkg/Setup/SaSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: dab6a3ab6b6d1f78e3446a8c8c330b369ff46b38 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL] Update RefPiOffset sweep w/ 4-tick stepsize
+  
+  [Feature Description]
+  Updated MrcRefPiFunctionalTraining1D sweep to default to a stepsize of
+  4 when RefPiOffset and 2 when RefPi4XoverOffset.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  H
+  
+  Hsd-es-id: 22019221229
+  Change-Id: I58b72268229afc786f9c9579f458de421fc562e4
+  Original commit hash: b137993a0deef6eda228e0c0eabaf43c9cfbd886
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 4bba6f6062db2686dc56132659daee418b7c1b55 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S MTL-M MTL-P | DDR5 LP5] RefPi Optimization Functional Training
+  
+  [Feature Description]
+  Updated RePi Calibration Optimization to RefPi4XoverOffset edges found
+  on system through 1D sweeps of this parameters.
+  
+  RefPiOffset static edge calculations are still used for final RefPi
+  setting calculations.
+  
+  The the range of RefPiOffset and RePi4XoverOffset settings are
+  individually tested at VccSa Vmin and Vmax using a 2D sweep. The 2D
+  sweep consists of:
+  1. Outer 1D sweep which finds the left\right edges for a given RefPi
+  parameter. The parameter is either RefPiOffset or RefPi4XoverOffset
+  2. Inner 1D sweep which runs a CPGC point test at each
+  Write Leveling Timing offset between -28 and +28 in steps of 4.
+  Write Leveling is TxDq & TxDqs on DDR5, TxDq and WCK on LP5.
+  
+  On LP5, the MC CKE is toggled during the RefPi register writes in the
+  RefPiOffset and RefPi4XoverOffset 1D sweeps to force a WCK sync.
+  
+  Additional Changes:
+  - Split 1D sweeps into separate phase and run with Vboot RefPi settings
+  to avoid speckles seen when the RefPi FSM is run at Vmax.
+  - Added Unit Tests for new helper functions
+  - Use 3tCK read preamble for 3200
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22019169206
+  Change-Id: Id70f8f81ca4487d70f9389cbee2c73fab8f5b1b5
+  Original commit hash: ab0d48198082d3b3c67a9694bc48901db9f39864
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcDebugHook.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfigPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 152ee2eff9d2bc7ed9dde119caf437bf8e229cbb 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S MTL-M MTL-P | DDR5 LP5] RefPi RMT
+  
+  [Feature Description]
+  Added RefPiOffset and RefPi4XoverOffset 2D sweeps to RMT.
+  
+  The range of RefPiOffset and RePi4XoverOffset settings are
+  individually tested at VccSa Vmin and Vmax using a 2D sweep.
+  The final margin reported is the composite result of the eye
+  seen at Vmax and Vmin plus the max (worst case) calculated guardband
+  for the system temperature.
+  
+  The 2D sweep consists of:
+  1. Outer loop that sweeps the RefPi param (RefPiOffset or
+  RefPi4XoverOffset) accross the range of register values as an offset
+  to the programmed setting. The sweep is done in steps of 2.
+  This sweep modifies the offset values in the following partitions:
+  - CCC
+  - Data
+  - VTT
+  On LP5, the MC CKE is toggled during the RefPi register writes in the
+  RefPiOffset and RefPi4XoverOffset 1D sweeps to force a WCK sync.
+  
+  2. An inner loop that runs a CPGC point test at a range of
+  Write Leveling offsets from -28 to +28 from the trained values in
+  steps of 4.
+  Write Leveling consists of TxDq and TxDqs (or WCK for LP5)
+  
+  Added BDAT Schema 6C support to publish RefPi RMT results.
+  
+  Added CMOS option (0xE1) to adjust the RefPi4XoverOffset based on the
+  closest edge (where positive number is how much inside the eye to adjust
+  by and negative number is how much outside the eye to adjust by)
+  Example:
+  Closest Edge is -30:
+  CMOS option is -2 then RefPi4XoverOffset is adjusted by -32.
+  Closest Edge is +30:
+  CMOS option is +2 then RefPi4XoverOffset is adjusted by +28.
+  
+  Additional Changes:
+  - Fixed bug in VTT Parition GetSet Multicast. These GetSet enumerators
+  were implement using the "Strobe" GetSet argument which is always
+  limited to the maximum number of bytes on a channel. On LP5 this was
+  always limited to 2 causing only 2 of the 4 VTT partition instances
+  to be updated when GetSet multicast was used.
+  - RefPi\RefPi4Xover Offset 1D sweeps return results assuming the
+  passing region can wrap around.
+  - Added MrcPrintf support for string printing with left justify and
+  right justify padding.
+  - Added LP5 Write Leveling (WCK) margin to RMT.
+  - Added Unit Tests for new helper functions
+  - Updated LocalStub to support VccSa request re-try.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22019169206
+  Change-Id: Ibd2e336195dbcc310b51c92bf87d693d8ce2fd50
+  Original commit hash: 558ac7bff13707011a4002e140edef6e693254d9
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcRmtData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfigPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommonPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: fb66093ebf1515c1ec912b82dc56f8591ac54094 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-P | DDR5 LP5] CA Parity Boot Time Optimization Revert back to ...
+  
+  [Feature Description]
+  CA Parity Boot Time Optimization Revert back to Pattern Rotation for
+  Mobile:
+  Set IsLegacyCaParityPointTest = TRUE on mobile platforms to revert back
+  to a higher stress CA Parity pattern with rotations. This is done to
+  resolve low and asymmetric ClkGrpPi margin issues observed on some
+  configs.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  U, H
+  
+  Hsd-es-id: 22019367969
+  Change-Id: Ie83ece1acbcb80f18ddc22c200f300a33582ed4a
+  Original commit hash: 9e9b6e502e573be496af60356f2a1555b0a1f4f3
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 383c9d70429ef740811825e9bd20d59b5d331e9a 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Enable MIPI VTIO Support for Secure Biometrics feature by default
+  
+  [Feature Description]
+  1. Enabling VTIO if SA IPU is enabled.
+  2. Expose ISP SDEV Entry: Enabled
+  3. Set "Sensor Entry 2" to 105
+  
+  Package/Module:
+  VtioFeaturePkg
+  
+  [Impacted Platform]
+  MTL,ARL
+  
+  Hsd-es-id: 16023328932
+  Change-Id: I987e87f6e51186c44e6974a40b626a562b0eb092
+  Original commit hash: 1073a134992a0d144ebfbcaa16f105d8f6466125
+  
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetup.inf
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupStrings.uni
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupVfr.vfr
+  MeteorLakePlatSamplePkg/Setup/SaSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 97e45cf50647b01f95c9dd5d35dedbe0edcd5612 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [MTL] WA - PCIe Cfg Space after PLDR
+  
+  [Feature Description]
+  Left 4 registers only (0x18C,0x198,0x19C,0x2B4).
+  
+  Package/Module: MeteorlakeBoardPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 15015254318
+  Change-Id: Ib4975e105d725832086276a1777956e9447b477f
+  Original commit hash: f463f310c7d60eaf51309e3594ae195c2789b7db
+  
+  Features/Connectivity/CnvFeaturePkg/CnvDxe/CnvDxe.c
+  Features/Connectivity/CnvFeaturePkg/CnvDxe/CnvDxe.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/DiscreteConnectivity.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Wifi.asl
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.h
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  WA 
+
+*********************************************************************************
+Commit: e64ec00956bb81daaf2e0e646b21d963ba3edcf5 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [ARL H] SATA config 0x4 BOM ID support for DC validation
+  
+  [Feature Description]
+  Added new BOM ID 0x4(100) support in BIOS to enable SATA config.
+  GPP_D3 pin set by default high.
+  SATA Power Pin programming in Pre-Mem
+  Handle RTD3 flow for X8 slot with new SKUID.
+  
+  Package/Module:
+  MeteorLakeBoardPkg/
+  MeteorLakePlatSamplePkg/
+  
+  [Impacted Platform]
+  H
+  
+  Hsd-es-id: 16023215390
+  Change-Id: I638c604b32abb3a8710a37c65d4d594e019aa011
+  Original commit hash: 183d20a52a575b3833b120a002c8a41c3ea21e29
+  
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvpBomSku.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4RvpBomSku.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: e67366bf07a9603dd669ca823dca43d3b56c95ee 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [ARL-Hx][BR] BIOS changes to expose number of TCP connectors
+  
+  [Feature Description]
+  Need below changes in BIOS to accommodate below config.
+  
+  ARL-Hx 5* - iTBT Enabled
+  2 Ports - dTBT 0 and 1 disabled in BIOS
+  BIOS is expected to expose 2 Connectors as dTBT is completed disabled
+  Reports 2 ports based on 1 x PD AIC
+  
+  ARL-Hx 3* - dTBT 0 Enabled on IOE
+  2 Ports - iTBT and dTBT1 disabled in BIOS
+  BIOS is expected to expose 2 connectors as iTBT and dTBT1
+  is disabled in BIOS set-up
+  Need to remove PD AIC for iTBT as well to avoid EC reporting 2 ports
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  ARL-Hx
+  
+  Hsd-es-id: 15015163261
+  Change-Id: I8c035c6fcb77a49eaa2443d2f54e59630b1e40eb
+  Original commit hash: 8cce5bd7b17e9c21146daf1bea28ec520bdad71e
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlSbgaErb.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 926fce9e151800cbd15815e20cfc7618d43feb1c 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [ARL][CVS] Add BIOS Vision Driver Device support
+  
+  [Feature Description]
+  Added BIOS Vision Driver Device support in ARL
+  Added ARROWLAKE_MOBILE_Z0 support to PcdIsArlMobile
+  
+  Package/Module:
+  BoardPkg
+  PlatSamplePkg
+  
+  [Impacted Platform]
+  all ARL mobile platforms
+  
+  Hsd-es-id: 16022908112
+  Change-Id: I1ccb25090010dc17e963a0e5f7d3c0d5bfa3c2d9
+  Original commit hash: a52936d355752ce24359973f6384757d633f91d0
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Cvs.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Dsdt.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/MipiCamSensors.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5CammRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdArlHDdr5SODimmPpvRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.inf
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/SaPlatformInitAdvancedDxe.c
+  MeteorLakePlatSamplePkg/Setup/SaSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 9bd28c0a5df3f2ec3737f9a8923603a094dbc6ea 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  [MTL] HTTPS Boot Flow failed over wired LAN
+  
+  [Issue Description]
+  Since the flow was changed in PR 69793,
+  the AsfDxe driver would run earlier than the OCR driver.
+  The AsfDxe driver registers AsfOcrBootOptionsCallback to
+  the OCR protocol register notify.
+  HECI Clear Boot Options executed before
+  AsfOcrBootOptionsCallback calls OcrSaveUefiBootOption to
+  get boot option from HECI UEFI Boot Option.
+  
+  [Resolution]
+  Postpone the HECI Clear Boot Options when http or PBA boot.
+  Ensure the HECI Clear Boot Options is run after OcrSaveUefiBootOption.
+  
+  Package/Module:
+  ClientOneSiliconPkg/IpBlock/Me
+  PlatSamplePkg/Features/Amt
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16023074876
+  Change-Id: I6722bf67a8c135c03b50fa682b2b64910ae50350
+  Original commit hash: ac21e9a2f52911125643222fb372539d67c1649c
+  
+  ClientOneSiliconPkg/IpBlock/Me/Asf/Dxe/AsfDxe.c
+  MeteorLakePlatSamplePkg/Features/Amt/OneClickRecovery/OneClickRecovery.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: bfda1cfc201f281167521cd9789fa289f4bc8699 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg], [ASL], [PlatformPkg]
+
+  [ARL S] Support new CPUID and Steps for S68 CPU
+  
+  [Feature Description]
+  Support new CPUID(0xC06Ax) and Steps for ARL S68 CPU.
+  
+  Package/Module:
+  ClientOneSiliconPkg/Fru/MtlCpu
+  ClientOneSiliconPkg/Fru/MtlSoc
+  ClientOneSiliconPkg/IpBlock
+  ClientOneSiliconPkg/Library
+  ClientOneSiliconPkg/Product
+  MeteorLakeBoardPkg/Acpi
+  MeteorLakeBoardPkg/Features
+  MeteorLakeBoardPkg/Library
+  MeteorLakeBoardPkg/MeteorLakeBoards
+  MeteorLakeBoardPkg/SmbiosPlatformInfo
+  MeteorLakePlatSamplePkg/Setup
+  
+  [Impacted Platform]
+  ARL S
+  
+  Hsd-es-id: 15015124769
+  Change-Id: I6601fcfbb0a12c4dcefe9176c4898c7b9c766a73
+  Original commit hash: a927e0239ad1d06678caa7dcfd3bd9ed29feef43
+  
+  ClientOneSiliconPkg/Fru/MtlCpu/Include/CpuGenInfo.h
+  ClientOneSiliconPkg/Fru/MtlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  ClientOneSiliconPkg/Fru/MtlCpu/LibraryPrivate/BaseMsrFruLib/BaseMsrFruLib.c
+  ClientOneSiliconPkg/Fru/MtlCpu/Overclocking/LibraryPrivate/BaseOcFruLib/BaseOcFruLib.c
+  ClientOneSiliconPkg/Fru/MtlSoc/Include/Defines/HostBridgeDefines.h
+  ClientOneSiliconPkg/Include/Library/CpuPlatformLib.h
+  ClientOneSiliconPkg/IncludePrivate/Library/CpuInfoFruLib.h
+  ClientOneSiliconPkg/IpBlock/BiosGuard/Smm/BiosGuardServices.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/Library/PeiDxeSmmCpuPlatformLib/CpuPlatformLibrary.c
+  ClientOneSiliconPkg/Product/MeteorLake/SiInit/Pei/PeiSiPreMemPolicyPrint.c
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/LpcB.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/LpcDev.asl
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/EcInit.c
+  MeteorLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/LPC_DEV.ASL
+  MeteorLakeBoardPkg/Acpi/BoardAcpiDxe/Dsdt/LpcB.asl
+  MeteorLakeBoardPkg/Features/CapsuleUpdate/Library/PlatformCbntSvnCheckHookLib/PlatformCbntSvnCheckHookLib.c
+  MeteorLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.c
+  MeteorLakeBoardPkg/SmbiosPlatformInfo/SmbiosPlatformInfo.c
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/Setup/SaSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 0a2e12d855b4e01617f0095a20ec62652f29476e 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S ARL-H | DDR5] Partial CKD DIMM Support
+  
+  [Feature Description]
+  When mixed CKD and non-CKD DIMMs, operate the CKD DIMM in BypassMode
+  Disable IsCkdSupported to skip CKD code
+  Default PLL Mode (CKD Control Word 0) is in BypassMode
+  
+  Package/Module: ClientOneSiliconPkg\IpBlock\MemoryInit\Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15012207279
+  Change-Id: Ia6d7ab63fc113020cacc3a7345ceaa183cc9d50e
+  Original commit hash: 0de7a53a94b6abe464ca6dc9622f441f7f0941b1
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: 3e71b7e1a20dca28ead511c26f825e5f85f975cb 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL] DDR5 CCC ODT revert from previous check-in
+  
+  [Feature Description]
+  Revert previously changed DDR5 CCC ODT due to unexpected failures
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  DDR5
+  
+  Hsd-es-id: 22019253174
+  Change-Id: I720c6022f134da488bce4596b973d613907026e4
+  Original commit hash: d596fa336139787849619ea5c1ba0fd78f0352c0
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 6ed1fd3e6d8510c45e4fc2ba664810de292837d0 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S | DDR5] CKD Training - Helper functions
+  
+  [Feature Description]
+  Added input parameter to EarlyCaTraining to include Pi to CKD scale
+  Added MrcGetDdr5ClkIndex function to return Physical MC/Ch/Rank that CLK
+  resides in
+  Added MrcCccLimits function to gather the Left and Right Shift Limits
+  for CLK/CS
+  Added MrcCccDelays function to keep CLK/CS PI shifting within the Limits
+  from MrcCccLimits and updates the Limits based on the shift
+  Added MrcGetDelayInCkdSteps function to calculate the CKD Steps based on
+  CKD shift in PI ticks
+  Updated Sweep2D:
+  1. Input parameter for PiToCkdScale as optional
+  2. Removed CLK/CTL shifting between CSTM and CATM
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22016466831
+  Change-Id: I2dc53e96e1bc6a969aa28e98d066244ef219e3ac
+  Original commit hash: 292ea0c05162929347e25e44164989b88cbfa41c
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTrainingPrivate.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 6a4ef7147b1b7afb3b982cdcc5f4a040ca12d8b9 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ARL-H T3] Align Type-C ports with EC reported
+  
+  [Issue Description]
+  EC reported 4 Type-C ports on MTL T3. But it reported
+  3 Type-C ports on ARL T3. UCSI driver will get YB
+  because ports reported by BIOS is more than EC reported.
+  
+  [Resolution]
+  BIOS need align the ports reported by EC.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-H T3
+  
+  Hsd-es-id: 22019310181
+  Change-Id: I7670e0bf82e65fa2041d8a85427646a3b6a53e34
+  Original commit hash: 71d595a7c53b15a853e673cdbae6729d8595483c
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT3Rvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 83318c9480a823fd4ac0206f549df3f49cf5fe40 
+*********************************************************************************
+
+[ASL]
+
+  Fix the method error reported by FWTS tool
+  
+  [Issue Description]
+  Enable the _BTP support for LNL battery participant, but method:
+  \_SB_.PC00.LPCB.H_EC.BAT1._BTP returned values, it was expected
+  to return nothing.
+  
+  [Resolution]
+  Remove the return() code for _BTP method.
+  
+  Package/Module: EcFeaturePkg/Bat1Real
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15015084491
+  Change-Id: Ib5651816154947455cd59b918b2cfe4a934bbd24
+  Original commit hash: 6d2e56348cc5937ec4368e5f49bec54032e82d79
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat1Real.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 1ef99d496ac1194ac86cf2f705f0730a00d6b6fc 
+*********************************************************************************
+
+[BoardPkg]
+
+  [MTL-P][DDR5][dTBT] Delay observed ~ 2.30 mins during WR cycle
+  
+  [Issue Description]
+  Observing Delay in WR Cycles on DDR5 Memory down dTBT board
+  
+  [Resolution]
+  The SPD input data from BIOS is malformed. BIOS is passing in an SPD
+  for 8 total channels but only 4 are actually populated.
+  This is causing the Fast Boot Allowed check to detect a DIMM change
+  which forces a full training Cold Boot.
+  
+  To fix this issue, the input SPD Address table should be changed to
+  set the unused channels to 0.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL-P
+  
+  Hsd-es-id: 14021305960
+  Change-Id: Iacf84195d754037b056f9c45dc01ebd9c5267e96
+  Original commit hash: ad04051b5eff5260f7142d1ead29c93fb10b41a0
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5MemSolderDowndTBTRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 7ffbb79efcc082cc296771e6e83bea87c5d8e23f 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [MTLS] Disable Foxville Wake capability in DeepSx
+  
+  [Feature Description]
+  Foxville does not support DeepSx while its wake pin is under
+  GPD group. Disable interrupt config of the wake pin in DeepSx
+  entry to avoid unexpected autowake issue.
+  When Amt is provisioned, DeepSx will be demoted to Sx, so no
+  need to disable Foxville WOL in that case.
+  
+  This change is needed only for MTLS RVP that uses GPD as
+  Foxville wake pin.
+  
+  Package/Module: MeteorLakeBoardPkg, MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  MTL S
+  
+  Hsd-es-id: 15015043231
+  Change-Id: I7d6bd32ebc003ce2173a0c957e595540ba6a2c34
+  Original commit hash: 306af9cc0cb6104943fdb9435ac998c1511e4392
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedSmm/PlatformInitAdvancedSmm.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedSmm/PlatformInitAdvancedSmm.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 00b27fd132e5484b20d347f2a2c0dbbbfa19c266 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Ethernet Controller has MAC address written in incorrect byte order
+  
+  [Issue Description]
+  MAC address is actually reported in format like this 49 90 0A FA 9E 8A
+  (byte-swapped order)
+  
+  [Resolution]
+  Expected behavior: MAC address should be reported in format like this:
+  90 49 FA 0A 8A 9E (MAC address with normal byte order).
+  Byte swapping done to write MAC address in proper format.
+  
+  Package/Module:
+  PlatSamplePkg
+  
+  [Impacted Platform]
+  MTLS
+  
+  Hsd-es-id: 22019269295
+  Change-Id: I195825386eb900dd9e7631422a2ee8e8ffba2c9e
+  Original commit hash: 9f8ca26878b6b10020746a88ab4cbcf0a7ce998a
+  
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateHw.c
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 6b87b9ed5c64ad786ddda18555273c1e1fb209ef 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg], [ASL], [PlatformPkg]
+
+  [MTLPS] Update MTL-PS Configuration Settings
+  
+  [Feature Description]
+  Update MTL-PS Configuration Settings
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL-PS
+  
+  Hsd-es-id: 15014963570
+  Change-Id: I7cac00a2076315923474d3e857249daa0f0e83f8
+  Original commit hash: a93c37697a073e15048390ada8456967c9e53e5c
+  
+  ClientOneSiliconPkg/Include/Library/DxeMeLib.h
+  ClientOneSiliconPkg/Include/MkhiMsgs.h
+  ClientOneSiliconPkg/IpBlock/Me/Library/DxeMeLib/HeciMsgDxeLib.c
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/MtlPSPpvRtd3.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPsDdr5Ppv.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPsDdr5PpvFabB.asl
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/BoardPkg.fdf
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5OnlyDpRvpFabB.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5RvpFabB.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Sbc.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5TcpRvpFabB.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPSDdr5PpvFabB.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePsPpvBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePsSbcBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  MeteorLakePlatSamplePkg/Features/Embedded/Dxe/EmbeddedDxe.c
+  MeteorLakePlatSamplePkg/Features/Embedded/Dxe/EmbeddedDxe.inf
+  MeteorLakePlatSamplePkg/PlatformPkg.dsc
+  MeteorLakePlatSamplePkg/Setup/MeSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: c7577f2cc107ce7c7fd034ed5503eb21bfd54939 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [ARL-Hx AEP] Power on learnings
+  
+  [Issue Description]
+  System not booting to EFI shell/OS and
+  some of the devices are not working
+  
+  [Resolution]
+  Program the Hard Coded SPD for on board Memory
+  program the correspoing GPIO pin for Smart C cover
+  Program the GPIO pins and RTD3 flow for Foxville LAN as this is PCIE
+  Provide correct GOP config in Vpd Pcd for TBT Type-C display
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-Hx AEP
+  
+  Hsd-es-id: 16022685063
+  Change-Id: I2040f990bf268b404dc8ae65f93c2a45c5d125a9
+  Original commit hash: 8ca903dca37195ab093431fadae8a0f4c5da26ad
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/ArlHAepRtd3.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/ArlH/SkuIdArlHDdr5SODimmAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakeSRvpBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 551f19ac9f817c4970beed7779c429d0cd8bc860 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [MTL-H] [MTL-U] [MTL-S] [HID]: HEBC value option missing in BIOS
+  
+  [Issue Description] or [Feature Description]
+  HEBC value option missing in setup page
+  
+  [Resolution]
+  Removed "HebcValueSupport" condition as it supports for all SKUs.
+  So enabled by default at HFR
+  
+  Package/Module:
+  MeteorlakeBoardPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 22019142074
+  Change-Id: I50f884f404e411110fbb61b028bb33e09f81a47f
+  Original commit hash: 2aa78fe8cd951b0a25a805e3d757d1a2d03ca199
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakeSRvpBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakeSimicsBoardsConfigPatchTable.h
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  MeteorLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 0627489c13e3f3d1aa9e2029aa8f2acb7583285a 
+*********************************************************************************
+
+[BoardPkg]
+
+  GPIO and ClQREQ changes for ppv board
+  
+  [Feature Description]
+  with PXPB lane reversal and CLKreq
+  
+  Package/Module:
+  Intel/MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 14021231790
+  Change-Id: I06943462d2b201f642b4384b5fa33c09d36b7aef
+  Original commit hash: 42abe4a7883171b0abde198c066fbd0c9478296a
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdArlHDdr5SODimmPpvRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: d05395ee4541c6752e45d5bc305d05169834dea7 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [ARL-H BEP] Power On Changes
+  
+  [Feature Description]
+  Power On Changes for ARL-H BEP
+  RTD3 flow and XHCI programmed
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-H BEP
+  
+  Hsd-es-id: 16021703113
+  Change-Id: I890b0429f493cd1e967ab651c7e79562b6d45402
+  Original commit hash: 1780bd1aab0d371aeb699675259516ec82045cd5
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/ArlHBepRtd3.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlHBep.asl
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+  MeteorLakeBoardPkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/ArlH/SkuIdArlHBep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  MeteorLakePlatSamplePkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: f3d6c543cc1f51fccda3f8a0b7a19499b33beabf 
+*********************************************************************************
+
+[BoardPkg]
+
+  ARL-H T4 RVP SPD update to 8500
+  
+  [Feature Description]
+  Change SPD data to 8500 DDR speed
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  H
+  
+  Hsd-es-id: 16022668156
+  Change-Id: I8a164078fe5bee5baa752416da9dd119507c74ab
+  Original commit hash: 6631636533c8acd3534e7ee0a839d6dd0a5c49ce
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4Rvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 364ffd5566282f2cd2b68aaf0a291316113947bd 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [MTL] HTTP not enumerate after setting Onboard NIC
+  
+  [Issue Description]
+  HTTP boot option is not enumerating
+  after setting EFI network to Onboard NIC.
+  
+  [Resolution]
+  Unload Discrete EFI Network Driver when it is disabled in setup
+  
+  Package/Module: MeteorLakeSamplePkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16022781916
+  Change-Id: I71aa70b0037364702cda05d6c68a0efdc9d95be0
+  Original commit hash: 4c638bf1087cc186b91a1d5a97f86b4f95666c7d
+  
+  MeteorLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 5c8b6f2b2b8ac3f12db77c9d87153a6a2cd83e40 
+*********************************************************************************
+
+[ASL], [BoardPkg], [PlatformPkg]
+
+  [ARL] Type C Connectors UPC capability support enabled
+  
+  [Feature Description]
+  BIOS shall support ACPI rev.6.5 Chapter 9.12 _UPC capabilities
+  related to USBC retimer. Benefits to Customers by having this
+  change is Improve Type-C connector mapping and user experience
+  on Windows ecosystem. Help user connect the docking station on
+  correct Type-C capable port for best Thunderbolt/USB4 docking
+  experience. For example, OS will send UI notification on desktop
+  if a user connects a Thunderbolt dock to non-TBT port (sub-optimal
+  performance), the notification will help user connect to right
+  Thunderbolt/USB4 port for optimal user experience.
+  
+  Package/Module:
+  MeteorLakeBoardPkg,
+  MeteorLakePlatSamplePkg,
+  ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 16022280556
+  Change-Id: I51b144669d8184c2453958edc58893afd9284f14
+  Original commit hash: 10676d54d7bbc268697b6e95aab7d82d7ceb6aa3
+  
+  ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssXhci.asl
+  ClientOneSiliconPkg/IpBlock/Usb/AcpiTables/PchXhci.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlHDdr5SODimmAep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlSDdr5SODimm2DpcAep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlSbgaErb.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlMLp5xAep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlMLp5xConf1Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5MemSolderDowndTBTRvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5SODimmB2bHsioRvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5SODimmSbsRvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5SODimmSbsRvpBom2.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5T4SODimmSbsRvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPGcs.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPLp5xAep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPLp5xBep.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPLp5xT3Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSSD02Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSU1D01Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSU1DOC04Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlSU2D03Rvp.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciWrapper.asl
+  MeteorLakeBoardPkg/Include/PlatformBoardConfig.h
+  MeteorLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5CammRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPDdr5Crb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Crb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5OnlyDpRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Sbc.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf1Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf2Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdArlHDdr5SODimmErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5MemSolderDowndTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvpBomSku.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5Gcs.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5GcsFab2.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT4Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdArlHDdr5SODimmPpvRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlMLp5xConf1PpvRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPDdr5SODimmB2bHsioRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPDdr5SODimmSbsPpvRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPSDdr5Ppv.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Simics/SkuIdMtlSSimics.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Simics/SkuIdMtlSimics.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/ArlH/SkuIdArlHDdr5SODimmAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlM/SkuIdMtlMLp5xAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlM/SkuIdMtlMLp5xAepp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlP/SkuIdMtlPLp5xAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlP/SkuIdMtlPLp5xBep.dsc
+  MeteorLakePlatSamplePkg/Features/Acpi/AcpiTables/TbtTypeC/TbtTypeC.asl
+  MeteorLakePlatSamplePkg/Features/Acpi/AcpiTables/TbtTypeC/TbtTypeCWrapper.asl
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/Include/UsbTypeC.h
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeC.asl
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: f9fcb3d2c3acfe8dc6ffd878bc833e4f6b81cc6a 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [ARL] Update the Type-C port map
+  
+  [Feature Description]
+  Update the Type-C port map to support
+  the _UPC for DTBT.
+  
+  Package/Module:
+  MeteorLakeBoardPkg,
+  MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 16022280556
+  Change-Id: Id3b5ed4aebb6d9e97c5e26c0984d03006f60db4a
+  Original commit hash: 1d8ac638d40913175722f1b8f5d7b37c94e694f5
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 3e576f36c4f9a6c08b0157bc18d780a969603428 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [MTL-S][FXVL-C]: FXVL gets LSC during exit from S5
+  
+  [Issue Description]
+  FXVL gets LSC during exit from S5 flow by PB when critical session are
+  open
+  
+  [Resolution]
+  The FXVL power is turned off only when FXVL is totally disabled in
+  BIOS setting. When FXVL is enabled in setup menu, it is turned on even
+  in low power modes like Sx.
+  
+  Package/Module:MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 13011100083
+  Change-Id: Iada1b0e6489654d5e0f9ac831ae08d98a686ab15
+  Original commit hash: 630b93733a9c0c9d6195f2889f0b0994a18b0d54
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPostMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 1d50c81580a1abe667bfd3a3b270d502bf65c753 
+*********************************************************************************
+
+[BoardPkg]
+
+  Pull low on GPP_E_19 (LAN_GPIO_RST_N)
+  
+  [Feature Description]
+  Pull low on GPP_E_19 (LAN_GPIO_RST_N) at pre-memory stage
+  
+  Package/Module: MeteorLakeBoards
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 14021111987
+  Change-Id: Ie61e749f20096c56e2cdc380fd2d430e7bb164c1
+  Original commit hash: 95f97c94aa605ac93ad933928162664e1f528f2a
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 78ac9b92688c6cf196bd4fb27e97d2b8b002b368 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Alternate PSS chip location for MAC address on MTL-S RVP boardsm
+  
+  [Feature Description]
+  MTL-S RVP motherboards have MAC address programmed into PSS chip
+  in a different PSS chip location than was expected. Request BIOS to
+  read alternate PSS location for MTL-S RVP boards, as thousands have
+  already been built and deployed. MTL-S RVP board SKUs used Block 2
+  PSS chip (start address 64) instead of Block 5 PSS Chip location
+  (start address 136). The data was also stored in ASCII rather
+  than Hex format, and with no JV letters preceding the MAC address.
+  
+  Package/Module:
+  BoardPkg
+  PlatSamplePkg
+  
+  [Impacted Platform]
+  MTLS, ARLS
+  
+  Hsd-es-id: 16022613859
+  Change-Id: I4bff2bda93b16f1860f7a0f1f2f51393c8e8d705
+  Original commit hash: 8241a18d5d4d45bc1d60a1009f78334ca5d5accc
+  
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdate.inf
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateDefines.h
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateHw.c
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateInit.c
+  MeteorLakePlatSamplePkg/Include/Library/PssLib.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 71d5e41efb929b8a4a030dd0affe4dda4ec7d222 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg]
+
+  [MTL-S]x8x4x4 lane-reversal support - platform code change
+  
+  [Feature Description]
+  Add x8x4x4 lane-reversal support
+  
+  Package/Module:MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 15014135202
+  Change-Id: Ib1f10d62d62dd44b0a11e23f0628645c7c13e387
+  Original commit hash: 16da5dbc8e291e651b90d6c32cd62ea22a42b647
+  
+  ClientOneSiliconPkg/IpBlock/PcieRp/Library/PeiDxeSmmPchPcieRpLib/PchPcieRpLibVer6.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/BoardPchInitPreMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 6b408b2a03d1d74485deec95674cca2687493115 
+*********************************************************************************
+
+[ASL], [BoardPkg]
+
+  Add _BTP support for battery participant
+  
+  [Feature Description]
+  Enable _BTP support for ARL battery participant.
+  
+  Package/Module:
+  EcFeaturePkg/EcNvs
+  EcFeaturePkg/Bat1Real
+  MeteorLakeBoardPkg/EcInit
+  
+  [Impacted Platform]
+  All.
+  
+  Hsd-es-id: 15014767028
+  Change-Id: I83f85ebf8c278ddd70219fdfefe366b04f92e3c1
+  Original commit hash: ab727bd68f55a346e77ad250a9728345557f8a0a
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat1Real.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcNvs.asl
+  Features/Ec/EcFeaturePkg/Include/EcNvsAreaDef.h
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/EcInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: b079309c136b0f92bc532a19ba5536c06ce1c57b 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [ARL-Hx][HLK][SV2]:USB Exposed Port System Test IS failing
+  
+  [Issue Description]
+  USB Exposed Port System Test IS failing with
+  \\***Failing Exposed Connector***\\.
+  
+  [Resolution]
+  HydraCreek and FP in ARL-Hx RVP2 was moved to not in POR.
+  Removed FP Connector declaration.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-Hx
+  
+  Hsd-es-id: 16022650603
+  Change-Id: Iae72adacdd3c845abf7c59caeb849e0aedd8f582
+  Original commit hash: db2270329ce776b6b53010747503ca17ea70d3d1
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlSbgaUDimm2Dpc.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 2437cb39b448db3ec65d926a846d688051c3f942 
+*********************************************************************************
+
+[BoardPkg]
+
+  Enable USBC OC via Physical wire
+  
+  [Feature Description]
+  Defeature USBC overcurrent over eSPI VWM and
+  Enable USBC OC via Physical wire.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL/ARL S, Hx
+  
+  Hsd-es-id: 15014715551
+  Change-Id: I67ada214f98625d493805d75c23616506e26d882
+  Original commit hash: 8a466b8098f4e5555b78d73304ec6ab6c1c3d7bd
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 28a8ac9083d3ac432206ff04cf87d9cf78459a2b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  SPI DMA Transfer Hang WA
+  
+  [Feature Description]
+  Both WA 1 and WA 2 are required to be implemented as complete WA
+  for the DMA Boundary Condition bug
+  
+  BIOS WA 1 : (Disable Power and Clock Gating to prevent the bug)
+  To have WA in BIOS during boot by disabling IP-level clock gating and
+  disabling all PSFs power and clock gating before issuing DMA commands.
+  Then, after all DMA commands are fully completed,
+  BIOS re-enables them back.
+  Before Issuing DMA comands :
+  BIOS to set
+  FAB_PG_CTL_PSF--> 0xA0000086
+  PLCC_DCGE -> '0' (disable)
+  PLPC_DCGE -> '0' (disable)
+  BIOS to disable the following register bits of all PSF to '0' :
+  Trunk clock gating PSF_<x>_PSF_GLOBAL_CONFIG[4] - (enTCG)
+  Local clock gating PSF_<x>_PSF_GLOBAL_CONFIG[3] - (enLCG)
+  Partition clock gating PSF_<x>_PSF_GLOBAL_CONFIG[12] - (enPCG)
+  Clock gate holdoff timeout value to 0xF
+  
+  After DMA completes :
+  BIOS to set
+  FAB_PG_CTL_PSF : 0x20000082
+  PLCC_DCGE : '1' (enable)
+  PLPC_DCGE : '1' (enable)
+  BIOS to re-enable back the following register bits to '1' :
+  Trunk clock gating PSF_<x>_PSF_GLOBAL_CONFIG[4] - (enTCG)
+  Local clock gating PSF_<x>_PSF_GLOBAL_CONFIG[3] - (enLCG)
+  Partition clock gating PSF_<x>_PSF_GLOBAL_CONFIG[12] - (enPCG)
+  Clock gate holdoff timeout value to 0x0
+  
+  BIOS WA 2 : (Recovery Mechanism as mitigation if PSF traffic is backpressured)
+  
+  Apart from Power Gating and Clock Gating factors, there is another factor
+  called PSF traffics Backpressure could possibly trigger this DMA
+  boundary condition bug. Based on technical assessment,
+  the probability of the DMA boundary condition to be triggered due to
+  PSF traffics backpressure is very rare.
+  However, for safety reason, to propose a contingency BIOS fallback
+  mechanism to CopyMem (non-DMA command) if DMA traffic is hang and
+  timeout due to rare PSF traffics backpressure.
+  Thus, even if PSF traffics backpressure really happens during boot,
+  BIOS has recovery steps to boot up with copy mem approach
+  The BIOS Recovery steps as following :
+  Once BIOS detects DMA hangs, BIOS can clear the DMA start bit and
+  fallbacks to copy mem approach.
+  Clearing the DMA start bit is important because the DMA start bit will
+  cause SPBC controller to keep requesting for clk and will indirectly
+  block the system from low power entry.
+  
+  Package/Module: OneSiliconPkg/IpBlock/Spi/LibraryPrivate/PeiSpiDmaLib
+  
+  [Impacted Platform]
+  MTL-S
+  
+  Hsd-es-id: 22019064556
+  Change-Id: Ib5fad435c917fc934092a20534bd563da9ceeac1
+  Original commit hash: 15c23dd3985fe1a1e8e2d3e4ece8a9a898c6edb2
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocEndOfPei.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocInitPei.h
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocInitPreMem.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/PeiMtlSocInitLib.inf
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/PeiMtlSocInitLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/Spi/LibraryPrivate/PeiSpiDmaLib/PeiSpiDmaReg.c
+  ClientOneSiliconPkg/Product/MeteorLake/SiPkgPcdInit.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 3556b479c356499d1c82d93937c66e7d5c792ef1 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [ARL] Bios Guard ARL-H Z0 PO support
+  
+  [Feature Description]
+  Bios Guard support for ARL-H Z0 SKUs
+  
+  Package/Module: MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 13011412287
+  Change-Id: Ibeb7c72eb298049aa2150527662a94ddc14f36f6
+  Original commit hash: b85db7a1447f16e0738d07d1d8983ed665a63983
+  
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: cf526fc3bbda75ba1d07ac08cc583377da7aab25 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [MTL H Modular PC] Added PO Porting Changes.
+  
+  [Feature Description]
+  Added GPIO,HSIO,USB and PO related changes
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL H
+  
+  Hsd-es-id: 16021445277
+  Change-Id: Ia9beba1836a30fcee176c6de5df9de8cf00e76bb
+  Original commit hash: 06ea456a58346ee58df78b9804b7e222ae420f21
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/AcpiTables.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/MtlHLpCammModPcRtd3.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlHLpCammModPc.asl
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/MtlH/SkuIdMtlHLpCammModularPc.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: c920c33c579b146911f74e8ef2d847434d3fddd5 
+*********************************************************************************
+
+[BoardPkg]
+
+  GAP peak wifi module is not enumerated in DM after F-02 rework
+  
+  [Issue Description]
+  wifi device is not enumerated in dxe phase while PCIE enumeration.
+  On 0x6 display skuid,clock is not correctly mapped for WLAN PCIE RP.
+  
+  [Resolution]
+  Inherited ARL H DDR5 Skuid for SKUid with display id 0x6.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  H
+  
+  Hsd-es-id: 22019135209
+  Change-Id: I274790911d9f4fc822d6d10a07e0e3601d1d98de
+  Original commit hash: 87d3ed5fa52d662ba5fcd94ef5907bf741ab5a74
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 05358589e7adf471433da556c13a9a591950ec23 
+*********************************************************************************
+
+[BoardPkg]
+
+  Multiple Re-timer fields are not showing up in BIOS page
+  
+  [Issue Description]
+  Multiple Re-timer fields are not showing up in BIOS page.
+  
+  [Resolution]
+  Update the retimer info for this board.
+  
+  Package/Module: BoardPkg
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 16022531603
+  Change-Id: Ide47835eefd4e47c7a086f1c501f39b0d7d2e928
+  Original commit hash: e1047f1daef2821bbc875ec42f1450aa7b470708
+  
+  Features/Tcss/TcssCapsuleFeaturePkg/CapsuleBuild/ConfigSample/DTbtPayloadConfig.ini
+  Features/Tcss/TcssCapsuleFeaturePkg/CapsuleBuild/ConfigSample/DTbtRetimerPayloadConfig.ini
+  MeteorLakeBoardPkg/Features/TcssCapsuleUpdate/Config/DTbtPayloadConfig.ini
+  MeteorLakeBoardPkg/Features/TcssCapsuleUpdate/Config/DTbtRetimerPayloadConfig.ini
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: d384cb0d07cf0d6fe81cfcb3078c3305bd7d22be 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  [BR] Observed YB on UCM-UCSI ACPI Device
+  
+  [Issue Description]
+  Observed UCM-UCSI with yello-Bang when enabling UCSI BIOS knob.
+  In addition, USBC on Barlow Ridge also supports UCSI.
+  
+  [Resolution]
+  USBC ports mapping modified dynamically depends on
+  Barlow Ridge enabling.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  ARL Hx, S
+  
+  Hsd-es-id: 15014357375
+  Change-Id: I064cc3bead4c3993e4d337d2f63dd0343792dd18
+  Original commit hash: c3d167d5dada74eb5fb25f240f12849f5aaa741b
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.c
+  MeteorLakePlatSamplePkg/Features/UsbTypeC/UsbTypeCDxe/UsbTypeCDxe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: be1e05df35c01f0f9ec07db3f405b9c5326fb5d8 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ARL-H T4] NVME Disk and PCIE port is not entering to D3Hot/Cold
+  
+  [Issue Description]
+  PCIE port is not entering to D3hot/Cold state when system put to sleep
+  
+  [Resolution]
+  Corrected RTD3 ACPI table signature.
+  
+  Package/Module:
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit
+  
+  [Impacted Platform]
+  H
+  
+  Hsd-es-id: 22019122386
+  Change-Id: I8541876ac130220cf07fd1bf61a72e5a1e95a09c
+  Original commit hash: 4217f6b3475c2628ad1af5b8bdf0b322af2d2b0d
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4Rvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: b62e84fd125dab5879569d372c010fe6cc14e255 
+*********************************************************************************
+
+[BoardPkg]
+
+  External display hot-plug detection on iGfx (Hybrid config) while D3
+  
+  [Feature Description]
+  BIOS enabled VpdPcdTcNotifyIgdSupport to support iGPU wake from D3
+  on dGPU based systems.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL-S
+  
+  Hsd-es-id: 15014719471
+  Change-Id: I0f38e666d6de1a2a01ddc669c66330e20fd94809
+  Original commit hash: 9ddfa4457295280b0822a4a847ad0692b9537351
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 08901758411ed420f70d891d31b29dcbed7018d6 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  Board support: MTL/ARL-H LPDDR5 CAMM ERB
+  
+  [Feature Description]
+  Added CAMM RVP board ID to 0x3F,
+  CRD_PRVICAY_LED (GPP_F20) default state changed to LOW.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  H
+  
+  Hsd-es-id: 16022558747
+  Change-Id: Ieb6ebd1dca1aa7bed7f1528ba9a776ae21595c88
+  Original commit hash: ab12415845a2e60c73564cc61f4dac86bdeff6b6
+  
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5CammRvp.dsc
+  MeteorLakePlatSamplePkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 23f4d5fe77c52a3e439a8f15cdb00f704ee42560 
+*********************************************************************************
+
+[SiliconPkg], [ASL], [BoardPkg], [PlatformPkg]
+
+  SyncScript: Revert override commits.
+  
+  Thu Mar 7 04:44:25 2024 -0800
+  Original commit hash: 1942a3ea94d81a69a5711e5daf25120b8c54589f
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/Graphics/Library/PeiDxeSmmGraphicsInfoFruLib/GraphicsInfoFruLib.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocEndOfPei.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocInitPei.h
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocPmc.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiSaInitLib/SaInitPreMem.c
+  ClientOneSiliconPkg/Fsp/BuildFsp.sh
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver4/MemoryConfig.h
+  ClientOneSiliconPkg/Include/Library/GraphicsInfoLib.h
+  ClientOneSiliconPkg/IpBlock/Graphics/IncludePrivate/GraphicsDataHob.h
+  ClientOneSiliconPkg/IpBlock/Graphics/Library/PeiDxeSmmGraphicsInfoLib/GraphicsInfoLib.c
+  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayInitLibGen14Plus/PeiDisplayInitLib.c
+  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayLib/PeiDisplayLib.c
+  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayLib/PeiDisplayLib.inf
+  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsInitLibGen13/PeiGraphicsInitLib.c
+  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiGraphicsPolicyLibGen13/PeiGraphicsPolicyLib.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcDebugHook.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcExtInputs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterfaceGlobalTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcRmtData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/InputBlock/MrcInputBlock.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/InputBlock/MrcInputBlock.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfigPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/Mc/MrcRowHammer.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/Mc/MrcRowHammer.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/MrcChipApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/Pma/MrcPmaApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommonPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosser.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcTurnAround.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.h
+  ClientOneSiliconPkg/IpBlock/TraceHub/IncludePrivate/Library/PeiTraceHubInitLib.h
+  ClientOneSiliconPkg/Library/SiMtrrLib/SiMtrr.h
+  ClientOneSiliconPkg/Library/SiMtrrLib/SiMtrrLib.c
+  ClientOneSiliconPkg/Library/SiMtrrLib/SiMtrrLib.inf
+  ClientOneSiliconPkg/Product/MeteorLake/SiInit/Pei/SiInit.c
+  ClientOneSiliconPkg/Product/MeteorLake/SiInit/Pei/SiInit.inf
+  ClientOneSiliconPkg/Product/MeteorLake/SiInit/Pei/SiInitFsp.inf
+  ClientOneSiliconPkg/Product/MeteorLake/SiInit/Pei/SiInitPreMem.c
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/Devices/Bat1Real.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcNvs.asl
+  Features/Ec/EcFeaturePkg/Include/EcNvsAreaDef.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Include/FmpLastAttemptStatus.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Include/Library/TbtRetimerNvmUpdateLib.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Include/TbtRetimerNvm.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/FmpDeviceLibTbtRetimer/FmpDeviceLibTbtRetimer.c
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvDevice.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvHr.c
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvHr.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvRetimerThruHr.c
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtRetimerNvmUpdateLib.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/EcInit.c
+  MeteorLakeBoardPkg/BiosId.env
+  MeteorLakeBoardPkg/BoardPkg.fdf
+  MeteorLakeBoardPkg/BoardPkgPcdInit.dsc
+  MeteorLakeBoardPkg/Library/PeiBoardConfigLib/PeiBoardConfigLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5MemSolderDowndTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/ThunderboltConfigPatchTable.h
+  MeteorLakeBoardPkg/prep.bat
+  MeteorLakeFspPkg/BuildFv.sh
+  MeteorLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakeFspPkg/MeteorLakeFspPkg.fdf
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakeFspPkg/Upd/UpdList/FSPM.txt
+  MeteorLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.h
+  MeteorLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/SecureIntegratedGraphicsConfiguration.c
+  MeteorLakePlatSamplePkg/Features/Usb4Cm/Include/Usb4ConfigLayer.h
+  MeteorLakePlatSamplePkg/Features/Usb4Cm/Include/Usb4PlatformInfo.h
+  MeteorLakePlatSamplePkg/Features/Usb4Cm/Library/Usb4DomainLib/Usb4DomainLib.c
+  MeteorLakePlatSamplePkg/Features/Usb4Cm/Library/Usb4ProtocolsLib/DpPath.c
+  MeteorLakePlatSamplePkg/Features/Usb4Cm/Library/Usb4ProtocolsLib/DpTunnel.c
+  MeteorLakePlatSamplePkg/Features/Usb4Cm/Library/Usb4RtEnumLib/Usb4Router.c
+  MeteorLakePlatSamplePkg/Features/Usb4Cm/Usb4CmDxe/Usb4Cm.c
+  MeteorLakePlatSamplePkg/Features/Usb4Cm/Usb4PlatformPei/Usb4PlatformDriver.c
+  MeteorLakePlatSamplePkg/Features/Usb4Cm/Usb4PlatformPei/Usb4PlatformPei.inf
+  MeteorLakePlatSamplePkg/Include/OemSetup.h
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  MeteorLakePlatSamplePkg/Library/DxeFirmwareVersionInfoLib/DxeFirmwareVersionInfoLib.c
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.h
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/SaPlatformInitAdvancedDxe.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.inf
+  MeteorLakePlatSamplePkg/PlatformPkg.dec
+  MeteorLakePlatSamplePkg/Setup/SaSetup.c
+  MeteorLakePlatSamplePkg/Setup/SaSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/SaSetup.uni
+  MeteorLakePlatSamplePkg/Setup/Setup.inf
+  MeteorLakePlatSamplePkg/Setup/TbtSetup.hfr
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Oem: ecs
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 46 suspect commits for review 
+
+Warnings Found:
+  Commit: dc6fef4    --Commit Message Contains Key Word: revert
+  Commit: dc6fef4    --Commit Message Contains Key Word: security
+  Commit: dab6a3a    --Commit Message Contains Key Word: step
+  Commit: 4bba6f6    --Commit Message Contains Key Word: step
+  Commit: 152ee2e    --Commit Message Contains Key Word: step
+  Commit: fb66093    --Commit Message Contains Key Word: revert
+  Commit: 383c9d7    --Commit Message Contains Key Word: security
+  Commit: 97e45cf    --Commit Message Contains Key Word:  WA 
+  Commit: e64ec00    --Commit Message Contains Key Word: sku
+  Commit: e67366b    --Commit Message Contains Key Word: sku
+  Commit: 926fce9    --Commit Message Contains Key Word: sku
+  Commit: 9bd28c0    --Commit Message Contains Key Word: http
+  Commit: bfda1cf    --Commit Message Contains Key Word: step
+  Commit: 0a2e12d    --Commit Message Contains Key Word: bypass
+  Commit: 3e71b7e    --Commit Message Contains Key Word: revert
+  Commit: 6ed1fd3    --Commit Message Contains Key Word: step
+  Commit: 6a4ef71    --Commit Message Contains Key Word: sku
+  Commit: 83318c9    --Commit Message Contains Oem: ecs
+  Commit: 1ef99d4    --Commit Message Contains Key Word: sku
+  Commit: 7ffbb79    --Commit Message Contains Key Word: sku
+  Commit: 00b27fd    --Commit Message Contains Key Word: HW
+  Commit: 6b87b9e    --Commit Message Contains Key Word: sku
+  Commit: c7577f2    --Commit Message Contains Key Word: sku
+  Commit: 551f19a    --Commit Message Contains Key Word: sku
+  Commit: 0627489    --Commit Message Contains Key Word: sku
+  Commit: d05395e    --Commit Message Contains Key Word: sku
+  Commit: f3d6c54    --Commit Message Contains Key Word: sku
+  Commit: 364ffd5    --Commit Message Contains Key Word: http
+  Commit: 5c8b6f2    --Commit Message Contains Key Word: sku
+  Commit: f9fcb3d    --Commit Message Contains Key Word: sku
+  Commit: 3e576f3    --Commit Message Contains Key Word: sku
+  Commit: 1d50c81    --Commit Message Contains Key Word: sku
+  Commit: 78ac9b9    --Commit Message Contains Key Word: sku
+  Commit: 78ac9b9    --Commit Message Contains Key Word: HW
+  Commit: 71d5e41    --Commit Message Contains Key Word: sku
+  Commit: 6b408b2    --Commit Message Contains Oem: ecs
+  Commit: b079309    --Commit Message Contains Key Word: sku
+  Commit: 2437cb3    --Commit Message Contains Key Word: sku
+  Commit: 28a8ac9    --Commit Message Contains Key Word: step
+  Commit: 3556b47    --Commit Message Contains Key Word: sku
+  Commit: cf526fc    --Commit Message Contains Key Word: sku
+  Commit: c920c33    --Commit Message Contains Key Word: sku
+  Commit: 0535858    --Commit Message Contains Key Word: sku
+  Commit: d384cb0    --Commit Message Contains Key Word: sku
+  Commit: be1e05d    --Commit Message Contains Key Word: sku
+  Commit: b62e84f    --Commit Message Contains Key Word: sku
+  Commit: 0890175    --Commit Message Contains Key Word: sku
+  Commit: 23f4d5f    --Commit Message Contains Key Word: revert
+  Commit: 23f4d5f    --Commit Message Contains Oem: ecs
+  Commit: 23f4d5f    --Commit Message Contains Key Word: sku
