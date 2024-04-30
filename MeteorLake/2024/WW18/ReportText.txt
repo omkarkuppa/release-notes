@@ -1,0 +1,973 @@
+*********************************************************************************
+Commit: 513bf87ceda90e082132477aab1904da682e4982 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Revert "Enable MIPI VTIO Support for Secure Biometrics feature by default"
+  
+  This reverts commit 1073a134992a0d144ebfbcaa16f105d8f6466125.
+  
+  Tue Mar 12 11:35:58 2024 +0530
+  Original commit hash: dd5a5912397f9669b94cfedf2d55346f5caea273
+  
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetup.inf
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupStrings.uni
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupVfr.vfr
+  MeteorLakePlatSamplePkg/Setup/SaSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 32056ae1917d9877ae1f79861c0651bd031e992b 
+*********************************************************************************
+
+
+  Fix RPMC BIOS when using patching table
+  
+  [Issue Description]
+  When using patch tables with UEFI variable protection,
+  a variable can get out of sync if a SetVarible() is never
+  called on the variable after applying the patch table.
+  This will cause a integrity check error on reboot because
+  the MetaDataHmac value will have been calculated based on
+  the original value of the variable, while it will be compared
+  to the value calculated based on the updated patch table value.
+  
+  [Resolution]
+  After applying the patch table, update the variable digest
+  of the variable and recalculate the MetaDataHmac variable
+  based on the variable with the patch table applied.
+  
+  Package/Module:
+  ProtectedVariablePkg
+  
+  [Impacted Platform]
+  MTL, ARL
+  
+  Hsd-es-id: 16023696300
+  Change-Id: I475807265b9303cc92f83cb3562cfcde0280508e
+  Original commit hash: 3033abdd000dd0175b5e68b200573ac3ad08c059
+  
+  Features/Security/ProtectedVariablePkg/Library/ProtectedVariableLib/PeiProtectedVariable.c
+  Features/Security/ProtectedVariablePkg/Library/ProtectedVariableLib/ProtectedVariableCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: eac9bf934b43e9acf6d9a109398bd347b4ac8290 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Revert "PME_EN has to be set to allow remote wake"
+  
+  Issue: System hangs while exiting from S4 state using ICT Tool
+  Based on feedback from validation, the change needs to be
+  reverted as it causes hang
+  This reverts commit 4f04aa60fc9757e5fd117c1251574d6f212b43f2.
+  
+  Hsd-es-id: 16023592995
+  Change-Id: Ib4519e07c21b84def7117e929dc3911f98d5cb82
+  Original commit hash: 8feb5d1a79d9c367a5772fa1a10ae427fe25385e
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/SocInit/Dxe/PchInitDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: e995ac8a34a1a2e5210e0173ede9186e7426426e 
+*********************************************************************************
+
+
+  Fix DXE ASSERT error with RPMC BIOS
+  
+  [Issue Description]
+  DXE ASSERT occurs with RPMC BIOS because a reclaim()
+  operation (which tries to erase from flash) is
+  happening after BIOS Guard enables flash wear-out
+  protection.
+  
+  [Resolution]
+  The non-volatile variable usage was incorrectly being
+  incremented for all volatile/non-volatile variable updates.
+  This caused BIOS to think, variable memory is filled
+  and so it issued a reclaim(). The fix is to make sure
+  only non-volatile variable updates non-volatile variable
+  usage.
+  
+  Package/Module:
+  ProtectedVariablePkg
+  
+  [Impacted Platform]
+  MTL, ARL
+  
+  Hsd-es-id: 16023497072
+  Change-Id: I3b5c0391f17b54f6a6c86909521429e1837f1fd8
+  Original commit hash: 471359a7841b85d4a480b81866825ca15427178d
+  
+  Features/Security/ProtectedVariablePkg/Universal/ProtectedVariable/RuntimeDxe/Variable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 390a05d2a5b873a0012c92f32ac45ac2ea26aeed 
+*********************************************************************************
+
+[BoardPkg], [PlatformPkg]
+
+  BIOS to ForcePower the Retimer when doing the retimer capsule update
+  
+  [Feature Description]
+  BIOS should assert FORCE_POWER GPIO after sending FW update mode
+  command to EC, and de-assert the GPIO before sending restore command
+  to EC.
+  EC is still responsible to drive POWER pin
+  
+  Package/Module:
+  MeteorLakePlatSamplePkg/Library/DxeFirmwareVersionInfoLib
+  TcssCapsuleFeaturePkg/Library/FmpDeviceLibTbtRetimer
+  TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib
+  
+  [Impacted Platform]
+  ARL.
+  
+  Hsd-es-id: 15015628396
+  Change-Id: I66bbfaedff6b35238b32068878b0de4f9be804bb
+  Original commit hash: e2ba5fc55e3b650bd3b00937bfab71de03b478bc
+  
+  Features/Tcss/TcssCapsuleFeaturePkg/Include/FmpLastAttemptStatus.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Include/Library/TbtRetimerNvmUpdateLib.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Include/TbtRetimerNvm.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/FmpDeviceLibDiscreteTbt/FmpDeviceLibDiscreteTbt.c
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/FmpDeviceLibTbtRetimer/FmpDeviceLibTbtRetimer.c
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvDevice.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvHr.c
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvRetimerThruHr.c
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtNvmDrvRetimerThruHr.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtRetimerNvmUpdateLib.c
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateLib/TbtRetimerNvmUpdateLib.h
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateNullLib/TbtRetimerNvmUpdateLib.c
+  Features/Tcss/TcssCapsuleFeaturePkg/Library/TbtRetimerNvmUpdateNullLib/TbtRetimerNvmUpdateLib.h
+  Features/Tcss/TcssCapsuleFeaturePkg/TcssCapsuleFeaturePkg.dec
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/Features/TcssCapsuleUpdate/RetimerCapsuleSupportDriver/RetimerCapsuleUpdate.c
+  MeteorLakeBoardPkg/Features/TcssCapsuleUpdate/RetimerCapsuleSupportDriver/RetimerCapsuleUpdate.inf
+  MeteorLakeBoardPkg/Features/TcssCapsuleUpdate/RetimerCapsuleSupportDriver/TbtPdRetimerDevice.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
+  MeteorLakePlatSamplePkg/Include/Library/DxeFirmwareVersionInfoLib.h
+  MeteorLakePlatSamplePkg/Library/DxeFirmwareVersionInfoLib/DxeFirmwareVersionInfoLib.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedPei/PlatformInitAdvancedPreMem.inf
+  MeteorLakePlatSamplePkg/Setup/PlatformSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 194366f0d12e675e4603d0e5f2c13d215d11e03e 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [ARL-H BEP][PO Learning]: RP mapping changes and Touchpanel changes
+  
+  [Issue Description]
+  Root Port devices, Touch Panel, Power Meter Devices not working
+  
+  [Resolution]
+  Corrected the RP numbers of uSD controller, SSD Gen4 and SSD Gen5
+  devices to RP10, RP11, RP12
+  Added BoardId check for Power Meter 194x/195x devices
+  Changed uSD Power Enable Gpio Polarity to HIGH
+  Programmed Touch Panel GPIO pins
+  Changed uSD controller GPIO pins configuration
+  Changed Clock map of RP devices according to the RP numbers changed
+  Added SSID for Audio in Setup option
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARLH BEP
+  
+  Hsd-es-id: 16023434339
+  Change-Id: Id89dbe74cf30a5a12d65eaa90e1c24ba0f9d8521
+  Original commit hash: 60654d02f5bd69e36593f9a7da38fbd42cac64f1
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/ArlHBepRtd3.asl
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/ArlH/SkuIdArlHBep.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: adc666a5801896912b1aa0502f69d415e79f788d 
+*********************************************************************************
+
+[ASL], [BoardPkg]
+
+  SUT shutdown trying to wake from PS_ON with PB press
+  
+  [Issue Description]
+  SUT going to shutdown when try to wake from PS_ON
+  with PB press.
+  
+  [Resolution]
+  Originally, when CS enable the power button would change to
+  control mode. And it would be fixed mode when CS disabled.
+  Force BIOS keep power button as fixed mode all the time.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 16023479234
+  Change-Id: Id1cec26585103918405659e2493edc8462ab971b
+  Original commit hash: d1308409098ed9d5f92622a26929c92d3f2ba901
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcBase.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcNvs.asl
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/SBMethod/PowerButtonMethod.asl
+  Features/Ec/EcFeaturePkg/Include/EcNvsAreaDef.h
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/EcInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: fa4da753aabe8d0183dd1994c13128493a4ed664 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ARL] BIOS code update for new VR Spec WW10_24
+  
+  [Feature Description]
+  BIOS code update for new VR Spec WW10_24.
+  Support new ARL-S SKUs: 2+4, 2+8 and 4+8.
+  
+  Package/Module:
+  ClientOneSiliconPkg/Fru/MtlCpu
+  
+  [Impacted Platform]
+  ARL-S
+  
+  Hsd-es-id: 15015588789
+  Change-Id: Ic1f98f05278e92d8c47124a2adefe3d2325c26d9
+  Original commit hash: 80562746ce11350c7bf497acec3c48040bd12da9
+  
+  ClientOneSiliconPkg/Fru/MtlCpu/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 926fe190abec3351f7c0e4efbb31aec01cb1813a 
+*********************************************************************************
+
+[BoardPkg]
+
+  [DTBT] Update the reset config for ARL-H DTBT
+  
+  [Issue Description]
+  The reset config isn't following the HAS and cause
+  WOL unworkable.
+  
+  [Resolution]
+  Update the reset config for GPP_A17 of ARL-H DTBT
+  as deep GPIO reset.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-H DTBT
+  
+  Hsd-es-id: 16023507085
+  Change-Id: Iac0980ea831a3c99a694c9a635977ffc7d709791
+  Original commit hash: 4226d1667d59e4a43d1d3871451b6083c0cbe924
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: c548362f243d01580905b730e4244503c239bb4d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL] Update RefPiOffset sweep w/ 4-tick stepsize
+  
+  [Feature Description]
+  Updated MrcRefPiFunctionalTraining1D sweep to default to a stepsize of
+  4 when RefPiOffset and 2 when RefPi4XoverOffset.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  H
+  
+  Hsd-es-id: 22019221229
+  Change-Id: I58b72268229afc786f9c9579f458de421fc562e4
+  Original commit hash: b2d6fc73c89fe3bc25a7057892b996f0b723ab06
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: c92acbbeba90eb0991f92486a7a3c76649ceff34 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S MTL-M MTL-P | DDR5 LP5] RefPi Optimization Functional Training
+  
+  [Feature Description]
+  Updated RePi Calibration Optimization to RefPi4XoverOffset edges found
+  on system through 1D sweeps of this parameters.
+  
+  RefPiOffset static edge calculations are still used for final RefPi
+  setting calculations.
+  
+  The the range of RefPiOffset and RePi4XoverOffset settings are
+  individually tested at VccSa Vmin and Vmax using a 2D sweep. The 2D
+  sweep consists of:
+  1. Outer 1D sweep which finds the left\right edges for a given RefPi
+  parameter. The parameter is either RefPiOffset or RefPi4XoverOffset
+  2. Inner 1D sweep which runs a CPGC point test at each
+  Write Leveling Timing offset between -28 and +28 in steps of 4.
+  Write Leveling is TxDq & TxDqs on DDR5, TxDq and WCK on LP5.
+  
+  On LP5, the MC CKE is toggled during the RefPi register writes in the
+  RefPiOffset and RefPi4XoverOffset 1D sweeps to force a WCK sync.
+  
+  Additional Changes:
+  - Split 1D sweeps into separate phase and run with Vboot RefPi settings
+  to avoid speckles seen when the RefPi FSM is run at Vmax.
+  - Added Unit Tests for new helper functions
+  - Use 3tCK read preamble for 3200
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22019169206
+  Change-Id: Id70f8f81ca4487d70f9389cbee2c73fab8f5b1b5
+  Original commit hash: 5a6b14d75b35216074d2daf3383ef5aacb400e11
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcDebugHook.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfigPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 62d952487e46fd51bc581d6a0d0364c26b097c48 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-S MTL-M MTL-P | DDR5 LP5] RefPi RMT
+  
+  [Feature Description]
+  Added RefPiOffset and RefPi4XoverOffset 2D sweeps to RMT.
+  
+  The range of RefPiOffset and RePi4XoverOffset settings are
+  individually tested at VccSa Vmin and Vmax using a 2D sweep.
+  The final margin reported is the composite result of the eye
+  seen at Vmax and Vmin plus the max (worst case) calculated guardband
+  for the system temperature.
+  
+  The 2D sweep consists of:
+  1. Outer loop that sweeps the RefPi param (RefPiOffset or
+  RefPi4XoverOffset) accross the range of register values as an offset
+  to the programmed setting. The sweep is done in steps of 2.
+  This sweep modifies the offset values in the following partitions:
+  - CCC
+  - Data
+  - VTT
+  On LP5, the MC CKE is toggled during the RefPi register writes in the
+  RefPiOffset and RefPi4XoverOffset 1D sweeps to force a WCK sync.
+  
+  2. An inner loop that runs a CPGC point test at a range of
+  Write Leveling offsets from -28 to +28 from the trained values in
+  steps of 4.
+  Write Leveling consists of TxDq and TxDqs (or WCK for LP5)
+  
+  Added BDAT Schema 6C support to publish RefPi RMT results.
+  
+  Added CMOS option (0xE1) to adjust the RefPi4XoverOffset based on the
+  closest edge (where positive number is how much inside the eye to adjust
+  by and negative number is how much outside the eye to adjust by)
+  Example:
+  Closest Edge is -30:
+  CMOS option is -2 then RefPi4XoverOffset is adjusted by -32.
+  Closest Edge is +30:
+  CMOS option is +2 then RefPi4XoverOffset is adjusted by +28.
+  
+  Additional Changes:
+  - Fixed bug in VTT Parition GetSet Multicast. These GetSet enumerators
+  were implement using the "Strobe" GetSet argument which is always
+  limited to the maximum number of bytes on a channel. On LP5 this was
+  always limited to 2 causing only 2 of the 4 VTT partition instances
+  to be updated when GetSet multicast was used.
+  - RefPi\RefPi4Xover Offset 1D sweeps return results assuming the
+  passing region can wrap around.
+  - Added MrcPrintf support for string printing with left justify and
+  right justify padding.
+  - Added LP5 Write Leveling (WCK) margin to RMT.
+  - Added Unit Tests for new helper functions
+  - Updated LocalStub to support VccSa request re-try.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22019169206
+  Change-Id: Ibd2e336195dbcc310b51c92bf87d693d8ce2fd50
+  Original commit hash: f1b7f9f83470fd9cbd30be5622b9c8a3ffdcdca3
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcRmtData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfigPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommonPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 50888b1c9c759f41181d087e6f8fef8a4b2d9732 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL-P | DDR5 LP5] CA Parity Boot Time Optimization Revert back to ...
+  
+  [Feature Description]
+  CA Parity Boot Time Optimization Revert back to Pattern Rotation for
+  Mobile:
+  Set IsLegacyCaParityPointTest = TRUE on mobile platforms to revert back
+  to a higher stress CA Parity pattern with rotations. This is done to
+  resolve low and asymmetric ClkGrpPi margin issues observed on some
+  configs.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  U, H
+  
+  Hsd-es-id: 22019367969
+  Change-Id: Ie83ece1acbcb80f18ddc22c200f300a33582ed4a
+  Original commit hash: ca2c82187fe02db5ecb195afdd8defe53e85857c
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 7c11345a7b26cc9884cce636ea78b4ad8913c558 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Enable MIPI VTIO Support for Secure Biometrics feature by default
+  
+  [Feature Description]
+  1. Enabling VTIO if SA IPU is enabled.
+  2. Expose ISP SDEV Entry: Enabled
+  3. Set "Sensor Entry 2" to 105
+  
+  Package/Module:
+  VtioFeaturePkg
+  
+  [Impacted Platform]
+  MTL,ARL
+  
+  Hsd-es-id: 16023328932
+  Change-Id: I987e87f6e51186c44e6974a40b626a562b0eb092
+  Original commit hash: 72ab6e57838c17e1d8eb415e7980519be6bab893
+  
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetup.inf
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupStrings.uni
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupVfr.vfr
+  MeteorLakePlatSamplePkg/Setup/SaSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: f02c96a5abf0efd21e3fa9a1dea8b8354357f2f5 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ARL] Disable ATS replay mechanism only for Non ARL SOC SKUs
+  
+  [Feature Description]
+  Request to disable ATS replay mechanism only for
+  NON ARL steppings.
+  
+  Package/Module:
+  C1S/PeiGraphicsInitFruLib
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 16023284192
+  Change-Id: I27c76188cbeef6a89b8221e7a10ff121173edd6d
+  Original commit hash: 3d7ccaac7c2b7b62204bc157c8dee2edd80142a7
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/Graphics/LibraryPrivate/PeiGraphicsInitFruLib/PeiGraphicsInitFruLib.c
+  ClientOneSiliconPkg/Fru/MtlSoc/Graphics/LibraryPrivate/PeiGraphicsInitFruLib/PeiGraphicsInitFruLib.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: fbc286adb5cd1936e2b045e179576292ac6de9a9 
+*********************************************************************************
+
+[BoardPkg]
+
+  Update ARLH DDR5 dTBT retimer information
+  
+  [Issue Description]
+  Lost the information of ARLH DDR5 dTBT retimer.
+  
+  [Resolution]
+  Update DDR5 dTBT retimer configuration table and retimer number.
+  
+  Package/Module:
+  BoardVpdPcdsInit
+  
+  [Impacted Platform]
+  ALL.
+  
+  Hsd-es-id: 16023348916
+  Change-Id: Ie9c04d4394e6b066c399a5225b54694234a5e082
+  Original commit hash: 084eb1403c91de9e1cde2ba52349871224bc1462
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 1ff13fdd13a958e116c710604029e019dc0c8d85 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MTL] AMT_013 failed on compare FRU result
+  
+  [Issue Description]
+  The FRU table doesn't change after plugging PCIE card
+  on the PCH PCIE slot.
+  BIOS can only get the maximum bus number from PCI bridge SecondaryBus
+  on SOC, the SecondaryBus on discrete PCH is not parsed.
+  
+  [Resolution]
+  BIOS should get all PciRootBridgeIo instances to parse
+  all PCI Root Bridge devices.
+  
+  Package/Module:
+  ClientOneSiliconPkg/IpBlock/Me
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15015279725
+  Change-Id: Iaa57017f58c24eeaefaef3b6c29c5cd30a50879e
+  Original commit hash: b294f446db968fbde207e17f39d232794f42f2bc
+  
+  ClientOneSiliconPkg/IpBlock/Me/HwAsset/Dxe/Inventory.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 8c2c16f6d2d51677470f5257b972910d215f81c4 
+*********************************************************************************
+
+[BoardPkg]
+
+  [MTL] Correct the VpdPcdCpuUsb3OcMap for DDR5 BOM2
+  
+  [Issue Description]
+  The VpdPcdCpuUsb3OcMap for DDR5 BOM2 is incorrect.
+  This caused HDMI/DP hotplug not working.
+  
+  [Resolution]
+  Correct the VpdPcdCpuUsb3OcMap for DDR5 BOM2
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 15015403754
+  Change-Id: I988d0b7dbb941ae829fc547970fe1f9a6f515f76
+  Original commit hash: e0fb862ec88a486fdff608e176718f35cf52d373
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvpBomSku.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 069a69aab8bfab0d231cd9019bcf238f13aec821 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [MTL] WA - PCIe Cfg Space after PLDR
+  
+  [Feature Description]
+  Left 4 registers only (0x18C,0x198,0x19C,0x2B4).
+  
+  Package/Module: MeteorlakeBoardPkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 15015254318
+  Change-Id: Ib4975e105d725832086276a1777956e9447b477f
+  Original commit hash: b574c488d8d84cef2c16629451bfee5397db0386
+  
+  Features/Connectivity/CnvFeaturePkg/CnvDxe/CnvDxe.c
+  Features/Connectivity/CnvFeaturePkg/CnvDxe/CnvDxe.inf
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/DiscreteConnectivity.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Wifi.asl
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.h
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  WA 
+
+*********************************************************************************
+Commit: e2af6bb332ad71152068d839aa08686c8b227400 
+*********************************************************************************
+
+[BoardPkg], [ASL], [PlatformPkg]
+
+  [ARL-H][ARL-U] Remove Close Lid WoV LED Lighting Support
+  
+  [Issue Description]
+  Close Lid WoV LED Lighting feature is not required
+  
+  [Resolution]
+  Reverted the Close Lid WoV LED Lighting Support changes
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL, ARL
+  
+  Hsd-es-id: 15015148906
+  Change-Id: I1ce470b1e05f3ab8ff553e259e2a85d29ced92e9
+  Original commit hash: 939fef5d163fb9c69f1946733b2aed5e46b726cf
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/ClosedLidWoVLed.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Dsdt.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvpBomSku.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5CammRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4RvpBomSku.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5OnlyDpRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf1Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf2Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlM/SkuIdMtlMLp5xConf3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdArlHDdr5SODimmErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5MemSolderDowndTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvpBomSku.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT3Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPLp5xT4Rvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdArlHDdr5SODimmPpvRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPDdr5SODimmB2bHsioRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePsPpvBoardConfigPatchTable.h
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  MeteorLakePlatSamplePkg/Setup/PlatformSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/Setup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 81c35bcedc00c23b9b7f977356f2c8d956e50117 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  ARL-S AEP fab B BIOS support
+  
+  [Feature Description]
+  Update to mapping on USB lanes
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL S
+  
+  Hsd-es-id: 16023169535
+  Change-Id: I7a568483243d3b03bb3dac325a10b7d1018caafe
+  Original commit hash: 40fdada32f605af31b837227514f8fc5f83a4f15
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciArlSDdr5SODimm2DpcAep.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DAep.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 84f03a8b7c076e9c3d8da0924e5dbfd763c92e33 
+*********************************************************************************
+
+[SiliconPkg], [ASL], [PCH], [BoardPkg], [PlatformPkg]
+
+  SyncScript: Revert override commits.
+  
+  Tue Apr 9 21:53:03 2024 -0700
+  Original commit hash: 3c67d9d3f3417d0ee6855ee1d6710de8aed6524a
+  
+  ClientOneSiliconPkg/Fru/MtlPch/Dxe/PchHdaAcpi.c
+  ClientOneSiliconPkg/Fru/MtlPch/Include/AcpiTables/Dsdt/MtlPchHda.asl
+  ClientOneSiliconPkg/Fru/MtlPch/Include/AcpiTables/Dsdt/MtlPchNvs.asl
+  ClientOneSiliconPkg/Fru/MtlPch/IncludePrivate/MtlPchNvsAreaDef.h
+  ClientOneSiliconPkg/Fru/MtlSoc/Include/AcpiTables/Dsdt/MtlSocHda.asl
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocHobs.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocRootPorts.c
+  ClientOneSiliconPkg/Fru/MtlSoc/SocInit/Dxe/PchHdaAcpi.c
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver4/MemoryConfig.h
+  ClientOneSiliconPkg/Include/MemInfoHob.h
+  ClientOneSiliconPkg/Include/Protocol/MemInfo.h
+  ClientOneSiliconPkg/IpBlock/CpuInit/Dxe/CpuInitDxe.c
+  ClientOneSiliconPkg/IpBlock/Hda/AcpiTables/HdaSoundWireCtrl.asl
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcCommonTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcDebugHook.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcExtInputs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterfaceGlobalTypes.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcRmtData.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.S
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.asm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/Ia32/MrcOemPlatform.nasm
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/InputBlock/MrcInputBlock.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/InputBlock/MrcInputBlock.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/MrcOemPlatform.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/MrcOemPlatform.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/PeiMemPolicyLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/PeiMemPolicyLibFsp.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcBdat.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcStartMemoryConfiguration.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/CPGC/Cpgc20/Cpgc20TestCtl.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfigPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/Pma/MrcPmaApi.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcDdrIoOffsets.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Hal/MrcHalRegisterAccess.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommon.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommonPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCrosserPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdrCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcLpddr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/ReadTraining/MrcReadDqDqs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCrosser.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcTurnAround.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteDqDqs.h
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  ClientOneSiliconPkg/IpBlock/Tcss/LibraryPrivate/PeiItbtPcieRpInitLib/ItbtPcieRpInitLib.c
+  ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiDriver.c
+  ClientOneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiLibPrivate.c
+  ClientOneSiliconPkg/Pch/AcpiTables/Dsdt/PchNvs.asl
+  ClientOneSiliconPkg/Pch/IncludePrivate/PchConfigHob.h
+  ClientOneSiliconPkg/Pch/IncludePrivate/PchNvsAreaDef.h
+  Features/Connectivity/CnvFeaturePkg/CnvDxe/CnvDxe.c
+  Features/Connectivity/CnvFeaturePkg/CnvDxe/CnvDxe.inf
+  Features/FirmwareGuard/CapsuleFeaturePkg/Library/FmpDeviceLibuCode/FmpDeviceLibuCode.c
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/DiscreteConnectivity.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Wifi.asl
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.h
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+  MeteorLakeBoardPkg/Acpi/AdvancedAcpiDxe/EcInit.c
+  MeteorLakeBoardPkg/BiosId.env
+  MeteorLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  MeteorLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/Setup/CpuSetup.c
+  MeteorLakePlatSamplePkg/Setup/OverClockSetup.c
+  MeteorLakePlatSamplePkg/Setup/PchSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/PchSetup.uni
+  MeteorLakePlatSamplePkg/Setup/SaSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/SaSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+################################################################################
+
+Report Summary: Backstop found 22 suspect commits for review 
+
+Warnings Found:
+  Commit: 513bf87    --Commit Message Contains Key Word: revert
+  Commit: 513bf87    --Commit Message Contains Key Word: security
+  Commit: 32056ae    --Commit Message Contains Key Word: security
+  Commit: eac9bf9    --Commit Message Contains Key Word: revert
+  Commit: e995ac8    --Commit Message Contains Key Word: security
+  Commit: 390a05d    --Commit Message Contains Key Word: sku
+  Commit: 194366f    --Commit Message Contains Key Word: sku
+  Commit: adc666a    --Commit Message Contains Oem: ecs
+  Commit: fa4da75    --Commit Message Contains Key Word: sku
+  Commit: 926fe19    --Commit Message Contains Key Word: sku
+  Commit: c548362    --Commit Message Contains Key Word: step
+  Commit: c92acbb    --Commit Message Contains Key Word: step
+  Commit: 62d9524    --Commit Message Contains Key Word: step
+  Commit: 50888b1    --Commit Message Contains Key Word: revert
+  Commit: 7c11345    --Commit Message Contains Key Word: security
+  Commit: f02c96a    --Commit Message Contains Key Word: sku
+  Commit: f02c96a    --Commit Message Contains Key Word: step
+  Commit: f02c96a    --Commit Message Contains Key Word: stepping
+  Commit: fbc286a    --Commit Message Contains Key Word: sku
+  Commit: 1ff13fd    --Commit Message Contains Key Word: HW
+  Commit: 8c2c16f    --Commit Message Contains Key Word: sku
+  Commit: 069a69a    --Commit Message Contains Key Word:  WA 
+  Commit: e2af6bb    --Commit Message Contains Key Word: sku
+  Commit: 81c35bc    --Commit Message Contains Key Word: sku
+  Commit: 84f03a8    --Commit Message Contains Key Word: revert
