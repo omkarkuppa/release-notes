@@ -2230,8 +2230,6 @@ Date: Tue Apr 30 15:43:11 2024 +0530
 -------------------------------------------------------------------------------- 
 Revert "Enable MIPI VTIO Support for Secure Biometrics feature by default"
 
-This reverts commit 1073a134992a0d144ebfbcaa16f105d8f6466125.
-
 Tue Mar 12 11:35:58 2024 +0530
 Original commit date: Tue Mar 12 11:35:58 2024 +0530
 Original commit hash: dd5a5912397f9669b94cfedf2d55346f5caea273
@@ -2252,7 +2250,7 @@ Fix RPMC BIOS when using patching table
 
 [Issue Description]
 When using patch tables with UEFI variable protection,
-a variable can get out of sync if a SetVarible() is never
+a variable can get out of sync if a SetVariable() is never
 called on the variable after applying the patch table.
 This will cause a integrity check error on reboot because
 the MetaDataHmac value will have been calculated based on
@@ -2285,12 +2283,11 @@ Commit: eac9bf934b43e9acf6d9a109398bd347b4ac8290
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:42:51 2024 +0530 
 -------------------------------------------------------------------------------- 
-Revert "PME_EN has to be set to allow remote wake"
+Revert "[SOC I/O] PME_EN has to be set to allow remote wake"
 
 Issue: System hangs while exiting from S4 state using ICT Tool
 Based on feedback from validation, the change needs to be
 reverted as it causes hang
-This reverts commit 4f04aa60fc9757e5fd117c1251574d6f212b43f2.
 
 Hsd-es-id: 16023592995
 Original commit date: Mon Mar 18 14:07:30 2024 +0100
@@ -2306,10 +2303,10 @@ Commit: b3bb836c9f3bd3771d9a58b64aaecb29588946d2
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:42:43 2024 +0530 
 -------------------------------------------------------------------------------- 
-Fix that access forbidden address during iotrap
+[SOC I/O] Fix that access forbidden address during IOTrap
 
 [Issue Description]
-Invoke gBS within ioptrap and it's called during runtime
+Invoke gBS within IOTrap and it's called during runtime
 
 [Resolution]
 Replace gBS by gSmst
@@ -2337,7 +2334,7 @@ Commit: 5eea6926659dc65d3108216649df3bf272b2d79c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:42:33 2024 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-H] Virtual Keyboard touch is not displaying in BIOS screen
+[SOC I/O] Virtual Keyboard touch is not displaying in BIOS screen
 
 [Issue Description]
 Touch is not working on Bom 6 panel.
@@ -2373,13 +2370,13 @@ Date: Tue Apr 30 15:42:25 2024 +0530
 [Issue Description]
 Inside Bios Guard SMM handler BIOSGUARD_AP_SAFE_RETRY_LIMIT
 macro value has been retained from previous platforms.
-This could have resulted in unxpected failures during
+This could have resulted in unexpected failures during
 sending AP threads to sleep before invocating Bios Guard
 module execution on BSP under typical conditions.
 
 [Resolution]
 Macro value has been extended to avoid the AP timeouts on
-reference MTL/ARL boards. The value has been choosen in a way
+reference MTL/ARL boards. The value has been chosen in a way
 to provide support for multiple customer configurations, still
 ensuring there is no responsiveness impact to the platform.
 
@@ -2691,7 +2688,7 @@ Commit: 9b5d75a8ef7b5d4f12fff5047345e1d8d7ceae9e
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:27:17 2024 +0530 
 -------------------------------------------------------------------------------- 
-PME_EN has to be set to allow remote wake
+[SOC I/O] PME_EN has to be set to allow remote wake
 
 [Issue Description]
 PME_EN being set in S3-S5 callbacks does not address the scenario
@@ -2780,8 +2777,8 @@ TBT docks are not enumerating in Pre-OS on PCH BR Ports.
 [Resolution]
 During CM execution BIOS will allocate MMIO to USB4 Host Router
 temporarily. There're two Root Bridges as Soc and PCH die on ARL-Hx.
-Two Root Bridges will be assigned respective resoueces including
-Bus, I/O and Memory. PCH BR need to be allocated Memory resoueces
+Two Root Bridges will be assigned respective resources including
+Bus, I/O and Memory. PCH BR need to be allocated Memory resources
 in PCH Root Bridge.
 
 Package/Module: MeteorLakePlatSamplePkg
@@ -2911,10 +2908,10 @@ Commit: 9081d839f666c4c1ad986e0805f601ca028428ce
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:26:47 2024 +0530 
 -------------------------------------------------------------------------------- 
-EarlyDevices PCI device & LPSS UART Ppi pointer refresh
+[SOC I/O][PCH] EarlyDevices PCI device & LPSS UART Ppi pointer refresh
 
 [Issue Description]
-In EarlyDevices, initialization of PCI device for Smbus and LPSS UART
+In EarlyDevices, initialization of PCI device for SMBus and LPSS UART
 Ppi doesn't refresh pointers PostMem in PEI. This might cause undefined
 behavior when pointers are accessed.
 
@@ -3597,7 +3594,7 @@ Date: Tue Apr 30 15:25:15 2024 +0530
 Usage of the MOVDIRI instruction was causing a race condition in
 early command training. Even with M/SFENCE instructions, the race
 condition persisted. The DQ7 driving for LP5 during ECT was identified
-as the problem area where the race condition occured. As a temporary
+as the problem area where the race condition occurred. As a temporary
 fix, the DQ7 driving will go back to using the EDK2 MMIO write
 function. Also adds the appropriate NASM prefix since MOVDIRI adds It
 as a dependency.
@@ -4586,7 +4583,7 @@ for the system temperature.
 
 The 2D sweep consists of:
 1. Outer loop that sweeps the RefPi param (RefPiOffset or
-RefPi4XoverOffset) accross the range of register values as an offset
+RefPi4XoverOffset) across the range of register values as an offset
 to the programmed setting. The sweep is done in steps of 2.
 This sweep modifies the offset values in the following partitions:
 - CCC
@@ -4612,7 +4609,7 @@ Closest Edge is +30:
 CMOS option is +2 then RefPi4XoverOffset is adjusted by +28.
 
 Additional Changes:
-- Fixed bug in VTT Parition GetSet Multicast. These GetSet enumerators
+- Fixed bug in VTT Partition GetSet Multicast. These GetSet enumerators
 were implement using the "Strobe" GetSet argument which is always
 limited to the maximum number of bytes on a channel. On LP5 this was
 always limited to 2 causing only 2 of the 4 VTT partition instances
@@ -5613,15 +5610,15 @@ Commit: 45d1da140d170cca9b10ca8fcf4940c8def10c0b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:21:04 2024 +0530 
 -------------------------------------------------------------------------------- 
-Trigger Tco timeout smi from PCH.
+[PCH] Trigger TCO timeout SMI from PCH.
 
 [Issue Description]
 OfflineCrashdump cannot trigger TCO watchdog,
-because TCO timeout smi is registered in SoC
+because TCO timeout SMI is registered in SoC
 instead of PCH.
 
 [Resolution]
-Register TCO timeout smi to PCH.
+Register TCO timeout SMI to PCH.
 
 Package/Module:
 C1S/Smm
@@ -5684,7 +5681,7 @@ Commit: b8e79240178e927685aef5b5fb2e17e2b25c4b8a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:20:52 2024 +0530 
 -------------------------------------------------------------------------------- 
-[MTL] Policy Default Check mismatch observed with THC Mode
+[SOC I/O] Policy Default Check mismatch observed with THC Mode
 
 [Issue Description]
 Policy Default Check mismatch observed with THC Mode due to the change
@@ -5879,7 +5876,7 @@ Commit: 91a07385d970824fac94e9087e6651ff6ba99f97
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:20:27 2024 +0530 
 -------------------------------------------------------------------------------- 
-[CNVi][ARL] PLDR default timeout increase
+[SOC I/O][CNVi][ARL] PLDR default timeout increase
 
 [Feature Description]
 Increase the PLDR timeout for ARL
@@ -5903,7 +5900,7 @@ Commit: d5f6b4b3008dd1dca38352ba0ef9e3ba5fef3174
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:20:24 2024 +0530 
 -------------------------------------------------------------------------------- 
-[MTL] set VarConOut and VarConIn as NULL
+[SOC I/O] set VarConOut and VarConIn as NULL
 
 [Issue Description]
 LPSS UART serial screen goes blank
@@ -6044,7 +6041,7 @@ Commit: 064c9994e349ab121e77346995a1550d296ed54c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:20:04 2024 +0530 
 -------------------------------------------------------------------------------- 
-Changes required for EDK2Rebase to stabletag-202305
+Changes required for EDK2Rebase to stable tag-202305
 
 [Issue Description]
 Build error while rebasing EDK2
@@ -6089,7 +6086,7 @@ Commit: db7f4b70de74eaf8fbd6544b23c7768e7d5bcb5d
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:19:56 2024 +0530 
 -------------------------------------------------------------------------------- 
-[ARL-S] Hide/Remove the P2P option for PCH ports
+[PCH] Hide/Remove the P2P option for PCH ports
 
 [Feature Description]
 Hide PeerEnableMemoryWrite option for PCH ports
@@ -6161,11 +6158,10 @@ Date: Tue Apr 30 15:19:45 2024 +0530
 
 [Issue Description]
 Exposing the customer or vendor name in the source code. The guid
-gMsftGlobalVariableGuid has cutomer name in it. CCE dont allow to
-expose customer or vendor name in the source code.
+gMsftGlobalVariableGuid has customer name in it.
 
 [Resolution]
-Change cutomer name in gMsftGlobalVariableGuid to OsVendor.
+Change customer name in gMsftGlobalVariableGuid to OsVendor.
 
 Package/Module:
 MeteorLakePlatSamplePkg
@@ -6484,7 +6480,7 @@ GBE version byte ws getting changed due to wrong size.
 [Resolution]
 The MAC address size is 3 words i.e 6bytes, but the current
 implementation considered the address size to be 6words.
-Because of which apart from MAC address, unecessary bytes were
+Because of which apart from MAC address, unnecessary bytes were
 also getting changed. Now the MAC address size if made to 3 words
 which updates only first 6 bytes in the GBE region.
 Making sure to be on bank1 before updating the mac to GBE region.
@@ -6546,7 +6542,7 @@ Firmware test suite (FWTS).
 [Resolution]
 RPN0 is declared in SSDT for dTBT so when SSDT is not loaded,
 RPN0 int object will not be found.
-Add refence check for RPN0.
+Add reference check for RPN0.
 
 Package/Module:
 MeteorLakeBoardPkg
@@ -6585,14 +6581,14 @@ Commit: d138f553992ed949c10376c7c5cd4eee9a90f5ad
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:18:12 2024 +0530 
 -------------------------------------------------------------------------------- 
-[ARLS] 8k not coming up on the retimerless port after S5 cyling
+[ARLS] 8k not coming up on the retimer-less port after S5 cycling
 
 [Issue Description]
-Type-C dispaly is not enumerating on retimerless TCP port.
+Type-C display is not enumerating on retimer-less TCP port.
 
 [Resolution]
 There's two function config in same config register. Config register
-will be locked after one of functions is configed.
+will be locked after one of functions is configured.
 Remove locking register process in each config procedure because
 this config register will be locked at end of pei notify.
 
@@ -6664,15 +6660,15 @@ Commit: aa99242b7b8b0cf4f3e0362c9145b2e121644c3b
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:18:06 2024 +0530 
 -------------------------------------------------------------------------------- 
-Update Enable 8254 clock Gate and Tcc Activature Offset knob help string
+[SOC I/O] Update Enable 8254 clock Gate and Tcc Activation Offset knob help string
 
 [Issue Description]
 Observing spelling mistake in help string of BIOS Knob
-"Enable 8254 clock Gate" and "Tcc Activature Offset"
+"Enable 8254 clock Gate" and "Tcc Activation Offset"
 
 [Resolution]
 updated the string of "Enable 8254 clock Gate" and
-"Tcc Activature Offset" bios Knob
+"Tcc Activation Offset" bios Knob
 
 Package/Module: MeteorLakePlatSamplePkg
 
@@ -6804,7 +6800,7 @@ MMIOs will be allocated below 4GB which will be out of resource.
 [Resolution]
 Add the EnableAbove4GBMmio option back to HFR file, suppress it so that
 user will not have the option to disable it.
-also remove the disable option for saferside.
+also remove the disable option for safer-side.
 
 Package/Module: Hostbridge
 
@@ -6933,7 +6929,7 @@ Commit: 1268a9b9f0cd4163aafc9e893a571ed5771cd72c
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:17:42 2024 +0530 
 -------------------------------------------------------------------------------- 
-PCIe PTM Pipe Stage Delay update as per BWG.
+[SOC I/O] PCIe PTM Pipe Stage Delay update as per BWG.
 
 [Issue Description]
 PCIe PTM Pipe Stage Delay programming implements
@@ -7374,7 +7370,7 @@ Commit: 069a69aab8bfab0d231cd9019bcf238f13aec821
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:17:00 2024 +0530 
 -------------------------------------------------------------------------------- 
-[MTL] WA - PCIe Cfg Space after PLDR
+[SOC I/O][PCH] Reserve PCIe Cfg Space after PLDR
 
 [Feature Description]
 Left 4 registers only (0x18C,0x198,0x19C,0x2B4).
@@ -7468,7 +7464,7 @@ Commit: b0e209bc6ceb0bcf8790d4adc27fe0b3be734a8a
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:16:51 2024 +0530 
 -------------------------------------------------------------------------------- 
-Drop THC Base IPTS driver for next platform
+[SOC I/O] Drop THC Base IPTS driver for next platform
 
 [Feature Description]
 Based on platform check will enable THC Mode, For certain platforms
@@ -7531,7 +7527,7 @@ Commit: 5da808c14295c2e7f65ae9b06e5042d72498ea18
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:16:45 2024 +0530 
 -------------------------------------------------------------------------------- 
-Incorrect Soundwire controller configuration when Multilane enabled
+[PCH][SOC I/O] Incorrect Soundwire controller configuration when Multilane enabled
 
 [Issue Description]
 Unable to enumerate soundwire codec at SNDW#0, when enabled
@@ -7627,14 +7623,14 @@ Commit: 889bbb0823a79b01692884a5e2236bd7cc3a1e89
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:16:36 2024 +0530 
 -------------------------------------------------------------------------------- 
-Set Sdi1 line to disabled by default
+[PCH] Set Sdi1 line to disabled by default
 
 [Issue Description]
 By default Disabling the SDI1 settings from the BIOS
 as its not being used for any of the Codec.
 Having it enabled without any codec connected can potentially lead
 to other problems related to incorrect codec detection or
-unecessary trafic generation by the driver.
+unnecessary traffic generation by the driver.
 
 [Resolution]
 Change default setting of SDI1 line in BIOS setup.
@@ -7833,7 +7829,7 @@ Commit: 3ed295ff3107dede22d9d3f9044877c3827ad9ff
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:16:20 2024 +0530 
 -------------------------------------------------------------------------------- 
-SPI DMA BIOS Res Top-Swap Support
+[SOC I/O] SPI DMA BIOS Res Top-Swap Support
 
 [Issue Description]
 SUT hang at PC-D055 after updating NIST Resiliency (BIOS / NIST)
@@ -8170,7 +8166,7 @@ Commit: 631d24ff06dc8e430a5bc7c8686b40d3481c0367
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:15:48 2024 +0530 
 -------------------------------------------------------------------------------- 
-[ARL-S]:SATA SSD Residency is not achieving in D3cold in RTD3 cold state
+[SOC I/O][PCH] SATA SSD Residency is not achieving in D3cold in RTD3 cold state
 
 [Issue Description]
 SATA SSD Residency is not achieving in D3 cold in RTD3 cold state
@@ -8215,7 +8211,7 @@ Commit: 8cb94b93521d2a36585d10d443d8b13d87c17fd7
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:15:44 2024 +0530 
 -------------------------------------------------------------------------------- 
-[ARLH BEP] BIOS support to enable CX11880 Audio codec
+[SOC I/O] BIOS support to enable CX11880 Audio codec
 
 [Feature Description]
 Add support for CX11880 verb table for Audio
@@ -8374,7 +8370,7 @@ Commit: e6a391ab09efe1d93b20b8b718012b382e2e4b90
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Apr 30 15:15:24 2024 +0530 
 -------------------------------------------------------------------------------- 
-[MTL-H] Virtual Keyboard touch is not displaying in BIOS screen
+[SOC I/O] Virtual Keyboard touch is not displaying in BIOS screen
 
 [Issue Description]
 Touch is not working on EDP panel.
