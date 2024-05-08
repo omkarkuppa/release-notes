@@ -1,0 +1,127 @@
+*********************************************************************************
+Commit: ae676c74656fd6de7be51ba226056015424f676b 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ARL-S][ARL-Hx] Observed Incorrect DIMM slot info in Windows
+  
+  [Issue Description]
+  SMBIOS table 17 shows extra DIMM slot information with no DIMMs
+  connected while the actual no. of slots on the board available
+  are only 2 on 1DPC RVP.
+  On 2DPC Board, two extra slot details are seen in SMBIOS
+  table 17.
+  On Hx 1DPC, two extra slot details are seen are seen in SMBIOS
+  table 17
+  
+  [Resolution]
+  On ARL-S RVP, one DIMM is connected cross Controller-0/1, so the
+  second DIMM should be still set under Controller-0
+  On ARL-Hx 1DPC RVP, DIMM is connected to DIMM-1, so 0x2 should be used
+  Need to update VpdPcdMrcNoOfDimmSlot accordingly.
+  
+  Package/Module: MeteorLakeBoardPkg/MeteorLakeBoards
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 15015971269
+  Change-Id: I934143d8e469a3f7bac2a84c08583e3054357027
+  Original commit hash: c5efdf4f4cadcd269290d1fe11e0185ede1e695b
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 232caee8a744139087332b34f441d33c59e9233c 
+*********************************************************************************
+
+[ASL]
+
+  WIN10 BR EC CMD
+  
+  [Feature Description]
+  BIOS sends UCSI EC cmd to disable USB4/TBT capabilities
+  and reset PD for BR CIO ports by _OSC when current OS
+  doesn't support USB4 capability.
+  BIOS should check CM CMOS setting to downgrade PD to
+  MFDP mode in next G3.
+  If user upgrades OS to Win10 w/o a G3,
+  BIOS should send UCSI cmd to enable USB4/TBT capability
+  by _OSC once learn current OS is USB4 capable.
+  
+  Package/Module:
+  Features/Ec/EcFeaturePkg
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 15015918803
+  Change-Id: I8423ac1bb72fe5d4f387c7aa27a445e1e164b54c
+  Original commit hash: a34338f53b8d7d16033795c23f836f15f3db9a0c
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcExternalMethod.asl
+  Features/Ec/EcFeaturePkg/Include/Library/EcMiscLib.h
+  Features/Ec/EcFeaturePkg/IncludePrivate/EcCommands.h
+  Features/Ec/EcFeaturePkg/Library/BaseEcMiscLib/BaseEcMiscLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: ca9471b5abdd918fa6d08060ea5ab2a20369d46f 
+*********************************************************************************
+
+[SiliconPkg]
+
+  FCTL2.HPICTL is not programmed as per BWG.
+  
+  [Issue Description]
+  Curent hotplug implementation is facing SD Express card
+  de-enumeration issue.
+  
+  [Resolution]
+  FCTL2.HPICTL bit is to be programmed as per latest BWG.
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ALL.
+  
+  Hsd-es-id: 18038180041
+  Change-Id: I1c276bc8dbb432c5eb34a8ae3f9af2152bb73e0b
+  Original commit hash: 6e97bdd8a68ae190ed65a32d7a0084843c67f28e
+  
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+################################################################################
+
+Report Summary: Backstop found 3 suspect commits for review 
+
+Warnings Found:
+  Commit: ae676c7    --Commit Message Contains Key Word: sku
+  Commit: 232caee    --Commit Message Contains Oem: ecs
+  Commit: ca9471b    --Commit Message Contains Oem: HP
