@@ -1,0 +1,157 @@
+*********************************************************************************
+Commit: eccda0eaff416a21f3ff87a28a6ea47a1098d8c6 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [LNL] Bugs found on Intel TSE implementation
+  
+  [Issue Description]
+  1.DxeSaNvsInitLib.c function InstallSsdtAcpiTable seems to
+  have an unexpected behavior if the SSDT is never found in the
+  FV causing it to return STATUS_SUCCESS.
+  2.DxeSaNvsInitLib.c function InstallSsdtAcpiTable defeats
+  the ASSERTS inOneSiliconPkg\Product\LunarLake\SiInit\Dxe\SiInitDxe.c.
+  
+  [Resolution]
+  Return error status added.
+  Added PCD check before installing the table.
+  
+  Package/Module:
+  OneSiliconPkg/Fru
+  OneSiliconPkg/Product
+  LunarLakeBoardPkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 22019952968
+  Change-Id: I15cb150aaad2c931fc7caa5d740e71c676cb3378
+  Original commit hash: 18490917e219bdf43513e837266b4c2893f18dc6
+  
+  OneSiliconPkg/Fru/LnlCDie/LibraryPrivate/DxeSaNvsInitLib/DxeSaNvsInitLib.c
+  OneSiliconPkg/Product/LunarLake/SiInit/Dxe/SiInitDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  bug
+
+*********************************************************************************
+Commit: 9da72ef874081418d593463470bb96aabf533376 
+*********************************************************************************
+
+
+  Make the Beep feature more usable outside of the feature package
+  
+  [Issue Description]
+  The Beep feature cannot be use outside of the feature package without
+  compilation error fixes.
+  
+  [Resolution]
+  Fix the related problems when using the package outside.
+  Update the ReadMe file with an additional information about
+  Beep feature enablement.
+  
+  Package/Module:
+  Features/Audio/BeepPkg
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 18038072199
+  Change-Id: I92a2cc53e8ea7e69bcfcda1039008e0d64a7e324
+  Original commit hash: 7cdfecb6c563d1a39ecdc517eeec8d9cf047f18e
+  
+  Features/Audio/BeepPkg/Include/Beep.h
+  Features/Audio/BeepPkg/IncludePrivate/Register/AceRegs.h
+  Features/Audio/BeepPkg/LibraryPrivate/PeiDxeSndwInitLib/PeiDxeSndwInitLib.c
+  Features/Audio/BeepPkg/Readme.md
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: Acer
+
+*********************************************************************************
+Commit: 3c606548ccffd049f9cccb859ae9fd3f220f3d19 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [LNL |LP5] Port from MTL: Add knob to reduce basic memory test size
+  
+  [Feature Description]
+  This is porting from RPL to add a UPD to reduce the size of
+  BasicMemoryTests to speed up the boot. The upd name is
+  LowerBasicMemTestSize. By default, its value is 0.
+  
+  Package/Module:OneSiliconPkg/MemoryInit
+  
+  [Impacted Platform] ALL
+  
+  Hsd-es-id: 15015896516
+  Change-Id: I4f0860036223008de840068631679de2594432b6
+  Original commit hash: aea7a927aaf6a1032fd9d99a4047e9d8cc2bf2cc
+  
+  LunarLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  LunarLakeFspPkg/Upd/FspmUpd.dsc
+  LunarLakePlatSamplePkg/Include/SetupVariable.h
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  LunarLakePlatSamplePkg/Setup/SaSetup.hfr
+  LunarLakePlatSamplePkg/Setup/SaSetup.uni
+  OneSiliconPkg/Include/ConfigBlock/Memory/Ver5/MemoryConfig.h
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Blue/PeiMemoryInitLib/MemoryTest.c
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Blue/PeiMemoryInitLib/Source/Api/BlueMrcGeneral.c
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/Include/MrcInterface.h
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/PeiMemPolicyLib/PeiMemPolicyLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: RPL
+
+*********************************************************************************
+Commit: a43f4433d11ad4fbd4e6f09f2726ad45817026d2 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [LNL] Calculate Phbuff DCC only on populated channels in the Partition
+  
+  [Feature Description]
+  SUT hang at DF02 after disabling either of memory Controller (0 or 1)
+  with all channel in BIOS page. PhBuf DCC StepSize calculation fails due
+  to taking the empty partitions into account.
+  1. Adding MrcDataPartitionExist and same for CCC to the StepSize calc
+  so the check of DutyCycleSum in +16 vs -16 is done only on existing ch.
+  2. StepSize can be 2/3 smaller to get faster convergence.
+  
+  Package/Module: OneSiliconPkg/MemoryInit
+  
+  [Impacted Platform] all
+  
+  Hsd-es-id: 13011911994
+  Change-Id: Ib0bc027f4f98d560c2d226f7a9cde4f58f41e261
+  Original commit hash: 8e394b17554d91dad54358df5679be60ba828696
+  
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoDefines.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+################################################################################
+
+Report Summary: Backstop found 4 suspect commits for review 
+
+Warnings Found:
+  Commit: eccda0e    --Commit Message Contains Key Word:  bug
+  Commit: 9da72ef    --Commit Message Contains Oem: Acer
+  Commit: 3c60654    --Commit Message Contains Key Word: RPL
+  Commit: a43f443    --Commit Message Contains Key Word: step
