@@ -1,0 +1,2976 @@
+*********************************************************************************
+Commit: 209bc498c45a431ace89ae108d05612417ad0658 
+*********************************************************************************
+
+
+  [GNRWS][S3]Flow not entering SmmRestoreCpu() after enabling Paging
+  
+  [Issue Description]
+  During S3 resume, On AsmEnablePaging64, execution hangs during Context
+  switching.
+  
+  [Resolution]
+  As an experiment we modify the page generation in EDK2 module by using
+  Gen4GPageTable (1, FALSE) instead of GenSmmPageTable (Paging4Level, 32).
+  we can able to surpass the AsmEnablePaging64 successfuly.
+  
+  Package/Module:
+  GnrwsRpPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 16024104233
+  
+  Change-Id: I88d397edbbd23d008900652171503e1c182f477b
+  Original commit hash: 9675db3b1b692d6695d6a463877a79133aaa49a6
+  
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Cet.inc
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/CpuS3.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/CpuService.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/CpuService.h
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/Cet.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/MpFuncs.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/PageTbl.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/Semaphore.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/SmiEntry.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/SmiException.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/SmmFuncsArch.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/SmmInit.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/SmmProfileArch.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/Ia32/SmmProfileArch.h
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/MpService.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/PiSmmCpuDxeSmm.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/PiSmmCpuDxeSmm.h
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/PiSmmCpuDxeSmm.inf
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/PiSmmCpuDxeSmm.uni
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/PiSmmCpuDxeSmmExtra.uni
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SmmCpuMemoryManagement.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SmmMp.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SmmMp.h
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SmmMpPerf.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SmmMpPerf.h
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SmmProfile.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SmmProfile.h
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SmmProfileInternal.h
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SmramSaveState.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/SyncTimer.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/Cet.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/MpFuncs.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/PageTbl.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/Semaphore.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/SmiEntry.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/SmiException.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/SmmFuncsArch.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/SmmInit.nasm
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/SmmProfileArch.c
+  GnrwsRpPkg/EDK2OverRide/PiSmmCpuDxeSmm/X64/SmmProfileArch.h
+  GnrwsRpPkg/Include/Dsc/PlatformPkgComponents.dsc
+  GnrwsRpPkg/PlatformPkg.fdf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: d2ded5a0a312cff5cd184827d38490c758b1f009 
+*********************************************************************************
+
+[ASL]
+
+  [GNRWS] YB observed in device manager (INTC1084)
+  
+  [Issue Description]
+  YB observed in device manager
+  (code 28, Hardware ID INTC1084)
+  
+  [Resolution]
+  - Put SGPI under _SB scope.
+  
+  Package/Module:
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18038628009
+  
+  Change-Id: I999421bda39e367d4ce567473239b087601b5988
+  Original commit hash: 40920cb4d3301bde760d7d7655f2c95ef0e446c3
+  
+  GnrwsRpPkg/Tool/BoardInfo/GNRWS/ConnectivityGnrWs.asl
+  GnrwsRpPkg/Tool/BoardInfo/GNRWS/Foxville.asl
+  OneSiliconPkg/Fru/MtlPch/Include/AcpiTables/Dsdt/MtlPch.asl
+  OneSiliconPkg/Fru/MtlPch/Include/AcpiTables/Dsdt/MtlPchGpio.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: b2e242a89350b4af730f0bae40d10908f7b545e9 
+*********************************************************************************
+
+
+  [FSP][Internal Dev] remove ras standalone lib and drivers
+  
+  [Issue Description] or [Feature Description]
+  ras lib removal
+  
+  [Resolution]
+  remove ras standalone lib and drivers
+  
+  Package/Module:ServerRasPkg
+  
+  [Impacted Platform]
+  GNR.
+  
+  Hsd-es-id: 15016126057
+  
+  Change-Id: I2448820a65ed6fbc8606442acce9a38f33826a0f
+  Original commit hash: 4de209b1d56b0e8bfee96df98414020fc9736067
+  
+  ServerRasPkg/Driver/Smm/Gen3/RasSmiHandler/RasSmiHandlerStandalone.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: f0b6ef283e3ff2869195ec9eb946822bcdc88f35 
+*********************************************************************************
+
+[ME]
+
+  [GNR] Implement Advance MemTest type 18 pattern improvements
+  
+  [Feature Description]
+  MemTest Type 18 has implemented a row fast read - modify - write pattern and is requesting this to be added to GNR.
+  
+  [Resolution]
+  Update Memtest type 18 code to include row fast read improvements
+  
+  Package/Module:
+  CpRcPkg/Library/AdvMemTestLib
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14022394926
+  
+  Change-Id: I541456700a030915eafb47f75d393209d0e6193d
+  Original commit hash: 0484c014e59e9c860b0a94210ac0ca0345e1d8c0
+  
+  CpRcPkg/Include/Library/AdvMemTestLib.h
+  CpRcPkg/Library/AdvMemTestLib/MemTestAlg.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Common/VendorContent/MuRMW_AMT.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: LG
+
+*********************************************************************************
+Commit: 67bbb1aa9cbc096da0cff01f93840487db348b88 
+*********************************************************************************
+
+[ME]
+
+  Appy I2C workaround for all MiscVendor 4RX8 MCR dimm
+  
+  [Feature Description]
+  Switch to I2C mode for all MiscVendor 4RX8 to prevent shutdown
+  during OS runtime, while running intensive loads
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  bios.birchstream-sp_graniterapids-sp
+  bios.birchstream_clearwaterforest-ap
+  bios.birchstream_clearwaterforest-sp
+  bios.birchstream_graniterapids-ap
+  
+  Hsd-es-id: 14022407829
+  
+  Change-Id: Ia1fb07186908f20a0e8ac63741c6bb7c5726eb6d
+  Original commit hash: 2c4b6cf418455508bee1b876cb187b0d33ceab42
+  
+  ServerSiliconPkg/Mem/Library/MemMcIpLib/Common/MemConfigMc.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 6bcd64ca285e4ebbea1ce6f951d8ca6b3083c1b1 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [GNRWS] Lgmr and Lgir values for Pch and Socket are different.
+  
+  [Issue Description]
+  Lgmr and Lgir values for Pch and Socket are different.
+  
+  [Resolution]
+  - Program PCH LGMR and LDIRx same as for SOC (IBL).
+  - Reenable for ESPI init flow for simulation.
+  
+  Package/Module:
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18038581812
+  
+  Change-Id: I999421bda39e367d4ce567473238b087601b5988
+  Original commit hash: 53ab632391061db96f54432a45016373abba43e2
+  
+  OneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchEspi.c
+  OneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: LG
+
+*********************************************************************************
+Commit: c0ce4d3490473561245e066ce7cd33af6a70f3f1 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Reenable ASPM for PCH and CPU in GNRWS
+  
+  [Feature Description]
+  CPU and PCH ASPM was commented for GNRWS PO
+  Reenabling them by reverting the changes
+  
+  Package/Module:ServerSiliconPkg/Iio
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18038568697
+  
+  Change-Id: I6ff17e83ea946643e9146a34962dfdf3673ef907
+  Original commit hash: d45720915863b50fa29fe505b016d5b2bd18ea70
+  
+  ServerSiliconPkg/Iio/Library/IioDmiLib/IioDmiLibGnrWs/IioDmiInitGnrWs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 4d4156e843b9341bebb7a1b3733f6e50a488b65a 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Need to change pipectl2 controller register
+  
+  [Feature Description]
+  Need to change pipectl2.l1p0_psmap register to reduce the latency from the P2 state
+  This is a silicon workaround specific to GNRD
+  
+  Package/Module:ServerSiliconPkg/Iio
+  
+  [Impacted Platform]
+  KVL
+  
+  Hsd-es-id: 16024238964
+  
+  Change-Id: Ibae9a687fee3c27778d0d59e9f4bcd4d4213f35b
+  Original commit hash: 3d367c11c9289e60072e5626afe41da056b9ac60
+  
+  ServerSiliconPkg/Iio/Library/IioFblpSocLib/IioFblpSoc.c
+  ServerSiliconPkg/Iio/LibraryPrivate/IioFblpIpLib/IioFblpIp.c
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibGnrd.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 0693edf102fadaa088d4104b7e08b47817edbdd6 
+*********************************************************************************
+
+[ME]
+
+  Clear ADC done status bit
+  
+  [Feature Description]
+  ADC done status from BGRUGB HVMADC.
+  Set by HW. Must be cleared by BIOS by writing 0
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Gen3
+  
+  Hsd-es-id: 14022420481
+  
+  Change-Id: Ibb9f81ad241c7b65bee2087155f8ca96a5327e13
+  Original commit hash: 7f417cf177821fa03c94b9f21350b6df04be1cd2
+  
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemDdrioInitLib/22ww30e/DdrioInit.c
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemDdrioInitLib/RegflowSupport.h
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemIOControl.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 835f0e016588e46f11732cc4112f55cb294307b4 
+*********************************************************************************
+
+[ME]
+
+  GNR-WS add workaround for IMR1
+  
+  [Feature Description]
+  Add workaround for IMR1 that programs it to a separate region on GNR-WS.
+  
+  Package/Module:
+  ServerSiliconPkg/MemoryInstallLib
+  
+  [Impacted Platform]
+  GNR-WS
+  
+  Hsd-es-id: 22020069977
+  
+  Change-Id: I5babd8755b1459453cbe88b299127b9b60592ea7
+  Original commit hash: d0b240cdc86c74e2587a299362a2ca884fef9b72
+  
+  ServerSiliconPkg/Mem/Library/MemoryInstallLib/Gen3/MemoryInstallGen.c
+  ServerSiliconPkg/Mem/Library/MemoryInstallLib/MemoryInstallLibGen3.inf
+  ServerSiliconPkg/Mem/Library/MemoryInstallLib/MemoryInstallLibGen3Fsp.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 3170bff41eae25add93c5431ac1215d1a70fe209 
+*********************************************************************************
+
+
+  [GNR][MCR] Fix Montage WA for MRCD B0/B1 DCS1 Row E for warm reset
+  
+  Update PowerDownWorkaroundRevert to only clear BIT0 of RCD PG[80]RW63 rather than writing 0 to the entire register.
+  This WA is only executed in the slow boot path.
+  
+  Hsd-es-id: 14022259094
+  
+  Change-Id: I9724fd7cbc598d6022fe585dc5e8e758615521af
+  Original commit hash: b4a8533148ed93a80824c3a86249c5a36b4045c3
+  
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 5cb70f216a62a21697689a3dc6ea741bb967d8c6 
+*********************************************************************************
+
+[CPU]
+
+  Get Maximum enabled LPs from CPUID.0x1F:EBX[15:0]
+  
+  [Feature Description]
+  SRF-SP and AP QDFs are incorrectly fused such that MAX_LP_EN is always 1
+  as opposed to 0 for 4 cores/module, and 2 for 2 cores/module,
+  BIOS was using this value as 4 cores/module always.
+  
+  Change request is for BIOS to use CPUID leaf 0x1f level 1
+  for cores/module fusing information.
+  
+  Package/Module: ServerSiliconPkg/CpuIpLib
+  
+  [Impacted Platform]
+  SRF, CWF
+  
+  Hsd-es-id: 15016086287
+  
+  Change-Id: Ief60487218d45320afa8490593aaa351b12f0bae
+  Original commit hash: 0f66e4ec10c45deeae9f6d08bac5bccb07af8e0d
+  
+  ServerSiliconPkg/Cpu/Library/CpuIpLib/GnrSrf/CpuIpLib.c
+  ServerSiliconPkg/Library/PcuIpLib/GnrSrf/PcuCapid.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+  --Commit Message Contains Key Word: qdf
+  --Commit Message Contains Key Word: fusing
+
+*********************************************************************************
+Commit: c80390cd97e6b6e29e5ad180d8d7e7a6ce5ba156 
+*********************************************************************************
+
+[SiliconPkg], [ME]
+
+  Change RDIMM Tx pre-DFE loopcount to 1k and tap1 initial value to -5 for MiscVendor 2R 2DPC config
+  
+  [Feature Description]
+  Change RDIMM Tx pre-DFE loopcount to 1k and tap1 initial value to -5 for MiscVendor 2R 2DPC config
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  GNR
+  
+  Hsd-es-id: 15015752916
+  
+  Change-Id: Iac4c81084a731aa728030fb458333ab159fe9733
+  Original commit hash: 56fa6874541755daa36ffdefd9339b4c957ae633
+  
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDfe.c
+  ServerSiliconPkg/Include/Library/MemCpgcIpTargetLib.h
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibGnr.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/HwMemCpgcIpTargetLib/HwMemCpgc.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgc.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 7f9c4884b1594067cc95c412eb0eb8c471b67258 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [GNRWS] MTP-S RS3 bus number handling by BIOS
+  
+  [Feature Description]
+  MTP-S RS3 bus number handling by BIOS
+  
+  - Added RS3 bus number progrmmaing step.
+  
+  Package/Module:
+  GnrwsPkg, OnesiliconPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18038542182
+  
+  Change-Id: I888777bda44e367dccc567233999f087701b9967
+  Original commit hash: f150599a1dfe3b27890de2dabb63c018c215627c
+  
+  OneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiTraceHubPchLib/PeiTraceHubPchLib.c
+  OneSiliconPkg/IpBlock/TraceHub/LibraryPrivate/PeiTraceHubInitLib/PeiTraceHubInitLibPreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 1e5492761381edbe697f80dd7d5fd0206cb91b92 
+*********************************************************************************
+
+[ME]
+
+  To set CSImode enabled by default with 0xF for all UDIMM/MD configs/vendors at 4800 and 5600
+  
+  [Feature Description]
+  1. revert this change 14021249127 - [GRR VV][DDR][MRC] To set cs_imode_en with 0x1 value (enabled) by default for 2R MiscVendor only. (intel.com)
+  2. cs_imode_en=0x1 and cs_imode_eq_code=0xF
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Gen3 GRR
+  
+  Hsd-es-id: 16024139658
+  
+  Change-Id: Ib705cf0c365e06ffa62219a08fc421e0dbe22cab
+  Original commit hash: 74d43b63ea853756ec7533b8bb79e7330200dde0
+  
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemIOControl.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 02e66541a09a7bf9d56a86ef4a033fb64e7fb11d 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [GNRD - B0] Reduced Memory Footprint for In Field Test
+  
+  [Issue Description]
+  GNRD B0 stepping has improper values of PRMRR for IFS
+  
+  [Resolution]
+  Add GNRD B0 revision or later check for the PRMRR
+  bitmap getter.
+  
+  Package/Module:
+  ServerSiliconPkg/Security/
+  
+  [Impacted Platform]
+  KSV
+  
+  Hsd-es-id: 16024144554
+  
+  Change-Id: I1b61fffe84f31ec3e3627b07b5ad13d64ec5e32c
+  Original commit hash: f36bfc45a4a5a9109f13d5be7e74828885ab6bfc
+  
+  ServerSiliconPkg/Security/Cct/Library/FruCpuFeaturePrmLib/4v0/FruCpuFeaturePrmPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: fe4ebea288f3431d25900a6956ddf7649bb352ab 
+*********************************************************************************
+
+
+  BirchStreamRp: Add IFW_TYPE_CHOICE support for 1x128MB IFWI
+  
+  [Feature Description]
+  Add IFW_TYPE_CHOICE support to enable 1x128MB IFWI build in CI
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 15016085271
+  
+  Change-Id: I26e30f0ac84a5394050545c682d61ab5cd81bd0e
+  Original commit hash: a39766f4bf826d9b7c2ae4f11fb57f941a962a5f
+  
+  ServerPlatformPkg/BuildScript/Source/BuildStep/IFWIGen.py
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 982c340bc289c3608a7a2eda0f6d0a5a204be6b2 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [CWF] BIOS to update to new soc_arch repo with V9P5 perf collaterals
+  
+  [Feature Description]
+  Integrate mesh credit release version: v9p5_24ww19a_cwf
+  
+  Package/Module:
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku
+  
+  [Impacted Platform]
+  CWF
+  
+  Hsd-es-id: 15016080397
+  
+  Change-Id: I94778856d57238af1fec9c955c097c056229021c
+  Original commit hash: ff23ad2bde9c79effd24f5b29acc389d023334b2
+  
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_maxi_cwf_skt_10_3_ap.h
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_maxi_cwf_skt_10_3_ici_val.h
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_maxi_cwf_skt_10_3_sp.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: cfe0d6ad6ec7c20fccee737d5c442aee23840d58 
+*********************************************************************************
+
+[ME]
+
+  [Seamless Update][OOB BIOS update]Removed reserved space from memory NV structure and removed enhanced MRC structures in CI check
+  
+  [Feature Description]
+  A slow boot should be triggered to save the new set of NV data if any change to memory NV structure is detected.
+  For some cases, using reserved space can ensure that variable address mapping is unchanged for the existed variables but cannot ensure that 0s always work for touched variables.
+  
+  [Resolution]
+  1. Removed reserved space (which was added by a previous patch) from NV structures below:
+  CHANNEL_NVRAM_STRUCT
+  SOCKET_NVRAM
+  DIMM_NVRAM_STRUCT
+  DDR_RANK_STRUCT
+  2. For CI check, NVRAM_PER_SOCKET and struct sysNvram already have enhancement to cover check across BIOS update. The variable check for these structures was removed. 2 new structures (SYS_NVRAM_STRUCT_INFO and NVRAM_PER_SOCKET_STRUCT_INFO) ware added for the check.
+  
+  Notes:
+  Reserved space for SET_UP knobs is helpful. We donot need to remove reserved space from them.
+  DFX_MEM_SETUP
+  MEM_SETUP
+  
+  Package/Module:
+  CpRcPkg/Memory
+  ServerPlatformPkg/BuildStep
+  
+  [Impacted Platform]
+  GEN3
+  
+  Hsd-es-id: 15016055273, 15016081642
+  
+  Change-Id: I679363bdbea473823d1a7a82380c810d0bd58732
+  Original commit hash: c2315ebfd4b0c98df4b9507e522887d987ff4401
+  
+  CpRcPkg/Include/Library/MemRcdAccessLib.h
+  CpRcPkg/Include/Memory/MemNvramStruct.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDbCwCache.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDramAccess.h
+  ServerPlatformPkg/BuildScript/Source/BuildStep/NvVarUpdate.py
+  ServerSiliconPkg/Mem/Library/MemDataInterfaceLib/Gen3/MemDataStructure.h
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/Include/MemDdrioPrivate.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 320d6128b21feec2ce44dc8a15defb0e81ddb511 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Based on the SKU type to search the CXPSMB mapping table
+  
+  [Issue Description]
+  R1S PE8 cannot get the CXPSMB mapping index since current searching logic
+  only checked the first row of PortIndex without considering other SKU type
+  
+  [Resolution]
+  Based on the SKU type to search the CXPSMB mapping table
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15015997644
+  
+  Change-Id: I506a206081958a551d1c0664694495f70833e4b2
+  Original commit hash: fd3ef9c9ff4c97a84becf0d10a2ea4daf21c3704
+  
+  ServerSiliconPkg/Iio/LibraryPrivate/IioCxpSmb/IioCxpSmb.inf
+  ServerSiliconPkg/Iio/LibraryPrivate/IioCxpSmb/IioCxpSmbInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 24950de27d69f77473909304af5e09f40f2fe08d 
+*********************************************************************************
+
+
+  [OOBRAS]get some memory data before SmmReadyToLock to avoid the access restrictions.
+  
+  [Issue Description]
+  When setting PcdCpuSmmRestrictedMemoryAccess = TRUE, access to non-SMRAM
+  memory is restricted to reserved, runtime and ACPI NVS type after SmmReadyToLock.
+  OOBRAS SMM OobRasHandshakeSendDataDriver need send RAS related data to
+  BMC at ReadyToBoot callback function, it happened after SmmReadyToLock
+  and will access prohibited memory data type, which cause PF Exception.
+  
+  [Resolution]
+  OOBRAS changed to get some memory data before SmmReadyToLock to avoid the access restrictions.
+  Also fix the NULL pointer access issue from IPMI command usage.
+  
+  Package/Module: ServerRasPkg
+  
+  [Impacted Platform]
+  BHS
+  
+  Hsd-es-id: 16024162202
+  
+  Change-Id: I42dd9759d8a9caee5d422ed682a7c640a71f7b38
+  Original commit hash: 1e6a65588ebc9f327938aecd695a29413b34d50a
+  
+  ServerRasPkg/Driver/Smm/OobRasHandshakeSendData/OobRasHandshakeSendData.c
+  ServerRasPkg/Driver/Smm/OobRasHandshakeSendData/OobRasHandshakeSendDataPrivate.h
+  ServerRasPkg/Driver/Smm/OobRasHandshakeSendData/OobRasOffloadIpmi.c
+  ServerRasPkg/Driver/Smm/OobRasHandshakeSendData/SendStructDataHelper.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: c304918e7f545efb9c7c10b6f64e9d257fc7581b 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "Nv Variable Seamless Update - Revision Data Update"
+  
+  This reverts commit 5bd78bb32ff2ce52169684b230893ffa326eaa91.
+  
+  [Issue Description]
+  Trunk branch broken caused by Nv variable seamless update and
+  DfxCxlRegDirMode knob revert change
+  
+  [Resolution]
+  Revert Nv variable seamless update change to fix build issue
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 14022383590
+  
+  Change-Id: I5cde17793ea011e2c64188def96c23fd393c3cda
+  Original commit hash: 4580963ab475de7d6c41fb6c3788796612fc297d
+  
+  BirchStreamOpenBoardPkg/PreBuildSetupPcdDefaults.dsc.inc
+  ServerPlatformPkg/Include/NvVariableUpdateRule.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: e0751e10cccaf3cbfd4897155abac1c5f7268fe2 
+*********************************************************************************
+
+[BoardPkg], [ME]
+
+  [Gen3] Revert #81308 due to side effort for security feature.
+  
+  Package/Module: ServerSiliconPkg
+  
+  [Impacted Platform]
+  Gen3
+  
+  Hsd-es-id: 15016083026
+  
+  Change-Id: Id9c11b63a9b3b8df015bdf020715109533c3bb04
+  Original commit hash: fe04f26e4c0a5cc3d43159f9b85eed883f739fa5
+  
+  BirchStreamOpenBoardPkg/Library/PeiFspHobCheckLib/FspHobHelpers.h
+  BirchStreamOpenBoardPkg/PreBuildSetupPcdDefaults.dsc.inc
+  CpRcPkg/Include/Memory/MemDefaults.h
+  CpRcPkg/Include/Ppi/MemoryPolicyPpi.h
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemStart.c
+  ServerPlatformPkg/Library/PeiMemoryPolicyUpdateLib/PeiMemoryPolicyUpdateLib.c
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemoryDfxSetup.hfr
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemoryDfxSetupStrings.uni
+  ServerSiliconPkg/Include/Guid/SocketMemoryVariable.h
+  ServerSiliconPkg/Include/Library/B2CxlIpLib.h
+  ServerSiliconPkg/Library/B2CxlIpLib/B2CxlIpLib.c
+  ServerSiliconPkg/Library/PeiMemoryPolicyLib/PeiMemoryPolicyLib.c
+  ServerSiliconPkg/Library/SimulationServicesLib/MemSpdSimInit.c
+  ServerSiliconPkg/Mem/Library/MemDecodeLib/Gen3/7nm/MemDecodeNode.c
+  ServerSiliconPkg/Mem/Library/MemDecodeLib/MemDecodeLib7nmWave4.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: ba45ce43ea7bf47da38a323d5f608d2aaa10b1a2 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ServerSiliconPkg/Upi: Integrate v8p1 Perf LUT for GNR B0
+  
+  - Update mesh credit to revision v8p1 for GNR B0 skus
+  
+  Hsd-es-id: 14022056228
+  Change-Id: I21a76818cf40584053ed05c61cce77b6c0a12cc7
+  Original commit hash: 686d0be9d8a623d2d2bdd263a6dc7ed945c36955
+  
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_b0_maxi_rwc_bhs_ucc.h
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_b0_maxi_rwc_egs_hcc.h
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_b0_maxi_rwc_egs_lcc.h
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_b0_maxi_rwc_egs_zcc.h
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_b0_maxi_rwc_val_1_2.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 67adf5ef217b4dde61e66c0f7ee0180151b24093 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [SRF] BIOS shall allocate 64MB SEAMRR for large number of threads //FW: [SysDebug FWD][SRF AP C0 VV ES0 ][Security][2S][TDX] system struck at postcode 58 with TDX enabled
+  
+  [Feature Description]
+  1.While system is capable and requesting to enable TDX,
+  1.1 and CPU Family is SRF-AP or CWF-AP, discovered in two steps:
+  SRF or CWF identified by CpuAndRevision via CPUID LEAF [EAX:0x01 CPUID_VERSION_INFO] |EAX Family (7:4) Stepping (3:0)
+  and AP segment identified by CPUID LEAF [EAX:0x1f ECX:0x2] |EAX|Shift Count (3:0) |[4b] >= 0xA (10dec)
+  BIOS shall use an algorithm to establish the SEAMRR size:
+  
+  Step1: Linear function parameters (Ax +B): A_source = 0.028; B_source= 2.4;
+  Note: as EDK2 BIOS does not support float number type, the calculation will be performed on integer values:
+  
+  A = 29696 because 0.028 MiB rounded to the nearest KiB is 29696 B (round A_int=0.028*1024*1024)
+  
+  B = 2517198 because 2.4 MiB rounded to the nearest KiB is 2517198 B (round B_int = 2.4*1024*1024)
+  Step2: NUM_SOCKETS = Number of populated sockets (number of present CPU packages)
+  Step3: MAX_ADDRESSABLE_LPS_PER_SOCKET = CPUID[0x4, 3].EAX[25:14] + 1 rounded up to the next larger power of 2
+  Step4: MAX_ADDRESSABLE_LPS = SUM for ALL sockets: Sum MAX_ADDRESSABLE_LPS_PER_SOCKET
+  Step5: MIN_SEAMRR = round to next power of 2 (MAX_ADDRESSABLE_LPS * A + B)
+  Step6: Narrow corner case to global boundaries: at least 64 MiB, at most 128 MiB.
+  
+  Example:
+  [0..2175] LPs will result in 64 MiB SEAMRR,
+  [2176..MAX_UINT32] LPs will result in 128 MiB SEAMRR.
+  
+  1.2 else CPU family is different apply previous POR for BHS
+  
+  Package/Module:
+  ServerSiliconPkg/Security/Cct
+  
+  [Impacted Platform]
+  BHS
+  
+  Hsd-es-id: 18038028104
+  
+  Change-Id: I9c29a767109a576abb1e17682f539f08ae33fa65
+  Original commit hash: 6144d396b8f9a053d6d37252d0b5a3e26a9d2595
+  
+  ServerSiliconPkg/Security/Cct/Library/SecurityIdePreMemLib/4v0/SecurityIdePreMemInit.c
+  ServerSiliconPkg/Security/Cct/Library/SecurityIdePreMemLib/4v0/SecurityIdePreMemInit.h
+  ServerSiliconPkg/Security/Cct/Library/SecurityIdePreMemLib/4v0/SecurityIdePreMemLibGnrSrf.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: be24857f0d100a70ac3fff555ce427dd2af37a4a 
+*********************************************************************************
+
+[BoardPkg], [ME]
+
+  Request to have BIOS Disable Directory Mode for CXL Only Region
+  
+  [Feature Description]
+  To mitigate CXL Silent Data Corruption or Performance issues on CXL cards
+  it is requested to have a BIOS option to partition off Directory Mode for
+  the CXL Only Region. We want to keep Directory Mode on for the Native
+  local DDR region.
+  
+  Package/Module:
+  ServerSiliconPkg\Mem\Library\MemDecodeLib
+  
+  [Impacted Platform]
+  BHS
+  
+  Hsd-es-id: 22020027940
+  
+  Change-Id: I91ce44d46960e3f9ed9694b2a4f2b98933265b26
+  Original commit hash: 4af25109574ba364232b38f9aeafa0c8de8c846d
+  
+  BirchStreamOpenBoardPkg/Library/PeiFspHobCheckLib/FspHobHelpers.h
+  BirchStreamOpenBoardPkg/PreBuildSetupPcdDefaults.dsc.inc
+  CpRcPkg/Include/Memory/MemDefaults.h
+  CpRcPkg/Include/Ppi/MemoryPolicyPpi.h
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemStart.c
+  ServerPlatformPkg/Library/PeiMemoryPolicyUpdateLib/PeiMemoryPolicyUpdateLib.c
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemoryDfxSetup.hfr
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemoryDfxSetupStrings.uni
+  ServerSiliconPkg/Include/Guid/SocketMemoryVariable.h
+  ServerSiliconPkg/Include/Library/B2CxlIpLib.h
+  ServerSiliconPkg/Library/B2CxlIpLib/B2CxlIpLib.c
+  ServerSiliconPkg/Library/PeiMemoryPolicyLib/PeiMemoryPolicyLib.c
+  ServerSiliconPkg/Library/SimulationServicesLib/MemSpdSimInit.c
+  ServerSiliconPkg/Mem/Library/MemDecodeLib/Gen3/7nm/MemDecodeNode.c
+  ServerSiliconPkg/Mem/Library/MemDecodeLib/MemDecodeLib7nmWave4.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: silent
+
+*********************************************************************************
+Commit: e6587e03941a6812e49c474d3818f6405a230613 
+*********************************************************************************
+
+[ME]
+
+  Clear sweep_fb_en bit at the end of Receive Enable Training
+  
+  [Issue Description] or [Feature Description]
+  It's found that external WL coarse has ddrd_sweep_ctl0.sweep_fb_en=1 which is
+  used for result aggregation. However Coarse step doesn't use result aggregation.
+  
+  More debug shows the sweep_fb_en bit is set at the step Receive Enable Training.
+  And the bit is kept to the DWL external WL coarse.
+  
+  [Resolution]
+  Clear sweep_fb_en bit at the end of Receive Enable Training.
+  
+  Package/Module:
+  CpRcPkg/Library/BaseDdr5CoreLib
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 14022258788
+  Change-Id: I67831e603ebcb7fe99863426622da4e34aa9da55
+  Original commit hash: 2d2dc7c97d2a2ad98155b11710fa8f9d7fb7a305
+  
+  CpRcPkg/Include/Library/MemDdrioIpLib.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemRecEnableDdr5.c
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemChipDdrio.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 7875242a4d615f2bdd37dc20716700d6306c16da 
+*********************************************************************************
+
+
+  [GNR][MCR] For MWD training, remove the fatal eye size check of 16 and add non-fatal check for eye size 6
+  
+  According to the pass/fail criteria spec, there should be only non-fatal eye size check for MWD and the threshold is 6.
+  Maintain a fatal warning for eye width of 0 and disable the channel in that case. User can make
+  this fatal error non-fatal by setting knobs promoteMrcWarnings and promoteWarnings to 0.
+  
+  Hsd-es-id: 14022254763
+  
+  Change-Id: I07837e17b56947f279b9da757e87f339dbce0ca0
+  Original commit hash: d3c3279005608bdafda51dfcc9004fa71d4b6b87
+  
+  CpRcPkg/Include/Library/EnhancedWarningLogLib.h
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDdr5Lrdimm.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemMwd.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Common/DefaultWarnings.c
+  CpRcPkg/Library/BaseMemoryServicesLib/MemStrings.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: e92240ff7c66dc4660831312369d50f75abcc44b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Fix UPI Affinity Degrade flow issue with Memory Error Injection
+  
+  [Issue Description]
+  When uncorrectable errors are injected into memory, the platform may
+  do warm reset and map out the affected DIMMs.
+  This can lead to changes in SNC, UPI Affinity, UMA Based Clustering,
+  and XPT Prefetch features. Failure to reconfigure these features may
+  lead to hang during boot.
+  
+  [Resolution]
+  BIOS must re-configure the SNC, UPI Affinity, UMA Based Clutering, and
+  XPT Prefetch feature registers after memory gets mapped out during a
+  warm reset.
+  
+  Package/Module: ServerSiliconPkg/SncPrefetchLib
+  
+  [Impacted Platform]
+  BHS GNR
+  
+  Hsd-es-id: 14022247264
+  
+  Change-Id: I8c175713757cdec1f82983d4fc56b18e48ef53a9
+  Original commit hash: 00891d39a3b577097be8ecdf44bc9354af057cac
+  
+  ServerSiliconPkg/Upi/Library/SncPrefetchLib/ChipGnrSrf/ClusterBase.c
+  ServerSiliconPkg/Upi/Library/SncPrefetchLib/ChipGnrSrf/SncProgramming.c
+  ServerSiliconPkg/Upi/Library/SncPrefetchLib/SncPrefetchLibInternal.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: ba4a67cf16d195f047fd43054ad22b8dbb7f596f 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Tracebub enabling for both SOC and PCH.
+  
+  [Feature Description]
+  Tracebub enabling for both SOC and PCH.
+  
+  Step 2 - CPU side
+  
+  - Switch to SOC/PCH tracehub enabling library.
+  It's based on CPU/PCH GRR version, delta:
+  Fetch PCH bus based on IIO API.
+  Fetch MTL THC device/functions from header.
+  THC unhide through PSF public API.
+  
+  Package/Module:
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18038465083
+  
+  Change-Id: I877666bda38e367dccc567222999f087701b9567
+  Original commit hash: eac206bf15494fb273d85d32c0b59fdadc0ee5b9
+  
+  ServerSiliconPkg/Library/Private/DxeTraceHubLib/DxeTraceHubLibGnrWs.c
+  ServerSiliconPkg/Library/Private/DxeTraceHubLib/DxeTraceHubLibGnrWs.inf
+  ServerSiliconPkg/Product/BirchStream/SiPkgDxeLib.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: c8bfcb70bb70524b1070f62c9bd6c6285957a13a 
+*********************************************************************************
+
+[ME]
+
+  Fix order of programming when enabling the DDRIO FSM to generate Nbias ADC codes.
+  
+  MRC must program the ADC mux select before setting the ADC enable bit.
+  Also include a 5us delay between these two steps to ensure enough time for the mux select to take effect.
+  
+  Hsd-es-id: 14022322434
+  
+  Change-Id: I53a85af12b61cad40d9a043a3839891de380d7a1
+  Original commit hash: 7fb5b733a3d278b9b30ef75a6b01f1e33065891d
+  
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemNbiasBasedRxDqsAdjust.c
+  ServerSiliconPkg/Mem/Library/MemPorLib/MemPor.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: cea7e8b3406a5a818cce2619ea554cc3712d2c35 
+*********************************************************************************
+
+
+  [GNR] 3StrikeTimer help string update
+  
+  [Issue Description]
+  After MSR address update, the help string in the setup menu
+  still shows previous MSR data.
+  
+  [Resolution]
+  Update the help string to reflect the correct MSR data.
+  New MSR is valid startgin B0 steppings, therefore
+  adding check on A0 steppings to show previous MSR data.
+  
+  Package/Module:
+  ServerPlatformPkg/Platform/Dxe/SocketSetup
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 15016022256
+  
+  Change-Id: Ibeba7021a1f64c7f25edf2147151aceca5a4b0d1
+  Original commit hash: d657a00836c9ae831d32ccfccdb61b4fa413eb2a
+  
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/ProcessorSetupStrings.uni
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/SocketSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: 908fb2015371c54fd29a5a4f91c8301d53649823 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Tracebub enabling for both SOC and PCH.
+  
+  [Feature Description]
+  Tracebub enabling for both SOC and PCH.
+  
+  Step 1 - PCH side
+  
+  - Added tracehub to pch config hob for
+  later use in DXE in IIO tracehub enabling.
+  - Added public PSF function to unhide
+  tracehub by IIO code.
+  
+  Package/Module:
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18038404218
+  
+  Change-Id: I877621bda38e367dccc567222999f087701b9567
+  Original commit hash: 8c1ca5fa97739b438bcb4194485cd96ba241789c
+  
+  OneSiliconPkg/Fru/MtlPch/CommonLib.dsc
+  OneSiliconPkg/Fru/MtlPch/Include/Library/MtlPchPsfSocLib.h
+  OneSiliconPkg/Fru/MtlPch/Library/MtlPchPsfSocLib/MtlPchPsfSocLib.c
+  OneSiliconPkg/Fru/MtlPch/Library/MtlPchPsfSocLib/MtlPchPsfSocLib.inf
+  OneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchTraceHub.c
+  OneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/PeiMtlPchInitLib.inf
+  OneSiliconPkg/Product/GnrWs/IncludePrivate/PchConfigHob.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: cda42413b4c7e976cf017f388a5b7be0b44d4146 
+*********************************************************************************
+
+
+  Persistent OTC CE errors reporting stopped in a single error injection
+  
+  [Issue Description]
+  Once Error Injection is enabled ( eien (31:31)) OTC CE error should be continually
+  reported but there is only a single error ce injection reported.
+  
+  [Resolution]
+  This changes are causing the issue, reverted this changes.
+  
+  Package/Module:ServerRasPkg
+  
+  [Impacted Platform]
+  GRR.
+  
+  Hsd-es-id: 16024109462
+  Change-Id: I6f28d47fc8167db2b45c81ad7407a3cd270e8cff
+  Original commit hash: 904f6d92a350136c2ebd2b63f0e2630e8086219f
+  
+  ServerRasPkg/Library/IehRasLib/IehErrorHandling.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: b225f144b3fd8a5490750f6a9e0f4308e92f54c4 
+*********************************************************************************
+
+
+  [BHS] Can not determine Ax/Bx/Cx silent stepping due to same CPUID
+  
+  [Feature Description]
+  Can not determine Ax/Bx/Cx silent stepping due to same CPUID
+  
+  [Resolution]
+  Change the A0, B0, C0 to Ax, Bx, Cx for not confusing.
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 15015964970
+  
+  Change-Id: I42fbc5cdc475d333e0dd2e3bc29bd0c9e76cb306
+  Original commit hash: d138f1e5663ef41d798eec9db077b7112105b8c1
+  
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/SocketSetup.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: silent
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+  --Commit Message Contains Key Word: fusing
+
+*********************************************************************************
+Commit: 1510909a3a2be2064ea801e1947e02cc22397f6a 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [BHS] Dynamic EID allocation multi segment for 4S/8S but keep 2S EID unchanged (0x1D, 0x9D)
+  
+  [Feature Description]
+  Revert the change made to Static EID allocation
+  Restore it to SPR format of Dynamic EID allocation. (Applicable 4S/8S Only)
+  For 2S Static EID allocaion is followed
+  
+  [Impacted Platform]
+  BHS
+  
+  Hsd-es-id: 22020042406
+  
+  Change-Id: I17ee777c1471bee8135f9d4c427eb88ea5a6d29b
+  Original commit hash: 87a679acdd46f54ed6635d2cf2dbdac3916cfa7c
+  
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/UncoreLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 4b36ea01e3a67d2705dff32edad4efc934dfc1ed 
+*********************************************************************************
+
+[ME]
+
+  [GNR] Modified RCD DCA training steps to improve margins
+  
+  [Issue Description] or [Feature Description]
+  Observed RCD DCA low margins and high variability in training results.
+  Some of these issues can be attributed to:
+  1. DFE Tap1 setting can shift the DCA timing center position
+  2. Complex Xtalk pattern causes large variability in margin measurements
+  3. Final timing recentering can alter the Tx phase relationship of Xtalk
+  
+  [Resolution]
+  Modified the RCD DCA training steps to add 3 extra steps: RcdDcaDfeTap1,
+  RcdDcaTimingComplexAfterDfeTap1 and RcdDcaVrefComplexAfterDfeTap1. These
+  steps compensate from the timing center position shift after the initial
+  DFE tap1 training. Modified the training steps after RcdDcaDfe to use
+  ComplexNoXtalk pattern. Removed the final DCA timing recentering step after
+  RcdDcaVrefComplexTrainingLast.
+  
+  Package/Module: CpRcPkg\BaseDdr5CoreLib
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 14022216732
+  
+  Change-Id: I1d1c2cf7bf7cba0132a7b1439aef6c48f4040ded
+  Original commit hash: 51dfe3b8d3b37bc10b754bf111e156c3c0968aae
+  
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Include/Memory/MemFlowsDefinitions.h
+  CpRcPkg/Include/Memory/MemoryCheckpointCodes.h
+  CpRcPkg/Include/Memory/PerformanceTrackerDefinitions.h
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDcsDcaDfeDdr5.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemStart.c
+  CpRcPkg/Library/PerformanceTrackerLib/PerformanceTrackerLib.c
+  ServerSiliconPkg/Mem/Library/MemTrainingLib/Gnr/MemTrainingCallTable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 5789a42ab2276f2da672f3ce2f4bf96590338f85 
+*********************************************************************************
+
+
+  [GNR] Apply DCA TCO averaging to reduce training variation
+  
+  [Issue Description] or [Feature Description]
+  Observed abnormally large boot-to-boot variation in the DCA TCO training
+  step due to flat/noisy response on the lanes with smallest eye width.
+  The coarse DCA TCO step would choose different results and the fine
+  step was not able to recover.
+  
+  [Resolution]
+  Changed the DCA TCO coarse step to test 21 offsets with a step size of 2
+  and removed the fine step. Applied averaging of the eye widths across
+  DCA lanes for each TCO offset. Also applied a sliding average over 5
+  TCO offsets to choose the best training result.
+  
+  Package/Module: CpRcPkg\BaseDdr5CoreLib
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 14022215694
+  
+  Change-Id: I28a928ac3a8fff83e02836c1d9a6e5ae5ca17b94
+  Original commit hash: cfb3bbc8cf9d13ed1151e13f99205e27bc08551e
+  
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemTrainingDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 72aa37beb4b5332dd81e9681404c2c199b6f4422 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ServerSiliconPkg/Upi: Integrate v2p1 Perf LUT for GNR-WS
+  
+  - Added updated v2p1 credit recipes for GNR-WS skus
+  
+  Hsd-es-id: 22019688171
+  Change-Id: Ifa7a3abad6da19d183b0892a845c1be3a05a08ea
+  Original commit hash: 067c82ee569baa52a4b1ea7b27faccbb3ead439b
+  
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_maxi_rwc_egs_hcc_WS.h
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_maxi_rwc_egs_lcc_WS.h
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/Sku/scf_gnr_maxi_rwc_egs_zcc_WS.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 7690a8231d51b0f3aa61f993894eee319d8a44a8 
+*********************************************************************************
+
+[ME]
+
+  [GNR] Changed RCD DCA training steps before DFE to avoid crosstalk
+  
+  [Issue Description] or [Feature Description]
+  Large boot-to-boot variation is observed in RCD DCA training steps prior
+  to DCA DFE. Some of the variation and asymmetrical centering can be
+  attributed to the original complex training pattern, which used
+  LFSR0 on even DCA signals and LFSR1 on odd DCA signals.
+  
+  [Resolution]
+  Defined a new CADB pattern per DCA target signal (U0) to keep aggressor
+  signals quiet with constant ones (U1). A non-target signal (~U0 XOR U2)
+  away from the target signal is selected to balance the CATM XOR function
+  as follows:
+  
+  CS DPAR CA6 CA5 CA4 CA3 CA2 CA1 CA0
+  U2 ~U0 XOR U2 U1 U1 U1 U1 U1 U1 U0
+  U2 ~U0 XOR U2 U1 U1 U1 U1 U1 U0 U1
+  U2 ~U0 XOR U2 U1 U1 U1 U1 U0 U1 U1
+  U2 ~U0 XOR U2 U1 U1 U1 U0 U1 U1 U1
+  U2 U1 U1 U1 U0 U1 U1 U1 ~U0 XOR U2
+  U2 U1 U1 U0 U1 U1 U1 U1 ~U0 XOR U2
+  U2 U1 U0 U1 U1 U1 U1 U1 ~U0 XOR U2
+  U2 U0 U1 U1 U1 U1 U1 U1 ~U0 XOR U2
+  
+  This new training pattern focusses on ISI while avoided crosstalk.
+  It is being applied to the following training steps:
+  - RcdDcaTimingComplexTraining
+  - RcdDcaVrefComplexTraining
+  - RcdDcaTcoTraining
+  - RcdDcaDckDutyCycleTraining
+  
+  Package/Module: ServerSiliconPkg\MemCpgcIpLib
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 14022213352
+  
+  Change-Id: Iab87ec790f1fff795c2f4439407f18b57007d8e0
+  Original commit hash: 9fb8411361b9e8dbfe357166cc5bfbba3d77a55b
+  
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Common/MemCpgcIpLibInternal.h
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgc.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgcDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: baeaa42dc7ee5ae69491aff6e5789da0b4890f48 
+*********************************************************************************
+
+[SiliconPkg]
+
+  To remove setting of PIPECTL2.ZRxDcNotMetInG3 workaround in GNRD B0 stepping
+  
+  [Feature Description]
+  The fix for Pi5 subsystem not reporting idle on the Gen5 pxp ports when PkgC6 is running is fixed in GNRD B0 stepping
+  Hence remove this workaround added in GNRD B0 stepping and retain the workaround as is in other programs and in GNRD A0
+  
+  Package/Module:ServerSiliconPkg/Library
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16023994133
+  
+  Change-Id: I3dc0e7cd19e45f0acc5e2968d99a7a64c89887d8
+  Original commit hash: 6321e7b8e20e7dde2f919ce30a5012c2a98b8b4a
+  
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLib.c
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibCwf.c
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibGnr.c
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibGnrd.c
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibSrf.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: b62d1feec1910e40e58d62cb3aaf3f5c0b30f7e9 
+*********************************************************************************
+
+
+  Enhance MLC CE Storm handling with CMCI after yellow flag asserted
+  
+  [Feature Description]
+  This PR is an adjustment for SRF change of https://github.com/intel-restricted/firmware.boot.uefi.iafw.intel/pull/79960
+  SRF cache storm CSMI disable have to be done to MCA_UNIT_TYPE_L2.
+  
+  Package/Module:ServerRasPkg/ProcessorRasLib
+  
+  [Impacted Platform]
+  SRF
+  
+  Hsd-es-id: 22020041946
+  
+  Change-Id: I420f2fcf0167eba74122294b0f58d4bc91669be9
+  Original commit hash: 15188492c043e94ac4d8eaf0cc295dd710551b3e
+  
+  ServerRasPkg/Library/LibraryGen3/ProcessorRasLib/ProcessorErrorHandling.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: bf8e9c0c55aa198c2fe325e3121e10ec7ea728c7 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Remove BIOS enforcement on PRQBIT on non-PRQ FW
+  
+  [Feature Description]
+  S3M & Ucode are already enforcing the PRQBIT; furthermore, BIOS
+  as a reference code is not an appropriate enforcement vehicle.
+  This has direct impact to PPV and needs to be processed ASAP to
+  avoid further PPV delays.
+  
+  [Resolution]
+  Remove the logic that checks PRQ bits from fuse and SoC config
+  manifest, just print the PRQ bits as an indicator.
+  
+  Package/Module:ServerSiliconPkg
+  
+  [Impacted Platform]
+  GNR, SRF, GNRD, GRR.
+  
+  Hsd-es-id: 14022227973
+  
+  Change-Id: I0b4f06fd899e80c51a0df8ffb582fcf08e3d3204
+  Original commit hash: 3f3b15c0595ee746c9a83e5638efc5a3d8bc2af6
+  
+  ServerSiliconPkg/Library/S3mIpLib/Common/S3m2p0Provision.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+
+*********************************************************************************
+Commit: db883a768bc7403cd37c0a23f94f03cc50f98ae4 
+*********************************************************************************
+
+[ME]
+
+  [BHS] Remove SK MiscVendor PPD W/A on BHS after WW37'23 DIMM date code.
+  
+  Existing power down mode workaround for MiscVendor 1anm and 1bnm DRAMs is now
+  only applied to DIMM modules from any vendor with date code on or before WW37'23
+  and DRAMs rated for 6400 MT/s or higher.
+  
+  Hsd-es-id: 14022178951
+  
+  Change-Id: I08d241de9c7c5e925f88a70d26152ecd112f3da6
+  Original commit hash: 2eedfc56a714d5aac2c0ebc68867a6425e51649d
+  
+  ServerSiliconPkg/Mem/Library/MemMcIpLib/Gen3/MemConfigMcSpecific.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 78fb3307b3e7f5195d2e5e22ec49461f3cd28fc8 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [GNR-WS] Add AMT drivers.
+  
+  [Feature Description]
+  This commit prepares the codebase for conditional AMT support,
+  ensuring that AMT features are enabled only when the AMT_ENABLE flag
+  is set to TRUE. It also cleans up the code by removing unnecessary
+  checks and organizing library dependencies.
+  
+  - Add conditional AMT_ENABLE checks to enable PcdAmtEnable in
+  various .dsc files
+  - Remove redundant AMT_ENABLE checks from KaseyvilleRpPkg and
+  PlatformPkgPcds.dsc
+  - Implement AmtPolicyInitDxe function in AmtPolicyInitDxe.c with
+  proper initialization and installation of AmtPolicyProtocol
+  - Add DxeAmtPolicyLib to PolicyInitDxe.inf and other necessary
+  libraries to support AMT functionality
+  - Adjust SerialOverLan.c to use MTL_PCH_KT_DEVICE_NUM and
+  MTL_PCH_KT_FUNCTION_NUM
+  - Include DxeAsfLib and DxeAsfHeciLib in CommonLib.dsc
+  - Conditionally include AMT related INF files in OneSiliconPkg
+  Fru/MtlPch/Dxe.dsc based on PcdAmtEnable
+  - Clean up and organize includes and library dependencies related
+  to AMT in various .inf and .dsc files
+  - Comment out VmdInfoLib usage in HwAssetDxe.inf and Inventory.c
+  due to potential issues or deprecation
+  - Adjust VmdInfoLib.inf to comment out PeiHostBridgeIpStatusLib
+  - Update PeiSiPolicyLibGnrWs.c to include AmtGetConfigBlockTotalSize
+  and add AmtConfigBlocks
+  - Include conditional AMT support in SiPkgDxeLib.dsc and
+  SiPkgPeiLib.dsc
+  - Add conditional AMT related entries in LateSiliconFvDxe.fdf
+  
+  Package/Module:
+  BirchStreamFspPkg
+  BirchStreamOpenBoardPkg
+  GnrwsRpPkg
+  OneSiliconPkg
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 18038259037
+  
+  Change-Id: Ib7379a0c9074485d221f20123272f708b28cf7cb
+  Original commit hash: da19518fa431a46d4b6354d46461688d10972cdd
+  
+  BirchStreamFspPkg/BirchStreamFvLateSilicon.dsc
+  BirchStreamFspPkg/GnrwsFspPkg.dsc
+  BirchStreamFspPkg/Include/Dsc/BirchStreamRpPkgFvLateSiliconPcdInit.dsc
+  BirchStreamFspPkg/Include/Dsc/KaseyvilleRpPkgFvLateSiliconPcdInit.dsc
+  GnrwsRpPkg/Platform/Dxe/PolicyInitDxe/AmtPolicyInitDxe.c
+  GnrwsRpPkg/Platform/Dxe/PolicyInitDxe/PolicyInitDxe.inf
+  OneSiliconPkg/Fru/MtlPch/CommonLib.dsc
+  OneSiliconPkg/Fru/MtlPch/Dxe.dsc
+  OneSiliconPkg/Include/Library/PeiAmtPolicyLib.h
+  OneSiliconPkg/IpBlock/Amt/AmtInit/Dxe/AmtInitDxe.c
+  OneSiliconPkg/IpBlock/Amt/AmtInit/Dxe/AmtInitDxe.inf
+  OneSiliconPkg/IpBlock/Amt/Sol/Dxe/SerialOverLan.c
+  OneSiliconPkg/IpBlock/Amt/Sol/Dxe/SerialOverLan.h
+  OneSiliconPkg/IpBlock/Amt/Sol/Dxe/SerialOverLan.inf
+  OneSiliconPkg/IpBlock/Me/Asf/Dxe/AsfDxe.c
+  OneSiliconPkg/IpBlock/Me/Asf/Dxe/AsfDxe.inf
+  OneSiliconPkg/IpBlock/Me/HwAsset/Dxe/HwAssetDxe.inf
+  OneSiliconPkg/IpBlock/Me/HwAsset/Dxe/Inventory.c
+  OneSiliconPkg/IpBlock/Me/ResetHandler/Dxe/ResetHandler.c
+  OneSiliconPkg/IpBlock/Me/ResetHandler/Dxe/ResetHandler.inf
+  OneSiliconPkg/IpBlock/Vmd/Library/VmdInfoLib/VmdInfoLib.inf
+  OneSiliconPkg/Product/GnrWs/Library/PeiSiPolicyLib/PeiSiPolicyLibGnrWs.c
+  OneSiliconPkg/Product/GnrWs/Library/PeiSiPolicyLib/PeiSiPolicyLibGnrWs.inf
+  OneSiliconPkg/Product/GnrWs/SiPkgDxeLib.dsc
+  OneSiliconPkg/Product/GnrWs/SiPkgPeiLib.dsc
+  ServerSiliconPkg/Product/BirchStream/LateSiliconFvDxe.fdf
+  ServerSiliconPkg/Product/BirchStream/SiPkgDxeLib.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 690cfeb84d4c37bd9c12a87e722d8b2687dd789a 
+*********************************************************************************
+
+[BoardPkg], [ME]
+
+  Port XMP 3.0 supported code from FHF to ServerGen3 repo
+  
+  [Feature description]
+  The implementation to conform to the Extreme Memory Profile (XMP) 3.0 specification has already been done for FHF in ServerGen2 repo to successfully overclock an XMP RDIMM
+  This base code is needed in family/server3 branch to continue with the memory OC improvements and further support XMP 3.0 Rev 1.3 spec
+  
+  The MRC porting activity must include the following items without impacting the existing functionality of GNR/SRF/CWF/GNR-D/GRR:
+  1) Enable XMP support only for GNR-WS and disable it for all other Gen3 SKUs
+  2) To conform to reading the XMP SPD bytes
+  3) Create setup options for the specified items within the spec in order to perform overclocking
+  4) Save and update the chosen XMP_PROFILE1/2/3 parameters when XMP 3+ modules are detected
+  5) Program PMIC Vpp and add the corresponding Dfx knob
+  6) Memory OC menu is expected to be displayed only for CPUs that contain memory overclocking capability
+  
+  Hsd-es-id: 16023639931
+  
+  Change-Id: Ib17ecfae9649f23b708bb59e38cbbb839959cc40
+  Original commit hash: 419f3ab765d365cefa1617d9242c592fd404b4f0
+  
+  BirchStreamFspPkg/GnrwsFspPkg.dsc
+  BirchStreamOpenBoardPkg/PreBuildSetupPcdDefaults.dsc.inc
+  CpRcPkg/CpRcPkg.dec
+  CpRcPkg/Include/Guid/MemoryMapData.h
+  CpRcPkg/Include/Library/MemCallTableLib.h
+  CpRcPkg/Include/Library/MemoryCoreLib.h
+  CpRcPkg/Include/Library/MemoryTrainingLib.h
+  CpRcPkg/Include/Library/PmicAccessLib.h
+  CpRcPkg/Include/Library/SpdDecodeLib.h
+  CpRcPkg/Include/Memory/MemDefaults.h
+  CpRcPkg/Include/Memory/MemNvramStruct.h
+  CpRcPkg/Include/Memory/MemRegs.h
+  CpRcPkg/Include/Ppi/MemoryPolicyPpi.h
+  CpRcPkg/Library/BaseMemoryCoreLib/BaseMemoryCoreLib10nm.inf
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Include/MemHost.h
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/InitMem.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemStart.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemXMP.c
+  CpRcPkg/Library/BaseMemoryTrainingLib/MemTiming.c
+  CpRcPkg/Library/PmicAccessLib/PmicAccess.c
+  CpRcPkg/Library/PmicAccessLib/PmicAccessLibDxe.inf
+  CpRcPkg/Library/PmicAccessLib/PmicAccessLibPei.inf
+  CpRcPkg/Library/PmicAccessLib/PmicAccessLibSmm.inf
+  CpRcPkg/Library/PmicAccessLib/PmicRegs.h
+  CpRcPkg/Library/PmicAccessLibNull/PmicAccess.c
+  CpRcPkg/Library/SpdDecodeLib/Ddr5/XmpSpdDecodeLibDdr.c
+  CpRcPkg/Library/SpdDecodeLib/SpdDecodeLibDdr5.inf
+  ServerPlatformPkg/Library/PeiMemoryPolicyUpdateLib/PeiMemoryPolicyUpdateLib.c
+  ServerPlatformPkg/Library/PeiMemoryPolicyUpdateLib/PeiMemoryPolicyUpdateLib.inf
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemoryDfxSetup.hfr
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemoryDfxSetupStrings.uni
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemorySetup.hfr
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemorySetupStrings.uni
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/SocketSetup.c
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/SocketSetup.inf
+  ServerSiliconPkg/Include/Guid/SocketMemoryVariable.h
+  ServerSiliconPkg/Include/SocketConfiguration.h
+  ServerSiliconPkg/Library/MemMapDataLib/MemMapDataLib.c
+  ServerSiliconPkg/Library/MemMapDataLib/MemMapDataLib.inf
+  ServerSiliconPkg/Library/PeiMemoryPolicyLib/PeiMemoryPolicyLib.c
+  ServerSiliconPkg/Library/PeiMemoryPolicyLib/PeiMemoryPolicyLib.inf
+  ServerSiliconPkg/Mem/Library/AdvMemTestChipLib/Gen3/MemTestCond.c
+  ServerSiliconPkg/Mem/Library/MemCallTableLib/GnrSrf/MemCallTableSoc.c
+  ServerSiliconPkg/Mem/Library/MemMcIpLib/Common/MemConfigMc.c
+  ServerSiliconPkg/Mem/Library/MemMcIpLib/Gen3/MemConfigMcSpecific.c
+  ServerSiliconPkg/Mem/Library/MemMcIpLib/MemMcIpLibGnr.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 3faf686d347a4ae45c55ba756c3430d26b8cc6f7 
+*********************************************************************************
+
+[ME]
+
+  Apply i2c mode workaround only to MiscVendor old pcb
+  
+  [Feature Description]
+  Switch from I3C to I2C mode only for MiscVendor dimms
+  with SPD Byte 539 is 0x5A
+  The workaround is applied to whole socket when a
+  single affected dimm is present in the socket
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 22020003746
+  
+  Change-Id: Id8caf741d32bb268ab4e739faddd5edc694f9a73
+  Original commit hash: 245e09d36f890da72a3dd61fe1fe483f8e2c5650
+  
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  ServerSiliconPkg/Mem/Library/MemMcIpLib/Common/MemConfigMc.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 5e56e35bcb1dcafb000d456db289d4c86cdb98ba 
+*********************************************************************************
+
+[BoardPkg]
+
+  Rename MBA Profiles
+  
+  [Feature Description]
+  Rename the profiles as follows:
+  Legacy BW shaping -> Low core BW shaping
+  Linear BW shaping -> Mid core BW shaping
+  Biased BW shaping -> High core BW shaping
+  
+  Package/Module: UPI/MbePerfSettings
+  
+  [Impacted Platform]
+  GNR, SRF, GNR-D, GRR
+  
+  Hsd-es-id: 14022193827
+  
+  Change-Id: I7357d78cdb963df03533575182f75eb654ccf656
+  Original commit hash: a0e6aeb5d146d47e66a65a26e9f2f3af25cb3910
+  
+  BirchStreamOpenBoardPkg/Platform/Dxe/FspUpdSetup/FspUpdSetup.uni
+  BirchStreamOpenBoardPkg/Platform/Dxe/FspUpdSetup/FspUpdSetupForms.vfr
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/KtiSetup.hfr
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/KtiSetupStrings.uni
+  ServerSiliconPkg/Include/KtiSetupDefinitions.h
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/MbePerfSettings.c
+  ServerSiliconPkg/Upi/Library/UncoreLib/KtiMain.c
+  ServerSiliconPkg/Upi/Library/UncoreLib/UncoreLibInternal.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 5e7fdfdfef9a1d4db7568364cde3b5733cae515d 
+*********************************************************************************
+
+[ME]
+
+  Provision MemDecode support for 2S UPI Affn. in UBC.
+  
+  [Feature Description]
+  Enable cluster remap in CHA route tables for UBC also.
+  Previously, cluster remap was restricted to SNC.
+  Add RcSim test coverage for BHS AP and SP platforms.
+  
+  Package/Module: ServerSiliconPkg/MemDecodeLib
+  
+  [Impacted Platform]
+  GNR BHS
+  
+  Hsd-es-id: 14022127674
+  
+  [Testing Completed] RcSim Test BIOS
+  
+  Change-Id: I71275a0cc13867007a511a0e24d043c6fde5ad58
+  Original commit hash: 0ee641a7a158e7c6a61656ff3a342fab8bc48795
+  
+  ServerSiliconPkg/Mem/Library/MemDecodeLib/Gen3/7nm/MemDecodeNode.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: restricted
+
+*********************************************************************************
+Commit: f7469be94bc7cae6ca9f15b06029d240e671be8a 
+*********************************************************************************
+
+
+  UDIMM/SODIMM/Memory down update to CS training for CS Vref Selection
+  
+  After completig all CS_VREF, for each CS_VREF for each signal for each device, calculate the absolute eye offset per device (abs(128-EW)).
+  Calculate average Min eye Offset per device (3 point sliding average of the absoulte eye offset).
+  Select the best CS vref as the minimum average eye offset per device.
+  For the channel,subchannel--> do the average CS vref for all devices for all ranks.
+  
+  Hsd-es-id: 16023994517
+  Change-Id: Iab096ef749f7f941b5767f426a437f1c3f49e04e
+  Original commit hash: 222f79adffa1b60ba3e2772151e695ec90f3ba35
+  
+  CpRcPkg/Include/MemCommon.h
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCsClkUdimm.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDisplayDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: d89688712e671d6feb1acbd23d4e724d3be01f7f 
+*********************************************************************************
+
+[SiliconPkg]
+
+  TOR Timeout failure observed with Surprise warm reset
+  
+  [Feature Description]
+  TOR Timeout error due to primary configuration access to the HIOPs PCIe Gen5 CXL Ports when its Fatal Error bit set in its Device Status Register
+  The fix for this will be in GNRD B0 stepping FBLP HW
+  For A0 stepping as a WA use AWR bit to skip the PCIe Gen5 link training to the flow to avoid primary access
+  
+  Package/Module:ServerSiliconPkg/Iio
+  
+  [Impacted Platform]
+  KVL
+  
+  Hsd-es-id: 16023813022
+  
+  Change-Id: I1d5563ef24f4d7cefc41c6d430469b00e1957ab9
+  Original commit hash: 25220159c80432748c6b2b336624e09593863aae
+  
+  ServerSiliconPkg/Iio/Library/PeiIioInitLib/IioEarlyInit.c
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibGnrd.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 33dc073fdf4d57d6411662d86d454f077467250d 
+*********************************************************************************
+
+[BoardPkg]
+
+  Revert "Need to implement a MSR 0x790 BIOS knob"
+  
+  This reverts commit 85e70f444313bbe35d22cc3ecdfa54269cc1eab4.
+  
+  [Feature Description]
+  This reverts commit 85e70f444313bbe35d22cc3ecdfa54269cc1eab4.
+  
+  Package/Module: ServerRasPkg/Driver/Smm
+  
+  [Impacted Platform]
+  SRF-SP
+  
+  Hsd-es-id: 22020004491
+  Change-Id: I2015ed7d8929eedcd70818bba9fc579218abe173
+  Original commit hash: 92037ab215b6f550a1d306ed26a6750dc2ef789f
+  
+  BirchStreamOpenBoardPkg/PreBuildSetupPcdDefaults.dsc.inc
+  ServerPlatformPkg/Include/Guid/SetupVariable.h
+  ServerPlatformPkg/Include/NvVariableUpdateRule.h
+  ServerRasPkg/Driver/Smm/OobRasHandshakeSendData/RasPolicyHelper.h
+  ServerRasPkg/Driver/Smm/WheaErrorInj/ErrorInj.c
+  ServerRasPkg/Driver/Smm/WheaErrorInj/IioErrorInj.c
+  ServerRasPkg/Driver/Smm/WheaErrorInj/WheaErrorInj.inf
+  ServerRasPkg/Include/Protocol/RasPolicy.h
+  ServerRasPkg/PolicySample/PolicySample.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: a1b71796377234279e6fb9c26eea19a92005f928 
+*********************************************************************************
+
+
+  [GNR] [MCR] DDR_RESET_LOOP feature broken by the fix for "system go to infinite loop cycle Issue POWER GOOD RESET!"
+  
+  MCR DIMMs with Montage RCDs have a workaorund applied related to power down mode. That workaround must be
+  reverted in the slow warm boot flow to avoid RCD DCS Timing Training failures.
+  
+  Hsd-es-id: 22019980453
+  
+  Change-Id: I710358319afe8dd5e5a7ce06e0a11dafd6cae970
+  Original commit hash: 17c476ba9ed23a28006fee02367efdfa7a6da71f
+  
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: d4dfc2f07265d95f65113543548a3453d1805fec 
+*********************************************************************************
+
+[ME]
+
+  [GNR] Reintroduce new Dca Timining Vref Complex flow after Dfe with Xtalk data pattern for MCR only
+  
+  [Feature Description]
+  To target UPM mode it is required to issue a Vref centering after DCA DFE by calling Dca Complex Timing and Vref
+  steps using new Dca Complex Xtalk pattern with UPM mode enabled
+  
+  [Resolution]
+  Update Dca Complex timinig/vref training steps has been modified to use COMPLEX_XTALK pattern
+  per Dca Signal and implemented the following training flow ONLY for MCR as follows:
+  
+  Complex Timing(old pattern)
+  DCA Dfe
+  Complex Timing (new pattern)
+  Complex Vref(UPM mode)(new pattern)
+  Complex timing (UPM mode)(new pattern)
+  
+  Package/Module:
+  CpRcPkg/Library/BaseDdr5CoreLib
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib
+  ServerSiliconPkg/Mem/Library/MemTrainingLib
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14022187227
+  
+  [Testing Completed] Yes
+  
+  Change-Id: I6549a875e5de070130c7e71f42967891f82b110c
+  Original commit hash: 39d363a5aaa3ae8c6b6e07bbf7993b7968a71fd2
+  
+  CpRcPkg/CpRcPkg.dec
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Include/Memory/MemFlowsDefinitions.h
+  CpRcPkg/Include/Memory/MemoryCheckpointCodes.h
+  CpRcPkg/Include/Memory/PerformanceTrackerDefinitions.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemStart.c
+  CpRcPkg/Library/BaseMemoryServicesLib/MrcHostInterfaces.c
+  CpRcPkg/Library/PerformanceTrackerLib/PerformanceTrackerLib.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgc.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgcDdr5.c
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemChipDdrio.c
+  ServerSiliconPkg/Mem/Library/MemTrainingLib/Gnr/MemTrainingCallTable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 4970a199217c44b1d776cb542ad8c5f74864dd53 
+*********************************************************************************
+
+[ME]
+
+  [GNR][MCR]BIOS is using RDIMM table entries instead of MCR DIMM table entry for backside ODT and VREF
+  
+  Fix bug that causes backside ODT and Vref settings for RDIMMs to be applied to MCR DIMMs.
+  Update backside ODT table to version 11.6 with edits to include MCR QRx4 changes from HSD 15014203835.
+  Remove inline workarounds from HSD 15014203835 and include those values in the table instead.
+  
+  Add backside ODT table entry to the debug log for each DIMM during "RCD QCS QCA Initialization".
+  
+  Example:
+  
+  N0.C00.D0: Backside ODT Table
+  Signal RON P1 P2 P3 P4 P5 Vref
+  QCA 20 0 0 480 480 80 70.0%
+  QCS 20 0 0 0 0 40 66.5%
+  QCK 14 0 0 0 0 40 0.0%
+  
+  Hsd-es-id: 22019643336
+  
+  Change-Id: I7a39cad7780a5f4c996762d29b0603b18c3cb198
+  Original commit hash: 332fcb516a5726f453e14072181dffdad363a2e3
+  
+  CpRcPkg/Include/Library/OdtTableLib.h
+  CpRcPkg/Include/ReferenceCodeFatalErrors.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  ServerSiliconPkg/Mem/Library/OdtTableLib/Ddr5BacksideOdtValueTable.h
+  ServerSiliconPkg/Mem/Library/OdtTableLib/MemODTTable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  bug
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: ad139ee3f948ce89bd295e17eec7f8ec91b996ba 
+*********************************************************************************
+
+[BoardPkg]
+
+  [GNR HEDT/1SWS]: bios knobs to bypass DMI link active check - Port from PO to Main
+  
+  [Feature Description]
+  Port knob from PO to Main branch
+  
+  Package/Module: ServerSiliconPkg
+  
+  [Impacted Platform]
+  GNR-WS
+  
+  Hsd-es-id: 18038010194
+  
+  Change-Id: Ic5df2d88108fc772796998384d1a8a9544ac0f73
+  Original commit hash: 5b2de2ef01aa6650a9d6c6b1082ffb0d89ab346f
+  
+  BirchStreamOpenBoardPkg/PreBuildSetupPcdDefaults.dsc.inc
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/Iio/IioFormGlobalDfxConfig.hfr
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/Iio/IioSetupStrings.uni
+  ServerSiliconPkg/Iio/Include/ConfigBlock/IioPcie.h
+  ServerSiliconPkg/Iio/Library/IioCxlInit/IioCxlInitSocGen3.c
+  ServerSiliconPkg/Iio/Library/PeiIioSiliconDataInitLib/PeiIioSiliconDataInitLib.c
+  ServerSiliconPkg/Include/Guid/SocketIioVariable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: 8b00dbe8ebfc83b8822ed0285be96d22362fa537 
+*********************************************************************************
+
+[SiliconPkg]
+
+  ServerGen3 add warm reset check on ISCLK SSC silicon workaround
+  
+  [Feature Description]
+  Checking on the ISCLK SSC Sync Done State is sufficient enough to
+  determine whether or not the ISCLK SSC silicon workaround has to run.
+  However the ISCLK SSC SYNC Done State is effective only with the
+  dependent CPLD. This patch just tries to mitigate the risk
+  that the dependency not being met causes unexpected behavior,
+  for instance the case BIOS is updated but CPLD is old.
+  
+  [Resolution]
+  This patch adds the warm reset check to the existing condition for running
+  ISCLK SSC silicon workaround.
+  
+  Package/Module:
+  ServerSiliconPkg/Upi/Library/SoftStrapLib/GnrSrf/SoftStrapLib.c
+  
+  [Impacted Platform]
+  ServerGen3
+  
+  Hsd-es-id: 22019997874
+  
+  Change-Id: I88b838a7705ad433ebc6b46d0092840e04c59bbf
+  Original commit hash: 54c5668c864acb650fd7d5a1130e9c98e43c0bbc
+  
+  ServerSiliconPkg/Upi/Library/SoftStrapLib/GnrSrf/SoftStrapLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: ace1171189663dd210822f192cbfab1584e76057 
+*********************************************************************************
+
+[ME]
+
+  [GNR][MCR] The RCD Termination setting RW10 shows incorrect setting in BIOS
+  
+  MCR DIMMs are configuring the RCD IBT value for CA/CS/CK to 60 ohms even thought the ODT table called for 48 ohms. This is a logic bug.
+  However, 60 ohms is now the desired value for MCR. The ODT table version ww14_24 has been updated for 60 ohms and also updates MCR CA Vref and CS Vref values.
+  
+  Fix the MCR logic bug and also consume the new ww14_24 ODT table.
+  
+  Hsd-es-id: 14021961740
+  
+  Change-Id: I46ada4899d08cd65c4b4a29b1a341ef5e67d9dfd
+  Original commit hash: 13c0ece36988c2849a14f572bd359ad12ee33275
+  
+  CpRcPkg/Include/ReferenceCodeFatalErrors.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  ServerSiliconPkg/Mem/Library/OdtTableLib/Gnr/Ddr5OdtValueTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  bug
+
+*********************************************************************************
+Commit: 982b0fab894a5b4fa17ed64bce7c27e3cb490728 
+*********************************************************************************
+
+[ME]
+
+  Revert "[GNR] Request to merge the new flow with Dca Complex Xtalk pattern and additional DCA Vref and timing complex after last timing complex in MRC flow."
+  
+  This reverts commit 4b36b703a151cb2e5be538b72d61a9bb2f2b8dc6.
+  [Feature Description]
+  revert it to fix block silicon boot
+  Package/Module:
+  
+  [Impacted Platform]
+  BHS SRF
+  Hsd-es-id: 15015962800
+  
+  [Testing Completed]
+  
+  Change-Id: I5cfc57fc8f5b493a185409b33a4f21977e9c3c84
+  Original commit hash: c101f419d9281a0242025ff02f57b2a25b540a4f
+  
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Include/Memory/MemFlowsDefinitions.h
+  CpRcPkg/Include/Memory/MemoryCheckpointCodes.h
+  CpRcPkg/Include/Memory/PerformanceTrackerDefinitions.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemStart.c
+  CpRcPkg/Library/BaseMemoryServicesLib/MrcHostInterfaces.c
+  CpRcPkg/Library/PerformanceTrackerLib/PerformanceTrackerLib.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgc.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgcDdr5.c
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemChipDdrio.c
+  ServerSiliconPkg/Mem/Library/MemTrainingLib/Gnr/MemTrainingCallTable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: cfd266a51000da5443c90ba664c9dee0c78cd568 
+*********************************************************************************
+
+[ME]
+
+  [GNR] Request to merge the new flow with Dca Complex Xtalk pattern and additional DCA Vref and timing complex after last timing complex in MRC flow.
+  
+  [Feature Description]
+  To target UPM mode it is required to issue a Vref centering after DCA DFE by calling Dca Complex Timing and Vref
+  steps using new Dca Complex Xtalk pattern with UPM mode enabled
+  
+  [Resolution]
+  Update Dca Complex timinig/vref training steps has been modified to use COMPLEX_XTALK pattern
+  per Dca Signal and implemented the following trainig flow ONLY for MCR as follows:
+  
+  Complex Timing(old pattern)
+  DCA Dfe
+  Complex Timing (new pattern)
+  Complex Vref(UPM mode)(new pattern)
+  Complex timing (UPM mode)(new patter)
+  
+  Package/Module:
+  CpRcPkg/Library/BaseDdr5CoreLib
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib
+  ServerSiliconPkg/Mem/Library/MemTrainingLib
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22019910089
+  
+  [Testing Completed] Yes
+  
+  Change-Id: I6549a875e5de070130c7e71f42967891f82b110c
+  Original commit hash: 4b36b703a151cb2e5be538b72d61a9bb2f2b8dc6
+  
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Include/Memory/MemFlowsDefinitions.h
+  CpRcPkg/Include/Memory/MemoryCheckpointCodes.h
+  CpRcPkg/Include/Memory/PerformanceTrackerDefinitions.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemStart.c
+  CpRcPkg/Library/BaseMemoryServicesLib/MrcHostInterfaces.c
+  CpRcPkg/Library/PerformanceTrackerLib/PerformanceTrackerLib.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgc.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgcDdr5.c
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemChipDdrio.c
+  ServerSiliconPkg/Mem/Library/MemTrainingLib/Gnr/MemTrainingCallTable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: ebff5feb8cdfb2e35f858567327bfb3434b4ff66 
+*********************************************************************************
+
+[BoardPkg]
+
+  ServerGen3 Update ISCLK SSC silicon workaround flow
+  
+  [Feature Description]
+  Currently the ISCLK SSC silicon workaround, which was applied only on
+  4 sockets and 8 sockets configuration, runs on every global reset or
+  on the first boot after flashing FW, and that caused an instability.
+  The flow does not meet the expectation to address the silicon issue.
+  
+  [Resolution]
+  The ISCLK SSC silicon workaround should run only once on the first
+  cold boot after AC power loss. The subsequent boots should not run the
+  workaround. Since the ISCLK provisioning is completed, the SSC settings
+  for all sockets are in sync and ISCLK SSC is being turned on,
+  the workaround should not run anymore until those settings are all
+  cleared up by the next AC power loss.
+  
+  With this BIOS patch, BIOS works together with CPLD to get the first
+  cold boot indicator bit in FPGA by using GPIO 88/92.
+  BIOS is responsible to read the indicator bit by GPIO 92.
+  If BIOS finds the bit is not set, BIOS should set the bit by using
+  GPIO 88 after the ISCLK SSC silicon workaround is completed.
+  The AC power loss resets the indicator bit to zero.
+  
+  The ISCLK SSC silicon workaround is applicable only to the 4 sockets
+  and the 8 sockets configuration which are both supported
+  by FSP dispatch mode only. This BIOS patch to update the workaround flow
+  is supported for FSP dispatch mode only.
+  
+  Package/Module:
+  BirchStreamOpenBoardPkg/Library/UbaGpioInitLib/UbaGpioInitLib.c
+  BirchStreamOpenBoardPkg/Library/UbaGpioInitLib/UbaGpioInitLib.inf
+  BirchStreamOpenBoardPkg/Library/UbaGpioInitLib/UnitTest/UbaGpioInitLibTest.inf
+  BirchStreamOpenBoardPkg/Library/UbaGpioInitLib/UnitTest/UbaGpioInitLibTestCase.c
+  BirchStreamOpenBoardPkg/Uba/UbaMain/TypeBeechnutCityModularRP/Pei/GpioTable.c
+  BirchStreamRpPkg/Tool/InterfaceCheck/InterfaceAllowList.ini
+  GnrwsRpPkg/Tool/InterfaceCheck/InterfaceAllowList.ini
+  ServerSiliconPkg/SiliconPkg.dec
+  ServerSiliconPkg/Upi/Library/SoftStrapLib/GnrSrf/SoftStrapLib.c
+  ServerSiliconPkg/Upi/Library/SoftStrapLib/SoftStrapLibGnrSrf.inf
+  
+  [Impacted Platform]
+  ServerGen3
+  
+  Hsd-es-id: 14021646670
+  
+  Change-Id: Ibac264754471f7143c0ede0c71a3283ce2aa4d47
+  Original commit hash: 2f42124d751a65d54ad0ed5e421a0d9603df7413
+  
+  BirchStreamOpenBoardPkg/Library/UbaGpioInitLib/UbaGpioInitLib.c
+  BirchStreamOpenBoardPkg/Library/UbaGpioInitLib/UbaGpioInitLib.inf
+  BirchStreamOpenBoardPkg/Library/UbaGpioInitLib/UnitTest/UbaGpioInitLibTest.inf
+  BirchStreamOpenBoardPkg/Library/UbaGpioInitLib/UnitTest/UbaGpioInitLibTestCase.c
+  BirchStreamOpenBoardPkg/Uba/UbaMain/TypeBeechnutCityModularRP/Pei/GpioTable.c
+  GnrwsRpPkg/Tool/InterfaceCheck/InterfaceAllowList.ini
+  ServerSiliconPkg/SiliconPkg.dec
+  ServerSiliconPkg/Upi/Library/SoftStrapLib/GnrSrf/SoftStrapLib.c
+  ServerSiliconPkg/Upi/Library/SoftStrapLib/SoftStrapLibGnrSrf.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 5a6facef8cb768b1a40eca9f3c92af1647454630 
+*********************************************************************************
+
+
+  ServerGen3 correct SMBIOS socket count
+  
+  [Issue Description]
+  The socket counts field in SMBIOS is filled with a wrong number
+  in case the system has one socket only.
+  
+  [Resolution]
+  The SMBIOS field for the number of sockets should be initialized
+  as followings,
+  - UBA sets PcdOemSkuBoardsocketCount to 2 for AP, 2 4 or 8 for SP.
+  2 for RP board, 4 or 8 for Modular board.
+  (This is determined depending on customer's platform BIOS design)
+  - SRF supports 2S in max. This patch hard codes to 2
+  if PcdOemSkuBoardsocketCount is set with larger than 2.
+  - Hard code to 1 for GNR R1S SKU.
+  - Hard code to 1 for SRF SP 1S SKU.
+  
+  Package/Module:
+  ServerPlatformPkg/Features/Cpu/Dxe/PlatformCpuPolicyDxe/PlatformCpuPolicyDxe.c
+  
+  [Impacted Platform]
+  Server Gen3
+  
+  Hsd-es-id: 15015865878
+  
+  Change-Id: I300de41947c9b8d540b79306ce8c6e5166e8fbe8
+  Original commit hash: 9e27e69d2a5bd04d6c36fa24b32f465736ba04bc
+  
+  ServerPlatformPkg/Features/Cpu/Dxe/PlatformCpuPolicyDxe/PlatformCpuPolicyDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: e09281d74d45d827dd2136ed802a09e54cdee1a9 
+*********************************************************************************
+
+[ASL]
+
+  Timed GPIO (TGPIO) ACPI interface for OS driver
+  
+  [Feature Description]
+  OS driver needs to access TGPIO registers that are mapped
+  in PMC/ACPI PM MMIO space.
+  To obtain Base Address of TGPIO registers space,
+  the driver uses an ACPI interface prepared by BIOS.
+  The requirement is BIOS shall expose an ACPI table
+  defining TGPIO registers mapping in the system memory map.
+  BIOS shall expose TGI0 and TGI1 devices _CRS ACPI methods
+  with following ACPI Hardware IDs (HIDs):
+  - INTC:0x1023 for TGPIO 0
+  - INTC:0x1024 for TGPIO 1
+  
+  Package/Module:
+  ACPI
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 13011767424
+  
+  Change-Id: I05ee325aaf66f7e43f17fa82b8475e209b9cbc3c
+  Original commit hash: 23a0fb8c5deed01a0269fbfed8b3e27ef512526e
+  
+  OneSiliconPkg/Fru/Ibl/AcpiTables/Dsdt/IblTimedGpio.asl
+  OneSiliconPkg/Fru/Ibl/AcpiTables/Dsdt/Pch.asl
+  OneSiliconPkg/Fru/Ibl/Dxe/IblAcpiDxe.c
+  OneSiliconPkg/Fru/Ibl/LibraryPrivate/PeiIblInitLib/IblHobs.c
+  ServerPlatformPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdateIbl.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: 1fb7fdadcc179760a2a91b8eb6c5dfb7801f20b6 
+*********************************************************************************
+
+[SiliconPkg], [ME]
+
+  [GNR] Enhancement to RMT DCA pattern used for CA margin (timing & vref), also apply pattern to IO Health Check
+  
+  [Feature Description]
+  Current RMT Dca timing/vref results do not correlate with OS RMT DCA timing/vref results that are lower
+  than the ones reported by RMT.
+  
+  [Resolution]
+  Enhanced RMT DCA timing/vref data pattern by programming of CADB_BUFF depending on the CA signal being margined.
+  
+  Package/Module:
+  CpRcPkg/Library/BaseDdr5CoreLib
+  ServerSiliconPkg/Library/MemBootHealthLib
+  ServerSiliconPkg/Library/MemoryEvContent/RMT
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 22019907585
+  
+  [Testing Completed] Yes
+  
+  Change-Id: I677e3dc8a3ac5612db19d4b15ba083bafe96ea66
+  Original commit hash: 49d7711d967fe868720082277d1094686bce81dd
+  
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Include/ReferenceCodeFatalErrors.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  ServerSiliconPkg/Library/MemBootHealthLib/MemBootHealthLib.c
+  ServerSiliconPkg/Library/MemoryEvContent/RMT/externals/RmtCore/RmtCore.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Common/MemCpgcIpLibInternal.h
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgcDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: edd822240cd17cd9e7955fd95408c74ef0b59166 
+*********************************************************************************
+
+
+  Check CAPID0[25] for MiniDpe enable/disable
+  
+  [Issue Description]
+  Use DPE_GET_PROF for only GNR_A, and for every other
+  Si/Step , MiniDpe enabled/siable shoudl be checked
+  by CAPID0[25]
+  
+  [Resolution]
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 15015838171
+  
+  Change-Id: I75e2973fff87b93097fad8008872894b7e261acc
+  Original commit hash: ef24c7ec66e13642af54efe5b2f4af41ec31dc25
+  
+  ServerSecurityPkg/MiniDpe/BootFileDpe.c
+  ServerSecurityPkg/MiniDpe/BootFileDpe.h
+  ServerSecurityPkg/MiniDpe/BootFileDpe.inf
+  ServerSecurityPkg/MiniDpe/PeiS3mDpe.c
+  ServerSecurityPkg/MiniDpe/S3mDpe.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: abaa09f6d69e43c14924c63d5193a987da914d7e 
+*********************************************************************************
+
+[ASL]
+
+  Revert "UX4 PHY recipe needs to be urgently updated to latest version for PCIe recipe7 and DMI to keep version 3.072"
+  
+  This reverts commit afb71b25ba6e5a6f61da67620528e055246ca77d.
+  [Impacted Platform]
+  GRR
+  
+  Hsd-es-id: 16023917271
+  Change-Id: Idc2f4920637e420b133fc1b42dde3f3e463039ec
+  Original commit hash: 618ceada865c8782ad31add2e9178346bf04bec8
+  
+  ServerSiliconPkg/Iio/Library/IioEvRecipeInjectionLib/Pcie/Gen4/PcieEvRecipeInjectionLib.aslc
+  ServerSiliconPkg/Iio/Library/IioEvRecipeInjectionLib/Pcie/Gen4/PcieEvRecipeInjectionLibPrivate.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 97056224cd2b93b0f685280d13f14b108634bf1b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [MCR]system go to infinite loop cycle "Issue POWER GOOD RESET!" and "Issue WARM RESET!" when change bios knob "dfxRankMask_12=0x0".
+  
+  When MCR DIMMs are installed, some warm resets may be converted to cold resets in order to clear the data buffer RTT park registers.
+  This may cause issues for other BIOS code that triggers warm resets, since that code assumes that a warm reset will occur and not
+  a cold reset.
+  This change solves the problem for BIOS agents that trigger warm resets by initializing data buffer RTT Park registers before
+  the warm reset occurs.
+  This change only benefits resets that are triggered using CheckAndHandleResetRequests().
+  
+  Hsd-es-id: 15015773167
+  
+  Change-Id: I59f6b11a8150e13cc4bb9a53ee5253faa8e6553f
+  Original commit hash: 2570dc58d3beff289f1af936ab8cc0889e3f3fc4
+  
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Include/Library/MemoryCoreLib.h
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemBcom.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDbAccess.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/InitMem.c
+  ServerSiliconPkg/Library/ResetServicesLib/ResetServices.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 8bdfa480aa160ba039638fbfb911649f7251c5cc 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Remove depepndency on PciRead Lib for OOBMSM driver
+  
+  [Issue Description]
+  PciRead32() doesnt give correct Pci Cfg address reads
+  if MmCfgBase changed via BIOS knobs.
+  
+  [Resolution]
+  Remove depependency on PciLib by using USRA_PCIE
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 15015768552
+  
+  Change-Id: If11b4dd009fcecc7eaeb274a3b35930856321cca
+  Original commit hash: b5beda6c4dd1803ca44fe011c44bc861760fb48d
+  
+  ServerSiliconPkg/Include/Library/Oobmsm.h
+  ServerSiliconPkg/Library/OobMsm/OobmsmIpLib/Oobmsm.c
+  ServerSiliconPkg/Library/OobMsm/OobmsmIpLib/OobmsmIpLib.inf
+  ServerSiliconPkg/Library/VabIpLib/VabIpLib.c
+  ServerSiliconPkg/Security/Cct/Library/SecureDataObjectStorageLib/SecureDataObjectStorageCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 46736088bd70f12adf023a0b5a6742bb68bdeab0 
+*********************************************************************************
+
+[SiliconPkg], [ME]
+
+  [Gen3][MCR]Switch to I2C at the end of MRC
+  
+  [Feature Description]
+  Switch to I2C mode at the end of MRC for all MCR 4RX8 dimms
+  This is a workaround to prevent shutdown when running high
+  loads during OS for MCR 4RX8 dimms.
+  
+  Hsd-es-id: 14022106161
+  
+  Change-Id: I36e520dc6ff8e48a2ec8787eee5026d5599b4e59
+  Original commit hash: 69c868e7af87803cebc138b08f6dda7dd79eb65f
+  
+  CpRcPkg/Include/Library/ProcSmbIpLib.h
+  ServerSiliconPkg/Library/ProcSmbIpLib/Common/ProcSmbChipDxeSmm.c
+  ServerSiliconPkg/Library/ProcSmbIpLib/Pei/ProcSmbChipPei.c
+  ServerSiliconPkg/Mem/Library/MemMcIpLib/Common/MemConfigMc.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: fb7798a236119f54d238640aaed0b8075df30d6b 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Fix Softstrap bug related to invalid UPI Affinity knob on SRF CPU
+  
+  [Issue Description]
+  BIOS was setting the S3M softstrap to indicate the UPI Affinity feature
+  was requested to be enabled by setup knob or UPI Policy PPI. However,
+  UPI affinity feature is not supported on SRF, and no other FW was
+  supporting this invalid knob setting.
+  
+  [Resolution]
+  OutTwoSktTopology is used to indicate the UPI link topology for 2-socket
+  UPI topology that can support UPI affinity. This OutTwoSktTopology is one
+  of the criteria that used by BIOS when updating UpiAffinityEn field in S3M
+  CPU softstrap. For SRF that does not support UPI affinity feature, this
+  OutTwoSktTopology shall remain as TYPE_UNKNOWN so that BIOS does not update
+  S3M softstrap field.
+  
+  Package/Module: ServerSiliconPkg/Upi/Library/MultiSocketLib
+  Package/Module: ServerSiliconPkg/Upi/Library/UncoreLib
+  
+  [Impacted Platform]
+  BHS
+  
+  Hsd-es-id: 22019804633
+  
+  Change-Id: I9e2f6b5bbff7f9abf75ba6c41c99fb621eb0050e
+  Original commit hash: 49242ae320882b45443ff862ff65d498b006ab6b
+  
+  ServerSiliconPkg/Upi/Library/MultiSocketLib/ChipGnrSrf/UpiTopologyPor.c
+  ServerSiliconPkg/Upi/Library/MultiSocketLibNull/KtiMultiSocketNull.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  bug
+  --Commit Message Contains Key Word: strap
+
+*********************************************************************************
+Commit: 5d0c46cde322ec23a041133a18804ad3c4101872 
+*********************************************************************************
+
+
+  GRR: Revert PcdCpuSmmRestrictedMemoryAccess change
+  
+  [Issue Description]
+  There is DXE_ASSERT issue when set PcdCpuSmmRestrictedMemoryAccess to
+  TRUE for GRR
+  
+  [Resolution]
+  Revert PcdCpuSmmRestrictedMemoryAccess change as WA
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 16023881929
+  
+  Change-Id: I8b62cca2f5c1925c4f3f9f665ebea0d6c674b6c3
+  Original commit hash: 096c7249d015493994224d614fd102609fb23c2d
+  
+  ServerPlatformPkg/Features/Cpu/Dxe/PlatformCpuPolicyDxe/PlatformCpuPolicyDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: c62cacef532bf2e8258b7686d8541836fee93656 
+*********************************************************************************
+
+
+  Adding FIT4 DATA through scripts in GNRD for external ipclean
+  
+  [Feature Description]
+  Adding FIT4 DATA through scripts in GNRD for external ipclean so that FIT4 will add during build process no need to use FITM tool
+  
+  Package/Module:ServerPlatformPkg
+  
+  [Impacted Platform]
+  GNRD
+  
+  Hsd-es-id: 18037947998
+  
+  Change-Id: Icf91344d1ab35dcaf79d21cbf751b7268b1cd886
+  Original commit hash: abef580b56f8873313a47a2dbc3822869dc44483
+  
+  ServerPlatformPkg/BuildScript/Source/BuildStep/IFWIGen.py
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 19f746a5697af4b34dceb9dd2dbc4a5516c8a97b 
+*********************************************************************************
+
+
+  [GNR]Change DCA DFE Step size = 1 for MCR Only
+  
+  For first iteration loop in DCA DFE training, for MCR DIMMs only, set the DFE tap stepsize to 1.
+  Other taps use original stepsize of 2.
+  No change for RDIMMs, which continue to use a step size of 2.
+  
+  Hsd-es-id: 22019871836
+  
+  Change-Id: Ia866287b69abe04413b05e51f9d0a5694481e91e
+  Original commit hash: 76c26748c800ad76c3fd94e9579071858ae8ebde
+  
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDcsDcaDfeDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 4aad690c8215f2e996e85818861217a440792041 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [GNR-D][SBL] FSP-S UPD for passing manifest data
+  
+  [Feature Description]
+  Metadata start pointer is updated for FSP-S phase.
+  Pointer which is set in FSP-M phase is not sufficient
+  because of TempRam data reallocation to RAM (pointer change).
+  PlatformCpuPolicyPei moved before FspInit to perform Policy update
+  before SecurityIdePostMem execution.
+  
+  Package/Module:
+  BirchStreamFspPkg
+  ServerSiliconPkg/Security
+  
+  [Impacted Platform]
+  GNRD FSP API
+  
+  Hsd-es-id: 18037793412
+  
+  Change-Id: Ie1f6a9d6d0fb6e95e92de6d19d26fa27522125bd
+  Original commit hash: 81f7894c2a49773619acfdc674ef400f477ad2b2
+  
+  BirchStreamFspPkg/FspInit/Pei/FspInit.c
+  BirchStreamFspPkg/Include/Library/PeiPolicyUpdatePostMemLib.h
+  BirchStreamFspPkg/KaseyvilleFspPkg.fdf
+  BirchStreamFspPkg/Library/PeiPolicyUpdatePostMemLib/PeiPolicyUpdatePostMemLib.inf
+  BirchStreamFspPkg/Library/PeiPolicyUpdatePostMemLib/PeiSecurityPolicyUpdatePostMem.c
+  BirchStreamFspPkg/Upd/FspUpd.yaml
+  BirchStreamFspPkg/Upd/FspUpd64bit.yaml
+  BirchStreamFspPkg/Upd/FspUpdGnrd.yaml
+  BirchStreamFspPkg/Upd/FspUpdGnrd64bit.yaml
+  ServerSiliconPkg/Security/Cct/Library/SecurityCctVarStorageLib/4v0/Common/Hob.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 5ccb494be903a2d45c6bb4a8d0c60c3e3baee0df 
+*********************************************************************************
+
+[BoardPkg]
+
+  Gen3: set PcdCpuSmmRestrictedMemoryAccess to TRUE for internal/external IPC build
+  
+  [Feature Description]
+  1. Keep PcdCpuSmmRestrictedMemoryAccess = TRUE for both internal IPC and external IPC
+  to avoid customer issue escape
+  2. Keep PcdCpuSmmRestrictedMemoryAccess = FALSE for default debug build
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 15015794140
+  
+  Change-Id: I0ef8f4e5e3b9b1a740544c7f9e183c2b3321cbc0
+  Original commit hash: e6b258dda0d49da20516391f58ea2f725e7384b4
+  
+  BirchStreamFspPkg/BirchStreamFspPkg.dsc
+  BirchStreamFspPkg/GnrwsFspPkg.dsc
+  BirchStreamFspPkg/Include/Dsc/BirchStreamOpenBoardPkgFvLateSiliconPcdInit.dsc
+  BirchStreamFspPkg/Include/Dsc/BirchStreamRpPkgFvLateSiliconPcdInit.dsc
+  BirchStreamFspPkg/Include/Dsc/GnrwsRpPkgFvLateSiliconPcdInit.dsc
+  BirchStreamFspPkg/Include/Dsc/KaseyvilleRpPkgFvLateSiliconPcdInit.dsc
+  BirchStreamOpenBoardPkg/Include/Dsc/Common/PlatformPkgCommonPcd.dsc
+  ServerPlatformPkg/Features/Cpu/Dxe/PlatformCpuPolicyDxe/PlatformCpuPolicyDxe.c
+  ServerPlatformPkg/PlatformPkg.dec
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+################################################################################
+
+Report Summary: Backstop found 75 suspect commits for review 
+
+Warnings Found:
+  Commit: 209bc49    --Commit Message Contains Key Word: internal
+  Commit: d2ded5a    --Commit Message Contains Key Word: hardware
+  Commit: b2e242a    --Commit Message Contains Key Word: internal
+  Commit: f0b6ef2    --Commit Message Contains Oem: LG
+  Commit: 67bbb1a    --Commit Message Contains Key Word: Workaround
+  Commit: 6bcd64c    --Commit Message Contains Oem: LG
+  Commit: c0ce4d3    --Commit Message Contains Key Word: revert
+  Commit: 4d4156e    --Commit Message Contains Key Word: Workaround
+  Commit: 0693edf    --Commit Message Contains Key Word: HW
+  Commit: 835f0e0    --Commit Message Contains Key Word: Workaround
+  Commit: 3170bff    --Commit Message Contains Key Word: revert
+  Commit: 5cb70f2    --Commit Message Contains Key Word: fuse
+  Commit: 5cb70f2    --Commit Message Contains Key Word: qdf
+  Commit: 5cb70f2    --Commit Message Contains Key Word: fusing
+  Commit: c80390c    --Commit Message Contains Key Word: internal
+  Commit: c80390c    --Commit Message Contains Key Word: HW
+  Commit: 7f9c488    --Commit Message Contains Key Word: step
+  Commit: 1e54927    --Commit Message Contains Key Word: revert
+  Commit: 02e6654    --Commit Message Contains Key Word: step
+  Commit: 02e6654    --Commit Message Contains Key Word: stepping
+  Commit: 02e6654    --Commit Message Contains Key Word: security
+  Commit: fe4ebea    --Commit Message Contains Key Word: step
+  Commit: 982c340    --Commit Message Contains Key Word: sku
+  Commit: cfe0d6a    --Commit Message Contains Key Word: step
+  Commit: 320d612    --Commit Message Contains Key Word: sku
+  Commit: 24950de    --Commit Message Contains Key Word: restricted
+  Commit: c304918    --Commit Message Contains Key Word: revert
+  Commit: e0751e1    --Commit Message Contains Key Word: security
+  Commit: e0751e1    --Commit Message Contains Key Word: revert
+  Commit: ba45ce4    --Commit Message Contains Key Word: sku
+  Commit: 67adf5e    --Commit Message Contains Key Word: security
+  Commit: 67adf5e    --Commit Message Contains Key Word: step
+  Commit: 67adf5e    --Commit Message Contains Key Word: stepping
+  Commit: be24857    --Commit Message Contains Key Word: silent
+  Commit: e6587e0    --Commit Message Contains Key Word: step
+  Commit: 7875242    --Commit Message Contains Key Word: internal
+  Commit: e92240f    --Commit Message Contains Key Word: internal
+  Commit: ba4a67c    --Commit Message Contains Key Word: step
+  Commit: c8bfcb7    --Commit Message Contains Key Word: step
+  Commit: cea7e8b    --Commit Message Contains Key Word: step
+  Commit: cea7e8b    --Commit Message Contains Key Word: stepping
+  Commit: 908fb20    --Commit Message Contains Key Word: step
+  Commit: cda4241    --Commit Message Contains Key Word: revert
+  Commit: b225f14    --Commit Message Contains Key Word: silent
+  Commit: b225f14    --Commit Message Contains Key Word: step
+  Commit: b225f14    --Commit Message Contains Key Word: stepping
+  Commit: b225f14    --Commit Message Contains Key Word: fusing
+  Commit: 1510909    --Commit Message Contains Key Word: revert
+  Commit: 4b36ea0    --Commit Message Contains Key Word: step
+  Commit: 4b36ea0    --Commit Message Contains Key Word: internal
+  Commit: 5789a42    --Commit Message Contains Key Word: step
+  Commit: 5789a42    --Commit Message Contains Key Word: internal
+  Commit: 72aa37b    --Commit Message Contains Key Word: sku
+  Commit: 7690a82    --Commit Message Contains Key Word: step
+  Commit: 7690a82    --Commit Message Contains Key Word: internal
+  Commit: baeaa42    --Commit Message Contains Key Word: step
+  Commit: baeaa42    --Commit Message Contains Key Word: stepping
+  Commit: baeaa42    --Commit Message Contains Key Word: Workaround
+  Commit: b62d1fe    --Commit Message Contains Key Word: restricted
+  Commit: b62d1fe    --Commit Message Contains Key Word: http
+  Commit: bf8e9c0    --Commit Message Contains Key Word: fuse
+  Commit: db883a7    --Commit Message Contains Key Word: Workaround
+  Commit: 78fb330    --Commit Message Contains Oem: NEC
+  Commit: 78fb330    --Commit Message Contains Key Word: HW
+  Commit: 690cfeb    --Commit Message Contains Key Word: sku
+  Commit: 3faf686    --Commit Message Contains Key Word: Workaround
+  Commit: 5e56e35    --Commit Message Contains Key Word: internal
+  Commit: 5e7fdfd    --Commit Message Contains Key Word: restricted
+  Commit: f7469be    --Commit Message Contains Key Word: internal
+  Commit: d896887    --Commit Message Contains Key Word: step
+  Commit: d896887    --Commit Message Contains Key Word: stepping
+  Commit: d896887    --Commit Message Contains Key Word: HW
+  Commit: 33dc073    --Commit Message Contains Key Word: revert
+  Commit: a1b7179    --Commit Message Contains Key Word: Workaround
+  Commit: d4dfc2f    --Commit Message Contains Key Word: step
+  Commit: 4970a19    --Commit Message Contains Key Word:  bug
+  Commit: 4970a19    --Commit Message Contains Key Word: Workaround
+  Commit: ad139ee    --Commit Message Contains Key Word: bypass
+  Commit: 8b00dbe    --Commit Message Contains Key Word: Workaround
+  Commit: ace1171    --Commit Message Contains Key Word:  bug
+  Commit: 982b0fa    --Commit Message Contains Key Word: revert
+  Commit: cfd266a    --Commit Message Contains Key Word: step
+  Commit: ebff5fe    --Commit Message Contains Key Word: Workaround
+  Commit: 5a6face    --Commit Message Contains Key Word: sku
+  Commit: e09281d    --Commit Message Contains Key Word: hardware
+  Commit: 1fb7fda    --Commit Message Contains Key Word: internal
+  Commit: edd8222    --Commit Message Contains Key Word: step
+  Commit: abaa09f    --Commit Message Contains Key Word: revert
+  Commit: 9705622    --Commit Message Contains Key Word: internal
+  Commit: 8bdfa48    --Commit Message Contains Key Word: security
+  Commit: 4673608    --Commit Message Contains Key Word: Workaround
+  Commit: fb7798a    --Commit Message Contains Key Word:  bug
+  Commit: fb7798a    --Commit Message Contains Key Word: strap
+  Commit: 5d0c46c    --Commit Message Contains Key Word: revert
+  Commit: c62cace    --Commit Message Contains Key Word: step
+  Commit: 19f746a    --Commit Message Contains Key Word: step
+  Commit: 4aad690    --Commit Message Contains Key Word: security
+  Commit: 5ccb494    --Commit Message Contains Key Word: internal
