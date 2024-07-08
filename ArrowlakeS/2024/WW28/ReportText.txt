@@ -1,0 +1,88 @@
+*********************************************************************************
+Commit: 5d0006185bb057a64f44203d9b727b289560f654 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  [ARL S][OC]Core 0 Fused P0 Minimum Voltage Status are reflecting as NA
+  
+  [Issue Description]
+  Unexpected Fused P0 Minimum Voltage are reflecting as NA in BIOS page
+  
+  [Resolution]
+  Remove OC mailbox command 0x7 due to the command is not supported
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  PlatSamplePkg
+  
+  [Impacted Platform]
+  S, H
+  
+  Hsd-es-id: 16024443732
+  Change-Id: I5e18f35be0c37597d86bb295d0a57035322f84e5
+  Original commit hash: 438abcc2c1ff21aec4568790adfec77f37402903
+  
+  ClientOneSiliconPkg/Include/Library/OcMailboxLib.h
+  ClientOneSiliconPkg/Include/Library/OcPlatformLib.h
+  ClientOneSiliconPkg/IpBlock/Overclocking/IncludePrivate/Library/PeiOcLib.h
+  ClientOneSiliconPkg/IpBlock/Overclocking/Library/DxeOcPlatformLib/DxeOcPlatformLib.c
+  ClientOneSiliconPkg/IpBlock/Overclocking/Library/DxeOcPlatformLib/DxeOcPlatformLib.inf
+  ClientOneSiliconPkg/IpBlock/Overclocking/Library/DxeOcPlatformLibNull/DxeOcPlatformLibNull.c
+  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcLib/OcLibrary.c
+  MeteorLakePlatSamplePkg/Setup/OverClockSetup.c
+  MeteorLakePlatSamplePkg/Setup/OverClockSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/OverClockSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+
+*********************************************************************************
+Commit: 77069513861ce179b29ca1669e50ab72f8fbe6ec 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ARL][N3B] Resolve the cache size calculation issue of L2 size
+  
+  [Issue Description]
+  An error occurs in the CpuCacheInfoLib/CpuCacheInfoLib when calculating
+  cache sizes across different Dies for ARL. The original code mistakenly
+  clear cache sizes for various core types during intermediate
+  calculations, leading to errors in handling duplicate entries.
+  An EDK2 patch introduces a check to differentiate cache types,
+  which necessitates adjustments to prevent overwriting the distinct
+  entries when calculating the total cache size per level in INTEL repo.
+  
+  [Resolution]
+  This patch implements a check to prevent overwriting existing entries
+  in the Cache table while summing the cache sizes.
+  
+  Package/Module: ARL
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 22019756988
+  Change-Id: I12404b4504d7ba4195a4dfa79a930777e503f461
+  Original commit hash: 11c24b24e837880c2850663c957f9997c7463ee8
+  
+  ClientOneSiliconPkg/IpBlock/CpuInit/Dxe/CpuInitDxe.c
+  ClientOneSiliconPkg/IpBlock/CpuInit/LibraryPrivate/PeiSmbiosCpuLib/SmbiosType7.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+################################################################################
+
+Report Summary: Backstop found 2 suspect commits for review 
+
+Warnings Found:
+  Commit: 5d00061    --Commit Message Contains Key Word: fuse
+  Commit: 7706951    --Commit Message Contains Oem: NEC
