@@ -1,0 +1,190 @@
+================================================================================ 
+Commit: bffca4ced8366dac86feb600e595118247ab087b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Aug 14 15:58:58 2024 +0800 
+-------------------------------------------------------------------------------- 
+[RPL-P]Microcode patch 0x00005103 update for RPL J0
+
+[Feature Description]
+Updated patch 0x00005103 for RPL J0
+
+Package/Module:
+AlderLakeBoardPkg
+
+[Impacted Platform]
+RPL-P
+
+Hsd-es-id: 15016536826
+Original commit date: Tue Jul 30 13:37:10 2024 +0800
+Change-Id: I271543947644a84ed201b92ec91856ee7b864ca6
+Original commit hash: 5ae1d0ce115e105fec3d9466514c1fdfe4028ce1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BoardPkg.fdf
+
+================================================================================ 
+Commit: 5195248cb6a1228c0cde61efc0ffe59cfb260fd3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Aug 14 15:58:54 2024 +0800 
+-------------------------------------------------------------------------------- 
+Update BIOS version to 5311_00
+
+[Feature Description]
+Update BIOS version to 5311_00
+
+[Resolution]
+Update BIOS version to 5311_00
+
+Package/Module:
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: N/A
+Original commit date: Mon Jul 29 17:20:09 2024 +0800
+Change-Id: I9eea7db8abbfbdb7920ccc50207f3efaa36464a9
+Original commit hash: 997deb0cecbd9a0282aa5cca361e508e2e065a32
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/BiosId.env
+AlderLakeFspPkg/FspPkgPcdInit.dsc
+ClientOneSiliconPkg/Product/AlderLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 52e56e1f37f5816c8ae4a62389a014d95c77e4bd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Aug 14 15:58:52 2024 +0800 
+-------------------------------------------------------------------------------- 
+Add LSV to BIOS/Monolithic FMP
+
+[Issue Description]
+After monolithic capsule downgrade, SUT is not
+booting to OS/EDK Shell , its rebooting continuously.
+
+There is a backward incompatible change in EDKII
+502c01c5028038e4e6b4512e9c66be0ec4d11492 which increase
+the value of EfiMaxMemoryType.
+Since MemoryTypeInfomration variable is kept during
+BIOS Capsule update, this kind of BIOS change would confuse
+BIOS to handle MemoryTypeInfomration variable.
+After BIOS downgrade, the value in MemoryTypeInfo variable
+confuse old BIOS which does not contain the EDKII change.
+
+[Resolution]
+Considering we cannot apply the fix in old BIOS which has been
+released. Add LSV to prohibit BIOS downgrade to the version
+without MemoryTypeInfomration change.
+
+Package/Module: AlderLakePlatSamplePkg/Features/CapsuleUpdate
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 16024748156
+Original commit date: Mon Jul 15 17:04:58 2024 +0800
+Change-Id: If59ba8128c85a197748fd9c843d6fc3b77920346
+Original commit hash: 08ab1a0f08ab40eb6e5b1453753d65125dde4148
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/FmpPlatformBios.dsc
+AlderLakePlatSamplePkg/Features/CapsuleUpdate/FmpPlatformMonolithic.dsc
+
+================================================================================ 
+Commit: b985691ef4092daba4298425f8496c7ffcd66c39 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Aug 14 15:58:49 2024 +0800 
+-------------------------------------------------------------------------------- 
+Cannot disable DisCo soundwire topology in BIOS UI
+
+[Issue Description]
+Cannot disable DisCo soundwire topology in BIOS UI.
+When it is disabled SND4 and SND5 devices are exposed
+causing SSDT override method to not work.
+
+[Resolution]
+Remove the code for exposing SND4 and SND5 in DSDT.
+
+Package/Module:
+AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt
+
+[Impacted Platform]
+ADL, RPL
+
+Hsd-es-id: 18039001200
+Original commit date: Thu Jun 27 11:39:29 2024 +0200
+Change-Id: I04bbfe8ac499c7b52aaa8b2bbc3395f3852aacfc
+Original commit hash: 4ff74f201fcd45c04845b5ae580d1613ecc0b152
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/HdaSoundWireDev/HdaSoundWireDev.asl
+
+================================================================================ 
+Commit: 0e0fa6f86f9464ec79802e54e4bffa32f84ab4a1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Aug 14 15:58:47 2024 +0800 
+-------------------------------------------------------------------------------- 
+Fixing HLK Issues related to USB4 DSD Properties.
+
+[Issue Description]
+USB4 Systems Have Support For All Type-C connectors failing
+due to mix of USBC ports. Even if CPU XHCI Port doesn't
+support TBT/USB4 functionality, _DSD for the port was still
+getting published leading to HLK Test error.
+
+[Resolution]
+Adding a PCD to Map the CPU Type-C Port having TBT/USB4 functionality.
+We will and it with CPU XHCI Port Enable Map and pass the value to
+ACPI BIOS. Then based the Map value ACPI BIOS will publish the _DSD
+Properties of CPU XHCI Ports.
+
+Package/Module:
+AlderLakeBoardPkg/Acpi/
+ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/
+
+[Impacted Platform]
+ALL.
+
+Hsd-es-id: 16024023941
+Original commit date: Fri Jul 26 16:14:48 2024 +0530
+Change-Id: I9c33b8adc841d81fa279dcc0dbe4361dc3345bd3
+Original commit hash: e8c66be482896c174c9fe588c9e4932985ec2a6f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+AlderLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+AlderLakeBoardPkg/Acpi/AdvancedAcpiDxe/AdvancedAcpiDxe.inf
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+AlderLakeBoardPkg/AlderLakePBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPostMemLib.inf
+AlderLakeBoardPkg/BoardPkg.dec
+AlderLakeBoardPkg/BoardPkgPcdInit.dsc
+AlderLakeBoardPkg/Include/PlatformNvsAreaDef.h
+ClientOneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssXhci.asl
+
+================================================================================ 
+Commit: 2a4c1ad2cda71c3baf490fee6f835393001d7234 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Aug 14 15:58:43 2024 +0800 
+-------------------------------------------------------------------------------- 
+Revert "The system can't work loading 100% after setted Max Non-Turbo."
+
+This reverts commit 498636ba30d510fab14f3a30abfa2e1e0fadc850.
+
+[Issue Description]
+Read the wrong value of MaxNonTurboLimRatio cause system
+can't work loading 100%.
+
+[Resolution]
+Updated to the latest MSVC version to avoid optimization issues.
+
+Hsd-es-id: 15016008860
+Original commit date: Tue Jul 23 13:44:21 2024 +0800
+Original commit hash: f8dc531388c19c85d81b4fa5cfeb58d284cd6dd0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Cpu/LibraryPrivate/PeiCpuInitLib/CpuInitPreResetCpl.c
