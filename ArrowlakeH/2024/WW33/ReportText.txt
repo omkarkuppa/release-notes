@@ -1,0 +1,538 @@
+*********************************************************************************
+Commit: 616ac7d806e63026552e0cc3f393535c6d63bcde 
+*********************************************************************************
+
+[BoardPkg]
+
+  Correct the PD Type in specific board
+  
+  [Issue Description]
+  PD type setting is wrong in
+  ARL-H DTBT and ARL-Hx 1DPC.
+  
+  [Resolution]
+  Change the PD type to show the right
+  PD version format in BIOS setup menu
+  
+  Package/Module: BoardPkg
+  
+  [Impacted Platform]
+  H, Hx
+  
+  Hsd-es-id: 15016570078
+  Change-Id: I1b91d53b0ec1f602191316ab4e71994cbd354acc
+  Original commit hash: 1d8dfc8e97488e62f275d34095ee97b2356f95c5
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: da0739259aaf51df3c164f531d6e7265d9773280 
+*********************************************************************************
+
+[BoardPkg]
+
+  [ARL]Updated SPD Data for dTBT Board
+  
+  [Issue Description]
+  For ARL H DTBT Board, Memory Frequency is displayed as 5600MHz
+  
+  [Resolution]
+  Updated SPD data for dTBT Board and verified Memory Frequency updated to
+  POR Memory frequency for ARL H DTBT Board.
+  
+  Package/Module: MeteorlakeBoardPkg
+  
+  [Impacted Platform]
+  ARL
+  
+  Hsd-es-id: 16024899576
+  Change-Id: I117bd592a87b4a3425af9068523717efe8f2bdb2
+  Original commit hash: 4ee94129ed06b70ce8f317e08327e473278f8bb0
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: f247f311972ad6a259d33258e1f322cfd998d52a 
+*********************************************************************************
+
+[ASL]
+
+  DSM to disable ACPI Burst Mode should be under the EC def
+  
+  [Issue Description]
+  The DSM inside the EC to prevent Windows from utilizing
+  ACPI Burst Mode for EC accesses less than 2 bytes
+  (aka ALL Windows access): But it was wrongly added under
+  USB type C device definition. Very specifically,
+  Windows OS is expecting to see the DSM under the same as the
+  HID matching PNP0C09. If they do not find it there, the DSM will not
+  be invoked and the burst mode will not be disabled.
+  
+  [Resolution]
+  Moved DSM method from USB Type device definition to inside EC
+  
+  Package/Module:
+  Features
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16024849311
+  Change-Id: Idf2d61b846a2bdd2f860e38e2e151281379f4e2a
+  Original commit hash: bc40159f8528cd0cf1c1a6e629458c41d676dcf2
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcBase.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 3637953b4f4a9baf27b99185b9fdb865ec01b245 
+*********************************************************************************
+
+[CPU]
+
+  [SMM] Fix S3 resume Hang if SOC ATOM Core enabled
+  
+  [Issue Description]
+  The "ADD" instruction successfully patches the "jmp IP" and
+  writes the changes to memory before entering S3. However, on
+  SOC ATOM Core, the "SUB" instruction fails to patch the "jmp
+  IP" changes into memory before entering S3.
+  
+  Since S3 preserves memory, during the S3 process, the SMBASE
+  address is added twice, resulting in a jump to an invalid
+  address. This will cause the S3 resume Hang if SOC ATOM Core
+  enabled.
+  
+  [Resolution]
+  Because the processor context can be lost while in the S3 state,
+  the transition to the S3 state requires that the operating software
+  flush the cache to DRAM if the code flow has any requirement.
+  
+  Due to the inefficiency of the "wbinvd" instruction in flushing
+  the cache, the solution is to refrain from using instructions
+  that necessitate flushing the cache to DRAM.
+  
+  The code change also aligned with open source implementation:
+  Edk2\UefiCpuPkg\PiSmmCpuDxeSmm\X64\SmiEntry.nasm
+  
+  Package/Module:
+  ClientOneSiliconPkg/Cpu
+  
+  [Impacted Platform]
+  MTL & ARL
+  
+  Hsd-es-id: 15016502426
+  Change-Id: Ie2f23f975800df51bfa1927fb126a08d294f9f64
+  Original commit hash: 9628a74b04d921a45e53f602d4928119dd59fdbb
+  
+  ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/X64/SmiEntry.nasm
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 692737241f1f964cb51bc1bfae1262ffc0c40294 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [MTL ARL P/M] Fix BIOS knobs for Vccddq NMOS option
+  
+  [Issue Description]
+  Previous vccddq knob change caused CI build failure
+  
+  [Resolution]
+  Revert the change and moved the space being used for Vccddq knob to
+  another reserved region
+  
+  Package/Module: MeteorLakeFspPkg/Upd
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14022681437
+  Change-Id: Ibed46c04a7f6aefea3a89c1d28cb5d13579d9547
+  Original commit hash: c7a1cfa92492a4b375676b29eba48a8badf32445
+  
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: cfc2ccc5c56b3a9adaa2b8fe572415ec9c2aca48 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg]
+
+  [ARLS][ARLHx] Enable Sata LED & DevSlp LED
+  
+  [Issue Description]
+  SATA disk activity LED not blinking while booting or data transfer.
+  SATA DevSlp LED is always glowing when hitting devslp.
+  
+  [Resolution]
+  Set VpdPcdSataLedEnable as TRUE.
+  Assign correct GpioV2Pad in MtlPchSataDevSlpEnable()
+  
+  Package/Module: MeteorLakeBoardPkg, ClientOneSiliconPkg/Fru/MtlPch
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 16024862615
+  Change-Id: I2c5fa90abf64af0baf491d04b4c7503916f251ac
+  Original commit hash: c5c82031ceae3af016bde47d00029f922799cdca
+  
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchSataInit.c
+  ClientOneSiliconPkg/Fru/MtlSoc/LibraryPrivate/PeiMtlSocInitLib/MtlSocSataInit.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DAep.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm2DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 5c4f93c1be96c850e61f07cc6a387fc52f1fc764 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  igfx and external graphics primary display
+  
+  [Issue Description]
+  Both igfx and external graphics were set as primary display when primary
+  display is external video controller and Internal Graphics was enabled.
+  
+  [Resolution]
+  In that case, deleting additional igfx device path to avoid connecting
+  gfx device with ConOut variable.
+  
+  Package/Module: PlatSamplePkg
+  
+  [Impacted Platform]
+  ALL.
+  
+  Hsd-es-id: 15016327406
+  Change-Id: Ib7ac6ff22ee21076cbb16e9d9a25b980424acf92
+  Original commit hash: 1d959f330ae3bc88aa6b1a5742ff3680d521bb35
+  
+  ClientOneSiliconPkg/IpBlock/Graphics/LibraryPrivate/PeiDisplayLib/PeiDisplayLib.c
+  MeteorLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 15ebe6282861909c21b24f64865dd482ae1a07c7 
+*********************************************************************************
+
+[PlatformPkg]
+
+  BIOS didn't update GBE registers after updating NVM
+  
+  [Issue Description]
+  BIOS didn't update GBE registers after updating NVM and
+  set interrupt to indicate MAC address update completed.
+  Due to different variable name used to store MAC address.
+  
+  [Resolution]
+  Optimizing to use same Variable name to store MAC address
+  
+  Package/Module:
+  PlatSamplePkg
+  
+  [Impacted Platform]
+  MTL platform
+  
+  Hsd-es-id: 13012129649
+  Change-Id: If999e0dadf3573c0f57bc200cb30e0f299655764
+  Original commit hash: b06554c0d763c8bc28815df497b508f470280f92
+  
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateDefines.h
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateHw.c
+  MeteorLakePlatSamplePkg/Features/MacUpdate/GbeFwUpdateInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 5449e2eabf68b981d94876accb01b64b0531a606 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  [ARL-Hx]PCH BarlowRidge not entering to D3Cold when system is in Sx
+  
+  [Feature Description]
+  Symptom:
+  PCH Barlow Ridge RTD3_PWR(GPP_J15) does not go to low
+  when system is in Sx state.
+  
+  Root Cause:
+  GPP default of GPP_J15 is Out/High causes RTD3_PWR going high
+  in Sx state.
+  
+  Requirement:
+  BIOS needs to patch below.
+  1. Change GPP_J15 reset mode to "Powergood" to keep GPP state
+  in Sx state/Reset.
+  2. Program GPP_J15 to Out/Low when system is entering Sx state.
+  3. Follow sequence,
+  pull-low PERST -> delay 10 ms -> poll-low RTD_PWR
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-Hx
+  
+  Hsd-es-id: 22020263498
+  Change-Id: I438a7b5e651a537f519149e06ce2895ed28f7070
+  Original commit hash: c975c3c98ca681309472be965d05e56175b5b7c1
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: d1e438226dcd987488d689dc4c6c43fe68d83500 
+*********************************************************************************
+
+[BoardPkg]
+
+  ARL-Hx AEP Power Meter
+  
+  [Feature Description]
+  Update the I2C power meter table with latest Rail names
+  for address 0x14, 0x11, 0x17 devices
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ARL-Hx AEP
+  
+  Hsd-es-id: 15016316055
+  Change-Id: I072c79dd8d4b3dda74eb6cfe68ed936ad9ee7970
+  Original commit hash: 7d2aa73d4ff150e2a5e9ea5439297c7357e8242b
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/Xep/ArlH/SkuIdArlHDdr5SODimmAep.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: a40fb5fba0b6ed6655be435ba94f1c19c5fbf65d 
+*********************************************************************************
+
+[SiliconPkg], [PlatformPkg]
+
+  [ARL S][OC]Core 0 Fused P0 Minimum Voltage Status are reflecting as NA
+  
+  [Issue Description]
+  Unexpected Fused P0 Minimum Voltage are reflecting as NA in BIOS page
+  
+  [Resolution]
+  Remove OC mailbox command 0x7 due to the command is not supported
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  PlatSamplePkg
+  
+  [Impacted Platform]
+  S, H
+  
+  Hsd-es-id: 16024443732
+  Change-Id: I5e18f35be0c37597d86bb295d0a57035322f84e5
+  Original commit hash: 5050c4d64165a10179c9dfcb7f65eadaece32c61
+  
+  ClientOneSiliconPkg/Include/Library/OcMailboxLib.h
+  ClientOneSiliconPkg/Include/Library/OcPlatformLib.h
+  ClientOneSiliconPkg/IpBlock/Overclocking/IncludePrivate/Library/PeiOcLib.h
+  ClientOneSiliconPkg/IpBlock/Overclocking/Library/DxeOcPlatformLib/DxeOcPlatformLib.c
+  ClientOneSiliconPkg/IpBlock/Overclocking/Library/DxeOcPlatformLib/DxeOcPlatformLib.inf
+  ClientOneSiliconPkg/IpBlock/Overclocking/Library/DxeOcPlatformLibNull/DxeOcPlatformLibNull.c
+  ClientOneSiliconPkg/IpBlock/Overclocking/LibraryPrivate/PeiOcLib/OcLibrary.c
+  MeteorLakePlatSamplePkg/Setup/OverClockSetup.c
+  MeteorLakePlatSamplePkg/Setup/OverClockSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/OverClockSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: fuse
+
+*********************************************************************************
+Commit: 8e871db2c0bbee197b1693330168f94e62f047ba 
+*********************************************************************************
+
+[BoardPkg], [ASL]
+
+  Modify usb port number correspond PCH usb.
+  
+  [Issue Description]
+  Incorrect port number in VpdPcdUsbTypeCPort.
+  
+  [Resolution]
+  Modify port number and mapping to correct PCH USB port.
+  
+  Package/Module:
+  MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14022601041
+  Change-Id: I4494ef3c507180a9e59c3b92266095933acb6162
+  Original commit hash: 9cbc7e7bb22188e451590a5538ba5bbb061940ee
+  
+  MeteorLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciMtlPDdr5MemSolderDowndTBTRvp.asl
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 207d696bd62a281d312bb88ad9d1a428808cd3de 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ARL][N3B] Resolve the cache size calculation issue of L2 size
+  
+  [Issue Description]
+  An error occurs in the CpuCacheInfoLib/CpuCacheInfoLib when calculating
+  cache sizes across different Dies for ARL. The original code mistakenly
+  clear cache sizes for various core types during intermediate
+  calculations, leading to errors in handling duplicate entries.
+  An EDK2 patch introduces a check to differentiate cache types,
+  which necessitates adjustments to prevent overwriting the distinct
+  entries when calculating the total cache size per level in INTEL repo.
+  
+  [Resolution]
+  This patch implements a check to prevent overwriting existing entries
+  in the Cache table while summing the cache sizes.
+  
+  Package/Module: ARL
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 22019756988
+  Change-Id: I12404b4504d7ba4195a4dfa79a930777e503f461
+  Original commit hash: 4ceb95d46325589186fc674062f15d9e6b20279f
+  
+  ClientOneSiliconPkg/IpBlock/CpuInit/Dxe/CpuInitDxe.c
+  ClientOneSiliconPkg/IpBlock/CpuInit/LibraryPrivate/PeiSmbiosCpuLib/SmbiosType7.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: c05711683d0414ed74fd10d9c0ede9f24273a159 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg], [ASL], [PlatformPkg]
+
+  SyncScript: Revert override commits.
+  
+  Wed Aug 7 03:44:22 2024 -0700
+  Original commit hash: 5c4cbb5fd6b517920be66040a47975cbc952e583
+  
+  ClientOneSiliconPkg/Fru/MtlSoc/Library/MtlSocInfoLib/MtlSocInfoLibCommon.c
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Cvs.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Dsdt.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/MipiCamSensors.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+  MeteorLakeBoardPkg/BiosId.env
+  MeteorLakeBoardPkg/Include/PlatformNvsAreaDef.h
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/PlatformInitAdvancedDxe.inf
+  MeteorLakePlatSamplePkg/PlatformInitAdvanced/PlatformInitAdvancedDxe/SaPlatformInitAdvancedDxe.c
+  MeteorLakePlatSamplePkg/Setup/SaSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/SaSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+################################################################################
+
+Report Summary: Backstop found 14 suspect commits for review 
+
+Warnings Found:
+  Commit: 616ac7d    --Commit Message Contains Key Word: sku
+  Commit: da07392    --Commit Message Contains Key Word: sku
+  Commit: f247f31    --Commit Message Contains Oem: ecs
+  Commit: 3637953    --Commit Message Contains Oem: NEC
+  Commit: 6927372    --Commit Message Contains Key Word: revert
+  Commit: cfc2ccc    --Commit Message Contains Key Word: sku
+  Commit: 5c4f93c    --Commit Message Contains Key Word: internal
+  Commit: 15ebe62    --Commit Message Contains Key Word: HW
+  Commit: 5449e2e    --Commit Message Contains Key Word: sku
+  Commit: d1e4382    --Commit Message Contains Key Word: sku
+  Commit: a40fb5f    --Commit Message Contains Key Word: fuse
+  Commit: 8e871db    --Commit Message Contains Key Word: sku
+  Commit: 207d696    --Commit Message Contains Oem: NEC
+  Commit: c057116    --Commit Message Contains Key Word: revert
