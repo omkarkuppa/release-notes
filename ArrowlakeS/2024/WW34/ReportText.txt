@@ -1,0 +1,201 @@
+*********************************************************************************
+Commit: 6f3a0c91e1457db4e987dc1541ebd89067a0b2cd 
+*********************************************************************************
+
+[SiliconPkg]
+
+  SUT loops at PC-AC10 Post enabling TXT from BIOS
+  
+  [Issue Description]
+  Bios was not disabling access to certain root ports at the
+  correct time which was leading to hardware failure
+  
+  [Resolution]
+  Updated the code disable the root ports at
+  correct time in the bios flow.
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 15016589611
+  Change-Id: Ibd2ec6864709efa2499719df2fd30df09f3e88e0
+  Original commit hash: 15754905236b55a914df06b2a2b74601a0c6a30f
+  
+  ClientOneSiliconPkg/Fru/MtlPch/IncludePrivate/Library/PeiMtlPchInitLib.h
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchInitPreMem.c
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchRootPorts.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: b9b523ce65b8ffe55403b756e393f85450b2306a 
+*********************************************************************************
+
+[BoardPkg]
+
+  Correct the PD Type in specific board
+  
+  [Issue Description]
+  PD type setting is wrong in
+  ARL-H DTBT and ARL-Hx 1DPC.
+  
+  [Resolution]
+  Change the PD type to show the right
+  PD version format in BIOS setup menu
+  
+  Package/Module: BoardPkg
+  
+  [Impacted Platform]
+  H, Hx
+  
+  Hsd-es-id: 15016570078
+  Change-Id: I1b91d53b0ec1f602191316ab4e71994cbd354acc
+  Original commit hash: c8e73074bfcff055bc9d2d1cd6470fa585e40c06
+  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: a3c78dfa926983fd1ed8886b3bbe7fb221470daa 
+*********************************************************************************
+
+[ASL]
+
+  DSM to disable ACPI Burst Mode should be under the EC def
+  
+  [Issue Description]
+  The DSM inside the EC to prevent Windows from utilizing
+  ACPI Burst Mode for EC accesses less than 2 bytes
+  (aka ALL Windows access): But it was wrongly added under
+  USB type C device definition. Very specifically,
+  Windows OS is expecting to see the DSM under the same as the
+  HID matching PNP0C09. If they do not find it there, the DSM will not
+  be invoked and the burst mode will not be disabled.
+  
+  [Resolution]
+  Moved DSM method from USB Type device definition to inside EC
+  
+  Package/Module:
+  Features
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16024849311
+  Change-Id: Idf2d61b846a2bdd2f860e38e2e151281379f4e2a
+  Original commit hash: 00a04a7d1fd21c0d4cb03fb748018bad12b0c787
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcBase.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 069b1435e377d26be5bc48fa5cf4b79818f424b6 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ARL-S | DDR5] DIMM CACTLE MR22 register update
+  
+  [Feature Description]
+  For MR22 CACTLE:
+  Add B-Die and set to 2 for -S SODIMM
+  Revert D-Die to 0 for -S UDIMM
+  Revert to 0 for all -HX
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 15016555060
+  Change-Id: I668846a36a5f03b8f60819818c6f8279a77dc3e3
+  Original commit hash: 098ba564a6bfb8eb9c45c339d0a2ef3ca73322c9
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: bb08a168f753265e30ca1675b5c2e5dd382c8b69 
+*********************************************************************************
+
+[CPU]
+
+  [SMM] Fix S3 resume Hang if SOC ATOM Core enabled
+  
+  [Issue Description]
+  The "ADD" instruction successfully patches the "jmp IP" and
+  writes the changes to memory before entering S3. However, on
+  SOC ATOM Core, the "SUB" instruction fails to patch the "jmp
+  IP" changes into memory before entering S3.
+  
+  Since S3 preserves memory, during the S3 process, the SMBASE
+  address is added twice, resulting in a jump to an invalid
+  address. This will cause the S3 resume Hang if SOC ATOM Core
+  enabled.
+  
+  [Resolution]
+  Because the processor context can be lost while in the S3 state,
+  the transition to the S3 state requires that the operating software
+  flush the cache to DRAM if the code flow has any requirement.
+  
+  Due to the inefficiency of the "wbinvd" instruction in flushing
+  the cache, the solution is to refrain from using instructions
+  that necessitate flushing the cache to DRAM.
+  
+  The code change also aligned with open source implementation:
+  Edk2\UefiCpuPkg\PiSmmCpuDxeSmm\X64\SmiEntry.nasm
+  
+  Package/Module:
+  ClientOneSiliconPkg/Cpu
+  
+  [Impacted Platform]
+  MTL & ARL
+  
+  Hsd-es-id: 15016502426
+  Change-Id: Ie2f23f975800df51bfa1927fb126a08d294f9f64
+  Original commit hash: c995bf567184f2164a6d69348cf394bfa878aa7f
+  
+  ClientOneSiliconPkg/Cpu/Library/SmmCpuFeaturesLib/X64/SmiEntry.nasm
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+################################################################################
+
+Report Summary: Backstop found 5 suspect commits for review 
+
+Warnings Found:
+  Commit: 6f3a0c9    --Commit Message Contains Key Word: hardware
+  Commit: b9b523c    --Commit Message Contains Key Word: sku
+  Commit: a3c78df    --Commit Message Contains Oem: ecs
+  Commit: 069b143    --Commit Message Contains Key Word: revert
+  Commit: bb08a16    --Commit Message Contains Oem: NEC
