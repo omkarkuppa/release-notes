@@ -1,0 +1,263 @@
+*********************************************************************************
+Commit: f718c0784369783a534f90240a682801418e5799 
+*********************************************************************************
+
+[PlatformPkg]
+
+  Production Signed IFWIs WW16.2.2 On Fail to Allow Entry to BIOS Menu
+  
+  [Issue Description]
+  Production IFWI Not Allow Entry to BIOS Menu
+  
+  [Resolution]
+  Revert "[MTL] set VarConOut and VarConIn as NULL"
+  
+  Package/Module:
+  MeteorLakePlatSamplePkg
+  
+  [Impacted Platform]
+  MTL
+  
+  Hsd-es-id: 14022562211
+  Change-Id: I113f10096cf6d065d0582c83c331725da91cfa42
+  Original commit hash: 4108e39c29bcd3646322905398e69415d941227f
+  
+  MeteorLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: e6e4adbf4f763a6fcbf9e9585d94193ddbf19f16 
+*********************************************************************************
+
+[SiliconPkg], [BoardPkg]
+
+  [ARL-S | DDR5] Max Frequency change in MRC for SAGV Disable
+  
+  [Feature Description]
+  Utilize MrcBoardDesignFreqCheck to set MaxFreq to align FreqMax with
+  POR frequency when SAGV is disabled
+  1. Update UdimmSDaisy, SoDimmSDaisy, SoDimmHxTee based on POR FreqMax
+  2. Set BoardStackUp to Freq Limited
+  2. Set BoardTopology accordingly (0 - Daisy for LGA, 1 - Tee for BGA)
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl, MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 15016587333
+  Change-Id: I189f1982900123737251ea8aab94cab5c5bd3f0b
+  Original commit hash: 1feb014cd44cecd534256680edef7561a8043666
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/Pma/MrcPmaApi.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakeSRvpBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: LG
+
+*********************************************************************************
+Commit: f98e392f5910aba4fb44fd12e5201dede81ce255 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ARL-S | DDR5] DIMM CACTLE MR22 register update
+  
+  [Feature Description]
+  For MR22 CACTLE:
+  Add B-Die and set to 2 for -S SODIMM
+  Revert D-Die to 0 for -S UDIMM
+  Revert to 0 for all -HX
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 15016555060
+  Change-Id: I668846a36a5f03b8f60819818c6f8279a77dc3e3
+  Original commit hash: 65930511e2c514de040df45caf4e639b07dd65a1
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 97dfc250c8277c7d621389c1df1b990801e8a903 
+*********************************************************************************
+
+[ASL]
+
+  DSM to disable ACPI Burst Mode should be under the EC def
+  
+  [Issue Description]
+  The DSM inside the EC to prevent Windows from utilizing
+  ACPI Burst Mode for EC accesses less than 2 bytes
+  (aka ALL Windows access): But it was wrongly added under
+  USB type C device definition. Very specifically,
+  Windows OS is expecting to see the DSM under the same as the
+  HID matching PNP0C09. If they do not find it there, the DSM will not
+  be invoked and the burst mode will not be disabled.
+  
+  [Resolution]
+  Moved DSM method from USB Type device definition to inside EC
+  
+  Package/Module:
+  Features
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16024849311
+  Change-Id: Idf2d61b846a2bdd2f860e38e2e151281379f4e2a
+  Original commit hash: 50e6c851235836456e8349a73941f72ab10081c6
+  
+  Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcBase.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 3e931d9a49212ae197b03a748b24cff7a877abf8 
+*********************************************************************************
+
+[PlatformPkg]
+
+  [MTL ARL P/M] Fix BIOS knobs for Vccddq NMOS option
+  
+  [Issue Description]
+  Previous vccddq knob change caused CI build failure
+  
+  [Resolution]
+  Revert the change and moved the space being used for Vccddq knob to
+  another reserved region
+  
+  Package/Module: MeteorLakeFspPkg/Upd
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14022681437
+  Change-Id: Ibed46c04a7f6aefea3a89c1d28cb5d13579d9547
+  Original commit hash: 16621b923827b33c40d1f6c3c8459d0233cc2f0b
+  
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: d6b59aba9afda40a0bfaaf57dc54cd5395119724 
+*********************************************************************************
+
+[SiliconPkg]
+
+  [ARL-S | DDR5] MRC Normal mode memory test FAILED w nECC 2DPC
+  
+  [Feature Description]
+  The request is MRC change to read SPD offset 552/553 and 554.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 15016146249
+  Change-Id: Ifa55537b1f721cc9960d0c64f46689cbe63f4866
+  Original commit hash: 40d6f60b7a66be60def6267d5048d9a613b4cadd
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: c8c9b9884dfe3016c63a3430bc42f6c4723f9904 
+*********************************************************************************
+
+[SiliconPkg], [SA], [BoardPkg], [PlatformPkg]
+
+  [MTL] Add VpdPcdMrcMustStaticSpdData
+  
+  [Feature Description]
+  Vendors might use DDR5 memory down on boards and there is no SPD eprom.
+  However, boards have PMIC and other local devices to control the DRAM.
+  MRC need access DIMM PMIC and other local devices.
+  When static VPD SPD data is used, current MRC couldn't get Spd Address,
+  and can't access local devices behind SPD HUB.
+  Add new PCD fields VpdPcdMrcMustStaticSpdData, PcdMrcMustStaticSpdData.
+  Each fields have 16 bits. Each bit maps to one DIMM. When the bit is
+  set, VPD has static spd data. spd address table provides correct spd
+  addresses. BIOS passes the spd address info to MRC. MRC checks
+  MrcMustStaticSpdData. If the bit is set, MRC forces to use VPD spd
+  data, although spd address is not 0.
+  MRC can use the correct spd address to access local devices behind SPD
+  HUB, such like PMIC, etc.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl,
+  MeteorLakeBoardPkg, MeteorLakeOpenBoardPkg
+  
+  [Impacted Platform]
+  All.
+  
+  Hsd-es-id: 15015883572
+  Change-Id: Iebc585afdeca81a1a75b0731475c5b93b25afc3e
+  Original commit hash: 396bff44324b356de101b04c5a07e5ce1e232d28
+  
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+  ClientOneSiliconPkg/SystemAgent/Include/ConfigBlock/SaMiscPeiPreMemConfig.h
+  MeteorLakeBoardPkg/BoardPkg.dec
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/BoardSaInitPreMemLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiMultiBoardInitPreMemLib.inf
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLibFsp.inf
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+################################################################################
+
+Report Summary: Backstop found 7 suspect commits for review 
+
+Warnings Found:
+  Commit: f718c07    --Commit Message Contains Key Word: revert
+  Commit: e6e4adb    --Commit Message Contains Oem: LG
+  Commit: f98e392    --Commit Message Contains Key Word: revert
+  Commit: 97dfc25    --Commit Message Contains Oem: ecs
+  Commit: 3e931d9    --Commit Message Contains Key Word: revert
+  Commit: d6b59ab    --Commit Message Contains Oem: NEC
+  Commit: c8c9b98    --Commit Message Contains Key Word: sku
