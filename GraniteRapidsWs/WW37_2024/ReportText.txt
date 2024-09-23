@@ -1,0 +1,4274 @@
+*********************************************************************************
+Commit: 0167045a89cca52226d321d60f1690b6bb64fa54 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.95,
+  LOGANVL.0.RPB.0031.D.80,
+      ^^^                  
+  KSYVLLE.1.RPB.0026.D.09,
+  GNRSPWS.0.RPB.0030.D.12,
+  Server-RC-0x02.0x00.0x01.0256
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 72bddc3bb3ad5995bf8a72e30b984131eb93ae39
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: b474513370b67763f738164a18ca83b7687e9564 
+*********************************************************************************
+
+
+  [GNR] DRAM CA Vref RMT shall add MR11 as 2nd condition for Pass/Fail criteria
+  
+  [Issue Description]
+  The MPC to set DRAM CaVref may silently fail during a margin sweep. MRC assumes Vref has been updated, but actually the DRAM is in a failed state and the SweepLib should treat the current CaVref setting as a failure.
+                                 ^^^^^^                                                                                                                                                                                    
+  
+  [Resolution]
+  The solution is for MRC to perform an MRR of MR11, after the MPC, to confirm if the MPC was successful. If the MRR results doesn't match what MRC things it wrote with the MPC, then the Vref setting is failing.
+  
+  Besides, MRR command failure is detected during DRAM CA VREF RMT, the trace shows the returned code from MR11 via MRR command, it can be either "valid data on upper or lower with random value" or "invalid data in entire byte".
+  Current ReadCpgcMrrData would treat invalid data as error and system would hang, however, it can be just command failure since DRAM CA Vref is swept to boundary of margin. To solve this, MRC shall add command test mode support
+  for ReadDramMr API to detect bad command being send during DRAM CA Vref sweep.
+  
+  Package/Module:
+  pRcPkg/Library/BaseDdr5CoreLib
+  CpRcPkg/Library/MemSweepLib
+  
+  [Impacted Platform]
+  GNR-SP, CWF-AP, GNR-AP, SRF-AP
+  
+  Hsd-es-id: 13012260341
+  
+  Change-Id: I063f11d18275ae844f00ae683bf6f324c1dd50da
+  Original commit hash: bdb894123160a587dca4046891246a88d699f24e
+  
+  [Changed Files]
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Include/Library/MemPatternGeneratorLib.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemBuiltInSelfTest.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDbAccess.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDdr5Lrdimm.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDramAccess.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemOdtDdr5.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemPpr.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemRcdAccess.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemTxReTrainingDdr5.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  CpRcPkg/Library/MemSweepLib/MemSweepCallbacks.c
+  CpRcPkg/Library/MrcMachineLearningSupportLib/DecodeAndProgramParameters.c
+  ServerSiliconPkg/Mem/Library/MemCpgcIpLib/Gen3/MemCpgcDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: silent
+
+*********************************************************************************
+Commit: b97efe6fb26b943f4c1b3d3f1a9ccee03b74fcdb 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.94,
+  LOGANVL.0.RPB.0031.D.79,
+      ^^^                  
+  KSYVLLE.1.RPB.0026.D.08,
+  GNRSPWS.0.RPB.0030.D.11
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2a4d5bfe240caa4cf1b58bcc4362cc6148255833
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 326d45b745d21978b36c758136b6dc8d79bae9ad 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.93,
+  LOGANVL.0.RPB.0031.D.78,
+      ^^^                  
+  KSYVLLE.1.RPB.0026.D.07,
+  GNRSPWS.0.RPB.0030.D.10
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 4a9892497c1c070c4f5491efcf882c07da83193b
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: f5f0c5a85963ee5e329107411dc533f440cbdcf5 
+*********************************************************************************
+
+
+  [GnrWs] OCR HTTPS issue fix
+              ^^^^            
+  
+  [Issue Description]
+  In some functions pointers were passed as value and modified inside.
+  Because of that other functions were using wrong pointer.
+  
+  [Resolution]
+  Fixed passed values to the functions modifying pointers.
+  
+  Package/Module:
+  Features/Manageability/OneClickRecoveryFeaturePkg
+  
+  [Impacted Platform]
+  GnrWs
+  
+  Hsd-es-id: 18039886752
+  
+  Change-Id: I349ada566df2d6d20c5005affbcf4ac75260cef1
+  Original commit hash: 00912e34ab3b92dc3476cdde881e8741c808aa57
+  
+  [Changed Files]
+  Features/Manageability/OneClickRecoveryFeaturePkg/OneClickRecovery/OcrBootOptionSupport.c
+  Features/Manageability/OneClickRecoveryFeaturePkg/OneClickRecovery/OcrBootOptionSupport.h
+  Features/Manageability/OneClickRecoveryFeaturePkg/OneClickRecovery/OcrHttpBootCallbackSupport.c
+  Features/Manageability/OneClickRecoveryFeaturePkg/OneClickRecovery/OcrProxySupport.c
+  Features/Manageability/OneClickRecoveryFeaturePkg/OneClickRecovery/OneClickRecovery.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 807e950d7b824e7b4566a9e1cfbe187e2022f160 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.92,
+  LOGANVL.0.RPB.0031.D.77,
+      ^^^                  
+  KSYVLLE.1.RPB.0026.D.06,
+  GNRSPWS.0.RPB.0030.D.09,
+  Server-RC-0x02.0x00.0x01.0255
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 9a55425a21ec84590bb53aaee72c35434c1f3f4c
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 1f77ac7c6d2ae15bfabc3eafc25516d57992e401 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.91,
+  LOGANVL.0.RPB.0031.D.76,
+      ^^^                  
+  KSYVLLE.1.RPB.0026.D.05,
+  GNRSPWS.0.RPB.0030.D.08,
+  Server-RC-0x02.0x00.0x01.0254
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 3b4fbc73c98febb62a72aebdfcedaccbd7cdb4fd
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 92d88faa406a8a78f6b07c3f6d771cf9c28a320a 
+*********************************************************************************
+
+[PCH]
+
+  [GNRWS] BIOS shall clear RTC register's bit IRQF during boot
+  
+  [Feature Description]
+  Register bit is cleared during boot but later in BIOS
+  boot phase. Silicon initiation is done earlier in the flow.
+             ^^^^^^^^^                                        
+  This include PCH PM1 RTC STS.
+  However, because RTC's IRQF bit is not cleared earlier,
+  clearing PM1 RTC STS is not successful.
+  
+  Package/Module:
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18039973494
+  
+  Change-Id: I87736359557e367d4cf5874736534324324d2456
+  Original commit hash: 8dd11954f6086a0f2685188fd970059e88d6c889
+  
+  [Changed Files]
+  OneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchRtc.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  silicon 
+
+*********************************************************************************
+Commit: 8302920b551562e6a2f9d6ebd74983cb1da4cdf8 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.90,
+  LOGANVL.0.RPB.0031.D.75,
+      ^^^                  
+  KSYVLLE.1.RPB.0026.D.04,
+  GNRSPWS.0.RPB.0030.D.07,
+  Server-RC-0x02.0x00.0x01.0253
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 8825d91ef2a95b01288b9edca3b9373c7fa76364
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 52bf1169cb667115dd9d69fd7e9d62bf0ef3d53c 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.89,
+  LOGANVL.0.RPB.0031.D.74,
+      ^^^                  
+  KSYVLLE.1.RPB.0026.D.03,
+  GNRSPWS.0.RPB.0030.D.06,
+  Server-RC-0x02.0x00.0x01.0252
+  
+  Hsd-es-id: N/A"
+  Original commit hash: f0ea47c0fa0645292e8afcd075d1bfed5decdad5
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: a09efbabe9feee7e7aff372dc46f5f7b7f895b71 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.88,
+  LOGANVL.0.RPB.0031.D.73,
+      ^^^                  
+  KSYVLLE.1.RPB.0026.D.02,
+  GNRSPWS.0.RPB.0030.D.05,
+  Server-RC-0x02.0x00.0x01.0251
+  
+  Hsd-es-id: N/A"
+  Original commit hash: bc7750377c29f3f2ee7a5f8b556fd92fc050603b
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 004be64e9465f13f5a9e94a74ebd47da9041667d 
+*********************************************************************************
+
+
+  Remove workaround 14016243097
+         ^^^^^^^^^^             
+  
+  Originally the WA 14016243097 was going to be a permanent but finally
+                ^^^^                                                    
+  a HW fix for GEN3 was made, so this commit is removing the WA from:
+    ^^                                                      ^^^^      
+  GNR-D B0, GNR B0, SRF B0, CWF A0
+  
+  Package/Module:
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  Birchstream, Kaseywville
+  
+  Hsd-es-id: 18039898856
+  
+  Change-Id: Iec0bb516f32aca7671b2f0982db9caa0d583f507
+  Original commit hash: da056d0f92508fd5a28654294e224b2ad6305f13
+  
+  [Changed Files]
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibCwf.c
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibGnr.c
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibSrf.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+  --Commit Message Contains Key Word:  WA 
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: f8dc4bc5fff79359c054e5f1173dadc0aee51b25 
+*********************************************************************************
+
+[CPU]
+
+  Enable X2APIC for BSP in pre mem phase for specific processor
+  
+  [Feature Description]
+  In MpInitLibInitialize() of PeiMpLib:
+  1.MpInitLibInitialize saves the BSP's initial APIC mode and
+  syncs to all APs in the first time wakeup in CollectProcessorCount().
+  2.If the BSP's Apic mode is LOCAL_APIC_MODE_XAPIC, AutoEnableX2Apic()
+  will forcely enable x2APIC mode for both BSP and AP if needed.
+  
+  Reccently we found that the calling of WakeUpAP in step2 cost a lot of
+                                                     ^^^^                
+  time on a specific processor. To reduce the time cost of MpInitLibInitialize,
+  we can enable X2APIC for BSP in pre mem phase. After that, AP's APIC mode
+  will be synced to X2Apic mode during the first call of MpInitLibInitialize
+  in CpuMpPei. Then the step2 in MpInitLibInitialize can be skipped.
+                        ^^^^                                         
+  
+  Package/Module:ServerSiliconPkg/Cpu
+  
+  [Impacted Platform]
+  GNR
+  
+  Hsd-es-id: 15016719938
+  
+  Change-Id: I9755892574c5d42564bbdbf8f26c16b10cfbdd38
+  Original commit hash: ea1fc99b6faecfc8c3e3e44e1cc7be8016cf3d1f
+  
+  [Changed Files]
+  ServerPlatformPkg/Library/PeiCpuPreMemPolicyUpdateLib/PeiCpuPreMemPolicyUpdateLib.c
+  ServerPlatformPkg/Library/PeiCpuPreMemPolicyUpdateLib/PeiCpuPreMemPolicyUpdateLib.inf
+  ServerSiliconPkg/Cpu/Library/CpuInitLib/CpuInitPeiLib.c
+  ServerSiliconPkg/Cpu/Library/CpuInitLib/CpuInitPeiLib.inf
+  ServerSiliconPkg/Cpu/Library/CpuPreMemPolicyLib/CpuPreMemPolicyLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 96f8ea6819b02d90a1e1396f5f3280299384608b 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.87,
+  LOGANVL.0.RPB.0031.D.72,
+      ^^^                  
+  KSYVLLE.1.RPB.0026.D.01,
+  GNRSPWS.0.RPB.0030.D.04,
+  Server-RC-0x02.0x00.0x01.0250
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 3e6e1bdc192fe14a07884fe523840b20fde3717d
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 41c63bb05e584959647ec8511e6d853254ebb9ae 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.86,
+  LOGANVL.0.RPB.0031.D.71,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.99,
+  GNRSPWS.0.RPB.0030.D.03,
+  Server-RC-0x02.0x00.0x01.024F
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 09821de76c7288dd421598dafa23ef9e153cdd2a
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 298c988ccb61840486ff6b87b63ec4ff740986b8 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.85,
+  LOGANVL.0.RPB.0031.D.70,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.98,
+  GNRSPWS.0.RPB.0030.D.02
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 831fac6756ee64a451efc6fef8952e26a4abfd6e
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: b31fbca4822efbec4975045441b50d298b6e7001 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.84,
+  LOGANVL.0.RPB.0031.D.69,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.97,
+  GNRSPWS.0.RPB.0030.D.01
+  
+  Hsd-es-id: N/A"
+  Original commit hash: ac3b4b67ccb4ff25509bb11f89debd83d46db224
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 82398feff0b60db7847286d7969b6a92074f1581 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.83,
+  LOGANVL.0.RPB.0031.D.68,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.96,
+  GNRSPWS.0.RPB.0029.D.99
+  
+  Hsd-es-id: N/A"
+  Original commit hash: ab374d62e758e4ac9b2dfb5a6afb222dba398861
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 181939363a11f545f4e3e2f2e8f76286bfb0e911 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.82,
+  LOGANVL.0.RPB.0031.D.67,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.95,
+  GNRSPWS.0.RPB.0029.D.98
+  
+  Hsd-es-id: N/A"
+  Original commit hash: fddf78ab2349a75338bfddb94a2f7ad53b81d040
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 6751ee803677b5a067f642626ffb3c8db0d021f4 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.81,
+  LOGANVL.0.RPB.0031.D.66,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.94,
+  GNRSPWS.0.RPB.0029.D.97,
+  Server-RC-0x02.0x00.0x01.024E
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 760dd9db1db0f0b9e88fc72dc107d4860984166f
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 1e1c9ae3c79ecb41274735d1058dfb242d22ef5d 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.80,
+  LOGANVL.0.RPB.0031.D.65,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.93,
+  GNRSPWS.0.RPB.0029.D.96
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 914c36553e2c644784ddd948b7757d678ef176bd
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 4d150e5c503f34ff46f203d4527db830f42bd9c7 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.79,
+  LOGANVL.0.RPB.0031.D.64,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.92,
+  GNRSPWS.0.RPB.0029.D.95,
+  Server-RC-0x02.0x00.0x01.024D
+  
+  Hsd-es-id: N/A"
+  Original commit hash: e0763ced5e947ba2a45a12d570163f359def0dd3
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 1e888b8992b65127317f88e2296db98de04e5434 
+*********************************************************************************
+
+
+  [GNRWS] FCTL2.HPICTL is not programmed as per BWG
+                ^^                                  
+  
+  [Issue Description]
+  FCTL2.HPICTL is not programmed as per BWG
+        ^^                                  
+  
+  [Resolution]
+  FCTL2.HPICTL bit is to be programmed as per latest BWG.
+        ^^                                                
+  
+  Package/Module:
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  GNR-WS
+  
+  Hsd-es-id: 18039911466
+  
+  Change-Id: I999421b2a34e757d4f5567453239b187601b5653
+  Original commit hash: a4047afde6cae9a48b4f05b49e13cb2233e5ae57
+  
+  [Changed Files]
+  OneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+*********************************************************************************
+Commit: b19bd6cdd4af5d9f2b3ad9ad6c01fd9962101096 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.78,
+  LOGANVL.0.RPB.0031.D.63,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.91,
+  GNRSPWS.0.RPB.0029.D.94
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 5afe5a3dd127baca35f8b7aeba3670eb2b71cfe3
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: fac465bdc3d5c344db27c7f1e0dcf9b32bddc55a 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.77,
+  LOGANVL.0.RPB.0031.D.62,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.90,
+  GNRSPWS.0.RPB.0029.D.93,
+  Server-RC-0x02.0x00.0x01.024C
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 84b101d503944008ea36bc4d21c7728594078c22
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: e24a5349d91726138771b2edfa6ce941523dff67 
+*********************************************************************************
+
+
+  Fixed QCA complex training for 2Rx4 RDIMM - incorrect calculation for 1 of the 2 copies
+  
+  [Issue Description]
+  The composite eye per copy is aymmetric after QCA training (even if enabling multi-vref training step).
+                                                                                                   ^^^^   
+  
+  [Resolution]
+  Adjusted the absolute result after the sweeping process.
+  
+  Package/Module:CpRcPkg/BaseDdr5CoreLib
+  
+  [Impacted Platform]
+  GNR, CWF
+  
+  Hsd-es-id: 15016687144
+  
+  Change-Id: Ib009dbb86660c6222476464986a799534c5521ad
+  Original commit hash: c44e04bdea5c5fe711e603f4cc3300f5f7193ab0
+  
+  [Changed Files]
+  CpRcPkg/Include/Library/MemoryServicesLib.h
+  CpRcPkg/Library/BaseMemoryServicesLib/ConvenienceFunctions.c
+  CpRcPkg/Library/MemSweepLib/MemSweep.c
+  CpRcPkg/Library/MemSweepLib/MemSweepResultsHelpers.c
+  CpRcPkg/Library/MemSweepLib/MemSweepResultsHelpers.h
+  ServerSiliconPkg/Library/MemoryEvContent/RMT/externals/RmtCore/Gen3/RmtProjectSpecific.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: e583769756bde0320ad6adb344d121d2681fc5d6 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.76,
+  LOGANVL.0.RPB.0031.D.61,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.89,
+  GNRSPWS.0.RPB.0029.D.92,
+  Server-RC-0x02.0x00.0x01.024B
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 6eec43c306bde1ce47086a5c1eb822d1cd43b1c0
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 5b3d38e40b4efae26c857f8c4cc6742a4a2340f7 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.75,
+  LOGANVL.0.RPB.0031.D.60,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.88,
+  GNRSPWS.0.RPB.0029.D.91
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 4b78fdae139b987e2da082d157478ba1b0980276
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 962661438bb406c71a71cb658e04bfa10ec50c7b 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.74,
+  LOGANVL.0.RPB.0031.D.59,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.87,
+  GNRSPWS.0.RPB.0029.D.90,
+  Server-RC-0x02.0x00.0x01.024A
+  
+  Hsd-es-id: N/A"
+  Original commit hash: edcf53c059b24d515eba52e9f7f320dbb38f4ab1
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 0aea4ecc9871d51d939d6ab23f5bdb82148424b9 
+*********************************************************************************
+
+
+  Implemented the feature which supports per-copy margin printing for QcaDelay on DRX4 RDIMM.
+  
+  [Feature Description]
+  Implemented the feature which supports per-copy margin print for QcaDelay on DRX4 RDIMM.
+  
+  Package/Module: ServerSiliconPkg/MemoryEvContent
+  
+  [Impacted Platform]
+  GNR, CWF
+  
+  Hsd-es-id: 15016692162
+  
+  Change-Id: If42d60c7ded2f01e83777df5e5667b3c02fd59cb
+  Original commit hash: 0212f5a296f2196ad256cb8abc2924360b850480
+  
+  [Changed Files]
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Include/Library/MemoryServicesLib.h
+  CpRcPkg/Include/ReferenceCodeFatalErrors.h
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+                                             ^^^^^^^^   
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  CpRcPkg/Library/BaseMemoryServicesLib/ConvenienceFunctions.c
+  ServerSiliconPkg/Include/RmtResultColumns.h
+  ServerSiliconPkg/Library/MemoryEvContent/BuiltInEvTest.c
+  ServerSiliconPkg/Library/MemoryEvContent/Gen3/EvContentProjectSpecific.h
+  ServerSiliconPkg/Library/MemoryEvContent/RMT/externals/RmtCore/Gen3/RmtProjectSpecific.c
+  ServerSiliconPkg/Library/MemoryEvContent/RMT/externals/RmtCore/RmtCore.c
+  ServerSiliconPkg/Library/MemoryEvContent/RMT/externals/RmtCore/RmtCore.h
+  ServerSiliconPkg/Mem/Library/MemSocChipLib/Common/InitMemChip.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: b30d7deccef415ecf3a51df8127984bc7360e728 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.73,
+  LOGANVL.0.RPB.0031.D.58,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.86,
+  GNRSPWS.0.RPB.0029.D.89
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2aaae9a79a306cfb4b6c05e8d8c364d539c5f460
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 2986216545f52e61ec6de8fba49875b9c7cdccfb 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.72,
+  LOGANVL.0.RPB.0031.D.57,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.85,
+  GNRSPWS.0.RPB.0029.D.88
+  
+  Hsd-es-id: N/A"
+  Original commit hash: f4aa12f8f7c2fb52a9d8f0516a088c38848cb745
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: ce28f8e47e40951724d67b62d15ebe17dc5a775c 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.71,
+  LOGANVL.0.RPB.0031.D.56,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.84,
+  GNRSPWS.0.RPB.0029.D.87,
+  Server-RC-0x02.0x00.0x01.0249
+  
+  Hsd-es-id: N/A"
+  Original commit hash: ec9ecdb02c6ba45150b3944f0e10a47b65d83cf8
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 18715de2321277f1bbdca9eb9723e1e453fbd561 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.70,
+  LOGANVL.0.RPB.0031.D.55,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.83,
+  GNRSPWS.0.RPB.0029.D.86
+  
+  Hsd-es-id: N/A"
+  Original commit hash: d8300ca228c451d134e7d87480db89ba04fab593
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: ad0b4df3435024a80f14d5f491b3c01206493a79 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.69,
+  LOGANVL.0.RPB.0031.D.54,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.82,
+  GNRSPWS.0.RPB.0029.D.85
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 25ce9abb351f6671a8eab6008f6dabb74b8189b3
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: c8882ae66ac38e0a2aa2ef9aeebd860ab1ceb871 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.68,
+  LOGANVL.0.RPB.0031.D.53,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.81,
+  GNRSPWS.0.RPB.0029.D.84
+  
+  Hsd-es-id: N/A"
+  Original commit hash: a6866e7398404763ad86c4d57c66e0cb82446d81
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 1116a9cd998e92b8108a5aaa72765079709922fc 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.67,
+  LOGANVL.0.RPB.0031.D.52,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.80,
+  GNRSPWS.0.RPB.0029.D.83
+  
+  Hsd-es-id: N/A"
+  Original commit hash: f4bae5f6589b9943add6d88940c90e6e00b5fdbf
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: a25a20d9e3d46c39bc623d1e6f01ef0683a38700 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.66,
+  LOGANVL.0.RPB.0031.D.51,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.79,
+  GNRSPWS.0.RPB.0029.D.82
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2dc57d2741a2ff424f38e48ae0bae6e92bddd8da
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: fbec6e3e497c208ba03e7ee3c7f3a5e1f29264a6 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.65,
+  LOGANVL.0.RPB.0031.D.50,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.78,
+  GNRSPWS.0.RPB.0029.D.81
+  
+  Hsd-es-id: N/A"
+  Original commit hash: ad1e526747d8899d3201c92bae843b6e64c463b0
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 56827310a6405893a40a0d874eb4d3b95b466fc4 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.64,
+  LOGANVL.0.RPB.0031.D.49,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.77,
+  GNRSPWS.0.RPB.0029.D.80
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2bc89724440d276d1f0cc14745ca30bad17a3143
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: f7e99e8477530a4561b10e30ab2bd56d14c5e2a3 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.63,
+  LOGANVL.0.RPB.0031.D.48,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.76,
+  GNRSPWS.0.RPB.0029.D.79,
+  Server-RC-0x02.0x00.0x01.0248
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 549c397435ee0b999e04ac1e1599f8732fd1e179
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: a5cf24c364a92036c6181f9116a7dc8c6d719e9c 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.62,
+  LOGANVL.0.RPB.0031.D.47,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.75,
+  GNRSPWS.0.RPB.0029.D.78
+  
+  Hsd-es-id: N/A"
+  Original commit hash: caf03a64d9fbea10d8a80d4e3acee1ed12c43b9e
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: faf4e1c30f5300ca262f2ca449d13776e665209f 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.61,
+  LOGANVL.0.RPB.0031.D.46,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.74,
+  GNRSPWS.0.RPB.0029.D.77,
+  Server-RC-0x02.0x00.0x01.0247
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 0d6c766c6a3104b553cb2e59a79e4207e5c2fcb3
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 98270f445f3d5334fe741f1653e19e10890a3b97 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.60,
+  LOGANVL.0.RPB.0031.D.45,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.73,
+  GNRSPWS.0.RPB.0029.D.76,
+  Server-RC-0x02.0x00.0x01.0246
+  
+  Hsd-es-id: N/A"
+  Original commit hash: b16a002b402c94253552994fcb8e1350b174f43a
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 1e98907ae1de9452b9a678d188de0619aa90dc17 
+*********************************************************************************
+
+
+  ServerPlatformPkg/BuildScript/Source/BuildStep/IFWIGen.py:
+                                            ^^^^             
+  Changes include:
+  1. DelayedAuthMode mode been changed through IFWI type.
+  2. Fix a regression which impact the DAM mode.
+  
+  Hsd-es-id: 16025370116
+  
+  Change-Id: I007800ec0c7c5043ff4d6b838027a0a663b2d81d
+  Original commit hash: f597e35070fc14a4541a5240eb6fb5d148af16b7
+  
+  [Changed Files]
+  ServerPlatformPkg/BuildScript/Source/BuildStep/IFWIGen.py
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 28f37c6218cf8cbbe5911d44d040deaecf5a1716 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.59,
+  LOGANVL.0.RPB.0031.D.44,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.72,
+  GNRSPWS.0.RPB.0029.D.75,
+  Server-RC-0x02.0x00.0x01.0245
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 39bfb82f774bf30c4d42cf89e88bd9a0d3799d4a
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 01b31cc215dbbfccc04b8d8c2ac2ccb6df52c092 
+*********************************************************************************
+
+
+  GNR DDR5 Change the Initial TX Tap1 Value of MiscVendor 32Gb 2DPC 2Rx4 to 0 for GNR-SP
+  
+  [Issue Description] or [Feature Description]
+  Change the initial TX tap1 value of MiscVendor 32Gb 2DPC 2Rx4 to 0 for GNR-SP only.
+  
+  [Resolution]
+  
+  Package/Module: CpRcPkg
+  
+  [Impacted Platform]
+  GNR SP
+  
+  Hsd-es-id: 15016702402
+  
+  Change-Id: Idfc6cd16fa77c49e57333b0f136df7b1ab3d9a9a
+  Original commit hash: 4ca058ce4e49ccd0014a6326959da3f1bfcd8d13
+  
+  [Changed Files]
+  CpRcPkg/Include/Library/MemDdrioIpLib.h
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+                                             ^^^^^^^^   
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDfe.c
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemIOControl.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 1f1a96d3e841fa17233a8d73a9532d9478f9a632 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.58,
+  LOGANVL.0.RPB.0031.D.43,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.71,
+  GNRSPWS.0.RPB.0029.D.74
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 913828b17208688b0bb594ba08fd0d9d8c968263
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: b5f2db19baf4945f8e6f7c2c2de35d0eb7f87f2e 
+*********************************************************************************
+
+
+  ServerPlatformPkg/BuildScript/Source/BuildStep/IFWIGen.py:
+                                            ^^^^             
+  
+  Refine the parameter for "setvalues" setting.
+  
+  Hsd-es-id: 15016709544
+  
+  Change-Id: Id99e97011fd76eb2d847b31021402000bdd8025e
+  Original commit hash: d8883d0948c3199916ade5e5ee168345b1cf5d9b
+  
+  [Changed Files]
+  ServerPlatformPkg/BuildScript/Source/BuildStep/IFWIGen.py
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 88930d80e4f0d4652d1de1f3bf0b652a17aa793b 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.57,
+  LOGANVL.0.RPB.0031.D.42,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.70,
+  GNRSPWS.0.RPB.0029.D.73,
+  Server-RC-0x02.0x00.0x01.0244
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 05c210b7e5e8bb5fe84515ffb4c868715a8e7d3b
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 9322b7ddda73f5c4cd62d194b3db2fbf501048c5 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.56,
+  LOGANVL.0.RPB.0031.D.41,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.69,
+  GNRSPWS.0.RPB.0029.D.72
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 5b97f3ee96517bb4f301dd23775acea7887d6dfe
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 962d4f1e912cbad54b36d1322c5c48d7265ff0d1 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.55,
+  LOGANVL.0.RPB.0031.D.40,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.68,
+  GNRSPWS.0.RPB.0029.D.71,
+  Server-RC-0x02.0x00.0x01.0243
+  
+  Hsd-es-id: N/A"
+  Original commit hash: bc700db7d48007ea17f71703b68bf34511a1ee67
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 04918970ea2da86bd577f8666d57a566f6c220d9 
+*********************************************************************************
+
+
+  SGX fails when enabling SgxDebugMode from BIOS UI, passes with XmlCli
+  
+  [Issue Description]
+  BIOS does not issue a reset when a mismatch on DebugInterface MSR is
+  detected and SgxDebugMode is requested
+  
+  [Resolution]
+  Enforce a cold reset when a mismatch on DebugInterface MSR is detected
+  
+  Package/Module:
+  ServerSiliconPkg/Security/Cct/Library/BaseSocMicrocodeLib
+                   ^^^^^^^^                                 
+  ServerSecurityPkg/Cct/Feature/SgxPostMem
+  ServerSecurityPkg/Cct/Dxe/SecurityIdeLate
+                            ^^^^^^^^        
+  
+  [Impacted Platform]
+  BIRCHSTREAM-AP
+  BIRCHSTREAM-SP
+  
+  Hsd-es-id: 15016554357
+  
+  Change-Id: Id5c03bf0cb0283b4fe9e369ddc4f60ab943f77c8
+  Original commit hash: 911d7635cf88afa8c7b702f8ad27fee6d26c36ac
+  
+  [Changed Files]
+  ServerSecurityPkg/Cct/Dxe/SecurityIdeLate/4v0/SecurityIdeLateCallback.c
+  ServerSecurityPkg/Cct/Feature/SgxPostMem/4v0/SgxPostMem.c
+  ServerSiliconPkg/Security/Cct/Library/BaseSocMicrocodeLib/4v0/BaseSocMicrocode.c
+  ServerSiliconPkg/Security/Cct/Library/BaseSocMicrocodeLib/4v0/Private/InternalCommon.c
+                                                                        ^^^^^^^^         
+  ServerSiliconPkg/Security/Cct/Library/SecurityIdePreMemLib/4v0/PrmPreMemInit.c
+  ServerSiliconPkg/Security/Cct/Library/SecurityIdePreMemLib/4v0/SgxPreMemInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 4f8db4ec5c4a43363316094c525531ec1149b265 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.54,
+  LOGANVL.0.RPB.0031.D.39,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.67,
+  GNRSPWS.0.RPB.0029.D.70,
+  Server-RC-0x02.0x00.0x01.0242
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 4129cfd506668da2b28c1d78f90cfdd14d0d1287
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: e3dadc1430f103568030c68e1e68b1edf3a3bb99 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.53,
+  LOGANVL.0.RPB.0031.D.38,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.66,
+  GNRSPWS.0.RPB.0029.D.69,
+  Server-RC-0x02.0x00.0x01.0241
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 5c4cf13d1b24f1246ca9e8b6e3f9fb694cf997f9
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 3d13ba2d3d33b2ed9027237ad15df41d4dc2aff2 
+*********************************************************************************
+
+
+  [Customer] Silicon RC filename conflict with EDK2 snapshot
+            ^^^^^^^^^                                        
+  
+  [Issue Description]
+  customer sync latest EDK2 version, it will meet the issue that
+  fails to build due to unresolved identifiers.
+  This was tracked back to EDK2 defining a Cxl30.h, which is picked up by the compiler instead of the CpRcPkg version.
+  The Cxl30.h file under EDK2 and cpRcPkg are not completed same. some c code file are developped based on
+  Cxl30.h of CpRcPkg. That will cause the current build failure.
+  
+  [Resolution]
+  To minimal the code change, just move Cxl30.h of CpRcPkg to Private Folder
+  to avoid the build error.
+  
+  Package/Module:CpRcPkg/Include
+  
+  [Impacted Platform]
+  GNR, GNRD
+  
+  Hsd-es-id: 14023144617
+  
+  Change-Id: I892b216d2a1d4d250bf4831935df2b31794b4b4d
+  Original commit hash: 3a2878930599311e69c471b96b2f9cbf657e9a45
+  
+  [Changed Files]
+  CpRcPkg/Include/IndustryStandard/Cxl.h
+  CpRcPkg/Include/IndustryStandard/Private/Cxl30.h
+  ServerSiliconPkg/Iio/Library/IioCxlApiLib/CxlNodeInfoInit.c
+  ServerSiliconPkg/Iio/Library/IioCxlApiLib/IioCxlApiLib.c
+  ServerSiliconPkg/Library/CxlIpLib/CxlIpLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  silicon 
+
+*********************************************************************************
+Commit: a9d0a895a7da64fb871442f14179a55e123c8f32 
+*********************************************************************************
+
+
+  [CWF] [AP] BIOS support to enable IC config (ChopType: XdccVal) - Uncore changes
+  
+  [Feature Description]
+  Add a new ChopType TypeXdccVal to support CWF-AP IC config.
+  Note:
+  TypeXdccVal means a SKU that has only 1 Computer die and 1 IO die
+                      ^^^                                           
+  (i.e., IC config) which is fused off from TypeXdcc SKU.
+                             ^^^^                    ^^^  
+  
+  Package/Module:
+  CpRcPkg/Upi
+  ServerSiliconPkg/*
+  SimulationPkg/KtiSim
+  
+  [Impacted Platform]
+  BHS CWF-AP
+  
+  Hsd-es-id: 15016673811
+  
+  Change-Id: I4d0bba8da3c8f4340a2a2d180c89bcb232114f5f
+  Original commit hash: 8da654f792890fba098b128d0d906450d5f4d93f
+  
+  [Changed Files]
+  CpRcPkg/Include/Upi/KtiHost.h
+  CpRcPkg/Include/Upi/KtiSi.h
+  ServerSiliconPkg/Library/ProcSmbIpLib/GnrSrf/ProcSmbChip.c
+  ServerSiliconPkg/Mem/Library/MemDecodeLib/Gen3/7nm/MemDecodeNode.c
+  ServerSiliconPkg/Upi/Library/KtiApiLib/KtiApi.c
+  ServerSiliconPkg/Upi/Library/SncPrefetchLib/ChipGnrSrf/SncProgramming.c
+  ServerSiliconPkg/Upi/Library/SncPrefetchLib/SncDeterminingCommon.c
+  ServerSiliconPkg/Upi/Library/UncoreLib/ChipGnrSrf/UncoreLib.c
+  ServerSiliconPkg/Upi/Library/UncoreLib/KtiMain.c
+  ServerSiliconPkg/Upi/Library/UpiInitDefaultLib/UpiInitDefaultLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: fuse
+
+*********************************************************************************
+Commit: 445bc6d3acc25efa309a02d544c15268381ab743 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.52,
+  LOGANVL.0.RPB.0031.D.37,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.65,
+  GNRSPWS.0.RPB.0029.D.68,
+  Server-RC-0x02.0x00.0x01.0240
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 40b11e150527d13e95171a1693d310d9a49c228f
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 5a5691c83f3482d60236417f8defd83882fa4926 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.51,
+  LOGANVL.0.RPB.0031.D.36,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.64,
+  GNRSPWS.0.RPB.0029.D.67,
+  Server-RC-0x02.0x00.0x01.023F
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 44f4899d90bf8f84d2369884e24c850ca789c660
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: d1996e04511ce81d2d88284fdda744dbeab0b721 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.50,
+  LOGANVL.0.RPB.0031.D.35,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.63,
+  GNRSPWS.0.RPB.0029.D.66
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 3add4842b903579b52af39ca935d9f69b16d23e2
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: d4623da3b9dca7506d3d7719af47bf2c05bdfed0 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.49,
+  LOGANVL.0.RPB.0031.D.34,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.62,
+  GNRSPWS.0.RPB.0029.D.65
+  
+  Hsd-es-id: N/A"
+  Original commit hash: abc0cbf1b9aa2027e835d09d7fe6a3c5917ef747
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 95038c2185c99118d08f0f26e9c2447628f54b77 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.48,
+  LOGANVL.0.RPB.0031.D.33,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.61,
+  GNRSPWS.0.RPB.0029.D.64
+  
+  Hsd-es-id: N/A"
+  Original commit hash: fc83d4ed13152b0f8fcd2c030737c3d995d5ee7c
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 3f4942284006c2c5963a6ebd3d1cb130db7773b5 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.47,
+  LOGANVL.0.RPB.0031.D.32,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.60,
+  GNRSPWS.0.RPB.0029.D.63
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 8525d00d815a973d232678604a95a9adef03c26b
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: a51b66c3f0241a7ceb252422a755a669ba8d5412 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.46,
+  LOGANVL.0.RPB.0031.D.31,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.59,
+  GNRSPWS.0.RPB.0029.D.62
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 69a6a8b1b0feff686541a09ebcfd23e75861eed5
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 30471b23f410e2f73cff0ce4293591c61e0c06fc 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.45,
+  LOGANVL.0.RPB.0031.D.30,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.58,
+  GNRSPWS.0.RPB.0029.D.61
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 8ed360f270d74d88936af804d64671c2ce899c1a
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: e27eb58d6a28eebf5559102de0ef585b80735935 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.44,
+  LOGANVL.0.RPB.0031.D.29,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.57,
+  GNRSPWS.0.RPB.0029.D.60,
+  Server-RC-0x02.0x00.0x01.023E
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 50a6c7fce3e0fe2f373ed31adb0cb7a4ed54dc24
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: f5d2f9c1305ae9516a798d0feab015579be6ce3f 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.43,
+  LOGANVL.0.RPB.0031.D.28,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.56,
+  GNRSPWS.0.RPB.0029.D.59,
+  Server-RC-0x02.0x00.0x01.023D
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2347b52295d218ca10fe4eeb28e0ef9b19cf3351
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: e53625a102533d95204ace22457e928783aea06d 
+*********************************************************************************
+
+
+  Revert "BirchStream remove performance measurement support from DEBUG build i"
+  ^^^^^^                                                                         
+  
+  
+  Hsd-es-id: 15016683093
+  
+  Change-Id: I53fbdbb053c2e99b85bd5504d3dbc5efaecc2ad9
+  Original commit hash: ed6d5b4870f9ee30dc66e8d2f66e190abbe76e31
+  
+  [Changed Files]
+  BirchStreamFspPkg/Include/Dsc/BirchStreamOpenBoardPkgFvLateSiliconDefines.dsc
+  BirchStreamFspPkg/Include/Dsc/BirchStreamRpPkgFvLateSiliconDefines.dsc
+  BirchStreamFspPkg/PlatformPkgConfig.dsc
+  BirchStreamOpenBoardPkg/PlatformPkgConfig.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: ccf3cf84b6a5551fe7d145552585e8f95aed2559 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.42,
+  LOGANVL.0.RPB.0031.D.27,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.55,
+  GNRSPWS.0.RPB.0029.D.58,
+  Server-RC-0x02.0x00.0x01.023C
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2a1a1dc629f7cf2b350befc343b319ac9430ab7e
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 4c534696de34eb84d9c09cf299ba62cee77c6fae 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.41,
+  LOGANVL.0.RPB.0031.D.26,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.54,
+  GNRSPWS.0.RPB.0029.D.57,
+  Server-RC-0x02.0x00.0x01.023B
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 5694f8a655a2cd721dc7b4dbb02b66b397a90ad7
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 77c730ebffa81926722a91cbaf3b0167c16f91e6 
+*********************************************************************************
+
+
+  GNR DDR5 MRDIMM Sweeps all DCA signals delays on the SUBCH together
+  
+  [Feature Description]
+  MRDIMM Sweeps all DCA signals delays on the SUBCH together in New RCD DCA Timing centering step and RMT
+                                                                                             ^^^^         
+  
+  [Resolution]
+  Previously in DCA Complex training, only the cmd_dly of the signal being targeted is swept. For example if CA0 is being margined,
+  only the cmd_dly for CA0 is swept. When it moves to CA1, the only cmd_dly for CA1 is swept. etc....
+  Now, regardless of which CA signal is being margined, the offset for cmd_dly is applied to all CA signals.
+  
+  Package/Module: CpRcPkg, ServerSiliconPkg
+  
+  [Impacted Platform]
+  GNR
+  
+  Hsd-es-id: 15016667896
+  
+  Change-Id: Iae1045eb6d9cf8c1b318f333b393383efdff476e
+  Original commit hash: 2c13da833a6854210332230ddd434484d7a329bf
+  
+  [Changed Files]
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Include/MemCommon.h
+  CpRcPkg/Include/Memory/MemFlowsDefinitions.h
+  CpRcPkg/Include/Memory/MemoryCheckpointCodes.h
+  CpRcPkg/Include/ReferenceCodeFatalErrors.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemStart.c
+  CpRcPkg/Library/MemSweepLib/MemSweepGetSet.c
+  ServerSiliconPkg/Mem/Library/MemTrainingLib/Gnr/MemTrainingCallTable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 756203184fdfec716ef12b70c15cc1614e924e24 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.40,
+  LOGANVL.0.RPB.0031.D.25,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.53,
+  GNRSPWS.0.RPB.0029.D.56,
+  Server-RC-0x02.0x00.0x01.023A
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 0b00680becce6f400c2c0fb8f4ca69d7fda96ad2
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 436b53e262e97c861379a3349470e499ab681b3c 
+*********************************************************************************
+
+
+  [GNR AP B3][DM_RAS] Lockups with SGX traffic(SGX1/SGX2) with PRM not allocated in S0
+  
+  [Issue Description]
+  SGX1/SGX2 traffic is hitting SW lock-ups (Linux kernel) when no PRM allocated in S0 but
+  present in S1
+  
+  [Resolution]
+  Add a workaround to make SGX follow a disabled flow in non-POR
+        ^^^^^^^^^^                                               
+  inefficient PRMRR configurations where:
+  PrmrrCountPerSystem != PrmrrCountPerPackage * SocketsAvailable
+  
+  Package/Module:
+  ServerSiliconPkg/Security/Cct
+                   ^^^^^^^^     
+  
+  [Impacted Platform]
+  BIRCHSTREAM-AP GNR B3
+  
+  Hsd-es-id: 15016645764
+  
+  Change-Id: Ia7f168512c9a678be32cdbdbd5a2228671bd4de6
+  Original commit hash: 5444f2634830f0820011978c2d2e4bdcb93a7920
+  
+  [Changed Files]
+  ServerSiliconPkg/Security/Cct/Library/SecurityIdePreMemLib/4v0/SgxPreMemInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 722eb5887f32b587459d608fb6a501f52e4dd5f5 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.39,
+  LOGANVL.0.RPB.0031.D.24,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.52,
+  GNRSPWS.0.RPB.0029.D.55,
+  Server-RC-0x02.0x00.0x01.0239
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 34a47770c8d63e365fe09ed4af0dde5da9601130
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: eeb54c6715c6372ffcb8d17fd0583634c1432816 
+*********************************************************************************
+
+
+  Enable UEFI BLE feature on GNRWS - Part3
+  
+  [Feature Description]
+  Implement the UEFI BLE feature on GNRWS.
+  
+  [Resolution]
+  Add source code for implementing UEFI BLE feature that:
+  1. BT BLE will connect the existing UEFI HID stack to provide
+  Keyboard and Mouse connections.
+  2. BT BLE bus support USB.
+  
+  Package/Module:Features/BluetoothPkg
+  
+  [Impacted Platform]
+  GNRWS.
+  
+  Hsd-es-id: 15016635907
+  
+  Change-Id: If9ca1adf1f70c1f04ab7672c6fe420765d32b268
+  Original commit hash: 736c6d04fb297003a8261893b875f8f6cd6af8ba
+  
+  [Changed Files]
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothAttribute.c
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothBusDxe.c
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothBusDxe.h
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothBusDxe.inf
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothConfigConnect.c
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothConfigGetData.c
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothConfigGetRemoteData.c
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothConfigInit.c
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothConfigRegisterCallBack.c
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothConfigScan.c
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothConfigSetData.c
+  Features/BluetoothPkg/BluetoothBusDxe/BluetoothIntHciEvent.c
+  Features/BluetoothPkg/BluetoothBusDxe/ComponentName.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/a4wp_srv.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/app_interface.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/atp_production_app.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/fmp_locator.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/fmp_reporter.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/gap_gatt_srv.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/hci2ile_interface.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/hci2ile_internal.h
+                                                             ^^^^^^^^   
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/hogp_host.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/hrp_collector.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/l2cap_coc_test_app.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/profile_adapt.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/smp_app.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/test_embedded_stack.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/uefi_app.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/inc/uhid_host.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/a4wp_srv.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/atp_production_app.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/fmp_locator.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/fmp_reporter.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/gap_gatt_srv.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/hci2ile_adaptation.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/hogp_host.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/hrp_collector.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/l2cap_coc_test_app.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/main.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/profile_adapt.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/pxp_monitor.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/smp_app.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/uefi_app.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/apps/src/uhid_host.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/inc/att.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/inc/gap.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/inc/gatt.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/inc/hci_host.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/inc/l2cap.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/inc/smp.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/att.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/gap.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/gatt_client.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/gatt_common.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/gatt_server.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/hci.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/hcicmds.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/l2cap.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/smp.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/android/inc/tl.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/android/src/tl.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/linux/inc/tl.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/linux/src/tl.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/rw/inc/tl.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/rw/src/tl.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/threadx/inc/tl.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/threadx/src/tl.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/uefi/inc/tl.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/hwal/uefi/src/tl.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/ifc/inc/config_host.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/ifc/inc/device_struct.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/ifc/inc/error_code.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/ifc/inc/int_interface.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/ifc/inc/interface.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/ifc/src/interface.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/inc/device_mgr.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/inc/profile_mgr.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/inc/service_mgr.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/inc/smp_mgr.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/src/device_mgr.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/src/profile_mgr.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/src/service_mgr.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/src/smp_mgr.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/osa/linux/inc/osa_types.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/osa/linux/src/osa_utils.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/osa/rw/inc/osa_types.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/osa/rw/src/osa_utils.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/osa/threadx/inc/osa_types.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/osa/threadx/src/osa_utils.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/osa/uefi/inc/osa_types.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/osa/uefi/src/osa_utils.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/storage/inc/storage.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/storage/src/storage.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/utils/inc/bt_types.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/utils/inc/log.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/utils/inc/utils.h
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/utils/src/device_utils.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/utils/src/mem_mgr_byte_wise.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/utils/src/mem_mgr_pool_mgr.c
+  Features/BluetoothPkg/BluetoothBusDxe/iLE/utils/src/utils.c
+  Features/BluetoothPkg/BluetoothConnectionManagerDxe/BluetoothConnectionManager.uni
+  Features/BluetoothPkg/BluetoothConnectionManagerDxe/BluetoothConnectionManager.vfr
+  Features/BluetoothPkg/BluetoothConnectionManagerDxe/BluetoothConnectionManagerDxe.c
+  Features/BluetoothPkg/BluetoothConnectionManagerDxe/BluetoothConnectionManagerDxe.h
+  Features/BluetoothPkg/BluetoothConnectionManagerDxe/BluetoothConnectionManagerDxe.inf
+  Features/BluetoothPkg/BluetoothConnectionManagerDxe/BluetoothConnectionManagerHii.h
+  Features/BluetoothPkg/BluetoothConnectionManagerDxe/BluetoothConnectionManagerVfr.h
+  Features/BluetoothPkg/BluetoothConnectionManagerDxe/ComponentName.c
+  Features/BluetoothPkg/BluetoothHidDxe/BluetoothHidDxe.c
+  Features/BluetoothPkg/BluetoothHidDxe/BluetoothHidDxe.h
+  Features/BluetoothPkg/BluetoothHidDxe/BluetoothHidDxe.inf
+  Features/BluetoothPkg/BluetoothHidDxe/BluetoothHidParser.c
+  Features/BluetoothPkg/BluetoothHidDxe/BluetoothHidParser.h
+  Features/BluetoothPkg/BluetoothHidDxe/BluetoothHidProtocol.c
+  Features/BluetoothPkg/BluetoothHidDxe/ComponentName.c
+  Features/BluetoothPkg/BluetoothPkg.ci.yaml
+  Features/BluetoothPkg/BluetoothPkg.dec
+  Features/BluetoothPkg/BluetoothPkg.dsc
+  Features/BluetoothPkg/HidKbDxe/ComponentName.c
+  Features/BluetoothPkg/HidKbDxe/EfiKey.c
+  Features/BluetoothPkg/HidKbDxe/HidKbDxe.c
+  Features/BluetoothPkg/HidKbDxe/HidKbDxe.h
+  Features/BluetoothPkg/HidKbDxe/HidKbDxe.inf
+  Features/BluetoothPkg/HidKbDxe/KeyBoard.c
+  Features/BluetoothPkg/HidKbDxe/KeyBoard.h
+  Features/BluetoothPkg/HidMouseDxe/ComponentName.c
+  Features/BluetoothPkg/HidMouseDxe/EfiMouse.c
+  Features/BluetoothPkg/HidMouseDxe/HidMouseDxe.c
+  Features/BluetoothPkg/HidMouseDxe/HidMouseDxe.h
+  Features/BluetoothPkg/HidMouseDxe/HidMouseDxe.inf
+  Features/BluetoothPkg/Include/Guid/HidKeyBoardLayout.h
+  Features/BluetoothPkg/Include/IndustryStandard/BluetoothAssignedNumbers.h
+  Features/BluetoothPkg/Include/IndustryStandard/BluetoothAtt.h
+  Features/BluetoothPkg/Include/IndustryStandard/BluetoothHci.h
+  Features/BluetoothPkg/Include/IndustryStandard/BluetoothHid.h
+  Features/BluetoothPkg/Include/Library/BluetoothLib.h
+  Features/BluetoothPkg/Include/Library/HidLib.h
+  Features/BluetoothPkg/Include/Protocol/Hid.h
+  Features/BluetoothPkg/Library/BluetoothLib/BluetoothLib.inf
+  Features/BluetoothPkg/Library/BluetoothLib/BluetoothLibGap.c
+  Features/BluetoothPkg/Library/BluetoothLib/BluetoothLibGatt.c
+  Features/BluetoothPkg/Library/HidLib/HidLib.c
+  Features/BluetoothPkg/Library/HidLib/HidLib.inf
+  Features/BluetoothPkg/UsbBtHciDxe/ComponentName.c
+  Features/BluetoothPkg/UsbBtHciDxe/UsbBtHci.c
+  Features/BluetoothPkg/UsbBtHciDxe/UsbBtHciDxe.c
+  Features/BluetoothPkg/UsbBtHciDxe/UsbBtHciDxe.h
+  Features/BluetoothPkg/UsbBtHciDxe/UsbBtHciDxe.inf
+  GnrwsRpPkg/Include/Dsc/PlatformPkgCommonLib.dsc
+  GnrwsRpPkg/Include/Dsc/PlatformPkgComponents.dsc
+  GnrwsRpPkg/PlatformPkg.fdf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: ac225b6156c064f4c5b23cc129d0c8bca8e49a09 
+*********************************************************************************
+
+[GPIO], [PCH]
+
+  [GNR-WS] Configure MTP-S PCH's GPP_F_23 for VROC hardware enabling key read
+                                                   ^^^^^^^^                   
+  
+  [Issue Description]
+  GNR-WS RVP and ERB boards reserve 2 GPIOs for reading hardware enabling key,
+                                                        ^^^^^^^^               
+  which is stored in a EEPROM installed on a 4-pin header, for VROC (virtual
+  RAID on CPU) function.
+  
+  1. IBL's GPP_C_4
+  2. PCH's GPP_F_23
+  
+  [Resolution]
+  The default route is through PCH's GPP_F_23. VROC driver is responsible
+  for reading the HW key and the driver itself will configure the GPIO to
+                  ^^                                                      
+  the required settings anyway. However, BIOS will also configure GPP_F_23 ready.
+  
+  Package/Module:GnrwsRpPkg
+  
+  [Impacted Platform]
+  GNR-WS.
+  
+  Hsd-es-id: 15016674926
+  
+  Change-Id: I673116b5405895c7e3672bc261b5de1ef38a2c42
+  Original commit hash: 94658e47ab7d326b687be0c5a5c06584ee5987c0
+  
+  [Changed Files]
+  GnrwsRpPkg/Uba/UbaMain/TypeGnrwsCRB/Pei/GpioTable.c
+  GnrwsRpPkg/Uba/UbaMain/TypeGnrwsCRB/Pei/GpioTableMtlPch.c
+  GnrwsRpPkg/Uba/UbaMain/TypeGnrwsERB/Pei/GpioTable.c
+  GnrwsRpPkg/Uba/UbaMain/TypeGnrwsERB/Pei/GpioTableMtlPch.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 863346726f02d6dbda928df738f7f45c959df144 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.38,
+  LOGANVL.0.RPB.0031.D.23,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.51,
+  GNRSPWS.0.RPB.0029.D.54
+  
+  Hsd-es-id: N/A"
+  Original commit hash: af6e6023f86e6c09a922edb3dd1f58902e036493
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 02465a06057ddf8957659ec466e80a1787fe2cd2 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.37,
+  LOGANVL.0.RPB.0031.D.22,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.50,
+  GNRSPWS.0.RPB.0029.D.53,
+  Server-RC-0x02.0x00.0x01.0238
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 543aa0a3b194bad42dfa1ff1aa2f9f15f0ba0bb3
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: ea2bd59f4cbf37c074aef937b38d626674a42c46 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.36,
+  LOGANVL.0.RPB.0031.D.21,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.49,
+  GNRSPWS.0.RPB.0029.D.52
+  
+  Hsd-es-id: N/A"
+  Original commit hash: a2530017d05c4dc8f4ee87372c78b801d254aec2
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: b54ccfa7e0394dd9dcac02f0b18aa5c75e10fab3 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.35,
+  LOGANVL.0.RPB.0031.D.20,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.48,
+  GNRSPWS.0.RPB.0029.D.51,
+  Server-RC-0x02.0x00.0x01.0237
+  
+  Hsd-es-id: N/A"
+  Original commit hash: daffa3c62ff20f8ccffe3a4b757f5ceca204785f
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 05515ce47780827ac9a6994a3e332d83bcac72c2 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.34,
+  LOGANVL.0.RPB.0031.D.19,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.47,
+  GNRSPWS.0.RPB.0029.D.50
+  
+  Hsd-es-id: N/A"
+  Original commit hash: c4ee9647e9c4c300d4b90d116f800d21539f0f06
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: c3688e404b220d9980d6ea074c805e663dcd1889 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.33,
+  LOGANVL.0.RPB.0031.D.18,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.46,
+  GNRSPWS.0.RPB.0029.D.49,
+  Server-RC-0x02.0x00.0x01.0236
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 8aa3d4ffe9dfaffb80bb3ec0263dbfa3145d976a
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 01e6d7ec2998bd8ab2dba4191dc047c74309ffc4 
+*********************************************************************************
+
+
+  Refactor DIMM vendor workarounds to optimize NEM code size
+                       ^^^^^^^^^^                            
+  
+  [Feature Description]
+  Reductions in NEM code size are needed to maintain flash layout stability
+  
+  [Resolution]
+  Refactor DIMM vendor workarounds to save space, while ensuring no change to
+                       ^^^^^^^^^^                                             
+  CSR traces or delays.
+  
+  Package/Module:
+  BaseDdr5CoreLib
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 14023203618
+  
+  Change-Id: I6c857c59c4bdb2060a548927c074e1212bf0c994
+  Original commit hash: fcaee4e32c43d38852de5c6bf2e8500548e3dc3c
+  
+  [Changed Files]
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: 725b56974c7dbe7c4be19fdaa8ce374d44c3603d 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.32,
+  LOGANVL.0.RPB.0031.D.17,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.45,
+  GNRSPWS.0.RPB.0029.D.48,
+  Server-RC-0x02.0x00.0x01.0235
+  
+  Hsd-es-id: N/A"
+  Original commit hash: b183b7abb3f79807b0dd62c642e32f25d34e8fbf
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 3d1a5f92ce7ad296903ac87dd6812d40be391fe8 
+*********************************************************************************
+
+[ME]
+
+  OCR HTTPS boot is failing
+      ^^^^                  
+  
+  [Issue Description]
+  OCR HTTPS boot is failing due to incorrect BIOS flow.
+      ^^^^                                              
+  
+  [Resolution]
+  Postponed sending ASF Clear Boot options command
+  to AsfOcrBootOptionsCallback.
+  
+  Package/Module:
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18039601149
+  
+  Change-Id: I9846713ff3089949f3beb9500540ab0e399a8d00
+  Original commit hash: d9235d6296ea668847b087ad44636929921fc435
+  
+  [Changed Files]
+  OneSiliconPkg/IpBlock/Me/Asf/Dxe/AsfDxe.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: http
+
+*********************************************************************************
+Commit: 8252882d3cd7684dc3776a2efeb8b9ada0139b2c 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.31,
+  LOGANVL.0.RPB.0031.D.16,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.44,
+  GNRSPWS.0.RPB.0029.D.47
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 0f90982ce863f991e127da421d02b7b5f624a615
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: e6084c2f9cf1af1390bc34039fc103e36584542f 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.30,
+  LOGANVL.0.RPB.0031.D.15,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.43,
+  GNRSPWS.0.RPB.0029.D.46
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 51a4c58155a2587769f1472d0e04fc2ebe883c04
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 89eceb10a1ff0d00f0f2978f96d1730ca076e919 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.29,
+  LOGANVL.0.RPB.0031.D.14,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.42,
+  GNRSPWS.0.RPB.0029.D.45
+  
+  Hsd-es-id: N/A"
+  Original commit hash: b8fb79690cfae83768a9dc10fef39fe001a0c1f8
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: f36a749a9174521106ad6ae77b306edfcd24b08c 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.28,
+  LOGANVL.0.RPB.0031.D.13,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.41,
+  GNRSPWS.0.RPB.0029.D.44
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 830cda5a15d972954c167103ff3fcffaee67c76c
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: a1656aa999e15fb3e9db890f291de37f67a15241 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.27,
+  LOGANVL.0.RPB.0031.D.12,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.40,
+  GNRSPWS.0.RPB.0029.D.43,
+  Server-RC-0x02.0x00.0x01.0234
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 854a10d340882631d3f099f2eef279533e565b39
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 585eb72fbd9c8780d5ce825e3bb4a502c4121404 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.26,
+  LOGANVL.0.RPB.0031.D.11,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.39,
+  GNRSPWS.0.RPB.0029.D.42,
+  Server-RC-0x02.0x00.0x01.0233
+  
+  Hsd-es-id: N/A"
+  Original commit hash: f96517833ded02759c79ffcd0cecfdd4cba477d0
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 661484b3c7a14ff345677e4823d2b0849912dc7b 
+*********************************************************************************
+
+
+  [GNR] BIOS update the B2P timeouts used in ADR flow
+  
+  [Feature Description]
+  Update flush timeout set via enhanced ADR B2P command (sub-command 0x1) to scale the value to the number of enabled sockets (i.e. 1 socket - 1 sec, 2 sockets 2 sec, 4 sockets - 4 secs).
+                                                                                                                                                                                      ^^^   
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Default ALL, Y, U, S, H, etc.
+  
+  Hsd-es-id: 22020381362
+  
+  Change-Id: Ide29a429fbb1442be2a2e8dff45f5a90b830ca9f
+  Original commit hash: b30e75b85a4e597ec233c14dcd118fb301169912
+  
+  [Changed Files]
+  ServerPlatformPkg/Features/Ras/Smm/ExtendedAdr/Fadr/Fadr.c
+  ServerPlatformPkg/Features/Ras/Smm/ExtendedAdr/Fadr/Fadr.h
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemorySetupStrings.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: ecs
+
+*********************************************************************************
+Commit: 9ac27365d94f2a1cf1c71b5a1cb70c64298cf662 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.25,
+  LOGANVL.0.RPB.0031.D.10,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.38,
+  GNRSPWS.0.RPB.0029.D.41,
+  Server-RC-0x02.0x00.0x01.0232
+  
+  Hsd-es-id: N/A"
+  Original commit hash: d07d72c749330d02dcec951abcbe52f17a129439
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 007821f2a015c47025066e59868bea5f15265230 
+*********************************************************************************
+
+
+  [GNR] HIOP IODC mode programming update
+  
+  [Feature Description]
+  Before:
+  For IODC enabled platforms, BIOS is expected to set HIOP to Hybrid Push.
+  For non-IODC enabled SKUs, BIOS is expected to set HIOP to Always Push.
+                       ^^^                                                
+  After:
+  For 1) IODC enabled -or- 2) IODC disabled but Directory mode is "Inclusive RSF",
+  BIOS is expected to set HIOP to Hybrid Push.
+  For non-IODC enabled SKUs, BIOS is expected to set HIOP to Always Push.
+                       ^^^                                                
+  "Inclusive RSF" is multi-socket or when CXL Type2 (CXL.cache+CXL.mem) device is connected.
+  "Inclusive RSF" apply to GNR SP/AP and CWF SP/AP, does not apply to SRF SP/AP and GNRWS.
+  
+  Package/Module:
+  ServerSiliconPkg/IioMs2IosfInit
+  
+  [Impacted Platform]
+  BHS/GNR, BHS/CWF
+  
+  Hsd-es-id: 18039557500
+  
+  Change-Id: I04e37baa4a5c86fc10bf298c61e05920e71c30ae
+  Original commit hash: dd128a91d14f78bf06365c999d37ce0394c66618
+  
+  [Changed Files]
+  ServerSiliconPkg/Iio/Library/IioMs2IosfInit/Gen3/IioMs2IosfPsf.c
+  ServerSiliconPkg/Iio/Library/IioMs2IosfInit/IioMs2IosfInitGen3.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 5c689a28447106cf3e5b87ad74d6cf1ec464ce73 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.24,
+  LOGANVL.0.RPB.0031.D.09,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.37,
+  GNRSPWS.0.RPB.0029.D.40,
+  Server-RC-0x02.0x00.0x01.0231
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 763fe987614bf14e0bbc829b9969c3485f44022f
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: e8404e379a2c6092c6dca53be1c6a0d27019856e 
+*********************************************************************************
+
+
+  Fixed issues that margins accross all strobes within one subchannel are the same for QcaDelay.
+  
+  [Issue Description]
+  The margin delta between strobes within one subchannel is very small for QcaDelay.
+  
+  [Resolution]
+  Removed flag ResultPerSubChnnel from FlagResult when sweeping to make the sweeping is independent for each strobe.
+  
+  Package/Module:CpRcPkg/BaseDdr5CoreLib
+  
+  [Impacted Platform]
+  GNR, SRF, CWF
+  
+  Hsd-es-id: 15016594590
+  
+  Change-Id: I6e4a186c76ec5590e4431f08ab1ea0dd38803f14
+  Original commit hash: 1422671c13dbc65a0b556c3c47eb820f7a0aa1cd
+  
+  [Changed Files]
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+                                             ^^^^^^^^   
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 7b618031de1c4ae3ca10b7c7e25ea52b56d5d326 
+*********************************************************************************
+
+
+  [Gen3]Update Write TCO coarse settings for MCR
+  
+  [Feature Description]
+  Update TCO coarse sweep start from 20 for MCR dimms
+  Update number of TCO coarse sweep step to 5
+                                    ^^^^      
+  No changes for RDIMM
+  
+  Package/Module:
+  CpRcPkg/Library/BaseDdr5CoreLib
+  
+  [Impacted Platform]
+  Graniterapids-sp
+  Clearwaterforest-ap
+  Graniterapids-ap
+  Graniterapids-d
+  
+  Hsd-es-id:14023087668
+  
+  Change-Id: Ic79c39eff1031b35d7ec3770acee7fbbac943a22
+  Original commit hash: a5b58322607976d5e5aef205ef4dbe46b038d36b
+  
+  [Changed Files]
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+                                             ^^^^^^^^   
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/Include/MemDdrioPrivate.h
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemIOControl.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: de634642dc2cbfdade920b5dee8e9e72ccff0fc7 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.23,
+  LOGANVL.0.RPB.0031.D.08,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.36,
+  GNRSPWS.0.RPB.0029.D.39,
+  Server-RC-0x02.0x00.0x01.0230
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2158568e3ac12692117da293ed400aa546a565ef
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 0015708b270af6dca1326ea6d900f5ffc3ea1163 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.22,
+  LOGANVL.0.RPB.0031.D.07,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.35,
+  GNRSPWS.0.RPB.0029.D.38,
+  Server-RC-0x02.0x00.0x01.022F
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 55c742fea32693eefc736e2a87d1d10934c61b4d
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 74096505cfc6b36d8736def04169a348ca0a04d9 
+*********************************************************************************
+
+
+  BIOS should check PMIC device type when apply workarounds
+                                                ^^^^^^^^^^  
+  
+  [Feature Description]
+  BIOS should check PMIC device type when apply workarounds
+                                                ^^^^^^^^^^  
+  
+  Package/Module: CpRcPkg/PmicAccessLib
+  
+  [Impacted Platform]
+  GNR, SRF, CWF
+  
+  Hsd-es-id: 15016580841
+  
+  Change-Id: I537e145bae6a65c309ce4edfe8cfb0bc9fb68dfb
+  Original commit hash: b200820fdbd9e7ec86f80d724cff9a055d055eb4
+  
+  [Changed Files]
+  CpRcPkg/Library/PmicAccessLib/PmicAccess.c
+  ServerSiliconPkg/Library/ProcSmbIpLib/Pei/ProcSmbChipPei.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: db70ba6375c6a8048f682303e67c36328983606a 
+*********************************************************************************
+
+
+  [GNR-SP 4s/8s] Disable ASPM in Aspeed root port also in socket 2,4,6
+  
+  [Feature Description]
+  The Aspeed GPU has problem with ASPM and we need to disable ASPM as WA.
+  This WA was implemented in socket 0, but in 4s/8s systems the spare GPU
+      ^^^^                                                                
+  can be activated and also needs ASPM disabled.
+  
+  [Resolution]
+  Disable ASMP in Aspeed root port in each even socket.
+  
+  Package/Module:
+  Platform defaults
+  
+  [Impacted Platform]
+  BHS-SP 4S/8S
+  
+  Hsd-es-id: 18039554750
+  
+  Change-Id: I721cf7f01badd40bcb7498e058cc0d3359def8d7
+  Original commit hash: a3cf923d5dbd4c84565b5a6ea906b4f2ca12fd9c
+  
+  [Changed Files]
+  BirchStreamOpenBoardPkg/PreBuildSetupPcdDefaults.dsc.inc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  WA 
+
+*********************************************************************************
+Commit: 6fe174fc534d7aab74dd54a30a69c7f6acb81ea0 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.21,
+  LOGANVL.0.RPB.0031.D.06,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.34,
+  GNRSPWS.0.RPB.0029.D.37,
+  Server-RC-0x02.0x00.0x01.022E
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2570f027dac21e39411e6566ba17cf868db82db7
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: fee86b80bf0e60e8fda590521d53e540c4bb7118 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.20,
+  LOGANVL.0.RPB.0031.D.05,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.33,
+  GNRSPWS.0.RPB.0029.D.36,
+  Server-RC-0x02.0x00.0x01.022D
+  
+  Hsd-es-id: N/A"
+  Original commit hash: f34bb125d70eeaa2c6f52f7823ce305d4a193e93
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 1b39e6a8ff44330bfe65ceebe86c701d809c686c 
+*********************************************************************************
+
+
+  [CWF] GNR Ax silicon workaround for S22018428423 shall not be applied to CWF
+              ^^^^^^^^^^^^^^^^^^^                                              
+  
+  [Issue Description]
+  The silicon workaround "S22018428423" is only needed for GNR Ax and SRF Ax/Bx stepping.
+     ^^^^^^^^^^^^^^^^^^^                                                        ^^^^^^^^  
+  And the silicon issue is resolved in GNR B0 and SRF C0.
+         ^^^^^^^^^                                        
+  
+  CWF-A0 stepping follows GNR-B0 stepping, so CWF silicon does not have this silicon issue.
+         ^^^^^^^^                ^^^^^^^^        ^^^^^^^^^                  ^^^^^^^^^       
+  However, this silicon workaround is now mistakenly applied to CWF all steppings.
+               ^^^^^^^^^^^^^^^^^^^                                      ^^^^^^^^   
+  
+  [Resolution]
+  Remove this silicon workaround for CWF.
+             ^^^^^^^^^^^^^^^^^^^          
+  Besides, refine a code comment to avoid confusion.
+  
+  Package/Module:
+  ServerSiliconPkg/SiliconWorkaroundLibCwf.c
+  ServerSiliconPkg/Upi
+  
+  [Impacted Platform]
+  CWF-AP
+  
+  Hsd-es-id: 14023055212
+  
+  Change-Id: I902fa4e3b5b2332dee18227df61e6250df92497f
+  Original commit hash: 5173a4431fab824bae2b0b9a3e0d3d485c6cbdc5
+  
+  [Changed Files]
+  ServerSiliconPkg/Library/SiliconWorkaroundLibGnrSrf/SiliconWorkaroundLibCwf.c
+  ServerSiliconPkg/Upi/Library/UncoreLib/KtiMain.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  silicon 
+  --Commit Message Contains Key Word: Workaround
+  --Commit Message Contains Key Word: step
+  --Commit Message Contains Key Word: stepping
+
+*********************************************************************************
+Commit: be06a766140808f30a2be35ed7bbc7503aaa9707 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.19,
+  LOGANVL.0.RPB.0031.D.04,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.32,
+  GNRSPWS.0.RPB.0029.D.35
+  
+  Hsd-es-id: N/A"
+  Original commit hash: c791ca86dde5d08d57a18a860b220e65ff4be550
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: a056a6d1eba892c523de44a3e540bbf7871eb095 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.18,
+  LOGANVL.0.RPB.0031.D.03,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.31,
+  GNRSPWS.0.RPB.0029.D.34
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 6936829cabf8ccbcb9cf1896f1b297ae24ffb320
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 2b650e29e2f62b5a00747c6f83d8cf7aebe6f7fb 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.17,
+  LOGANVL.0.RPB.0031.D.02,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.30,
+  GNRSPWS.0.RPB.0029.D.33
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 712ff96be62404a397102ac4ecd9be656132e6b1
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 7c87861bf5bc5664fbef3436d42d438b9ce2b95e 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.16,
+  LOGANVL.0.RPB.0031.D.01,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.29,
+  GNRSPWS.0.RPB.0029.D.32,
+  Server-RC-0x02.0x00.0x01.022C
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2ce77ddb93b9020deabed7f387be6221810348ec
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: c94de5679a27fad10f7198705f10e2b1dba0bc3b 
+*********************************************************************************
+
+[ASL], [PCH]
+
+  Revert "[GNRWS] Adding EcDxe support into GNRWS."
+  ^^^^^^                                            
+  
+  
+  Hsd-es-id: 16025154252
+  Change-Id: Ib30d2500e107e2c70f495869782d5aa3d230d5f8
+  Original commit hash: 54219dddeb629c3423f6ac9cdbc494179bff95d1
+  
+  [Changed Files]
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/AcpiTables/EcAcpiTables.inf
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcBase.asl
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcDevice.asl
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcExternalMethod.asl
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/AcpiTables/EcSsdt/EcSsdt.asl
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/EcDxe/EcDxe.c
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/EcDxe/EcDxe.inf
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/Include/Library/EcMiscLib.h
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/Library/BaseEcMiscLib/BaseEcMiscLib.c
+  GnrwsRpPkg/Features/Ec/EcFeaturePkg/Library/BaseEcMiscLib/BaseEcMiscLib.inf
+  GnrwsRpPkg/Platform/Pei/PlatformInfo/PlatformInfo.c
+  GnrwsRpPkg/PlatformPkg.dsc
+  GnrwsRpPkg/PlatformPkg.fdf
+  OneSiliconPkg/Fru/MtlPch/Include/AcpiTables/Dsdt/MtlPch.asl
+  ServerPlatformPkg/Include/Guid/SetupVariable.h
+  ServerPlatformPkg/Include/NvVariableUpdateRule.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 719d9d8b5e5684a6a0031352eec46dfad6485719 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.15,
+  LOGANVL.0.RPB.0030.D.99,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.28,
+  GNRSPWS.0.RPB.0029.D.31,
+  Server-RC-0x02.0x00.0x01.022B
+  
+  Hsd-es-id: N/A"
+  Original commit hash: e755d39521d64658a91e8f531fccfee090e95220
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: e726c779098b15b4292328fd3a11754746024a83 
+*********************************************************************************
+
+
+  Print cache values for dumpdimmstate
+  
+  [Feature Description]
+  Print cache values for dumpdimmstate using knob DumpDimmCache
+  
+  Package/Module: CpRcPkg/BaseDdr5CoreLib
+  
+  [Impacted Platform]
+  GNR, SRF, CWF
+  
+  Hsd-es-id: 15016519479
+  
+  Change-Id: I2418988c2fb75dc3628c91e53c52c797536d848c
+  Original commit hash: 351685afe7cdcdbfdc1079c5bfb4881694688d10
+  
+  [Changed Files]
+  BirchStreamOpenBoardPkg/Library/PeiFspHobCheckLib/FspHobHelpers.h
+  BirchStreamOpenBoardPkg/PreBuildSetupPcdDefaults.dsc.inc
+  CpRcPkg/Include/Library/MemRcdAccessLib.h
+  CpRcPkg/Include/Memory/MemDefaults.h
+  CpRcPkg/Include/Ppi/MemoryPolicyPpi.h
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+                                             ^^^^^^^^   
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDbAccess.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDbCwCache.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDramAccess.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDramAccess.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemRcdAccess.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemRcdCwCache.c
+  CpRcPkg/Library/BaseMemoryCoreLib/Core/Mem/MemStart.c
+  ServerPlatformPkg/Library/PeiMemoryPolicyUpdateLib/PeiMemoryPolicyUpdateLib.c
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemoryDfxSetup.hfr
+  ServerPlatformPkg/Platform/Dxe/SocketSetup/MemoryDfxSetupStrings.uni
+  ServerSiliconPkg/Include/Guid/SocketMemoryVariable.h
+  ServerSiliconPkg/Library/PeiMemoryPolicyLib/PeiMemoryPolicyLib.c
+  ServerSiliconPkg/Library/SimulationServicesLib/MemSpdSimInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: feed3d67b28d40cc4ac14def1a850466da18a277 
+*********************************************************************************
+
+
+  BIOS should check DRAM MR for hPPR resource available during AMT
+                                ^^                                 
+  
+  [Issue Description]
+  AMT could not apply hPPR if hPPR has already been applied
+                      ^^      ^^                            
+  
+  [Resolution]
+  BIOS should check DRAM MR for hPPR resource available during AMT
+                                ^^                                 
+  
+  Package/Module: CpRcPkg/AdvMemTestLib
+  
+  [Impacted Platform]
+  GNR, SRF, CWF
+  
+  Hsd-es-id: 15016580037
+  
+  Change-Id: Iffd5b16a43feca7c38b2b64969054f8ece09df02
+  Original commit hash: e8a6143b811f16b66aa27cf46edfc94e4822a4d0
+  
+  [Changed Files]
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Library/AdvMemTestLib/MemTestSeq.c
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+                                             ^^^^^^^^   
+  CpRcPkg/Library/BaseDdr5CoreLib/MemPpr.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 8df0c798a072b87531dff0a73a8004f20ac1ac45 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.14,
+  LOGANVL.0.RPB.0030.D.98,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.27,
+  GNRSPWS.0.RPB.0029.D.30
+  
+  Hsd-es-id: N/A"
+  Original commit hash: f7ede9b5a109dfce85524e84b5429a5963b0483a
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 1433a1ce1263dc624bb2061047bda401496dc454 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.13,
+  LOGANVL.0.RPB.0030.D.97,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.26,
+  GNRSPWS.0.RPB.0029.D.29
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 458bb2b4d1d74152812290e7a4756a1f303c8a29
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 6a520c4b7d161168059d36d9235a4904d44d1d5e 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.12,
+  LOGANVL.0.RPB.0030.D.96,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.25,
+  GNRSPWS.0.RPB.0029.D.28
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 6d369ef3346a7b23c4364f253999da385110f4fc
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 387ecd2f4b844dd546faee7ad4c6648f7b4d5989 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.11,
+  LOGANVL.0.RPB.0030.D.95,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.24,
+  GNRSPWS.0.RPB.0029.D.27
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 5387891b32ce39408c72f0bd2066ce641fefc4bd
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: a3d29d161f127ecc8504f2f9447d29bab34301b6 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.10,
+  LOGANVL.0.RPB.0030.D.94,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.23,
+  GNRSPWS.0.RPB.0029.D.26
+  
+  Hsd-es-id: N/A"
+  Original commit hash: e952077bcd2d6a1a0c1adb0b1df03f4b6f8b8a5c
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 7a29513385e6cbfc4b63bac6ec8bf7688d0f4ac8 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.09,
+  LOGANVL.0.RPB.0030.D.93,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.22,
+  GNRSPWS.0.RPB.0029.D.25
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 16f6a45ec1d98e22b4dd8bf97a9a3f900f0cabfe
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: bcace54ddbcc15a5541506fe42a40797f4ac7cd7 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.08,
+  LOGANVL.0.RPB.0030.D.92,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.21,
+  GNRSPWS.0.RPB.0029.D.24,
+  Server-RC-0x02.0x00.0x01.022A
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 70b028bbf6d96fd05392dfd5c6a44c13afaab3f9
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 2f4c8d30683fbd94844e44e9c802f39b34669d0d 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.07,
+  LOGANVL.0.RPB.0030.D.91,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.20,
+  GNRSPWS.0.RPB.0029.D.23
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 187ca105ddef51949b2a7a2ad9c21a981e640ad0
+  
+  [Changed Files]
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: 10a01eff4e3992b80db3c3bce4c233379cd91bf3 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.06,
+  LOGANVL.0.RPB.0030.D.90,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.19,
+  GNRSPWS.0.RPB.0029.D.22,
+  Server-RC-0x02.0x00.0x01.0229
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 11105508641e09ef3ba9669326369ef3e2c6cb64
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+*********************************************************************************
+Commit: b39493c2361d4252cc3410211ffede16c3b5d948 
+*********************************************************************************
+
+[CPU]
+
+  Lockstep Mode Error Injection
+      ^^^^                      
+  
+  [Feature Description]
+  This feature introduces a new MSRs that allow system software to inject miscompares into a core-pair that is in lockstep mode.
+                                                                                                                      ^^^^       
+  
+  Package/Module:ServerRasPkg
+  
+  [Impacted Platform]
+  CWF.
+  
+  Hsd-es-id: 15016516308
+  
+  Change-Id: I8c71d8194bd2d665f5fdd96934e4a896beccfe2d
+  Original commit hash: 00aec18fb638c539514050bb4e148e9911c63def
+  
+  [Changed Files]
+  BirchStreamOpenBoardPkg/PreBuildSetupPcdDefaults.dsc.inc
+  ServerPlatformPkg/Include/Guid/SetupVariable.h
+  ServerRasPkg/Driver/Smm/WheaErrorInj/ErrorInj.c
+  ServerRasPkg/Include/Protocol/RasPolicy.h
+  ServerRasPkg/PolicySample/PolicySample.c
+  ServerSiliconPkg/Include/Cpu/Msr/Gnr/MiscGenerationMsr.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 60426856ed4d87f4472d47e6d7d933cb5b44407b 
+*********************************************************************************
+
+
+  [GRR] Skipping MiscVendor RCD Gen3 WA for low CaV/DcaDfeV margins for UDIMM and SoDIMM
+                                    ^^^^                                                 
+  
+  [Feature Description]
+  Skipping RCD errata for UDIMM and SoDIMM config.
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  Gen3- GRR
+  
+  Hsd-es-id: 16025055119
+  
+  Change-Id: Ia93e0d9bdc387411477e9ce5d56dec2fbdf4c54d
+  Original commit hash: 8f99706cd7996c1ebc0eef745e074a58b1e528c4
+  
+  [Changed Files]
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  WA 
+
+*********************************************************************************
+Commit: c025d04c3c529366b0c8b3e0ba7521ffc03735cc 
+*********************************************************************************
+
+
+  "[TeamCity] SvrG3 ServerGen3_main_gen3_Daily Daily Updating Version/ID: BCHSTRM.0.RPB.0035.D.05,
+  LOGANVL.0.RPB.0030.D.89,
+      ^^^                  
+  KSYVLLE.1.RPB.0025.D.18,
+  GNRSPWS.0.RPB.0029.D.21,
+  Server-RC-0x02.0x00.0x01.0228
+  
+  Hsd-es-id: N/A"
+  Original commit hash: e26600cf58ce134464ba2ec25cae559f33415a03
+  
+  [Changed Files]
+  CpRcPkg/CpRcPkg.dec
+  GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+  GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+  GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Code Name: NVL
+
+################################################################################
+
+Report Summary: Backstop found 124 suspect commits for review 
+
+Warnings Found:
+  Commit: 0167045    --Commit Message Contains Code Name: NVL
+  Commit: b474513    --Commit Message Contains Key Word: silent
+  Commit: b97efe6    --Commit Message Contains Code Name: NVL
+  Commit: 326d45b    --Commit Message Contains Code Name: NVL
+  Commit: f5f0c5a    --Commit Message Contains Key Word: http
+  Commit: 807e950    --Commit Message Contains Code Name: NVL
+  Commit: 1f77ac7    --Commit Message Contains Code Name: NVL
+  Commit: 92d88fa    --Commit Message Contains Key Word:  silicon 
+  Commit: 8302920    --Commit Message Contains Code Name: NVL
+  Commit: 52bf116    --Commit Message Contains Code Name: NVL
+  Commit: a09efba    --Commit Message Contains Code Name: NVL
+  Commit: 004be64    --Commit Message Contains Key Word: Workaround
+  Commit: 004be64    --Commit Message Contains Key Word:  WA 
+  Commit: 004be64    --Commit Message Contains Key Word: HW
+  Commit: f8dc4bc    --Commit Message Contains Key Word: step
+  Commit: 96f8ea6    --Commit Message Contains Code Name: NVL
+  Commit: 41c63bb    --Commit Message Contains Code Name: NVL
+  Commit: 298c988    --Commit Message Contains Code Name: NVL
+  Commit: b31fbca    --Commit Message Contains Code Name: NVL
+  Commit: 82398fe    --Commit Message Contains Code Name: NVL
+  Commit: 1819393    --Commit Message Contains Code Name: NVL
+  Commit: 6751ee8    --Commit Message Contains Code Name: NVL
+  Commit: 1e1c9ae    --Commit Message Contains Code Name: NVL
+  Commit: 4d150e5    --Commit Message Contains Code Name: NVL
+  Commit: 1e888b8    --Commit Message Contains Oem: HP
+  Commit: b19bd6c    --Commit Message Contains Code Name: NVL
+  Commit: fac465b    --Commit Message Contains Code Name: NVL
+  Commit: e24a534    --Commit Message Contains Key Word: step
+  Commit: e583769    --Commit Message Contains Code Name: NVL
+  Commit: 5b3d38e    --Commit Message Contains Code Name: NVL
+  Commit: 9626614    --Commit Message Contains Code Name: NVL
+  Commit: 0aea4ec    --Commit Message Contains Key Word: internal
+  Commit: b30d7de    --Commit Message Contains Code Name: NVL
+  Commit: 2986216    --Commit Message Contains Code Name: NVL
+  Commit: ce28f8e    --Commit Message Contains Code Name: NVL
+  Commit: 18715de    --Commit Message Contains Code Name: NVL
+  Commit: ad0b4df    --Commit Message Contains Code Name: NVL
+  Commit: c8882ae    --Commit Message Contains Code Name: NVL
+  Commit: 1116a9c    --Commit Message Contains Code Name: NVL
+  Commit: a25a20d    --Commit Message Contains Code Name: NVL
+  Commit: fbec6e3    --Commit Message Contains Code Name: NVL
+  Commit: 5682731    --Commit Message Contains Code Name: NVL
+  Commit: f7e99e8    --Commit Message Contains Code Name: NVL
+  Commit: a5cf24c    --Commit Message Contains Code Name: NVL
+  Commit: faf4e1c    --Commit Message Contains Code Name: NVL
+  Commit: 98270f4    --Commit Message Contains Code Name: NVL
+  Commit: 1e98907    --Commit Message Contains Key Word: step
+  Commit: 28f37c6    --Commit Message Contains Code Name: NVL
+  Commit: 01b31cc    --Commit Message Contains Key Word: internal
+  Commit: 1f1a96d    --Commit Message Contains Code Name: NVL
+  Commit: b5f2db1    --Commit Message Contains Key Word: step
+  Commit: 88930d8    --Commit Message Contains Code Name: NVL
+  Commit: 9322b7d    --Commit Message Contains Code Name: NVL
+  Commit: 962d4f1    --Commit Message Contains Code Name: NVL
+  Commit: 0491897    --Commit Message Contains Key Word: security
+  Commit: 0491897    --Commit Message Contains Key Word: internal
+  Commit: 4f8db4e    --Commit Message Contains Code Name: NVL
+  Commit: e3dadc1    --Commit Message Contains Code Name: NVL
+  Commit: 3d13ba2    --Commit Message Contains Key Word:  silicon 
+  Commit: a9d0a89    --Commit Message Contains Key Word: sku
+  Commit: a9d0a89    --Commit Message Contains Key Word: fuse
+  Commit: 445bc6d    --Commit Message Contains Code Name: NVL
+  Commit: 5a5691c    --Commit Message Contains Code Name: NVL
+  Commit: d1996e0    --Commit Message Contains Code Name: NVL
+  Commit: d4623da    --Commit Message Contains Code Name: NVL
+  Commit: 95038c2    --Commit Message Contains Code Name: NVL
+  Commit: 3f49422    --Commit Message Contains Code Name: NVL
+  Commit: a51b66c    --Commit Message Contains Code Name: NVL
+  Commit: 30471b2    --Commit Message Contains Code Name: NVL
+  Commit: e27eb58    --Commit Message Contains Code Name: NVL
+  Commit: f5d2f9c    --Commit Message Contains Code Name: NVL
+  Commit: e53625a    --Commit Message Contains Key Word: revert
+  Commit: ccf3cf8    --Commit Message Contains Code Name: NVL
+  Commit: 4c53469    --Commit Message Contains Code Name: NVL
+  Commit: 77c730e    --Commit Message Contains Key Word: step
+  Commit: 7562031    --Commit Message Contains Code Name: NVL
+  Commit: 436b53e    --Commit Message Contains Key Word: Workaround
+  Commit: 436b53e    --Commit Message Contains Key Word: security
+  Commit: 722eb58    --Commit Message Contains Code Name: NVL
+  Commit: eeb54c6    --Commit Message Contains Key Word: internal
+  Commit: ac225b6    --Commit Message Contains Key Word: hardware
+  Commit: ac225b6    --Commit Message Contains Key Word: HW
+  Commit: 8633467    --Commit Message Contains Code Name: NVL
+  Commit: 02465a0    --Commit Message Contains Code Name: NVL
+  Commit: ea2bd59    --Commit Message Contains Code Name: NVL
+  Commit: b54ccfa    --Commit Message Contains Code Name: NVL
+  Commit: 05515ce    --Commit Message Contains Code Name: NVL
+  Commit: c3688e4    --Commit Message Contains Code Name: NVL
+  Commit: 01e6d7e    --Commit Message Contains Key Word: Workaround
+  Commit: 725b569    --Commit Message Contains Code Name: NVL
+  Commit: 3d1a5f9    --Commit Message Contains Key Word: http
+  Commit: 8252882    --Commit Message Contains Code Name: NVL
+  Commit: e6084c2    --Commit Message Contains Code Name: NVL
+  Commit: 89eceb1    --Commit Message Contains Code Name: NVL
+  Commit: f36a749    --Commit Message Contains Code Name: NVL
+  Commit: a1656aa    --Commit Message Contains Code Name: NVL
+  Commit: 585eb72    --Commit Message Contains Code Name: NVL
+  Commit: 661484b    --Commit Message Contains Oem: ecs
+  Commit: 9ac2736    --Commit Message Contains Code Name: NVL
+  Commit: 007821f    --Commit Message Contains Key Word: sku
+  Commit: 5c689a2    --Commit Message Contains Code Name: NVL
+  Commit: e8404e3    --Commit Message Contains Key Word: internal
+  Commit: 7b61803    --Commit Message Contains Key Word: step
+  Commit: 7b61803    --Commit Message Contains Key Word: internal
+  Commit: de63464    --Commit Message Contains Code Name: NVL
+  Commit: 0015708    --Commit Message Contains Code Name: NVL
+  Commit: 7409650    --Commit Message Contains Key Word: Workaround
+  Commit: db70ba6    --Commit Message Contains Key Word:  WA 
+  Commit: 6fe174f    --Commit Message Contains Code Name: NVL
+  Commit: fee86b8    --Commit Message Contains Code Name: NVL
+  Commit: 1b39e6a    --Commit Message Contains Key Word:  silicon 
+  Commit: 1b39e6a    --Commit Message Contains Key Word: Workaround
+  Commit: 1b39e6a    --Commit Message Contains Key Word: step
+  Commit: 1b39e6a    --Commit Message Contains Key Word: stepping
+  Commit: be06a76    --Commit Message Contains Code Name: NVL
+  Commit: a056a6d    --Commit Message Contains Code Name: NVL
+  Commit: 2b650e2    --Commit Message Contains Code Name: NVL
+  Commit: 7c87861    --Commit Message Contains Code Name: NVL
+  Commit: c94de56    --Commit Message Contains Key Word: revert
+  Commit: 719d9d8    --Commit Message Contains Code Name: NVL
+  Commit: e726c77    --Commit Message Contains Key Word: internal
+  Commit: feed3d6    --Commit Message Contains Oem: HP
+  Commit: feed3d6    --Commit Message Contains Key Word: internal
+  Commit: 8df0c79    --Commit Message Contains Code Name: NVL
+  Commit: 1433a1c    --Commit Message Contains Code Name: NVL
+  Commit: 6a520c4    --Commit Message Contains Code Name: NVL
+  Commit: 387ecd2    --Commit Message Contains Code Name: NVL
+  Commit: a3d29d1    --Commit Message Contains Code Name: NVL
+  Commit: 7a29513    --Commit Message Contains Code Name: NVL
+  Commit: bcace54    --Commit Message Contains Code Name: NVL
+  Commit: 2f4c8d3    --Commit Message Contains Code Name: NVL
+  Commit: 10a01ef    --Commit Message Contains Code Name: NVL
+  Commit: b39493c    --Commit Message Contains Key Word: step
+  Commit: 6042685    --Commit Message Contains Key Word:  WA 
+  Commit: c025d04    --Commit Message Contains Code Name: NVL
