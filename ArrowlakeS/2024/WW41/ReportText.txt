@@ -1,0 +1,341 @@
+*********************************************************************************
+Commit: 8e88a3d848a6d88c2e55e3155dc6e2bbac5e263d 
+*********************************************************************************
+
+[PCH], [SiliconPkg]
+
+  Revert "Modern standby can't WOL due to PCIe RP MSI."
+  ^^^^^^                                          ^^^   
+  
+  [Issue Description]
+  Hang observed while connecting TBT/Type-C devices to BOBCAT in hot plug
+  state with BIOS 4404_80
+  System gets hangs with PC 004F when SUT wake from S4 by magic packet
+  sent to PCIe LAN network
+  
+  [Resolution]
+  
+  Package/Module: ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ARL H
+  
+  Hsd-es-id: 22020542114
+  Change-Id: Ia14fc58af72e6d838891932c731783010245a5e0
+  Original commit hash: 7dc407cabf45ff038bc5a01a635bffcccefb6d48
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Fru/MtlPch/Smm/PchPcieSmm.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: MSI
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 9af5b9d8cecfa3e217bf14c7e275efc0490bbf64 
+*********************************************************************************
+
+[PCH], [SiliconPkg]
+
+  Modern standby can't WOL due to PCIe RP MSI.
+                                          ^^^  
+  
+  [Issue Description]
+  Modern standby can't wake on LAN due to PCIe RP
+  MSI sent with reqID for bus 0 instead of bus M.
+  ^^^                                             
+  
+  [Resolution]
+  BIOS required to write all MTL-S PCH PCIe RPs
+  mpc.pmme to 0x1, after PCI enumeration,
+  and before BIOS DONE, regardless of hot-plug
+  capability enabling. In addition to programming
+  to enable SMI for PM_PME events.
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ALL.
+  
+  Hsd-es-id: 22020498964
+  Change-Id: If96822a7f216cb15181766cd91fdcd093ce9e364
+  Original commit hash: 6691e23d1a0c69926df9bfd7e9090a356d0148e4
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Fru/MtlPch/Smm/PchPcieSmm.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: MSI
+
+*********************************************************************************
+Commit: 01516ae83b754d15c6aab862ee0c5b513eb984d5 
+*********************************************************************************
+
+
+  [ARL] HSIO board file update for CKD DIMM
+  
+  [Issue Description]
+  HSIO board with CKD DIMM failed at CKD Configuration due to VPD
+  is not updated
+  
+  [Resolution]
+  Update VpdPcdMrcChannelToCkdQckMapping and VpdPcdMrcPhyClockToCkdDimm
+  for MTL-S and MTL-P_B2B HSIO board
+  
+  Package/Module: MeteorLakeBoardPkg\MeteorLakeBoards
+  
+  [Impacted Platform]
+  S, H.
+  
+  Hsd-es-id: 14023530961
+  Change-Id: Ib51c903861bb84dbef432ebb48de7def9148caa0
+  Original commit hash: f0a89e3dc93d8d57d74f88c5c58ce430f1e2db52
+  
+  [Changed Files]
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPDdr5SODimmB2bHsioRvp.dsc
+                                                           ^^^                               
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 44f71fe5625f6c6b7a4e8cd7cb117d4ca7de3fa8 
+*********************************************************************************
+
+
+  [ARL] OC board file update for CKD DIMM
+  
+  [Issue Description]
+  OC board with CKD DIMM failed at CKD Configuration due to VPD
+  is not updated
+  
+  [Resolution]
+  Update VpdPcdMrcChannelToCkdQckMapping and VpdPcdMrcPhyClockToCkdDimm
+  for OC board
+  
+  Package/Module: MeteorLakeBoardPkg\MeteorLakeBoards
+  
+  [Impacted Platform]
+  S
+  
+  Hsd-es-id: 15016804422
+  Change-Id: If66b7b5ae0965a9c7195b7adbfcb3650a190bea8
+  Original commit hash: 7304d05ce62785bedefdc35a1c6e3c11b15f2780
+  
+  [Changed Files]
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSOcRvp.dsc
+                                                            ^^^                
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 315a8b1063e1b935736b77554e25a1ef7d453833 
+*********************************************************************************
+
+[SiliconPkg], [MRC]
+
+  [ARL | DDR5] Add MRC knob for CKD Disable
+  
+  [Feature Description]
+  Provide an input knob to force CKD in BypassMode
+                                        ^^^^^^     
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ALL DDR5 with CKD
+  
+  Hsd-es-id: 15016570939
+  Change-Id: Ifd3af4a933e4fbf5cbcbe7eb80511c6ff8bc527b
+  Original commit hash: 69c81fa2b81642480dadc3b184ab34d14b4d2955
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Include/ConfigBlock/Memory/Ver4/MemoryConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcExtInputs.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/InputBlock/MrcInputBlock.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Library/PeiMemPolicyLib/InputBlock/MrcInputBlock.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  MeteorLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakeFspPkg/Upd/FspmUpd.dsc
+  MeteorLakePlatSamplePkg/Include/SetupVariable.h
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/Setup/SaSetup.hfr
+  MeteorLakePlatSamplePkg/Setup/SaSetup.uni
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: d07dfc5b62a461a83143155812357bc5ad4ca8b6 
+*********************************************************************************
+
+[TBT]
+
+  [ARL] Setup board file to pass in CKD Mapping
+  
+  [Feature Description]
+  Update BoardVpd to pass in VpdPcdMrcChannelToCkdQckMapping and
+  VpdPcdMrcPhyClockToCkdDimm
+  
+  Package/Module: MeteorLakeBoardPkg\MeteorLakeBoards
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15016729196
+  Change-Id: I5a34f560dccabd1093f778e0ab58ca7551fae939
+  Original commit hash: 7e611b14e6e960d7bc59c01bde67d3ff67c2023e
+  
+  [Changed Files]
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+                                                            ^^^                          
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvp.dsc
+                                                            ^^^                        
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvpBomSku.dsc
+                                                            ^^^                      ^^^     
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DCrb.dsc
+                                                            ^^^                         
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm1DErb.dsc
+                                                            ^^^                         
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DAep.dsc
+                                                            ^^^                         
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlS/SkuIdArlSBGASodimm2DCrb.dsc
+                                                            ^^^                         
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdArlHDdr5SODimmErb.dsc
+                                                            ^^^                        
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvp.dsc
+                                                            ^^^                           
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlP/SkuIdMtlPDdr5SODimmSbsRvpBomSku.dsc
+                                                            ^^^                         ^^^     
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm1DEvcrb.dsc
+                                                            ^^^                        
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSSODimm2DEvcrb.dsc
+                                                            ^^^                        
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm1DEvcrb.dsc
+                                                            ^^^                       
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/MtlS/SkuIdMtlSUDimm2DEvcrb.dsc
+                                                            ^^^                       
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 166a56909a93921f4a4b9cfd6a5959fde09e5db6 
+*********************************************************************************
+
+[ASL]
+
+  [ARL-S] CPU "PS_ON#" output keep low level in sleep mode
+  
+  [Issue Description]
+  HW/SW DRIPS is reached 98%, but the PS_ON# from CPU still keep low when
+  ^^                                                                      
+  system enter S0ix.
+  
+  [Resolution]
+  PS_ON check should be proceeded regardless TCSS design.
+  Fixed the PS_ON check which was added in wrong place in pep.asl file.
+  
+  Package/Module:PlatSamplePkg
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 15016735736
+  Change-Id: I33a8c1f030473293b714e8e435be9ac4236f0d1b
+  Original commit hash: 59fe89bf1db5a317532527f610d2b882dca30c88
+  
+  [Changed Files]
+  MeteorLakePlatSamplePkg/Features/Pep/AcpiTables/Pep.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+
+*********************************************************************************
+Commit: 14d60b3b60b2d2f87a4b44038e4aa5fc2a0246bf 
+*********************************************************************************
+
+[SiliconPkg]
+
+  Fix SMBus usage in SMM
+  
+  [Issue Description]
+  Exception occurs when SMBus is accessed in SMI.
+  
+  [Resolution]
+  DxeSmbusLib is linked in SMM, but does not support SMM runtime.
+  Added SmbusLib instance supporting SMM runtime and additional
+  code providing SmbusSmmProtocol.
+  
+  Package/Module: ClientOneSiliconPg/Smbus
+  
+  [Impacted Platform]
+  MTL, ARL
+  
+  Hsd-es-id: 18039765193
+  Change-Id: Ic144a9fc28ebf4f277911d7fa3e1160247e647fd
+  Original commit hash: e8fe638b6c5af20157db345c8b4a98cedd7e5c97
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Fru/MtlSoc/Dxe.dsc
+  ClientOneSiliconPkg/Fru/MtlSoc/DxeLib.dsc
+  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/InternalSmbusLib.h
+                                                               ^^^^^^^^           
+  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/SmbusLib.c
+  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/SmmSmbusLib.c
+  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/SmmSmbusLib.inf
+  ClientOneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/SmmSmbusLib.uni
+  ClientOneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusDxe.c
+  ClientOneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusDxeSmm.h
+  ClientOneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusSmm.c
+  ClientOneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusSmm.inf
+  ClientOneSiliconPkg/Product/MeteorLake/SiPkgDxeLib.dsc
+  MeteorLakeBoardPkg/BoardPkg.fdf
+  MeteorLakeOpenBoardPkg/OpenBoardPkg.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+################################################################################
+
+Report Summary: Backstop found 8 suspect commits for review 
+
+Warnings Found:
+  Commit: 8e88a3d    --Commit Message Contains Oem: MSI
+  Commit: 8e88a3d    --Commit Message Contains Key Word: revert
+  Commit: 9af5b9d    --Commit Message Contains Oem: MSI
+  Commit: 01516ae    --Commit Message Contains Key Word: sku
+  Commit: 44f71fe    --Commit Message Contains Key Word: sku
+  Commit: 315a8b1    --Commit Message Contains Key Word: bypass
+  Commit: d07dfc5    --Commit Message Contains Key Word: sku
+  Commit: 166a569    --Commit Message Contains Key Word: HW
+  Commit: 14d60b3    --Commit Message Contains Key Word: internal
