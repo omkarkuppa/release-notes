@@ -1,0 +1,813 @@
+================================================================================ 
+Commit: 9c612a953f26b1a19c930540cc40ea6980a543fc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:28:44 2024 +0530 
+-------------------------------------------------------------------------------- 
+Added build files for LNL.3222.94
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/LunarLake_FSP_Integration_Guide.chm
+Doxygen/LunarLake_FSP_Integration_Guide.pdf
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+LICENSE.txt
+OneSiliconPkg/SiPkg.dec
+
+================================================================================ 
+Commit: 845948bd03735f6cbc2a0258725b9930e739c25d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:14:39 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_94
+
+Hsd-es-id: N/A"
+Original commit date: Tue Nov 12 00:22:40 2024 -0800
+Original commit hash: f68480f0be3af00dea0907959b048271e036e2e2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: a862e33ec1770f97757f0e737b3f817c76899c7b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:14:31 2024 +0530 
+-------------------------------------------------------------------------------- 
+TBT Display /TBT SSD hot plug enumeration is not working
+
+[Issue Description]
+TBT Display /TBT SSD hot plug enumeration is not working
+Should Revert "TBT-PCIe: New flow to nullify the LTR for devices not supporting LTR"
+
+[Resolution]
+Revert below Port from MTL to LNL.
+1. Enable Hotplug SCI always
+2. In SCI routine, sikp 100 ms if all iTBT RP in D-0
+3. Fix for toggle LTREN
+
+Package/Module:
+OneSiliconPkg
+
+[Impacted Platform]
+LNL
+
+Hsd-es-id: 16026005036
+Original commit date: Tue Nov 12 11:10:33 2024 +0530
+Change-Id: Ia028f526ec0fc7501a4eb51d8ae6af8eb65b338c
+Original commit hash: 8c9cf02870c247fd5a5e4da5f42ac9fd05939e2f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/LnlSoc/Include/AcpiTables/Soc/SocGpeSsdt.asl
+OneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssItbtPcieRp.asl
+
+================================================================================ 
+Commit: 015216af9ba678ffded9c54434554ec029f214b7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:14:23 2024 +0530 
+-------------------------------------------------------------------------------- 
+Remove changes for TBT docks de-enumerating
+
+[Issue Description]
+Remove changes for TBT docks when de-enumerating if connected in S0 idle state.
+
+[Resolution]
+Remove changes for TBT docks when de-enumerating if connected in S0 idle state"
+
+Package/Module:
+LunarLakeBoardPkg, OneSiliconPkg
+
+[Impacted Platform]
+LNL
+
+Hsd-es-id: 15017044880
+Original commit date: Mon Nov 11 22:17:17 2024 -0800
+Change-Id: Ie6d6d71a13be594e3da1ba6de972214d9bb674ee
+Original commit hash: d10c5a41ef016a354553597b8617434e283c0691
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+OneSiliconPkg/Fru/LnlSoc/Include/AcpiTables/Dsdt/LnlSoc.asl
+OneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssItbtPcieRp.asl
+OneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssSsdt.asl
+OneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssXhci.asl
+
+================================================================================ 
+Commit: f098d0fc8ece844d345d920052db4d616e3461f2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:14:16 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_93
+
+Hsd-es-id: N/A"
+Original commit date: Mon Nov 11 08:17:34 2024 -0800
+Original commit hash: da3bf14ffc29c5f8b25d0c202d80a403868c6574
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 153428a668a05b6b3c8b565658ddd35c6e4166c0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:14:09 2024 +0530 
+-------------------------------------------------------------------------------- 
+[TCSS] TBT docks are de-enumerating if connected in S0 idle state
+
+[Issue Description]
+TBT docks are de-enumerating if docks is connected in S0 idle state.
+
+[Resolution]
+Using ACPI U4SE to determine SW CM causes SW CM not set actually
+because U4SE won't be supported when dTBT is enabled.
+Add U4CM to determine SW CM or not.
+
+Package/Module:
+OneSiliconPkg
+LunarLakeBoardPkg
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 15017044880
+Original commit date: Thu Nov 7 19:49:48 2024 -0800
+Change-Id: I867f149556c7a5399de4b58ef3983233645eea97
+Original commit hash: 9f4bb6471b42aefd278cfa8ec4c34e286658fb08
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+OneSiliconPkg/Fru/LnlSoc/Include/AcpiTables/Dsdt/LnlSoc.asl
+OneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssItbtPcieRp.asl
+OneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssSsdt.asl
+OneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssXhci.asl
+
+================================================================================ 
+Commit: 79b26b7cf707038b7ccef0d3d47176eb237db9ae 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:14:00 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_92
+
+Hsd-es-id: N/A"
+Original commit date: Sun Nov 10 13:18:20 2024 -0800
+Original commit hash: 299d2778feab78a8987fa441d0d5998a70411c52
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: bfde2dacebb0e61191af99334a128cd4871eb497 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:13:53 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_91
+
+Hsd-es-id: N/A"
+Original commit date: Sun Nov 10 09:11:04 2024 -0800
+Original commit hash: 2e7fa71a3792c3489e6a563ba9d4502790e86db6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 3b145d31634c6e071c892594fc80af90a1df27eb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:13:44 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_90
+
+Hsd-es-id: N/A"
+Original commit date: Thu Nov 7 21:37:22 2024 -0800
+Original commit hash: 9c19129f4a4da724449d5273125950c6b25c78d2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 6c80527be7a33abaee8c85bac2435b54ad1f9905 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:13:36 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_89
+
+Hsd-es-id: N/A"
+Original commit date: Thu Nov 7 17:48:26 2024 -0700
+Original commit hash: e89786d63b046cd686192c043b731566e80b7939
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 0077445d116486b5c2cbe7d1ce38a8b6fdc67b7c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:13:27 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_88
+
+Hsd-es-id: N/A"
+Original commit date: Thu Nov 7 13:12:24 2024 -0800
+Original commit hash: 360036d23720d45d962c6a859f562d7e38466f48
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 3434d47eb9901f0807f9f9fccf6959c40d9d7e72 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:13:20 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_87
+
+Hsd-es-id: N/A"
+Original commit date: Thu Nov 7 08:49:06 2024 +0000
+Original commit hash: 5ab4af190d4b8d3df6ef1321f3d71f825d0667ce
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: d99377d7063ca605d1ec6b4d767bfdfa45115053 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:13:14 2024 +0530 
+-------------------------------------------------------------------------------- 
+TBT-PCIe: New flow to nullify the LTR for devices not supporting LTR
+
+[Feature Description]
+Port from MTL to LNL.
+1. Enable Hotplug SCI always
+2. In SCI routine, sikp 100 ms if all iTBT RP in D-0
+3. Fix for toggle LTREN
+
+Package/Module:
+ClientOneSiliconPkg
+
+[Impacted Platform]
+LNL
+
+Original commit date: Tue Oct 29 21:02:47 2024 -0700
+Change-Id: Id8720f64e077422c29ce8fe815fc6ee54f0c2257
+Original commit hash: a03765080f20590c0cce294c097933e24a926e47
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/LnlSoc/Include/AcpiTables/Soc/SocGpeSsdt.asl
+OneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssItbtPcieRp.asl
+
+================================================================================ 
+Commit: 4e9087cb63daa501ba4de5809510b1850fd8e222 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:13:07 2024 +0530 
+-------------------------------------------------------------------------------- 
+All Type-C connectors is failing with error
+
+[Issue Description]
+USB4 Systems Have Support for All Type-C connectors is failing with
+error "USB 3.0 port mapping of a valid USB4 host router reference
+string could not be found in the ACPI _DSD"
+
+[Resolution]
+Test that the iTBT root port is enabled before before enabling mapping.
+
+Package/Module: NA
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16025928150
+Original commit date: Mon Nov 4 19:25:18 2024 -0800
+Change-Id: I2a126431bab5491f13a2a7f68e0314db46615d25
+Original commit hash: e39b28b546caf391a0af4242bbd7b03e6c7022b1
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+
+================================================================================ 
+Commit: d366229d558c50f86e6d0ecca2e2e479ffd4e0c3 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:13:00 2024 +0530 
+-------------------------------------------------------------------------------- 
+[LNL] Unload BT PCI Driver when PreBoot Ble disable.
+
+[Feature Description]
+Unload BT PCI Driver when PreBoot Ble disable.
+
+Package/Module: PlatSamplePkg
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 15016744436
+Original commit date: Thu Sep 12 13:49:16 2024 +0800
+Change-Id: I8f745a36bf18ce815284eb60ecdc0ce42244f3b0
+Original commit hash: 1afef2cc9f0d0ce188cb06d7d0ba5224ba271f47
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakePlatSamplePkg/Library/DxePlatformBootManagerLib/BdsPlatform.c
+LunarLakePlatSamplePkg/Library/DxePlatformBootManagerLib/DxePlatformBootManagerLib.inf
+LunarLakePlatSamplePkg/PlatformPkg.dec
+
+================================================================================ 
+Commit: ee0bb12477ebdc4065b30ddabcf6e2596797028e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:12:54 2024 +0530 
+-------------------------------------------------------------------------------- 
+OneSiliconPkg/IpBlock/MemoryInit/Lnl: Update MrcVersion.h and ReleaseNotes to 0.1.114.0
+
+Updating MrcVersion.h and ReleaseNotes
+
+Hsd-es-id: 14023792681
+Original commit date: Wed Oct 30 12:12:10 2024 -0700
+Change-Id: Ibcf9eaadabd0f85094bce51ebe36db241f89ff01
+Original commit hash: 0088995bbe968059c9257e185c901e788f82cf25
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 05c40cf5ce9a09181efb8eaf550fc4d7009d60e0 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:12:47 2024 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.1.113.1
+
+[Feature Description]
+Updating MrcVersion.h and ReleaseNotes.
+
+Package/Module:OneSiliconPkg/MemoryInit/Lnl
+
+[Impacted Platform] All
+
+Hsd-es-id: 22014478540
+Original commit date: Wed Oct 30 17:46:24 2024 +0000
+Original commit hash: 9462676957e68f853361bcba093e0059fc6d2301
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 3c7eceb934b562b648c0f2be5f7368c9fef673ab 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:12:40 2024 +0530 
+-------------------------------------------------------------------------------- 
+[LNL] Use JEDEC Definition for LP5 tWRRD_dr calculation
+
+[Feature Description]
+Use the JEDEC definition to program the LP5 tWRRD_dr
+tWRRD_dr = ODTLoff + RU(tODToff(max)/tCK) - RL
+
+Package/Module: OneSiliconPkg/MemoryInit
+
+[Impacted Platform] all
+
+Hsd-es-id: 14023789094
+Original commit date: Tue Oct 29 23:09:22 2024 -0700
+Change-Id: I302ed6d2d0c8475aec4d91adce49702b8713f573
+Original commit hash: a11f27dc462352f571f6147856008c754752507b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/Lnl/Blue/PeiMemoryInitLib/Source/ServicesLib/MrcTurnAround.c
+
+================================================================================ 
+Commit: 350daac581b7bd4db2b8f34407be2d6973f8c8ad 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:12:33 2024 +0530 
+-------------------------------------------------------------------------------- 
+OneSiliconPkg/IpBlock/MemoryInit/Lnl: Update MrcVersion.h and ReleaseNotes to 0.1.113.0
+
+Updating MrcVersion.h and ReleaseNotes
+
+Hsd-es-id: 14023626058
+Original commit date: Mon Oct 7 17:31:49 2024 -0700
+Change-Id: I7cbb33c8aa0141c6de8a8b2690c83fb464f61b94
+Original commit hash: d8b37f2ded46e2d48a60185224b223d53e9806bc
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 4d6fa0e2a9a1bc89222ebce4bfd05fe784f88466 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:12:26 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_86
+
+Hsd-es-id: N/A"
+Original commit date: Mon Oct 28 12:46:55 2024 -0700
+Original commit hash: 1cc24b8b6f2b4059856c5d5215d3b8c1cd226e1a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 4a6781e076fd429c5a4f4f6ad7940d4a1aa4cc49 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:12:20 2024 +0530 
+-------------------------------------------------------------------------------- 
+Other actions were not triggered, when SSD Erase action fails.
+
+[Issue Description]
+Maximum retry reached when no SSD is connected.
+So other actions are not performed.
+PSR report is not send when maximum retry reached.
+
+[Resolution]
+When SSD erase action fails for maximum retry,
+CurrentRetry is set to zero. So that, other actions are performed.
+Send PSR report when maximum retries reached.
+
+Package/Module: LunarLakePlatSamplePkg
+
+[Impacted Platform]
+
+ALL
+
+Hsd-es-id: 16025773380 & 16025773436
+Original commit date: Mon Oct 21 17:00:14 2024 +0530
+Change-Id: I394e7f4a8b0bcb5478de893231b9bf13c006440d
+Original commit hash: 47329deb48f1168f67c1ce3438a9b0572a6c7bdb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakePlatSamplePkg/Features/Rpe/RemotePlatformErase.c
+LunarLakePlatSamplePkg/Features/Rpe/RpeEraseActions.c
+
+================================================================================ 
+Commit: 2a0ec6006586f7e46ca28385ac722f6b61a03c94 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:12:13 2024 +0530 
+-------------------------------------------------------------------------------- 
+THC I2C Protocol implementation.
+
+[Feature Description]
+Implement THC Protocol to support below THC I2C specific commands-
+HidGetInputReport GET_INPUT
+HidSetOPutputReport SET_OUTPUT
+HidGetFeature GET_FEATURE
+HidSetFeature SET_FEATURE
+HidSendReset RESET
+HidSetPower SET POWER
+HidGetDeviceDescriptor Retrieve HID Descriptor
+HidGetReportDescriptor Retrieve Report Descriptor
+
+Package/Module: OneSiliconPkg
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 16025664575
+Original commit date: Tue Sep 24 10:33:46 2024 +0530
+Change-Id: I38cbee32875e2dcb9f349874c87cccf6f5ea0e34
+Original commit hash: 897c7d8a5a3c2ed6b0d2c5764ec7c776ee61a46a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Include/Protocol/Thc.h
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2c.c
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2c.inf
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cDriver.c
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cDriver.h
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cHid.c
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cHid.h
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cLibPrivate.h
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cPrivate.h
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cThcProtocolHandler.c
+OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cThcProtocolImpl.c
+OneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpi.c
+OneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiHid.c
+OneSiliconPkg/IpBlock/Thc/QuickSpiDriver/QuickSpiHid.h
+
+================================================================================ 
+Commit: 0191791fcd8f3f96cf64691c2681f9e5010eed14 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:12:06 2024 +0530 
+-------------------------------------------------------------------------------- 
+[LNL] UsbLib instance error in DXE/BDS phase
+
+[Issue Description]
+UsbLib is used by customers in DXE to override USB ports disabling.
+Dependency on UsbHostControllerInitLib PEIM prevents this.
+
+[Resolution]
+Add ProgramPdo and UsbDisablePorts functions to the UsbLib
+to remove the dependency on the UsbHostControllerInitLib.
+
+Package/Module:
+OneSiliconPkg/PeiDxeSmmUsbLib
+OneSiliconPkg/PeiUsbHostControllerInitLib
+
+[Impacted Platform]
+LNL.
+
+Hsd-es-id: 13012405327
+Original commit date: Thu Oct 10 13:23:53 2024 +0200
+Change-Id: I00d2abf49acd3f1d5b1b3278873db4ad2bf1cc67
+Original commit hash: e9fc382da2ccfefd5c7555943728857562863030
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/Usb/IncludePrivate/Library/UsbHostControllerInitLib.h
+OneSiliconPkg/IpBlock/Usb/LibraryPrivate/PeiUsbHostControllerInitLib/UsbHostControllerInit.c
+
+================================================================================ 
+Commit: 1001b97665462c9b98e1383c58fd5db088da9568 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:12:00 2024 +0530 
+-------------------------------------------------------------------------------- 
+SndwAccessProtocol cannot enumerate all SoundWire devices
+
+[Issue Description]
+All peripherals on the bus remains at address 0 and
+other peripherals on the bus are not enumerated.
+That means that communication is possible only with one peripheral.
+
+[Resolution]
+Assign peripheral ID during the enumeration process.
+
+Package/Module:
+Features/Audio/BeepPkg
+
+[Impacted Platform]
+LNL
+
+Hsd-es-id: 18040295513
+Original commit date: Fri Sep 6 17:20:41 2024 +0200
+Change-Id: If6c3c1550af2a1e2568576542b62f37c109c5c15
+Original commit hash: fcc1c63bbb6ecd97112ae6781306335a3335ef62
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Audio/BeepPkg/IncludePrivate/Library/PeiDxeSndwInitLib.h
+Features/Audio/BeepPkg/IncludePrivate/Register/SndwCadenceRegs.h
+Features/Audio/BeepPkg/IncludePrivate/SndwAccess.h
+Features/Audio/BeepPkg/LibraryPrivate/PeiDxeSndwInitLib/PeiDxeSndwInitLib.c
+Features/Audio/BeepPkg/Readme.md
+Features/Audio/BeepPkg/SndwBeep/SndwBeepDxe.c
+Features/Audio/BeepPkg/SndwBeep/SndwBeepPei.c
+
+================================================================================ 
+Commit: 53c7d63ff45ae1c5b0abe5d3994e9f17fdcf2c02 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:11:53 2024 +0530 
+-------------------------------------------------------------------------------- 
+Support FDO for TXT flows
+
+[Issue Description]
+TXT is not compatible with FDO and causes LT reset, so disabling TXT when FDO is set
+
+[Resolution]
+Disabling TXT when FDO is set
+
+Package/Module:PeiTxtLib
+
+[Impacted Platform]
+LNL
+
+Hsd-es-id: 14023737874
+Original commit date: Wed Oct 23 11:09:00 2024 -0700
+Change-Id: I4d04674c9f913f787dad01c3f787ba8e78427d12
+Original commit hash: 0c619b0dcf4139c441ad022a5f1b87afb0a05157
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/Txt/LibraryPrivate/PeiTxtLib/TxtPei.c
+
+================================================================================ 
+Commit: 7ad47a610cf91fb3e5ab453f50901b143d4fdb50 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:11:47 2024 +0530 
+-------------------------------------------------------------------------------- 
+Removed AER disable in OSC method.
+
+[Issue Description]
+Platform PCIE advanced error reporting (AER) showed as not supported.
+
+[Resolution]
+Removed disable AER control by iTBT support.
+
+Package/Module:
+OneSiliconPkg/Fru
+
+[Impacted Platform]
+ALL.
+
+Hsd-es-id: 15016990599
+Original commit date: Thu Oct 24 10:24:09 2024 +0800
+Change-Id: Ibb1742c2f2654cb969b19ee7d30df6259cc6b825
+Original commit hash: 591b5c66d39f01d184928cc62ecd7e31772ae021
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/LnlCDie/HostBridge/AcpiTables/HostBus.asl
+
+================================================================================ 
+Commit: 16217887e15e78afd1e3b005f82e067a8bb19893 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:11:40 2024 +0530 
+-------------------------------------------------------------------------------- 
+Fixing HLK Issues related to USB4 DSD Properties.
+
+[Issue Description]
+USB4 Systems Have Support For All Type-C connectors failing
+due to mix of USBC ports. Even if CPU XHCI Port doesn't
+support TBT/USB4 functionality, _DSD for the port was still
+getting published leading to HLK Test error.
+
+[Resolution]
+Adding a PCD to Map the CPU Type-C Port having TBT/USB4 functionality.
+We will and it with CPU XHCI Port Enable Map and pass the value to
+ACPI BIOS. Then based the Map value ACPI BIOS will publish the _DSD
+Properties of CPU XHCI Ports.
+
+Package/Module:
+LunarLakeBoardPkg/Acpi
+ClientOneSiliconPkg/IpBlock/Tcss/Acpi/TcssSsdt
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 16025737916
+Original commit date: Thu Oct 10 20:48:45 2024 +0530
+Change-Id: I449891c0495821817751ef5c34193640c169cade
+Original commit hash: c8e0dfa7d60ccce8ebc30266a699660eb0a773b2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/PlatformNvs.asl
+LunarLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+LunarLakeBoardPkg/Include/PlatformNvsAreaDef.h
+OneSiliconPkg/IpBlock/Tcss/AcpiTables/TcssSsdt/TcssXhci.asl
+
+================================================================================ 
+Commit: c1cc03966d025ceb92e6180215fe63a8e9ae4eee 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:11:33 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_85
+
+Hsd-es-id: N/A"
+Original commit date: Wed Oct 23 13:53:26 2024 -0700
+Original commit hash: 268f9da8e2f5a7a6f0906bc67202fd1617fe4c5c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakeBoardPkg/BiosId.env
+OneSiliconPkg/Product/LunarLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 92085d488d754b7f140f9c6d0a58ea449d613602 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:11:24 2024 +0530 
+-------------------------------------------------------------------------------- 
+TDWTMRK value should be set to 0x1 in TRB_PRF_CTRL_REG4
+
+[Feature Description]
+TDWTMRK value should be set to 0x1 in TRB_PRF_CTRL_REG4
+
+Package/Module:
+OneSiliconPkg/IpUsb3
+
+[Impacted Platform]
+LNL
+
+Hsd-es-id: 18040375727
+Original commit date: Tue Oct 22 18:23:29 2024 +0200
+Change-Id: I7fdeebcf00b220624d4896064e5ecb0cf28f1705
+Original commit hash: 031329131304a22727e1ed10b210937c7ecf5d0f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Include/Register/UsbHostRegs.h
+
+================================================================================ 
+Commit: dcbbfb6115b39c5cc6dd0f36ef1119ea265b05cd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:11:15 2024 +0530 
+-------------------------------------------------------------------------------- 
+Disable USB2 DBC if DEBUG_EN bit is not set
+
+[Feature Description]
+Disable USB2 DBC if DEBUG_EN bit is not set
+
+Package/Module:
+OneSiliconPkg
+
+[Impacted Platform]
+LNL
+
+Hsd-es-id: 13012356851
+Original commit date: Tue Oct 22 02:51:35 2024 -0700
+Change-Id: Ibe9e271db3dfc135f04a3790378d001794d16e7d
+Original commit hash: 13906e6a5b4276d153296f2d6019c8a2da878514
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/Dci/LibraryPrivate/PeiDciInitLib/PeiDciInitLib.c
+
+================================================================================ 
+Commit: 3fcd27d31fc6c4cc6b0f8823ca4dbc420458273f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:11:08 2024 +0530 
+-------------------------------------------------------------------------------- 
+update socket type in SMBIOS type 4
+
+[Issue Description]
+For SMBIOS Type4:
+wrong length offset usage
+Socket Type is missing as per v3.8
+
+[Resolution]
+Add socket type in SMBIOS type 4 based on SMBIOS v3.8.0
+and updated type for processor socket
+
+Package/Module:
+OneSiliconPkg
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 15016982671
+Original commit date: Mon Oct 21 13:27:07 2024 +0530
+Change-Id: I505fee14222144014589be45d530b52b0ec0dd6e
+Original commit hash: 2a959426ec679266d789051fe3d4e3a3a3162f7a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Library/DxeSmbiosProcessorLib/DxeSmbiosProcessorLib.c
+OneSiliconPkg/Library/DxeSmbiosProcessorLib/DxeSmbiosProcessorLib.h
+
+================================================================================ 
+Commit: b5e4e62beb5a5f9dd735bb74b713b287986179eb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:10:56 2024 +0530 
+-------------------------------------------------------------------------------- 
+Help String for PCIE Configuration is shown as IMR Configuration
+
+[Issue Description]
+Help String for PCIE Configuration is shown as IMR Configuration
+
+[Resolution]
+Corrected the help string
+
+Package/Module:
+LunarLakePlatSamplePkg
+
+[Impacted Platform]
+LNL
+
+Hsd-es-id: 16025721871
+Original commit date: Thu Oct 10 15:35:56 2024 +0530
+Change-Id: I0faa189206cc222309aec5b2ee9af44976068d3b
+Original commit hash: d10f3e7a31c436c6085bf937a3b3d23f2e4f2368
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+LunarLakePlatSamplePkg/Setup/PcieSetup.uni
+
+================================================================================ 
+Commit: 65b99205661582bca7e46beb7594dd2e71937afe 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Nov 21 09:10:21 2024 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_84
+
+Hsd-es-id: N/A"
+Original commit date: Thu Oct 17 03:16:02 2024 -0700
+Original commit hash: 5dd1fd875754a11329304e84f4d04ba6666d0f40
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/LunarLake_FSP_Integration_Guide.chm
+Doxygen/LunarLake_FSP_Integration_Guide.pdf
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+LICENSE.txt
+OneSiliconPkg/SiPkg.dec
