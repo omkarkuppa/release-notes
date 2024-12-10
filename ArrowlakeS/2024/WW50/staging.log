@@ -128,7 +128,7 @@ Commit: b0630f2393241f7b181dfa446d11aac079d70a82
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Dec 10 11:46:05 2024 +0530 
 -------------------------------------------------------------------------------- 
-Customer request _L6E method in ACPI to handle PCH GPIO SCI event
+[PCH] Add _L6E method in ACPI to handle PCH GPIO SCI event
 
 [Feature Description]
 Introduce a method _L6E to handle SCIs that are being generated from
@@ -154,7 +154,7 @@ Commit: 895a80c80ca79cff1b00f62bc5418a139b4d2814
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Dec 10 11:46:01 2024 +0530 
 -------------------------------------------------------------------------------- 
-Correct GPIO PID for TCSS
+[PCH] Correct GPIO PID for TCSS
 
 [Issue Description]
 AUX_BIAS_GPIO stays low after plugging external monitor in bypass
@@ -184,7 +184,7 @@ Commit: db0cdfb087feb25e0e74b365b06df660e2137e83
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Dec 10 11:45:58 2024 +0530 
 -------------------------------------------------------------------------------- 
-Hide Foxville setup options if there is no onboard device
+[PCH] Hide Foxville setup options if there is no onboard device
 
 [Issue Description]
 Showing Foxville setup option might mislead end-user to use
@@ -239,7 +239,7 @@ Commit: 279eb22df8523332f6972978fe665eeab8d43db4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Dec 10 11:45:50 2024 +0530 
 -------------------------------------------------------------------------------- 
-[SPBC] DPMO hang Mitigation WA- Moving SPI DMA Firmware Shadow Ppi to Memory
+[PCH][SOC I/O] Moving SPI DMA Firmware Shadow Ppi to Memory
 
 [Feature Description]
 SPI DMA architecture doesn't allow SPI Flash to be accessed while
@@ -250,16 +250,15 @@ FirmwareVolumeShadow Ppi code exists in Flash, causing the SPI DMA to
 execute from Flash. in-effect causing SPI fetch instructions while waiting
 for SPI DMA to complete. Causing a hang 2-3 times in 15k cycles.
 
-To mitigate this hang scenario we need to execute from Memory while
-SPI DMA is in progress. We do this by using PeiServicesRegisterForShadow
+To mitigate this hang scenario, it will need to execute from Memory while
+SPI DMA is in progress. This implementation uses PeiServicesRegisterForShadow
 API to register SiInitPreMem PEIM for copy when memory is available.
 This causes a re-entry for SiInitPreMem which re-installs the SPI DMA
-base FirmwareVolumeShadow from SPI Flash to Memory. So we execute from
+base FirmwareVolumeShadow from SPI Flash to Memory. It executes from
 Memory instead of SPI Flash when SPI DMA is executing.
 This code assumes that the re-entry of SiInitPremem happens before FvReportPei
 executes. EDKII implemention of PeiDispatcher executes re-entry PEIM modules
-before any other PEIM modules. If this behaviour changes we would need to redo
-the change.
+before any other PEIM modules.
 
 Package/Module: ClientOneSiliconPkg/Product/MeteorLake/SiInit/Pei/SiInitPreMem
 
@@ -1221,7 +1220,7 @@ Commit: 4630e260cdbc3c1431ec093c13b9bf1864e0aef4
 Author: ClientSysFWGit <clientsysfwgit@intel.com> 
 Date: Tue Dec 10 11:43:29 2024 +0530 
 -------------------------------------------------------------------------------- 
-Correction of description for SMI handler.
+[PCH] Correction of description for SMI handler.
 
 [Issue Description]
 Description is detailing non-existing flow in the
