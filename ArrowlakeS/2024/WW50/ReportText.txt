@@ -1,0 +1,251 @@
+*********************************************************************************
+Commit: 895a80c80ca79cff1b00f62bc5418a139b4d2814 
+*********************************************************************************
+
+[PCH], [SiliconPkg], [TCSS]
+
+  Correct GPIO PID for TCSS
+  
+  [Issue Description]
+  AUX_BIAS_GPIO stays low after plugging external monitor in bypass
+                                                             ^^^^^^ 
+  mode.
+  
+  [Resolution]
+  In order to route SB cycle from TCSS to PCH, a particular
+  SB PID needs to be programmed into IOM.
+  
+  Package/Module: ClientOneSiliconPkg/Tcss
+  
+  [Impacted Platform]
+  ARL-S
+  
+  Hsd-es-id: 18040523446
+  Change-Id: Idab9b8181e772b61c8651cc15b98bec171fb9bf5
+  Original commit hash: fb78f37cf9d830b30427fbd194c82f5e9871b86a
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Fru/MtlPch/IncludePrivate/Register/MtlPchSbPortIds.h
+  ClientOneSiliconPkg/Fru/MtlSoc/Tcss/Library/PeiTcssInitFruLib/PeiTcssInitFruLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: 84d41625f5b7b7aaa99d8fac191b55e60cd7bd86 
+*********************************************************************************
+
+[MRC], [SiliconPkg]
+
+  [ARL-HX ARL-S | DDR5] Update CaCtle
+  
+  [Feature Description]
+  Update CaCtle per vendor
+  Revert CaCtle for 1R
+  ^^^^^^               
+  Applies only for 1SPC 2R CKD DIMM
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  ARL-S, ARL-HX
+  
+  Hsd-es-id: 14023931940
+  Change-Id: I28cdfc3d5c9237ce4bc62b88154c019cd4c1a88d
+  Original commit hash: e24e4d3b26030009d0877c4f094cdb1ceace8bf7
+  
+  [Changed Files]
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/SpdProcessing/MrcSpdProcessing.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 652eec6b02aafaf5d9badc359a98a56b8c32a0fb 
+*********************************************************************************
+
+[MRC], [SiliconPkg]
+
+  [ARL-S ARL-HX | DDR5] Mrc2CkdDimmShifts causing ClkGrpPi asymmetry
+                                      ^^^                            
+  
+  [Issue Description]
+  Mrc2CkdDimmShifts
+                ^^^ 
+  - shift based on CLK delta, which does not relate to CA eye delta
+  - CompositeCaCenter is not updated when CS/CLK are already updated
+    based on CaShift
+  CS and CLK has already been shifted when calculating IdealCaCenter,
+  thus Mrc2CkdDimmShifts is redundant
+                     ^^^              
+  
+  [Resolution]
+  Revert Mrc2CkdDimmShifts and related code
+  ^^^^^^               ^^^                  
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  S/HX 2DPC
+  
+  Hsd-es-id: 16025841814
+  Change-Id: I848ba28e81f9e900de15fd737eca75ec29f3154b
+  Original commit hash: 43901fc32e4d842e8b08d76b12b74a1379787df4
+  
+  [Changed Files]
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTrainingPrivate.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: FTS
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: ee6cc46bd14dc99291805bb6560edae5970c4e7e 
+*********************************************************************************
+
+[MRC], [SiliconPkg]
+
+  [ARL | DDR5] PiToCkdScale Warning Message
+  
+  [Issue Description]
+  Observing warning message due to the possible range for pishift
+  is too small (even value) when the PiStep is 4
+                                       ^^^^      
+  
+  [Resolution]
+  Reduce the PiStep to 2 during EarlyCS sweep in PiToCkdScale
+               ^^^^                                           
+  Add 2 ticks tolerance to handle rounding error
+  (1 pi tick from left edge and 1 pi tick from right edge)
+  
+  Additional Changes:
+  Override ValidRankMask due to duplicate EarlyCS sweep because
+  EarlyCsTrainSweep1D will loop all Ranks where MrcDdr5PiToCkdScale
+  already loop DIMM
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  All DDR5 with CKD
+  
+  Hsd-es-id: 15016900340
+  Change-Id: I817f5c3608f0bf2436ffefd24141adec124b4c37
+  Original commit hash: 5a0d48f04fd32b7bbb3e31543eb7ca868a900b56
+  
+  [Changed Files]
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 79e44f8fa1e42a9f6927fdf59115c4b775b6e07f 
+*********************************************************************************
+
+
+  Remove BuildDefaultDataHobForRecoveryVariable()
+  
+  [Issue Description]
+  This function is not needed and would cause assertion in
+  PeiVariable PEIM instead.
+  
+  [Resolution]
+  1. Remove BuildDefaultDataHobForRecoveryVariable()
+  2. Clean up MultiPlatSupportLib by this chance since
+  it's not used now.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+  MTL/ARL
+  
+  Hsd-es-id: 15016856665
+  Change-Id: I809ce8bbc4f9f6e5a753332f85323f1735fba9e7
+  Original commit hash: 06426647c89fcb8dfe847e74e5c930e085a24b2f
+  
+  [Changed Files]
+  MeteorLakeBoardPkg/Features/Setup/Include/Library/UefiVariableDefaultHobLib.h
+  MeteorLakeBoardPkg/Features/Setup/Library/PeiUefiVariableDefaultHobLib/PeiUefiVariableDefaultHobLib.c
+  MeteorLakeBoardPkg/Features/Setup/Library/PeiUefiVariableDefaultHobLib/PeiUefiVariableDefaultHobLib.inf
+  MeteorLakePlatSamplePkg/Include/Library/MultiPlatSupportLib.h
+  MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/InternalCommonLib.c
+                                                         ^^^^^^^^            
+  MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/PeiMultiPlatSupportLib.c
+  MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/PeiMultiPlatSupportLib.inf
+  MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/PeiMultiPlatSupportLibOptSize.c
+  MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/PeiMultiPlatSupportLibOptSize.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 6dd5b3295be3d3f0be1ab950b1c5d501c16d1292 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  "[TeamCity] MTL MeteorLake_arrowlake_s_program_platform_Daily Daily Updating Version/ID: MeteorLake_4454_88
+  
+  Hsd-es-id: N/A"
+  Original commit hash: e15b3fe95afe35535464870f62c3c5cc058af7c1
+  
+  [Changed Files]
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusArpDisabled.c
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusEntry.c
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusSmm.h
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusSmm.inf
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusTraditionalMm.c
+  ClientOneSiliconPkg/Pch/Include/Protocol/SmmSmbus.h
+  ClientOneSiliconPkg/Product/MeteorLake/EarlyDevices/Readme.md
+  ClientOneSiliconPkg/SiPkg.dec
+  Doxygen/BoardApi.chm
+  Doxygen/FspApi.chm
+  Doxygen/MeteorLake_FSP_Integration_Guide.chm
+  Doxygen/MeteorLake_FSP_Integration_Guide.pdf
+  Doxygen/PlatApi.chm
+  Doxygen/SiPkgApi.chm
+  LICENSE.txt
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Facs/Facs.act
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Fadt/Fadt6.3.act
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Hpet/Hpet.act
+                                     ^^   ^^       
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Madt/Madt.act
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Mcfg/Mcfg.act
+  MeteorLakeBoardPkg/CapsuleUpdateConfig/.gitignore
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+################################################################################
+
+Report Summary: Backstop found 6 suspect commits for review 
+
+Warnings Found:
+  Commit: 895a80c    --Commit Message Contains Key Word: bypass
+  Commit: 84d4162    --Commit Message Contains Key Word: revert
+  Commit: 652eec6    --Commit Message Contains Oem: FTS
+  Commit: 652eec6    --Commit Message Contains Key Word: revert
+  Commit: ee6cc46    --Commit Message Contains Key Word: step
+  Commit: 79e44f8    --Commit Message Contains Key Word: internal
+  Commit: 6dd5b32    --Commit Message Contains Oem: HP
