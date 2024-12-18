@@ -1,0 +1,318 @@
+*********************************************************************************
+Commit: b4c9f52777ef7374a74c6f29d13d59f47fa67508 
+*********************************************************************************
+
+[TBT]
+
+  Fix for QuickI2c driver YB issue
+  
+  [Feature Description]
+  When we disable ISH, ISH_GPIO is driving low.
+  Hence touch pad interrupt is not working
+  
+  Package/Module: BoardPkg
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 16026125344
+  Change-Id: I37e1b858fd79aa8dc79add1b3460f102c5ce2661
+  Original commit hash: 9b5c18222ba16c5e7c65c0c849f3fe246da8d818
+  
+  [Changed Files]
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDDR5MemSDTBTRvp.dsc
+                                                            ^^^                          
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvp.dsc
+                                                            ^^^                        
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHDdr5SODimmRvpBomSku.dsc
+                                                            ^^^                      ^^^     
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5CammRvp.dsc
+                                                            ^^^                     
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT3Rvp.dsc
+                                                            ^^^                    
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4Rvp.dsc
+                                                            ^^^                    
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/ArlH/SkuIdArlHLp5xT4RvpBomSku.dsc
+                                                            ^^^                  ^^^     
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: e2faef49d9a184d7c1b0392d998240ea65174b45 
+*********************************************************************************
+
+[MRC], [SiliconPkg]
+
+  [MTL ARL | DDR5] JEDEC Write Leveling WICA fix
+  
+  [Feature Description]
+  An issue with mismatched upper/lower bytes on
+  certain vendor x16 DDR5 memory caused JEDEC
+  Write Leveling failures. With some hardware
+                                     ^^^^^^^^ 
+  configs, the write leveling would never find
+  the edge in the int write fine.
+  For mismatched bytes, we took away 128 PI ticks
+  from them during int write leveling coarse.
+  This moved those bytes far back enough for
+  the int write leveling fine to find their
+  passing point.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  P,S
+  
+  Registers impacted: None
+  
+  Hsd-es-id: 22020572232
+  Change-Id: I31abcba348913484e8152d8e2cd6d1088a344b8c
+  Original commit hash: 50ab2677e4250e7f7745eb7c63d765171bc4fc4a
+  
+  [Changed Files]
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/WriteTraining/MrcWriteLeveling.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: fc5f23bd531e11a8132c89b628c38992ddf737ae 
+*********************************************************************************
+
+[MRC], [SiliconPkg]
+
+  [ARL | DDR5] PiToCkdScale Warning Message
+  
+  [Issue Description]
+  Observing warning message due to the possible range for pishift
+  is too small (even value) when the PiStep is 4
+                                       ^^^^      
+  
+  [Resolution]
+  Reduce the PiStep to 2 during EarlyCS sweep in PiToCkdScale
+               ^^^^                                           
+  Add 2 ticks tolerance to handle rounding error
+  (1 pi tick from left edge and 1 pi tick from right edge)
+  
+  Additional Changes:
+  Override ValidRankMask due to duplicate EarlyCS sweep because
+  EarlyCsTrainSweep1D will loop all Ranks where MrcDdr5PiToCkdScale
+  already loop DIMM
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  All DDR5 with CKD
+  
+  Hsd-es-id: 15016900340
+  Change-Id: I817f5c3608f0bf2436ffefd24141adec124b4c37
+  Original commit hash: fb7c6bf577e85627aad882c65efec089fbf1e72a
+  
+  [Changed Files]
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcCommandTraining.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommandTraining.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: step
+
+*********************************************************************************
+Commit: 0eea59de40ca56a2b283b0a7dc4b1e3ae1801f9c 
+*********************************************************************************
+
+[SiliconPkg], [ME]
+
+  SPI FDO fix
+  
+  [Issue Description]
+  Flash Descriptor Override (FDO) is controlled by 2 pin straps - one
+                                                         ^^^^^        
+  per SPI controller (die).
+  SpiIsFlashDescriptorOverrideEnabled function checks only status in SOC.
+  
+  [Resolution]
+  FDO return status is based on 2 pin straps.
+                                      ^^^^^   
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  MTL, ARL
+  
+  Hsd-es-id: 16024961516
+  Change-Id: I17c844bcd7f60f5a801b44c05a32116b7949ff7a
+  Original commit hash: bdacf673a8863c06b1d1c4469a853002c1be3e17
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Include/Library/SpiAccessLib.h
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/HeciInitPreMem.c
+  ClientOneSiliconPkg/IpBlock/Me/LibraryPrivate/PeiMeInitLib/PeiMeInitLib.inf
+  ClientOneSiliconPkg/IpBlock/Spi/Library/PeiDxeSmmSpiAccessLib/SpiAccessLib.c
+  ClientOneSiliconPkg/Product/MeteorLake/Include/Library/SpiFdoLib.h
+  ClientOneSiliconPkg/Product/MeteorLake/Library/PeiDxeSpiFdoLib/PeiDxeSpiFdoLib.c
+  ClientOneSiliconPkg/Product/MeteorLake/Library/PeiDxeSpiFdoLib/PeiDxeSpiFdoLib.inf
+  ClientOneSiliconPkg/Product/MeteorLake/SiPkgCommonLib.dsc
+  Features/FirmwareGuard/CapsuleFeaturePkg/Library/CbntSvnCheckLib/CbntSvnCheckLib.c
+  Features/FirmwareGuard/CapsuleFeaturePkg/Library/CbntSvnCheckLib/CbntSvnCheckLib.inf
+  MeteorLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/BootFirmwareMediaProtection.c
+  MeteorLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.h
+  MeteorLakePlatSamplePkg/Features/Hsti/HstiIhvDxe/HstiIhvDxe.inf
+  MeteorLakePlatSamplePkg/Features/Me/MeExtMeasurement/Dxe/MeExtMeasurement.c
+  MeteorLakePlatSamplePkg/Features/Me/MeExtMeasurement/Dxe/MeExtMeasurement.h
+  MeteorLakePlatSamplePkg/Features/Me/MeExtMeasurement/Dxe/MeExtMeasurement.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: strap
+
+*********************************************************************************
+Commit: 0313d91a534d6eb550ca4af4ad71d5f075abbd55 
+*********************************************************************************
+
+[PCH], [SiliconPkg]
+
+  Revert "Modern standby can't WOL due to PCIe RP MSI."
+  ^^^^^^                                          ^^^   
+  
+  [Issue Description]
+  Hang observed while connecting TBT/Type-C devices to BOBCAT in hot plug
+  state with BIOS 4404_80
+  System gets hangs with PC 004F when SUT wake from S4 by magic packet
+  sent to PCIe LAN network
+  
+  [Resolution]
+  Reverts "Modern standby can't WOL due to PCIe RP MSI."
+  ^^^^^^                                           ^^^   
+  
+  Package/Module: ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ARL H
+  
+  Hsd-es-id: 22020542114
+  Change-Id: Ia14fc58af72e6d838891932c731783010245a5e0
+  Original commit hash: a5dc102a1411f15625eb63809dc439d33bfbe489
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Fru/MtlPch/Smm/PchPcieSmm.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: MSI
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 007ea0eb23d771f30c390c09055a3d5243d1be4f 
+*********************************************************************************
+
+[PCH], [SiliconPkg], [TCSS], [MRC], [TBT], [ASL], [CPU]
+
+  SyncScript: Revert override commits.
+              ^^^^^^                   
+  
+  Mon Nov 25 05:46:40 2024 -0800
+  Original commit hash: f2455129e4386d081a39be527a1a3a9694b21ffd
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Fru/MtlPch/Smm/PchPcieSmm.c
+  ClientOneSiliconPkg/Fru/MtlSoc/DxeLib.dsc
+  ClientOneSiliconPkg/Fru/MtlSoc/IncludePrivate/Library/PeiTcssInitFruLib.h
+  ClientOneSiliconPkg/Fru/MtlSoc/PeiLib.dsc
+  ClientOneSiliconPkg/Fru/MtlSoc/Tcss/IncludePrivate/Library/DxeTcssInitFruLib.h
+  ClientOneSiliconPkg/Fru/MtlSoc/Tcss/LibraryPrivate/DxeTcssInitFruLib/DxeTcssInitFruLib.c
+  ClientOneSiliconPkg/Fru/MtlSoc/Tcss/LibraryPrivate/DxeTcssInitFruLib/DxeTcssInitFruLib.inf
+  ClientOneSiliconPkg/Fru/MtlSoc/Tcss/LibraryPrivate/PeiTcssInitFruLib/PeiTcssInitFruLib.c
+  ClientOneSiliconPkg/Fru/MtlSoc/Tcss/LibraryPrivate/PeiTcssInitFruLib/PeiTcssInitFruLib.inf
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoApi.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfig.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoConfigPrivate.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcChipRouting.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Services/MrcCommon.c
+  ClientOneSiliconPkg/IpBlock/PcieRp/LibraryPrivate/PeiPcieSipInitLib/PeiPcieSipInitLib.c
+  ClientOneSiliconPkg/LibraryPrivate/DxeSmbiosMemoryLib/SmbiosMemory.h
+  ClientOneSiliconPkg/LibraryPrivate/DxeSmbiosMemoryLib/SmbiosType17.c
+  ClientOneSiliconPkg/Product/MeteorLake/MeteorLakeSiliconPkg.dsc
+  ClientOneSiliconPkg/Product/MeteorLake/SiPkgDxeLib.dsc
+  MeteorLakeBoardPkg/BiosId.env
+  MeteorLakePlatSamplePkg/Features/Acpi/AcpiTables/TbtTypeC/TbtTypeC.asl
+  MeteorLakePlatSamplePkg/Features/Tbt/TbtInit/Dxe/AcpiTables/DTbt.asl
+  MeteorLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+  MeteorLakePlatSamplePkg/Platform/PciHotPlug/PciHotPlug.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: b9c2af56624eee4e8fa6ee7ac333ba1ec0fd4c50 
+*********************************************************************************
+
+[SiliconPkg], [PCH]
+
+  "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily Daily Updating Version/ID: MeteorLake_4404_82
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 9af720acf0d35d912f44c2ec0b6330d1e1e2319c
+  
+  [Changed Files]
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusArpDisabled.c
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusEntry.c
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusSmm.h
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusSmm.inf
+  ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusTraditionalMm.c
+  ClientOneSiliconPkg/Pch/Include/Protocol/SmmSmbus.h
+  ClientOneSiliconPkg/Product/MeteorLake/EarlyDevices/Readme.md
+  ClientOneSiliconPkg/SiPkg.dec
+  Doxygen/BoardApi.chm
+  Doxygen/FspApi.chm
+  Doxygen/MeteorLake_FSP_Integration_Guide.chm
+  Doxygen/MeteorLake_FSP_Integration_Guide.pdf
+  Doxygen/PlatApi.chm
+  Doxygen/SiPkgApi.chm
+  LICENSE.txt
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Facs/Facs.act
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Fadt/Fadt6.3.act
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Hpet/Hpet.act
+                                     ^^   ^^       
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Madt/Madt.act
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Mcfg/Mcfg.act
+  MeteorLakeBoardPkg/CapsuleUpdateConfig/.gitignore
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+################################################################################
+
+Report Summary: Backstop found 7 suspect commits for review 
+
+Warnings Found:
+  Commit: b4c9f52    --Commit Message Contains Key Word: sku
+  Commit: e2faef4    --Commit Message Contains Key Word: hardware
+  Commit: fc5f23b    --Commit Message Contains Key Word: step
+  Commit: 0eea59d    --Commit Message Contains Key Word: strap
+  Commit: 0313d91    --Commit Message Contains Oem: MSI
+  Commit: 0313d91    --Commit Message Contains Key Word: revert
+  Commit: 007ea0e    --Commit Message Contains Key Word: revert
+  Commit: b9c2af5    --Commit Message Contains Oem: HP
