@@ -1,0 +1,331 @@
+================================================================================ 
+Commit: 7f2149ac9123d583f03fe2f2e83abdd2c711089e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:22:10 2025 +0530 
+-------------------------------------------------------------------------------- 
+Added Doxygen folder and License file for ARL-H 4474_85 label.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusArpDisabled.c
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusEntry.c
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusSmm.h
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusSmm.inf
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusTraditionalMm.c
+ClientOneSiliconPkg/Pch/Include/Protocol/SmmSmbus.h
+ClientOneSiliconPkg/Product/MeteorLake/EarlyDevices/Readme.md
+ClientOneSiliconPkg/SiPkg.dec
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/MeteorLake_FSP_Integration_Guide.chm
+Doxygen/MeteorLake_FSP_Integration_Guide.pdf
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+LICENSE.txt
+MeteorLakeBoardPkg/CapsuleUpdateConfig/.gitignore
+MeteorLakeBoardPkg/Features/CapsuleUpdate/Tools/CapsuleGenerate/Ucode/.gitignore
+
+================================================================================ 
+Commit: 20c809f85169142bc930e0cc7fc7dc5a134ed60b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:07:26 2025 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily Daily Updating Version/ID: MeteorLake_4474_85
+
+Hsd-es-id: N/A"
+Original commit date: Fri Dec 20 03:29:14 2024 +0000
+Original commit hash: 775aaddf12bf342d50db2a5fab0c100bd71e118b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+MeteorLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 734979a477607b9f643b15dea041e2f86c4a8d31 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:07:23 2025 +0530 
+-------------------------------------------------------------------------------- 
+POST time issue during SoundWire enumeration
+
+[Issue Description]
+It takes too long for the SoundWire protocol to enumerate all
+peripherals on the SoundWire bus.
+
+[Resolution]
+Improve the enumeration process by adding a break condition when the
+status register meets the criteria.
+
+Package/Module:
+Features/Audio/SndwFeaturePkg
+
+[Impacted Platform]
+MTL, ARL
+
+Hsd-es-id: 18040950409
+Original commit date: Wed Dec 11 12:04:33 2024 +0100
+Change-Id: I25762a383d337b1ad1655ccb0a8b355447a682b0
+Original commit hash: a4a56d3c4c71f6b0e5b4f9fdf5b7da6889bf75a5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Audio/SndwFeaturePkg/LibraryPrivate/PeiDxeSndwCommonLib/PeiDxeSndwCommonLib.c
+Features/Audio/SndwFeaturePkg/SndwInitDxe/SndwInitDxe.c
+
+================================================================================ 
+Commit: 8079083c1f092a0fc9230273e6e4e7c15f87a599 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:07:19 2025 +0530 
+-------------------------------------------------------------------------------- 
+Hii config access without proper NULL check handling
+
+[Issue Description]
+1. RouteConfig() return "EFI_INVALID_PARAMETER" instead of
+	 "EFI_NOT_FOUND" with no found target for the routing data.
+
+2. ExtractConfig() return "EFI_INVALID_PARAMETER" instead of
+     "EFI_NOT_FOUND" with Request been NULL.
+
+[Resolution]
+Add proper error handling.
+
+Package/Module:
+Features/Manageability/MebxFeaturePkg/MebxSetup
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 15017165798
+Original commit date: Thu Nov 14 14:49:56 2024 +0800
+Change-Id: I8f080f12d6d66c34141218c5dbdb18374a1f2eb6
+Original commit hash: d97479d7538c1ace2127f4f1fd16024613aef128
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Manageability/MebxFeaturePkg/MebxSetup/MebxSetup.c
+
+================================================================================ 
+Commit: b0e3ca587ad2db2327183841a9d19a3f404a5cc5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:07:16 2025 +0530 
+-------------------------------------------------------------------------------- 
+XmlCli should be disabled in production bios by default
+
+[Issue Description]
+XmlCli should be disabled by default in the production bios.
+However PcdXmlCliFeatureEnable is set to TRUE in
+BoardPkgPcdUpdate.dsc file, which is causing it to be enabled.
+
+[Resolution]
+PcdXmlCliFeatureEnable should be removed from the
+BoardPkgPcdUpdate.dsc as it is already properly configured
+in the BoardPkgPcdInit.dsc
+
+Package/Module: XmlCliFeaturePkg
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 22020719946
+Original commit date: Mon Dec 9 11:31:01 2024 +0530
+Change-Id: I949fcbe549f8ce6a878cda8e05c0e52009845516
+Original commit hash: 90160800b2808e62e356bfd12855c61e9e01cbc6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+MeteorLakeBoardPkg/BoardPkgPcdUpdate.dsc
+
+================================================================================ 
+Commit: c2f50e15121afff87ac338fafc60e3df8d963654 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:07:13 2025 +0530 
+-------------------------------------------------------------------------------- 
+Remove BuildDefaultDataHobForRecoveryVariable()
+
+[Issue Description]
+This function is not needed and would cause assertion in
+PeiVariable PEIM instead.
+
+[Resolution]
+1. Remove BuildDefaultDataHobForRecoveryVariable()
+2. Clean up MultiPlatSupportLib by this chance since
+it's not used now.
+
+Package/Module: MeteorLakeBoardPkg
+
+[Impacted Platform]
+MTL/ARL
+
+Hsd-es-id: 15016856665
+Original commit date: Mon Nov 25 14:56:24 2024 +0800
+Change-Id: I809ce8bbc4f9f6e5a753332f85323f1735fba9e7
+Original commit hash: c44fe6f047897c4e2b5340b6b65708167daffd72
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+MeteorLakeBoardPkg/Features/Setup/Include/Library/UefiVariableDefaultHobLib.h
+MeteorLakeBoardPkg/Features/Setup/Library/PeiUefiVariableDefaultHobLib/PeiUefiVariableDefaultHobLib.c
+MeteorLakeBoardPkg/Features/Setup/Library/PeiUefiVariableDefaultHobLib/PeiUefiVariableDefaultHobLib.inf
+MeteorLakePlatSamplePkg/Include/Library/MultiPlatSupportLib.h
+MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/InternalCommonLib.c
+MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/PeiMultiPlatSupportLib.c
+MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/PeiMultiPlatSupportLib.inf
+MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/PeiMultiPlatSupportLibOptSize.c
+MeteorLakePlatSamplePkg/Library/PeiMultiPlatSupportLib/PeiMultiPlatSupportLibOptSize.inf
+
+================================================================================ 
+Commit: 77a90d88ddfa0b6a6c8ac8024dcaa4a121a66fa4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:07:08 2025 +0530 
+-------------------------------------------------------------------------------- 
+Support FDO for TXT flows
+
+[Issue Description]
+TXT is not compatible with FDO and causes LT reset, so disabling TXT when FDO is set
+
+[Resolution]
+Disabling TXT when FDO is set
+
+Package/Module:PeiTxtLib
+
+[Impacted Platform]
+ARL, MTL
+
+Hsd-es-id: 15017029403
+Original commit date: Mon Nov 18 13:01:24 2024 -0800
+Change-Id: I2ee28081668053d825d9cedcf181c1c24fc116cb
+Original commit hash: 7831fc1f574a91073a4595243b5974964561f073
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/Txt/LibraryPrivate/PeiTxtLib/TxtPei.c
+
+================================================================================ 
+Commit: 93c0407e9018a2232a9a69b27efceca644ffcaee 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:07:03 2025 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily Daily Updating Version/ID: MeteorLake_4474_84
+
+Hsd-es-id: N/A"
+Original commit date: Tue Dec 17 05:31:18 2024 +0000
+Original commit hash: 37abe29964e03c31ba4657132a01f4e179164386
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+MeteorLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 0c7299d91b337b19003b221110db5fcf31553b9c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:06:58 2025 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes MTL MRC 1.5.8.1
+
+[Feature Description]
+Update MRC version.
+
+Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 22014478540
+Original commit date: Fri Dec 13 11:17:27 2024 -0800
+Change-Id: Ia0d57353e27207946f55ed164823e2d3a17285b0
+Original commit hash: 00357c8f35305090fe970c8e1eed221d34c05281
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Include/MrcVersion.h
+
+================================================================================ 
+Commit: 5b86b8ba357f5b376d8c7888376398e4b4ab783e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:06:54 2025 +0530 
+-------------------------------------------------------------------------------- 
+[ARL-U | DDR5] limit max qclk frequency to 2800MHz -> DDR5 SAGV points..
+
+[Feature Description]
+1) MRC must limit max qclk frequency in ARL-U to 2800Mhz which in turn
+   changes the DDR5 SAGV table because the DDR5 max data rate (6400)
+   would be higher than the max gear2 frequency.
+
+Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+
+[Impacted Platform]
+U
+
+Hsd-es-id: 22020735690
+Original commit date: Wed Dec 11 21:29:11 2024 -0800
+Change-Id: I11260b0da2542b79d910f881da57f8c0875c596f
+Original commit hash: 71da4515dc5d58ca94710b624f817c9f390c8946
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/MemoryInit.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcDebugPrint.h
+ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcGeneral.c
+ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Chip/Pma/MrcPmaApi.c
+
+================================================================================ 
+Commit: 2885642d8eb78e2a42ed4106aba975e416df7345 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:06:48 2025 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily Daily Updating Version/ID: MeteorLake_4474_83
+
+Hsd-es-id: N/A"
+Original commit date: Thu Dec 12 22:12:27 2024 -0800
+Original commit hash: cef1eab62abd415cbd3d0b2d9f0b1c57efe49865
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+MeteorLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 2752a3294e50177ed5912fd8b33e9315f42802b7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Jan 2 13:06:39 2025 +0530 
+-------------------------------------------------------------------------------- 
+"[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily Daily Updating Version/ID: MeteorLake_4474_82
+
+Hsd-es-id: N/A"
+Original commit date: Fri Nov 29 12:50:57 2024 +0000
+Original commit hash: 07f9e97a8e20bcd7a8f828e8a0cb5125c6f6f4ae
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ClientOneSiliconPkg/Fru/MtlSoc/Include/Library/PeiTcssInitFruLib.h
+ClientOneSiliconPkg/Fru/MtlSoc/Tcss/Include/Library/DxeTcssInitFruLib.h
+ClientOneSiliconPkg/Fru/MtlSoc/Tcss/Library/DxeTcssInitFruLib/DxeTcssInitFruLib.c
+ClientOneSiliconPkg/Fru/MtlSoc/Tcss/Library/DxeTcssInitFruLib/DxeTcssInitFruLib.inf
+ClientOneSiliconPkg/Fru/MtlSoc/Tcss/Library/PeiTcssInitFruLib/PeiTcssInitFruLib.c
+ClientOneSiliconPkg/Fru/MtlSoc/Tcss/Library/PeiTcssInitFruLib/PeiTcssInitFruLib.inf
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusArpDisabled.c
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusEntry.c
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusSmm.h
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusSmm.inf
+ClientOneSiliconPkg/IpBlock/Smbus/Smm/SmbusTraditionalMm.c
+ClientOneSiliconPkg/Pch/Include/Protocol/SmmSmbus.h
+ClientOneSiliconPkg/Product/MeteorLake/EarlyDevices/EarlySmmLpssUart.c
+ClientOneSiliconPkg/Product/MeteorLake/EarlyDevices/EarlySmmLpssUart.inf
+ClientOneSiliconPkg/Product/MeteorLake/EarlyDevices/Readme.md
+ClientOneSiliconPkg/SiPkg.dec
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/MeteorLake_FSP_Integration_Guide.chm
+Doxygen/MeteorLake_FSP_Integration_Guide.pdf
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+Features/Audio/NhltFeaturePkg/Include/NhltBtConfigurationVariable.h
+Features/Audio/NhltFeaturePkg/IncludePrivate/Library/InstallBtConfigurationVariable.h
+LICENSE.txt
+MeteorLakeBoardPkg/Acpi/AcpiTables/Facs/Facs.act
+MeteorLakeBoardPkg/Acpi/AcpiTables/Fadt/Fadt6.3.act
+MeteorLakeBoardPkg/Acpi/AcpiTables/Hpet/Hpet.act
+MeteorLakeBoardPkg/Acpi/AcpiTables/Madt/Madt.act
+MeteorLakeBoardPkg/Acpi/AcpiTables/Mcfg/Mcfg.act
+MeteorLakeBoardPkg/CapsuleUpdateConfig/.gitignore
+MeteorLakeBoardPkg/Features/CapsuleUpdate/Tools/CapsuleGenerate/Ucode/.gitignore
