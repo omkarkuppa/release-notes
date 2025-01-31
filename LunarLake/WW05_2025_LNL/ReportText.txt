@@ -1,0 +1,522 @@
+*********************************************************************************
+Commit: ebdf9864267a3ffdd8ff44981df526343d08b09c 
+*********************************************************************************
+
+[ASL]
+
+  USB VTIO SDEV table auto disable
+  
+  [Feature Description]
+  BIOS update to disable USB VTIO SDEV table before Win11 24H2 11D
+  
+  Package/Module:
+  Features/CmosFeaturePkg/
+  Features/Security/VtioFeaturePkg/
+           ^^^^^^^^                 
+  LunarLakeBoardPkg/Acpi/
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15017230515
+  Change-Id: I043056808156fa4b453bce838af3e8ee99090785
+  Original commit hash: ebf24634d23fa22ab6f017b0951bdb5b8cdfd55e
+  
+  [Changed Files]
+  Features/CmosFeaturePkg/Include/CmosMap.h
+  Features/Security/VtioFeaturePkg/Include/VtioSetup.h
+  Features/Security/VtioFeaturePkg/VtioDxe/VtioDxe.c
+  Features/Security/VtioFeaturePkg/VtioDxe/VtioDxe.inf
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetup.c
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetup.inf
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupStrings.uni
+  Features/Security/VtioFeaturePkg/VtioSetup/VtioSetupVfr.vfr
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+*********************************************************************************
+Commit: 3777b20de68c42601684c5595b1a5a8d4fb0ce7c 
+*********************************************************************************
+
+[GPIO]
+
+  WWAN device is disappeared in device manager after idle in OS about 30s
+  
+  [Issue Description]
+  LNL RC "SetGroupToGpeMapping" was installed far after
+  "HpBoardInitBeforeMemoryInit()". But SiPreMemPolicyPpi return fail,
+   ^^                                                                 
+  SetGroupToGpeMapping was not set. This affects ACPI's Scope(\_GPE)
+  being established as Method(_L6F) instead of Method (_L00),
+  causing the WWAN device to fail to call the WWAN wake pin when
+  it goes to sleep, and it will also cause the WWAN to disappear.
+  
+  [Resolution]
+  Remove redundant code for "Gpio Override Level1 flag" in
+  InternalGpioInterfaceConstructor.
+  ^^^^^^^^                          
+  
+  Package/Module:
+  LnlSoc/Gpio
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 15017345086
+  Change-Id: I6ebfd805f94d7fdcf4648abbc7e9358354012024
+  Original commit hash: bd9f6f70ecef2a2b9096d7f6360720003a13213a
+  
+  [Changed Files]
+  OneSiliconPkg/Fru/LnlSoc/SocInit/GpioV2ServicesInit/Pei/GpioV2PpiInitPei.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: eb881c6e701fc26cd9c845a57767c7b7229d7b4c 
+*********************************************************************************
+
+
+  Revert "gcc workaround"
+  ^^^^^^      ^^^^^^^^^^  
+  
+  
+  Mon Jan 13 17:05:06 2025 -0800
+  Original commit hash: 91e1768545ef92a859da5a38e776a3763e5474d5
+  
+  [Changed Files]
+  LunarLakeBoardPkg/BuildIafw.sh
+  LunarLakeFspPkg/BuildFv.sh
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: 4ccc22cfbe8fe8d8713394fae516c915f1673230 
+*********************************************************************************
+
+[ASL]
+
+  Remove "Support Aux power budgeting on Mobile Platform."
+  
+  [Issue Description]
+  1.Bios exposes Auxiliary power budgeting Reg
+  key in Pcie _dsd method which would guide
+  Driver /OS to call necessary functions in
+                     ^^^                    
+  _dsm that is Func A and B.
+  2.In current scenario this particular reg key
+  is not getting exposed to the OS and there is
+  no calls for aux power budgeting func in _dsm.
+  
+  [Resolution]
+  1.Exposing _DSD method for mobile
+  platforms.
+  
+  Package/Module:OneSiliconPkg
+  
+  [Impacted Platform]
+  Default ALL
+  
+  Hsd-es-id: 16026378800
+  Change-Id: I969912bbcfe76317f57f0f6437828522a0c287c3
+  Original commit hash: ca794d4133ad4b57e2389290aa78d173af7dff75
+  
+  [Changed Files]
+  OneSiliconPkg/IpBlock/PcieRp/AcpiTables/PcieCommon.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 804c9dde66d2f144f0c8eee112038fc4f695146b 
+*********************************************************************************
+
+[ASL]
+
+  Support Aux power budgeting on Mobile Platform.
+  
+  [Issue Description]
+  1.Bios exposes Auxiliary power budgeting Reg
+  key in Pcie _dsd method which would guide
+  Driver /OS to call necessary functions in
+                     ^^^                    
+  _dsm that is Func A and B.
+  2.In current scenario this particular reg key
+  is not getting exposed to the OS and there is
+  no calls for aux power budgeting func in _dsm.
+  
+  [Resolution]
+  1.Exposing _DSD method for mobile
+  platforms.
+  
+  Package/Module:OneSiliconPkg
+  
+  [Impacted Platform]
+  Default ALL
+  
+  Hsd-es-id: 16026378800
+  Change-Id: I3600e56bffa89f3e6a2a7671def4af4149f12817
+  Original commit hash: e08a6d41d05df2308edef3a85f45ce78cad59419
+  
+  [Changed Files]
+  OneSiliconPkg/IpBlock/PcieRp/AcpiTables/PcieCommon.asl
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: fc3985c0cea8bc7d9567473f1164bd01b37faec9 
+*********************************************************************************
+
+
+  gcc workaround
+      ^^^^^^^^^^ 
+  
+  Fri Dec 20 15:29:26 2024 -0600
+  Original commit hash: 542e803086304f5a05b512e1ad17bc5cc48ab340
+  
+  [Changed Files]
+  LunarLakeBoardPkg/BuildIafw.sh
+  LunarLakeFspPkg/BuildFv.sh
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+
+*********************************************************************************
+Commit: dccf0ece4365579f67feb8d8c826bdb4bc91b0a6 
+*********************************************************************************
+
+[PCH]
+
+  Fix SMBus usage in SMM
+  
+  [Issue Description]
+  Exception occurs when SMBus is accessed in SMI
+  
+  [Resolution]
+  DxeSmbusLib is linked in SMM, but does not support SMM runtime.
+  Added SmbusLib instance supporting SMM runtime and additional code
+  providing SmbusSmmProtocol.
+  
+  Package/Module: OneSiliconPkg/Smbus
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 18039993729
+  Change-Id: Ica98946231e2b5fa1049bfc7117c9b97821069d9
+  Original commit hash: 33606232dbf031818ec1014cb1657fc27d2ed935
+  
+  [Changed Files]
+  LunarLakeBoardPkg/BoardPkg.dsc
+  LunarLakeBoardPkg/BoardPkg.fdf
+  LunarLakeOpenBoardPkg/OpenBoardPkg.dsc
+  OneSiliconPkg/Fru/LnlSoc/Dxe.dsc
+  OneSiliconPkg/Fru/LnlSoc/SocInit/Dxe/PchInitDxe.c
+  OneSiliconPkg/Fru/LnlSoc/SocInit/Dxe/PchInitDxe.inf
+  OneSiliconPkg/Include/Ppi/PciDevice.h
+  OneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/InternalSmbusLib.h
+                                                         ^^^^^^^^           
+  OneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/SmbusLib.c
+  OneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/SmmSmbusLib.c
+  OneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/SmmSmbusLib.inf
+  OneSiliconPkg/IpBlock/Smbus/LibraryPrivate/SmmSmbusLib/SmmSmbusLib.uni
+  OneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusDxe.c
+  OneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusDxeSmm.h
+  OneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusSmm.c
+  OneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusSmm.inf
+  OneSiliconPkg/LibraryPrivate/PciIoLib/PciIoLibInternal.h
+                                                ^^^^^^^^   
+  OneSiliconPkg/Product/LunarLake/SiPkgDxeLib.dsc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 7ac0c0c2d10458fc135bb11dfe5b0a1c6b1371b2 
+*********************************************************************************
+
+[MRC]
+
+  Dev10 Telmetry changes to program stream tracer mem buffer
+                                             ^^^^            
+  
+  [Feature Description]
+  Dev10 Telmetry changes to program stream tracer mem buffer
+                                             ^^^^            
+  
+  Package/Module: Telemetry
+  
+  [Impacted Platform]
+  All
+  
+  Hsd-es-id: 16026017740
+  Change-Id: Ie1dfe70352fea5d8af30fd881e2098c410fd0ca4
+  Original commit hash: ec828debf5834b40cc93563be1a7bab4cbaeb79b
+  
+  [Changed Files]
+  LunarLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+  OneSiliconPkg/Fru/LnlCDie/Include/Register/HostBridge/PunitMchBar.h
+  OneSiliconPkg/Fru/LnlCDie/Telemetry/LibraryPrivate/PeiTelemetryFruLib/PeiTelemetryFruLib.c
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Blue/PeiMemoryInitLib/MemoryInit.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: Acer
+
+*********************************************************************************
+Commit: b552502f448b7d722e960fba010d5feac593bc35 
+*********************************************************************************
+
+[ASL]
+
+  Configuration SOC GPIO which drivers the HBR retimer GPIO6.
+  
+  [Feature Description]
+  1.Set IOSstate to 0b0001
+  2.Set PadRstCfg to 0b01
+  3.Set GPIOTxDis to 1 on Sx Enter
+  
+  Package/Module:
+  BoardPkg/Acpi
+  BoardPkg/BoardSupport
+  
+  [Impacted Platform]
+  ALL.
+  
+  Hsd-es-id: 15017226730
+  Change-Id: I7ddb149c7de95b07da051f87cc051dac69c3ccc3
+  Original commit hash: 7b15ca321ffade3ec4b33fbecf7355b5601fdaff
+  
+  [Changed Files]
+  LunarLakeBoardPkg/Acpi/AcpiTables/Dsdt/Platform.asl
+  LunarLakeBoardPkg/BoardSupport/LunarLakeBoards/Library/BoardInitLib/Pei/PeiInitPostMemLib.c
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Gcs1.dsc
+                                                          ^^^                  
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Gcs2.dsc
+                                                          ^^^                  
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp1.dsc
+                                                          ^^^                     
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5PpvRvp2.dsc
+                                                          ^^^                     
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp1.dsc
+                                                          ^^^                  
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp2.dsc
+                                                          ^^^                  
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp4.dsc
+                                                          ^^^                  
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 41daeded905407bd5016edcb109738535b48e815 
+*********************************************************************************
+
+[TBT], [ASL], [MRC], [PCH]
+
+  "[TeamCity] LNL LunarLake_lunarlake_program_platform_Daily Daily Updating Version/ID: LunarLake_3222_97
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 2911cf7428243d8ea88dfbf88e2afb725e4a2435
+  
+  [Changed Files]
+  Doxygen/BoardApi.chm
+  Doxygen/FspApi.chm
+  Doxygen/LunarLake_FSP_Integration_Guide.chm
+  Doxygen/LunarLake_FSP_Integration_Guide.pdf
+  Doxygen/PlatApi.chm
+  Doxygen/SiPkgApi.chm
+  Features/Audio/BeepPkg/Include/Beep.h
+  Features/Audio/NhltFeaturePkg/Include/NhltBtConfigurationVariable.h
+  Features/Audio/NhltFeaturePkg/IncludePrivate/Library/InstallBtConfigurationVariable.h
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/AudioComposition_Jamerson_4spk_Cohen_mic_UAJ.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/AudioComposition_Jamerson_4spk_Cohen_mic_UAJ_all_endpoints.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/AudioComposition_Jamerson_4spk_Cohen_mic_UAJ_no_capture.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/AudioComposition_Jamerson_4spk_Cohen_mic_UAJ_no_capture_no_spk.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/AudioComposition_Jamerson_4spk_Cohen_mic_UAJ_no_spk.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/AudioComposition_Jamerson_6spk_Cohen_mic_UAJ.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/CS35L56_DSD.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/CS35L56_PDP.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/CS42L43_DSD.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/CS_HID_headset_buttons.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/Cirrus_Topology_4_Jamerson_1_Cohen.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/Cirrus_Topology_6_Jamerson_1_Cohen.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/Cohen_Amp.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/Cohen_SimpleMic.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/Cohen_UAJ.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/Cohen_UAJ_capture_disable.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/Cohen_UAJ_capture_enable.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/SdcaSmartAmp_CJAM3556_RefStream_common.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/Sidecar_Cohen_Tweeter_Jamerson_Woofer.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/SndwDevTopologySt08Ssdt.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/common4ch.h
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/common6ch.h
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/sb_pc00_hdas_ppms_cirrus_aec.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt06Ssdt/sb_pc00_hdas_ppms_waves.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt08Ssdt/306810EC_AudioComposition_PC00.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt08Ssdt/306810EC_AudioFunction_1316_SPK.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt08Ssdt/306810EC_AudioFunction_711_UAJ.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt08Ssdt/306810EC_Peripheral_1316.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt08Ssdt/306810EC_Peripheral_711.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt08Ssdt/SndwDevTopologySt09Ssdt.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt10Ssdt/AudioComposition.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt10Ssdt/AudioFunction_1316_SPK.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt10Ssdt/AudioFunction_711_UAJ.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt10Ssdt/Peripheral_1316.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt10Ssdt/Peripheral_711.asl
+  Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt10Ssdt/SndwDevTopologySt10Ssdt.asl
+  Features/BluetoothPkg/BleConPlatformDxe/BleConPlatform.c
+  Features/BluetoothPkg/BleConPlatformDxe/BleConPlatform.h
+  Features/BluetoothPkg/BleConPlatformDxe/BleConPlatformDxe.inf
+  Features/BluetoothPkg/Include/Protocol/BtPreBoot.h
+  Features/Connectivity/CnvFeaturePkg/AcpiTables/Ssdt/GuidLockIndicator.asl
+  Features/FirmwareGuard/CapsuleFeaturePkg/SigningKeys/Production/Csme/Gen20.inc
+  Features/FirmwareGuard/CapsuleFeaturePkg/SigningKeys/Production/Csme/Gen20.pub.pem
+  LICENSE.txt
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtRtd3/LnlMxAiDevKitRtd3.asl
+  LunarLakeBoardPkg/Acpi/AcpiTables/SsdtXhci/UsbPortXhciLnlMxAiDevKit.asl
+  LunarLakeBoardPkg/Features/CapsuleUpdate/Library/PlatformMeUpdateHookLib/PlatformMeUpdateHookLib.c
+  LunarLakeBoardPkg/Features/CapsuleUpdate/Library/PlatformMeUpdateHookLib/PlatformMeUpdateHookLib.inf
+  LunarLakeBoardPkg/Features/CapsuleUpdate/Tools/CapsuleGenerate/Ifwi/IfwiUpdateConfig64MB.ini
+  LunarLakeBoardPkg/Features/Connectivity/BtPreBootDxe/BtPreBootDxe.c
+  LunarLakeBoardPkg/Features/Connectivity/BtPreBootDxe/BtPreBootDxe.inf
+  LunarLakeBoardPkg/Features/MemoryDiagnosticTest/Include/TishDataHob.h
+  LunarLakeBoardPkg/Features/MemoryDiagnosticTest/PeiMemoryDiagnosticTest/PeiMemoryDiagnosticTest.c
+  LunarLakeBoardPkg/Features/MemoryDiagnosticTest/PeiMemoryDiagnosticTest/PeiMemoryDiagnosticTest.inf
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/CISettings.py
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/FreeSpaceSkipFvCopyLib.c
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/FreeSpaceSkipFvCopyLib.inf
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/IncludePrivate/FreeSpaceSkipFvCopyLib.h
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/Readme.md
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/FreeSpaceSkipFvCopyLibHostTest.dsc
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/FreeSpaceSkipFvCopyLibHostTest.inf
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/PrivateMock/PrivateMock.c
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/PrivateMock/PrivateMock.h
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/TestCase/TestCaseFirmwareVolumeCopy.h
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/TestCase/TestCaseFirmwareVolumeCopyWithSpiDma.c
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/TestCase/TestCaseFirmwareVolumeCopyWithoutSpiDma.c
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/TestCase/TestCaseFreeSpaceSkipEntryPoint.c
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/UnitTestMain.c
+  LunarLakeBoardPkg/Library/FreeSpaceSkipFvCopyLib/UnitTest/UnitTestMain.h
+  LunarLakeBoardPkg/LunarLakeBoardPkg.ci.yaml
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Gcs1.dsc
+                                                          ^^^                  
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Gcs2.dsc
+                                                          ^^^                  
+  LunarLakeBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMxAiDevKit.dsc
+                                                          ^^^                    
+  LunarLakeOpenBoardPkg/LunarLakeBoards/BoardVpdPcdsInit/LnlM/SkuIdLnlMLp5Rvp1.dsc
+                                                              ^^^                  
+  LunarLakeOpenBoardPkg/LunarLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  LunarLakeOpenBoardPkg/LunarLakeBoards/Library/BoardInitLib/Dxe/DxeMultiBoardInitLib.c
+  LunarLakeOpenBoardPkg/LunarLakeBoards/Library/BoardInitLib/Dxe/DxeMultiBoardInitlib.inf
+  LunarLakeOpenBoardPkg/SBCVpdStructurePcd/AllStructPCD.dsc
+  LunarLakeOpenBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/LnlMLp5RvpDqMap.dsc
+  LunarLakeOpenBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/LnlMLp5RvpDqsMap.dsc
+  LunarLakeOpenBoardPkg/SBCVpdStructurePcd/MrcDqDqsSPD/LnlMLp5RvpSpdMap.dsc
+  LunarLakePlatSamplePkg/Features/Dptf/AcpiTables/BiosDataVaultAdk.asl
+  LunarLakePlatSamplePkg/Features/Dptf/AcpiTables/BiosDataVaultGcs.asl
+  OneSiliconPkg/Fru/LnlSoc/AcpiTables/HgNvs.asl
+  OneSiliconPkg/Fru/LnlSoc/IncludePrivate/HgNvsAreaDef.h
+  OneSiliconPkg/Fru/LnlSoc/IncludePrivate/Protocol/HgNvsArea.h
+  OneSiliconPkg/Fru/LnlSoc/LibraryPrivate/PeiThcSsidInitLib/PeiThcInitSsidLib.inf
+  OneSiliconPkg/Fru/LnlSoc/LibraryPrivate/PeiThcSsidInitLib/PeiThcSsidInit.c
+  OneSiliconPkg/Include/Library/UsbLib.h
+  OneSiliconPkg/IncludePrivate/Library/PciIoLib.h
+  OneSiliconPkg/IpBlock/HybridGraphics/Include/HybridGraphicsInfo.h
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.c
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLib/DxeHybridGraphicsInitLib.inf
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLibNull/DxeHybridGraphicsInitLibNull.c
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/DxeHybridGraphicsInitLibNull/DxeHybridGraphicsInitLibNull.inf
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/PeiHybridGraphicsPolicyLib/PeiHybridGraphicsPolicyLib.c
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/PeiHybridGraphicsPolicyLib/PeiHybridGraphicsPolicyLib.inf
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/PeiHybridGraphicsPolicyLibNull/PeiHybridGraphicsPolicyLibNull.c
+  OneSiliconPkg/IpBlock/HybridGraphics/LibraryPrivate/PeiHybridGraphicsPolicyLibNull/PeiHybridGraphicsPolicyLibNull.inf
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Blue/PeiMemoryInitLib/Source/Chip/Mc/MrcModeRegisterHandlerPrivate.h
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/PeiMemoryInitLib/Source/Chip/DdrIo/MrcDdrIoUtilsPrivate.h
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/PeiMemoryInitLib/Source/Chip/MrcChipApiPrivate.h
+  OneSiliconPkg/IpBlock/MemoryInit/Lnl/Common/PeiMemoryInitLib/Source/MemoryTypes/MrcDdr5Null.c
+  OneSiliconPkg/IpBlock/Smbus/Dxe/SmbusArp.c
+  OneSiliconPkg/IpBlock/Smbus/Dxe/SmbusDxe.h
+  OneSiliconPkg/IpBlock/Smbus/Dxe/SmbusEntry.c
+  OneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusCommon.c
+  OneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusCommon.h
+  OneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusDxe.c
+  OneSiliconPkg/IpBlock/Smbus/SmbDriver/SmbusDxe.inf
+  OneSiliconPkg/IpBlock/Smbus/Smm/SmbusArpDisabled.c
+  OneSiliconPkg/IpBlock/Smbus/Smm/SmbusEntry.c
+  OneSiliconPkg/IpBlock/Smbus/Smm/SmbusSmm.h
+  OneSiliconPkg/IpBlock/Smbus/Smm/SmbusTraditionalMm.c
+  OneSiliconPkg/IpBlock/Thc/IncludePrivate/Library/ThcConfigurePrivateLib.h
+  OneSiliconPkg/IpBlock/Thc/IncludePrivate/Library/ThcInitSsidHob.h
+  OneSiliconPkg/IpBlock/Thc/LibraryPrivate/PeiDxeSmmThcPrivateLib/PeiDxeSmmThcPrivateLib.inf
+  OneSiliconPkg/IpBlock/Thc/LibraryPrivate/PeiDxeSmmThcPrivateLib/ThcConfigurePrivateLib.c
+  OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cThcProtocolHandler.c
+  OneSiliconPkg/IpBlock/Thc/QuickI2cDriver/QuickI2cThcProtocolImpl.c
+  OneSiliconPkg/IpBlock/Usb/Library/PeiDxeSmmUsbLib/PeiDxeSmmUsbLib.inf
+  OneSiliconPkg/IpBlock/Usb/Library/PeiDxeSmmUsbLib/UsbLib.c
+  OneSiliconPkg/LibraryPrivate/PciIoLib/DxePciIoLib.c
+  OneSiliconPkg/LibraryPrivate/PciIoLib/DxePciIoLib.inf
+  OneSiliconPkg/LibraryPrivate/PciIoLib/PciIoLib.c
+  OneSiliconPkg/LibraryPrivate/PciIoLib/PciIoLib.inf
+  OneSiliconPkg/LibraryPrivate/PciIoLib/PciIoLibInternal.h
+                                                ^^^^^^^^   
+  OneSiliconPkg/LibraryPrivate/PciIoLib/PeiPciIoLib.c
+  OneSiliconPkg/Pch/Include/Protocol/SmmSmbus.h
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+  --Commit Message Contains Key Word: internal
+
+################################################################################
+
+Report Summary: Backstop found 10 suspect commits for review 
+
+Warnings Found:
+  Commit: ebdf986    --Commit Message Contains Key Word: security
+  Commit: 3777b20    --Commit Message Contains Oem: HP
+  Commit: 3777b20    --Commit Message Contains Key Word: internal
+  Commit: eb881c6    --Commit Message Contains Key Word: Workaround
+  Commit: eb881c6    --Commit Message Contains Key Word: revert
+  Commit: 4ccc22c    --Commit Message Contains Oem: NEC
+  Commit: 804c9dd    --Commit Message Contains Oem: NEC
+  Commit: fc3985c    --Commit Message Contains Key Word: Workaround
+  Commit: dccf0ec    --Commit Message Contains Key Word: internal
+  Commit: 7ac0c0c    --Commit Message Contains Oem: Acer
+  Commit: b552502    --Commit Message Contains Key Word: sku
+  Commit: 41daede    --Commit Message Contains Key Word: sku
+  Commit: 41daede    --Commit Message Contains Key Word: internal
