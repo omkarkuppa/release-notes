@@ -1,0 +1,45 @@
+*********************************************************************************
+Commit: 99352cb97cd50060364a4c471ee6d7af1b7b6baf 
+*********************************************************************************
+
+[CPU]
+
+  BTG-Verified IBB Should not be Evicted from Cache
+  
+  [Issue Description]
+  On LNL since cache was default-disabled in Real16ToFlat32.asm, there
+  were issues with boot in SecCpuLib.nasm x64. The fix involved
+  invalidated cache and setting up CR0 again in HSD 18025778439.
+  This fix may allow for boot but does not take into account Boot Guard
+  security concerns with regard to SPI interposer type attacks
+  ^^^^^^^^                                                     
+  
+  [Resolution]
+  Modify Real16ToFlat32.asm (already done in public Edk2 and
+  mirror via separate PR), and then here get rid of the cache disable/re-
+  enable
+  
+  Package/Module: SecCpuLib
+  
+  [Impacted Platform]
+  LNL
+  
+  Hsd-es-id: 14024443826
+  Change-Id: Ia51b904bad616730f46e394c67bc9daffd44a4d1
+  Original commit hash: 30fec6f1855a65f813c511e12e693d05c4d1c2ea
+  
+  [Changed Files]
+  OneSiliconPkg/Cpu/Library/SecCpuLib/X64/SecCpuLib.nasm
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: security
+
+################################################################################
+
+Report Summary: Backstop found 1 suspect commits for review 
+
+Warnings Found:
+  Commit: 99352cb    --Commit Message Contains Key Word: security
