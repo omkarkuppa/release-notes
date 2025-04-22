@@ -1,0 +1,260 @@
+================================================================================ 
+Commit: ab1c19c1ef9f4018f9648021933a40698c13916d 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:56 2025 -0700 
+-------------------------------------------------------------------------------- 
+"[TeamCity] GNRWS GnrwsRp_PC_milestone_rel_Daily Daily Updating Version/ID: GNRSPWS.0.RPB.3512.Q.08
+
+Hsd-es-id: N/A"
+Original commit date: Thu Apr 10 23:52:40 2025 -0700
+Original commit hash: c9ac3d3f6815f148293186dbc7034ad806b9475e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+
+================================================================================ 
+Commit: 4ad3fe252da1acb8624409cdb150f086f59a7473 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:53 2025 -0700 
+-------------------------------------------------------------------------------- 
+"[TeamCity] GNRWS GnrwsRp_PC_milestone_rel_Daily Daily Updating Version/ID: GNRSPWS.0.RPB.3512.Q.07
+
+Hsd-es-id: N/A"
+Original commit date: Thu Apr 10 20:43:50 2025 -0700
+Original commit hash: 46f8b7fc8d0607b1a61406da2cd974672639e463
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+
+================================================================================ 
+Commit: a342d78856229ff0d0f47f2479e3cdba9945d5a5 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:50 2025 -0700 
+-------------------------------------------------------------------------------- 
+GNRWS:VrocVmdPei can't initialize VMD device on S3 resume boot path
+
+[Issue Description]
+VrocVmdPeim can't initialize VMD device on S3 resume boot path because
+PEI VMD initialization doesn't meet its requirements.
+
+[Solution]
+1.Removed original early VMD initialzation in IioDisableVmdForInit()
+2.Do early VMD initialization in IioPostMemInit()->IioVmdInitOnEndOfPei()
+3.Support assigning temporary MMIO resources to VMD BARs in IioVmdInitOnEndOfPei()
+4.Install a flag PPI at end of IioVmdInitOnEndOfPei() as a depex for VROC VMD PEIM
+
+[Impacted Platform]
+GNRWS
+
+Hsd-es-id: 18041938656
+
+Original commit date: Sat Mar 29 18:39:22 2025 +0800
+Change-Id: Iab61ba41050b997c1fbe1c540f9a4612acecedaa
+Original commit hash: 074053049bee26b3a6757998a07059c28306fd31
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+ServerSiliconPkg/Iio/Library/IioPostMemInitLib/IioPostMemInitLib.c
+ServerSiliconPkg/Iio/Library/IioPostMemInitLib/IioPostMemInitLib.inf
+ServerSiliconPkg/Iio/Library/IioVmdInit/IioVmdInit.c
+ServerSiliconPkg/Iio/Library/IioVmdInit/IioVmdInitPchLess.inf
+ServerSiliconPkg/SiliconPkg.dec
+
+================================================================================ 
+Commit: 9a1c7ac6b5598f1ca80addaa0eda99b2fb67dc00 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:47 2025 -0700 
+-------------------------------------------------------------------------------- 
+"[TeamCity] GNRWS GnrwsRp_PC_milestone_rel_Daily Daily Updating Version/ID: GNRSPWS.0.RPB.3512.Q.06
+
+Hsd-es-id: N/A"
+Original commit date: Thu Apr 10 00:46:35 2025 -0700
+Original commit hash: 89382edb3dfc582811d1711a82e89632f9648464
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+
+================================================================================ 
+Commit: 0f1dacde857cc53bf5a924442da6b818227d438e 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:43 2025 -0700 
+-------------------------------------------------------------------------------- 
+[GNR-WS] Support PLDR type VSEC
+
+[Issue Description]
+PLDR failed with VSEC type on CNVd module.
+
+[Resolution]
+CNVd not only support legacy RF kill PLDR, but also support VSEC.
+1.Check whether VSEC supported,save VSEC information to ACPI PSYS.
+2.Execute legacy RF kill PLDR if VSEC not supported.
+
+Package/Module:
+ServerPlatformPkg, GnrwsRpPkg
+
+[Impacted Platform]
+GNR-WS
+
+Hsd-es-id: 22021114146
+
+Original commit date: Thu Apr 10 08:13:15 2025 +0800
+Change-Id: Iea47da7934c9efaa671411ba521c30b6992d68e2
+Original commit hash: 64539e20095c946e6934d6ad07997a6d676d3bf5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/BoardInfo/GNRWS/BtFeatureDsmGnrWs.asl
+ServerPlatformPkg/Features/Acpi/Dxe/AcpiPlatform/AcpiPlatform.c
+ServerPlatformPkg/Features/Acpi/Dxe/AcpiPlatform/AcpiPlatform.inf
+ServerPlatformPkg/Features/Acpi/Dxe/AcpiPlatform/AcpiPlatformHooks.c
+ServerPlatformPkg/Features/Acpi/Dxe/AcpiPlatform/AcpiPlatformHooks.h
+
+================================================================================ 
+Commit: f7fb7d1d03c451b6f42e78a4d76b72f2603932fd 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:40 2025 -0700 
+-------------------------------------------------------------------------------- 
+"[TeamCity] GNRWS GnrwsRp_PC_milestone_rel_Daily Daily Updating Version/ID: GNRSPWS.0.RPB.3512.Q.05
+
+Hsd-es-id: N/A"
+Original commit date: Wed Apr 9 23:21:16 2025 -0700
+Original commit hash: 560ab007dd97878e14cc552b3f32a03030c559d8
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+
+================================================================================ 
+Commit: 41eb33e40a95891b4177bff9afc4987203c9b0b8 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:37 2025 -0700 
+-------------------------------------------------------------------------------- 
+"[TeamCity] GNRWS GnrwsRp_PC_milestone_rel_Daily Daily Updating Version/ID: GNRSPWS.0.RPB.3512.Q.04
+
+Hsd-es-id: N/A"
+Original commit date: Wed Apr 9 22:36:37 2025 -0700
+Original commit hash: 82b888467b8d8af1f8b545c72b5ffc7833a17d53
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+
+================================================================================ 
+Commit: 8abab7cff76d2dbb0fe849be1ffe73b4450e6d7a 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:34 2025 -0700 
+-------------------------------------------------------------------------------- 
+"[TeamCity] GNRWS GnrwsRp_PC_milestone_rel_Daily Daily Updating Version/ID: GNRSPWS.0.RPB.3512.Q.03
+
+Hsd-es-id: N/A"
+Original commit date: Wed Apr 9 22:19:16 2025 -0700
+Original commit hash: 5e118e7ca0a33f181a342e07e3aef7294ea07dd3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+
+================================================================================ 
+Commit: 905cedb1ea7328fe3d7dfb1cf86e74054521ce30 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:31 2025 -0700 
+-------------------------------------------------------------------------------- 
+"[TeamCity] GNRWS GnrwsRp_PC_milestone_rel_Daily Daily Updating Version/ID: GNRSPWS.0.RPB.3512.Q.02
+
+Hsd-es-id: N/A"
+Original commit date: Thu Apr 3 22:43:04 2025 -0700
+Original commit hash: 7b578c8d85cd024137bb339064f959e5fc5dfc13
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+
+================================================================================ 
+Commit: 643b7bda31b4b89c73c44cb165843c62d90b2e3d 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:27 2025 -0700 
+-------------------------------------------------------------------------------- 
+"[TeamCity] GNRWS GnrwsRp_PC_milestone_rel_Daily Daily Updating Version/ID: GNRSPWS.0.RPB.3512.Q.01
+
+Hsd-es-id: N/A"
+Original commit date: Wed Apr 2 06:57:37 2025 -0700
+Original commit hash: d04a734373fc73f551e6a62eaa1a89c31bdc4581
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdD.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdR.env
+GnrwsRpPkg/Tool/GenIfwiId/IfwiIdS.env
+
+================================================================================ 
+Commit: 23cc1cd0a68639ac39fa363e535c509f6b73b42f 
+Author: DCPAE SERVER <dcpae.server@intel.com> 
+Date: Tue Apr 22 09:40:23 2025 -0700 
+-------------------------------------------------------------------------------- 
+Changed the D-Label to 3512Q00.
+Package/Module:
+GnrwsRpPkg
+
+[Impacted Platform]
+
+Hsd-es-id: NA
+
+Original commit date: Wed Apr 2 11:21:05 2025 +0530
+Change-Id: I17aaacc049a8485845b8622d2242520997ca8a15
+Original commit hash: 3ca8071ebd7890d153ab576b2a8fd63043112790
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+GnrwsRpPkg/Tool/GenBiosId/BiosId.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdD.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdR.env
+GnrwsRpPkg/Tool/GenBiosId/BiosIdS.env
