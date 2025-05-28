@@ -1,0 +1,248 @@
+*********************************************************************************
+Commit: 0a37abd0131e10439427c60025c5d933e4e4843a 
+*********************************************************************************
+
+[MRC], [SiliconPkg]
+
+  [ARL MTL | LP5] MRC LP5 with SAGV Disable Fastboot Check Fails
+  
+  [Issue Description]
+  For LP5 with SAGV disabled, it will cause fast boot to fail. This is
+  primarily due to modifying the SPD contents which changes the DIMM CRC
+  that is saved. The current boot DIMM CRC will fail the check since the
+  saved DIMM CRC is different from before
+  
+  [Resolution]
+  Delay modifying the SPD contents since its seems to be only necessary
+                                                              ^^^       
+  for SMBIOS table 17.
+  
+  Package/Module: ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl
+  
+  [Impacted Platform]
+  H, U
+  
+  Hsd-es-id: 14024705366
+  Change-Id: I468354d90c7b2b986c14aaafe656d088ee27eace
+  Original commit hash: cdf3ac8de75082796cba796ab03524d25dee5ca4
+  
+  [Changed Files]
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/Include/MrcInterface.h
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/Api/MrcSaveRestore.c
+  ClientOneSiliconPkg/IpBlock/MemoryInit/Mtl/LibraryPrivate/PeiMemoryInitLib/Source/MemoryTypes/MrcDdrCommon.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: fec5800dec56068381fc1f361bbfa1dd8c3d836d 
+*********************************************************************************
+
+[PCH], [SiliconPkg]
+
+  Revert SPI register value mismatch fix
+  ^^^^^^                                 
+  
+  [Issue Description]
+  PCH.SPI.PCR.SPI_CLK_PWR_GATE_CNTRL.CLKGATE_HOLDOFF_TYMOUT register
+  has mismatch value with SPI BWG. This value should be programmed
+  to 0x0 value.
+  
+  [Resolution]
+  PCH.SPI.PCR.SPI_CLK_PWR_GATE_CNTRL.CLKGATE_HOLDOFF_TYMOUT is
+  programmed to 0x0.
+  
+  Package/Module:
+  ClientOneSiliconPkg
+  
+  [Impacted Platform]
+  ARL-S
+  
+  Hsd-es-id: 16027206810
+  Change-Id: I38ec9d8825a7f42f26674efdce2d0d362122d828
+  Original commit hash: 72335492253d770a6783adffcb22483ba04ff410
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchEspi.c
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/PeiMtlPchInitLib.inf
+  ClientOneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/PeiMtlPchInitLibFsp.inf
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: ab315b27b67a51ef571edd61df0847b0e8213945 
+*********************************************************************************
+
+
+  [ECG][MTL] Cleanup ECG MTL Specific Code
+  
+  [Issue Description]
+    Need to cleanup ECG MTL Code related to GPIO and Patch Table, which is causing GPIO Overflow
+    error in BIOS as maximum GPIO Configurable limit is set as 100
+  
+  [Resolution]
+    Cleanup ECG MTL Code related to GPIO and Patch Table, which is causing GPIO Overflow
+    error in BIOS as maximum GPIO Configurable limit is set as 100
+  
+  Package/Module:
+    MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+      MTL
+  
+  Hsd-es-id: 16027028551
+  Change-Id: Icc652fce7a052ec0a5438d13991805ef13bb5bb9
+  Original commit hash: 6260d0562949e7202f36ea5047020504201449cd
+  
+  [Changed Files]
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPDdr5Crb.dsc
+                                                            ^^^                  
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPDdr5CrbFab2.dsc
+                                                            ^^^                      
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5CrbFabB.dsc
+                                                            ^^^                       
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5OnlyDpRvpFabB.dsc
+                                                            ^^^                             
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5RvpFabB.dsc
+                                                            ^^^                       
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5Sbc.dsc
+                                                            ^^^                   
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPSDdr5TcpRvpFabB.dsc
+                                                            ^^^                          
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/PPV/SkuIdMtlPSDdr5PpvFabB.dsc
+                                                           ^^^                       
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePCrbBoardConfigPatchTable.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/Include/MeteorLakePsSbcBoardConfigPatchTable.h
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 2f94f2ac358f12b2002a23f834928e57975946f2 
+*********************************************************************************
+
+
+  [MTL-P][CRB] Enable S0ix Support for MTL-P CRB Platform
+  
+  [Issue Description]
+    MTL-P CRB system not able to get s0ix value when enter Modern Standby mode
+    due to shared CLKREQ#/REFCLK across multiple root ports
+  
+  [Resolution]
+    For S0ix implementation an independent CLKREQ#/REFCLK signal is required per root port and
+    modifying the existing sharedCLK configuration will block the usage of other device on the root port.
+    so for S0ix support, new FAB-ID is created with which S0ix can be validated.
+  
+  Package/Module: MeteorLakeBoardPkg
+  
+  [Impacted Platform]
+    MTL`
+  
+  Hsd-es-id: 16026978760
+  Change-Id: I004b6964e6a489de967db598a1bb3b3f35890bee
+  Original commit hash: db71d99d7e0998ea6716678347091cf7383ba989
+  
+  [Changed Files]
+  MeteorLakeBoardPkg/BoardPkg.dsc
+  MeteorLakeBoardPkg/Include/PlatformBoardId.h
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/BoardVpdPcdInit.dsc
+  MeteorLakeBoardPkg/MeteorLakeBoards/BoardVpdPcdsInit/IOTG/SkuIdMtlPDdr5CrbFab2Bom2.dsc
+                                                            ^^^                          
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Dxe/DxeInitLib.c
+  MeteorLakeBoardPkg/MeteorLakeBoards/Library/BoardInitLib/Pei/PeiInitPreMemLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 3f5fd8f40558760331c198b0829e70a33a3c8b85 
+*********************************************************************************
+
+
+  SyncScript: Revert override commits.
+              ^^^^^^                   
+  
+  Thu May 15 03:35:13 2025 -0700
+  Original commit hash: c0389c8339e19aac0a9a1d0ab364f9add6900d5f
+  
+  [Changed Files]
+  MeteorLakeBoardPkg/BiosId.env
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: b11fd655d7687382ee968849d15bbe20d3a5ca2e 
+*********************************************************************************
+
+[SiliconPkg], [ASL]
+
+  "[TeamCity] MTL MeteorLake_meteorlake_program_platform_Daily Daily Updating Version/ID: MeteorLake_5124_80
+  
+  Hsd-es-id: N/A"
+  Original commit hash: 850e16dc2593cb9fa744ad635eec197ececc5e2b
+  
+  [Changed Files]
+  ClientOneSiliconPkg/Product/MeteorLake/EarlyDevices/Readme.md
+  ClientOneSiliconPkg/SiPkg.dec
+  Doxygen/BoardApi.chm
+  Doxygen/FspApi.chm
+  Doxygen/MeteorLake_FSP_Integration_Guide.chm
+  Doxygen/MeteorLake_FSP_Integration_Guide.pdf
+  Doxygen/PlatApi.chm
+  Doxygen/SiPkgApi.chm
+  Features/Thermal/DptfFeaturePkg/AcpiTables/BiosNexDataVaultCrb.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/IteHelperFunctions.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/IteHwMonFan1.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/IteHwMonFan2.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/IteSen1Particip.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/IteSen2Particip.asl
+  Features/Thermal/DptfFeaturePkg/AcpiTables/IteSen3Particip.asl
+  LICENSE.txt
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Sio/IteHwMonAuto.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Dsdt/Sio/IteHwMonAutoFan2.asl
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Facs/Facs.act
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Fadt/Fadt6.3.act
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Hpet/Hpet.act
+                                     ^^   ^^       
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Madt/Madt.act
+  MeteorLakeBoardPkg/Acpi/AcpiTables/Mcfg/Mcfg.act
+  MeteorLakeBoardPkg/CapsuleUpdateConfig/.gitignore
+  MeteorLakeBoardPkg/Features/CapsuleUpdate/Tools/CapsuleGenerate/Ucode/.gitignore
+  MeteorLakePlatSamplePkg/Include/Library/IteSioLib.h
+  MeteorLakePlatSamplePkg/Sio/Ite8659Lib/IteSioLib.c
+  MeteorLakePlatSamplePkg/Sio/Ite8659Lib/IteSioLib.inf
+  MeteorLakePlatSamplePkg/Sio/Ite8659Lib/IteSioLibNull.c
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: HP
+
+################################################################################
+
+Report Summary: Backstop found 6 suspect commits for review 
+
+Warnings Found:
+  Commit: 0a37abd    --Commit Message Contains Oem: NEC
+  Commit: fec5800    --Commit Message Contains Key Word: revert
+  Commit: ab315b2    --Commit Message Contains Key Word: sku
+  Commit: 2f94f2a    --Commit Message Contains Key Word: sku
+  Commit: 3f5fd8f    --Commit Message Contains Key Word: revert
+  Commit: b11fd65    --Commit Message Contains Oem: HP
