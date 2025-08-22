@@ -1,0 +1,342 @@
+*********************************************************************************
+Commit: 76e77855d1f5ea4a0e456585f4bbab1805714ff6 
+*********************************************************************************
+
+[PCH]
+
+  [GNRWS]Change IEH mode to bypass mode a short term WA
+                            ^^^^^^                      
+  
+  [Feature Description]
+  In RCR 16026791988, IEH mode needs to be enabled by default,
+  developer just changed the default value and missed the related RAS
+  support for it. Need bios team to change IEH mode to Bypass mode
+                                                       ^^^^^^      
+  a short-term WA.
+  
+  Package/Module: GnrwsRpPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 15018185480
+  
+  Change-Id: Ic047dd750f519760ef764c8a261f534dddf42cc9
+  Original commit hash: 4f0e9e4c864d751404c236b6e36e8bda56eda828
+  
+  [Changed Files]
+  GnrwsRpPkg/PchSetupPcdDefaults.dsc.inc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: 42e4b72fcd5152b1377bbc2ef6f5df8aead98165 
+*********************************************************************************
+
+
+  For PCH on RCIL link do not report reserved resoures in ACPI _CRS
+  
+  [Issue Description]
+  PCH use MmioMgr reserve API to allocate MMIO64 resources for internal devices
+                                                               ^^^^^^^^         
+  e.g. P2SB region for GPIO, however, this MMIO is used in PCH ASL code
+  where the device is exposed to OS.
+  
+  [Resolution]
+  MMIO64 reserved for PCH in the stack with RCIL should not be marked reserved.
+  
+  Package/Module:
+  ServerPlatformPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18042983275
+  
+  Change-Id: I143b3af3b9c3bd2cb951213aa7c3c3e30149af3c
+  Original commit hash: 7c3c5a30aa782ca9f16a170d62150e3b51f8ed17
+  
+  [Changed Files]
+  ServerPlatformPkg/Library/AcpiPlatformTableLib/AcpiPlatformLibDsdt.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 144298e37f9fc9925b343fcc800210d974f85132 
+*********************************************************************************
+
+
+  Mark VTBAR/KCBAR/HBBAR/CXLRBBAR reserved in E820 and in ACPI CRS
+             ^^                                                    
+  
+  [Issue Description]
+  There are several regions in MMIO that map system registers exposed
+  in dedicated ACPI tables. These regions shall not be used by device
+  drivers.
+  
+  [Resolution]
+  Set attribute EFI_MEMORY_RUNTIME for regions VTBAR/KCBAR/HBBAR/CXLRBBAR
+                                                     ^^                   
+  so that they are listed as reserved in E820, list them also in _CRS
+  as reserved.
+  
+  Package/Module:
+  BirchStreamOpenBoardPkg
+  GnrwsRpPkg
+  ServerPlatformPkg
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  CLEAR WATER FOREST AP
+  GRANITE RAPIDS AP
+  GRANITE RAPIDS SP
+  GRANITE RAPIDS WORKSTATION
+  
+  Hsd-es-id: 13013552995
+  
+  Change-Id: Icd4f58b1dc8c863a7ea911c6d1f5f655a564b09a
+  Original commit hash: faddc43289acfb4d7ae7a1c74d8614253389ee8c
+  
+  [Changed Files]
+  BirchStreamOpenBoardPkg/Tool/BoardInfo/GNRSRF/Iio/IioRbDinoResource.asi
+  GnrwsRpPkg/Tool/BoardInfo/GNRWS/Iio/IioRbDinoResource.asi
+  ServerPlatformPkg/Features/Acpi/AcpiTables/Dsdt/Iio/IioRootBridge.asi
+  ServerPlatformPkg/Features/Pci/Dxe/PciHostBridge/PciHostBridge.c
+  ServerPlatformPkg/Library/AcpiPlatformTableLib/AcpiPlatformLibDsdt.c
+  ServerSiliconPkg/Iio/Library/IioDmiLib/IioDmiLibGnrWs/IioDmiInitGnrWs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: kc
+
+*********************************************************************************
+Commit: 3844d71199ea5cd9baf1f5c81901c59df260d3be 
+*********************************************************************************
+
+
+  Revert "Mark VTBAR/KCBAR/HBBAR/CXLRBBAR reserved in E820 and in ACPI CRS"
+  ^^^^^^             ^^                                                     
+  
+  
+  Revert the change as it causes one yellow bang issue.
+  ^^^^^^                                                
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: N/A
+  
+  Change-Id: I95bbf2307a2e8f7c28e8ae64fd4b6f33800a660a
+  Original commit hash: a8319de68a24bd8e7d81b5d97cc8fc8777f3602c
+  
+  [Changed Files]
+  BirchStreamOpenBoardPkg/Tool/BoardInfo/GNRSRF/Iio/IioRbDinoResource.asi
+  GnrwsRpPkg/Tool/BoardInfo/GNRWS/Iio/IioRbDinoResource.asi
+  ServerPlatformPkg/Features/Acpi/AcpiTables/Dsdt/Iio/IioRootBridge.asi
+  ServerPlatformPkg/Features/Pci/Dxe/PciHostBridge/PciHostBridge.c
+  ServerPlatformPkg/Library/AcpiPlatformTableLib/AcpiPlatformLibDsdt.c
+  ServerSiliconPkg/Iio/Library/IioDmiLib/IioDmiLibGnrWs/IioDmiInitGnrWs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: kc
+  --Commit Message Contains Key Word: revert
+
+*********************************************************************************
+Commit: c517dfb79fbec5132ca188c001b92e41230d4edf 
+*********************************************************************************
+
+
+  Mark VTBAR/KCBAR/HBBAR/CXLRBBAR reserved in E820 and in ACPI CRS
+             ^^                                                    
+  
+  [Issue Description]
+  There are several regions in MMIO that map system registers exposed
+  in dedicated ACPI tables. These regions shall not be used by device
+  drivers.
+  
+  [Resolution]
+  Set attribute EFI_MEMORY_RUNTIME for regions VTBAR/KCBAR/HBBAR/CXLRBBAR
+                                                     ^^                   
+  so that they are listed as reserved in E820, list them also in _CRS
+  as reserved.
+  
+  Package/Module:
+  BirchStreamOpenBoardPkg
+  GnrwsRpPkg
+  ServerPlatformPkg
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  CLEAR WATER FOREST AP
+  GRANITE RAPIDS AP
+  GRANITE RAPIDS SP
+  GRANITE RAPIDS WORKSTATION
+  
+  Hsd-es-id: 13013552995
+  
+  Change-Id: Icd4f58b1dc8c863a7ea911c6d1f5f655a564b09a
+  Original commit hash: f3bf46c0c550bd4e5032277f69e9cc26bcc2b916
+  
+  [Changed Files]
+  BirchStreamOpenBoardPkg/Tool/BoardInfo/GNRSRF/Iio/IioRbDinoResource.asi
+  GnrwsRpPkg/Tool/BoardInfo/GNRWS/Iio/IioRbDinoResource.asi
+  ServerPlatformPkg/Features/Acpi/AcpiTables/Dsdt/Iio/IioRootBridge.asi
+  ServerPlatformPkg/Features/Pci/Dxe/PciHostBridge/PciHostBridge.c
+  ServerPlatformPkg/Library/AcpiPlatformTableLib/AcpiPlatformLibDsdt.c
+  ServerSiliconPkg/Iio/Library/IioDmiLib/IioDmiLibGnrWs/IioDmiInitGnrWs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: kc
+
+*********************************************************************************
+Commit: 2535f566bed050a11ed93ea0bb3c8f28e5828ca1 
+*********************************************************************************
+
+
+  Update Tjmax override range to support values from 92 to 115 degrees Celsius
+  
+  [Issue Description]
+  The lowest Tjmax value differs across various QDFs, leading to
+                                                ^^^              
+  inconsistencies in supported temperature ranges. This discrepancy
+  necessitates an update to the minimum allowable Tjmax value to ensure
+  ^^^                                                                   
+  compatibility across all platforms.
+  
+  [Resolution]
+  Update the Tjmax override range to allow values between 92 and 115
+  degrees Celsius. This change ensures consistent support for all QDFs and
+                                                                  ^^^      
+  resolves the issue of mismatched temperature thresholds.
+  
+  [Package/Module]
+  GnrwsRpPkg
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  GRANITE RAPIDS WORKSTATION
+  
+  Hsd-es-id: 16027672795
+  
+  Change-Id: I2fba8ad80cf7305e29934b1497f1a84467d0dfa5
+  Original commit hash: 81d0ad083a1544a9ac05becb2e9b7e31ed1f3b57
+  
+  [Changed Files]
+  GnrwsRpPkg/Platform/Dxe/Setup/OverclockSetup.c
+  GnrwsRpPkg/Platform/Dxe/Setup/OverclockSetup.uni
+  GnrwsRpPkg/Platform/Dxe/Setup/OverclockSetupDomain.hfr
+  ServerSiliconPkg/Overclocking/OcInitPostMem.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: qdf
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 341628c98c84bda6a9226292d18f85912cd24ec5 
+*********************************************************************************
+
+[ME]
+
+  HWA Asset - Skip RB lowest bus number
+  ^^                                    
+  
+  [Issue Description]
+  BIOS adds internal devices to the HWA PCI FRU table
+            ^^^^^^^^                ^^                
+  
+  [Resolution]
+  Skip enumeration of root bridge min bus number.
+  
+  Package/Module:
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  GnrWs
+  
+  Hsd-es-id: 15018097308
+  
+  Change-Id: I5c08f423d45fac9deb26e500d5f3ac349104f670
+  Original commit hash: d2325169bb9da8b88bbfc28794061e37f73fa6c1
+  
+  [Changed Files]
+  OneSiliconPkg/IpBlock/Me/HwAsset/Dxe/Inventory.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: HW
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 3245c81bc57c1ae87ee5b90e6d7e370ff70ad7f4 
+*********************************************************************************
+
+[PCH]
+
+  Unhide SSRAM device in PMC initialization
+  
+  [Feature Description]
+  The SSRAM device was previously hidden during PMC initialization. This
+  change removes the call to hide the SSRAM device, ensuring it remains
+  visible for subsequent operations. This adjustment is necessary to align
+                                                        ^^^                
+  with updated requirements for SSRAM accessibility.
+  
+  BIOS should not hide PCH PMC SSRAM
+  
+  [Package/Module]
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 18042767824
+  
+  Change-Id: I8386a23ca5789abd4c5843420236887643b7438
+  Original commit hash: 683e77a9cd8b283978407a21dc631f0096955072
+  
+  [Changed Files]
+  OneSiliconPkg/Fru/MtlPch/LibraryPrivate/PeiMtlPchInitLib/MtlPchPmc.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+################################################################################
+
+Report Summary: Backstop found 8 suspect commits for review 
+
+Warnings Found:
+  Commit: 76e7785    --Commit Message Contains Key Word: bypass
+  Commit: 42e4b72    --Commit Message Contains Key Word: internal
+  Commit: 144298e    --Commit Message Contains Key Word: kc
+  Commit: 3844d71    --Commit Message Contains Key Word: kc
+  Commit: 3844d71    --Commit Message Contains Key Word: revert
+  Commit: c517dfb    --Commit Message Contains Key Word: kc
+  Commit: 2535f56    --Commit Message Contains Key Word: qdf
+  Commit: 2535f56    --Commit Message Contains Oem: NEC
+  Commit: 341628c    --Commit Message Contains Key Word: HW
+  Commit: 341628c    --Commit Message Contains Key Word: internal
+  Commit: 3245c81    --Commit Message Contains Oem: NEC
