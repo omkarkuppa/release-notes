@@ -1,0 +1,189 @@
+*********************************************************************************
+Commit: 9e1beba35aa70b6524f496f446f89ad0e693ed18 
+*********************************************************************************
+
+
+  Fix incorrect clipping of some JEDEC parameters for higher frequencies.
+  
+  [Issue Description]
+  Some JEDEC parameters are incorrectly clipped below the maximum register value.
+  - Fix case where tCL values above 63 are clipped at 63
+  - Fix case where tCWL values above 63 are clipped at 63
+  - Remove WA to handle tCWL bound checking separately for native DDR5 DIMMs and MRDIMM. It is deprecated by this commit.
+          ^^^^                                                                                                            
+  - Remove unused functions: GettXSDLL, GettXSOFFSET, GettMOD
+  - Add new register limits for registers:
+    pmmnt_trp, blkwrcmd_latency, blkrdcmd_latency, blkothercmd_latency, ref_trrdl,
+    trrd_s_bypass, trrd_l_bypass, trcd_wr_bypass, trcd_rd_bypass, trc_bypass, tras_bypass
+           ^^^^^^         ^^^^^^          ^^^^^^          ^^^^^^      ^^^^^^       ^^^^^^ 
+  - Modify BoundCheck debug message to include "Warning" when the value exceeds the register size.
+  
+  [Package/Module]
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  GRANITE RAPIDS WORKSTATION
+  CLEAR WATER FOREST AP
+  CLEAR WATER FOREST SP
+  GRANITE RAPIDS AP
+  GRANITE RAPIDS SP
+  SIERRA FOREST SP
+  GRANITE RAPIDS D
+  SIERRA FOREST AP
+  GRAND RIDGE
+  
+  Hsd-es-id: 22021286802
+  
+  Change-Id: I5ff7d0d03560d3f59e5b504f4f514adf87f1f40d
+  Original commit hash: e88706585768247c04b02a5807a44cc4728fa0a7
+  
+  [Changed Files]
+  CpRcPkg/Include/Library/MemoryTrainingLib.h
+  CpRcPkg/Include/MemCommon.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  CpRcPkg/Library/BaseMemoryTrainingLib/MemJedec.c
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Common/MemBounds.c
+  ServerSiliconPkg/Mem/Library/MemDdrioIpLib/Gen3/MemBoundsChip.c
+  ServerSiliconPkg/Mem/Library/MemMcIpLib/Gen3/MemTimingChipSpecific.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  WA 
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: a6cfb6f763b0c4e7ccbbd0bd4c2bf100aa1d3b9f 
+*********************************************************************************
+
+
+  Porting DB Control Words Access Fix
+  
+  [Issue Description]
+  Issue in DB Control Words Access may cause training failure
+  
+  [Resolution]
+  Porting DB Control Words Access Fix
+  1. ExitDbDqPassThroguhMode should use DbControlWordWrite instead to keep cache coherency and switch page to access paged regsiters
+  2. The ExitDbDqPassThroughMode should be move out of rank loop. It should be DIMM level.
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  ALL
+  
+  Hsd-es-id: 15017871767
+  
+  Change-Id: Ia323471cbbb1dfa94d85c77da5626037d8a227fb
+  Original commit hash: c0780c45f2ce0be94296d22eaf7dc46b3d952a8e
+  
+  [Changed Files]
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Library/BaseDdr5CoreLib/Ddr5CoreLibInternal.h
+                                             ^^^^^^^^   
+  CpRcPkg/Library/BaseDdr5CoreLib/MemCaClk.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemDbAccess.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  CpRcPkg/Library/BaseDdr5CoreLib/MemRcdAccess.c
+  CpRcPkg/Library/BaseDdr5CoreLib/QcaTraining.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: internal
+
+*********************************************************************************
+Commit: 9ff8562cd5d1e55ac318e16a8a27554475108595 
+*********************************************************************************
+
+[PCH]
+
+  [GNR] Change IEH mode back to "Enable" mode.
+  
+  [Feature Description]
+  In RCR 16026791988, IEH mode needs to be enabled by default,
+  developer just changed the default value and missed the related RAS
+  support for it. Need bios team to change IEH mode to Bypass mode
+                                                       ^^^^^^      
+  a short-term WA. Now it needs to change IEH mode back to "Enable" mode.
+  
+  Package/Module: GnrwsRpPkg
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 15018316383
+  
+  Change-Id: I3d4535b5420b8fd2ee5ab9338bec99e7ba201dae
+  Original commit hash: c758f9202d2ceb79256c8ec300ce7ba4353765b8
+  
+  [Changed Files]
+  GnrwsRpPkg/PchSetupPcdDefaults.dsc.inc
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: bypass
+
+*********************************************************************************
+Commit: 6bec8bb543db5b2130d95493ce5d87e5d85d3667 
+*********************************************************************************
+
+
+  Fix MRDIMM rank calculation in SMBIOS tables to address incorrect Type17 data.
+  
+  [Issue Description]
+  The rank information for MRDIMM is incorrectly reported in the SMBIOS
+  Type17 table, where the memory rank changes from the original 4Rank to
+  2Rank. This discrepancy leads to inaccurate memory information being
+  presented in the system firmware tables, potentially causing confusion
+  or misrepresentation of hardware capabilities.
+                          ^^^^^^^^               
+  
+  [Resolution]
+  Revert the rank calculation logic for all SMBIOS tables and apply the
+  ^^^^^^                                                                
+  updated calculation only to the SMBIOS Type18 table. Specifically,
+  adjust the logic to ensure that MRDIMM rank information is correctly
+  divided or retained based on the table type, aligning with the intended
+  behavior. This change ensures accurate rank reporting across all SMBIOS
+  tables.
+  
+  [Package/Module]
+  ServerPlatformPkg
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  GRANITE RAPIDS AP
+  
+  Hsd-es-id: 15018078109
+  
+  Change-Id: Iea750f06c57778ec306f3279a9d03b53fb414124
+  Original commit hash: f820a4c6d41c5010a5f3b8cf89a1ba0cfccd2954
+  
+  [Changed Files]
+  ServerPlatformPkg/Platform/Dxe/MemorySubClass/MemorySubClass.c
+  ServerSiliconPkg/Library/MemMapDataLib/MemMapDataLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+  --Commit Message Contains Key Word: revert
+
+################################################################################
+
+Report Summary: Backstop found 4 suspect commits for review 
+
+Warnings Found:
+  Commit: 9e1beba    --Commit Message Contains Key Word:  WA 
+  Commit: 9e1beba    --Commit Message Contains Key Word: bypass
+  Commit: a6cfb6f    --Commit Message Contains Key Word: internal
+  Commit: 9ff8562    --Commit Message Contains Key Word: bypass
+  Commit: 6bec8bb    --Commit Message Contains Key Word: hardware
+  Commit: 6bec8bb    --Commit Message Contains Key Word: revert
