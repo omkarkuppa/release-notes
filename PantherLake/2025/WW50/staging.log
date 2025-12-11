@@ -1,0 +1,842 @@
+================================================================================ 
+Commit: 1011a9d3b422a814e6770e7ad26184cc7bbc892c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 14:33:23 2025 +0530 
+-------------------------------------------------------------------------------- 
+Added Doxygen and License file for PTL label 3494_02.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/PantherLake_FSP_Integration_Guide.chm
+Doxygen/PantherLake_FSP_Integration_Guide.pdf
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+Features/HestFeaturePkg/HestDxe/HestDxe.c
+Features/HestFeaturePkg/HestDxe/HestDxe.inf
+Features/HestFeaturePkg/HestFeaturePkg.dec
+Features/HestFeaturePkg/HestFeaturePkg.dsc
+Features/HestFeaturePkg/Include/HestFeature.dsc
+Features/HestFeaturePkg/Readme.md
+LICENSE.txt
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: e67b30fcd25b9c355d06f4340880585f2ed40482 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:04:07 2025 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_3494_02
+
+Hsd-es-id: N/A"
+Original commit date: Mon Dec 8 22:59:31 2025 +0000
+Original commit hash: 8e227ec4351a3ccf3aba967a9cab977433f5553c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+PantherLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 5cb6e258af0d6e5c8bf4b8edbdda838ef36cf9a2 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:04:04 2025 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.120.1
+
+[Feature Description]
+Updating MrcVersion.h and ReleaseNotes.
+
+Package/Module:OneSiliconPkg/MemoryInit
+
+[Impacted Platform]
+All
+
+Registers impacted: None
+
+Hsd-es-id: 22018552565
+Original commit date: Mon Dec 8 19:11:52 2025 +0000
+Original commit hash: a7c979c25d5c7b1ebbbba26232d008bdbab6e79c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/src/IncludePrivate/Ptl/MrcVersion.h
+OneSiliconPkg/IpBlock/MemoryInit/src/UcManagement/Ptl/MrcUcPayloadData.c
+
+================================================================================ 
+Commit: c8d8869c5341e5978d24896b6d342930ab84740b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:04:00 2025 +0530 
+-------------------------------------------------------------------------------- 
+LP5 DRAM Rx Offset Calibration flow update
+
+[Feature Description]
+1. Move DimmRxOffsetCalibration in the call table to be right before UMWRTC1D.
+2. Observe tOSCal properly
+3. Use Outputs->LpX instead of MR8 readout
+4. Set DQ ODT to RZQ/6 during the training, per JEDEC spec.
+5. Run Rx Offset Calibration Training on one rank at a time.
+6. Properly restore MR15 on each device.
+7. Keep WCK on if it was in always-on mode before this training.
+8. Remove the recentering as it's not possible to do it in the early stage
+ and also when this will run as part of JEDEC init on Fast flow (not part of this PR).
+9. Rerun RxOCC on subsequent JEDEC Resets
+10. Move the calibration routine from MrcCrosser.c to MrcLpddr5.c to share the code
+ between Blue and Green.
+11. Enable RxOCC by default, only on 9600 and above.
+
+Package/Module: MemoryInit
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 18044017019
+Original commit date: Mon Dec 8 14:19:42 2025 +0100
+Change-Id: I2095804548d96679343968a35cd45a67a7c2e04d
+Original commit hash: 76abf8c41d62135757ba7767e87bf33b65245216
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/Include/CMrcInterface.h
+OneSiliconPkg/IpBlock/MemoryInit/Library/PeiMemPolicyLib/InputBlock/Ptl/MrcInputBlock.c
+OneSiliconPkg/IpBlock/MemoryInit/src/JedecLib/Lpddr5/BlueMrcLpddr5.c
+OneSiliconPkg/IpBlock/MemoryInit/src/MemoryTypes/MrcLpddr5.c
+OneSiliconPkg/IpBlock/MemoryInit/src/MemoryTypes/MrcLpddr5.h
+OneSiliconPkg/IpBlock/MemoryInit/src/MemoryTypes/MrcLpddr5Registers.h
+OneSiliconPkg/IpBlock/MemoryInit/src/ServicesLib/BlueMrcReset.c
+OneSiliconPkg/IpBlock/MemoryInit/src/ServicesLib/MrcCrosser.h
+PantherLakeBoardPkg/Include/Dsc/HiiStructurePcd.dsc
+PantherLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+PantherLakeFspPkg/Upd/FspmUpd.dsc
+PantherLakeFspPkg/Upd/UpdList/FSPM.txt
+PantherLakePlatSamplePkg/Include/SetupVariable.h
+PantherLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+PantherLakePlatSamplePkg/Setup/SaSetup.hfr
+PantherLakePlatSamplePkg/Setup/SaSetup.uni
+
+================================================================================ 
+Commit: 48409d70589008367fc6079340f2282229fb6e9e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:56 2025 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_3494_01
+
+Hsd-es-id: N/A"
+Original commit date: Mon Dec 8 03:31:34 2025 +0000
+Original commit hash: d6ce6c1aca0cf91a72a57ae41a6e894157b93ec5
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+PantherLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 8b558366baaabcc65349bdd4882165543f23d86e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:52 2025 +0530 
+-------------------------------------------------------------------------------- 
+Revert revison change to align the origional code base
+
+[Issue Description]
+Backward Compatibility error comes because of the version change
+
+[Resolution]
+Revert Revison change to align the origional code base
+
+Package/Module: OneSiliconPkg, PantherLakePlatSamplePkg
+
+[Impacted Platform]
+PTL
+
+Hsd-es-id: N/A
+Original commit date: Mon Dec 8 07:53:07 2025 +0530
+Change-Id: I4ca9812eb4dac585543231932aa2539273c97e16
+Original commit hash: 6a12dd6e1ddd5e3f2bb9519036d76d94ff0d1893
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Include/ConfigBlock/VoltageRegulator/CpuPowerMgmtVrConfig.h
+PantherLakePlatSamplePkg/Include/SetupVariable.h
+
+================================================================================ 
+Commit: 152eb379d5ab0fb182f4955599c458703694f265 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:48 2025 +0530 
+-------------------------------------------------------------------------------- 
+Revert "[TXT] Don't Relocate SACM if no LLC"
+
+[Issue Description]
+With debug BIOS + TXT enable : SUT hangs at PC A700 with CAT error.
+
+[Resolution]
+Reverted commit causing the failure
+
+Package/Module: Intel/OneSiliconPkg/IpBlock/Txt/LibraryPrivate/PeiTxtLib
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16029378297
+Original commit date: Sun Dec 7 20:30:28 2025 +0530
+Change-Id: Iab625e56fa6c6dd1950a510344c918e7a46eeab7
+Original commit hash: bc4d60bc05442ac293ccb2df9442e4bb656b4357
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Include/ConfigBlock/VoltageRegulator/CpuPowerMgmtVrConfig.h
+OneSiliconPkg/IpBlock/Txt/LibraryPrivate/PeiTxtLib/TxtPeiLib.c
+PantherLakePlatSamplePkg/Include/SetupVariable.h
+
+================================================================================ 
+Commit: 91edfd7f1368158cfd9349ad88e8a423d8e0a74c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:43 2025 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_3494_00
+
+Hsd-es-id: N/A"
+Original commit date: Thu Dec 4 12:13:01 2025 +0000
+Original commit hash: a266f9d306f5a4e268fd2b66465442823b8d606f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+PantherLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 6c4c32b4a8f2ec3cf0a6f413bd446d8bec1f0579 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:39 2025 +0530 
+-------------------------------------------------------------------------------- 
+PCIe Public API Update for TSE library
+
+[Feature Description]
+Provide public API which will check standard PCIe register if given bus number NVMe
+is connected to Hot plugable Root ports
+
+Package/Module:
+PCIe
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16029360537
+Original commit date: Thu Dec 4 13:23:07 2025 +0530
+Change-Id: I20e1643b550f3ac4fdb2dced87472e1e437b25d6
+Original commit hash: 4c357ea25fe2ea2cdb7a7370b9e270ba18cd5645
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/PtlPcd/LibraryPrivate/PtlPcdPcieRpLib/PcieRpPcdLib.c
+
+================================================================================ 
+Commit: 8592af29b8891009d14abefaf6cc36e4b030837e 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:34 2025 +0530 
+-------------------------------------------------------------------------------- 
+BIOS shall not support programming TSE BDF of Hot-plugged NVMe device
+
+[Feature Description]
+BIOS shall not support programming TSE BDF of Hot-plugged NVMe device
+
+Package/Module:
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 14026475995
+Original commit date: Wed Dec 3 09:13:53 2025 -0800
+Change-Id: I1b10c3e09fb6081386ee94fa4374ccb1e949c5d9
+Original commit hash: d59ab3230d124ebe118af2d17329a8c88a251793
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/Tse/TseDxe/TseDxe.c
+
+================================================================================ 
+Commit: dce3c9ec05539dce3494b55bcf5124e7ec084baa 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:29 2025 +0530 
+-------------------------------------------------------------------------------- 
+Revert "VCCSA_ShutDown BIOS Menu knob exposure"
+
+This reverts commit 3206919f1a2b5cfbb49a7b1ddff4b7efb024daf0.
+
+Thu Dec 4 15:53:03 2025 +0530
+Original commit date: Thu Dec 4 15:53:03 2025 +0530
+Original commit hash: 2220d3409e960c6f49762f4a5c373f608b93a7cd
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Include/ConfigBlock/VoltageRegulator/CpuPowerMgmtVrConfig.h
+OneSiliconPkg/Include/Register/B2pMailbox.h
+OneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrLib/PeiVrLib.c
+OneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrPolicyLib/PeiVrPolicyLib.c
+PantherLakeBoardPkg/Include/Dsc/HiiStructurePcd.dsc
+PantherLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiCpuPolicyUpdatePreMem.c
+PantherLakeFspPkg/Upd/FspmUpd.dsc
+PantherLakePlatSamplePkg/Include/SetupVariable.h
+PantherLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+PantherLakePlatSamplePkg/Setup/CpuSetup.uni
+PantherLakePlatSamplePkg/Setup/VoltageRegulatorSetup.hfr
+
+================================================================================ 
+Commit: a7a1c088953f88049c96c831750912bcc12adeee 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:23 2025 +0530 
+-------------------------------------------------------------------------------- 
+Revert "Enable xHCI System USB2 BW check"
+
+This reverts commit 07ec263c2722ef658f18f21315e301fb48f15533.
+
+Thu Dec 4 14:06:44 2025 +0530
+Original commit date: Thu Dec 4 14:06:44 2025 +0530
+Original commit hash: 4549833709be388acc7eb9eed832f51948da05a7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/PtlPcd/LibraryPrivate/PtlPcdPeiInitLib/PtlPcdUsb.c
+OneSiliconPkg/Fru/PtlPcd/Tcss/LibraryPrivate/PtlPcdTcssInitLib/PtlPcdTcssInitPostMem.c
+OneSiliconPkg/Include/Register/UsbHostRegs.h
+OneSiliconPkg/IpBlock/Usb/IncludePrivate/IpUsb3.h
+OneSiliconPkg/IpBlock/Usb/LibraryPrivate/IpUsb3/IpUsb3CsiSpecific.c
+
+================================================================================ 
+Commit: 5833cf77863793f07223401eca2002fa3ab3397c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:18 2025 +0530 
+-------------------------------------------------------------------------------- 
+PCIe Public API for TSE library
+
+[Feature Description]
+Provide PCIe public API which will check if given bus number NVMe
+is connected to Hot plugable Root ports
+
+Package/Module:
+TSE
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 14026475935
+Original commit date: Fri Nov 21 11:18:23 2025 +0530
+Change-Id: I12c9248c57fa95a125e4c773707b109aeca38644
+Original commit hash: 9cbbdeeb4e132cb643e4c05d40326877b53f797c
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/PtlPcd/LibraryPrivate/PtlPcdPcieRpLib/PcieRpPcdLib.c
+OneSiliconPkg/Include/Library/PchPcieRpLib.h
+OneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/PcieSipRegs.h
+
+================================================================================ 
+Commit: 3ccf4ecf4446a13cb15774567e99cf03a5083ee7 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:13 2025 +0530 
+-------------------------------------------------------------------------------- 
+Maintain backward compatibility for public APIs
+
+[Feature Description]
+Maintain backward compatibility for both public APIs
+i.e. IsSigningSupported() and VerifyAndLogEventFsps()
+
+Package/Module:
+xxxFspPkg
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 16029290108
+Original commit date: Tue Nov 25 11:12:59 2025 +0530
+Change-Id: I4a58a1b588e3682ce17c1219ef6b1456bf658ec1
+Original commit hash: e11bce24607f24519266c19e384734251b16f5fb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fsp/Include/Ppi/FspLoaderPpi.h
+PantherLakeFspPkg/FspLoaderPeim/FspLoaderPeim.c
+PantherLakeFspPkg/Include/Library/FspVerificationLib.h
+PantherLakeFspPkg/Library/BaseFspVerificationLib/BaseFspVerificationLib.c
+PantherLakeFspPkg/Library/MeasurementLib/FspMeasurementLib.c
+
+================================================================================ 
+Commit: 43bd7db079f91028fe66d3dcc2959eab0afdc60a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:03:07 2025 +0530 
+-------------------------------------------------------------------------------- 
+Migrate FBM data required for FSP-S verification
+
+[Feature Description]
+Migrate FBM data via HOB required for FSP-S verification
+Later retrieve the data during FSP-S verification phase.
+
+Package/Module:
+xxxFspPkg
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 16029073572
+Original commit date: Thu Nov 6 19:20:25 2025 +0530
+Change-Id: I3ebbe8185c96134fde857cb33d2311c21fa80bcb
+Original commit hash: 64d72330799df642070c0e91be52d83aedaf80ad
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fsp/Include/Ppi/FspLoaderPpi.h
+PantherLakeFspPkg/FspLoaderPeim/FspLoaderPeim.c
+PantherLakeFspPkg/Include/FbmDataHob.h
+PantherLakeFspPkg/Include/Library/FspMeasurementLib.h
+PantherLakeFspPkg/Include/Library/FspVerificationLib.h
+PantherLakeFspPkg/Library/BaseFspVerificationLib/BaseFspVerificationLib.c
+PantherLakeFspPkg/Library/BaseFspVerificationLib/BaseFspVerificationLib.inf
+PantherLakeFspPkg/Library/FspLoadComponentsLib/FspLoadComponents.c
+PantherLakeFspPkg/Library/MeasurementLib/FspMeasurementLib.c
+PantherLakeFspPkg/Library/MeasurementLib/FspMeasurementLib.inf
+PantherLakeFspPkg/PantherLakeFspPkg.dec
+
+================================================================================ 
+Commit: 86710b3993137ac3a7b462c523725467b9175d68 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:58 2025 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_3442_15
+
+Hsd-es-id: N/A"
+Original commit date: Wed Dec 3 09:31:34 2025 +0000
+Original commit hash: bcc22a6d24c0eb01e9e518363720b0e0b7ef93a7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+PantherLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 0ea057f049ee3937a998fcf5771f3193b3c77eff 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:51 2025 +0530 
+-------------------------------------------------------------------------------- 
+VCCSA_ShutDown BIOS Menu knob exposure
+
+[Feature Description]
+VCCSA_ShutDown BIOS Menu knob exposure
+
+Package/Module: 1S, Platform, Fsp
+
+[Impacted Platform]
+P.
+
+Hsd-es-id: 16029189113
+Original commit date: Tue Nov 18 17:05:15 2025 +0530
+Change-Id: I7b9b5b74907530a88fad9b0fccedaa26f08cae2c
+Original commit hash: 3206919f1a2b5cfbb49a7b1ddff4b7efb024daf0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Include/ConfigBlock/VoltageRegulator/CpuPowerMgmtVrConfig.h
+OneSiliconPkg/Include/Register/B2pMailbox.h
+OneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrLib/PeiVrLib.c
+OneSiliconPkg/IpBlock/VoltageRegulator/LibraryPrivate/PeiVrPolicyLib/PeiVrPolicyLib.c
+PantherLakeBoardPkg/Include/Dsc/HiiStructurePcd.dsc
+PantherLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiCpuPolicyUpdatePreMem.c
+PantherLakeFspPkg/Upd/FspmUpd.dsc
+PantherLakePlatSamplePkg/Include/SetupVariable.h
+PantherLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiCpuPolicyUpdatePreMem.c
+PantherLakePlatSamplePkg/Setup/CpuSetup.uni
+PantherLakePlatSamplePkg/Setup/VoltageRegulatorSetup.hfr
+
+================================================================================ 
+Commit: 96a90955229e3c9816493d7e47410dcdd14331dc 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:45 2025 +0530 
+-------------------------------------------------------------------------------- 
+Recovering vPro TBT Dock MAPT MAC Address after CSME FW Recovery
+
+[Issue Description]
+When ME region is re-flashed after MAPT MAC address is set,
+CSME loses the MAPT MAC address and BIOS does not set it again.
+This could be due to resiliency flow where CSME FW is recovered
+or due to a special manufacturing flow.
+As a result, the CSME loses the MAPT functionality.
+
+[Resolution]
+When "HW Asset" indication is set in MBP,
+BIOS shall send the MAPT MAC address to CSME FW
+
+Package/Module:
+Features/Manageability/AmtMacPassThroughFeaturePkg/
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 18044005129
+Original commit date: Mon Dec 1 16:45:40 2025 +0100
+Change-Id: I1542dc39611285fb0d4d699d0bfa0c2db527680f
+Original commit hash: a56ab2486428bfa92e0f323d4b024d14b0e3703b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Manageability/AmtMacPassThroughFeaturePkg/AmtMacPassThrough/AmtMacPassThrough.c
+Features/Manageability/AmtMacPassThroughFeaturePkg/Readme.md
+
+================================================================================ 
+Commit: d50d907a34edd3b47078d70af6be6d55d091ec22 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:40 2025 +0530 
+-------------------------------------------------------------------------------- 
+[TXT] Don't Relocate SACM if no LLC
+
+[Issue Description]
+ACHECK ACM launch was failing with UCODE error on 0+0+4 config.
+Turns out that if no LLC, then relocating ACM from flash location is
+not an option.
+Before ACM launch, UCODE loads ACM to MLC from level higher in mem
+(generally LLC).
+In MLC-only case, there is no LLC. Level higher is SPI flash.
+Since SPI flash at alternate location (ie TempRAM) does not contain ACM,
+GETSEC[ENTERACCS] launch would fail with UCODE error
+
+[Resolution]
+If no LLC, then must use an MTRR to cover ACM at flash location.
+
+Package/Module: Intel/OneSiliconPkg/IpBlock/Txt/LibraryPrivate/PeiTxtLib
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 14026076796
+Original commit date: Thu Oct 16 15:18:55 2025 -0700
+Change-Id: I5e03d934dccb8c42cafeb576f5e38dabea8c37f8
+Original commit hash: 2f3d075a79d66d96d0b0f3f2182adcc2bd8d173e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fsp/Library/DebugLibDebugPort/Pei/DebugLibDebugPort.c
+OneSiliconPkg/IpBlock/Txt/LibraryPrivate/PeiTxtLib/TxtPeiLib.c
+
+================================================================================ 
+Commit: f94b62403fa8df0d17ad4dcbffe22942e90ca441 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:35 2025 +0530 
+-------------------------------------------------------------------------------- 
+Enable SC Phase 2, new pair of keys is not getting generated
+
+[Issue Description]
+Currently Public key(x,y) is generated once and the same key reused for each pairing.
+For each paring, a new set of public key should be generated.
+
+[Resolution]
+Call smp_generate_p256_keys at correct state and appropriate changes needed.
+
+Package/Module:
+Features/BluetoothPkg/BluetoothBusDxe
+
+[Impacted Platform]
+PTL
+
+Hsd-es-id: 16029255489
+Original commit date: Mon Nov 24 15:05:19 2025 +0530
+Change-Id: Ibc3a30301dbbe14e800fa2017a503a3623bc0520
+Original commit hash: b38e9405463f6e9427e7f64c6fce5dcafcf0d16a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/BluetoothPkg/BluetoothBusDxe/iLE/core/inc/smp.h
+Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/gap.c
+Features/BluetoothPkg/BluetoothBusDxe/iLE/core/src/smp.c
+Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/inc/smp_mgr.h
+Features/BluetoothPkg/BluetoothBusDxe/iLE/mgr/src/smp_mgr.c
+
+================================================================================ 
+Commit: 5ace08c443fbb3bbf22d661c5ee1eaafff13cf78 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:31 2025 +0530 
+-------------------------------------------------------------------------------- 
+BIOS Cleanup for Unused Code
+
+[Feature Description]
+BIOS Cleanup for Unused Code
+
+Package/Module:
+SiliconPkg
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 16029332688
+Original commit date: Sun Nov 30 14:38:12 2025 +0530
+Change-Id: I9f81b4d1b268fe7a5432b8a4e34d5c5b0f1dbddf
+Original commit hash: 1b2b8f0f77bb3881f4d53fc4cf21a94d01973d8f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/PtlCDie/LibraryPrivate/BaseCpuInfoFruLib/BaseCpuInfoFruLib.c
+OneSiliconPkg/Fru/PtlCDie/VoltageRegulator/LibraryPrivate/PeiVrFruLib/PeiVrFruLib.c
+OneSiliconPkg/IncludePrivate/Register/Ptl/Cpu/CpuGenInfoFruLib.h
+
+================================================================================ 
+Commit: cc4afa776a8565b31e5cb67fbcecbaeac5461782 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:26 2025 +0530 
+-------------------------------------------------------------------------------- 
+Fix for reset issue in WCL,PTL and junk character issue in PTL
+
+[Issue Description]
+After performing RESET -S while waking up from S5 state observing postcode:10B3 in WCL and PTL
+Junk values in PTL debug logs
+
+[Resolution]
+Fixes reset issue in WCL and PTL
+Fixes junk character issue in PTL debug logs
+
+Package/Module:
+
+[Impacted Platform]
+WCL
+PTL
+
+Hsd-es-id: 16029211746,16029211804,15018696024
+Original commit date: Mon Nov 24 11:57:22 2025 +0530
+Change-Id: I9398dc7ca7b75d0b5ceb5d6e4f6eaf41395df1cb
+Original commit hash: bf3356af101ea9f6c0600e18e07a0bec506bc54b
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Manageability/PlatformSanitizeFeaturePkg/PlatformSanitizeFeaturePkg.dsc
+OneSiliconPkg/Fru/PtlPcd/Dxe.dsc
+OneSiliconPkg/Fsp/FspDebugInit/Pei/FspDebugServicePei.c
+OneSiliconPkg/Fsp/FspDebugInit/Pei/FspDebugServicePei.inf
+OneSiliconPkg/Fsp/Library/DebugLibDebugPort/Pei/DebugLibDebugPort.c
+OneSiliconPkg/Fsp/Library/DebugLibDebugPort/Pei/DebugLibDebugPort.inf
+OneSiliconPkg/Product/PantherLake/SiPkgDxe.dsc
+PantherLakeBoardPkg/BoardPkg.dsc
+PantherLakeBoardPkg/Include/Dsc/CoreDxeDrivers.dsc
+PantherLakeBoardPkg/Include/Dsc/CoreDxeInclude.dsc
+PantherLakePlatSamplePkg/Features/PlatformStatusCodeHandler/RuntimeDxe/PlatformStatusCodeHandlerRuntimeDxe.h
+PantherLakePlatSamplePkg/Library/BaseDebugLibAllDebugPort/BaseDebugLibAllDebugPort.inf
+PantherLakePlatSamplePkg/Library/BaseDebugLibAllDebugPort/DebugLib.c
+PantherLakePlatSamplePkg/Library/RuntimeDxePlatformStatusCodeHandlerLib/RuntimeDxePlatformStatusCodeHandlerLib.c
+PantherLakePlatSamplePkg/Library/RuntimeDxePlatformStatusCodeHandlerLib/RuntimeDxePlatformStatusCodeHandlerLib.h
+PantherLakePlatSamplePkg/Library/RuntimeDxePlatformStatusCodeHandlerLib/RuntimeDxePlatformStatusCodeHandlerLib.inf
+PantherLakePlatSamplePkg/Library/RuntimeDxePlatformStatusCodeHandlerLib/SerialIoUartDxeStatusCodeWorker.c
+PantherLakePlatSamplePkg/Library/RuntimeDxePlatformStatusCodeHandlerLib/Usb3StatusCodeWorker.c
+PantherLakePlatSamplePkg/Library/SmmPlatformStatusCodeHandlerLib/SerialIoUartStatusCodeWorker.c
+PantherLakePlatSamplePkg/Library/SmmPlatformStatusCodeHandlerLib/SmmPlatformStatusCodeHandlerLib.c
+PantherLakePlatSamplePkg/Library/SmmPlatformStatusCodeHandlerLib/SmmPlatformStatusCodeHandlerLib.h
+PantherLakePlatSamplePkg/Library/SmmPlatformStatusCodeHandlerLib/SmmPlatformStatusCodeHandlerLib.inf
+PantherLakePlatSamplePkg/Library/SmmPlatformStatusCodeHandlerLib/Usb3StatusCodeWorker.c
+
+================================================================================ 
+Commit: 2a4482c8d53e6b5edb9b73b97ceae9998a80a11a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:21 2025 +0530 
+-------------------------------------------------------------------------------- 
+Open source full fsp headers to coreboot
+
+[Feature Description]
+Add all the remaining UPDs in the FSPM.txt and FSPS.txt
+
+Package/Module:
+FspPkg
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 16028535508
+Original commit date: Thu Nov 20 12:40:42 2025 +0530
+Change-Id: Ia5994026a123452349dd5055b9dc728523f61082
+Original commit hash: bd9f524ffde1d9fcdeb091ef6a48a3a3882551c7
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+PantherLakeFspPkg/Upd/UpdList/FSPM.txt
+PantherLakeFspPkg/Upd/UpdList/FSPS.txt
+
+================================================================================ 
+Commit: fd8e59c02bd6506fb301bb4dbed4ccb10433894f 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:11 2025 +0530 
+-------------------------------------------------------------------------------- 
+ClkReq GPIO pads must be modified during PCIe init with override
+
+[Issue Description]
+Pcie initialization fails for devices connected to PCIe slots when
+coreboot as bootloader
+
+[Resolution]
+Modified PCI clock functions to continue execution even when GPIO
+override is enabled
+
+Package/Module: OneSiliconPkg/Fru
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16028995073
+Original commit date: Thu Nov 20 17:48:35 2025 +0530
+Change-Id: I17d6c3652e8da95eb609b854efb3fb710fb3579f
+Original commit hash: bf97d2a7a2f96fcadee35ceb30e55a9b8016ca82
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/PtlPcd/Library/PtlPcdMinimalGpioNativeLib/PtlPcdMinimalGpio.h
+OneSiliconPkg/Fru/PtlPcd/Library/PtlPcdMinimalGpioNativeLib/PtlPcdMinimalGpioNativeLib.c
+OneSiliconPkg/Fru/PtlPcd/Library/PtlPcdMinimalGpioNativeLib/PtlPcdMinimalPadData.c
+OneSiliconPkg/Fru/PtlPcd/LibraryPrivate/PtlPcdPeiPchPcieClocksLib/PeiPchPcieClocksLibPtl.c
+OneSiliconPkg/Include/Library/Ptl/PcdMinimalGpioNativeLib/PtlPcdMinimalGpioNativeLib.h
+
+================================================================================ 
+Commit: d556a12b81c1ecf2420c5bbd15769f5e1d2cd415 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:02:04 2025 +0530 
+-------------------------------------------------------------------------------- 
+Enable xHCI System USB2 BW check
+
+[Feature Description]
+Enable xHCI System BW check so USB2 periodic endpoints
+are not incorrectly allowed with higher ESIT requirements.
+Camera flickering is due to total ESIT beyond the USB2 HS BW limit.
+
+Package/Module:
+OneSiliconPkg/PtlPcdPeiInitLib
+OneSiliconPkg/PtlPcdTcssInitLib
+OneSiliconPkg/IpUsb3
+
+[Impacted Platform]
+PTL, WCL.
+
+Hsd-es-id: 18043975168
+Original commit date: Thu Nov 20 13:00:18 2025 +0100
+Change-Id: I957b4c12c006e3119d2b1cae563d5a9225002274
+Original commit hash: 07ec263c2722ef658f18f21315e301fb48f15533
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/PtlPcd/LibraryPrivate/PtlPcdPeiInitLib/PtlPcdUsb.c
+OneSiliconPkg/Fru/PtlPcd/Tcss/LibraryPrivate/PtlPcdTcssInitLib/PtlPcdTcssInitPostMem.c
+OneSiliconPkg/Include/Register/UsbHostRegs.h
+OneSiliconPkg/IpBlock/Usb/IncludePrivate/IpUsb3.h
+OneSiliconPkg/IpBlock/Usb/LibraryPrivate/IpUsb3/IpUsb3CsiSpecific.c
+
+================================================================================ 
+Commit: 6c4fc5262e0f88ef516ed0f187e025310d27d5d8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:01:52 2025 +0530 
+-------------------------------------------------------------------------------- 
+DisCo table update for DC2 and DC5
+
+[Feature Description]
+DisCo table update for DC2 and DC5.
+
+Package/Module:
+Features/Audio/SndwDevTopologyFeaturePkg
+
+[Impacted Platform]
+PTL
+
+Hsd-es-id: 18043896434
+Original commit date: Tue Nov 11 07:53:04 2025 +0000
+Change-Id: Id5ce79c1ffd21ff045c5bfd7009b3ac14b4779a6
+Original commit hash: 8ca747a221519c46b4a9e7808ee779665e4c1042
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/AudioComposition_722.asl
+Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/AudioFunction_722_AMP.asl
+Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt01Ssdt/AudioFunction_722_MIC.asl
+Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt04Ssdt/AudioComposition_722.asl
+Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt04Ssdt/AudioFunction_722_AMP.asl
+Features/Audio/SndwDevTopologyFeaturePkg/AcpiTables/SndwDevTopologySt04Ssdt/AudioFunction_722_MIC.asl
+PantherLakePlatSamplePkg/Setup/PchSetup.uni
+
+================================================================================ 
+Commit: fa3eaee5b3ff5c65bdf60f8f1578cb14d7288918 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:01:46 2025 +0530 
+-------------------------------------------------------------------------------- 
+Fix volume corrupt assert issue observed with extended image
+
+[Issue Description]
+Volume corrupt assert is observed while booting extended
+image, this is because the FVuefiboot volume is getting
+corrupted as BiosKnobsData.ffs was being added twice to this FV
+
+[Resolution]
+ParseSetup.py is already adding BiosKnobsData.ffs to FV and
+generating FD using FMMT. So the removing the second time
+generation of FFS and FD
+
+Package/Module:
+BoardPkg
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 16029217857
+Original commit date: Fri Nov 28 12:38:05 2025 +0530
+Change-Id: I3a702ceb01638c20266e7067ef7c4d4d93ac9599
+Original commit hash: bd8315595758141b7f71410bcc6a65611444e993
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+PantherLakeBoardPkg/PostBuild.sh
+
+================================================================================ 
+Commit: e566105c31c2cd660e6232f110c02cb426cad4c1 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:01:39 2025 +0530 
+-------------------------------------------------------------------------------- 
+Fix S4 wake failure when a additional reset occurs during S4 wake
+
+[Issue Description]
+After a system crash immediate s4 wake is failing when
+an additional reset occurs during S4 wake
+
+[Resolution]
+Once a crash occured allocate the new crash record pages memory
+every time in the bios flow
+
+Package/Module:
+Features/Crashlog
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 15018706685
+Original commit date: Fri Nov 28 17:20:54 2025 +0530
+Change-Id: I24bf40ac8de996b9e65247ea850480524a4e2e10
+Original commit hash: fdf3e242894cfa9c48b227169c2f604e2b15e2ba
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+PantherLakeBoardPkg/Features/CrashLog/Agent/CpuCrashLogAgent/CpuCrashLogPei.c
+PantherLakeBoardPkg/Features/CrashLog/Agent/SocCrashLogAgent/SocCrashLogPei.c
+
+================================================================================ 
+Commit: ad34011746607fa16ae20ea53f258f19ea477a97 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Thu Dec 11 08:01:27 2025 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_3442_14
+
+Hsd-es-id: N/A"
+Original commit date: Tue Nov 25 12:09:52 2025 +0000
+Original commit hash: 09be8a833fb3767694ac5b76da56d25c71277919
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/PantherLake_FSP_Integration_Guide.chm
+Doxygen/PantherLake_FSP_Integration_Guide.pdf
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+Features/HestFeaturePkg/HestDxe/HestDxe.c
+Features/HestFeaturePkg/HestDxe/HestDxe.inf
+Features/HestFeaturePkg/HestFeaturePkg.dec
+Features/HestFeaturePkg/HestFeaturePkg.dsc
+Features/HestFeaturePkg/Include/HestFeature.dsc
+Features/HestFeaturePkg/Readme.md
+LICENSE.txt
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
