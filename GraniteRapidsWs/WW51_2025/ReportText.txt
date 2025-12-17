@@ -1,0 +1,253 @@
+*********************************************************************************
+Commit: fb669524099ba07e4a7c2f13543b661499d52d1f 
+*********************************************************************************
+
+[PCH]
+
+  Change Power button Override Period value related register in the PCH side.
+  
+  Ignore the register at S3M side as hardware usage.
+                                     ^^^^^^^^        
+  
+  [Impacted Platform]
+  GNRWS
+  
+  Hsd-es-id: 15018665959
+  
+  Change-Id: Ibfca8ad2a7a2bcdb788d2ddcad7d0a3d42efe164
+  Original commit hash: 3ea561e5783c189edc503c30647ba50146f2a335
+  
+  [Changed Files]
+  GnrwsRpPkg/PchSetupPcdDefaults.dsc.inc
+  GnrwsRpPkg/Platform/Dxe/Setup/IblSetup.hfr
+  GnrwsRpPkg/Platform/Dxe/Setup/PchSetup.hfr
+  ServerPlatformPkg/Library/PeiPolicyUpdateLib/PeiPchPolicyUpdateGnrWs.c
+  ServerPlatformPkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateGnrWs.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: hardware
+
+*********************************************************************************
+Commit: fdfcdbccfe7de3055db35ecb4dea37f183e6e076 
+*********************************************************************************
+
+
+  [GNRWS] Remove PWRB object when POWER_BUTTON flag is set to 0
+  
+  [Issue Description]
+  The ACPI specification (Table 4.8) states that the PWRB
+  object should be absent if the POWER_BUTTON flag is set to 0.
+  In the current implementation, the POWER_BUTTON flag in GNRWS
+  is fixed to 0, which necessitates the removal of the PWRB object
+                       ^^^                                         
+  to maintain compliance with the specification.
+  
+  [Resolution]
+  Implement conditional compilation based on the PcdGnrwsSupport
+  flag to ensure the PWRB object is only included when the
+  POWER_BUTTON flag is set to 1. This change removes the PWRB
+  object in scenarios where the POWER_BUTTON flag is fixed to 0,
+  aligning the implementation with the ACPI specification.
+  
+  Use \_SB.ACPI_RCIL_DEVNAME to detect whether it is GNRWS.
+  
+  [Package/Module]
+  ServerPlatformPkg
+  
+  [Impacted Platform]
+  GRANITE RAPIDS WORKSTATION
+  
+  Hsd-es-id: 15018374329
+  
+  Change-Id: Id35f2b126d6dad95afdc75bc63575a25e98d6149
+  Original commit hash: 740fdb3133acf896a012e7efcbbfa28dfe8ffdf9
+  
+  [Changed Files]
+  ServerPlatformPkg/Features/Acpi/AcpiTables/Dsdt/CommonPlatform.asi
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 56c7ab062bfbd146393ece30e676eac1405d6fae 
+*********************************************************************************
+
+
+  Hide Overclocking Feature in Non-OC SKU's.
+                                      ^^^    
+  
+  [Issue Description]
+  The overclocking feature is currently visible in non-OC SKUs, which may
+                                                          ^^^             
+  lead to user confusion and misconfiguration. Non-OC SKUs are not
+                                                      ^^^          
+  designed to support overclocking, and the presence of this feature could
+  create an inconsistent user experience.
+  
+  [Resolution]
+  Update the platform setup logic to conditionally enable the overclocking
+  feature only when the 'CpuGetOcEnable' function confirms that
+  overclocking is supported. This ensures the feature is hidden in non-OC
+  SKUs, aligning the functionality with the intended platform
+  ^^^                                                         
+  capabilities.
+  
+  Package/Module:
+  GnrwsRpPkg/Platform
+  
+  [Impacted Platform]
+  GRANITE RAPIDS WORKSTATION
+  
+  Hsd-es-id: 16028611074
+  
+  Change-Id: Ibc6a15120c60bfe19f745ba814f7b4b0c709b489
+  Original commit hash: 16de1f3404be159d25cb75d584989b3fcc051122
+  
+  [Changed Files]
+  GnrwsRpPkg/Platform/Dxe/Setup/DxePlatform.inf
+  GnrwsRpPkg/Platform/Dxe/Setup/SetupPlatform.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: sku
+
+*********************************************************************************
+Commit: 406d715bb201ba4aff7ea6ffa1c7a1b3228686fe 
+*********************************************************************************
+
+[CPU]
+
+  ServerSiliconPkg/Cpu: Fix CPU Freq doesn't update after AVX P1 Level back to normal
+  
+  [Issue Description]
+  CPU Freq doesn't update after AVX P1 Level back to normal
+  
+  [Resolution]
+  Introduce a check to compare the current and target flex ratios,
+  ensuring that ratio changes are only performed when necessary. Update
+                                                      ^^^               
+  the 'CpuGetFlexRatio' function to return a BOOLEAN value, allowing the
+  system to verify the success of retrieving the current flex ratio.
+  Modify related logic to handle cases where the flex ratio retrieval
+  fails, improving overall reliability.
+  
+  Package/Module:
+  ServerSiliconPkg
+  
+  [Impacted Platform]
+  GRANITE RAPIDS SP
+  GRANITE RAPIDS AP
+  
+  Hsd-es-id: 15018240222
+  
+  Change-Id: I997998ba0be7a92b99a9cf3ee39ade990a3f796d
+  Original commit hash: 605d783c4c958f3438868457c0035d1ecac2d7ec
+  
+  [Changed Files]
+  ServerSiliconPkg/Cpu/Include/Library/CpuIpLib.h
+  ServerSiliconPkg/Cpu/Library/CpuInitLib/CpuInitCommon.c
+  ServerSiliconPkg/Cpu/Library/CpuIpLib/GnrSrf/CpuIpLib.c
+  ServerSiliconPkg/Upi/Library/SoftStrapLib/GnrSrf/SoftStrapLib.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Oem: NEC
+
+*********************************************************************************
+Commit: 55e7dc7c53afb5ecdb06d9aaa96b131063f3f6f1 
+*********************************************************************************
+
+[PCH]
+
+  Workaround DXE_ASSERT in Link Active SMI handler at end of S3 resume
+  ^^^^^^^^^^                                                           
+  
+  [Issue Description]
+  When hotplug is enabled for a non-empty PCH PCIe RP, system will
+  hit DXE_ASSERT in Link Active SMI handler at end of S3 resume.
+  
+  [Resolution]
+  Clear SLSTS.DLLSC(Bit8) before enabling MPC.HPME in S3 bootscript
+                                              ^^                    
+  register restoration at end of S3 resume
+  
+  Package/Module:
+  OneSiliconPkg
+  
+  [Impacted Platform]
+  GnrWs
+  
+  Hsd-es-id: 15018291539
+  
+  Change-Id: I794e449a85063153d7fbad246043b4349435b34f
+  Original commit hash: 62653f73fb34ab38c0cd9d2ce56720e01ce13899
+  
+  [Changed Files]
+  OneSiliconPkg/Fru/MtlPch/Smm/PchPcieSmm.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word: Workaround
+  --Commit Message Contains Oem: HP
+
+*********************************************************************************
+Commit: 42e4edf0c163f4b9a0db4c37433d304901c6b5b3 
+*********************************************************************************
+
+
+  Add tCCD_WR relaxation WA for Vendor Specific downbinned frequencies
+                        ^^^^                                           
+  
+  [Feature Description]
+  Vendor requires tCCD_WR_DLR Relaxation W/A for downbinned frequencies
+                                         ^^^                            
+  
+  Package/Module:
+  
+  [Impacted Platform]
+  GRANITE RAPIDS AP, GRANITE RAPIDS SP
+  
+  Hsd-es-id: 14025263487
+  
+  Change-Id: I5b64e63d9bcc59174276c3d717c2a9aead5519a6
+  Original commit hash: 213b8c54fa71cf3beda823602079cbc1b48c28fd
+  
+  [Changed Files]
+  CpRcPkg/Include/Library/Ddr5CoreLib.h
+  CpRcPkg/Library/BaseDdr5CoreLib/MemJedecDdr5.c
+  CpRcPkg/Library/BaseDdr5CoreLibNull/BaseDdr5CoreLibNull.c
+  ServerSiliconPkg/Mem/Library/MemTurnaroundTimingLib/Soc/MemTurnaroundTimingSoc.c
+  ServerSiliconPkg/Mem/Library/MemTurnaroundTimingTableLib/MemTurnaroundTimingTable.c
+  
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Potential Errors Below:
+
+  --Commit Message Contains Key Word:  WA 
+  --Commit Message Contains Key Word: W/A
+
+################################################################################
+
+Report Summary: Backstop found 6 suspect commits for review 
+
+Warnings Found:
+  Commit: fb66952    --Commit Message Contains Key Word: hardware
+  Commit: fdfcdbc    --Commit Message Contains Oem: NEC
+  Commit: 56c7ab0    --Commit Message Contains Key Word: sku
+  Commit: 406d715    --Commit Message Contains Oem: NEC
+  Commit: 55e7dc7    --Commit Message Contains Key Word: Workaround
+  Commit: 55e7dc7    --Commit Message Contains Oem: HP
+  Commit: 42e4edf    --Commit Message Contains Key Word:  WA 
+  Commit: 42e4edf    --Commit Message Contains Key Word: W/A
