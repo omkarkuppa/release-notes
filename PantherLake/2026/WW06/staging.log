@@ -1,0 +1,876 @@
+================================================================================ 
+Commit: c2e1ebf576d76076eedfeb9702c9230368389585 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 16:11:46 2026 +0530 
+-------------------------------------------------------------------------------- 
+Added Doxygen folder and License.txt file for the PTL label 4015_03.
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/PantherLake_FSP_Integration_Guide.chm
+Doxygen/PantherLake_FSP_Integration_Guide.pdf
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+Features/HestFeaturePkg/HestDxe/HestDxe.c
+Features/HestFeaturePkg/HestDxe/HestDxe.inf
+Features/HestFeaturePkg/HestFeaturePkg.dec
+Features/HestFeaturePkg/HestFeaturePkg.dsc
+Features/HestFeaturePkg/Include/HestFeature.dsc
+Features/HestFeaturePkg/Readme.md
+LICENSE.txt
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+
+================================================================================ 
+Commit: 9dafe6657c612566b71a34e42671e302b70b1723 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:33:48 2026 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_4015_03
+
+Hsd-es-id: N/A"
+Original commit date: Mon Jan 19 12:25:12 2026 +0000
+Original commit hash: 1efc48c68649187c9efc1208ec54e0029b0b2ab9
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+PantherLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 80829b322460dbbea27f15b6b0928c9d741de898 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:33:37 2026 +0530 
+-------------------------------------------------------------------------------- 
+Align PB as per FB for CPU Acoustic noise feature
+
+[Issue Description]
+Few Acoustic noise changes were not part of PB
+
+[Resolution]
+Made changes accordingly
+
+Package/Module: PlatSamplePkg/Setup
+
+[Impacted Platform]
+Default
+
+Hsd-es-id: 16029634388
+Original commit date: Wed Jan 14 16:43:06 2026 +0530
+Change-Id: I030568ced82e72662d0c0983794ec89f6b798f32
+Original commit hash: f531928b1254d0c997a28288836cf12da19902a6
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+PantherLakeFspPkg/Upd/FspmUpd.dsc
+PantherLakePlatSamplePkg/Setup/CpuSetup.c
+PantherLakePlatSamplePkg/Setup/CpuSetup.hfr
+PantherLakePlatSamplePkg/Setup/CpuSetup.uni
+
+================================================================================ 
+Commit: a622df1f9ab1d22e9ce372d86b48b4934546c3a4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:33:25 2026 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_4015_02
+
+Hsd-es-id: N/A"
+Original commit date: Mon Jan 12 06:45:59 2026 +0000
+Original commit hash: 98e00e94b666819e10124bf7a52ef5b126733f97
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+PantherLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: f111ed863fb859a0d77e61cb85dd90925cf8ffa6 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:33:13 2026 +0530 
+-------------------------------------------------------------------------------- 
+Optimize VGA progress bar to avoid redundant memory writes
+
+[Feature Description]
+The UpdateProgressBar function in BaseIGpuInfoLib was rewriting the
+entire progress bar from 0% to the current percentage on every update,
+causing redundant VGA memory writes. For example, updating from 10% to
+50% would redraw columns 0-50 instead of only drawing the new 10-50%
+portion.
+
+This optimization introduces incremental progress bar updates by storing
+the previous progress percentage in IGpuDataHob->PreviousProgressBar and
+only filling the delta between the previous and current positions. This
+significantly reduces VGA memory writes and improves performance during
+memory initialization progress display.
+
+The optimization applies to both VGA Text Mode 3 (80x25) and Graphics
+Mode 12 (640x480) with special handling for clearing (percentage = 0)
+which always fills the entire bar.
+
+Changes include:
+- Added PreviousProgressBar field to IGPU_DATA_HOB structure
+- Modified UpdateProgressBar to track and use previous progress position
+- Implemented incremental fill logic for both Mode 3 and Mode 12
+
+Package/Module: DomainIGpu
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16029552668
+Original commit date: Mon Dec 29 14:49:46 2025 +0530
+Change-Id: Icba80bb48de57313f03dd66c2f75c8efbf83e831
+Original commit hash: b5f9d606286b81432c6b4ed692f61562c4914f87
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/DomainIGpu/IncludePrivate/IGpuDataHob.h
+OneSiliconPkg/IpBlock/DomainIGpu/Library/BaseIGpuInfoLib/BaseIGpuInfoLib.c
+OneSiliconPkg/IpBlock/DomainIGpu/LibraryPrivate/IGpuInit/PeiDisplayInitLib/PeiDisplayInitLib.c
+
+================================================================================ 
+Commit: 42e728ec241d0ec00b646324d8644d3f57ee4f1c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:32:59 2026 +0530 
+-------------------------------------------------------------------------------- 
+Revert "Optimize VGA progress bar to avoid redundant memory writes"
+
+[Issue Description]
+SOL progress bar is getting corrupted
+
+[Resolution]
+MRC was calling the IGpuVgaInit twice, due to which this issue is seen.
+Reverting the commit as need to add final changes
+
+Package/Module: OneSiliconPkg/IpBlock/MemoryInit
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 18044075862
+Original commit date: Mon Jan 12 08:49:37 2026 +0530
+Change-Id: I303ef93834a91d2aaee183676474c39801f85e41
+Original commit hash: 875f017c87b1bf00b00c778a6eedb2c90b8878ce
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/DomainIGpu/IncludePrivate/IGpuDataHob.h
+OneSiliconPkg/IpBlock/DomainIGpu/Library/BaseIGpuInfoLib/BaseIGpuInfoLib.c
+
+================================================================================ 
+Commit: cd4bd0a08fb2306b6b419343dcf56ebcd4040e4d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:32:49 2026 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_4015_01
+
+Hsd-es-id: N/A"
+Original commit date: Fri Jan 9 08:34:20 2026 +0000
+Original commit hash: 1cb92d8de74c61011258bde96f36c95cc6acad59
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+PantherLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 66b01d18b19dafa1085364120f9c0ae8d458a398 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:32:38 2026 +0530 
+-------------------------------------------------------------------------------- 
+Optimize VGA progress bar to avoid redundant memory writes
+
+[Feature Description]
+The UpdateProgressBar function in BaseIGpuInfoLib was rewriting the
+entire progress bar from 0% to the current percentage on every update,
+causing redundant VGA memory writes. For example, updating from 10% to
+50% would redraw columns 0-50 instead of only drawing the new 10-50%
+portion.
+
+This optimization introduces incremental progress bar updates by storing
+the previous progress percentage in IGpuDataHob->PreviousProgressBar and
+only filling the delta between the previous and current positions. This
+significantly reduces VGA memory writes and improves performance during
+memory initialization progress display.
+
+The optimization applies to both VGA Text Mode 3 (80x25) and Graphics
+Mode 12 (640x480) with special handling for clearing (percentage = 0)
+which always fills the entire bar.
+
+Changes include:
+- Added PreviousProgressBar field to IGPU_DATA_HOB structure
+- Modified UpdateProgressBar to track and use previous progress position
+- Implemented incremental fill logic for both Mode 3 and Mode 12
+
+Package/Module: DomainIGpu
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16029552668
+Original commit date: Mon Dec 29 14:49:46 2025 +0530
+Change-Id: Icba80bb48de57313f03dd66c2f75c8efbf83e831
+Original commit hash: c811edae6af666414a9484a3900362f1c600f804
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/DomainIGpu/IncludePrivate/IGpuDataHob.h
+OneSiliconPkg/IpBlock/DomainIGpu/Library/BaseIGpuInfoLib/BaseIGpuInfoLib.c
+
+================================================================================ 
+Commit: 64cf64a92f3da8b55cf4c1fe4f1509e3dbd52d49 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:32:16 2026 +0530 
+-------------------------------------------------------------------------------- 
+Some CNVI option cannot be load to their default values in BIOS Setup
+
+[Issue Description]
+Some CNVI option cannot be load to their default values in BIOS Setup when user press F3.
+
+[Resolution]
+Ensure that the platform callback is called with the correct parameters when F3 is pressed.
+
+Package/Module:Features
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 15018817850
+Original commit date: Thu Jan 8 15:08:40 2026 +0530
+Change-Id: I91cdf09114efff88f43fe825498294f67bf4d2aa
+Original commit hash: 01c0c561184158f67026fb21da8cf49d49294133
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Connectivity/CnvFeaturePkg/CnvVfrSetupMenu/CnvVfrSetupMenuHiiConfigAccess.c
+PantherLakePlatSamplePkg/Setup/ConnectivitySetup.c
+
+================================================================================ 
+Commit: aac47c0c242c18745cde8d8a6b414e5e5f2c1b5b 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:32:06 2026 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.126.1
+
+[Feature Description]
+Updating MrcVersion.h and ReleaseNotes.
+
+Package/Module:OneSiliconPkg/MemoryInit
+
+[Impacted Platform]
+All
+
+Registers impacted: None
+
+Hsd-es-id: 22018552565
+Original commit date: Thu Jan 8 00:20:44 2026 +0000
+Original commit hash: aa13b8e460659c8bebb1e2368927d4a638c88cd3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/src/IncludePrivate/Ptl/MrcVersion.h
+
+================================================================================ 
+Commit: 7ed972cdd27d64c740d46aeecba5e02d1a052d6c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:31:56 2026 +0530 
+-------------------------------------------------------------------------------- 
+Physical memory maximum capacity is displayed incorrectly
+
+[Issue Description]
+MaxRankCapacity was set to 16 to reflect the maximum rank
+capacity for a 32Gb x8 memory - 16GB (according to PTL MC HAS).
+It turned out that the maximum capacity calculation was not
+taking into account the fact that this value does not reflect
+an entire x64 SO-DIMM.
+
+[Resolution]
+For the SMBIOS calculations, we need to multiply the rank size by 2
+in order to get both x32 channels of a x64 SO-DIMM.
+
+Package/Module: OneSiliconPkg/IpBlock/MemoryInit
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 18044075862
+Original commit date: Wed Jan 7 20:36:42 2026 +0100
+Change-Id: I557e8dd644dfe27a6c244a9990ac36955fb64f7b
+Original commit hash: 56230c1ffb0d5a21db1364d046392d35c0f56e73
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/LibraryPrivate/MemoryInitPtl.c
+
+================================================================================ 
+Commit: a9ff7c12458cb99cd9c4e553a0709c21a825224a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:31:47 2026 +0530 
+-------------------------------------------------------------------------------- 
+Add CD Clock frequency control for VGA SOL initialization support
+
+[Feature Description]
+This change adds support for configuring higher CD Clock frequencies
+(442MHz and 461MHz) for VGA SOL initialization during the Pre-Memory
+phase. The feature allows BIOS to request specific display
+core clock frequencies when VGA support is enabled during MRC training.
+
+The VgaInitControl field in IGPU_PEI_PREMEM_CONFIG has been extended
+to include BIT6-7 for CD Clock frequency selection:
+- 0: No higher CD Clock required
+- 1: 442 MHz
+- 2: 461 MHz
+- 3: Reserved
+
+Package/Module: OneSiliconPkg
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16029552664
+Original commit date: Tue Dec 30 15:05:44 2025 +0530
+Change-Id: If219f7a2f90efa805d577b440ab78938232495e2
+Original commit hash: 5690ae535702ed4d35c17ea29e8599a6cf54498a
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Include/ConfigBlock/Graphics/Gen13/IGpuConfig.h
+OneSiliconPkg/Include/Register/B2pMailbox.h
+OneSiliconPkg/Product/PantherLake/SiInit/Pei/SiInitPreMem.c
+OneSiliconPkg/Product/PantherLake/SiInit/Pei/SiInitPreMem.inf
+PantherLakeFspPkg/Upd/FspmUpd.dsc
+
+================================================================================ 
+Commit: 322cc86f675f9d289145e2e27b4f28c97bf4650c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:31:36 2026 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Green Payload for MRC build revision 0.0.126.0
+
+[Feature Description]
+Updating MrcVersion.h and ReleaseNotes.
+
+Package/Module:OneSiliconPkg/MemoryInit
+
+[Impacted Platform]
+All
+
+Registers impacted: None
+
+Hsd-es-id: 22018552565
+Original commit date: Wed Jan 7 09:35:55 2026 -0800
+Original commit hash: ffa60d1463b77ab4cd45c7a5a5ab76128430bb9f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/src/UcManagement/Ptl/MrcUcPayloadData.c
+
+================================================================================ 
+Commit: b2068799f12bae6438e5a86f6d2efad1a8807c73 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:31:23 2026 +0530 
+-------------------------------------------------------------------------------- 
+PTL MRC increment 0.0.126.0
+
+[Feature Description]
+Update Program-P Platform BIOS with Program-P MRC drop 0.0.126.0.
+
+Package/Module: OneSiliconPkg/IpBlock/MemoryInit
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 18044069136
+Original commit date: Wed Dec 31 12:32:17 2025 +0100
+Change-Id: Ia78a6bb781360672e75464dddc792470610b0806
+Original commit hash: edb48c5ca6684ef83856e6e58d31145d1c963ceb
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/Include/CMrcInterface.h
+OneSiliconPkg/IpBlock/MemoryInit/Library/PeiMemPolicyLib/InputBlock/Ptl/MrcInputBlock.c
+OneSiliconPkg/IpBlock/MemoryInit/src/ApiLib/BlueMrcGeneral.c
+OneSiliconPkg/IpBlock/MemoryInit/src/IncludePrivate/Ptl/MrcVersion.h
+OneSiliconPkg/IpBlock/MemoryInit/src/IncludePublic/Ptl/CMrcExtInputs.h
+OneSiliconPkg/IpBlock/MemoryInit/src/ServicesLib/MrcCommon.h
+
+================================================================================ 
+Commit: 449906b994bd5429f8f0731ddf0773bbc3b96beb 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:31:10 2026 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Release Notes and increment MRC build revision to 0.0.124.1
+
+[Feature Description]
+Updating MrcVersion.h and ReleaseNotes.
+
+Package/Module:OneSiliconPkg/MemoryInit
+
+[Impacted Platform]
+All
+
+Registers impacted: None
+
+Hsd-es-id: 22018552565
+Original commit date: Wed Jan 7 06:26:52 2026 +0000
+Original commit hash: ac5c70c1a359626e0e7893743d2c1d651fb3b459
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/src/IncludePrivate/Ptl/MrcVersion.h
+
+================================================================================ 
+Commit: 136460d2b2ed2f725c58393bbced43c84b53b2d9 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:30:59 2026 +0530 
+-------------------------------------------------------------------------------- 
+Fix VGA initialization timing to occur during MRC training for SOL
+
+[Issue Description]
+VGA SOL initialization was being skipped during cold
+boot when it was intended to occur during Memory Reference Code (MRC)
+training. The VGA initialization was conditionally executed outside
+the MRC training loop, causing the display to not initialize properly
+during memory training when SOL was enabled.
+
+[Resolution]
+1. Moved IGpuVgaInit() call inside the MRC training do-while loop in
+   MemoryInitPtl.c so that VGA initialization occurs during cold boot
+   MRC training when enabled.
+
+2. Updated PeiSaPolicyUpdatePreMem.c to add BIT3
+   bit to all VgaInitControl settings when SOL is enabled. This ensures
+   BIT3 is set to indicate VGA should initialize during MRC training
+   rather than during Display Init phase.
+
+3. Removed unnecessary boot mode check (BOOT_WITH_FULL_CONFIGURATION and
+   BOOT_WITH_DEFAULT_SETTINGS) as VGA initialization timing should be
+   consistent regardless of boot mode.
+
+Package/Module: MemoryInit
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16029478262
+Original commit date: Wed Dec 31 17:29:59 2025 +0530
+Change-Id: I092541110ba7d94f639a27f9c62c31174e3e711e
+Original commit hash: c276b255f166964c6d709f51d4e06bb63190ba94
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/LibraryPrivate/MemoryInitPtl.c
+PantherLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+
+================================================================================ 
+Commit: 877cb1fb08f8bc118c8ea3857620b9fe82c740c4 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:30:47 2026 +0530 
+-------------------------------------------------------------------------------- 
+BIOS to program HPME=1 for all ENABLED ports in the controller
+
+[Feature Description]
+	- BIOS to program HPME=1 for all RP's which are not function
+disabled as long as any port within a controller is hotplug capable
+	- Set HPICTL to 0 if all RP's in the same controllers are
+not disabled and HotPlug is enabled for those RP's
+	- BIOS should prioritize root port disabled over hotplug and
+disable HotPlug capability if the RP is disabled.
+
+Package/Module: OneSiliconPkg
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 16029451023
+Original commit date: Fri Dec 12 13:52:23 2025 +0530
+Change-Id: I82d7550c73cc6c97083673d5075cfd8742b875fa
+Original commit hash: 067375a388155127da3142bf7832f3b6d8284cd0
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fru/PtlPcd/SocInit/Smm/PchPcieSmm.c
+OneSiliconPkg/IpBlock/DomainPcie/Ver1/Library/DomainPcieInitLib/DomainPcieInit.c
+OneSiliconPkg/IpBlock/IpPcieSip17/Include/IpPcieSipInitLib.h
+OneSiliconPkg/IpBlock/IpPcieSip17/IpPcieLib/IpPcie.c
+OneSiliconPkg/IpBlock/IpPcieSip17/IpPcieLib/IpPcieSipInitLib.c
+OneSiliconPkg/IpBlock/PcieRp/IncludePrivate/Register/PcieSipRegs.h
+
+================================================================================ 
+Commit: 72bbe8203dd247f4296f2265d586d1be852522d5 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:30:23 2026 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_4015_00
+
+Hsd-es-id: N/A"
+Original commit date: Fri Jan 2 15:29:54 2026 +0000
+Original commit hash: 4ba6144089f5e6bbc4b2bd084b2b678609a020d3
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
+PantherLakeBoardPkg/BiosId.env
+
+================================================================================ 
+Commit: 919ecb7f9cb2def9b9411bd1affa79afbf72722c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:30:11 2026 +0530 
+-------------------------------------------------------------------------------- 
+Update MRC Green Payload for MRC build revision 0.0.124.0
+
+[Feature Description]
+Updating MrcVersion.h and ReleaseNotes.
+
+Package/Module:OneSiliconPkg/MemoryInit
+
+[Impacted Platform]
+All
+
+Registers impacted: None
+
+Hsd-es-id: 22018552565
+Original commit date: Tue Dec 23 08:56:38 2025 -0800
+Original commit hash: 5e52c2e9d691a7716e89de0e1ce7a1877c78d400
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/src/UcManagement/Ptl/MrcUcPayloadData.c
+
+================================================================================ 
+Commit: 33d3aadc25f5843895cbfbc3a096a3b23dcb35cd 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:30:01 2026 +0530 
+-------------------------------------------------------------------------------- 
+PTL MRC increment 0.0.124.0
+
+[Feature Description]
+Update Program-P Platform BIOS with Program-P MRC drop 0.0.124.0.
+
+Package/Module: OneSiliconPkg/IpBlock/MemoryInit
+
+[Impacted Platform]
+All
+
+Hsd-es-id: 18044051758
+Original commit date: Wed Dec 17 15:13:29 2025 +0100
+Change-Id: I8c9405ad9046ccf07e5f849266aba5ab55fddd3e
+Original commit hash: c291bcfab052a64837e22017f48ebe8d4556c78f
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/IpBlock/MemoryInit/Include/CMrcInterface.h
+OneSiliconPkg/IpBlock/MemoryInit/Library/PeiMemPolicyLib/InputBlock/Ptl/MrcInputBlock.c
+OneSiliconPkg/IpBlock/MemoryInit/LibraryPrivate/MemoryInitPtl.c
+OneSiliconPkg/IpBlock/MemoryInit/src/ApiLib/BlueMrcGeneral.c
+OneSiliconPkg/IpBlock/MemoryInit/src/ApiLib/Ptl/BlueMrcMemoryScrubPtl.c
+OneSiliconPkg/IpBlock/MemoryInit/src/DdrIoLib/Ptl/MrcDdrIoUtilsSiSpecificPtl.c
+OneSiliconPkg/IpBlock/MemoryInit/src/IncludePrivate/Ptl/MrcVersion.h
+OneSiliconPkg/IpBlock/MemoryInit/src/IncludePublic/Ptl/CMrcExtInputs.h
+OneSiliconPkg/IpBlock/MemoryInit/src/MemoryTypes/MrcDdr5.c
+OneSiliconPkg/IpBlock/MemoryInit/src/MemoryTypes/MrcDdr5Settings.h
+OneSiliconPkg/IpBlock/MemoryInit/src/MemoryTypes/MrcLpddr5.c
+OneSiliconPkg/IpBlock/MemoryInit/src/MemoryTypes/MrcLpddr5.h
+OneSiliconPkg/IpBlock/MemoryInit/src/MemoryTypes/Ptl/MrcDdr5Settings.c
+OneSiliconPkg/IpBlock/MemoryInit/src/MemoryTypes/Ptl/MrcLpddr5Settings.c
+OneSiliconPkg/IpBlock/MemoryInit/src/SpdProcessing/MrcSpdProcessing.c
+PantherLakeBoardPkg/Include/Dsc/HiiStructurePcd.dsc
+PantherLakeFspPkg/Library/PeiPolicyUpdatePreMemLib/PeiSaPolicyUpdatePreMem.c
+PantherLakeFspPkg/Upd/FspmUpd.dsc
+PantherLakeFspPkg/Upd/UpdList/FSPM.txt
+PantherLakePlatSamplePkg/Include/SetupVariable.h
+PantherLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+PantherLakePlatSamplePkg/Setup/SaSetup.hfr
+PantherLakePlatSamplePkg/Setup/SaSetup.uni
+
+================================================================================ 
+Commit: 244c1828606e003eaca82a887b5819d60df213e8 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:29:50 2026 +0530 
+-------------------------------------------------------------------------------- 
+Incorrect implementation of _DSM Method causing YB in OS
+
+[Issue Description]
+Before filling the data for the next command, Ec will check whether
+BIOS had read the data. However, BIOS read the buffer multiple times
+in the _DSM method 2, causing the buffer to be overwritten incorrectly
+and triggering a BSOD.
+
+[Resolution]
+Correct the _DSM method 2 to read the EC buffer only once.
+
+Package/Module:
+UcsiFeaturePkg
+
+[Impacted Platform]
+PTL.
+
+Hsd-es-id: 16029452507
+Original commit date: Mon Dec 15 14:34:27 2025 +0800
+Change-Id: I65b6875de9725fefd01ac14a2e8a49accabacd86
+Original commit hash: dd5b895f974fd4707d426db17bb358e3fe744421
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/UcsiFeaturePkg/AcpiTables/Ucsi.asl
+
+================================================================================ 
+Commit: cf2379a11230b6fe5c5a79759953b1e9484e208a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:29:41 2026 +0530 
+-------------------------------------------------------------------------------- 
+The number of used slots is displayed incorrectly.
+
+[Issue Description]
+The number of used slots is displayed incorrectly in the BIOS
+when 1DPC configuration is used. For example, when 2 DIMMs are
+installed in a 1DPC configuration, the BIOS shows 4 used slots.
+
+[Resolution]
+Adding as 1 slot = 1 dimm = 2 channels = 1 MC.
+
+Package/Module:
+BoardPkg
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 15018847124
+Original commit date: Wed Dec 31 12:53:34 2025 +0530
+Change-Id: I906be2bbddbfa6d5b1731f934f42e340b974be6b
+Original commit hash: 6f39129568a1929c8c2667035f18c89e697e5057
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+PantherLakeBoardPkg/PantherLakeBoards/PantherLakeMobileBoards/BoardVpdPcdsInit/PtlUH/SkuIdPtlUHDdr5Rvp4.dsc
+
+================================================================================ 
+Commit: 1475325d18b467f7cce92f2a6b3e6f3aa56d780a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:29:30 2026 +0530 
+-------------------------------------------------------------------------------- 
+XHCI setting will be override by supporting secure camera
+
+[Issue Description]
+physical port mapping mismatched with logical port mapping
+
+[Resolution]
+The physical port mapping should be same as logical port mapping
+
+Package/Module: BoardPkg
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 15018849463
+Original commit date: Fri Jan 2 09:24:09 2026 +0530
+Change-Id: If92496945d4469e9bd9cf6cf8be57319942edd06
+Original commit hash: 9343991a18075707a758e6d12de8c895ad299712
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+PantherLakeBoardPkg/Acpi/AdvancedAcpiDxe/AcpiPlatform.c
+
+================================================================================ 
+Commit: 83aedd82a44a324dff84836d6c19a08356ded776 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:29:21 2026 +0530 
+-------------------------------------------------------------------------------- 
+Some CNVI option cannot be load to their default values in BIOS Setup
+
+[Issue Description]
+Some CNVI option cannot be load to their default values in BIOS Setup
+
+[Resolution]
+CNVI setup options should be restored to default after F3
+
+Package/Module: CnvFeaturePkg
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 15018817850
+Original commit date: Tue Dec 30 11:47:57 2025 +0530
+Change-Id: I9292c5f620ac3d16c1523ea4909ac8592b9e2ff3
+Original commit hash: 6f10c8cf7a3c6db850c40b689de7d8f36e0eb65e
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Connectivity/CnvFeaturePkg/CnvVfrSetupMenu/CnvVfrSetupMenuHiiConfigAccess.c
+
+================================================================================ 
+Commit: 5e9d2c47fa2e6c8374bb39e620580a03dd7f6dac 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:29:10 2026 +0530 
+-------------------------------------------------------------------------------- 
+MemoryTelemetry: Refactor PEIM to library and fix AMT PPR policy
+
+[Issue Description]
+The existing Memory Telemetry enabling AMT and PPR via a PEIM variable
+was failing to set MRC AMT PPR to run. The PEIM variable MRC set was
+overwritten during SA Policy update and AMT fails to run reliably.
+
+[Resolution]
+Refactored the architecture to eliminate the redundant PEIM and consolidate
+all logic into PeiMemoryTelemetryLib. Created UpdateAmtPprMrcPolicy()
+API that reads the AmtPprEnable UEFI variable and configures MRC policies:
+- Sets MemConfigNoCrc->PprTestType.Value to PPR_TEST when AMT enabled
+- Sets MemConfigNoCrc->PprRepairType to HARD_PPR or NOREPAIR_PPR based on
+  AMT/PPR capability configuration
+
+Modified PeiSaPolicyUpdatePreMem to call UpdateAmtPprMrcPolicy() when
+PcdMemoryTelemetryEnabled is TRUE. If UpdateAmtPprMrcPolicy() succeeds,
+the AMT-configured policies are preserved. If it fails (variable not found
+or AMT not enabled), the code falls back to Setup menu values, maintaining
+backward compatibility.
+
+Package/Module:
+MemoryTelemetryFeaturePkg, PlatSamplePkg, BoardPkg
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16029419604
+Original commit date: Wed Dec 31 11:49:48 2025 -0800
+Change-Id: I4cc6fdc86324487509995de3ca2317402946721f
+Original commit hash: b6c7cb92dc75af422351d8f7f817ecd187c6ed59
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Manageability/MemoryTelemetryFeaturePkg/Include/Library/PeiMemoryTelemetryLib.h
+Features/Manageability/MemoryTelemetryFeaturePkg/Include/MemoryTelemetryFeaturePkg.dsc
+Features/Manageability/MemoryTelemetryFeaturePkg/Include/PreMemory.fdf
+Features/Manageability/MemoryTelemetryFeaturePkg/Library/PeiMemoryTelemetryLib/PeiMemoryTelemetryLib.c
+Features/Manageability/MemoryTelemetryFeaturePkg/Library/PeiMemoryTelemetryLib/PeiMemoryTelemetryLib.inf
+Features/Manageability/MemoryTelemetryFeaturePkg/Library/PeiMemoryTelemetryLibNull/PeiMemoryTelemetryLibNull.c
+Features/Manageability/MemoryTelemetryFeaturePkg/Library/PeiMemoryTelemetryLibNull/PeiMemoryTelemetryLibNull.inf
+Features/Manageability/MemoryTelemetryFeaturePkg/PeiMemoryTelemetry/PeiMemoryTelemetry.c
+Features/Manageability/MemoryTelemetryFeaturePkg/PeiMemoryTelemetry/PeiMemoryTelemetry.h
+PantherLakeBoardPkg/BoardPkg.dsc
+PantherLakeBoardPkg/BoardPkg.fdf
+PantherLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiPolicyUpdateLib.inf
+PantherLakePlatSamplePkg/Library/PeiPolicyUpdateLib/PeiSaPolicyUpdatePreMem.c
+
+================================================================================ 
+Commit: b6bbf9afa625987322b7b7693d72b4b28930c23d 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:28:58 2026 +0530 
+-------------------------------------------------------------------------------- 
+OneClickRecovery: Enable WiFi Profile Sync independent of OCR
+
+[Feature Description]
+Control the OCR code load from OcrEnable Pcd so if WPS is enabled
+and OCR is not, WPS will still be loaded and utilized.
+Enable the One Click Recovery WiFi Profile Sync capability bit in
+ME SMBIOS OEM Capabilities 4 structure.
+
+Package/Module: OneClickRecoveryFeaturePkg
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 14026457445
+Original commit date: Mon Nov 17 11:41:32 2025 -0800
+Change-Id: I04312d72db52d81ddd86909d866399d376f2af1f
+Original commit hash: 74bc7f7e067d4083b8e3a220e1b43f89ed42b60d
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Features/Manageability/OneClickRecoveryFeaturePkg/Include/Fdf/OneClickRecoveryFeature.fdf
+Features/Manageability/OneClickRecoveryFeaturePkg/Include/Protocol/OneClickRecoveryProtocol.h
+Features/Manageability/OneClickRecoveryFeaturePkg/OneClickRecovery/OneClickRecovery.c
+Features/Manageability/OneClickRecoveryFeaturePkg/ReadMe.md
+Features/Manageability/OneClickRecoveryFeaturePkg/WifiProfileSync/WifiProfileSync.c
+OneSiliconPkg/Include/MeSmbios.h
+PantherLakeBoardPkg/BoardPkg.fdf
+PantherLakeBoardPkg/Features/Me/MeSmbiosUpdateConfigDxe/MeSmbiosUpdateConfig.c
+PantherLakeBoardPkg/Features/Me/MeSmbiosUpdateConfigDxe/MeSmbiosUpdateConfigDxe.inf
+
+================================================================================ 
+Commit: 141382d0e3a51ab1df3de946d1300f26023a3f7a 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:28:45 2026 +0530 
+-------------------------------------------------------------------------------- 
+Incorrect Board ID and Board Name displayed
+
+[Issue Description]
+Incorrect Board ID and Board Name displayed
+in BIOS for 9600 MT/s Memory System.
+
+[Resolution]
+Adding Board name for GCS and ADK 9600
+
+Package/Module:
+BoardPkg
+PlatSamplePkg
+
+[Impacted Platform]
+ALL
+
+Hsd-es-id: 16029528785
+Original commit date: Wed Dec 31 11:43:13 2025 +0530
+Change-Id: I2b86b05b93ea831620e7c167be7f4c326f21a975
+Original commit hash: 87b1bd1c5b8a80cec04b5b9e5a3d1496d2103bd2
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+PantherLakeBoardPkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+PantherLakePlatSamplePkg/Library/PeiDxeBoardIdsLib/PeiDxeBoardIdsLib.c
+
+================================================================================ 
+Commit: 628623c0971e89b2bbf6a82be38fd17483d89a0c 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:28:30 2026 +0530 
+-------------------------------------------------------------------------------- 
+DebugServicePei PEIM is not printing debug messages using event handler
+
+[Issue Description]
+FspDebugServicePei PEIM is not printing debug messages using event handler
+
+[Resolution]
+DebugLib will use DebugPortLib to print the debug messages.
+
+Package/Module: FspPkg, OneSiliconPkg
+
+[Impacted Platform]
+Default ALL
+
+Hsd-es-id: 16029411861
+Original commit date: Mon Dec 15 13:46:30 2025 +0530
+Change-Id: Ie2409d2fdd94a51fefe8241481c6021772e6deca
+Original commit hash: d2bed9f32ec817d72892f92ff518ed3acadc0704
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+OneSiliconPkg/Fsp/FspDebugInit/Pei/FspDebugServicePei.c
+OneSiliconPkg/Fsp/FspDebugInit/Pei/FspDebugServicePei.inf
+PantherLakeFspPkg/PantherLakeFspPkg.dsc
+
+================================================================================ 
+Commit: 664fa9fc52f99ec8a398dafb8fde5e2e3cda1901 
+Author: ClientSysFWGit <clientsysfwgit@intel.com> 
+Date: Wed Feb 4 10:27:37 2026 +0530 
+-------------------------------------------------------------------------------- 
+"PTL PantherLake_pantherlake_program_platform_Daily Daily Updating Version/ID: PantherLake_3514_01
+
+Hsd-es-id: N/A"
+Original commit date: Mon Dec 29 10:59:31 2025 +0000
+Original commit hash: 5f74e8710d563eed2add5a4e4037489fa69ef947
+
+-------------------------------------------------------------------------------- 
+[Changed Files]
+Doxygen/BoardApi.chm
+Doxygen/FspApi.chm
+Doxygen/PantherLake_FSP_Integration_Guide.chm
+Doxygen/PantherLake_FSP_Integration_Guide.pdf
+Doxygen/PlatApi.chm
+Doxygen/SiPkgApi.chm
+Features/HestFeaturePkg/HestDxe/HestDxe.c
+Features/HestFeaturePkg/HestDxe/HestDxe.inf
+Features/HestFeaturePkg/HestFeaturePkg.dec
+Features/HestFeaturePkg/HestFeaturePkg.dsc
+Features/HestFeaturePkg/Include/HestFeature.dsc
+Features/HestFeaturePkg/Readme.md
+LICENSE.txt
+OneSiliconPkg/Product/PantherLake/SiPkgPcdInit.dsc
